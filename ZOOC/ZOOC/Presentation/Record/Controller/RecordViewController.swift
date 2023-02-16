@@ -100,7 +100,7 @@ final class RecordViewController : BaseViewController{
     private lazy var nextButton: UIButton = {
         let button = UIButton()
         button.setTitle("다음", for: .normal)
-        button.titleLabel?.font = .zoocSubhead1
+        button.titleLabel?.font = .zoocSubhead2
         button.setTitleColor(.zoocWhite1, for: .normal)
         button.backgroundColor = .zoocGray1
         button.isEnabled = false
@@ -111,7 +111,7 @@ final class RecordViewController : BaseViewController{
         return button
     }()
     
-    //MARK: - Life Cycle
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,7 +132,9 @@ final class RecordViewController : BaseViewController{
         
         removeKeyboardNotifications()
     }
-    //MARK: - Custom Method
+    
+    // MARK: - Custom Method
+    
     private func gesture(){
         galleryImageView.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                  action: #selector(galleryImageViewDidTap)))

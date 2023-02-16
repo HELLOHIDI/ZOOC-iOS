@@ -14,6 +14,9 @@
 		4C6B186A296C82850059840D /* RecordRegisterFourCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B1869296C82850059840D /* RecordRegisterFourCollectionViewCell.swift */; };
 		4C6B186C296CB8730059840D /* RecordCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B186B296CB8730059840D /* RecordCompleteViewController.swift */; };
 		4C6B186E296DBFE40059840D /* RecordAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B186D296DBFE40059840D /* RecordAlertViewController.swift */; };
+		4C84C33C298CD662003B899E /* RecordMissionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C84C33B298CD662003B899E /* RecordMissionModel.swift */; };
+		4C84C33E298CD737003B899E /* RecordMissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C84C33D298CD737003B899E /* RecordMissionViewController.swift */; };
+		4C84C341298E2E7B003B899E /* RecordMissionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C84C340298E2E7B003B899E /* RecordMissionCollectionViewCell.swift */; };
 		4C8A7C33297063F400783979 /* OnboardingInviteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A7C32297063F400783979 /* OnboardingInviteResult.swift */; };
 		870D062A297BEB7900ADAD04 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870D0629297BEB7900ADAD04 /* HomeView.swift */; };
 		871EA33C296F3E6200D0E8CC /* HomePetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871EA33B296F3E6200D0E8CC /* HomePetResult.swift */; };
@@ -171,6 +174,9 @@
 		4C6B1869296C82850059840D /* RecordRegisterFourCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRegisterFourCollectionViewCell.swift; sourceTree = "<group>"; };
 		4C6B186B296CB8730059840D /* RecordCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCompleteViewController.swift; sourceTree = "<group>"; };
 		4C6B186D296DBFE40059840D /* RecordAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordAlertViewController.swift; sourceTree = "<group>"; };
+		4C84C33B298CD662003B899E /* RecordMissionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMissionModel.swift; sourceTree = "<group>"; };
+		4C84C33D298CD737003B899E /* RecordMissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMissionViewController.swift; sourceTree = "<group>"; };
+		4C84C340298E2E7B003B899E /* RecordMissionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMissionCollectionViewCell.swift; sourceTree = "<group>"; };
 		4C8A7C32297063F400783979 /* OnboardingInviteResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInviteResult.swift; sourceTree = "<group>"; };
 		870D0629297BEB7900ADAD04 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		871EA33B296F3E6200D0E8CC /* HomePetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePetResult.swift; sourceTree = "<group>"; };
@@ -335,6 +341,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C84C33F298E2E62003B899E /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				4C84C340298E2E7B003B899E /* RecordMissionCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		871EA34B2970413700D0E8CC /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -444,6 +458,7 @@
 		877BAFBD295EA09C00C2AA1C /* Record */ = {
 			isa = PBXGroup;
 			children = (
+				4C84C33F298E2E62003B899E /* Cell */,
 				87A76A93295F6DB10096F669 /* View */,
 				87A76A95295F6DBB0096F669 /* Controller */,
 			);
@@ -616,6 +631,7 @@
 				4C6B186D296DBFE40059840D /* RecordAlertViewController.swift */,
 				4C6B1861296B69070059840D /* RecordRegisterViewController.swift */,
 				4C6B186B296CB8730059840D /* RecordCompleteViewController.swift */,
+				4C84C33D298CD737003B899E /* RecordMissionViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -738,6 +754,7 @@
 			children = (
 				4C6B185F296B40C00059840D /* RecordModel.swift */,
 				4C6B1863296B6C600059840D /* RecordRegisterModel.swift */,
+				4C84C33B298CD662003B899E /* RecordMissionModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1022,12 +1039,14 @@
 				D27D9562296CA4640097CD03 /* OnboardingInviteFamilyViewController.swift in Sources */,
 				87D5AF602960CD5900CA7F12 /* HomeMissionCollectionViewCell.swift in Sources */,
 				D2F193632970B95E00AD87D3 /* HomeNoticeResult.swift in Sources */,
+				4C84C33E298CD737003B899E /* RecordMissionViewController.swift in Sources */,
 				D2F193612970B3FB00AD87D3 /* HomeNoticeModel.swift in Sources */,
 				87D5AF6429649DC100CA7F12 /* HomeViewController.swift in Sources */,
 				870D062A297BEB7900ADAD04 /* HomeView.swift in Sources */,
 				87A76AC32960427C0096F669 /* APIConstants.swift in Sources */,
 				877E57F02966C046006D82FC /* HomeArchiveModel.swift in Sources */,
 				D26C860A296B5C7400AEAF9B /* OnboardingParticipateViewController.swift in Sources */,
+				4C84C341298E2E7B003B899E /* RecordMissionCollectionViewCell.swift in Sources */,
 				D26C85CF2968681900AEAF9B /* MyPetCollectionFooterView.swift in Sources */,
 				8765549F295846F3006BBDA9 /* ZoocTabBarController.swift in Sources */,
 				D26C8602296B285700AEAF9B /* OnboardingCompleteProfileViewController.swift in Sources */,
@@ -1108,6 +1127,7 @@
 				87A76AA7295F6ECD0096F669 /* MyService.swift in Sources */,
 				D26C8614296B7F3E00AEAF9B /* OnboardingRegisterPetTableViewCell.swift in Sources */,
 				D26C85FE296B253600AEAF9B /* OnboardingRegisterProfileImageViewController.swift in Sources */,
+				4C84C33C298CD662003B899E /* RecordMissionModel.swift in Sources */,
 				8764831F2952368800F74882 /* UITableViewCell+.swift in Sources */,
 				876483272952370F00F74882 /* UIStackView+.swift in Sources */,
 				D23502FD2961F85100F01101 /* MySettingModel.swift in Sources */,

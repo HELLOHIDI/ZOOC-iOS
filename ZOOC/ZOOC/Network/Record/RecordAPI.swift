@@ -35,7 +35,18 @@ extension RecordAPI{
         }
     }
     
-    
+    func postMission(photo: UIImage, content: String, pets: [Int], completion: @escaping (NetworkResult<Any>) -> Void) {
+        recordProvider.request(.postMission(familyID: User.familyID,
+                                            photo: photo,
+                                            content: content,
+                                            pets: pets))
+        { result in
+            self.disposeNetwork(result,
+                                dataModel: SimpleResponse.self,
+                                completion: completion)
+        }
     }
+    
+}
 
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C54E80429BF482300B76052 /* RecordMissonRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54E80329BF482300B76052 /* RecordMissonRequest.swift */; };
 		4C6B1860296B40C00059840D /* RecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B185F296B40C00059840D /* RecordModel.swift */; };
 		4C6B1862296B69070059840D /* RecordRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B1861296B69070059840D /* RecordRegisterViewController.swift */; };
 		4C6B1864296B6C600059840D /* RecordRegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B1863296B6C600059840D /* RecordRegisterModel.swift */; };
@@ -167,6 +168,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C54E80329BF482300B76052 /* RecordMissonRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMissonRequest.swift; sourceTree = "<group>"; };
 		4C6B185F296B40C00059840D /* RecordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordModel.swift; sourceTree = "<group>"; };
 		4C6B1861296B69070059840D /* RecordRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRegisterViewController.swift; sourceTree = "<group>"; };
 		4C6B1863296B6C600059840D /* RecordRegisterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRegisterModel.swift; sourceTree = "<group>"; };
@@ -733,6 +735,7 @@
 			isa = PBXGroup;
 			children = (
 				871EA35A2970BE8400D0E8CC /* RecordPetResult.swift */,
+				4C54E80329BF482300B76052 /* RecordMissonRequest.swift */,
 			);
 			path = APIModel;
 			sourceTree = "<group>";
@@ -1068,6 +1071,7 @@
 				D23502FB2961F44700F01101 /* MySettingTableViewCell.swift in Sources */,
 				D26C85D929689D0800AEAF9B /* MyDeleteAccountAlertViewController.swift in Sources */,
 				871EA35B2970BE8400D0E8CC /* RecordPetResult.swift in Sources */,
+				4C54E80429BF482300B76052 /* RecordMissonRequest.swift in Sources */,
 				D26C860C296B650900AEAF9B /* OnboardingParticipateCompletedView.swift in Sources */,
 				876554A72958494B006BBDA9 /* MyViewController.swift in Sources */,
 				D2350309296490A700F01101 /* MyEditProfileView.swift in Sources */,

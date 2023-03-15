@@ -13,7 +13,7 @@ protocol RecordMissionCollectionViewCellDelegate: AnyObject {
     func sendTapEvent(index: IndexPath)
 }
 
-final class RecordMissionCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
+final class RecordMissionCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Identifier
     
@@ -137,5 +137,27 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell, UITextViewDel
         } else {
             print("indexPath가 nil인가 봐요!")
         }
+    }
+}
+
+extension RecordMissionCollectionViewCell: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == placeHolderText {
+            textView.text = nil
+            textView.textColor = .black
+        } else{
+            
+        }
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            textView.text = placeHolderText
+            textView.textColor = .zoocGray1
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        // updateUI()
     }
 }

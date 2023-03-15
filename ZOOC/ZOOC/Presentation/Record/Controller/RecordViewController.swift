@@ -249,7 +249,6 @@ final class RecordViewController : BaseViewController{
     
     @objc
     private func galleryImageViewDidTap(){
-        print("갤러리 선택")
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary

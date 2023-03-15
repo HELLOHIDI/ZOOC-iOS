@@ -47,9 +47,6 @@ final class RecordViewController : BaseViewController{
         button.setTitle("일상", for: .normal)
         button.titleLabel?.font = .zoocSubhead1
         button.setTitleColor(.zoocDarkGray1, for: .normal)
-        button.addTarget(self,
-                         action: #selector(dailyButtonDidTap),
-                         for: .touchUpInside)
         return button
     }()
     
@@ -206,6 +203,12 @@ final class RecordViewController : BaseViewController{
         }
     }
     
+    func pushToRecordMissionViewController() {
+        let recordMissionViewController = RecordMissionViewController()
+        navigationController?.pushViewController(recordMissionViewController, animated: true)
+        print(#function)
+    }
+    
     func pushToRecordAlertViewController() {
         let recordAlertViewController = RecordAlertViewController()
         recordAlertViewController.modalPresentationStyle = .overFullScreen
@@ -240,12 +243,8 @@ final class RecordViewController : BaseViewController{
         pushToRecordAlertViewController()
     }
     
-    @objc private func dailyButtonDidTap(){
-        print(#function)
-    }
-    
     @objc private func missionButtonDidTap(){
-        print(#function)
+        pushToRecordMissionViewController()
     }
     
     @objc
@@ -255,7 +254,6 @@ final class RecordViewController : BaseViewController{
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true)
-        
     }
     
     @objc

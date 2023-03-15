@@ -9,6 +9,10 @@ import UIKit
 
 import SnapKit
 
+protocol RecordMissionCollectionViewCellDelegate: AnyObject {
+    func sendTapEvent(index: IndexPath)
+}
+
 final class RecordMissionCollectionViewCell: UICollectionViewCell, UITextViewDelegate {
     
     // MARK: - Identifier
@@ -18,6 +22,9 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell, UITextViewDel
     // MARK: - Properties
     
     private let placeHolderText: String = "오늘 어떤 일이 있었는지 공유해보세요"
+    weak var delegate: RecordMissionCollectionViewCellDelegate?
+    
+    var indexPath: IndexPath?
     
     // MARK: - UI Components
     
@@ -41,13 +48,13 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell, UITextViewDel
         return label
     }()
     
-    private let galleryImageView: UIImageView = {
+    lazy var galleryImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = Image.gallery
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 12
         imageView.contentMode = .scaleAspectFill
         imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(galleryImageViewDidTap)))
         return imageView
     }()
     
@@ -68,7 +75,6 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell, UITextViewDel
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        gesture()
         setLayout()
         contentTextView.delegate = self
     }
@@ -78,10 +84,6 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell, UITextViewDel
     }
     
     // MARK: - Custom Method
-    
-    private func gesture(){
-        // 임시로 비워뒀습니다
-    }
     
     private func setLayout() {
         backgroundColor = .clear
@@ -114,7 +116,26 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell, UITextViewDel
         }
     }
     
-    func dataBind(model: RecordMissionModel) {
+    func dataBind(model: RecordMissionModel, index: IndexPath) {
         cardQuestion.text = model.question
+        indexPath = index
+        if model.image == nil {
+            galleryImageView.image = Image.gallery
+        } else {
+            galleryImageView.image = model.image
+        }
+        /* 여기서 UIImage에 대한 분기처리 해야 하고, text도 분기처리 해야 할 듯? */
+    }
+    
+    //MARK: - Action Method
+    
+    @objc
+    private func galleryImageViewDidTap(){
+        // 여기서 몇번 미션 사진을 클릭한건지 인덱스(indexPath)를 보내주면 되지 않을까?
+        if let index: IndexPath = indexPath {
+            delegate?.sendTapEvent(index: index)
+        } else {
+            print("indexPath가 nil인가 봐요!")
+        }
     }
 }

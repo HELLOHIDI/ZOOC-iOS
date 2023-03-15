@@ -19,7 +19,7 @@ final class RecordMissionViewController : BaseViewController {
     private let placeHolderText: String = "오늘 어떤 일이 있었는지 공유해보세요"
     private let screenInset: CGFloat = 30
     private let cardLineSpacing: CGFloat = 13
-    private let missionList: [RecordMissionModel] = [
+    private var missionList: [RecordMissionModel] = [
         RecordMissionModel(question: """
                                     반려동물이 사람처럼 느껴진
                                     순간은 언제인가요?
@@ -30,6 +30,7 @@ final class RecordMissionViewController : BaseViewController {
         RecordMissionModel(question: "반려동물의 제일 꼬질꼬질한 모습을 남겨봐요."),
         RecordMissionModel(question: "가족과 반려동물이 함께 찍은 사진을 기록해봐요"),
     ]
+    var tappedCellIndex: Int = 100
     
     //MARK: - UI Components
     
@@ -69,9 +70,6 @@ final class RecordMissionViewController : BaseViewController {
         button.setTitle("미션", for: .normal)
         button.titleLabel?.font = .zoocSubhead1
         button.setTitleColor(.zoocDarkGray1, for: .normal)
-        button.addTarget(self,
-                         action: #selector(missionButtonDidTap),
-                         for: .touchUpInside)
         return button
     }()
     
@@ -186,6 +184,12 @@ final class RecordMissionViewController : BaseViewController {
             $0.height.equalTo(54)
         }
     }
+    
+    func pushToRecordViewController() {
+        let recordViewController = RecordViewController()
+        navigationController?.pushViewController(recordViewController, animated: true)
+        print(#function)
+    }
         
     func pushToRecordAlertViewController() {
         let recordAlertViewController = RecordAlertViewController()
@@ -217,12 +221,9 @@ final class RecordMissionViewController : BaseViewController {
     }
     
     @objc private func dailyButtonDidTap(){
-        print(#function)
+        pushToRecordViewController()
     }
-    
-    @objc private func missionButtonDidTap(){
-        print(#function)
-    }
+
     
     @objc
     private func nextButtonDidTap(_ sender: Any) {
@@ -283,7 +284,36 @@ extension RecordMissionViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let missionCell = collectionView.dequeueReusableCell(withReuseIdentifier: RecordMissionCollectionViewCell.identifier, for: indexPath) as? RecordMissionCollectionViewCell else { return UICollectionViewCell() }
-        missionCell.dataBind(model: missionList[indexPath.item])
+        missionCell.dataBind(model: missionList[indexPath.item], index: indexPath)
+        missionCell.delegate = self
+        
         return missionCell
     }
+    
 }
+
+extension RecordMissionViewController: RecordMissionCollectionViewCellDelegate {
+    func sendTapEvent(index: IndexPath) {
+        print("셀이 누른 이벤트가 뷰컨트롤러에 전달되었슴다~")
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true)
+        tappedCellIndex = index.row
+    }
+}
+
+extension RecordMissionViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    
+    if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+        missionList[tappedCellIndex].image = image
+        missionCollectionView.reloadData()
+    }
+    }
+}
+
+/*
+ self.missionData.image = image
+ galleryImageView.image = image
+ */

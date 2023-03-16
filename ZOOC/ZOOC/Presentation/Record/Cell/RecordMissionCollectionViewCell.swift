@@ -21,10 +21,11 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
-    private let placeHolderText: String = "오늘 어떤 일이 있었는지 공유해보세요"
+    let placeHolderText: String = "오늘 어떤 일이 있었는지 공유해보세요"
     weak var delegate: RecordMissionCollectionViewCellDelegate?
     
     var indexPath: IndexPath?
+    var enableNextButton: Bool = false
     
     // MARK: - UI Components
     
@@ -58,7 +59,7 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private lazy var contentTextView: UITextView = {
+    lazy var contentTextView: UITextView = {
         let textView = UITextView()
         textView.textContainerInset = UIEdgeInsets(top: 16.0, left: 18.0, bottom: 16.0, right: 18.0)
         textView.font = .zoocBody2
@@ -67,6 +68,7 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
         textView.backgroundColor = .zoocWhite2
         textView.clipsToBounds = true
         textView.layer.cornerRadius = 12
+
         return textView
     }()
     
@@ -76,7 +78,6 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         setLayout()
-        contentTextView.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -102,14 +103,14 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
         }
         
         galleryImageView.snp.makeConstraints {
-            $0.top.equalTo(cardQuestion.snp.bottom).offset(20)
+            $0.bottom.equalTo(contentTextView.snp.top).offset(-12)
             $0.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(22)
             $0.height.equalTo(210)
         }
         
         contentTextView.snp.makeConstraints {
-            $0.top.equalTo(galleryImageView.snp.bottom).offset(12)
+            $0.bottom.equalToSuperview().inset(22)
             $0.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(22)
             $0.height.equalTo(135)
@@ -131,7 +132,6 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     
     @objc
     private func galleryImageViewDidTap(){
-        // 여기서 몇번 미션 사진을 클릭한건지 인덱스(indexPath)를 보내주면 되지 않을까?
         if let index: IndexPath = indexPath {
             delegate?.sendTapEvent(index: index)
         } else {
@@ -140,24 +140,3 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension RecordMissionCollectionViewCell: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == placeHolderText {
-            textView.text = nil
-            textView.textColor = .black
-        } else{
-            
-        }
-    }
-
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = placeHolderText
-            textView.textColor = .zoocGray1
-        }
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
-        // updateUI()
-    }
-}

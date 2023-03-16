@@ -31,6 +31,8 @@ final class RecordMissionViewController : BaseViewController {
         RecordMissionModel(question: "가족과 반려동물이 함께 찍은 사진을 기록해봐요"),
     ]
     var tappedCellIndex: Int = 100
+    var galleryImageIsRegistered: Bool = false
+    var contentTextViewIsRegistered: Bool = false
     
     //MARK: - UI Components
     
@@ -81,6 +83,7 @@ final class RecordMissionViewController : BaseViewController {
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.isScrollEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.decelerationRate = .fast
         collectionView.isPagingEnabled = false
         collectionView.delegate = self
@@ -198,7 +201,7 @@ final class RecordMissionViewController : BaseViewController {
     }
     
     func pushToRecordRegisterViewController() {
-        let recordRegisterViewController = RecordRegisterViewController()
+        _ = RecordRegisterViewController()
         
         /*
         if let text = contentTextView.text{
@@ -206,12 +209,22 @@ final class RecordMissionViewController : BaseViewController {
         } else { return }
         */
         
-        /* 쉬벌 미션인지 일상인지 분기처리 해야 할듯 분기처리 어떻게 하지...... */
+        /* 미션인지 일상인지 분기처리 해야 할듯 분기처리 어떻게 하지...... */
         /*
         recordRegisterViewController.dataBind(data: missionData)
         navigationController?.pushViewController(recordRegisterViewController, animated: true)
         print(#function)
         */
+    }
+    
+    private func updateUIViewController(galleryImageIsRegistered: Bool, contentTextViewIsRegistered: Bool) {
+        if galleryImageIsRegistered == true && contentTextViewIsRegistered == true {
+            nextButton.backgroundColor = .zoocGradientGreen
+            nextButton.isEnabled = true
+        } else {
+            nextButton.backgroundColor = .zoocGray1
+            nextButton.isEnabled = false
+        }
     }
     
     //MARK: - Action Method
@@ -286,6 +299,7 @@ extension RecordMissionViewController: UICollectionViewDataSource {
         guard let missionCell = collectionView.dequeueReusableCell(withReuseIdentifier: RecordMissionCollectionViewCell.identifier, for: indexPath) as? RecordMissionCollectionViewCell else { return UICollectionViewCell() }
         missionCell.dataBind(model: missionList[indexPath.item], index: indexPath)
         missionCell.delegate = self
+        missionCell.contentTextView.delegate = self
         
         return missionCell
     }
@@ -293,6 +307,7 @@ extension RecordMissionViewController: UICollectionViewDataSource {
 }
 
 extension RecordMissionViewController: RecordMissionCollectionViewCellDelegate {
+    
     func sendTapEvent(index: IndexPath) {
         print("셀이 누른 이벤트가 뷰컨트롤러에 전달되었슴다~")
         let imagePicker = UIImagePickerController()
@@ -306,14 +321,46 @@ extension RecordMissionViewController: RecordMissionCollectionViewCellDelegate {
 extension RecordMissionViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     
-    if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-        missionList[tappedCellIndex].image = image
-        missionCollectionView.reloadData()
-    }
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            missionList[tappedCellIndex].image = image
+            missionCollectionView.reloadData()
+            print(image)
+            if missionList[tappedCellIndex].image == nil {
+                print("이미지를 선택해주세요")
+            } else {
+                galleryImageIsRegistered = true
+                updateUIViewController(galleryImageIsRegistered: galleryImageIsRegistered, contentTextViewIsRegistered: contentTextViewIsRegistered)
+            }
+        }
+
+
     }
 }
 
-/*
- self.missionData.image = image
- galleryImageView.image = image
- */
+extension RecordMissionViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == placeHolderText {
+            textView.text = nil
+            textView.textColor = .black
+        } else {
+            
+        }
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            textView.text = placeHolderText
+            textView.textColor = .zoocGray1
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView.text == "오늘 어떤 일이 있었는지 공유해보세요" || textView.text.isEmpty {
+            print("contentView 입력해줘..")
+        } else {
+            contentTextViewIsRegistered = true
+            updateUIViewController(galleryImageIsRegistered: galleryImageIsRegistered, contentTextViewIsRegistered: true)
+        }
+    }
+}
+

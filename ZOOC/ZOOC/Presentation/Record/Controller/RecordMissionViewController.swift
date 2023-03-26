@@ -92,11 +92,15 @@ final class RecordMissionViewController : BaseViewController {
         return collectionView
     }()
     
+    /*
     private let progressBar: UIView = {
         let view = UIView()
         view.backgroundColor = .zoocDarkGreen
         return view
     }()
+    */
+    
+    public let missionIndicatorView = RecordMissionIndicatorView()
     
     private lazy var nextButton: UIButton = {
         let button = UIButton()
@@ -127,7 +131,7 @@ final class RecordMissionViewController : BaseViewController {
     }
     
     private func setLayout(){
-        view.addSubviews(topBarView, missionCollectionView, progressBar, nextButton)
+        view.addSubviews(topBarView, missionCollectionView, missionIndicatorView, nextButton)
         
         topBarView.addSubviews(xmarkButton, buttonsContainerView)
         
@@ -168,12 +172,12 @@ final class RecordMissionViewController : BaseViewController {
         }
         
         missionCollectionView.snp.makeConstraints {
-            $0.top.equalTo(topBarView.snp.bottom).offset(40)
+            $0.centerY.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(477)
         }
         
-        progressBar.snp.makeConstraints {
+        missionIndicatorView.snp.makeConstraints {
             $0.top.equalTo(missionCollectionView.snp.bottom).offset(34)
             $0.width.equalTo(232)
             $0.height.equalTo(4)
@@ -201,20 +205,12 @@ final class RecordMissionViewController : BaseViewController {
     }
     
     func pushToRecordRegisterViewController() {
-        _ = RecordRegisterViewController()
+        let recordRegisterViewController = RecordRegisterViewController()
         
-        /*
-        if let text = contentTextView.text{
-            recordData.content = text
-        } else { return }
-        */
-        
-        /* 미션인지 일상인지 분기처리 해야 할듯 분기처리 어떻게 하지...... */
-        /*
         recordRegisterViewController.dataBind(data: missionData)
         navigationController?.pushViewController(recordRegisterViewController, animated: true)
         print(#function)
-        */
+
     }
     
     private func updateUIViewController(galleryImageIsRegistered: Bool, contentTextViewIsRegistered: Bool) {
@@ -224,6 +220,15 @@ final class RecordMissionViewController : BaseViewController {
         } else {
             nextButton.backgroundColor = .zoocGray1
             nextButton.isEnabled = false
+        }
+    }
+    
+    private func configIndicatorBarWidth(_ scrollView: UIScrollView) {
+        UIView.animate(withDuration: 0.5) {
+            let allWidth = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
+            let showingWidth = scrollView.bounds.width
+            self.missionIndicatorView.widthRatio = showingWidth / allWidth
+            self.missionIndicatorView.layoutIfNeeded()
         }
     }
     
@@ -358,9 +363,25 @@ extension RecordMissionViewController: UITextViewDelegate {
         if textView.text == "오늘 어떤 일이 있었는지 공유해보세요" || textView.text.isEmpty {
             print("contentView 입력해줘..")
         } else {
+            missionData.content = textView.text
             contentTextViewIsRegistered = true
             updateUIViewController(galleryImageIsRegistered: galleryImageIsRegistered, contentTextViewIsRegistered: true)
         }
     }
 }
 
+//MARK: - ScrollViewDelegate
+
+extension RecordMissionViewController {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == missionCollectionView {
+            
+            let scroll = scrollView.contentOffset.x + scrollView.contentInset.left
+            let width = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
+            let scrollRatio = scroll / width
+            
+            self.missionIndicatorView.leftOffsetRatio = scrollRatio
+        }
+    }
+}

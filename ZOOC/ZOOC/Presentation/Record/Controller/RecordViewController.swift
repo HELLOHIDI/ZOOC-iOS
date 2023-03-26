@@ -15,11 +15,13 @@ final class RecordViewController : BaseViewController{
     //MARK: - Properties
     
     var petImage: UIImage?
-    private var recordData = RecordModel()
+    private var recordData = RecordMissionModel()
     private let placeHoldText: String = """
                                         ex) 2023년 2월 30일
                                         가족에게 어떤 순간이었는지 남겨주세요
                                         """
+    var contentTextViewIsRegistered: Bool = false
+    
     //MARK: - UI Components
     
     private let topBarView: UIView = {
@@ -228,7 +230,7 @@ final class RecordViewController : BaseViewController{
     }
     
     private func updateUI(){
-        if contentTextView.text.isEmpty || recordData.image == nil {
+        if contentTextViewIsRegistered == false || recordData.image == nil {
             nextButton.backgroundColor = .zoocGray1
             nextButton.isEnabled = false
         } else {
@@ -284,7 +286,15 @@ extension RecordViewController: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        updateUI()
+        if textView.text == """
+                                        ex) 2023년 2월 30일
+                                        가족에게 어떤 순간이었는지 남겨주세요
+                                        """ || textView.text.isEmpty {
+            print("contentView 입력해줘..")
+        } else {
+            contentTextViewIsRegistered = true
+            updateUI()
+        }
     }
 }
 

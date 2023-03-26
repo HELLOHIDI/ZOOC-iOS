@@ -11,7 +11,7 @@ import Moya
 enum RecordService{
     case getTotalPet(familyID: String)
     case postRecord(familyID: String, photo: UIImage, content: String, pets: [Int])
-    case postMission(familyID: String, photo: UIImage, content: String, pets: [Int])
+    case postMission(familyID: String, missionID: String, photo: UIImage, content: String, pets: [Int])
 }
 
 extension RecordService: BaseTargetType{
@@ -21,8 +21,8 @@ extension RecordService: BaseTargetType{
             return URLs.totalPet.replacingOccurrences(of: "{familyId}", with: familyID)
         case .postRecord(familyID: let familyID, photo: _, content: _, pets: _):
             return URLs.postRecord.replacingOccurrences(of: "{familyId}", with: familyID)
-        case .postMission(familyID: let familyID, photo: _, content: _, pets: _):
-            return URLs.postMission.replacingOccurrences(of: "{familyId}", with: familyID)
+        case .postMission(familyID: let familyID, missionID: let missionID, photo: _, content: _, pets: _):
+            return URLs.postMission.replacingOccurrences(of: "{familyId}", with: familyID).replacingOccurrences(of: "{missionId}", with: missionID)
         }
     }
     
@@ -70,7 +70,7 @@ extension RecordService: BaseTargetType{
             
             return .uploadMultipart(multipartFormData)
             
-        case .postMission(familyID: _, photo: let photo, content: let content, pets: let pets):
+        case .postMission(familyID: _, missionID: _, photo: let photo, content: let content, pets: let pets):
             
             var multipartFormData: [MultipartFormData] = []
             

@@ -14,7 +14,7 @@ final class RecordRegisterViewController : BaseViewController{
     
     // MARK: - Properties
     
-    var recordData: RecordModel = RecordModel()
+    var recordData: RecordMissionModel = RecordMissionModel()
     var petList: [RecordRegisterModel] = []
     var selectedPetIDList: [Int] = []
     
@@ -244,9 +244,10 @@ final class RecordRegisterViewController : BaseViewController{
     }
     
     
-    func dataBind(data: RecordModel){
+    func dataBind(data: RecordMissionModel){
         self.recordData = data
     }
+    
     //MARK: - Action Method
 
     private func register() {
@@ -289,11 +290,12 @@ final class RecordRegisterViewController : BaseViewController{
         registerButton.isEnabled = false
         registerButton.backgroundColor = .zoocGray1
         
-        RecordAPI.shared.postRecord(photo: recordData.image ?? UIImage(),
+        RecordAPI.shared.postMission(photo: recordData.image ?? UIImage(),
                                     content: recordData.content ?? "",
                                     pets: selectedPetIDList) { result in
             self.pushToRecordCompleteViewController()
         }
+    
     }
     
     private func activateButton(indexPathArray: [IndexPath]?) {
@@ -339,7 +341,7 @@ extension RecordRegisterViewController: UICollectionViewDataSource {
 
 //MARK: - UICollectionViewDelegate
 
-extension RecordRegisterViewController{
+extension RecordRegisterViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if(petList.count <= 3) {
             guard let cell = collectionView.cellForItem(at: indexPath) as? RecordRegisterCollectionViewCell else { return }

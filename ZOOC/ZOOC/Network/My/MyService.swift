@@ -49,7 +49,7 @@ extension MyService: BaseTargetType {
             
             let nickNameData = MultipartFormData(provider: .data(nickName.data(using: String.Encoding.utf8)!),
                                                            name: "nickName",
-                                                           mimeType: "application/json")
+                                                           mimeType: "application/   ")
             if let photo = photo{
                 print("포토있음")
                 let photo = photo.jpegData(compressionQuality: 1.0) ?? Data()

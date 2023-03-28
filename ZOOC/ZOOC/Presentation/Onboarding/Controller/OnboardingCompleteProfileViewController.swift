@@ -57,7 +57,7 @@ final class OnboardingCompleteProfileViewController: UIViewController{
     }
 }
 
-extension OnboardingCompleteProfileViewController {
+private extension OnboardingCompleteProfileViewController {
     func updateCompleteProfileView() {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
             self.onboardingCompleteProfileView.completeProfileLabel.textColor = .zoocGray1
@@ -69,12 +69,12 @@ extension OnboardingCompleteProfileViewController {
     }
     
     func pushToParticipateCompletedView() {
-        let onboardingParticipateViewController = OnboardingParticipateViewController()
+        let onboardingParticipateViewController = OnboardingJoinFamilyViewController()
         self.navigationController?.pushViewController(onboardingParticipateViewController, animated: true)
     }
     
     func pushToRegisterPetView() {
-        let onboardingParticipateViewController = OnboardingRegisterPetViewController()
+        let onboardingParticipateViewController = OnboardingRegisterPetViewController(onboardingPetRegisterViewModel: OnboardingPetRegisterViewModel())
         self.navigationController?.pushViewController(onboardingParticipateViewController, animated: true)
     }
 }

@@ -14,8 +14,8 @@ final class MyFamilySectionCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Properties
     
-    private var myProfileData: MyUser?
-    private var myFamilyData: [MyUser] = []
+    private var myProfileData: UserResult?
+    private var myFamilyData: [UserResult] = []
     
     //MARK: - UI Components
     
@@ -23,7 +23,7 @@ final class MyFamilySectionCollectionViewCell: UICollectionViewCell {
     private var familyCountLabel = UILabel()
     private var inviteButton = UIButton()
     private var inviteButtonUnderLine = UIView()
-    public lazy var familyCollectionView = UICollectionView(frame: .zero)
+    public lazy var familyCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     //MARK: - Life Cycles
     
@@ -90,7 +90,7 @@ final class MyFamilySectionCollectionViewCell: UICollectionViewCell {
     }
     
     private func hierarchy() {
-        addSubviews(familyLabel,
+        self.addSubviews(familyLabel,
                     familyCountLabel,
                     inviteButton,
                     familyCollectionView,
@@ -130,7 +130,7 @@ final class MyFamilySectionCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    public func dataBind(myFamilyData: [MyUser], myProfileData: MyUser?) {
+    public func dataBind(myFamilyData: [UserResult], myProfileData: UserResult?) {
         self.myProfileData = myProfileData
         self.myFamilyData = myFamilyData
         familyCountLabel.text = "\(myFamilyData.count)/8"

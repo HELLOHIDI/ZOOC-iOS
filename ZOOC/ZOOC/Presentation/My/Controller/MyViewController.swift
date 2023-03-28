@@ -15,9 +15,9 @@ final class MyViewController: BaseViewController {
     
     //MARK: - Properties
     
-    private var myFamilyMemberData: [MyUser] = []
-    private var myPetMemberData: [MyPet] = []
-    private var myProfileData: MyUser?
+    private var myFamilyMemberData: [UserResult] = []
+    private var myPetMemberData: [PetResult] = []
+    private var myProfileData: UserResult?
     
     //MARK: - UI Components
     
@@ -38,7 +38,7 @@ final class MyViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        getMyPageAPI()
+        requestMyPageAPI()
     }
     
     //MARK: - Custom Method
@@ -48,14 +48,13 @@ final class MyViewController: BaseViewController {
         myView.myCollectionView.dataSource = self
     }
     
-    func dataSend(myprofileData: MyUser?) {
+    func dataSend(myprofileData: UserResult?) {
         guard let nickNameData = myProfileData?.nickName else { return }
         guard let photoData = myProfileData?.photo else { return }
         myView.myCollectionView.reloadData()
     }
     
-    
-    func getMyPageAPI(){
+    func requestMyPageAPI(){
         MyAPI.shared.getMyPageData() { result in
             
             guard let result = self.validateResult(result) as? MyResult else { return }
@@ -67,6 +66,20 @@ final class MyViewController: BaseViewController {
             self.myView.myCollectionView.reloadData()
         }
     }
+    
+    private func requestLogoutAPI() {
+        MyAPI.shared.logout { result in
+            self.validateResult(result)
+        }
+    }
+    
+    private func logout() {
+        requestLogoutAPI()
+        User.shared.clearData()
+        changeRootViewController(OnboardingLoginViewController())
+    }
+    
+    
     
     //MARK: - Action Method
     
@@ -183,6 +196,8 @@ extension MyViewController: SettingMenuTableViewCellDelegate {
             pushToNoticeSettingView()
         case 4:
             pushToAppInformationView()
+        case 5:
+            logout()
         default:
             break
         }
@@ -199,15 +214,15 @@ extension MyViewController: MyRegisterPetButtonTappedDelegate {
 
 extension MyViewController {
     private func pushToEditProfileView() {
-        let editProfileViewController = EditProfileViewController()
+        let editProfileViewController = MyEditProfileViewController()
         editProfileViewController.hidesBottomBarWhenPushed = true
-        editProfileViewController.dataSend(data: myProfileData)
+        editProfileViewController.dataBind(data: myProfileData)
         
         self.navigationController?.pushViewController(editProfileViewController, animated: true)
     }
     
     private func pushToAppInformationView() {
-        let appInformationViewController = AppInformationViewController()
+        let appInformationViewController = MyAppInformationViewController()
         appInformationViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(appInformationViewController, animated: true)
     }
@@ -219,7 +234,7 @@ extension MyViewController {
     }
     
     private func pushToRegisterPetView() {
-        let registerPetViewController = MyRegisterPetViewController()
+        let registerPetViewController = MyRegisterPetViewController(myPetRegisterViewModel: MyPetRegisterViewModel())
         registerPetViewController.hidesBottomBarWhenPushed = true
         registerPetViewController.dataSend(myPetMemberData: myPetMemberData)
         self.navigationController?.pushViewController(registerPetViewController, animated: true)

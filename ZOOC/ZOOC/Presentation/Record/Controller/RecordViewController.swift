@@ -24,10 +24,13 @@ final class RecordViewController : BaseViewController{
     
     //MARK: - UI Components
     
-    private let topBarView: UIView = {
-        let view = UIView()
-        return view
+    private let imagePickerController: UIImagePickerController = {
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        return picker
     }()
+    
+    private let topBarView = UIView()
     
     private lazy var xmarkButton: UIButton = {
         let button = UIButton()
@@ -117,7 +120,7 @@ final class RecordViewController : BaseViewController{
         
         gesture()
         setLayout()
-        contentTextView.delegate = self
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -135,8 +138,13 @@ final class RecordViewController : BaseViewController{
     // MARK: - Custom Method
     
     private func gesture(){
+        
+        imagePickerController.delegate = self
+        contentTextView.delegate = self
+        
         galleryImageView.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                  action: #selector(galleryImageViewDidTap)))
+        
     }
     
     private func setLayout() {
@@ -306,5 +314,6 @@ extension RecordViewController: UIImagePickerControllerDelegate, UINavigationCon
             self.galleryImageView.image = image
             updateUI()
         }
+        dismiss(animated: true)
     }
 }

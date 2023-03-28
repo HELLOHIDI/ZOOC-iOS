@@ -9,20 +9,16 @@ import UIKit
 
 //MARK: - MyAddButtonTappedDelegate
 
-protocol MyAddButtonTappedDelegate: AnyObject {
-    func addPetButtonTapped(isSelected: Bool)
-}
-
 final class MyRegisterPetTableFooterView: UITableViewHeaderFooterView {
     
     //MARK: - Properties
     
-    weak var delegate: MyAddButtonTappedDelegate?
+    let myPetRegisterViewModel = MyPetRegisterViewModel()
     
     //MARK: - UI Components
     
     private var petRegisterButtonSeparatorLineView = UIView()
-    private lazy var addPetProfileButton = UIButton()
+    public lazy var addPetProfileButton = UIButton()
     
     //MARK: - Life Cycle
     
@@ -83,25 +79,9 @@ final class MyRegisterPetTableFooterView: UITableViewHeaderFooterView {
         }
     }
     
-    public func dataBind(isFull: Bool) {
-        updateUI(isFull: isFull)
-    }
-    
     //MARK: - Action Method
     
     @objc func addPetProfileButtonDidTap() {
-        delegate?.addPetButtonTapped(isSelected: true)
-    }
-}
-
-extension MyRegisterPetTableFooterView {
-    func updateUI(isFull: Bool) {
-       if isFull{
-           petRegisterButtonSeparatorLineView.isHidden = true
-           addPetProfileButton.isHidden = true
-        } else {
-            petRegisterButtonSeparatorLineView.isHidden = false
-            addPetProfileButton.isHidden = false
-        }
+        myPetRegisterViewModel.addCellClosure?()
     }
 }

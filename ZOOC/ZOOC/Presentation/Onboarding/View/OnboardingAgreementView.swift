@@ -10,14 +10,13 @@ import UIKit
 import SnapKit
 import Then
 
-final class OnboardingAgreementView: UIView {
+final class OnboardingAgreementView: OnboardingBaseView {
 
     //MARK: - UI Components
     
-    public var backButton = UIButton()
-    private var agreeTitleLabel = UILabel()
-    public var agreeTableView = UITableView(frame: .zero, style: .grouped)
-    public var signUpButton = UIButton()
+    private let agreeTitleLabel = UILabel()
+    public lazy var agreementTableView = UITableView(frame: .zero, style: .grouped)
+    public lazy var signUpButton = UIButton()
     
     //MARK: - Life Cycles
     
@@ -37,10 +36,10 @@ final class OnboardingAgreementView: UIView {
     //MARK: - Custom Method
     
     private func register() {
-        agreeTableView.register(
+        agreementTableView.register(
             OnboardingAgreementTableViewCell.self,
             forCellReuseIdentifier: OnboardingAgreementTableViewCell.cellIdentifier)
-        agreeTableView.register(
+        agreementTableView.register(
             OnboardingAgreementTableHeaderView.self,
             forHeaderFooterViewReuseIdentifier: OnboardingAgreementTableHeaderView.cellIdentifier)
     }
@@ -48,9 +47,7 @@ final class OnboardingAgreementView: UIView {
     private func style() {
         self.backgroundColor = .zoocBackgroundGreen
         
-        backButton.do {
-            $0.setImage(Image.back, for: .normal)
-        }
+        allHidden()
         
         agreeTitleLabel.do {
             $0.text = "더 나은 서비스 제공을 위해 \n약관동의가 필요해요"
@@ -58,9 +55,10 @@ final class OnboardingAgreementView: UIView {
             $0.textAlignment = .left
             $0.font = .zoocDisplay1
             $0.numberOfLines = 2
+            $0.setLineSpacing(spacing: 6)
         }
         
-        agreeTableView.do {
+        agreementTableView.do {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.separatorStyle = .none
             $0.isScrollEnabled = false
@@ -77,22 +75,22 @@ final class OnboardingAgreementView: UIView {
         }
     }
     private func hierarchy() {
-        addSubviews(backButton, agreeTitleLabel, agreeTableView, signUpButton)
+        self.addSubviews(
+            agreeTitleLabel,
+            agreementTableView,
+            signUpButton
+        )
     }
     
     private func layout() {
-        backButton.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(17)
-            $0.leading.equalToSuperview().offset(15)
-            $0.size.equalTo(42)
-        }
-        
         agreeTitleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(77)
-            $0.leading.equalToSuperview().offset(34)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(315)
+            $0.height.equalTo(68)
         }
         
-        agreeTableView.snp.makeConstraints {
+        agreementTableView.snp.makeConstraints {
             $0.top.equalTo(self.agreeTitleLabel.snp.bottom).offset(43)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(315)

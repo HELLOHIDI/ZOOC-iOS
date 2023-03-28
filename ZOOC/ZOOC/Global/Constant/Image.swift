@@ -17,11 +17,12 @@ public enum Image{
     
     //MARK: - Icon
     
+    static let arrowDown = UIImage(named: "arrow.down")
     static let backCircle = UIImage(named: "back.circle")!
     static let back = UIImage(named: "back")!
     static let cameraCircleBig = UIImage(named: "camera.circle.big")!
     static let cameraCircleGreen = UIImage(named: "camera.circle.green")!
-    static let cameraCircleSmall = UIImage(named: "camera.circle.small")!
+    static let cameraCircle = UIImage(named: "camera.circle")!
     static let check = UIImage(named: "check")!
     static let checkBoxFill = UIImage(named: "checkbox.fill")!
     static let checkBox = UIImage(named: "checkbox")!
@@ -32,6 +33,7 @@ public enum Image{
     static let gridFill = UIImage(named: "grid.fill")!
     static let grid = UIImage(named: "grid")!
     static let home = UIImage(named: "home")!
+    static let kakaoLogin = UIImage(named: "kakaoLogin")!
     static let listFill = UIImage(named: "list.fill")!
     static let list = UIImage(named: "list")!
     static let next = UIImage(named: "next")!
@@ -46,7 +48,6 @@ public enum Image{
     
     //MARK: - Default
     
-    static let defaultProfilePet = UIImage(named: "default_profile_pet")!
     static let defaultProfile = UIImage(named: "default_profile")!
     
     //MARK: - Emoji
@@ -69,6 +70,8 @@ public enum Image{
     static let graphics5 = UIImage(named: "graphics_5")!
     static let graphics6 = UIImage(named: "graphics_6")!
     static let graphics7 = UIImage(named: "graphics_7")!
+    static let graphics8 = UIImage(named: "graphics_8")!
+    static let graphics9 = UIImage(named: "graphics_9")!
     
     //MARK: - Mock
     

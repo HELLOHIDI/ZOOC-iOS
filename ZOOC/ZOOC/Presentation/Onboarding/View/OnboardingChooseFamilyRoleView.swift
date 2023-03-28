@@ -10,18 +10,16 @@ import UIKit
 import SnapKit
 import Then
 
-final class OnboardingChooseFamilyRoleView: UIView {
+final class OnboardingChooseFamilyRoleView: OnboardingBaseView {
     
     //MARK: - UI Components
     
-    public var backButton = UIButton()
-    public var progressBarView = UIView()
-    public var completedProgressBarView = UIView()
-    private var chooseFamilyLabel = UILabel()
-    private var chooseFamilySubLabel = UILabel()
-    public var chooseFamilyTextField = UITextField()
-    public var chooseFamilyTextFeildUnderLineView = UIView()
-    public var chooseFamilyButton = UIButton()
+    public let completedProgressBarView = UIView()
+    private let chooseFamilyLabel = UILabel()
+    private let chooseFamilySubLabel = UILabel()
+    public lazy var chooseFamilyTextField = UITextField()
+    public let chooseFamilyTextFeildUnderLineView = UIView()
+    public lazy var chooseFamilyButton = UIButton()
     
     //MARK: - Life Cycles
     
@@ -42,18 +40,7 @@ final class OnboardingChooseFamilyRoleView: UIView {
     private func style() {
         self.backgroundColor = .zoocBackgroundGreen
         
-        backButton.do {
-            $0.setImage(Image.back, for: .normal)
-        }
-        progressBarView.do {
-            $0.backgroundColor = .zoocLightGreen
-            $0.makeCornerRadius(ratio: 2)
-        }
-        
-        completedProgressBarView.do {
-            $0.backgroundColor = .zoocMainGreen
-            $0.makeCornerRadius(ratio: 2)
-        }
+        firstStep()
         
         chooseFamilyLabel.do {
             $0.text = "가족에서 \n어떤 역할을 맡고 있나요?"
@@ -93,40 +80,20 @@ final class OnboardingChooseFamilyRoleView: UIView {
     }
     
     private func hierarchy() {
-        self.addSubviews(backButton,
-                         progressBarView,
-                         chooseFamilyLabel,
-                         chooseFamilySubLabel,
-                         chooseFamilyTextField,
-                         chooseFamilyTextFeildUnderLineView,
-                         chooseFamilyButton)
-        
-        progressBarView.addSubview(completedProgressBarView)
+        self.addSubviews(
+            chooseFamilyLabel,
+            chooseFamilySubLabel,
+            chooseFamilyTextField,
+            chooseFamilyTextFeildUnderLineView,
+            chooseFamilyButton
+        )
     }
     
     private func layout() {
-        backButton.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(5)
-            $0.leading.equalToSuperview().offset(17)
-            $0.size.equalTo(42)
-        }
-        
-        progressBarView.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(57)
-            $0.leading.trailing.equalToSuperview().inset(30)
-            $0.height.equalTo(4)
-        }
-        
-        completedProgressBarView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(263)
-            $0.bottom.equalToSuperview()
-        }
         
         chooseFamilyLabel.snp.makeConstraints {
-            $0.top.equalTo(self.backButton.snp.bottom).offset(56)
-            $0.leading.equalToSuperview().offset(30)
+            $0.top.equalTo(backButton.snp.bottom).offset(56)
+            $0.leading.equalTo(self.safeAreaLayoutGuide).offset(30)
         }
         
         chooseFamilySubLabel.snp.makeConstraints {

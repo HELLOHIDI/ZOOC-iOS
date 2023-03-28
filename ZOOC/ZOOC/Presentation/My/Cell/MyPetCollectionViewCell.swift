@@ -68,7 +68,7 @@ final class MyPetCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    public func dataBind(data: MyPet) {
+    public func dataBind(data: PetResult) {
         petNameLabel.text = data.name
         data.photo == nil ? setDefaultPetProfileImage() : setPetMemberProfileImage(photo: data.photo!)
     }
@@ -76,7 +76,7 @@ final class MyPetCollectionViewCell: UICollectionViewCell {
 
 extension MyPetCollectionViewCell {
     func setDefaultPetProfileImage() {
-        petImageView.image = Image.defaultProfilePet
+        petImageView.image = Image.cameraCircle
     }
     
     func setPetMemberProfileImage(photo: String) {

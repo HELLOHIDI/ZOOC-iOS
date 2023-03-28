@@ -10,11 +10,14 @@ import UIKit
 import SnapKit
 import Then
 
+
+
 final class OnboardingChooseFamilyRoleViewController: UIViewController{
     
     //MARK: - Properties
     
     private let onboardingChooseFamilyRoleView = OnboardingChooseFamilyRoleView()
+    private var registerMyProfileData = EditProfileRequest(hasPhoto: false)
     
     //MARK: - Life Cycle
     
@@ -43,7 +46,7 @@ final class OnboardingChooseFamilyRoleViewController: UIViewController{
     func target() {
         NotificationCenter.default.addObserver(self, selector: #selector(textDidChange), name: UITextField.textDidChangeNotification, object: nil)
         
-        onboardingChooseFamilyRoleView.chooseFamilyButton.addTarget(self, action: #selector(pushToRegisterProfileImageView), for: .touchUpInside)
+        onboardingChooseFamilyRoleView.chooseFamilyButton.addTarget(self, action: #selector(chooseFamilyButtonDidTap), for: .touchUpInside)
         onboardingChooseFamilyRoleView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
     }
     
@@ -52,25 +55,33 @@ final class OnboardingChooseFamilyRoleViewController: UIViewController{
     @objc private func textDidChange(_ notification: Notification) {
         guard let textField = notification.object as? UITextField else { return }
         guard let text = textField.text else { return }
+        var textFieldState: BaseTextFieldState
         switch text.count {
         case 1...9:
-            textFieldIsWritten()
+            textFieldState = .isWritten
         case 10...:
+            textFieldState = .isFull
             textField.resignFirstResponder()
             let index = text.index(text.startIndex, offsetBy: 10)
             let newString = text[text.startIndex..<index]
             textField.text = String(newString)
-            textFieldIsFull()
         default:
-            textFieldIsEmpty()
+            textFieldState = .isEmpty
         }
+        
+        textFieldState.setTextFieldState(
+            textField: onboardingChooseFamilyRoleView.chooseFamilyTextField,
+            underLineView: onboardingChooseFamilyRoleView.chooseFamilyTextFeildUnderLineView,
+            button: onboardingChooseFamilyRoleView.chooseFamilyButton
+        )
     }
     
-    @objc private func pushToRegisterProfileImageView() {
-        let onboardingRegisterProfileImageViewController = OnboardingRegisterProfileImageViewController()
-        let profileName = onboardingChooseFamilyRoleView.chooseFamilyTextField.text!
-        onboardingRegisterProfileImageViewController.dataSend(profileName: profileName)
-        self.navigationController?.pushViewController(onboardingRegisterProfileImageViewController, animated: true)
+    @objc private func chooseFamilyButtonDidTap() {
+        registerMyProfileData.nickName = onboardingChooseFamilyRoleView.chooseFamilyTextField.text!
+        MyAPI.shared.patchMyProfile(requset: registerMyProfileData) { result in
+            //guard let result = self.validateResult(result) as? UserResult else { return }
+            self.pushToCompleteProfileView()
+        }
     }
     
     @objc private func backButtonDidTap() {
@@ -79,25 +90,9 @@ final class OnboardingChooseFamilyRoleViewController: UIViewController{
 }
 
 extension OnboardingChooseFamilyRoleViewController {
-    func textFieldIsFull() {
-        onboardingChooseFamilyRoleView.chooseFamilyTextFeildUnderLineView.backgroundColor = .zoocGray1
-        onboardingChooseFamilyRoleView.chooseFamilyTextField.textColor = .zoocDarkGreen
-        onboardingChooseFamilyRoleView.chooseFamilyButton.backgroundColor = .zoocGradientGreen
-        onboardingChooseFamilyRoleView.chooseFamilyButton.isEnabled = true
-    }
-    
-    func textFieldIsEmpty() {
-        onboardingChooseFamilyRoleView.chooseFamilyTextFeildUnderLineView.backgroundColor = .zoocGray1
-        onboardingChooseFamilyRoleView.chooseFamilyTextField.textColor = .zoocGray1
-        onboardingChooseFamilyRoleView.chooseFamilyButton.backgroundColor = .zoocGray1
-        onboardingChooseFamilyRoleView.chooseFamilyButton.isEnabled = false
-    }
-    
-    func textFieldIsWritten() {
-        onboardingChooseFamilyRoleView.chooseFamilyTextFeildUnderLineView.backgroundColor = .zoocDarkGreen
-        onboardingChooseFamilyRoleView.chooseFamilyTextField.textColor = .zoocDarkGreen
-        onboardingChooseFamilyRoleView.chooseFamilyButton.backgroundColor = .zoocGray1
-        onboardingChooseFamilyRoleView.chooseFamilyButton.backgroundColor = .zoocGradientGreen
-        onboardingChooseFamilyRoleView.chooseFamilyButton.isEnabled = true
+    func pushToCompleteProfileView() {
+        let onboardingCompleteProfileViewController = OnboardingCompleteProfileViewController()
+        self.navigationController?.pushViewController(onboardingCompleteProfileViewController, animated: true)
     }
 }
+

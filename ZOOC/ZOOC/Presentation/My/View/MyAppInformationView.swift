@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class AppInformationView: UIView {
+final class MyAppInformationView: UIView {
     
     //MARK: - UI Components
     
@@ -77,7 +77,7 @@ final class AppInformationView: UIView {
     }
     
     private func hierarchy() {
-        addSubviews(backButton,
+        self.addSubviews(backButton,
                     appInformationLabel,
                     currentVersionTitleLabel,
                     currentVersionLabel,

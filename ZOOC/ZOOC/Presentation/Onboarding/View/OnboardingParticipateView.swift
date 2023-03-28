@@ -10,53 +10,14 @@ import UIKit
 import SnapKit
 import Then
 
-final class OnboardingParticipateView: UIView {
+final class OnboardingJoinFamilyView: OnboardingBaseView {
     
     //MARK: - UI Components
     
-    public var backButton = UIButton().then {
-        $0.setImage(Image.back, for: .normal)
-    }
-    
-    public var progressBarView = UIView().then {
-        $0.backgroundColor = .zoocLightGreen
-        $0.makeCornerRadius(ratio: 2)
-    }
-    
-    public var completedProgressBarView = UIView().then {
-        $0.backgroundColor = .zoocMainGreen
-        $0.makeCornerRadius(ratio: 2)
-    }
-    
-    private var participateTitleLabel = UILabel().then {
-        $0.text = "전달받은 가족코드를 \n입력해주세요"
-        $0.textColor = .zoocDarkGray1
-        $0.textAlignment = .left
-        $0.font = .zoocDisplay1
-        $0.numberOfLines = 2
-    }
-    
-    public var familyCodeTextField = UITextField().then {
-        $0.backgroundColor = .zoocWhite2
-        $0.font = .zoocBody2
-        $0.textColor = .zoocDarkGreen
-        $0.placeholder = "  ex) SEF33210"
-        $0.makeCornerRadius(ratio: 8)
-    }
-    
-    private var participateImage = UIImageView().then {
-        $0.image = Image.graphics5
-        $0.contentMode = .scaleAspectFit
-    }
-    
-    public var nextButton = UIButton().then {
-        $0.setTitle("입력하기", for: .normal)
-        $0.setTitleColor(.zoocWhite1, for: .normal)
-        $0.titleLabel?.font = .zoocSubhead1
-        $0.titleLabel?.textAlignment = .center
-        $0.makeCornerRadius(ratio: 27)
-        $0.backgroundColor = .zoocGray1
-    }
+    private let participateTitleLabel = UILabel()
+    public lazy var familyCodeTextField = UITextField()
+    private let participateImage = UIImageView()
+    public lazy var nextButton = UIButton()
     
     //MARK: - Life Cycles
     
@@ -77,19 +38,7 @@ final class OnboardingParticipateView: UIView {
     private func style() {
         self.backgroundColor = .zoocBackgroundGreen
         
-        backButton.do {
-            $0.setImage(Image.back, for: .normal)
-        }
-        
-        progressBarView.do {
-            $0.backgroundColor = .zoocLightGreen
-            $0.makeCornerRadius(ratio: 2)
-        }
-        
-        completedProgressBarView.do {
-            $0.backgroundColor = .zoocMainGreen
-            $0.makeCornerRadius(ratio: 2)
-        }
+        secondStep()
         
         participateTitleLabel.do {
             $0.text = "전달받은 가족코드를 \n입력해주세요"
@@ -97,6 +46,7 @@ final class OnboardingParticipateView: UIView {
             $0.textAlignment = .left
             $0.font = .zoocDisplay1
             $0.numberOfLines = 2
+            $0.setAttributeLabel(targetString: ["가족코드"], color: .zoocMainGreen, spacing: 6)
         }
         
         familyCodeTextField.do {
@@ -105,6 +55,7 @@ final class OnboardingParticipateView: UIView {
             $0.textColor = .zoocDarkGreen
             $0.placeholder = "  ex) SEF33210"
             $0.makeCornerRadius(ratio: 8)
+            $0.addLeftPadding(inset: 6)
         }
         
         participateImage.do {
@@ -123,39 +74,20 @@ final class OnboardingParticipateView: UIView {
     }
     
     private func hierarchy() {
-        addSubviews(backButton,
-                    progressBarView,
-                    participateTitleLabel,
-                    familyCodeTextField,
-                    participateImage,
-                    nextButton)
-        
-        progressBarView.addSubview(completedProgressBarView)
+        self.addSubviews(
+            participateTitleLabel,
+            familyCodeTextField,
+            participateImage,
+            nextButton
+        )
     }
     
     private func layout() {
-        backButton.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(5)
-            $0.leading.equalToSuperview().offset(17)
-            $0.size.equalTo(42)
-        }
-        
-        progressBarView.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(57)
-            $0.leading.trailing.equalToSuperview().inset(30)
-            $0.height.equalTo(4)
-        }
-        
-        completedProgressBarView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(81)
-            $0.bottom.equalToSuperview()
-        }
-        
         participateTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.backButton.snp.bottom).offset(56)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(103)
             $0.leading.equalToSuperview().offset(30)
+            $0.width.equalTo(200)
+            $0.height.equalTo(68)
         }
         
         familyCodeTextField.snp.makeConstraints {

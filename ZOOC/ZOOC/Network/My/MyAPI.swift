@@ -15,7 +15,7 @@ final class MyAPI: BaseAPI {
 }
 
 extension MyAPI{
-    func getMyPageData(completion: @escaping (NetworkResult<Any>) -> Void) {
+    public func getMyPageData(completion: @escaping (NetworkResult<Any>) -> Void) {
         myProvider.request(.getMyPageData) { (result) in
             self.disposeNetwork(result,
                                 dataModel: MyResult.self,
@@ -23,15 +23,11 @@ extension MyAPI{
         }
     }
     
-    func patchMyProfile(isPhoto: Bool,
-                        nickName: String,
-                        photo: UIImage?,
+    func patchMyProfile(requset: EditProfileRequest,
                         completion: @escaping (NetworkResult<Any>) -> Void){
-        myProvider.request(.patchUserProfile(isPhoto: isPhoto,
-                                             nickName: nickName,
-                                             photo: photo)) { result in
+        myProvider.request(.patchUserProfile(requset)) { result in
             self.disposeNetwork(result,
-                                dataModel: MyUser.self,
+                                dataModel: UserResult.self,
                                 completion: completion)
         }
     }
@@ -40,6 +36,23 @@ extension MyAPI{
         myProvider.request(.deleteAccount) { (result) in
             self.disposeNetwork(result,
                                 dataModel: MyResult.self,
+                                completion: completion)
+        }
+    }
+    
+    public func registerPet(param: MyRegisterPetRequestDto, completion: @escaping (NetworkResult<Any>) -> Void) {
+        myProvider.request(.postRegisterPet(param: param)) {
+            (result) in
+            self.disposeNetwork(result,
+                                dataModel: [MyRegisterPetResult].self,
+                                completion: completion)
+        }
+    }
+    
+    public func logout(completion: @escaping (NetworkResult<Any>) -> Void) {
+        myProvider.request(.logout) { result in
+            self.disposeNetwork(result,
+                                dataModel: VoidResult.self,
                                 completion: completion)
         }
     }

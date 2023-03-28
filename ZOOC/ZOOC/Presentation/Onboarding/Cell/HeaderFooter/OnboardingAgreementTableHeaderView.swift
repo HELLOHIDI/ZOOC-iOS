@@ -10,21 +10,23 @@ import UIKit
 //MARK: - AllChekedButtonTappedDelegate
 
 protocol AllChekedButtonTappedDelegate : AnyObject {
-    func allCellButtonTapped(isSelected: Bool)
+    func allCellButtonTapped()
 }
 
 final class OnboardingAgreementTableHeaderView: UITableViewHeaderFooterView {
     
     //MARK: - Properties
     
+    let onboardingAgreementViewModel = OnboardingAgreementViewModel()
+    
     private var isSelected: Bool = false
     weak var delegate: AllChekedButtonTappedDelegate?
     
     //MARK: - UI Components
     
-    private var allAgreementView = UIView()
+    public var allAgreementView = UIView()
     private var allAgreementLabel = UILabel()
-    private lazy var allCheckedButton = BaseButton()
+    public lazy var allCheckedButton = BaseButton()
     
     //MARK: - Life Cycle
     
@@ -49,9 +51,12 @@ final class OnboardingAgreementTableHeaderView: UITableViewHeaderFooterView {
     }
     
     private func style() {
+        contentView.backgroundColor = .zoocBackgroundGreen
+        
         allAgreementView.do {
             $0.makeCornerRadius(ratio: 12)
-            $0.makeCornerBorder(borderWidth: 1, borderColor: UIColor.zoocMainGreen)
+            $0.backgroundColor = .white
+            $0.makeCornerBorder(borderWidth: 1, borderColor: UIColor.zoocLightGray)
         }
         
         allAgreementLabel.do {
@@ -91,10 +96,6 @@ final class OnboardingAgreementTableHeaderView: UITableViewHeaderFooterView {
         }
     }
     
-    func dataBind(all: Bool){
-        updateUI(all: all)
-    }
-    
     //MARK: - Action Method
     
     @objc func checkedButtonDidTap() {
@@ -102,21 +103,9 @@ final class OnboardingAgreementTableHeaderView: UITableViewHeaderFooterView {
     }
 }
 
-extension OnboardingAgreementTableHeaderView {
-    private func updateUI(all: Bool) {
-        let checkButtonImage = all ? Image.checkBoxFill : Image.checkBox
-        allCheckedButton.setImage(checkButtonImage, for: .normal)
-    }
-    
-    private func updateAllCheckedButtonUI() {
-        if isSelected {
-            isSelected = false
-            allCheckedButton.setImage(Image.checkBoxFill, for: .normal)
-            delegate?.allCellButtonTapped(isSelected: false)
-        } else {
-            isSelected = true
-            allCheckedButton.setImage(Image.checkBoxFill, for: .normal)
-            delegate?.allCellButtonTapped(isSelected: true)
-        }
+private extension OnboardingAgreementTableHeaderView {
+    func updateAllCheckedButtonUI() {
+        delegate?.allCellButtonTapped()
+        onboardingAgreementViewModel.updateAllAgreementClosure?()
     }
 }

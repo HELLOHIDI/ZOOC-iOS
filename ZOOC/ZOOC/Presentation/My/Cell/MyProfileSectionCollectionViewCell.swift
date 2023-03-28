@@ -27,6 +27,7 @@ final class MyProfileSectionCollectionViewCell: UICollectionViewCell  {
     public var profileImageView = UIImageView()
     public var profileNameLabel = UILabel()
     public var editProfileButton = UIButton()
+    
     //MARK: - Life Cycles
     
     override init(frame: CGRect) {
@@ -65,7 +66,11 @@ final class MyProfileSectionCollectionViewCell: UICollectionViewCell  {
     }
     
     private func hierarchy() {
-        addSubviews(profileImageView, profileNameLabel, editProfileButton)
+        self.addSubviews(
+            profileImageView,
+            profileNameLabel,
+            editProfileButton
+        )
     }
     
     private func layout() {
@@ -88,7 +93,7 @@ final class MyProfileSectionCollectionViewCell: UICollectionViewCell  {
         }
     }
     
-    func dataBind(data: MyUser?) {
+    func dataBind(data: UserResult?) {
         profileNameLabel.text = data?.nickName
         data?.photo == nil ? setDefaultProfileImage() : setProfileImage(photo: (data?.photo)!)
     }

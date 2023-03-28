@@ -15,11 +15,13 @@ final class RecordViewController : BaseViewController{
     //MARK: - Properties
     
     var petImage: UIImage?
-    private var recordData = RecordModel()
+    private var recordData = RecordMissionModel()
     private let placeHoldText: String = """
                                         ex) 2023년 2월 30일
                                         가족에게 어떤 순간이었는지 남겨주세요
                                         """
+    var contentTextViewIsRegistered: Bool = false
+    
     //MARK: - UI Components
     
     private let imagePickerController: UIImagePickerController = {
@@ -50,9 +52,6 @@ final class RecordViewController : BaseViewController{
         button.setTitle("일상", for: .normal)
         button.titleLabel?.font = .zoocSubhead1
         button.setTitleColor(.zoocDarkGray1, for: .normal)
-        button.addTarget(self,
-                         action: #selector(dailyButtonDidTap),
-                         for: .touchUpInside)
         return button
     }()
     
@@ -103,7 +102,7 @@ final class RecordViewController : BaseViewController{
     private lazy var nextButton: UIButton = {
         let button = UIButton()
         button.setTitle("다음", for: .normal)
-        button.titleLabel?.font = .zoocSubhead1
+        button.titleLabel?.font = .zoocSubhead2
         button.setTitleColor(.zoocWhite1, for: .normal)
         button.backgroundColor = .zoocGray1
         button.isEnabled = false
@@ -114,7 +113,7 @@ final class RecordViewController : BaseViewController{
         return button
     }()
     
-    //MARK: - Life Cycle
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -135,7 +134,8 @@ final class RecordViewController : BaseViewController{
         
         removeKeyboardNotifications()
     }
-    //MARK: - Custom Method
+    
+    // MARK: - Custom Method
     
     private func gesture(){
         
@@ -213,6 +213,12 @@ final class RecordViewController : BaseViewController{
         }
     }
     
+    func pushToRecordMissionViewController() {
+        let recordMissionViewController = RecordMissionViewController()
+        navigationController?.pushViewController(recordMissionViewController, animated: true)
+        print(#function)
+    }
+    
     func pushToRecordAlertViewController() {
         let recordAlertViewController = RecordAlertViewController()
         recordAlertViewController.modalPresentationStyle = .overFullScreen
@@ -232,7 +238,7 @@ final class RecordViewController : BaseViewController{
     }
     
     private func updateUI(){
-        if contentTextView.text.isEmpty || recordData.image == nil {
+        if contentTextViewIsRegistered == false || recordData.image == nil {
             nextButton.backgroundColor = .zoocGray1
             nextButton.isEnabled = false
         } else {
@@ -247,18 +253,16 @@ final class RecordViewController : BaseViewController{
         pushToRecordAlertViewController()
     }
     
-    @objc private func dailyButtonDidTap(){
-        print(#function)
-    }
-    
     @objc private func missionButtonDidTap(){
-        print(#function)
+        pushToRecordMissionViewController()
     }
     
     @objc
     private func galleryImageViewDidTap(){
-        present(imagePickerController, animated: true)
-        
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true)
     }
     
     @objc
@@ -290,7 +294,15 @@ extension RecordViewController: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        updateUI()
+        if textView.text == """
+                                        ex) 2023년 2월 30일
+                                        가족에게 어떤 순간이었는지 남겨주세요
+                                        """ || textView.text.isEmpty {
+            print("contentView 입력해줘..")
+        } else {
+            contentTextViewIsRegistered = true
+            updateUI()
+        }
     }
 }
 

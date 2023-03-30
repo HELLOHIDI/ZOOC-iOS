@@ -70,16 +70,10 @@ final class MyViewController: BaseViewController {
     private func requestLogoutAPI() {
         MyAPI.shared.logout { result in
             self.validateResult(result)
+            User.shared.clearData()
+            self.changeRootViewController(OnboardingLoginViewController())
         }
     }
-    
-    private func logout() {
-        requestLogoutAPI()
-        User.shared.clearData()
-        changeRootViewController(OnboardingLoginViewController())
-    }
-    
-    
     
     //MARK: - Action Method
     
@@ -197,7 +191,7 @@ extension MyViewController: SettingMenuTableViewCellDelegate {
         case 4:
             pushToAppInformationView()
         case 5:
-            logout()
+            requestLogoutAPI()
         default:
             break
         }

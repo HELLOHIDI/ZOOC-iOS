@@ -36,7 +36,7 @@ extension RecordAPI{
     }
     
     func postMission(photo: UIImage, content: String, pets: [Int], completion: @escaping (NetworkResult<Any>) -> Void) {
-        recordProvider.request(.postMission(familyID: User.familyID, missionID: "1",
+        recordProvider.request(.postMission(familyID: User.shared.familyID, missionID: "1",
                                             photo: photo,
                                             content: content,
                                             pets: pets))

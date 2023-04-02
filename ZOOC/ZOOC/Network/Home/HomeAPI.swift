@@ -11,7 +11,7 @@ import Moya
 class HomeAPI: BaseAPI {
     static let shared = HomeAPI()
     var homeProvider = MoyaProvider<HomeService>(plugins: [MoyaLoggingPlugin()])
-    
+    private override init() {}
 }
 
 extension HomeAPI{

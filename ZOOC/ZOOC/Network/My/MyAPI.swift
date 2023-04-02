@@ -12,6 +12,7 @@ import Moya
 final class MyAPI: BaseAPI {
     static let shared = MyAPI()
     private var myProvider = MoyaProvider<MyService>(plugins: [MoyaLoggingPlugin()])
+    private override init() {}
 }
 
 extension MyAPI{

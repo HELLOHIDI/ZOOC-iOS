@@ -55,7 +55,7 @@ extension OnboardingService: BaseTargetType {
         case .getFamily:
             return .get
         case .patchFCMToken:
-            return .patch
+            return .put
         }
     }
     

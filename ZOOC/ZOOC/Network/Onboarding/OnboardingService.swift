@@ -14,6 +14,7 @@ enum OnboardingService {
     case patchFCMToken(fcmToken: String)
     case postKakaoSocialLogin(accessToken: String)
     case postAppleSocialLogin(_ request: OnboardingAppleSocialLoginRequest)
+    case postRefreshToken(refreshToken: String)
     case getFamily
     case getInviteCode(familyId: String)
     case postJoinFamily(_ request: OnboardingJoinFamilyRequest)
@@ -23,56 +24,77 @@ enum OnboardingService {
 extension OnboardingService: BaseTargetType {
     var path: String {
         switch self {
-        case .getInviteCode(let familyId):
-            return URLs.getInviteCode.replacingOccurrences(of: "{familyId}", with: familyId)
-        case .postJoinFamily:
-            return URLs.joinFamily
-        case .makeFamily:
-            return URLs.makeFamily
-        case .postKakaoSocialLogin:
-            return URLs.kakaoLogin
-        case .postAppleSocialLogin:
-            return URLs.appleLogin
-        case .getFamily:
-            return URLs.getFamily
         case .patchFCMToken:
             return URLs.fcmToken
+            
+        case .postKakaoSocialLogin:
+            return URLs.kakaoLogin
+            
+        case .postAppleSocialLogin:
+            return URLs.appleLogin
+            
+        case .postRefreshToken:
+            return URLs.refreshToken
+            
+        case .getInviteCode(let familyId):
+            return URLs.getInviteCode.replacingOccurrences(of: "{familyId}", with: familyId)
+            
+        case .postJoinFamily:
+            return URLs.joinFamily
+            
+        case .makeFamily:
+            return URLs.makeFamily
+            
+        case .getFamily:
+            return URLs.getFamily
         }
     }
     
     var method: Moya.Method {
         switch self {
+        case .patchFCMToken:
+            return .patch
+        case .postKakaoSocialLogin:
+            return .post
+        case .postAppleSocialLogin:
+            return .post
+        case .postRefreshToken:
+            return .post
         case .getInviteCode:
             return .get
         case .postJoinFamily:
             return .post
         case .makeFamily:
             return .post
-        case .postKakaoSocialLogin:
-            return .post
-        case .postAppleSocialLogin:
-            return .post
         case .getFamily:
             return .get
-        case .patchFCMToken:
-            return .patch
         }
     }
     
     
     var task: Task {
         switch self {
-        case .getInviteCode:
-            return .requestPlain
             
-        case .postJoinFamily(let param):
-            return .requestJSONEncodable(param)
+        case .patchFCMToken(fcmToken: let fcmToken):
+            return .requestParameters(parameters: ["fcmToken": fcmToken],
+                                      encoding: JSONEncoding.default)
             
         case .postKakaoSocialLogin:
             return .requestPlain
             
         case .postAppleSocialLogin(let param):
             return .requestJSONEncodable(param)
+            
+        case .postRefreshToken(refreshToken: let token) :
+            return .requestParameters(parameters: ["refreshToken": token],
+                                      encoding: JSONEncoding.default)
+            
+        case .getInviteCode:
+            return .requestPlain
+            
+        case .postJoinFamily(let param):
+            return .requestJSONEncodable(param)
+            
             
         case .makeFamily(let param):
             print(param)
@@ -104,21 +126,25 @@ extension OnboardingService: BaseTargetType {
         case .getFamily:
             return .requestPlain
             
-        case .patchFCMToken(fcmToken: let fcmToken):
-            return .requestParameters(parameters: ["fcmToken": fcmToken],
-                                      encoding: JSONEncoding.default)
         }
         
     }
     
     var headers: [String : String]?{
         switch self {
+            
+        case .patchFCMToken:
+            return APIConstants.hasTokenHeader
+            
         case .postKakaoSocialLogin(accessToken: let accessToken):
             return [APIConstants.contentType: APIConstants.applicationJSON,
                     APIConstants.auth : accessToken]
             
         case .postAppleSocialLogin(param: _):
             return APIConstants.noTokenHeader
+            
+        case .postRefreshToken:
+            return APIConstants.hasTokenHeader
             
         case .getInviteCode(familyId: _):
             return APIConstants.hasTokenHeader
@@ -130,9 +156,6 @@ extension OnboardingService: BaseTargetType {
             return APIConstants.multipartHeader
             
         case .getFamily:
-            return APIConstants.hasTokenHeader
-            
-        case .patchFCMToken:
             return APIConstants.hasTokenHeader
         }
     }

@@ -14,6 +14,7 @@ struct User {
     var id: String = ""
     var familyID: String = ""
     var jwtToken: String = ""
+    var jwtRefreshToken: String = ""
     var fcmToken: String = ""
     
     public mutating func clearData() {

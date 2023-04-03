@@ -489,7 +489,6 @@
 		876554A02958489F006BBDA9 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				877E57EC2966AAD3006D82FC /* Cell */,
 				8782C7E82969502600C9324B /* View */,
 				87A76A8D295F6D840096F669 /* Controller */,
 			);
@@ -622,6 +621,7 @@
 				D26C85DE2968C26500AEAF9B /* OnboardingLoginView.swift */,
 				D26C85E22968C88800AEAF9B /* OnboardingAgreementView.swift */,
 				D26C85EF29693C8500AEAF9B /* OnboardingWelcomeView.swift */,
+				877E57EC2966AAD3006D82FC /* Cell */,
 				D26C85F7296B0B4E00AEAF9B /* OnboardingChooseFamilyRoleView.swift */,
 				D26C85FF296B27B100AEAF9B /* OnboardingCompleteProfileView.swift */,
 				D26C8607296B585600AEAF9B /* OnboardingParticipateView.swift */,
@@ -1219,7 +1219,6 @@
 				87A76AA5295F6EC40096F669 /* HomeAPI.swift in Sources */,
 				87A76AA7295F6ECD0096F669 /* MyService.swift in Sources */,
 				D26C8614296B7F3E00AEAF9B /* OnboardingRegisterPetTableViewCell.swift in Sources */,
-				D26C85FE296B253600AEAF9B /* OnboardingRegisterProfileImageViewController.swift in Sources */,
 				4C84C33C298CD662003B899E /* RecordMissionModel.swift in Sources */,
 				8764831F2952368800F74882 /* UITableViewCell+.swift in Sources */,
 				876483272952370F00F74882 /* UIStackView+.swift in Sources */,

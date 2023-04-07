@@ -44,7 +44,7 @@ extension MyService: BaseTargetType {
         case .postRegisterPet(param: _):
             return .post
         case .logout:
-            return .patch
+            return .delete
         }
     }
     

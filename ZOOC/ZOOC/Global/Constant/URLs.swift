@@ -13,7 +13,7 @@ public enum URLs{
     
     static let makeFamily = "/family"
     static let getNotice = "/alarm/list"
-    static let myPage = "/family/mypage"
+    static let myPage = "/family/mypage/{familyId}"
     static let getFamily = "/family"
     static let getInviteCode = "/family/code/{familyId}"
     static let registerPet = "/family/pets/{familyId}"

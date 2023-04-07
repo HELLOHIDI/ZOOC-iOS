@@ -14,4 +14,5 @@ struct RecordResult: Codable{
     let date: String
     let writerPhoto: String?
     let writerName: String
+    let isMyRecord: Bool
 }

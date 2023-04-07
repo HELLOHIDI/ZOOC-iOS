@@ -14,58 +14,6 @@ import AuthenticationServices
 import KakaoSDKAuth
 import KakaoSDKUser
 
-//enum KakaoLogin {
-//    case kakaoTalk
-//    case kakaoAccount
-//
-////    func loginKakao() async -> Bool {
-////        var success: Bool = false
-////        switch self {
-////        case .kakaoTalk:
-////            UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
-////                guard let oauthToken = oauthToken else {
-////                    guard let error = error else { return }
-////                    print(error)
-////                    return
-////                }
-////                self.postKakaoSocialLogin(oauthToken: oauthToken)
-////            }
-////
-////        case .kakaoAccount:
-////            UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
-////                guard let oauthToken = oauthToken else {
-////                    guard let error = error else { return }
-////                    print(error)
-////                    return
-////                }
-////                self.postKakaoSocialLogin(oauthToken: oauthToken)
-////            }
-////        }
-////        success = User.jwtToken != "" ? true : false
-////        return success
-////    }
-////
-////    func postKakaoSocialLogin(oauthToken: OAuthToken) {
-////        OnboardingAPI.shared.postKakaoSocialLogin(accessToken: "Bearer \(oauthToken.accessToken)") { result in
-////            switch result {
-////            case .success(let data):
-////                guard let data = data as? OnboardingTokenData else { return}
-////                User.jwtToken = data.jwtToken
-////            case .requestErr(let message):
-////                print(message)
-////            case .decodedErr:
-////                print("디코딩 오류가 발생했습니다.")
-////            case .pathErr:
-////                print("잘못된 경로입니다.")
-////            case .serverErr:
-////                print("서버 오류 혹은 메소드 오류입니다.")
-////            case .networkFail:
-////                print("네트워크가 불안정합니다.")
-////            }
-////        }
-////    }
-////}
-
 final class OnboardingLoginViewController: BaseViewController {
     
     //MARK: - Properties
@@ -112,7 +60,8 @@ final class OnboardingLoginViewController: BaseViewController {
     }
     
     @objc func goHomeButtonDidTap(){
-        presentBottomAlert("해당 이스터에그 기능은 종료되었습니다.\n 소셜로그인을 이용해주세요.")
+        User.shared.jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI1LCJpYXQiOjE2Nzk4Mzg1MjksImV4cCI6MTY4MDQ0MzMyOX0.1kjlgTZ7eZLMaiFK0Opduj8GUICJomlU9dZVlXZ0DyA"
+        self.requestFamilyAPI()
     }
 }
 

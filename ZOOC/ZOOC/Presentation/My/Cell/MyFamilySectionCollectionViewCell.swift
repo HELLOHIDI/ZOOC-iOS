@@ -21,7 +21,7 @@ final class MyFamilySectionCollectionViewCell: UICollectionViewCell {
     
     private var familyLabel = UILabel()
     private var familyCountLabel = UILabel()
-    private var inviteButton = UIButton()
+    public var inviteButton = UIButton()
     private var inviteButtonUnderLine = UIView()
     public lazy var familyCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
@@ -42,6 +42,7 @@ final class MyFamilySectionCollectionViewCell: UICollectionViewCell {
     }
     
     //MARK: - Custom Method
+    
     private func register() {
         familyCollectionView.delegate = self
         familyCollectionView.dataSource = self

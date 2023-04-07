@@ -22,7 +22,7 @@ extension RecordService: BaseTargetType{
         case .postRecord(familyID: let familyID, photo: _, content: _, pets: _):
             return URLs.postRecord.replacingOccurrences(of: "{familyId}", with: familyID)
         case .postMission(familyID: let familyID, missionID: let missionID, photo: _, content: _, pets: _):
-            return URLs.postMission.replacingOccurrences(of: "{familyId}", with: familyID).replacingOccurrences(of: "{missionId}", with: missionID)
+            return URLs.postMission.replacingOccurrences(of: "{familyId}", with: familyID)
         }
     }
     
@@ -70,7 +70,7 @@ extension RecordService: BaseTargetType{
             
             return .uploadMultipart(multipartFormData)
             
-        case .postMission(familyID: _, missionID: _, photo: let photo, content: let content, pets: let pets):
+        case .postMission(familyID: _, missionID: let missionID, photo: let photo, content: let content, pets: let pets):
             
             var multipartFormData: [MultipartFormData] = []
             
@@ -96,8 +96,7 @@ extension RecordService: BaseTargetType{
             multipartFormData.append(contentData)
             multipartFormData.append(imageData)
             
-            return .uploadMultipart(multipartFormData)
-            
+            return .uploadCompositeMultipart(multipartFormData, urlParameters: ["missionId" : missionID])
         }
     }
     

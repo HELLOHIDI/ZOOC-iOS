@@ -18,6 +18,7 @@ final class MyViewController: BaseViewController {
     private var myFamilyMemberData: [UserResult] = []
     private var myPetMemberData: [PetResult] = []
     private var myProfileData: UserResult?
+    private var invitedCode: String = "우르르롺끼"
     
     //MARK: - UI Components
     
@@ -90,6 +91,10 @@ final class MyViewController: BaseViewController {
         deleteAccountAlertViewController.modalPresentationStyle = .overFullScreen
         present(deleteAccountAlertViewController, animated: false)
     }
+    
+    @objc func inviteButtonDidTap() {
+        getInviteCode()
+    }
 }
 
 //MARK: - UICollectionViewDelegateFlowLayout
@@ -155,6 +160,7 @@ extension MyViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyFamilySectionCollectionViewCell.cellIdentifier, for: indexPath)
                     as? MyFamilySectionCollectionViewCell else { return UICollectionViewCell() }
             cell.dataBind(myFamilyData: myFamilyMemberData, myProfileData: myProfileData)
+            cell.inviteButton.addTarget(self, action: #selector(inviteButtonDidTap), for: .touchUpInside)
             return cell
             
         case 2:
@@ -232,5 +238,38 @@ extension MyViewController {
         registerPetViewController.hidesBottomBarWhenPushed = true
         registerPetViewController.dataSend(myPetMemberData: myPetMemberData)
         self.navigationController?.pushViewController(registerPetViewController, animated: true)
+    }
+    
+    private func shareInviteCode() {
+        var objectToShare = [String]()
+        
+        objectToShare.append(invitedCode)
+        
+        let activityViewController = UIActivityViewController(activityItems : objectToShare, applicationActivities: nil)
+        
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
+        
+        activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
+            let message = success ? "초대 코드 복사에 성공했습니다"  : "초대 코드 복사에 실패했습니다"
+            let title = success ? "복사 성공" : "복사 실패"
+            self.showAlertCopyCompleted(message: message, title: title)
+        }
+    }
+    
+    private func getInviteCode() {
+        OnboardingAPI.shared.getInviteCode(familyID: User.shared.familyID) { result in
+            guard let result = self.validateResult(result) as? OnboardingInviteResult else { return }
+            let code = result.code
+            self.invitedCode = code
+            self.shareInviteCode()
+        }
+    }
+    
+    private func showAlertCopyCompleted(message: String, title: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(okAction)
+        present(alert, animated: false, completion: nil)
     }
 }

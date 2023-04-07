@@ -33,7 +33,7 @@ public enum URLs{
     static let getMission = "/record/mission/{familyId}"
     static let totalPet = "/record/pet/{familyId}"
     static let postRecord = "/record/{familyId}"
-    static let postMission = "/record/{familyId}?missionId={missionId}"
+    static let postMission = "/record/{familyId}"
     static let detailRecord = "/record/detail/{familyId}/{recordId}"
     static let detailPetRecord = "/record/detail/{familyId}/{petId}/{recordId}"
     static let totalRecord = "/record/{familyId}/{petId}"

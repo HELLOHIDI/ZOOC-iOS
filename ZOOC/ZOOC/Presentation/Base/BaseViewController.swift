@@ -5,6 +5,7 @@
 //  Created by 장석우 on 2022/12/25.
 //
 
+import Photos
 import UIKit
 
 import SnapKit
@@ -13,6 +14,8 @@ import Then
 class BaseViewController : UIViewController{
     
     //MARK: - Properties
+    
+    public var isPermission: Bool?
     
     //MARK: - UI Components
     
@@ -44,6 +47,20 @@ class BaseViewController : UIViewController{
         
     }
     
+    func checkAlbumPermission() {
+        
+        PHPhotoLibrary.requestAuthorization( { status in
+            switch status{
+            case .authorized:
+                self.isPermission = true
+            case .denied, .restricted, .notDetermined:
+                self.isPermission = false
+            default:
+                break
+            }
+        })
+    }
+    
     func validateResult(_ result: NetworkResult<Any>) -> Any?{
         switch result{
         case .success(let data):
@@ -58,14 +75,13 @@ class BaseViewController : UIViewController{
             presentBottomAlert("서버 내 오류입니다.")
         case .networkFail:
             presentBottomAlert("네트워크가 불안정합니다.")
-        case .decodedErr:
-            presentBottomAlert("디코딩 오류가 발생했습니다.")
+        case .decodedErr:            presentBottomAlert("디코딩 오류가 발생했습니다.")
         }
         return nil
     }
     
     //MARK: - Keyboard 관련 처리
-   
+    
     
     //MARK: - Action Method
     

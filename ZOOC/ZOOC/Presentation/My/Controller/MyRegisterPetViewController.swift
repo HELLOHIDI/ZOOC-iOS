@@ -233,13 +233,21 @@ extension MyRegisterPetViewController {
     
     private func showAccessCopyCompleted() {
         let alert = UIAlertController(title: "갤러리 접근이 거부되었습니다", message: "환경설정에서 설정해주세요", preferredStyle: .alert)
-        let okAction = UIAlertAction(
+        
+        let openSettingsAction = UIAlertAction(
             title: "설정하러 가기",
             style: .default,
             handler: self.settingHandler)
-        alert.addAction(okAction)
+        
+        let goBackAction = UIAlertAction(
+            title: "나가기",
+            style: .destructive
+        )
+        
+        alert.addAction(openSettingsAction)
+        alert.addAction(goBackAction)
+        
         present(alert, animated: false, completion: nil)
     }
 }
-
 

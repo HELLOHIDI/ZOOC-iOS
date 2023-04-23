@@ -58,7 +58,6 @@ class BaseViewController : UIViewController{
     }
     
     func checkAlbumPermission() {
-        
         PHPhotoLibrary.requestAuthorization( { status in
             switch status{
             case .authorized:
@@ -69,6 +68,25 @@ class BaseViewController : UIViewController{
                 break
             }
         })
+    }
+    
+    func showAccessDenied() {
+        let alert = UIAlertController(title: "갤러리 접근이 거부되었습니다", message: "환경설정에서 설정해주세요", preferredStyle: .alert)
+        
+        let openSettingsAction = UIAlertAction(
+            title: "설정하러 가기",
+            style: .default,
+            handler: self.settingHandler)
+        
+        let goBackAction = UIAlertAction(
+            title: "나가기",
+            style: .destructive
+        )
+        
+        alert.addAction(openSettingsAction)
+        alert.addAction(goBackAction)
+        
+        present(alert, animated: false, completion: nil)
     }
     
     func validateResult(_ result: NetworkResult<Any>) -> Any?{

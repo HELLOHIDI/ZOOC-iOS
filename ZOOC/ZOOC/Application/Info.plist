@@ -5,7 +5,7 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>&apos;ZOOC&apos;이(가) 사용자의 사진에 접근하려고 합니다</string>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>&apos;ZOOC&apos;이(가) 사용자의 카메라에 접근하려고 합니다</string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
 	<key>CFBundleIdentifier</key>

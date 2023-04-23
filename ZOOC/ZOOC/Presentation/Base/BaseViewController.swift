@@ -15,6 +15,16 @@ class BaseViewController : UIViewController{
     
     //MARK: - Properties
     
+    typealias handler<T> = ((T) -> Void)
+    
+    public var settingHandler: handler<UIAlertAction> = { _ in 
+        guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+        
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
+        
+    }
     public var isPermission: Bool?
     
     //MARK: - UI Components

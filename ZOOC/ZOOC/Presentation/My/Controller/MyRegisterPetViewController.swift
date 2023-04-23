@@ -197,9 +197,8 @@ extension MyRegisterPetViewController: MyDeleteButtonTappedDelegate {
             imagePicker.sourceType = .photoLibrary
             self.present(imagePicker, animated: true)
         } else {
-            print("거부되었습니다!")
+            self.showAccessCopyCompleted()
         }
-        
     }
     
     func deleteButtonTapped(tag: Int) {
@@ -216,11 +215,6 @@ extension MyRegisterPetViewController: MyDeleteButtonTappedDelegate {
     }
     
 }
-extension MyRegisterPetViewController {
-    func registerPet() {
-        self.navigationController?.popViewController(animated: true)
-    }
-}
 
 //MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 
@@ -231,3 +225,21 @@ extension MyRegisterPetViewController: UIImagePickerControllerDelegate, UINaviga
         self.myRegisterPetView.registerPetTableView.reloadData()
     }
 }
+
+extension MyRegisterPetViewController {
+    func registerPet() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    private func showAccessCopyCompleted() {
+        let alert = UIAlertController(title: "갤러리 접근이 거부되었습니다", message: "환경설정에서 설정해주세요", preferredStyle: .alert)
+        let okAction = UIAlertAction(
+            title: "설정하러 가기",
+            style: .default,
+            handler: self.settingHandler)
+        alert.addAction(okAction)
+        present(alert, animated: false, completion: nil)
+    }
+}
+
+

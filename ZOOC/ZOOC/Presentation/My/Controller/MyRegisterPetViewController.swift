@@ -197,7 +197,7 @@ extension MyRegisterPetViewController: MyDeleteButtonTappedDelegate {
             imagePicker.sourceType = .photoLibrary
             self.present(imagePicker, animated: true)
         } else {
-            self.showAccessCopyCompleted()
+            self.showAccessDenied()
         }
     }
     
@@ -231,7 +231,7 @@ extension MyRegisterPetViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    private func showAccessCopyCompleted() {
+    private func showAccessDenied() {
         let alert = UIAlertController(title: "갤러리 접근이 거부되었습니다", message: "환경설정에서 설정해주세요", preferredStyle: .alert)
         
         let openSettingsAction = UIAlertAction(

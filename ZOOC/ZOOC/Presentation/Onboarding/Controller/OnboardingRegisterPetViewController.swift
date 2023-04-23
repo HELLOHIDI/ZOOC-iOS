@@ -167,11 +167,17 @@ extension OnboardingRegisterPetViewController: UITableViewDataSource {
 
 extension OnboardingRegisterPetViewController: DeleteButtonTappedDelegate {
     func petProfileImageButtonDidTap(tag: Int) {
-        self.onboardingPetRegisterViewModel.index = tag
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        self.present(imagePicker, animated: true)
+        checkAlbumPermission()
+        guard let isPermission else { return }
+        if isPermission {
+            self.onboardingPetRegisterViewModel.index = tag
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            self.present(imagePicker, animated: true)
+        } else {
+            self.showAccessDenied()
+        }
     }
     
     func deleteButtonTapped(tag: Int) {
@@ -201,9 +207,27 @@ extension OnboardingRegisterPetViewController: DeleteButtonTappedDelegate {
 }
 
 private extension OnboardingRegisterPetViewController {
-     func pushToInviteFamilyViewController() {
+    func pushToInviteFamilyViewController() {
         let onboardingInviteFamilyViewController = OnboardingInviteFamilyViewController()
         self.navigationController?.pushViewController(onboardingInviteFamilyViewController, animated: true)
+    }
+    
+    private func showAccessDenied() {
+        let alert = UIAlertController(title: "갤러리 접근이 거부되었습니다", message: "환경설정에서 설정해주세요", preferredStyle: .alert)
+        
+        let openSettingsAction = UIAlertAction(
+            title: "설정하러 가기",
+            style: .default,
+            handler: self.settingHandler)
+        
+        let goBackAction = UIAlertAction(
+            title: "나가기",
+            style: .destructive
+        )
+        alert.addAction(openSettingsAction)
+        alert.addAction(goBackAction)
+        
+        present(alert, animated: false, completion: nil)
     }
 }
 

@@ -36,6 +36,8 @@ final class HomeDetailArchiveViewController : BaseViewController {
         }
     }
     
+
+    
     
     //MARK: - UI Components
     
@@ -128,6 +130,17 @@ final class HomeDetailArchiveViewController : BaseViewController {
         rightButton.addTarget(self,
                              action: #selector(directionButtonDidTap),
                              for: .touchUpInside)
+        
+        
+        let swipeGestureLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
+        swipeGestureLeft.direction = .left
+        
+        let swipeGestureRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
+        swipeGestureRight.direction = .right
+        
+        view.addGestureRecognizer(swipeGestureLeft)
+        view.addGestureRecognizer(swipeGestureRight)
+        
     }
     
     private func style() {
@@ -312,6 +325,27 @@ final class HomeDetailArchiveViewController : BaseViewController {
         }
     }
     
+    private func updateNewUI(direction: PageDirection) {
+        var message: String
+        var id: Int?
+        
+        switch direction {
+        case .left:
+            message = "가장 최근 페이지입니다."
+            id = detailArchiveData?.leftID
+        case .right:
+            message = "마지막 페이지 입니다."
+            id = detailArchiveData?.rightID
+        }
+        
+        guard let id = id else {
+            presentBottomAlert(message)
+            return
+        }
+        
+        requestDetailArchiveAPI(recordID: String(id), petID: petID)
+    }
+    
     private func updateArchiveUI() {
         if let imageURL = detailArchiveData?.record.writerPhoto{
             self.writerImageView.kfSetImage(url: imageURL)
@@ -382,26 +416,23 @@ final class HomeDetailArchiveViewController : BaseViewController {
     }
     
     @objc
-    private func directionButtonDidTap(_ sender: UIButton) {
-        guard let direction = PageDirection.init(rawValue: sender.tag) else { return }
-        var message: String
-        var id: Int?
-        
-        switch direction {
+    private func handleSwipeGesture(_ gesture: UIGestureRecognizer) {
+        guard let gesture = gesture as? UISwipeGestureRecognizer else { return }
+        switch gesture.direction {
         case .left:
-            message = "가장 최근 페이지입니다."
-            id = detailArchiveData?.leftID
+            updateNewUI(direction: .right)
         case .right:
-            message = "마지막 페이지 입니다."
-            id = detailArchiveData?.rightID
-        }
-        
-        guard let id = id else {
-            presentBottomAlert(message)
+            updateNewUI(direction: .left)
+        default:
             return
         }
         
-        requestDetailArchiveAPI(recordID: String(id), petID: petID)
+    }
+    
+    @objc
+    private func directionButtonDidTap(_ sender: UIButton) {
+        guard let direction = PageDirection.init(rawValue: sender.tag) else { return }
+       updateNewUI(direction: direction)
     }
     
     @objc

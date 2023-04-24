@@ -145,8 +145,10 @@ extension UIViewController{
     }
     
     @objc func dismissKeyboard() {
-        print(#function)
-        self.view.endEditing(false)
+        self.view.endEditing(true)
+    }
     
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+          dismissKeyboard()
     }
 }

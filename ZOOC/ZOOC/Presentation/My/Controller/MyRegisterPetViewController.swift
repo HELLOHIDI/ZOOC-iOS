@@ -217,7 +217,7 @@ extension MyRegisterPetViewController {
 
 //MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 
-extension MyRegisterPetViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+extension MyRegisterPetViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         self.myPetRegisterViewModel.petList[self.myPetRegisterViewModel.index].image = image

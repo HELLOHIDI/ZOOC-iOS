@@ -132,10 +132,10 @@ final class HomeDetailArchiveViewController : BaseViewController {
                              for: .touchUpInside)
         
         
-        let swipeGestureLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
+        let swipeGestureLeft = UISwipeGestureRecognizer(target: self, action: #selector(handlePageSwipeGesture(_:)))
         swipeGestureLeft.direction = .left
         
-        let swipeGestureRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
+        let swipeGestureRight = UISwipeGestureRecognizer(target: self, action: #selector(handlePageSwipeGesture(_:)))
         swipeGestureRight.direction = .right
         
         view.addGestureRecognizer(swipeGestureLeft)
@@ -407,7 +407,7 @@ final class HomeDetailArchiveViewController : BaseViewController {
     
     @objc
     func backButtonDidTap() {
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
     
     @objc
@@ -416,7 +416,7 @@ final class HomeDetailArchiveViewController : BaseViewController {
     }
     
     @objc
-    private func handleSwipeGesture(_ gesture: UIGestureRecognizer) {
+    private func handlePageSwipeGesture(_ gesture: UIGestureRecognizer) {
         guard let gesture = gesture as? UISwipeGestureRecognizer else { return }
         switch gesture.direction {
         case .left:

@@ -89,9 +89,7 @@ final class MyRegisterPetViewController: BaseViewController {
             guard let result = self.validateResult(result) as? [MyRegisterPetResult] else {
                 return
             }
-            
-            print(result)
-            self.dismiss(animated: true)
+            self.navigationController?.popViewController(animated: true)
         }
         
     }
@@ -197,15 +195,6 @@ extension MyRegisterPetViewController: MyDeleteButtonTappedDelegate {
         self.present(imagePicker, animated: true)
     }
     
-//    func canRegister(tag: Int, editing: Bool) {
-//        self.myPetRegisterViewModel.index = tag
-//        for index in 0..<self.myPetRegisterViewModel.petList.count {
-//            self.myPetRegisterViewModel.petList[index].editing = (index == tag) ? editing : false
-//            print("\(index)번째의 편집유무는 \(editing)")
-//        }
-//    }
-    
-    
     func deleteButtonTapped(tag: Int) {
         self.myPetRegisterViewModel.index = tag
     }
@@ -228,7 +217,7 @@ extension MyRegisterPetViewController {
 
 //MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 
-extension MyRegisterPetViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+extension MyRegisterPetViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         self.myPetRegisterViewModel.petList[self.myPetRegisterViewModel.index].image = image

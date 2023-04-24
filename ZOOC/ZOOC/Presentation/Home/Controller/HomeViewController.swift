@@ -103,9 +103,8 @@ final class HomeViewController : BaseViewController {
         let petID = String(petData[index].id)
         detailVC.petID = petID
         detailVC.requestDetailArchiveAPI(recordID: recordID, petID: petID)
-        
-        detailVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(detailVC, animated: true)
+        detailVC.modalPresentationStyle = .fullScreen
+        present(detailVC, animated: true)
     }
     
     private func pushToHomeAlarmViewController() {

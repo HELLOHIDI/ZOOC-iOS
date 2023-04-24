@@ -306,7 +306,7 @@ extension RecordViewController: UITextViewDelegate {
     }
 }
 
-extension RecordViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+extension RecordViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {

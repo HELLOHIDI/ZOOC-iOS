@@ -67,8 +67,10 @@ final class MyEditProfileViewController: BaseViewController {
         imagePickerController.do { 
             $0.sourceType = .photoLibrary
         }
+        
+        rootView.numberOfNameCharactersLabel.text = "\(rootView.nameTextField.text!.count)/10"
     }
-    
+
     func dataBind(data: UserResult?) {
         rootView.nameTextField.text = data?.nickName
         editMyProfileData.nickName = data?.nickName ?? ""
@@ -166,7 +168,7 @@ extension MyEditProfileViewController: GalleryAlertControllerDelegate {
 
 //MARK: - UIImagePickerControllerDelegate
 
-extension MyEditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension MyEditProfileViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         

@@ -36,6 +36,8 @@ final class HomeDetailArchiveViewController : BaseViewController {
         }
     }
     
+
+    
     
     //MARK: - UI Components
     
@@ -128,6 +130,17 @@ final class HomeDetailArchiveViewController : BaseViewController {
         rightButton.addTarget(self,
                              action: #selector(directionButtonDidTap),
                              for: .touchUpInside)
+        
+        
+        let swipeGestureLeft = UISwipeGestureRecognizer(target: self, action: #selector(handlePageSwipeGesture(_:)))
+        swipeGestureLeft.direction = .left
+        
+        let swipeGestureRight = UISwipeGestureRecognizer(target: self, action: #selector(handlePageSwipeGesture(_:)))
+        swipeGestureRight.direction = .right
+        
+        view.addGestureRecognizer(swipeGestureLeft)
+        view.addGestureRecognizer(swipeGestureRight)
+        
     }
     
     private func style() {
@@ -312,6 +325,27 @@ final class HomeDetailArchiveViewController : BaseViewController {
         }
     }
     
+    private func updateNewUI(direction: PageDirection) {
+        var message: String
+        var id: Int?
+        
+        switch direction {
+        case .left:
+            message = "가장 최근 페이지입니다."
+            id = detailArchiveData?.leftID
+        case .right:
+            message = "마지막 페이지 입니다."
+            id = detailArchiveData?.rightID
+        }
+        
+        guard let id = id else {
+            presentBottomAlert(message)
+            return
+        }
+        
+        requestDetailArchiveAPI(recordID: String(id), petID: petID)
+    }
+    
     private func updateArchiveUI() {
         if let imageURL = detailArchiveData?.record.writerPhoto{
             self.writerImageView.kfSetImage(url: imageURL)
@@ -373,7 +407,7 @@ final class HomeDetailArchiveViewController : BaseViewController {
     
     @objc
     func backButtonDidTap() {
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
     
     @objc
@@ -382,26 +416,23 @@ final class HomeDetailArchiveViewController : BaseViewController {
     }
     
     @objc
-    private func directionButtonDidTap(_ sender: UIButton) {
-        guard let direction = PageDirection.init(rawValue: sender.tag) else { return }
-        var message: String
-        var id: Int?
-        
-        switch direction {
+    private func handlePageSwipeGesture(_ gesture: UIGestureRecognizer) {
+        guard let gesture = gesture as? UISwipeGestureRecognizer else { return }
+        switch gesture.direction {
         case .left:
-            message = "가장 최근 페이지입니다."
-            id = detailArchiveData?.leftID
+            updateNewUI(direction: .right)
         case .right:
-            message = "마지막 페이지 입니다."
-            id = detailArchiveData?.rightID
-        }
-        
-        guard let id = id else {
-            presentBottomAlert(message)
+            updateNewUI(direction: .left)
+        default:
             return
         }
         
-        requestDetailArchiveAPI(recordID: String(id), petID: petID)
+    }
+    
+    @objc
+    private func directionButtonDidTap(_ sender: UIButton) {
+        guard let direction = PageDirection.init(rawValue: sender.tag) else { return }
+       updateNewUI(direction: direction)
     }
     
     @objc
@@ -457,12 +488,30 @@ extension HomeDetailArchiveViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.frame.width - 36        
+        let width = collectionView.frame.width - 36
+        
         if commentsData[indexPath.item].isEmoji{
             return CGSize(width: width, height: 126)
         } else {
-            return CGSize(width: width, height: 70)
+            // 셀의 너비는 collectionView의 너비와 같습니다.
+            let comment = commentsData[indexPath.item].content
+            let commentLabel = UILabel(frame: CGRect(x: 0,
+                                                     y: 0,
+                                                     width: width,
+                                                     height: CGFloat.greatestFiniteMagnitude))
+            commentLabel.text = comment
+            commentLabel.numberOfLines = 0
+            let commentTextSize = commentLabel.sizeThatFits(commentLabel.frame.size)
+            
+            // 댓글 셀의 최소 높이
+            let minHeight: CGFloat = 84
+            
+            // 댓글 텍스트의 높이와 최소 높이를 비교하여 큰 값을 선택하여 셀의 높이를 결정합니다.
+            let cellHeight = max(minHeight, commentTextSize.height + 40) // 여백을 추가합니다.
+            
+            return CGSize(width: width, height: cellHeight)
         }
+        
         
     }
     

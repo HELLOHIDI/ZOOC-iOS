@@ -60,7 +60,8 @@ final class OnboardingLoginViewController: BaseViewController {
     }
     
     @objc func goHomeButtonDidTap(){
-        presentBottomAlert("해당 이스터에그 기능은 종료되었습니다.\n 소셜로그인을 이용해주세요.")
+        User.shared.jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI1LCJpYXQiOjE2Nzk4Mzg1MjksImV4cCI6MTY4MDQ0MzMyOX0.1kjlgTZ7eZLMaiFK0Opduj8GUICJomlU9dZVlXZ0DyA"
+        self.requestFamilyAPI()
     }
 }
 

@@ -27,5 +27,6 @@ struct CommentResult: Codable {
     let content: String?
     let emoji: Int?
     let date: String
+    let isMyComment: Bool
 }
 

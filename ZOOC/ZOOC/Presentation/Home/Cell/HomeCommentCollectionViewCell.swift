@@ -34,6 +34,7 @@ final class HomeCommentCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .zoocBody1
         label.textColor = .zoocDarkGray2
+        label.numberOfLines = 0
         return label
     }()
     
@@ -102,9 +103,15 @@ final class HomeCommentCollectionViewCell: UICollectionViewCell {
             $0.leading.equalTo(writerImageView.snp.trailing).offset(17)
         }
         
+        dateLabel.snp.makeConstraints {
+            $0.centerY.equalTo(writerLabel)
+            $0.leading.equalTo(writerLabel.snp.trailing).offset(3)
+        }
+        
         commentLabel.snp.makeConstraints {
-            $0.bottom.equalTo(writerImageView)
+            $0.top.equalTo(writerLabel.snp.bottom).offset(8)
             $0.leading.equalTo(writerLabel)
+            $0.trailing.equalTo(etcButton.snp.leading).offset(-5)
         }
         
         commentEmojiImageView.snp.makeConstraints {
@@ -113,10 +120,6 @@ final class HomeCommentCollectionViewCell: UICollectionViewCell {
             $0.size.equalTo(84)
         }
         
-        dateLabel.snp.makeConstraints {
-            $0.centerY.equalTo(writerLabel)
-            $0.leading.equalTo(writerLabel.snp.trailing).offset(3)
-        }
         
         etcButton.snp.makeConstraints {
             $0.centerY.equalTo(writerLabel)
@@ -137,7 +140,6 @@ final class HomeCommentCollectionViewCell: UICollectionViewCell {
              
             commentLabel.isHidden = true
             commentEmojiImageView.isHidden = false
-            
             commentEmojiImageView.image = UIImage.zoocEmoji(data.emoji ?? 1)
         } else {
             commentLabel.isHidden = false

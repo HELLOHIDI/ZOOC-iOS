@@ -21,11 +21,11 @@ extension MyService: BaseTargetType {
     var path: String {
         switch self {
         case .getMyPageData:
-            return "/family/mypage"
+            return URLs.myPage.replacingOccurrences(of: "{familyId}", with: User.shared.familyID)
         case .patchUserProfile:
-            return "/user/profile"
+            return URLs.editProfile
         case .deleteAccount:
-            return "/user"
+            return URLs.deleteUser
         case .postRegisterPet(param: _):
             return URLs.registerPet.replacingOccurrences(of: "{familyId}", with: User.shared.familyID) //TODO: 이 위치가 맞을까..
         case .logout:
@@ -44,7 +44,7 @@ extension MyService: BaseTargetType {
         case .postRegisterPet(param: _):
             return .post
         case .logout:
-            return .patch
+            return .delete
         }
     }
     

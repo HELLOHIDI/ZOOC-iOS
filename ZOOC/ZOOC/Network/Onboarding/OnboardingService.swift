@@ -68,6 +68,8 @@ extension OnboardingService: BaseTargetType {
             return .post
         case .getFamily:
             return .get
+        case .patchFCMToken:
+            return .put
         }
     }
     

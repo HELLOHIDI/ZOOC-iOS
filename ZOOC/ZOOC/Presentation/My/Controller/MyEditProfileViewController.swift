@@ -168,7 +168,7 @@ extension MyEditProfileViewController: GalleryAlertControllerDelegate {
 
 //MARK: - UIImagePickerControllerDelegate
 
-extension MyEditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension MyEditProfileViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         

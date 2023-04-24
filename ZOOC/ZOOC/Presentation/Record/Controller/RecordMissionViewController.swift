@@ -323,7 +323,7 @@ extension RecordMissionViewController: RecordMissionCollectionViewCellDelegate {
     }
 }
 
-extension RecordMissionViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension RecordMissionViewController: UIImagePickerControllerDelegate  {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {

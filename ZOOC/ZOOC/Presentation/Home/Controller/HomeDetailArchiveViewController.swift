@@ -457,12 +457,30 @@ extension HomeDetailArchiveViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.frame.width - 36        
+        let width = collectionView.frame.width - 36
+        
         if commentsData[indexPath.item].isEmoji{
             return CGSize(width: width, height: 126)
         } else {
-            return CGSize(width: width, height: 70)
+            // 셀의 너비는 collectionView의 너비와 같습니다.
+            let comment = commentsData[indexPath.item].content
+            let commentLabel = UILabel(frame: CGRect(x: 0,
+                                                     y: 0,
+                                                     width: width,
+                                                     height: CGFloat.greatestFiniteMagnitude))
+            commentLabel.text = comment
+            commentLabel.numberOfLines = 0
+            let commentTextSize = commentLabel.sizeThatFits(commentLabel.frame.size)
+            
+            // 댓글 셀의 최소 높이
+            let minHeight: CGFloat = 84
+            
+            // 댓글 텍스트의 높이와 최소 높이를 비교하여 큰 값을 선택하여 셀의 높이를 결정합니다.
+            let cellHeight = max(minHeight, commentTextSize.height + 40) // 여백을 추가합니다.
+            
+            return CGSize(width: width, height: cellHeight)
         }
+        
         
     }
     

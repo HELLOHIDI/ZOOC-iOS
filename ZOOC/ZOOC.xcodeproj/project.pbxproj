@@ -489,6 +489,7 @@
 		876554A02958489F006BBDA9 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				877E57EC2966AAD3006D82FC /* Cell */,
 				8782C7E82969502600C9324B /* View */,
 				87A76A8D295F6D840096F669 /* Controller */,
 			);
@@ -621,7 +622,6 @@
 				D26C85DE2968C26500AEAF9B /* OnboardingLoginView.swift */,
 				D26C85E22968C88800AEAF9B /* OnboardingAgreementView.swift */,
 				D26C85EF29693C8500AEAF9B /* OnboardingWelcomeView.swift */,
-				877E57EC2966AAD3006D82FC /* Cell */,
 				D26C85F7296B0B4E00AEAF9B /* OnboardingChooseFamilyRoleView.swift */,
 				D26C85FF296B27B100AEAF9B /* OnboardingCompleteProfileView.swift */,
 				D26C8607296B585600AEAF9B /* OnboardingParticipateView.swift */,

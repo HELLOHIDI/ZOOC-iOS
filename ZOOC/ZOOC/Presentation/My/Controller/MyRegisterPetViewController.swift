@@ -188,11 +188,17 @@ extension MyRegisterPetViewController: UITableViewDataSource {
 
 extension MyRegisterPetViewController: MyDeleteButtonTappedDelegate {
     func petProfileImageButtonDidTap(tag: Int) {
-        self.myPetRegisterViewModel.index = tag
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        self.present(imagePicker, animated: true)
+        checkAlbumPermission()
+        guard let isPermission else { return }
+        if isPermission {
+            self.myPetRegisterViewModel.index = tag
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            self.present(imagePicker, animated: true)
+        } else {
+            showAccessDenied()
+        }
     }
     
     func deleteButtonTapped(tag: Int) {
@@ -209,11 +215,6 @@ extension MyRegisterPetViewController: MyDeleteButtonTappedDelegate {
     }
     
 }
-extension MyRegisterPetViewController {
-    func registerPet() {
-        self.navigationController?.popViewController(animated: true)
-    }
-}
 
 //MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 
@@ -224,3 +225,12 @@ extension MyRegisterPetViewController: UIImagePickerControllerDelegate {
         self.myRegisterPetView.registerPetTableView.reloadData()
     }
 }
+
+extension MyRegisterPetViewController {
+    func registerPet() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    
+}
+

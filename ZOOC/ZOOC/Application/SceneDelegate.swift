@@ -23,16 +23,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
+         autoLogin(window)
         
-        
-        let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
-        onboardingNVC.setNavigationBarHidden(true, animated: true)
-        
-        autoLogin()
-        
-        window?.rootViewController = onboardingNVC //
-        self.window?.backgroundColor = .white
-        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -69,11 +61,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 extension SceneDelegate {
     
-    private func autoLogin() {
-        requestFamilyAPI()
+    private func autoLogin(_ window: UIWindow?) {
+        requestFamilyAPI(window)
     }
     
-    private func requestFamilyAPI() {
+    private func requestFamilyAPI(_ window: UIWindow?) {
         OnboardingAPI.shared.getFamily { result in
             switch result{
                 
@@ -82,34 +74,52 @@ extension SceneDelegate {
                 if data.count != 0 {
                     let familyID = String(data[0].id)
                     User.shared.familyID = familyID
-                    self.requestFCMTokenAPI()
+                    self.autoLoginSuccess(window)
                 } else {
-                    print("")
+                    self.autoLoginFail(window)
                 }
-            case .requestErr(let message):
-                self.requestRefreshTokenAPI()
-            default: return
+            default:
+                self.autoLoginFail(window)
             }
         }
     }
     
-    private func requestFCMTokenAPI() {
+    private func requestFCMTokenAPI(_ window: UIWindow?) {
         OnboardingAPI.shared.patchFCMToken(fcmToken: User.shared.fcmToken) { result in
-            UIApplication.shared.changeRootViewController(ZoocTabBarController())
+            let mainVC = UINavigationController(rootViewController: ZoocTabBarController())
+            mainVC.setNavigationBarHidden(true, animated: true)
+            window?.rootViewController = mainVC
+            self.window?.backgroundColor = .white
+            window?.makeKeyAndVisible()
         }
     }
     
-    private func requestRefreshTokenAPI() {
-        OnboardingAPI.shared.postRefreshToken(refreshToken: User.shared.jwtRefreshToken) { result in
-            switch result{
-            case .success(let data):
-                guard let data = data as? OnboardingJWTTokenResult else { return }
-                User.shared.jwtToken = data.accessToken
-                User.shared.jwtRefreshToken = data.refreshToken
-                self.requestFamilyAPI()
-            default: print(result)
-            }
-            
-        }
+//    private func requestRefreshTokenAPI() {
+//        OnboardingAPI.shared.postRefreshToken(refreshToken: User.shared.jwtRefreshToken) { result in
+//            switch result{
+//            case .success(let data):
+//                guard let data = data as? OnboardingJWTTokenResult else { return }
+//                User.shared.jwtToken = data.accessToken
+//                //User.shared.jwtRefreshToken = data.refreshToken
+//                self.requestFamilyAPI()
+//            default: print(result)
+//            }
+//
+//        }
+//    }
+    
+    private func autoLoginSuccess(_ window: UIWindow?) {
+        print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
+        print(#function)
+        requestFCMTokenAPI(window)
+    }
+    
+    private func autoLoginFail(_ window: UIWindow?) {
+        print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
+        let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
+        onboardingNVC.setNavigationBarHidden(true, animated: true)
+        window?.rootViewController = onboardingNVC
+        self.window?.backgroundColor = .white
+        window?.makeKeyAndVisible()
     }
 }

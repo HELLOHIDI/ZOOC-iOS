@@ -94,7 +94,7 @@ private extension OnboardingLoginViewController {
     private func requestZOOCKaKaoLoginAPI(_ oauthToken: OAuthToken) {
         OnboardingAPI.shared.postKakaoSocialLogin(accessToken: "Bearer \(oauthToken.accessToken)") { result in
             guard let result = self.validateResult(result) as? OnboardingJWTTokenResult else { return }
-            User.shared.jwtToken = result.accessToken
+            User.shared.jwtToken = result.jwtToken
             
             if result.isExistedUser{
                 self.requestFamilyAPI()
@@ -117,8 +117,10 @@ private extension OnboardingLoginViewController {
     private func requestZOOCAppleSocialLoginAPI(_ identityTokenString: String) {
         OnboardingAPI.shared.postAppleSocialLogin(request: OnboardingAppleSocialLoginRequest(identityTokenString: identityTokenString)) { result in
             guard let result = self.validateResult(result) as? OnboardingJWTTokenResult else { return }
-            User.shared.jwtToken = result.accessToken
-            
+            User.shared.jwtToken = result.jwtToken
+            print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
+            print(UserDefaultsManager.zoocAccessToken)
+            print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
             if result.isExistedUser{
                 self.requestFamilyAPI()
             } else {

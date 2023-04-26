@@ -10,7 +10,7 @@ import Foundation
 // MARK: - MyResult
 
 struct OnboardingJWTTokenResult: Codable {
-    let accessToken: String
-    let refreshToken: String
+    let jwtToken: String
+    //let refreshToken: String
     let isExistedUser: Bool
 }

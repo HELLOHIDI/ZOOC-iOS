@@ -20,5 +20,6 @@ extension UIApplication {
                           duration: 0.5,
                           options: .transitionCrossDissolve,
                           animations: nil)
+        
     }
 }

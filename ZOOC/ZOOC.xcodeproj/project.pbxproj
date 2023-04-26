@@ -39,6 +39,8 @@
 		871EA35B2970BE8400D0E8CC /* RecordPetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871EA35A2970BE8400D0E8CC /* RecordPetResult.swift */; };
 		871EA35D2970CFA700D0E8CC /* SimpleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871EA35C2970CFA700D0E8CC /* SimpleResponse.swift */; };
 		871EA35F2971628D00D0E8CC /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871EA35E2971628D00D0E8CC /* Encodable+.swift */; };
+		872BBD9229F9576E002E2C71 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872BBD9129F9576E002E2C71 /* UIApplication+.swift */; };
+		872BBD9529F959FC002E2C71 /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */; };
 		872F638929B89D9B002EC413 /* HomeGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872F638829B89D9B002EC413 /* HomeGuideView.swift */; };
 		8731C4B029A93EF500006743 /* EmojiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8731C4AF29A93EF500006743 /* EmojiModel.swift */; };
 		8731C4B229A9400D00006743 /* EmojiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8731C4B129A9400D00006743 /* EmojiCollectionViewCell.swift */; };
@@ -222,6 +224,8 @@
 		871EA35A2970BE8400D0E8CC /* RecordPetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordPetResult.swift; sourceTree = "<group>"; };
 		871EA35C2970CFA700D0E8CC /* SimpleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleResponse.swift; sourceTree = "<group>"; };
 		871EA35E2971628D00D0E8CC /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
+		872BBD9129F9576E002E2C71 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
+		872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
 		872F638829B89D9B002EC413 /* HomeGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGuideView.swift; sourceTree = "<group>"; };
 		8731C4AF29A93EF500006743 /* EmojiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiModel.swift; sourceTree = "<group>"; };
 		8731C4B129A9400D00006743 /* EmojiCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -430,9 +434,18 @@
 			path = Lottie;
 			sourceTree = "<group>";
 		};
+		872BBD9329F959E2002E2C71 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		87648315295234C100F74882 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				872BBD9129F9576E002E2C71 /* UIApplication+.swift */,
 				8764831C2952368100F74882 /* UIView+.swift */,
 				8764831A2952367400F74882 /* UIViewController+.swift */,
 				8764831E2952368800F74882 /* UITableViewCell+.swift */,
@@ -457,6 +470,7 @@
 		876483162952351500F74882 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				872BBD9329F959E2002E2C71 /* Utility */,
 				876483172952355A00F74882 /* Constant */,
 				87648315295234C100F74882 /* Extension */,
 			);
@@ -1216,6 +1230,7 @@
 				D26C85FA296B109500AEAF9B /* OnboardingChooseFamilyRoleViewController.swift in Sources */,
 				4C6B186E296DBFE40059840D /* RecordAlertViewController.swift in Sources */,
 				874AE9FA29B4A12F007A637D /* OnboardingJoinUserResult.swift in Sources */,
+				872BBD9529F959FC002E2C71 /* UserDefaultWrapper.swift in Sources */,
 				87A76AA5295F6EC40096F669 /* HomeAPI.swift in Sources */,
 				87A76AA7295F6ECD0096F669 /* MyService.swift in Sources */,
 				D26C8614296B7F3E00AEAF9B /* OnboardingRegisterPetTableViewCell.swift in Sources */,
@@ -1241,6 +1256,7 @@
 				87D5AF622960CFE500CA7F12 /* HomeGuideCollectionViewCell.swift in Sources */,
 				4C6B186A296C82850059840D /* RecordRegisterFourCollectionViewCell.swift in Sources */,
 				D26C68F62970B0640088DC9A /* HomeNoticeTableViewCell.swift in Sources */,
+				872BBD9229F9576E002E2C71 /* UIApplication+.swift in Sources */,
 				D23502E22961898C00F01101 /* MyProfileSectionCollectionViewCell.swift in Sources */,
 				D27D956A296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift in Sources */,
 				D26C8612296B7CA500AEAF9B /* OnboardingRegisterPetView.swift in Sources */,

@@ -24,9 +24,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        //온보딩 Flow 부터
+        
         let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
         onboardingNVC.setNavigationBarHidden(true, animated: true)
+        
+        autoLogin()
         
         window?.rootViewController = onboardingNVC //
         self.window?.backgroundColor = .white
@@ -62,4 +64,52 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
 
+}
+
+
+extension SceneDelegate {
+    
+    private func autoLogin() {
+        requestFamilyAPI()
+    }
+    
+    private func requestFamilyAPI() {
+        OnboardingAPI.shared.getFamily { result in
+            switch result{
+                
+            case .success(let data):
+                guard let data = data as? [OnboardingFamilyResult] else { return }
+                if data.count != 0 {
+                    let familyID = String(data[0].id)
+                    User.shared.familyID = familyID
+                    self.requestFCMTokenAPI()
+                } else {
+                    print("")
+                }
+            case .requestErr(let message):
+                self.requestRefreshTokenAPI()
+            default: return
+            }
+        }
+    }
+    
+    private func requestFCMTokenAPI() {
+        OnboardingAPI.shared.patchFCMToken(fcmToken: User.shared.fcmToken) { result in
+            UIApplication.shared.changeRootViewController(ZoocTabBarController())
+        }
+    }
+    
+    private func requestRefreshTokenAPI() {
+        OnboardingAPI.shared.postRefreshToken(refreshToken: User.shared.jwtRefreshToken) { result in
+            switch result{
+            case .success(let data):
+                guard let data = data as? OnboardingJWTTokenResult else { return }
+                User.shared.jwtToken = data.accessToken
+                User.shared.jwtRefreshToken = data.refreshToken
+                self.requestFamilyAPI()
+            default: print(result)
+            }
+            
+        }
+    }
 }

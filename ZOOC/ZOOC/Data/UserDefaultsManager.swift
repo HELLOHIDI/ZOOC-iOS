@@ -36,7 +36,14 @@ extension UserDefaultsManager {
     
     static func reset() {
         UserDefaultKeys.allCases.forEach { key in
-            UserDefaults.standard.removeObject(forKey: key.rawValue)
+            if key != .fcmToken{
+                UserDefaults.standard.removeObject(forKey: key.rawValue)
+            }
+            print("FCM Token: \(UserDefaultsManager.fcmToken)")
+            print("Access Token: \(UserDefaultsManager.zoocAccessToken)")
+            print("Refresh Token: \(UserDefaultsManager.zoocRefreshToken)")
+            print("Active User: \(UserDefaultsManager.isActiveUser)")
+            print("Family ID: \(UserDefaultsManager.familyID)")
         }
     }
 }

@@ -5,7 +5,7 @@
 //  Created by 장석우 on 2022/12/31.
 //
 
-import Foundation
+import UIKit
 
 import Moya
 
@@ -54,6 +54,16 @@ final class MoyaLoggingPlugin: PluginType {
         }
         log.append("------------------- END HTTP (\(response.data.count)-byte body) -------------------")
         print(log)
+        
+        switch statusCode {
+        case 401:
+            let acessToken = User.shared.zoocAccessToken
+            let refreshToken = User.shared.zoocRefreshToken
+            // 🔥 토큰 갱신 서버통신 메서드.
+            userTokenReissueWithAPI(accessToken: acessToken, refreshToken: refreshToken)
+        default:
+            return
+        }
     }
     
     func onFail(_ error: MoyaError, target: TargetType) {
@@ -67,5 +77,41 @@ final class MoyaLoggingPlugin: PluginType {
         log.append("<-- END HTTP")
         print(log)
     }
+}
+
+extension MoyaLoggingPlugin {
+    func userTokenReissueWithAPI(accessToken: String,refreshToken: String) {
+        OnboardingAPI.shared.postRefreshToken(accessToken: accessToken, refreshToken: refreshToken) { response in
+                switch response {
+                case .success(let data):
+                    // 🔥 성공적으로 액세스 토큰, 리프레쉬 토큰 갱신.
+                    if let data = data as? OnboardingJWTTokenResult {
+                        User.shared.zoocAccessToken = data.accessToken
+                        User.shared.zoocRefreshToken = data.refreshToken
+                        print("userTokenReissueWithAPI - success")
+                    }
+                case .requestErr(let statusCode):
+                    // 🔥 406 일 경우, 리프레쉬 토큰도 만료되었다고 판단.
+                    if let statusCode = statusCode as? Int, statusCode == 406 {
+                        // 🔥 로그인뷰로 화면전환. 액세스 토큰, 리프레쉬 토큰, userID 삭제.
+                        let loginVC = OnboardingLoginViewController()
+                        UIApplication.shared.changeRootViewController(loginVC)
+                        
+                        UserDefaultsManager.zoocAccessToken = nil
+                        UserDefaultsManager.zoocRefreshToken = nil
+                    }
+                    print("userTokenReissueWithAPI - requestErr: \(statusCode)")
+                case .pathErr:
+                    print("userTokenReissueWithAPI - pathErr")
+                case .serverErr:
+                    print("userTokenReissueWithAPI - serverErr")
+                case .networkFail:
+                    print("userTokenReissueWithAPI - networkFail")
+                case .decodedErr:
+                    print("디코딩 오류")
+                    
+                }
+            }
+        }
 }
 

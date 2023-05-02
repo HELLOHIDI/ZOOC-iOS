@@ -20,11 +20,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
+        print(#function)
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-         autoLogin(window)
-        
+        autoLogin(window)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -35,16 +34,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
+        print("👶🏻 \(#function)")
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
+        print("👶🏻 \(#function)")
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
+        print("👶🏻 \(#function)")
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
     }
@@ -62,10 +64,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 extension SceneDelegate {
     
     private func autoLogin(_ window: UIWindow?) {
+        guard !User.shared.zoocAccessToken.isEmpty else {
+            autoLoginFail(window)
+            return
+        }
+        print("엠티가 아니래🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
         requestFamilyAPI(window)
     }
     
+    
+    
     private func requestFamilyAPI(_ window: UIWindow?) {
+        print("👩‍👩‍👧‍👦 \(#function)에서 Access Token은 = \(User.shared.zoocAccessToken)")
+        
         OnboardingAPI.shared.getFamily { result in
             switch result{
                 
@@ -82,6 +93,21 @@ extension SceneDelegate {
                 self.autoLoginFail(window)
             }
         }
+    }
+    
+    private func autoLoginSuccess(_ window: UIWindow?) {
+        print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
+        print(#function)
+        requestFCMTokenAPI(window)
+    }
+    
+    private func autoLoginFail(_ window: UIWindow?) {
+        print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
+        let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
+        onboardingNVC.setNavigationBarHidden(true, animated: true)
+        window?.rootViewController = onboardingNVC
+        self.window?.backgroundColor = .white
+        window?.makeKeyAndVisible()
     }
     
     private func requestFCMTokenAPI(_ window: UIWindow?) {
@@ -108,18 +134,4 @@ extension SceneDelegate {
 //        }
 //    }
     
-    private func autoLoginSuccess(_ window: UIWindow?) {
-        print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
-        print(#function)
-        requestFCMTokenAPI(window)
-    }
-    
-    private func autoLoginFail(_ window: UIWindow?) {
-        print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
-        let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
-        onboardingNVC.setNavigationBarHidden(true, animated: true)
-        window?.rootViewController = onboardingNVC
-        self.window?.backgroundColor = .white
-        window?.makeKeyAndVisible()
-    }
 }

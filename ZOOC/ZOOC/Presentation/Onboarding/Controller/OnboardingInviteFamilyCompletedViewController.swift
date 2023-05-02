@@ -38,7 +38,14 @@ final class OnboardingInviteFamilyCompletedViewController: UIViewController{
     
     private func requestFCMTokenAPI() {
         OnboardingAPI.shared.patchFCMToken(fcmToken: User.shared.fcmToken) { result in
-            self.changeRootViewController(ZoocTabBarController())
+            switch result {
+            case .success(_):
+                UIApplication.shared.changeRootViewController(ZoocTabBarController())
+            default:
+                print("FCM 토큰 갱신 API 확인해보세요e")
+                UIApplication.shared.changeRootViewController(ZoocTabBarController())
+            }
+            
         }
     }
     

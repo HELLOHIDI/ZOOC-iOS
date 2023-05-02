@@ -72,7 +72,9 @@ final class MyViewController: BaseViewController {
         MyAPI.shared.logout { result in
             self.validateResult(result)
             User.shared.clearData()
-            self.changeRootViewController(OnboardingLoginViewController())
+            
+            
+            UIApplication.shared.changeRootViewController(OnboardingLoginViewController())
         }
     }
     

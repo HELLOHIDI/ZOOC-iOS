@@ -25,7 +25,7 @@ struct User {
             UserDefaultsManager.familyID = newValue
         }
     }
-    var jwtToken: String {
+    var zoocAccessToken: String {
         get {
             UserDefaultsManager.zoocAccessToken ?? ""
         }
@@ -34,7 +34,7 @@ struct User {
         }
     }
     
-    var jwtRefreshToken: String {
+    var zoocRefreshToken: String {
         get {
             UserDefaultsManager.zoocRefreshToken ?? ""
         }

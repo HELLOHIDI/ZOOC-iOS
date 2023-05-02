@@ -60,7 +60,7 @@ final class OnboardingLoginViewController: BaseViewController {
     }
     
     @objc func goHomeButtonDidTap(){
-        User.shared.jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI1LCJpYXQiOjE2Nzk4Mzg1MjksImV4cCI6MTY4MDQ0MzMyOX0.1kjlgTZ7eZLMaiFK0Opduj8GUICJomlU9dZVlXZ0DyA"
+        User.shared.zoocAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI1LCJpYXQiOjE2Nzk4Mzg1MjksImV4cCI6MTY4MDQ0MzMyOX0.1kjlgTZ7eZLMaiFK0Opduj8GUICJomlU9dZVlXZ0DyA"
         self.requestFamilyAPI()
     }
 }
@@ -94,7 +94,8 @@ private extension OnboardingLoginViewController {
     private func requestZOOCKaKaoLoginAPI(_ oauthToken: OAuthToken) {
         OnboardingAPI.shared.postKakaoSocialLogin(accessToken: "Bearer \(oauthToken.accessToken)") { result in
             guard let result = self.validateResult(result) as? OnboardingJWTTokenResult else { return }
-            User.shared.jwtToken = result.jwtToken
+            User.shared.zoocAccessToken = result.accessToken
+            User.shared.zoocRefreshToken = result.refreshToken
             
             if result.isExistedUser{
                 self.requestFamilyAPI()
@@ -117,10 +118,10 @@ private extension OnboardingLoginViewController {
     private func requestZOOCAppleSocialLoginAPI(_ identityTokenString: String) {
         OnboardingAPI.shared.postAppleSocialLogin(request: OnboardingAppleSocialLoginRequest(identityTokenString: identityTokenString)) { result in
             guard let result = self.validateResult(result) as? OnboardingJWTTokenResult else { return }
-            User.shared.jwtToken = result.jwtToken
+            User.shared.zoocAccessToken = result.accessToken
+            User.shared.zoocRefreshToken = result.refreshToken
             print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
             print(UserDefaultsManager.zoocAccessToken)
-            print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
             if result.isExistedUser{
                 self.requestFamilyAPI()
             } else {
@@ -146,7 +147,16 @@ private extension OnboardingLoginViewController {
     
     private func requestFCMTokenAPI() {
         OnboardingAPI.shared.patchFCMToken(fcmToken: User.shared.fcmToken) { result in
-            self.changeRootViewController(ZoocTabBarController())
+            switch result {
+            case .success(let data):
+                UIApplication.shared.changeRootViewController(ZoocTabBarController())
+            default:
+                self.presentBottomAlert("FCM토큰을 재발급 받으세요")
+                
+                UIApplication.shared.changeRootViewController(ZoocTabBarController())
+            }
+            
+            
         }
     }
     

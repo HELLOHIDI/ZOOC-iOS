@@ -14,7 +14,7 @@ enum OnboardingService {
     case patchFCMToken(fcmToken: String)
     case postKakaoSocialLogin(accessToken: String)
     case postAppleSocialLogin(_ request: OnboardingAppleSocialLoginRequest)
-    case postRefreshToken(refreshToken: String)
+    case postRefreshToken(accessToken: String, refreshToken: String)
     case getFamily
     case getInviteCode(familyId: String)
     case postJoinFamily(_ request: OnboardingJoinFamilyRequest)
@@ -87,9 +87,8 @@ extension OnboardingService: BaseTargetType {
         case .postAppleSocialLogin(let param):
             return .requestJSONEncodable(param)
             
-        case .postRefreshToken(refreshToken: let token) :
-            return .requestParameters(parameters: ["refreshToken": token],
-                                      encoding: JSONEncoding.default)
+        case .postRefreshToken:
+            return .requestPlain
             
         case .getInviteCode:
             return .requestPlain
@@ -145,8 +144,11 @@ extension OnboardingService: BaseTargetType {
         case .postAppleSocialLogin(param: _):
             return APIConstants.noTokenHeader
             
-        case .postRefreshToken:
-            return APIConstants.hasTokenHeader
+        case .postRefreshToken(accessToken: let accessToken, refreshToken: let refreshToken):
+            return [APIConstants.contentType: APIConstants.applicationJSON,
+                    APIConstants.auth: accessToken,
+                    APIConstants.refresh: refreshToken,
+                    APIConstants.fcm: User.shared.fcmToken]
             
         case .getInviteCode(familyId: _):
             return APIConstants.hasTokenHeader
@@ -158,6 +160,8 @@ extension OnboardingService: BaseTargetType {
             return APIConstants.multipartHeader
             
         case .getFamily:
+            User.shared
+            print("🍏 APIConstant Has Token Header: \(APIConstants.hasTokenHeader)")
             return APIConstants.hasTokenHeader
         }
     }

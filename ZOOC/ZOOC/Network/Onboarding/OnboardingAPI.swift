@@ -40,8 +40,9 @@ extension OnboardingAPI {
         }
     }
     
-    public func postRefreshToken(refreshToken: String, completion: @escaping (NetworkResult<Any>) -> Void) {
-        onboardingProvider.request(.postRefreshToken(refreshToken: refreshToken)) { result in
+    public func postRefreshToken(accessToken: String, refreshToken: String, completion: @escaping (NetworkResult<Any>) -> Void) {
+        onboardingProvider.request(.postRefreshToken(accessToken: accessToken,
+                                                     refreshToken: refreshToken)) { result in
             self.disposeNetwork(result,
                                 dataModel: OnboardingJWTTokenResult.self,
                                 completion: completion)

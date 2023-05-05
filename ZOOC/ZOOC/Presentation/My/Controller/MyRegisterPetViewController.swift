@@ -14,10 +14,15 @@ final class MyRegisterPetViewController: BaseViewController {
     
     //MARK: - Properties
     
-    private let myRegisterPetView = MyRegisterPetView()
     private let myPetRegisterViewModel: MyPetRegisterViewModel
     
     private var myPetMemberData: [PetResult] = []
+    
+    //MARK: - UI Components
+    
+    private let myRegisterPetView = MyRegisterPetView()
+    private let galleryAlertController = GalleryAlertController()
+    private lazy var imagePickerController = UIImagePickerController()
     
     //MARK: - Life Cycle
     
@@ -50,6 +55,9 @@ final class MyRegisterPetViewController: BaseViewController {
     }
     
     private func target() {
+        galleryAlertController.delegate = self
+        imagePickerController.delegate = self
+        
         myRegisterPetView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
         myRegisterPetView.registerPetButton.addTarget(self, action: #selector(registerPetButtonDidTap), for: .touchUpInside)
     }
@@ -192,10 +200,7 @@ extension MyRegisterPetViewController: MyDeleteButtonTappedDelegate {
         guard let isPermission else { return }
         if isPermission {
             self.myPetRegisterViewModel.index = tag
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = .photoLibrary
-            self.present(imagePicker, animated: true)
+            present(galleryAlertController,animated: true)
         } else {
             showAccessDenied()
         }
@@ -230,7 +235,16 @@ extension MyRegisterPetViewController {
     func registerPet() {
         self.navigationController?.popViewController(animated: true)
     }
+}
+
+extension MyRegisterPetViewController: GalleryAlertControllerDelegate {
+    func galleryButtonDidTap() {
+        present(imagePickerController, animated: true)
+    }
     
-    
+    func deleteButtonDidTap() {
+        self.myPetRegisterViewModel.petList[self.myPetRegisterViewModel.index].image = Image.cameraCircle
+        self.myRegisterPetView.registerPetTableView.reloadData()
+    }
 }
 

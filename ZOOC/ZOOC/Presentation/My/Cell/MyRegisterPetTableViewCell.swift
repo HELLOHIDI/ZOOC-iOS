@@ -14,8 +14,6 @@ protocol MyDeleteButtonTappedDelegate: AnyObject {
     
     func petProfileImageButtonDidTap(tag: Int)
     
-    //func canRegister(tag: Int, editing: Bool)
-    
     func collectionViewCell(valueChangedIn textField: UITextField, delegatedFrom cell: UITableViewCell, tag: Int, image: UIImage)
 }
 
@@ -52,7 +50,7 @@ final class MyRegisterPetTableViewCell: UITableViewCell {
     //MARK: - Custom Method
     
     private func register() {
-//        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange), name: UITextField.textDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange), name: UITextField.textDidChangeNotification, object: nil)
         petProfileNameTextField.delegate = self
     }
     
@@ -120,20 +118,15 @@ final class MyRegisterPetTableViewCell: UITableViewCell {
         delegate?.petProfileImageButtonDidTap(tag: sender.tag)
     }
     
-//    @objc private func textDidChange(_ notification: Notification) {
-//        guard let textField = notification.object as? UITextField else { return }
-//        guard let text = textField.text else { return }
-//        switch text.count {
-//        case 1...3:
-//            delegate?.canRegister(tag: textField.tag, editing: true)
-//        case 4...:
-//            delegate?.canRegister(tag: textField.tag, editing: false)
-//            textField.resignFirstResponder()
-//        default:
-//            delegate?.canRegister(tag: textField.tag, editing: false)
-//        }
-//        myPetRegisterViewModel.editCellClosure?()
-//    }
+    @objc private func textDidChange(_ notification: Notification) {
+        guard let textField = notification.object as? UITextField else { return }
+        guard let text = textField.text else { return }
+        if text.count > 4 {
+            let index = text.index(text.startIndex, offsetBy: 4)
+            let newString = text[text.startIndex..<index]
+            textField.text = String(newString)
+        }
+    }
 }
 
 extension MyRegisterPetTableViewCell: UITextFieldDelegate {

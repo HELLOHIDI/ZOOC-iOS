@@ -119,9 +119,9 @@ final class MyEditProfileView: UIView {
         }
         
         cameraIconImageView.snp.makeConstraints {
-            $0.top.equalTo(self.titleLabel.snp.bottom).offset(268)
-            $0.leading.equalToSuperview().offset(210)
-            $0.size.equalTo(30)
+            $0.top.equalTo(self.profileImageButton).offset(78)
+            $0.leading.equalTo(self.profileImageButton).offset(78)
+            $0.size.equalTo(35)
         }
         
         nameTextField.snp.makeConstraints {
@@ -133,7 +133,7 @@ final class MyEditProfileView: UIView {
             $0.top.equalTo(self.nameTextField.snp.bottom).offset(9)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(205)
-            $0.height.equalTo(1)
+            $0.height.equalTo(2)
         }
         
         numberOfNameCharactersLabel.snp.makeConstraints {

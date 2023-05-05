@@ -106,10 +106,12 @@ final class MyEditProfileViewController: BaseViewController {
         guard let textField = notification.object as? UITextField else { return }
         guard let text = textField.text else { return }
         var textFieldState: BaseTextFieldState
+        var indexScope: String = String(rootView.numberOfNameCharactersLabel.text!.count)
         switch text.count {
         case 1...9:
             textFieldState = .isWritten
         case 10...:
+            indexScope = rootView.numberOfNameCharactersLabel.text!
             textFieldState = .isFull
             let index = text.index(text.startIndex, offsetBy: 10)
             let newString = text[text.startIndex..<index]
@@ -121,7 +123,9 @@ final class MyEditProfileViewController: BaseViewController {
         textFieldState.setTextFieldState(
             textField: nil,
             underLineView: rootView.underLineView,
-            button: rootView.completeButton
+            button: rootView.completeButton,
+            label: rootView.numberOfNameCharactersLabel,
+            indexScope: indexScope
         )
         setTextFieldText(textCount: text.count)
         

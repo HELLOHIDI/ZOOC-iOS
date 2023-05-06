@@ -22,6 +22,7 @@ extension BaseTargetType{
     
     var validationType: ValidationType {
         return .customCodes(Array(0...500).filter { $0 != 401 } )
+        //return .successCodes
     }
    
 }

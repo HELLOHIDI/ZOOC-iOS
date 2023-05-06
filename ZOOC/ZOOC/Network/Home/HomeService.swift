@@ -121,5 +121,9 @@ extension HomeService: BaseTargetType {
             return .requestJSONEncodable(body)
         }
     }
+    
+    var validationType: ValidationType {
+        return .successAndRedirectCodes
+    }
 }
 

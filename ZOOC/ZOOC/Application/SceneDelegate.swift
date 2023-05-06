@@ -90,6 +90,7 @@ extension SceneDelegate {
                     self.autoLoginFail(window)
                 }
             default:
+                print("자동로그인 실패")
                 self.autoLoginFail(window)
             }
         }
@@ -119,19 +120,6 @@ extension SceneDelegate {
             window?.makeKeyAndVisible()
         }
     }
-    
-//    private func requestRefreshTokenAPI() {
-//        OnboardingAPI.shared.postRefreshToken(refreshToken: User.shared.jwtRefreshToken) { result in
-//            switch result{
-//            case .success(let data):
-//                guard let data = data as? OnboardingJWTTokenResult else { return }
-//                User.shared.jwtToken = data.accessToken
-//                //User.shared.jwtRefreshToken = data.refreshToken
-//                self.requestFamilyAPI()
-//            default: print(result)
-//            }
-//
-//        }
-//    }
+
     
 }

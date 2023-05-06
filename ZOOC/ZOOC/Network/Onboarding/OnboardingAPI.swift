@@ -10,7 +10,8 @@ import Moya
 
 final class OnboardingAPI: BaseAPI {
     static let shared = OnboardingAPI()
-    var onboardingProvider = MoyaProvider<OnboardingService>(plugins: [MoyaLoggingPlugin()])
+    var onboardingProvider = MoyaProvider<OnboardingService>(session: Session(interceptor: MoyaInterceptor.shared),
+                                                             plugins: [MoyaLoggingPlugin()])
     private override init() {}
 }
 
@@ -40,9 +41,8 @@ extension OnboardingAPI {
         }
     }
     
-    public func postRefreshToken(accessToken: String, refreshToken: String, completion: @escaping (NetworkResult<Any>) -> Void) {
-        onboardingProvider.request(.postRefreshToken(accessToken: accessToken,
-                                                     refreshToken: refreshToken)) { result in
+    public func postRefreshToken(completion: @escaping (NetworkResult<Any>) -> Void) {
+        onboardingProvider.request(.postRefreshToken) { result in
             self.disposeNetwork(result,
                                 dataModel: OnboardingJWTTokenResult.self,
                                 completion: completion)

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 struct SimpleResponse: Codable {
     var status: Int
     var success: Bool

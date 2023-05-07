@@ -73,7 +73,7 @@ final class OnboardingChooseFamilyRoleViewController: UIViewController{
             textField: onboardingChooseFamilyRoleView.chooseFamilyTextField,
             underLineView: onboardingChooseFamilyRoleView.chooseFamilyTextFeildUnderLineView,
             button: onboardingChooseFamilyRoleView.chooseFamilyButton,
-            label: nil, indexScope: nil
+            label: nil
         )
     }
     

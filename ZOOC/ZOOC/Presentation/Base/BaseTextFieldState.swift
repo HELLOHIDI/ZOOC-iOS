@@ -70,12 +70,11 @@ enum BaseTextFieldState {
     func setTextFieldState(textField: UITextField?,
                            underLineView: UIView?,
                            button: UIButton?,
-                           label: UILabel?,
-                           indexScope: String?) {
+                           label: UILabel?) {
         underLineView?.backgroundColor = self.backgroundColor
         textField?.textColor = self.textColor
         button?.backgroundColor = self.buttonColor
         button?.isEnabled = self.isEnabled
-        label?.asColor(targetString: indexScope ?? "", color: self.indexColor)
+        label?.textColor = self.indexColor
     }
 }

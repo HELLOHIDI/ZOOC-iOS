@@ -10,7 +10,15 @@ import UIKit
 import SnapKit
 import Then
 
+protocol MyDeleteAccountSectionCollectionViewCellDelegate: AnyObject {
+    func deleteAccountButtonDidTapped()
+}
+
 final class MyDeleteAccountSectionCollectionViewCell: UICollectionViewCell {
+    
+    //MARK: - Properties
+    
+    weak var delegate: MyDeleteAccountSectionCollectionViewCellDelegate?
     
     //MARK: - UI Components
     
@@ -22,6 +30,8 @@ final class MyDeleteAccountSectionCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        target()
+        
         style()
         hierarchy()
         layout()
@@ -32,6 +42,10 @@ final class MyDeleteAccountSectionCollectionViewCell: UICollectionViewCell {
     }
     
     //MARK: - Custom Method
+
+    private func target() {
+        deleteAccountButton.addTarget(self, action: #selector(deleteAccountButtonDidTap), for: .touchUpInside)
+    }
     
     private func style() {
         deleteAccountButton.do {
@@ -52,7 +66,7 @@ final class MyDeleteAccountSectionCollectionViewCell: UICollectionViewCell {
     private func layout() {
         deleteAccountButton.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().offset(65)
+            $0.leading.equalToSuperview().offset(10)
             $0.width.equalTo(42)
             $0.height.equalTo(14)
         }
@@ -63,6 +77,11 @@ final class MyDeleteAccountSectionCollectionViewCell: UICollectionViewCell {
             $0.width.equalTo(42)
             $0.height.equalTo(1)
         }
+    }
+    
+    @objc func deleteAccountButtonDidTap() {
+        print(#function)
+        delegate?.deleteAccountButtonDidTapped()
     }
 }
 

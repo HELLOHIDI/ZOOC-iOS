@@ -87,9 +87,8 @@ final class MyViewController: BaseViewController {
     }
     
     @objc func deleteAccountButtonDidTap() {
-        let deleteAccountAlertViewController = DeleteAccountAlertViewController()
-        deleteAccountAlertViewController.modalPresentationStyle = .overFullScreen
-        present(deleteAccountAlertViewController, animated: false)
+        print(#function)
+
     }
     
     @objc func inviteButtonDidTap() {
@@ -111,7 +110,7 @@ extension MyViewController: UICollectionViewDelegateFlowLayout {
         case 3:
             return CGSize(width: 315, height: 346)
         case 4:
-            return CGSize(width: 42, height: 17)
+            return CGSize(width: 315, height: 17)
         default:
             return CGSize(width: 0, height: 0)
         }
@@ -178,7 +177,7 @@ extension MyViewController: UICollectionViewDataSource {
         case 4:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyDeleteAccountSectionCollectionViewCell.cellIdentifier, for: indexPath)
                     as? MyDeleteAccountSectionCollectionViewCell else { return UICollectionViewCell() }
-            cell.deleteAccountButton.addTarget(self, action: #selector(deleteAccountButtonDidTap), for: .touchUpInside)
+            cell.delegate = self
             return cell
             
         default:
@@ -209,6 +208,15 @@ extension MyViewController: SettingMenuTableViewCellDelegate {
 extension MyViewController: MyRegisterPetButtonTappedDelegate {
     func myRegisterPetButtonTapped(isSelected: Bool) {
         pushToRegisterPetView()
+    }
+}
+
+extension MyViewController: MyDeleteAccountSectionCollectionViewCellDelegate {
+    func deleteAccountButtonDidTapped() {
+        print(#function)
+        let deleteAccountAlertViewController = DeleteAccountAlertViewController()
+        deleteAccountAlertViewController.modalPresentationStyle = .overFullScreen
+        present(deleteAccountAlertViewController, animated: false)
     }
 }
 

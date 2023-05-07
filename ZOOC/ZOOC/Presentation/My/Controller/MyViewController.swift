@@ -105,7 +105,7 @@ extension MyViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.section {
         case 0:
-            return CGSize(width: UIScreen.main.bounds.width, height: 140)
+            return CGSize(width: 315, height: 140)
         case 1:
             return CGSize(width: 315, height: 155)
         case 2:
@@ -122,7 +122,7 @@ extension MyViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         switch section {
         case 0:
-            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            return UIEdgeInsets(top: 38, left: 30, bottom: 0, right: 30)
         case 1:
             return UIEdgeInsets(top: 0, left: 30, bottom: 30, right: 30)
         case 2:
@@ -130,7 +130,7 @@ extension MyViewController: UICollectionViewDelegateFlowLayout {
         case 3:
             return UIEdgeInsets(top: 0, left: 30, bottom: 40, right: 30)
         case 4:
-            return UIEdgeInsets(top: 0, left: 40, bottom: 103, right: 0)
+            return UIEdgeInsets(top: 0, left: 0, bottom: 103, right: 0)
             
         default:
             return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)

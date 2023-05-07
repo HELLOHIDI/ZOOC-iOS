@@ -39,6 +39,7 @@ class BaseViewController : UIViewController{
         dismissKeyboardWhenTappedAround()
         
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.navigationController?.isNavigationBarHidden = true
         navigationController?.delegate = self
     }
     

@@ -26,8 +26,6 @@ final class MyNoticeSettingViewController: BaseViewController {
         super.viewDidLoad()
         
         target()
-        
-        
     }
     
     //MARK: - Custom Method

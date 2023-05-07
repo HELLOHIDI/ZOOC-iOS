@@ -52,7 +52,7 @@ final class MyDeleteAccountSectionCollectionViewCell: UICollectionViewCell {
     private func layout() {
         deleteAccountButton.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(56)
             $0.width.equalTo(42)
             $0.height.equalTo(14)
         }

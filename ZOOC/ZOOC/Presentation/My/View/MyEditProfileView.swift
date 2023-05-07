@@ -109,7 +109,7 @@ final class MyEditProfileView: UIView {
         
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(19)
-            $0.leading.equalTo(self.backButton.snp.trailing).offset(83)
+            $0.centerX.equalToSuperview()
         }
         
         profileImageButton.snp.makeConstraints {

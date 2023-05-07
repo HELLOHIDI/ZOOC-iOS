@@ -55,14 +55,14 @@ final class MyEditProfileView: UIView {
         
         profileImageButton.do {
             $0.setImage(Image.logoSymbol, for: .normal)
-            $0.makeCornerRadius(ratio: 54.5)
+            $0.makeCornerRadius(ratio: self.frame.width / 2)
             $0.contentMode = .scaleAspectFill
         }
         
         cameraIconImageView.do {
             $0.image = Image.cameraCircleGreen
             $0.contentMode = .scaleAspectFill
-            $0.makeCornerRadius(ratio: 17.5)
+            $0.makeCornerRadius(ratio: self.frame.width / 2)
         }
         
         nameTextField.do {

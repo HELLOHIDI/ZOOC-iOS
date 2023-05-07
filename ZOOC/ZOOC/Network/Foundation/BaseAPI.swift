@@ -43,6 +43,8 @@ class BaseAPI{
         switch statusCode {
         case 200..<205:
             return .success(decodedData)
+        case 406:
+            return .authorizationFail((decodedData.message, decodedData.message))
         case 400..<500:
             return .requestErr(decodedData.message ?? "요청에러")
         case 500:
@@ -69,8 +71,9 @@ class BaseAPI{
             }
             
         case .failure(let err):
+            print("여기서 에러나는 경우는 무슨경우?")
             print(err)
-            
+            completion(.authorizationFail("인증오류입니다람쥐"))
         }
     }
 }

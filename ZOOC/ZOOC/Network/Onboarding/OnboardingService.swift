@@ -14,7 +14,7 @@ enum OnboardingService {
     case patchFCMToken(fcmToken: String)
     case postKakaoSocialLogin(accessToken: String)
     case postAppleSocialLogin(_ request: OnboardingAppleSocialLoginRequest)
-    case postRefreshToken(accessToken: String, refreshToken: String)
+    case postRefreshToken
     case getFamily
     case getInviteCode(familyId: String)
     case postJoinFamily(_ request: OnboardingJoinFamilyRequest)
@@ -52,8 +52,6 @@ extension OnboardingService: BaseTargetType {
     
     var method: Moya.Method {
         switch self {
-        case .patchFCMToken:
-            return .patch
         case .postKakaoSocialLogin:
             return .post
         case .postAppleSocialLogin:
@@ -144,11 +142,8 @@ extension OnboardingService: BaseTargetType {
         case .postAppleSocialLogin(param: _):
             return APIConstants.noTokenHeader
             
-        case .postRefreshToken(accessToken: let accessToken, refreshToken: let refreshToken):
-            return [APIConstants.contentType: APIConstants.applicationJSON,
-                    APIConstants.auth: accessToken,
-                    APIConstants.refresh: refreshToken,
-                    APIConstants.fcm: User.shared.fcmToken]
+        case .postRefreshToken:
+            return APIConstants.refreshHeader
             
         case .getInviteCode(familyId: _):
             return APIConstants.hasTokenHeader
@@ -160,9 +155,9 @@ extension OnboardingService: BaseTargetType {
             return APIConstants.multipartHeader
             
         case .getFamily:
-            User.shared
-            print("🍏 APIConstant Has Token Header: \(APIConstants.hasTokenHeader)")
+            print("겟 패밀리의 헤더를 가져옵니다요")
             return APIConstants.hasTokenHeader
         }
     }
+    
 }

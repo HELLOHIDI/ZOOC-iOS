@@ -36,7 +36,7 @@ extension MyAPI{
     func deleteAccount(completion: @escaping (NetworkResult<Any>) -> Void) {
         myProvider.request(.deleteAccount) { (result) in
             self.disposeNetwork(result,
-                                dataModel: MyResult.self,
+                                dataModel: VoidResult.self,
                                 completion: completion)
         }
     }

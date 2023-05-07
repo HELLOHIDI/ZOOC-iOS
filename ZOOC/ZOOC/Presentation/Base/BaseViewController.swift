@@ -112,7 +112,10 @@ class BaseViewController : UIViewController{
             presentBottomAlert("서버 내 오류입니다.")
         case .networkFail:
             presentBottomAlert("네트워크가 불안정합니다.")
-        case .decodedErr:            presentBottomAlert("디코딩 오류가 발생했습니다.")
+        case .decodedErr:
+            presentBottomAlert("디코딩 오류가 발생했습니다.")
+        case .authorizationFail(_):
+            presentBottomAlert("인증 오류가 발생했습니다. 다시 로그인해주세요")
         }
         return nil
     }

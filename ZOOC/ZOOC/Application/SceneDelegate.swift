@@ -90,6 +90,7 @@ extension SceneDelegate {
                     self.autoLoginFail(window)
                 }
             default:
+                print("자동로그인 실패")
                 self.autoLoginFail(window)
             }
         }

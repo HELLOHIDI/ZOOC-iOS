@@ -72,26 +72,26 @@ final class HomeViewController : BaseViewController {
                                                     forCellWithReuseIdentifier: HomeArchiveListCollectionViewCell.cellIdentifier)
         
         rootView.archiveGridCollectionView.register(HomeArchiveGridCollectionViewCell.self,
-                                           forCellWithReuseIdentifier: HomeArchiveGridCollectionViewCell.cellIdentifier)
+                                                    forCellWithReuseIdentifier: HomeArchiveGridCollectionViewCell.cellIdentifier)
     }
     
     private func gesture() {
         rootView.noticeButton.addTarget(self,
-                               action: #selector(noticeButtonDidTap),
-                               for: .touchUpInside)
+                                        action: #selector(noticeButtonDidTap),
+                                        for: .touchUpInside)
         rootView.listButton.addTarget(self,
-                             action: #selector(listButtonDidTap),
-                             for: .touchUpInside)
+                                      action: #selector(listButtonDidTap),
+                                      for: .touchUpInside)
         
         rootView.gridButton.addTarget(self,
-                             action: #selector(galleryButtonDidTap),
-                             for: .touchUpInside)
+                                      action: #selector(galleryButtonDidTap),
+                                      for: .touchUpInside)
         
         rootView.archiveBottomView.addGestureRecognizer(UITapGestureRecognizer(target: self,
-                                                                      action: #selector(bottomViewDidTap)))
+                                                                               action: #selector(bottomViewDidTap)))
     }
     
-   
+    
     
     private func pushToDetailViewController(recordID: String) {
         guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
@@ -127,10 +127,10 @@ final class HomeViewController : BaseViewController {
         }
         
         guard index < petData.count else { return }
-    
+        
         rootView.petCollectionView.selectItem(at:IndexPath(item: index, section: 0),
-                                     animated: false,
-                                     scrollPosition: .centeredHorizontally)
+                                              animated: false,
+                                              scrollPosition: .centeredHorizontally)
         rootView.petCollectionView.performBatchUpdates(nil)
         requestTotalArchiveAPI(petID: petData[index].id)
     }
@@ -154,7 +154,7 @@ final class HomeViewController : BaseViewController {
             self.rootView.missionLabel.text = result[0].missionContent //TODO: 미션용 API 필요
         }
     }
-
+    
     private func requestTotalPetAPI() {
         HomeAPI.shared.getTotalPet(familyID: User.shared.familyID) { result in
             
@@ -226,8 +226,6 @@ final class HomeViewController : BaseViewController {
     private func bottomViewDidTap() {
         deselectAllOfListArchiveCollectionViewCell()
     }
-    
-    
 }
 
 //MARK: - UICollectionViewDataSource
@@ -331,7 +329,7 @@ extension HomeViewController {
         if collectionView == rootView.petCollectionView {
             collectionView.performBatchUpdates(nil)
         }
-         
+        
         if collectionView == rootView.archiveListCollectionView {
             collectionView.performBatchUpdates(nil)
         }
@@ -419,12 +417,26 @@ extension HomeViewController {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == rootView.archiveListCollectionView{
+            pagination(scrollView)
             
             let scroll = scrollView.contentOffset.x + scrollView.contentInset.left
             let width = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
             let scrollRatio = scroll / width
             
             self.rootView.archiveIndicatorView.leftOffsetRatio = scrollRatio
+            
+            
+        }
+    }
+    
+    func pagination(_ scrollView: UIScrollView) {
+        let contentOffsetX = scrollView.contentOffset.y
+        let collectionViewContentSizeX = rootView.archiveListCollectionView.contentSize.height
+        let paginationX = collectionViewContentSizeX * 0.5
+        
+        if contentOffsetX > collectionViewContentSizeX - paginationX {
+            requestTotalPetAPI()
         }
     }
 }
+

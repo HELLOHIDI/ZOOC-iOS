@@ -196,6 +196,7 @@ extension MyRegisterPetViewController: UITableViewDataSource {
 
 extension MyRegisterPetViewController: MyDeleteButtonTappedDelegate {
     func petProfileImageButtonDidTap(tag: Int) {
+        print(#function)
         checkAlbumPermission()
         guard let isPermission else { return }
         if isPermission {
@@ -239,6 +240,7 @@ extension MyRegisterPetViewController {
 
 extension MyRegisterPetViewController: GalleryAlertControllerDelegate {
     func galleryButtonDidTap() {
+        print(#function)
         present(imagePickerController, animated: true)
     }
     

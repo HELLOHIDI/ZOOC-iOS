@@ -144,9 +144,10 @@ final class ZoocAlertViewController: UIViewController {
 
 extension ZoocAlertViewController {
     private func popToMyView() {
-        guard let presentingTVC = self.presentingViewController as? UITabBarController else { return }
-        guard let presentingNVC = presentingTVC.selectedViewController as? UINavigationController else { return }
-        guard let presentingVC = presentingNVC.topViewController else { return }
+        guard let presentingNVC = self.presentingViewController as? UINavigationController else { return }
+        guard let presentingTVC = presentingNVC.topViewController as? UITabBarController else { return }
+        guard let presentingNVC2 = presentingTVC.selectedViewController as? UINavigationController else { return }
+        guard let presentingVC = presentingNVC2.topViewController else { return }
         
         presentingVC.navigationController?.popViewController(animated: true)
         self.dismiss(animated: false)

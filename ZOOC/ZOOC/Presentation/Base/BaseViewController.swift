@@ -67,6 +67,7 @@ class BaseViewController : UIViewController{
     }
     
     func checkAlbumPermission() {
+        print(#function)
         PHPhotoLibrary.requestAuthorization( { status in
             switch status{
             case .authorized:

@@ -12,7 +12,7 @@ protocol BaseTargetType: TargetType{ }
 
 extension BaseTargetType{
     
-    var baseURL: URL{
+    var baseURL: URL {
         return URL(string: (Bundle.main.infoDictionary?["BASE_URL"] as! String))!
     }
     

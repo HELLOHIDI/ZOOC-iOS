@@ -10,7 +10,7 @@ import Moya
 
 final class OnboardingAPI: BaseAPI {
     static let shared = OnboardingAPI()
-    var onboardingProvider = MoyaProvider<OnboardingService>(session: Session(interceptor: MoyaInterceptor.shared),
+    var onboardingProvider = MoyaProvider<OnboardingService>(session: Session(interceptor: MoyaInterceptor()),
                                                              plugins: [MoyaLoggingPlugin()])
     private override init() {}
 }

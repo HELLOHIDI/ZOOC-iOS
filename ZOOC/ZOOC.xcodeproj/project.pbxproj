@@ -67,7 +67,7 @@
 		876554A3295848D6006BBDA9 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876554A2295848D5006BBDA9 /* BaseViewController.swift */; };
 		876554A529584912006BBDA9 /* HomeGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876554A429584912006BBDA9 /* HomeGuideViewController.swift */; };
 		876554A72958494B006BBDA9 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876554A62958494B006BBDA9 /* MyViewController.swift */; };
-		877184382A052BF500AB7DE4 /* MoyaInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877184372A052BF500AB7DE4 /* MoyaInterceptor.swift */; };
+		877184382A052BF500AB7DE4 /* ZoocInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877184372A052BF500AB7DE4 /* ZoocInterceptor.swift */; };
 		8771843D2A0541B700AB7DE4 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8771843C2A0541B700AB7DE4 /* AuthService.swift */; };
 		8771843F2A0541C500AB7DE4 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8771843E2A0541C500AB7DE4 /* AuthAPI.swift */; };
 		877BAFC2295EEA6900C2AA1C /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 877BAFC1295EEA6900C2AA1C /* Pretendard-SemiBold.otf */; };
@@ -252,7 +252,7 @@
 		876554A2295848D5006BBDA9 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		876554A429584912006BBDA9 /* HomeGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGuideViewController.swift; sourceTree = "<group>"; };
 		876554A62958494B006BBDA9 /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
-		877184372A052BF500AB7DE4 /* MoyaInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaInterceptor.swift; sourceTree = "<group>"; };
+		877184372A052BF500AB7DE4 /* ZoocInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocInterceptor.swift; sourceTree = "<group>"; };
 		8771843C2A0541B700AB7DE4 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		8771843E2A0541C500AB7DE4 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
 		877BAFC1295EEA6900C2AA1C /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
@@ -567,7 +567,7 @@
 				87D5AF5929606AC900CA7F12 /* NetworkResult.swift */,
 				87D5AF5B29606AFC00CA7F12 /* BaseTargetType.swift */,
 				871EA33F296F6E5000D0E8CC /* BaseAPI.swift */,
-				877184372A052BF500AB7DE4 /* MoyaInterceptor.swift */,
+				877184372A052BF500AB7DE4 /* ZoocInterceptor.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -1261,7 +1261,7 @@
 				8764831F2952368800F74882 /* UITableViewCell+.swift in Sources */,
 				876483272952370F00F74882 /* UIStackView+.swift in Sources */,
 				D23502FD2961F85100F01101 /* MySettingModel.swift in Sources */,
-				877184382A052BF500AB7DE4 /* MoyaInterceptor.swift in Sources */,
+				877184382A052BF500AB7DE4 /* ZoocInterceptor.swift in Sources */,
 				D26C85F229693CFA00AEAF9B /* OnboardingWelcomeViewController.swift in Sources */,
 				871EA35329704CD200D0E8CC /* UIImage+.swift in Sources */,
 				4C66FB0329C9A20E0006359E /* RecordMissionIndicatorView.swift in Sources */,

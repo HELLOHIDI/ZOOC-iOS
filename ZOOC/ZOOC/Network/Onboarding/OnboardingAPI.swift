@@ -8,12 +8,47 @@
 import UIKit
 import Moya
 
-class OnboardingAPI: BaseAPI {
+final class OnboardingAPI: BaseAPI {
     static let shared = OnboardingAPI()
-    var onboardingProvider = MoyaProvider<OnboardingService>(plugins: [MoyaLoggingPlugin()])
+    var onboardingProvider = MoyaProvider<OnboardingService>(session: Session(interceptor: ZoocInterceptor()),
+                                                             plugins: [MoyaLoggingPlugin()])
+    private override init() {}
 }
 
 extension OnboardingAPI {
+    
+    public func patchFCMToken(fcmToken: String, completion: @escaping (NetworkResult<Any>) -> Void) {
+        onboardingProvider.request(.patchFCMToken(fcmToken: fcmToken)) {(result) in
+            self.disposeNetwork(result,
+                                dataModel: VoidResult.self,
+                                completion: completion)
+        }
+    }
+    
+    public func postKakaoSocialLogin(accessToken: String, completion: @escaping (NetworkResult<Any>) -> Void) {
+        onboardingProvider.request(.postKakaoSocialLogin(accessToken: accessToken)) { (result) in
+            self.disposeNetwork(result,
+                                dataModel: OnboardingJWTTokenResult.self,
+                                completion: completion)
+        }
+    }
+    
+    public func postAppleSocialLogin(request: OnboardingAppleSocialLoginRequest, completion: @escaping (NetworkResult<Any>) -> Void) {
+        onboardingProvider.request(.postAppleSocialLogin(request)) { (result) in
+            self.disposeNetwork(result,
+                                dataModel: OnboardingJWTTokenResult.self,
+                                completion: completion)
+        }
+    }
+    
+    public func postRefreshToken(completion: @escaping (NetworkResult<Any>) -> Void) {
+        onboardingProvider.request(.postRefreshToken) { result in
+            self.disposeNetwork(result,
+                                dataModel: OnboardingJWTTokenResult.self,
+                                completion: completion)
+        }
+    }
+    
     public func getInviteCode(familyID: String ,completion: @escaping (NetworkResult<Any>) -> Void) {
         onboardingProvider.request(.getInviteCode(familyId: familyID)) { (result) in
             self.disposeNetwork(result,
@@ -38,34 +73,10 @@ extension OnboardingAPI {
         }
     }
     
-    public func postKakaoSocialLogin(accessToken: String, completion: @escaping (NetworkResult<Any>) -> Void) {
-        onboardingProvider.request(.postKakaoSocialLogin(accessToken: accessToken)) { (result) in
-            self.disposeNetwork(result,
-                                dataModel: OnboardingJWTTokenResult.self,
-                                completion: completion)
-        }
-    }
-    
-    public func postAppleSocialLogin(request: OnboardingAppleSocialLoginRequest, completion: @escaping (NetworkResult<Any>) -> Void) {
-        onboardingProvider.request(.postAppleSocialLogin(request)) { (result) in
-            self.disposeNetwork(result,
-                                dataModel: OnboardingJWTTokenResult.self,
-                                completion: completion)
-        }
-    }
-    
     public func getFamily(completion: @escaping (NetworkResult<Any>) -> Void) {
         onboardingProvider.request(.getFamily) {(result) in
             self.disposeNetwork(result,
                                 dataModel: [OnboardingFamilyResult].self,
-                                completion: completion)
-        }
-    }
-    
-    public func patchFCMToken(fcmToken: String, completion: @escaping (NetworkResult<Any>) -> Void) {
-        onboardingProvider.request(.patchFCMToken(fcmToken: fcmToken)) {(result) in
-            self.disposeNetwork(result,
-                                dataModel: VoidResult.self,
                                 completion: completion)
         }
     }

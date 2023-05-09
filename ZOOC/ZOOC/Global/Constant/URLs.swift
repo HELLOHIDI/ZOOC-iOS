@@ -23,6 +23,7 @@ public enum URLs{
     
     static let kakaoLogin = "/user/kakao/signin"
     static let appleLogin = "/user/apple/signin"
+    static let refreshToken = "/user/refresh"
     static let editProfile = "/user/profile"
     static let signUp = "/user/create?code={code}"
     static let deleteUser = "/user"

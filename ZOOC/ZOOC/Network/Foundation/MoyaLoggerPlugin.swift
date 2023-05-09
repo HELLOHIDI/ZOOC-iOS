@@ -5,28 +5,37 @@
 //  Created by 장석우 on 2022/12/31.
 //
 
-import Foundation
+import UIKit
 
 import Moya
 
 final class MoyaLoggingPlugin: PluginType {
+    
+    func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
+        return request
+    }
     // Request를 보낼 때 호출
     func willSend(_ request: RequestType, target: TargetType) {
         guard let httpRequest = request.request else {
             print("--> 유효하지 않은 요청")
             return
         }
+        
         let url = httpRequest.description
-        let method = httpRequest.httpMethod ?? "unknown method"
-        var log = "----------------------------------------------------\n\n[\(method)] \(url)\n\n----------------------------------------------------\n"
-        log.append("API: \(target)\n")
+        let method = httpRequest.httpMethod ?? "메소드값이 nil입니다."
+        var log = """
+                  ⎡---------------------서버통신을 시작합니다.----------------------⎤
+                  [\(method)] \(url)
+                  API: \(target) \n
+                  """
         if let headers = httpRequest.allHTTPHeaderFields, !headers.isEmpty {
-            log.append("header: \(headers)\n")
+            log.append("header:\n \(headers) \n")
         }
         if let body = httpRequest.httpBody, let bodyString = String(bytes: body, encoding: String.Encoding.utf8) {
             log.append("\(bodyString)\n")
         }
-        log.append("------------------- END \(method) --------------------------")
+        
+        log.append("⎣------------------ Request END  -------------------------⎦")
         print(log)
     }
     // Response가 왔을 때
@@ -39,20 +48,22 @@ final class MoyaLoggingPlugin: PluginType {
         }
     }
     
+    func process(_ result: Result<Response, MoyaError>, target: TargetType) -> Result<Response, MoyaError> {
+        return result
+    }
+    
     func onSucceed(_ response: Response, target: TargetType, isFromError: Bool) {
         let request = response.request
         let url = request?.url?.absoluteString ?? "nil"
         let statusCode = response.statusCode
-        var log = "------------------- 네트워크 통신 성공 -------------------"
-        log.append("\n[\(statusCode)] \(url)\n----------------------------------------------------\n")
+        var log = "⎡------------------서버에게 Response가 도착했습니다. ------------------⎤\n"
         log.append("API: \(target)\n")
-//        response.response?.allHeaderFields.forEach {
-//            log.append("\($0): \($1)\n")
-//        }
-        if let reString = String(bytes: response.data, encoding: String.Encoding.utf8) {
-            log.append("\(reString)\n")
+        log.append("Status Code: [\(statusCode)]\n")
+        log.append("URL: \(url)\n")
+        if let responseData = String(bytes: response.data, encoding: String.Encoding.utf8) {
+            log.append("Data: \n  \(responseData)\n")
         }
-        log.append("------------------- END HTTP (\(response.data.count)-byte body) -------------------")
+        log.append("⎣------------------ END HTTP (\(response.data.count)-byte body) ------------------⎦")
         print(log)
     }
     
@@ -68,4 +79,3 @@ final class MoyaLoggingPlugin: PluginType {
         print(log)
     }
 }
-

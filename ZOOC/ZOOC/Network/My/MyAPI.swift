@@ -11,7 +11,9 @@ import Moya
 
 final class MyAPI: BaseAPI {
     static let shared = MyAPI()
-    private var myProvider = MoyaProvider<MyService>(plugins: [MoyaLoggingPlugin()])
+    private var myProvider = MoyaProvider<MyService>(session: Session(interceptor: ZoocInterceptor()),
+                                                     plugins: [MoyaLoggingPlugin()])
+    private override init() {}
 }
 
 extension MyAPI{
@@ -35,7 +37,7 @@ extension MyAPI{
     func deleteAccount(completion: @escaping (NetworkResult<Any>) -> Void) {
         myProvider.request(.deleteAccount) { (result) in
             self.disposeNetwork(result,
-                                dataModel: MyResult.self,
+                                dataModel: VoidResult.self,
                                 completion: completion)
         }
     }

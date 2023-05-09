@@ -183,7 +183,10 @@ final class DeleteAccountAlertViewController: BaseViewController {
     
     @objc func popToMyViewButtonDidTap() {
         MyAPI.shared.deleteAccount() { result in
-            self.dismiss(animated: false)
+            User.shared.clearData()
+            let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
+            onboardingNVC.setNavigationBarHidden(true, animated: true)
+            UIApplication.shared.changeRootViewController(onboardingNVC)
         }
     }
     

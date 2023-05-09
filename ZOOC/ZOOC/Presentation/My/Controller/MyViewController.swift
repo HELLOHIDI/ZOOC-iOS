@@ -70,9 +70,10 @@ final class MyViewController: BaseViewController {
     
     private func requestLogoutAPI() {
         MyAPI.shared.logout { result in
-            self.validateResult(result)
             User.shared.clearData()
-            UIApplication.shared.changeRootViewController(OnboardingLoginViewController())
+            let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
+            onboardingNVC.setNavigationBarHidden(true, animated: true)
+            UIApplication.shared.changeRootViewController(onboardingNVC)
         }
     }
     

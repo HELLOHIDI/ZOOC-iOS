@@ -65,18 +65,16 @@ extension SceneDelegate {
     
     private func autoLogin(_ window: UIWindow?) {
         guard !User.shared.zoocAccessToken.isEmpty else {
+            print("📌 DB에 AccessToken 값이 없습니다. 온보딩을 시작합니다.")
             autoLoginFail(window)
             return
         }
-        print("엠티가 아니래🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
         requestFamilyAPI(window)
     }
     
     
     
     private func requestFamilyAPI(_ window: UIWindow?) {
-        print("👩‍👩‍👧‍👦 \(#function)에서 Access Token은 = \(User.shared.zoocAccessToken)")
-        
         OnboardingAPI.shared.getFamily { result in
             switch result{
                 
@@ -97,13 +95,11 @@ extension SceneDelegate {
     }
     
     private func autoLoginSuccess(_ window: UIWindow?) {
-        print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
         print(#function)
         requestFCMTokenAPI(window)
     }
     
     private func autoLoginFail(_ window: UIWindow?) {
-        print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
         let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
         onboardingNVC.setNavigationBarHidden(true, animated: true)
         window?.rootViewController = onboardingNVC

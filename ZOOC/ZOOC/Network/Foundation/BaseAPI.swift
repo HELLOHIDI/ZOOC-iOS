@@ -69,16 +69,14 @@ class BaseAPI{
             
             if dataModel != VoidResult.self{
                 let networkResult = self.judgeStatus(by: statusCode, data, dataModel.self)
-                print("🥰 \(networkResult)")
                 completion(networkResult)
             } else {
                 let networkResult = self.judgeSimpleResponseStatus(by: statusCode, data)
-                print("🥰 \(networkResult)")
                 completion(networkResult)
             }
             
         case .failure(let err):
-            print("여기서 에러나는 경우는 무슨경우?")
+            print("[BaseAPI - disposeNetwork]/ndisposeNeretry에도 실패한것 같습니다.")
             print(err)
             completion(.authorizationFail("인증오류입니다람쥐"))
         }

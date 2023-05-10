@@ -44,17 +44,17 @@ class OnboardingBaseView: UIView {
         
         firstProgressBar.do {
             $0.backgroundColor = .zoocLightGray
-            $0.makeCornerRadius(ratio: 2)
+            $0.makeCornerRound(radius: 2)
         }
         
         secondProgressBar.do {
             $0.backgroundColor = .zoocLightGray
-            $0.makeCornerRadius(ratio: 2)
+            $0.makeCornerRound(radius: 2)
         }
         
         thirdProgressBar.do {
             $0.backgroundColor = .zoocLightGray
-            $0.makeCornerRadius(ratio: 2)
+            $0.makeCornerRound(radius: 2)
         }
     }
     private func hierarchy() {

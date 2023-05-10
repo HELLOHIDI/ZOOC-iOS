@@ -25,14 +25,17 @@ final class HomeArchiveIndicatorView : UIView{
     
     var widthRatio: Double? {
       didSet {
-        guard let widthRatio = self.widthRatio else { return }
-        self.indicatorTintView.snp.remakeConstraints {
-          $0.top.bottom.equalToSuperview()
-          $0.width.equalToSuperview().multipliedBy(widthRatio)
-          $0.left.greaterThanOrEqualToSuperview()
-          $0.right.lessThanOrEqualToSuperview()
-          self.leftInsetConstraint = $0.left.equalToSuperview().priority(900).constraint
-        }
+          guard let widthRatio = self.widthRatio else { return }
+          
+          self.indicatorTintView.snp.remakeConstraints {
+              $0.top.bottom.equalToSuperview()
+              $0.width.equalToSuperview().multipliedBy(widthRatio)
+              $0.left.greaterThanOrEqualToSuperview()
+              $0.right.lessThanOrEqualToSuperview()
+              self.leftInsetConstraint = $0.left.equalToSuperview().priority(900).constraint
+          }
+          
+          self.makeCornerRound()
       }
     }
 
@@ -61,6 +64,13 @@ final class HomeArchiveIndicatorView : UIView{
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.makeCornerRound()
+    }
+    
+    
+    
     //MARK: - Custom Method
     
     private func setUI() {
@@ -82,6 +92,11 @@ final class HomeArchiveIndicatorView : UIView{
             $0.right.lessThanOrEqualToSuperview()
             leftInsetConstraint = $0.left.equalToSuperview().priority(900).constraint
         }
+    }
+    
+    private func makeCornerRound() {
+        indicatorTintView.makeCornerRound(ratio: 2)
+        makeCornerRound(ratio: 2)
     }
     
     //MARK: - Action Method

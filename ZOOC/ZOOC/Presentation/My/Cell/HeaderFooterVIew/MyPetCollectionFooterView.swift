@@ -52,7 +52,7 @@ final class MyPetCollectionFooterView: UICollectionReusableView {
         registerPetButton.do {
             $0.backgroundColor = .zoocWhite2
             $0.setImage(Image.plus, for: .normal)
-            $0.makeCornerRadius(ratio: 20)
+            $0.makeCornerRound(radius: 20)
             $0.makeCornerBorder(borderWidth: 1, borderColor: .zoocLightGray)
         }
     }

@@ -18,7 +18,7 @@ final class DeleteAccountAlertViewController: BaseViewController {
     
     private var alertView = UIView().then {
         $0.backgroundColor = .white
-        $0.makeCornerRadius(ratio: 14)
+        $0.makeCornerRound(radius: 14)
         $0.alpha = 1
     }
     
@@ -90,7 +90,7 @@ final class DeleteAccountAlertViewController: BaseViewController {
         
         alertView.do {
             $0.backgroundColor = .white
-            $0.makeCornerRadius(ratio: 14)
+            $0.makeCornerRound(radius: 14)
             $0.alpha = 1
         }
         

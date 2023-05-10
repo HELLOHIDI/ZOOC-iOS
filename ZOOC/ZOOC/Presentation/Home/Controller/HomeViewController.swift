@@ -139,7 +139,12 @@ final class HomeViewController : BaseViewController {
         UIView.animate(withDuration: 0.5) {
             let allWidth = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
             let showingWidth = scrollView.bounds.width
-            self.rootView.archiveIndicatorView.widthRatio = showingWidth / allWidth
+            if allWidth >= showingWidth {
+                self.rootView.archiveIndicatorView.widthRatio = showingWidth / allWidth
+            } else {
+                self.rootView.archiveIndicatorView.widthRatio = 0
+            }
+             
             self.rootView.archiveIndicatorView.layoutIfNeeded()
         }
     }
@@ -176,10 +181,8 @@ final class HomeViewController : BaseViewController {
             guard let result = self.validateResult(result) as? [HomeArchiveResult] else { return }
             
             self.archiveData = result
-            
-            DispatchQueue.main.async {
-                self.configIndicatorBarWidth(self.rootView.archiveListCollectionView)
-            }
+            self.view.layoutIfNeeded()
+            self.configIndicatorBarWidth(self.rootView.archiveListCollectionView)
         }
     }
     

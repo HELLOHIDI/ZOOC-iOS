@@ -55,14 +55,14 @@ final class MyEditProfileView: UIView {
         
         profileImageButton.do {
             $0.setImage(Image.logoSymbol, for: .normal)
-            $0.makeCornerRadius(ratio: self.frame.width / 2)
+            $0.makeCornerRound(radius: self.frame.width / 2)
             $0.contentMode = .scaleAspectFill
         }
         
         cameraIconImageView.do {
             $0.image = Image.cameraCircleGreen
             $0.contentMode = .scaleAspectFill
-            $0.makeCornerRadius(ratio: self.frame.width / 2)
+            $0.makeCornerRound(radius: self.frame.width / 2)
         }
         
         nameTextField.do {
@@ -84,7 +84,7 @@ final class MyEditProfileView: UIView {
         completeButton.do {
             $0.backgroundColor = .zoocGray1
             $0.setTitle("완료", for: .normal)
-            $0.makeCornerRadius(ratio: 27)
+            $0.makeCornerRound(radius: 27)
         }
     }
     

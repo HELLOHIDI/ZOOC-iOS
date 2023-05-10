@@ -87,7 +87,17 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         let label = UILabel()
         label.font = .zoocCaption
         label.textColor = .zoocGray2
+        label.backgroundColor = .red
         return label
+    }()
+    
+    private let hStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.alignment = .center
+        stackView.spacing = 5
+        return stackView
     }()
     
     private let writerCollectionView : UICollectionView = {
@@ -253,7 +263,8 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
             $0.leading.equalTo(self.writerProfileImageView.snp.trailing).offset(7)
             $0.centerY.equalTo(self.writerProfileImageView)
             $0.height.equalTo(24)
-            $0.width.equalTo(90)
+            //$0.trailing.lessThanOrEqualTo(dateLabel.snp.leading).offset(-20).priority(900)
+            $0.width.lessThanOrEqualTo(writerLabel.intrinsicContentSize.width + 14).priority(.medium)
         }
     }
     private func updateUI() {
@@ -274,6 +285,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
                 self.layoutIfNeeded()
             },completion:  { _ in
                 self.expandedSecondAnimatedLayout()
+                self.layoutIfNeeded()
             })
         }
     }

@@ -130,6 +130,7 @@ final class RecordCompleteViewController : BaseViewController {
         guard let petID = firstPetID else {
             print("가드문에 막힘 petID가 없는듯")
             return }
+        
         print("가드문 통과")
         tabVC.homeViewController.selectPetCollectionView(petID: petID)
         

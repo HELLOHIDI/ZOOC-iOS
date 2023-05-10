@@ -71,12 +71,12 @@ final class OnboardingLoginView: UIView {
         }
         
         appleLoginButton.do {
-            $0.makeCornerRadius(ratio: 27)
+            $0.makeCornerRound(radius: 27)
         }
         
         kakaoLoginButton.do {
             $0.setImage(Image.kakaoLogin, for: .normal)
-            $0.makeCornerRadius(ratio: 27)
+            $0.makeCornerRound(radius: 27)
             $0.backgroundColor = UIColor(r: 255, g: 231, b: 0)
         }
     }

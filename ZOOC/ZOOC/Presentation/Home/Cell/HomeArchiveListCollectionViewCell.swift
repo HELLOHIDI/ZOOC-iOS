@@ -253,7 +253,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
             $0.leading.equalTo(self.writerProfileImageView.snp.trailing).offset(7)
             $0.centerY.equalTo(self.writerProfileImageView)
             $0.height.equalTo(24)
-            $0.width.equalTo(writerLabel.intrinsicContentSize.width + 14)
+            $0.width.equalTo(90)
         }
     }
     private func updateUI() {

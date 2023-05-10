@@ -111,9 +111,13 @@ final class MyEditProfileViewController: BaseViewController {
             textFieldState = .isWritten
         case 10...:
             textFieldState = .isFull
-            let index = text.index(text.startIndex, offsetBy: 10)
-            let newString = text[text.startIndex..<index]
-            textField.text = String(newString)
+            let fixedText = text.substring(from: 0, to:9)
+            textField.text = fixedText + " "
+            
+            let when = DispatchTime.now() + 0.01
+            DispatchQueue.main.asyncAfter(deadline: when) {
+                textField.text = fixedText
+            }
         default:
             textFieldState = .isEmpty
         }
@@ -121,11 +125,13 @@ final class MyEditProfileViewController: BaseViewController {
         textFieldState.setTextFieldState(
             textField: nil,
             underLineView: rootView.underLineView,
-            button: rootView.completeButton
+            button: rootView.completeButton,
+            label: rootView.numberOfNameCharactersLabel
         )
         setTextFieldText(textCount: text.count)
         
     }
+    
     @objc func editCompleteButtonDidTap(){
         guard let nickName = rootView.nameTextField.text else { return }
         self.editMyProfileData.nickName = nickName

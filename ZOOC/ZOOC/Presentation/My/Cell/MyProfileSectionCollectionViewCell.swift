@@ -76,7 +76,7 @@ final class MyProfileSectionCollectionViewCell: UICollectionViewCell  {
     private func layout() {
         profileImageView.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(38)
-            $0.leading.equalToSuperview().offset(38)
+            $0.leading.equalToSuperview().offset(6)
             $0.size.equalTo(72)
         }
         
@@ -87,7 +87,7 @@ final class MyProfileSectionCollectionViewCell: UICollectionViewCell  {
         
         editProfileButton.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(62)
-            $0.trailing.equalToSuperview().inset(36)
+            $0.trailing.equalToSuperview().inset(6)
             $0.width.equalTo(45)
             $0.height.equalTo(24)
         }

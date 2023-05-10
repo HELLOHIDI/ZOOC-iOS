@@ -132,6 +132,7 @@
 		D235030729647B4200F01101 /* MyAppInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D235030629647B4200F01101 /* MyAppInformationViewController.swift */; };
 		D2350309296490A700F01101 /* MyEditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2350308296490A700F01101 /* MyEditProfileView.swift */; };
 		D235030B2964991700F01101 /* MyEditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D235030A2964991700F01101 /* MyEditProfileViewController.swift */; };
+		D25323162A07330C00562D92 /* MyAppInformationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25323152A07330C00562D92 /* MyAppInformationHeaderView.swift */; };
 		D25543A22996B22E0072BF0D /* OnboardingRegisterPetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25543A12996B22E0072BF0D /* OnboardingRegisterPetResult.swift */; };
 		D25543A4299A239B0072BF0D /* OnboardingRegisterPetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25543A3299A239B0072BF0D /* OnboardingRegisterPetRequest.swift */; };
 		D26989A829A60EE7008A5ACC /* OnboardingAgreementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26989A729A60EE7008A5ACC /* OnboardingAgreementViewModel.swift */; };
@@ -315,6 +316,7 @@
 		D235030629647B4200F01101 /* MyAppInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppInformationViewController.swift; sourceTree = "<group>"; };
 		D2350308296490A700F01101 /* MyEditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditProfileView.swift; sourceTree = "<group>"; };
 		D235030A2964991700F01101 /* MyEditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditProfileViewController.swift; sourceTree = "<group>"; };
+		D25323152A07330C00562D92 /* MyAppInformationHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppInformationHeaderView.swift; sourceTree = "<group>"; };
 		D25543A12996B22E0072BF0D /* OnboardingRegisterPetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRegisterPetResult.swift; sourceTree = "<group>"; };
 		D25543A3299A239B0072BF0D /* OnboardingRegisterPetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRegisterPetRequest.swift; sourceTree = "<group>"; };
 		D26989A729A60EE7008A5ACC /* OnboardingAgreementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAgreementViewModel.swift; sourceTree = "<group>"; };
@@ -1024,6 +1026,7 @@
 			children = (
 				D26C85CE2968681900AEAF9B /* MyPetCollectionFooterView.swift */,
 				D26C68E9296DE6F70088DC9A /* MyRegisterPetTableFooterView.swift */,
+				D25323152A07330C00562D92 /* MyAppInformationHeaderView.swift */,
 			);
 			path = HeaderFooterVIew;
 			sourceTree = "<group>";
@@ -1203,6 +1206,7 @@
 				8731C4B029A93EF500006743 /* EmojiModel.swift in Sources */,
 				D2DD45C7297D9612001722A1 /* BaseButton.swift in Sources */,
 				871EA351297042D800D0E8CC /* RecordResult.swift in Sources */,
+				D25323162A07330C00562D92 /* MyAppInformationHeaderView.swift in Sources */,
 				D23503052964743100F01101 /* MyAppInformationModel.swift in Sources */,
 				D26C85DD2968B0A500AEAF9B /* MyNoticeSettingViewController.swift in Sources */,
 				D26C85E12968C63F00AEAF9B /* OnboardingLoginViewController.swift in Sources */,

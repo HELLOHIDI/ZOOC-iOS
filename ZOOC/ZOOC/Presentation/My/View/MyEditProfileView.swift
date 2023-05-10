@@ -55,14 +55,14 @@ final class MyEditProfileView: UIView {
         
         profileImageButton.do {
             $0.setImage(Image.logoSymbol, for: .normal)
-            $0.makeCornerRadius(ratio: 54.5)
+            $0.makeCornerRadius(ratio: self.frame.width / 2)
             $0.contentMode = .scaleAspectFill
         }
         
         cameraIconImageView.do {
             $0.image = Image.cameraCircleGreen
             $0.contentMode = .scaleAspectFill
-            $0.makeCornerRadius(ratio: 17.5)
+            $0.makeCornerRadius(ratio: self.frame.width / 2)
         }
         
         nameTextField.do {
@@ -109,7 +109,7 @@ final class MyEditProfileView: UIView {
         
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(19)
-            $0.leading.equalTo(self.backButton.snp.trailing).offset(83)
+            $0.centerX.equalToSuperview()
         }
         
         profileImageButton.snp.makeConstraints {
@@ -119,9 +119,9 @@ final class MyEditProfileView: UIView {
         }
         
         cameraIconImageView.snp.makeConstraints {
-            $0.top.equalTo(self.titleLabel.snp.bottom).offset(268)
-            $0.leading.equalToSuperview().offset(210)
-            $0.size.equalTo(30)
+            $0.top.equalTo(self.profileImageButton).offset(78)
+            $0.leading.equalTo(self.profileImageButton).offset(78)
+            $0.size.equalTo(35)
         }
         
         nameTextField.snp.makeConstraints {
@@ -133,7 +133,7 @@ final class MyEditProfileView: UIView {
             $0.top.equalTo(self.nameTextField.snp.bottom).offset(9)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(205)
-            $0.height.equalTo(1)
+            $0.height.equalTo(2)
         }
         
         numberOfNameCharactersLabel.snp.makeConstraints {

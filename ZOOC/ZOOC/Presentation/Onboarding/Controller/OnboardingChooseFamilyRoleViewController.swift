@@ -72,7 +72,8 @@ final class OnboardingChooseFamilyRoleViewController: UIViewController{
         textFieldState.setTextFieldState(
             textField: onboardingChooseFamilyRoleView.chooseFamilyTextField,
             underLineView: onboardingChooseFamilyRoleView.chooseFamilyTextFeildUnderLineView,
-            button: onboardingChooseFamilyRoleView.chooseFamilyButton
+            button: onboardingChooseFamilyRoleView.chooseFamilyButton,
+            label: nil
         )
     }
     

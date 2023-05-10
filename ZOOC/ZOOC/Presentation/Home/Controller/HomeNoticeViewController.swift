@@ -21,18 +21,15 @@ final class HomeNoticeViewController: BaseViewController {
     
     //MARK: - Properties
     
-    private let homeNoticeView = HomeNoticeView()
+    private let rootView = HomeNoticeView()
     
     private var homeNoticeData: [HomeNoticeResult] = []
-//    private var myFamilyMemberData: [MyUser] = []
-//    private var myPetMemberData: [MyPet] = []
-//    private var myProfileData: MyUser?
     
     
     //MARK: - Life Cycle
     
     override func loadView() {
-        self.view = homeNoticeView
+        self.view = rootView
     }
     
     override func viewDidLoad() {
@@ -47,18 +44,19 @@ final class HomeNoticeViewController: BaseViewController {
         HomeAPI.shared.getNotice() { result in
             guard let result = self.validateResult(result) as? [HomeNoticeResult] else { return }
             self.homeNoticeData = result
-            self.homeNoticeView.noticeTableView.reloadData()
+            self.showNoticeView(count: self.homeNoticeData.count)
+            self.rootView.noticeTableView.reloadData()
         }
     }
     
     //MARK: - Custom Method
     
     func register() {
-        homeNoticeView.noticeTableView.delegate = self
-        homeNoticeView.noticeTableView.dataSource = self
-        homeNoticeView.noticeTableView.register(HomeNoticeTableViewCell.self, forCellReuseIdentifier: HomeNoticeTableViewCell.cellIdentifier)
+        rootView.noticeTableView.delegate = self
+        rootView.noticeTableView.dataSource = self
+        rootView.noticeTableView.register(HomeNoticeTableViewCell.self, forCellReuseIdentifier: HomeNoticeTableViewCell.cellIdentifier)
         
-        homeNoticeView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
     }
     
     //MARK: - Action Method
@@ -86,6 +84,14 @@ extension HomeNoticeViewController: UITableViewDataSource {
         cell.selectionStyle = .none
         cell.dataBind(data: homeNoticeData[indexPath.row])
         return cell
+    }
+}
+
+extension HomeNoticeViewController {
+    func showNoticeView(count: Int) {
+        if count == 0 {
+            rootView.defaultView.isHidden = false
+        }
     }
 }
 

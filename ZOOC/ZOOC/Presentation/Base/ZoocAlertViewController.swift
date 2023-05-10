@@ -40,7 +40,6 @@ final class ZoocAlertViewController: UIViewController {
     
     private func target() {
         popToMyViewButton.addTarget(self, action: #selector(popToMyViewButtonDidTap), for: .touchUpInside)
-        
         keepEditButton.addTarget(self, action: #selector(keepButtonDidTap), for: .touchUpInside)
     }
     
@@ -145,11 +144,12 @@ final class ZoocAlertViewController: UIViewController {
 
 extension ZoocAlertViewController {
     private func popToMyView() {
-        guard let presentingTBC = self.presentingViewController as? UITabBarController else { return }
-        guard let presentingNVC = presentingTBC.selectedViewController as? UINavigationController else { return }
-        guard let presentingVC = presentingNVC.topViewController else { return }
-        presentingVC.navigationController?.popViewController(animated: true)
+        guard let presentingNVC = self.presentingViewController as? UINavigationController else { return }
+        guard let presentingTVC = presentingNVC.topViewController as? UITabBarController else { return }
+        guard let presentingNVC2 = presentingTVC.selectedViewController as? UINavigationController else { return }
+        guard let presentingVC = presentingNVC2.topViewController else { return }
         
+        presentingVC.navigationController?.popViewController(animated: true)
         self.dismiss(animated: false)
     }
 }

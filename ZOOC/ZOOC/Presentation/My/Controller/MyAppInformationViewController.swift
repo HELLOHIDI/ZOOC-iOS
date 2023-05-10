@@ -54,6 +54,12 @@ extension MyAppInformationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 63
     }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 43
+    }
+    
+    
 }
 
 //MARK: - UITableViewDataSource
@@ -68,5 +74,10 @@ extension MyAppInformationViewController: UITableViewDataSource {
                 AppInformationTableViewCell else { return UITableViewCell() }
         cell.dataBind(model: MyAppInformationModel.appInformationData[indexPath.row])
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MyAppInformationHeaderView.cellIdentifier) as? MyAppInformationHeaderView else { return UIView()}
+        return header
     }
 }

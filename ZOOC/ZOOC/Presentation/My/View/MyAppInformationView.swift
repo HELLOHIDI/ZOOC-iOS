@@ -16,8 +16,6 @@ final class MyAppInformationView: UIView {
     
     public var backButton = UIButton()
     private var appInformationLabel = UILabel()
-    private var currentVersionTitleLabel = UILabel()
-    private var currentVersionLabel = UILabel()
     public var appInformationTableView = UITableView(frame: .zero, style: .plain)
     
     //MARK: - Life Cycles
@@ -41,6 +39,8 @@ final class MyAppInformationView: UIView {
         appInformationTableView.register(
             AppInformationTableViewCell.self,
             forCellReuseIdentifier: AppInformationTableViewCell.cellIdentifier)
+        
+        appInformationTableView.register(MyAppInformationHeaderView.self, forHeaderFooterViewReuseIdentifier: MyAppInformationHeaderView.cellIdentifier)
     }
     
     private func style() {
@@ -54,18 +54,7 @@ final class MyAppInformationView: UIView {
             $0.font = .zoocHeadLine
             $0.text = "앱 정보"
             $0.textColor = .zoocDarkGray2
-        }
-        
-        currentVersionTitleLabel.do {
-            $0.font = .zoocBody3
-            $0.text = "현재 버전"
-            $0.textColor = .zoocDarkGray2
-        }
-        
-        currentVersionLabel.do {
-            $0.font = .zoocCaption
-            $0.text = "v1.0.0"
-            $0.textColor = .zoocDarkGreen
+            $0.textAlignment = .center
         }
         
         appInformationTableView.do {
@@ -79,9 +68,8 @@ final class MyAppInformationView: UIView {
     private func hierarchy() {
         self.addSubviews(backButton,
                     appInformationLabel,
-                    currentVersionTitleLabel,
-                    currentVersionLabel,
-                    appInformationTableView)
+                    appInformationTableView
+        )
     }
     
     private func layout() {
@@ -96,18 +84,8 @@ final class MyAppInformationView: UIView {
             $0.centerX.equalToSuperview()
         }
         
-        currentVersionTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.backButton.snp.bottom).offset(25)
-            $0.leading.equalToSuperview().offset(40)
-        }
-        
-        currentVersionLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(85)
-            $0.trailing.equalToSuperview().inset(30)
-        }
-        
         appInformationTableView.snp.makeConstraints {
-            $0.top.equalTo(self.currentVersionTitleLabel.snp.bottom).offset(20)
+            $0.top.equalTo(self.appInformationLabel.snp.bottom).offset(33)
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.bottom.equalToSuperview()
         }

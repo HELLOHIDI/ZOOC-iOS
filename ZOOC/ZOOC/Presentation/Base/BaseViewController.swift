@@ -39,6 +39,7 @@ class BaseViewController : UIViewController{
         dismissKeyboardWhenTappedAround()
         
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.navigationController?.isNavigationBarHidden = true
         navigationController?.delegate = self
     }
     
@@ -66,6 +67,7 @@ class BaseViewController : UIViewController{
     }
     
     func checkAlbumPermission() {
+        print(#function)
         PHPhotoLibrary.requestAuthorization( { status in
             switch status{
             case .authorized:

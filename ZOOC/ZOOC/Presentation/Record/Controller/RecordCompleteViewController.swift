@@ -122,9 +122,15 @@ final class RecordCompleteViewController : BaseViewController {
     @objc
     private func goArchiveButtonDidTap() {
         
-        guard let tabVC = navigationController?.previousViewController?.presentingViewController as? ZoocTabBarController else { return }
-        
-        guard let petID = firstPetID else { return }
+        guard let tabVC = UIApplication.shared.rootViewController  as? ZoocTabBarController
+        else {
+            print("가드문에 막힘 tabVC가 없는듯")
+            return }
+
+        guard let petID = firstPetID else {
+            print("가드문에 막힘 petID가 없는듯")
+            return }
+        print("가드문 통과")
         tabVC.homeViewController.selectPetCollectionView(petID: petID)
         
         self.navigationController?.previousViewController?.navigationController?.previousViewController?.dismiss(animated: true)

@@ -20,6 +20,13 @@ extension UIApplication {
                           duration: 0.5,
                           options: .transitionCrossDissolve,
                           animations: nil)
+    }
+    
+    var rootViewController: UIViewController? {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScenes = scenes.first as? UIWindowScene
         
+        let firstWindow = windowScenes?.windows.filter { $0.isKeyWindow }.first
+        return firstWindow?.rootViewController
     }
 }

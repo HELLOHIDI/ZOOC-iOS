@@ -87,6 +87,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         let label = UILabel()
         label.font = .zoocCaption
         label.textColor = .zoocGray2
+        label.textAlignment = .center
         return label
     }()
     
@@ -191,7 +192,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         
         hStackView.snp.makeConstraints {
             $0.bottom.equalToSuperview().offset(-20)
-            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
         }
         
         dateLabel.snp.makeConstraints {
@@ -220,6 +221,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         writerCollectionView.alpha = 0
         contentLabel.alpha = 0
         writerLabel.alpha = 0
+        spacing.alpha = 0
     }
     
     
@@ -234,6 +236,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         writerCollectionView.alpha = 1
         contentLabel.alpha = 1
         writerLabel.alpha = 1
+        spacing.alpha = 1
     }
     
     private func foldedAnimatedLayout() {
@@ -245,7 +248,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         
         self.hStackView.snp.remakeConstraints {
             $0.bottom.equalToSuperview().offset(-20)
-            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
         }
     }
     
@@ -266,7 +269,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
     private func expandedSecondAnimatedLayout() {
         
         self.expandedLayout()
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: 1) {
             self.expandedAlpha()
         }
         
@@ -274,12 +277,15 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
             $0.top.equalTo(self.petImageView.snp.bottom).offset(19)
             $0.leading.trailing.equalToSuperview().inset(20)
         }
+        
         dateLabel.snp.makeConstraints {
             $0.width.equalTo(dateLabel.intrinsicContentSize).priority(.init(990))
         }
+        
         writerLabel.snp.makeConstraints {
             $0.width.equalTo(writerLabel.intrinsicContentSize.width + 14).priority(.init(751))
         }
+        
         spacing.snp.makeConstraints {
             $0.size.equalTo(24).priority(.init(251))
         }
@@ -300,7 +306,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
             
         case .folded:
             foldedLayout()
-            
+            foldedAlpha()
             UIView.animate(withDuration: 0.3, animations: {
                 self.foldedAnimatedLayout()
                 self.layoutIfNeeded()

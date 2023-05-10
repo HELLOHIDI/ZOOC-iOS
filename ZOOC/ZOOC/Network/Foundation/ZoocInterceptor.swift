@@ -65,6 +65,10 @@ final class ZoocInterceptor: RequestInterceptor {
                 guard let data = data as? (String, Int) else { return }
                 print(data)
                 print("👽 StatusCode: 406을 반환받았습니다. 이는 모든 토큰이 만료됐음을 뜻합니다.")
+                
+                let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
+                onboardingNVC.setNavigationBarHidden(true, animated: true)
+                UIApplication.shared.changeRootViewController(onboardingNVC)
                 completion(.doNotRetryWithError(error))
             default:
                 print("👽 default에 들어왔습니다. default에 들어오지 않게 추후 분기처리 할게요.")

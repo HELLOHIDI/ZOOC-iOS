@@ -122,7 +122,7 @@ final class RecordCompleteViewController : BaseViewController {
     @objc
     private func goArchiveButtonDidTap() {
         
-        guard let tabVC = UIApplication.shared.rootViewController  as? ZoocTabBarController
+        guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController
         else {
             print("가드문에 막힘 tabVC가 없는듯")
             return }

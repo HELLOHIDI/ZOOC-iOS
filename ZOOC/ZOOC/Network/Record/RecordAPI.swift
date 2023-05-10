@@ -10,7 +10,8 @@ import Moya
 
 class RecordAPI: BaseAPI {
     static let shared = RecordAPI()
-    var recordProvider = MoyaProvider<RecordService>(plugins: [MoyaLoggingPlugin()])
+    var recordProvider = MoyaProvider<RecordService>(session: Session(interceptor: ZoocInterceptor()),
+                                                     plugins: [MoyaLoggingPlugin()])
     private override init() {}
 }
 

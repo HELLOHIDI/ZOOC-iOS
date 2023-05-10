@@ -10,7 +10,8 @@ import Moya
 
 class HomeAPI: BaseAPI {
     static let shared = HomeAPI()
-    var homeProvider = MoyaProvider<HomeService>(plugins: [MoyaLoggingPlugin()])
+    var homeProvider = MoyaProvider<HomeService>(session: Session(interceptor: ZoocInterceptor()),
+                                                 plugins: [MoyaLoggingPlugin()])
     private override init() {}
 }
 

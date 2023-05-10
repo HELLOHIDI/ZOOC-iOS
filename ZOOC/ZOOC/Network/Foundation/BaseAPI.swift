@@ -14,6 +14,7 @@ class BaseAPI{
         let decoder = JSONDecoder()
         guard let decodedData = try? decoder.decode(GenericResponse<T>.self, from: data)
         else {
+            print("⛔️ \(self)애서 디코딩 오류가 발생했습니다 ⛔️")
             return .pathErr
         }
         
@@ -24,6 +25,8 @@ class BaseAPI{
                 return .decodedErr
             }
             return .success(decodedData.data as Any)
+        case 406:
+            return .authorizationFail((decodedData.message, decodedData.status))
         case 400..<500:
             return .requestErr(decodedData.message ?? "요청에러")
         case 500:
@@ -37,14 +40,15 @@ class BaseAPI{
         let decoder = JSONDecoder()
         guard let decodedData = try? decoder.decode(SimpleResponse.self, from: data)
         else {
-            return .pathErr
+            print("⛔️ \(self)애서 디코딩 오류가 발생했습니다 ⛔️")
+            return .decodedErr
         }
         
         switch statusCode {
         case 200..<205:
             return .success(decodedData)
         case 406:
-            return .authorizationFail((decodedData.message, decodedData.message))
+            return .authorizationFail((decodedData.message, decodedData.status))
         case 400..<500:
             return .requestErr(decodedData.message ?? "요청에러")
         case 500:
@@ -57,6 +61,7 @@ class BaseAPI{
     public func disposeNetwork<T: Codable>(_ result: Result<Response, MoyaError>,
                                     dataModel: T.Type,
                                     completion: @escaping (NetworkResult<Any>) -> Void) {
+        print("📍\(#function) 에서 result \(result)")
         switch result{
         case .success(let response):
             let statusCode = response.statusCode
@@ -71,7 +76,7 @@ class BaseAPI{
             }
             
         case .failure(let err):
-            print("여기서 에러나는 경우는 무슨경우?")
+            print("[BaseAPI - disposeNetwork]/ndisposeNeretry에도 실패한것 같습니다.")
             print(err)
             completion(.authorizationFail("인증오류입니다람쥐"))
         }

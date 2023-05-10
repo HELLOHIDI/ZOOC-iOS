@@ -27,7 +27,6 @@ struct User {
     }
     var zoocAccessToken: String {
         get {
-            print(Thread.current)
             return UserDefaultsManager.zoocAccessToken ?? ""
         }
         set {

@@ -12,7 +12,7 @@ protocol BaseTargetType: TargetType{ }
 
 extension BaseTargetType{
     
-    var baseURL: URL{
+    var baseURL: URL {
         return URL(string: (Bundle.main.infoDictionary?["BASE_URL"] as! String))!
     }
     
@@ -22,6 +22,7 @@ extension BaseTargetType{
     
     var validationType: ValidationType {
         return .customCodes(Array(0...500).filter { $0 != 401 } )
+        //return .successCodes
     }
    
 }

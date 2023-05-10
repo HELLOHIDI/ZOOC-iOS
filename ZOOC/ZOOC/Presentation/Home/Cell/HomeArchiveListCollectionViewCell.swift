@@ -162,9 +162,10 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
                                 writerCollectionView,
                                 writerProfileImageView,
                                 contentLabel,
-                                hStackView)
+                                hStackView,
+                                dateLabel)
         
-        hStackView.addArrangedSubViews(writerLabel, spacing, dateLabel)
+        hStackView.addArrangedSubViews(writerLabel, spacing)
         
         petImageView.snp.makeConstraints {
             $0.top.equalToSuperview()
@@ -185,7 +186,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         
         
         writerProfileImageView.snp.makeConstraints {
-            $0.bottom.equalTo(hStackView.snp.top).offset(-9)
+            $0.bottom.equalTo(dateLabel.snp.top).offset(-9)
             $0.centerX.equalToSuperview()
             $0.height.width.equalTo(24)
         }
@@ -196,12 +197,14 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         }
         
         dateLabel.snp.makeConstraints {
-            $0.width.equalTo(dateLabel.intrinsicContentSize).priority(.init(990))
+            $0.bottom.equalToSuperview().offset(-20)
+            $0.leading.trailing.equalToSuperview()
         }
         
         writerLabel.snp.makeConstraints {
             $0.width.equalTo(writerLabel.intrinsicContentSize.width + 14).priority(.init(751))
         }
+        
         spacing.snp.makeConstraints {
             $0.size.equalTo(24).priority(.init(251))
         }
@@ -259,27 +262,33 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
             $0.height.width.equalTo(24)
         }
         
+        
         self.hStackView.snp.remakeConstraints {
+            $0.bottom.equalToSuperview().offset(-20)
             $0.leading.equalTo(writerProfileImageView.snp.trailing).offset(7)
+            $0.trailing.equalTo(dateLabel.snp.leading).offset(-5)
+        }
+        
+        self.dateLabel.snp.remakeConstraints {
+            $0.width.equalTo(dateLabel.intrinsicContentSize).priority(.init(990))
             $0.bottom.equalToSuperview().offset(-20)
             $0.trailing.equalToSuperview().offset(-18)
         }
+        
     }
     
     private func expandedSecondAnimatedLayout() {
         
         self.expandedLayout()
-        UIView.animate(withDuration: 1) {
+        UIView.animate(withDuration: 0.2) {
             self.expandedAlpha()
         }
+        
+        
         
         self.contentLabel.snp.remakeConstraints {
             $0.top.equalTo(self.petImageView.snp.bottom).offset(19)
             $0.leading.trailing.equalToSuperview().inset(20)
-        }
-        
-        dateLabel.snp.makeConstraints {
-            $0.width.equalTo(dateLabel.intrinsicContentSize).priority(.init(990))
         }
         
         writerLabel.snp.makeConstraints {
@@ -289,14 +298,6 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         spacing.snp.makeConstraints {
             $0.size.equalTo(24).priority(.init(251))
         }
-        
-//        self.writerLabel.snp.remakeConstraints {
-//            $0.leading.equalTo(self.writerProfileImageView.snp.trailing).offset(7)
-//            $0.centerY.equalTo(self.writerProfileImageView)
-//            $0.height.equalTo(24)
-//            //$0.trailing.lessThanOrEqualTo(dateLabel.snp.leading).offset(-20).priority(900)
-//            $0.width.lessThanOrEqualTo(writerLabel.intrinsicContentSize.width + 14).priority(.medium)
-//        }
         
         
     }

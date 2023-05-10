@@ -87,7 +87,6 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         let label = UILabel()
         label.font = .zoocCaption
         label.textColor = .zoocGray2
-        label.backgroundColor = .red
         return label
     }()
     
@@ -98,6 +97,11 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         stackView.alignment = .center
         stackView.spacing = 5
         return stackView
+    }()
+    
+    private let spacing : UIView = {
+        let view = UIView()
+        return view
     }()
     
     private let writerCollectionView : UICollectionView = {
@@ -136,20 +140,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
     
     //MARK: - Custom Method
     
-    
-    private func foldedLayout() {
-        writerCollectionView.isHidden = true
-        contentLabel.isHidden = true
-        writerLabel.isHidden = true
-    }
-    
-    private func foldedAlpha() {
-        writerCollectionView.alpha = 0
-        contentLabel.alpha = 0
-        writerLabel.alpha = 0
-    }
 
-    
     private func register() {
         writerCollectionView.delegate = self
         writerCollectionView.dataSource = self
@@ -164,13 +155,16 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
     }
     
     private func setLayout() {
+        
+        
         contentView.addSubviews(petImageView,
                                 writerCollectionView,
                                 writerProfileImageView,
                                 contentLabel,
-                                writerLabel,
-                                dateLabel)
-       
+                                hStackView)
+        
+        hStackView.addArrangedSubViews(writerLabel, spacing, dateLabel)
+        
         petImageView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
@@ -188,24 +182,44 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
-        writerLabel.snp.makeConstraints {
-            $0.leading.equalTo(writerProfileImageView.snp.trailing).offset(7)
-            $0.centerY.equalTo(writerProfileImageView)
-            $0.height.equalTo(24)
-        }
         
         writerProfileImageView.snp.makeConstraints {
-            $0.bottom.equalTo(dateLabel.snp.top).offset(-9)
+            $0.bottom.equalTo(hStackView.snp.top).offset(-9)
             $0.centerX.equalToSuperview()
             $0.height.width.equalTo(24)
         }
         
-        dateLabel.snp.makeConstraints {
+        hStackView.snp.makeConstraints {
             $0.bottom.equalToSuperview().offset(-20)
             $0.centerX.equalToSuperview()
         }
         
+        dateLabel.snp.makeConstraints {
+            $0.width.equalTo(dateLabel.intrinsicContentSize).priority(.init(990))
+        }
+        
+        writerLabel.snp.makeConstraints {
+            $0.width.equalTo(writerLabel.intrinsicContentSize.width + 14).priority(.init(751))
+        }
+        spacing.snp.makeConstraints {
+            $0.size.equalTo(24).priority(.init(251))
+        }
+        
     
+    }
+    
+    
+    private func foldedLayout() {
+        writerCollectionView.isHidden = true
+        contentLabel.isHidden = true
+        writerLabel.isHidden = true
+        spacing.isHidden = true
+    }
+    
+    private func foldedAlpha() {
+        writerCollectionView.alpha = 0
+        contentLabel.alpha = 0
+        writerLabel.alpha = 0
     }
     
     
@@ -213,6 +227,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         writerCollectionView.isHidden = false
         contentLabel.isHidden = false
         writerLabel.isHidden = false
+        spacing.isHidden = false
     }
     
     private func expandedAlpha() {
@@ -228,7 +243,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
             $0.height.width.equalTo(24)
         }
         
-        self.dateLabel.snp.remakeConstraints {
+        self.hStackView.snp.remakeConstraints {
             $0.bottom.equalToSuperview().offset(-20)
             $0.centerX.equalToSuperview()
         }
@@ -241,7 +256,8 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
             $0.height.width.equalTo(24)
         }
         
-        self.dateLabel.snp.remakeConstraints {
+        self.hStackView.snp.remakeConstraints {
+            $0.leading.equalTo(writerProfileImageView.snp.trailing).offset(7)
             $0.bottom.equalToSuperview().offset(-20)
             $0.trailing.equalToSuperview().offset(-18)
         }
@@ -258,14 +274,25 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
             $0.top.equalTo(self.petImageView.snp.bottom).offset(19)
             $0.leading.trailing.equalToSuperview().inset(20)
         }
-        
-        self.writerLabel.snp.remakeConstraints {
-            $0.leading.equalTo(self.writerProfileImageView.snp.trailing).offset(7)
-            $0.centerY.equalTo(self.writerProfileImageView)
-            $0.height.equalTo(24)
-            //$0.trailing.lessThanOrEqualTo(dateLabel.snp.leading).offset(-20).priority(900)
-            $0.width.lessThanOrEqualTo(writerLabel.intrinsicContentSize.width + 14).priority(.medium)
+        dateLabel.snp.makeConstraints {
+            $0.width.equalTo(dateLabel.intrinsicContentSize).priority(.init(990))
         }
+        writerLabel.snp.makeConstraints {
+            $0.width.equalTo(writerLabel.intrinsicContentSize.width + 14).priority(.init(751))
+        }
+        spacing.snp.makeConstraints {
+            $0.size.equalTo(24).priority(.init(251))
+        }
+        
+//        self.writerLabel.snp.remakeConstraints {
+//            $0.leading.equalTo(self.writerProfileImageView.snp.trailing).offset(7)
+//            $0.centerY.equalTo(self.writerProfileImageView)
+//            $0.height.equalTo(24)
+//            //$0.trailing.lessThanOrEqualTo(dateLabel.snp.leading).offset(-20).priority(900)
+//            $0.width.lessThanOrEqualTo(writerLabel.intrinsicContentSize.width + 14).priority(.medium)
+//        }
+        
+        
     }
     private func updateUI() {
         

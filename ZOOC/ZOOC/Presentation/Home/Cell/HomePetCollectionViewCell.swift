@@ -134,8 +134,8 @@ final class HomePetCollectionViewCell: UICollectionViewCell {
         
         petImageView.snp.remakeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().inset(3)
-            $0.height.width.equalTo(34)
+            $0.leading.equalToSuperview().offset(3)
+            $0.size.equalTo(34)
         }
         
         petNameLabel.snp.remakeConstraints {

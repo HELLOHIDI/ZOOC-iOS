@@ -131,6 +131,7 @@ final class HomeViewController : BaseViewController {
         rootView.petCollectionView.selectItem(at:IndexPath(item: index, section: 0),
                                               animated: false,
                                               scrollPosition: .centeredHorizontally)
+        view.layoutIfNeeded()
         rootView.petCollectionView.performBatchUpdates(nil)
         requestTotalArchiveAPI(petID: petData[index].id)
     }
@@ -167,10 +168,8 @@ final class HomeViewController : BaseViewController {
             
             self.petData = result
             guard let id = self.petData.first?.id else { return }
+            self.selectPetCollectionView(petID: id)
             
-            DispatchQueue.main.async {
-                self.selectPetCollectionView(petID: id)
-            }
             
         }
     }
@@ -348,12 +347,15 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize
     {
         if collectionView == rootView.petCollectionView {
+            
             switch collectionView.indexPathsForSelectedItems?.first {
             case .some(indexPath):
+                print("🙏🙏선택된 펫 알약 컬렉션뷰셀의 size")
                 guard let cell = collectionView.cellForItem(at: indexPath) as? HomePetCollectionViewCell else { return .zero}
                 cell.dataBind(data: petData[indexPath.item])
-                return cell.sizeFittingWith(cellHeight: 40)
+                return  cell.sizeFittingWith(cellHeight: 40)
             default:
+                print("🙏🙏디펄트에 들어옴")
                 return CGSize(width: 40, height: 40)
             }
         }

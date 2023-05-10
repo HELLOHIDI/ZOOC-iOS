@@ -9,6 +9,16 @@ import UIKit
 
 extension UIApplication {
     
+    var firstWindow: UIWindow? {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScenes = scenes.first as? UIWindowScene
+        return windowScenes?.windows.filter { $0.isKeyWindow }.first
+    }
+    
+    var rootViewController: UIViewController? {
+        return firstWindow?.rootViewController
+    }
+    
     func changeRootViewController(_ viewController: UIViewController) {
         guard let firstWindow = firstWindow else {
             print("윈도우 생성 전입니다.")
@@ -21,20 +31,5 @@ extension UIApplication {
                           duration: 0.5,
                           options: .transitionCrossDissolve,
                           animations: nil)
-    }
-    
-    var rootViewController: UIViewController? {
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScenes = scenes.first as? UIWindowScene
-        
-        let firstWindow = windowScenes?.windows.filter { $0.isKeyWindow }.first
-        return firstWindow?.rootViewController
-    }
-    
-    var firstWindow: UIWindow? {
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScenes = scenes.first as? UIWindowScene
-        
-        return windowScenes?.windows.filter { $0.isKeyWindow }.first
     }
 }

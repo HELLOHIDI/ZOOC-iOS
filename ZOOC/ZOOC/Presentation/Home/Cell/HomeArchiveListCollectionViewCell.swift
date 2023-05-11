@@ -244,7 +244,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
     
     private func foldedAnimatedLayout() {
         self.writerProfileImageView.snp.remakeConstraints {
-            $0.top.equalTo(self.petImageView.snp.bottom).offset(84)
+            $0.bottom.equalTo(dateLabel.snp.top).offset(-9)
             $0.centerX.equalToSuperview()
             $0.height.width.equalTo(24)
         }

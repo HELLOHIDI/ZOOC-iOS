@@ -44,9 +44,11 @@ final class HomeView : UIView{
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
     
     //MARK: - Custom Method
-    
+
+extension HomeView {
     
     private func style() {
         

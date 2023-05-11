@@ -21,21 +21,21 @@ final class HomeViewController : BaseViewController {
     }
     
     private var archiveData: [HomeArchiveResult] = [] {
-        didSet{
-            if archiveData.count == 0 {
-                self.view = guideView
-            } else {
-                self.view = rootView
-                rootView.archiveListCollectionView.reloadData()
-                rootView.archiveGridCollectionView.reloadData()
-            }
+        didSet {
             
+            rootView.archiveListCollectionView.reloadData()
+            rootView.archiveGridCollectionView.reloadData()
+            
+            if archiveData.count == 0 {
+                let guideVC = HomeGuideViewController()
+                guideVC.modalPresentationStyle = .overCurrentContext
+                present(guideVC, animated: false)
+            }
         }
     }
     
     //MARK: - UI Components
     
-    private let guideView = HomeGuideView()
     private let rootView = HomeView()
     
     //MARK: - Life Cycle

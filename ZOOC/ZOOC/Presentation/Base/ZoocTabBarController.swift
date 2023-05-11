@@ -15,7 +15,7 @@ class ZoocTabBarController: UITabBarController {
     
     //MARK: - Properties
 
-    let homeGuideViewController = HomeGuideViewController()
+    let homeGuideViewController = HomeGuideVC_Deprecated()
     let homeViewController = HomeViewController()
     let myViewController = MyViewController()
     

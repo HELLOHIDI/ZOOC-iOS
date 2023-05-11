@@ -23,7 +23,7 @@ final class HomeViewController : BaseViewController {
     private var archiveData: [HomeArchiveResult] = [] {
         didSet{
             if archiveData.count == 0 {
-                self.view = rootGuideView
+                self.view = guideView
             } else {
                 self.view = rootView
                 rootView.archiveListCollectionView.reloadData()
@@ -35,7 +35,7 @@ final class HomeViewController : BaseViewController {
     
     //MARK: - UI Components
     
-    private let rootGuideView = HomeGuideView()
+    private let guideView = HomeGuideView()
     private let rootView = HomeView()
     
     //MARK: - Life Cycle
@@ -182,7 +182,7 @@ final class HomeViewController : BaseViewController {
         }
     }
     
-    public func requestTotalArchiveAPI(petID: Int) {
+    private func requestTotalArchiveAPI(petID: Int) {
         HomeAPI.shared.getTotalArchive(petID: String(petID)) { result in
             
             guard let result = self.validateResult(result) as? [HomeArchiveResult] else { return }

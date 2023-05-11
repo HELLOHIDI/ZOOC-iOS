@@ -21,6 +21,7 @@ final class HomeGuideView : UIView{
     private let titleLabel = UILabel()
     private let subTitleLabel = UILabel()
     private let arrowImageView = UIImageView()
+    private let dismissButton = UIButton()
     
     //MARK: - Life Cycle
     
@@ -66,6 +67,11 @@ final class HomeGuideView : UIView{
             $0.image = Image.arrowDown
             $0.contentMode = .scaleAspectFit
         }
+        
+        dismissButton.do {
+            $0.setImage(Image.xmarkWhite, for: .normal)
+            $0.contentMode = .scaleAspectFit
+        }
     }
    
     
@@ -75,12 +81,19 @@ final class HomeGuideView : UIView{
         self.addSubviews(graphicsImageView,
                          titleLabel,
                          subTitleLabel,
-                         arrowImageView)
+                         arrowImageView,
+                         dismissButton)
     }
     
     private func layout() {
         backgroundView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        dismissButton.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide).offset(18)
+            $0.trailing.equalToSuperview().offset(-25)
+            $0.size.equalTo(42)
         }
         
         graphicsImageView.snp.makeConstraints {

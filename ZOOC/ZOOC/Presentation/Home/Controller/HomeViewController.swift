@@ -93,12 +93,17 @@ final class HomeViewController : BaseViewController {
                                                                                action: #selector(bottomViewDidTap)))
     }
     
-    
+    public func updateUI() {
+        guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
+            fatalError("선택된 펫이 없습니다.")
+        }
+        requestTotalPetAPI()
+        requestTotalArchiveAPI(petID: index)
+    }
     
     private func pushToDetailViewController(recordID: String) {
         guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
-            presentBottomAlert("선택된 펫이 없습니다.")
-            return
+            fatalError("선택된 펫이 없습니다.")
         }
         
         let detailVC = HomeDetailArchiveViewController()

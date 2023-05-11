@@ -170,7 +170,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         petImageView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(280)
+            $0.height.equalTo(contentView.snp.height).dividedBy(1.6)
         }
         
         writerCollectionView.snp.makeConstraints {

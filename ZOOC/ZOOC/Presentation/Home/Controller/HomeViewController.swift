@@ -350,11 +350,15 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         }
         
         if collectionView == rootView.archiveListCollectionView {
+            var height = collectionView.frame.height
+            let spacing: CGFloat = 10
+            height = height - spacing * 2
+            
             switch collectionView.indexPathsForSelectedItems?.first {
             case .some(indexPath):
-                return CGSize(width: 195, height: 436)
+                return CGSize(width: 195, height: height)
             default:
-                return CGSize(width: 60, height: 436)
+                return CGSize(width: 60, height: height)
             }
         }
         

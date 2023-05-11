@@ -87,6 +87,8 @@ final class HomeViewController : BaseViewController {
                                       action: #selector(galleryButtonDidTap),
                                       for: .touchUpInside)
         
+        rootView.missionView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(missionViewDidTap)))
+        
         rootView.archiveBottomView.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                                action: #selector(bottomViewDidTap)))
     }
@@ -187,6 +189,15 @@ final class HomeViewController : BaseViewController {
     
     
     //MARK: - Action Method
+    
+    @objc
+    private func missionViewDidTap() {
+        let missionVC = RecordMissionViewController()
+        let missionNVC = UINavigationController(rootViewController: missionVC)
+        missionNVC.modalPresentationStyle = .fullScreen
+        missionNVC.setNavigationBarHidden(true, animated: true)
+        present(missionNVC, animated: true)
+    }
     
     @objc
     private func noticeButtonDidTap() {

@@ -271,7 +271,6 @@ extension HomeViewController: UICollectionViewDataSource {
                                                                 for: indexPath) as?  HomeArchiveListCollectionViewCell else { return UICollectionViewCell() }
             
             cell.dataBind(data: archiveData[indexPath.item])
-            cell.updateWriterCollectionViewCell()
             return cell
         }
         

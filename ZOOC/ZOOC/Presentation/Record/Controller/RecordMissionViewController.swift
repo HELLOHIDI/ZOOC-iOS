@@ -36,200 +36,30 @@ final class RecordMissionViewController : BaseViewController {
     
     //MARK: - UI Components
     
-    private let topBarView: UIView = {
-        let view = UIView()
-        return view
-    }()
+    private let rootView = RecordMissionView()
     
-    private lazy var xmarkButton: UIButton = {
-        let button = UIButton()
-        button.setImage(Image.xmark,
-                        for: .normal)
-        button.addTarget(self,
-                         action: #selector(xButtonDidTap),
-                         for: .touchUpInside)
-        return button
-    }()
-    
-    private let buttonsContainerView: UIView = {
-        let view = UIView()
-        return view
-    }()
-    
-    private lazy var dailyButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("일상", for: .normal)
-        button.titleLabel?.font = .zoocSubhead1
-        button.setTitleColor(.zoocGray1, for: .normal)
-        button.addTarget(self,
-                         action: #selector(dailyButtonDidTap),
-                         for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var missionButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("미션", for: .normal)
-        button.titleLabel?.font = .zoocSubhead1
-        button.setTitleColor(.zoocDarkGray1, for: .normal)
-        return button
-    }()
-    
-    private lazy var missionCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.isScrollEnabled = true
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.decelerationRate = .fast
-        collectionView.isPagingEnabled = false
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
-        return collectionView
-    }()
-    
-    /*
-    private let progressBar: UIView = {
-        let view = UIView()
-        view.backgroundColor = .zoocDarkGreen
-        return view
-    }()
-    */
-    
-    public let missionIndicatorView = RecordMissionIndicatorView()
-    
-    private lazy var nextButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("다음", for: .normal)
-        button.titleLabel?.font = .zoocSubhead2
-        button.setTitleColor(.zoocWhite1, for: .normal)
-        button.backgroundColor = .zoocGray1
-        button.isEnabled = false
-        button.layer.cornerRadius = 27
-        button.addTarget(self,
-                         action: #selector(nextButtonDidTap),
-                         for: .touchUpInside)
-        return button
-    }()
     
     //MARK: - Life Cycle
     
+    override func loadView() {
+        self.view = rootView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        register()
-        setLayout()
+        
+        target()
     }
         
     //MARK: - Custom Method
     
-    private func register() {
-        missionCollectionView.register(RecordMissionCollectionViewCell.self, forCellWithReuseIdentifier: RecordMissionCollectionViewCell.identifier)
-    }
-    
-    private func setLayout(){
-        view.addSubviews(topBarView, missionCollectionView, missionIndicatorView, nextButton)
+    func target() {
+        rootView.missionCollectionView.delegate = self
+        rootView.missionCollectionView.dataSource = self
         
-        topBarView.addSubviews(xmarkButton, buttonsContainerView)
-        
-        buttonsContainerView.addSubviews(dailyButton, missionButton)
-        
-        topBarView.snp.makeConstraints {
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(11)
-            $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
-            $0.height.equalTo(42)
-        }
-        
-        xmarkButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().offset(22)
-            $0.width.equalTo(42)
-            $0.height.equalTo(42)
-        }
-        
-        buttonsContainerView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(22)
-            $0.width.equalTo(112)
-            $0.height.equalTo(42)
-        }
-        
-        dailyButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalTo(self.missionButton.snp.leading)
-            $0.width.equalTo(56)
-            $0.height.equalTo(42)
-        }
-        
-        missionButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.width.equalTo(56)
-            $0.height.equalTo(42)
-        }
-        
-        missionCollectionView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(477)
-        }
-        
-        missionIndicatorView.snp.makeConstraints {
-            $0.top.equalTo(missionCollectionView.snp.bottom).offset(34)
-            $0.width.equalTo(232)
-            $0.height.equalTo(4)
-            $0.centerX.equalToSuperview()
-        }
-        
-        nextButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(50)
-            $0.leading.trailing.equalToSuperview().inset(30)
-            $0.centerX.equalToSuperview()
-            $0.height.equalTo(54)
-        }
-    }
-    
-    func pushToRecordViewController() {
-        let recordViewController = RecordViewController()
-        navigationController?.pushViewController(recordViewController, animated: true)
-        print(#function)
-    }
-        
-    func pushToRecordAlertViewController() {
-        let recordAlertViewController = RecordAlertViewController()
-        recordAlertViewController.modalPresentationStyle = .overFullScreen
-        self.present(recordAlertViewController, animated: false, completion: nil)
-    }
-    
-    func pushToRecordRegisterViewController() {
-        let recordRegisterViewController = RecordRegisterViewController()
-        
-        recordRegisterViewController.dataBind(data: missionData)
-        navigationController?.pushViewController(recordRegisterViewController, animated: true)
-        print(#function)
-
-    }
-    
-    private func updateUIViewController(galleryImageIsRegistered: Bool, contentTextViewIsRegistered: Bool) {
-        if galleryImageIsRegistered == true && contentTextViewIsRegistered == true {
-            nextButton.backgroundColor = .zoocGradientGreen
-            nextButton.isEnabled = true
-        } else {
-            nextButton.backgroundColor = .zoocGray1
-            nextButton.isEnabled = false
-        }
-    }
-    
-    private func configIndicatorBarWidth(_ scrollView: UIScrollView) {
-        UIView.animate(withDuration: 0.5) {
-            let allWidth = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
-            let showingWidth = scrollView.bounds.width
-            self.missionIndicatorView.widthRatio = showingWidth / allWidth
-            self.missionIndicatorView.layoutIfNeeded()
-        }
+        rootView.xmarkButton.addTarget(self, action: #selector(xButtonDidTap), for: .touchUpInside)
+        rootView.dailyButton.addTarget(self, action: #selector(dailyButtonDidTap), for: .touchUpInside)
+        rootView.nextButton.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
     }
     
     //MARK: - Action Method
@@ -241,10 +71,8 @@ final class RecordMissionViewController : BaseViewController {
     @objc private func dailyButtonDidTap(){
         pushToRecordViewController()
     }
-
     
-    @objc
-    private func nextButtonDidTap(_ sender: Any) {
+    @objc private func nextButtonDidTap(_ sender: Any) {
         pushToRecordRegisterViewController()
     }
 }
@@ -264,26 +92,6 @@ extension RecordMissionViewController: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
     }
     
-    /*
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        guard let layout = self.missionCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        
-        let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
-        
-        let estimatedIndex = scrollView.contentOffset.x / cellWidthIncludingSpacing
-        let index: Int
-        if velocity.x > 0 {
-            index = Int(ceil(estimatedIndex))
-        } else if velocity.x < 0 {
-            index = Int(floor(estimatedIndex))
-        } else {
-            index = Int(round(estimatedIndex))
-        }
-        
-        targetContentOffset.pointee = CGPoint(x: CGFloat(index) * cellWidthIncludingSpacing, y: 0)
-    }
-     */
-    
     func scrollViewWillEndDragging (_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let screenWidth = UIScreen.main.bounds.width
         let cardWidth = screenWidth - (screenInset * 2)
@@ -301,14 +109,13 @@ extension RecordMissionViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let missionCell = collectionView.dequeueReusableCell(withReuseIdentifier: RecordMissionCollectionViewCell.identifier, for: indexPath) as? RecordMissionCollectionViewCell else { return UICollectionViewCell() }
+        guard let missionCell = collectionView.dequeueReusableCell(withReuseIdentifier: RecordMissionCollectionViewCell.cellIdentifier, for: indexPath) as? RecordMissionCollectionViewCell else { return UICollectionViewCell() }
         missionCell.dataBind(model: missionList[indexPath.item], index: indexPath)
         missionCell.delegate = self
         missionCell.contentTextView.delegate = self
         
         return missionCell
     }
-    
 }
 
 extension RecordMissionViewController: RecordMissionCollectionViewCellDelegate {
@@ -328,7 +135,7 @@ extension RecordMissionViewController: UIImagePickerControllerDelegate  {
     
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             missionList[tappedCellIndex].image = image
-            missionCollectionView.reloadData()
+            rootView.missionCollectionView.reloadData()
             print(image)
             if missionList[tappedCellIndex].image == nil {
                 print("이미지를 선택해주세요")
@@ -337,8 +144,6 @@ extension RecordMissionViewController: UIImagePickerControllerDelegate  {
                 updateUIViewController(galleryImageIsRegistered: galleryImageIsRegistered, contentTextViewIsRegistered: contentTextViewIsRegistered)
             }
         }
-
-
     }
 }
 
@@ -375,13 +180,53 @@ extension RecordMissionViewController: UITextViewDelegate {
 extension RecordMissionViewController {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == missionCollectionView {
+        if scrollView == rootView.missionCollectionView {
             
             let scroll = scrollView.contentOffset.x + scrollView.contentInset.left
             let width = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
             let scrollRatio = scroll / width
             
-            self.missionIndicatorView.leftOffsetRatio = scrollRatio
+            rootView.missionIndicatorView.leftOffsetRatio = scrollRatio
+        }
+    }
+    
+    func pushToRecordViewController() {
+        let recordViewController = RecordViewController()
+        navigationController?.pushViewController(recordViewController, animated: true)
+        print(#function)
+    }
+        
+    func pushToRecordAlertViewController() {
+        let recordAlertViewController = RecordAlertViewController()
+        recordAlertViewController.modalPresentationStyle = .overFullScreen
+        self.present(recordAlertViewController, animated: false, completion: nil)
+    }
+    
+    func pushToRecordRegisterViewController() {
+        let recordRegisterViewController = RecordRegisterViewController()
+        
+        recordRegisterViewController.dataBind(data: missionData)
+        navigationController?.pushViewController(recordRegisterViewController, animated: true)
+        print(#function)
+
+    }
+    
+    private func updateUIViewController(galleryImageIsRegistered: Bool, contentTextViewIsRegistered: Bool) {
+        if galleryImageIsRegistered == true && contentTextViewIsRegistered == true {
+            rootView.nextButton.backgroundColor = .zoocGradientGreen
+            rootView.nextButton.isEnabled = true
+        } else {
+            rootView.nextButton.backgroundColor = .zoocGray1
+            rootView.nextButton.isEnabled = false
+        }
+    }
+    
+    private func configIndicatorBarWidth(_ scrollView: UIScrollView) {
+        UIView.animate(withDuration: 0.5) {
+            let allWidth = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
+            let showingWidth = scrollView.bounds.width
+            self.rootView.missionIndicatorView.widthRatio = showingWidth / allWidth
+            self.rootView.missionIndicatorView.layoutIfNeeded()
         }
     }
 }

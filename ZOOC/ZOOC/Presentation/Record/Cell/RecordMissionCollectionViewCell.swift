@@ -15,10 +15,6 @@ protocol RecordMissionCollectionViewCellDelegate: AnyObject {
 
 final class RecordMissionCollectionViewCell: UICollectionViewCell {
     
-    // MARK: - Identifier
-    
-    static let identifier = "RecordMissionCollectionViewCell"
-    
     // MARK: - Properties
     
     let placeHolderText: String = "오늘 어떤 일이 있었는지 공유해보세요"
@@ -29,55 +25,19 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Components
     
-    private let cardContainerView: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 24
-        view.layer.shadowColor = UIColor.zoocSubGreen.cgColor
-        view.layer.shadowOpacity = 0.1
-        view.layer.shadowRadius = 14
-        view.layer.shadowOffset = CGSize(width: 0, height: 0)
-        view.backgroundColor = .white
-        return view
-    }()
-    
-    private let cardQuestion: UILabel = {
-        let label = UILabel()
-        label.textColor = .zoocDarkGray2
-        label.font = .zoocSubhead1
-        label.numberOfLines = 2
-        label.textAlignment = .center
-        return label
-    }()
-    
-    lazy var galleryImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.layer.masksToBounds = true
-        imageView.layer.cornerRadius = 12
-        imageView.contentMode = .scaleAspectFill
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(galleryImageViewDidTap)))
-        return imageView
-    }()
-    
-    lazy var contentTextView: UITextView = {
-        let textView = UITextView()
-        textView.textContainerInset = UIEdgeInsets(top: 16.0, left: 18.0, bottom: 16.0, right: 18.0)
-        textView.font = .zoocBody2
-        textView.text = placeHolderText
-        textView.textColor = .zoocGray1
-        textView.backgroundColor = .zoocWhite2
-        textView.clipsToBounds = true
-        textView.layer.cornerRadius = 12
-
-        return textView
-    }()
+    private let cardContainerView = UIView()
+    private let cardQuestion = UILabel()
+    lazy var galleryImageView = UIImageView()
+    lazy var contentTextView = UITextView()
     
     // MARK: - Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setLayout()
+        style()
+        hierarchy()
+        layout()
     }
     
     required init?(coder: NSCoder) {
@@ -86,13 +46,53 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Custom Method
     
-    private func setLayout() {
-        backgroundColor = .clear
-        contentView.backgroundColor = .clear
+    private func style() {
+        self.do {
+            $0.backgroundColor = .clear
+            $0.contentView.backgroundColor = .clear
+        }
         
+        cardContainerView.do {
+            $0.layer.cornerRadius = 24
+            $0.layer.shadowColor = UIColor.zoocSubGreen.cgColor
+            $0.layer.shadowOpacity = 0.1
+            $0.layer.shadowRadius = 14
+            $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+            $0.backgroundColor = .white
+        }
+        
+        cardQuestion.do {
+            $0.textColor = .zoocDarkGray2
+            $0.font = .zoocSubhead1
+            $0.numberOfLines = 2
+            $0.textAlignment = .center
+        }
+        
+        galleryImageView.do {
+            $0.layer.masksToBounds = true
+            $0.layer.cornerRadius = 12
+            $0.contentMode = .scaleAspectFill
+            $0.isUserInteractionEnabled = true
+            $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(galleryImageViewDidTap)))
+        }
+        
+        contentTextView.do {
+            $0.textContainerInset = UIEdgeInsets(top: 16.0, left: 18.0, bottom: 16.0, right: 18.0)
+            $0.font = .zoocBody2
+            $0.text = placeHolderText
+            $0.textColor = .zoocGray1
+            $0.backgroundColor = .zoocWhite2
+            $0.clipsToBounds = true
+            $0.layer.cornerRadius = 12
+        }
+    }
+    
+    private func hierarchy() {
         contentView.addSubview(cardContainerView)
         cardContainerView.addSubviews(cardQuestion, galleryImageView, contentTextView)
-        
+    }
+    
+    private func layout() {
         cardContainerView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -116,6 +116,7 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
             $0.height.equalTo(135)
         }
     }
+    
     
     func dataBind(model: RecordMissionModel, index: IndexPath) {
         cardQuestion.text = model.question

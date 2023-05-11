@@ -200,12 +200,7 @@ final class HomeViewController : BaseViewController {
         rootView.archiveBottomView.isHidden = false
         rootView.listButton.isSelected = true
         rootView.gridButton.isSelected = false
-        
-        rootView.archiveListCollectionView.snp.remakeConstraints {
-            $0.top.equalTo(rootView.petCollectionView.snp.bottom).offset(29)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(438)
-        }
+
     }
     
     @objc
@@ -216,12 +211,6 @@ final class HomeViewController : BaseViewController {
         
         rootView.listButton.isSelected = false
         rootView.gridButton.isSelected = true
-        
-        rootView.archiveListCollectionView.snp.remakeConstraints {
-            $0.top.equalTo(rootView.petCollectionView.snp.bottom).offset(29)
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
     }
     
     @objc
@@ -370,7 +359,13 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         }
         
         if collectionView == rootView.archiveGridCollectionView {
-            return CGSize(width: 100, height: 100)
+            
+            var width = collectionView.frame.width
+            let spacing: CGFloat = 10
+            width = width - (spacing * 2)
+            width = width / 3
+            let height = width
+            return CGSize(width: width, height: height)
         }
         
         return .zero
@@ -408,7 +403,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         }
         
         if collectionView == rootView.archiveGridCollectionView{
-            return UIEdgeInsets(top: 0, left: 30, bottom: 30, right: 30)
+            return .zero
         }
         
         return .zero

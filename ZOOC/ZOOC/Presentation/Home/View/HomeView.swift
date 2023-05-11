@@ -163,7 +163,9 @@ final class HomeView : UIView{
         }
         
         archiveGridCollectionView.snp.makeConstraints {
-            $0.edges.equalTo(archiveListCollectionView)
+            $0.top.equalTo(archiveListCollectionView)
+            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.bottom.equalTo(self.safeAreaLayoutGuide)
         }
         
         archiveBottomView.snp.makeConstraints {

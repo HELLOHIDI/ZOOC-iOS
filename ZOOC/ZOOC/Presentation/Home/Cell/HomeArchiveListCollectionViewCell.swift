@@ -121,6 +121,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         
         register()
         setUI()
+        
         setLayout()
         foldedLayout()
         foldedAlpha()
@@ -291,11 +292,11 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
-        writerLabel.snp.makeConstraints {
+        writerLabel.snp.remakeConstraints {
             $0.width.equalTo(writerLabel.intrinsicContentSize.width + 14).priority(.init(751))
         }
         
-        spacing.snp.makeConstraints {
+        spacing.snp.remakeConstraints {
             $0.size.equalTo(24).priority(.init(251))
         }
         

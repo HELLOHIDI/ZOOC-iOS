@@ -87,18 +87,17 @@ final class HomeViewController : BaseViewController {
                                       action: #selector(galleryButtonDidTap),
                                       for: .touchUpInside)
         
-        rootView.missionView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(missionViewDidTap)))
+        rootView.missionView
+            .addGestureRecognizer(UITapGestureRecognizer(target: self,
+                                        action: #selector(missionViewDidTap)))
         
-        rootView.archiveBottomView.addGestureRecognizer(UITapGestureRecognizer(target: self,
-                                                                               action: #selector(bottomViewDidTap)))
+        rootView.archiveBottomView
+            .addGestureRecognizer(UITapGestureRecognizer(target: self,
+                                        action: #selector(bottomViewDidTap)))
     }
     
     public func updateUI() {
-        guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
-            fatalError("선택된 펫이 없습니다.")
-        }
         requestTotalPetAPI()
-        requestTotalArchiveAPI(petID: index)
     }
     
     private func pushToDetailViewController(recordID: String) {
@@ -121,8 +120,10 @@ final class HomeViewController : BaseViewController {
     }
     
     private func deselectAllOfListArchiveCollectionViewCell() {
-        rootView.archiveListCollectionView.indexPathsForSelectedItems?
-            .forEach { rootView.archiveListCollectionView.deselectItem(at: $0, animated: false) }
+        rootView.archiveListCollectionView.indexPathsForSelectedItems?.forEach {
+                rootView.archiveListCollectionView.deselectItem(at: $0, animated: false)
+        }
+        
         rootView.archiveListCollectionView.performBatchUpdates(nil, completion: nil)
     }
     

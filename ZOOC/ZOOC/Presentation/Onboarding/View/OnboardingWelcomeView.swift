@@ -55,14 +55,14 @@ final class OnboardingWelcomeView: OnboardingBaseView {
             $0.textAlignment = .left
             $0.font = .zoocDisplay1
             $0.numberOfLines = 2
-            $0.isHidden = true
+            $0.alpha = 0
             $0.setLineSpacing(spacing: 6)
         }
         
         welcomeImage.do {
-            $0.contentMode = .scaleAspectFit
+            $0.contentMode = .scaleAspectFill
             $0.image = Image.graphics1
-            $0.isHidden = true
+            $0.alpha = 0
         }
         
         nextButton.do {
@@ -72,17 +72,15 @@ final class OnboardingWelcomeView: OnboardingBaseView {
             $0.titleLabel?.textAlignment = .center
             $0.makeCornerRound(radius: 27)
             $0.backgroundColor = .zoocGradientGreen
-            $0.isHidden = true
+            $0.alpha = 0
         }
     }
     
     private func hierarchy() {
-        self.addSubviews(
-            welcomeLabel,
-            welcomeSubLabel,
-            welcomeImage,
-            nextButton
-        )
+        self.addSubviews(welcomeLabel,
+                         welcomeSubLabel,
+                         welcomeImage,
+                         nextButton)
     }
     
     private func layout() {

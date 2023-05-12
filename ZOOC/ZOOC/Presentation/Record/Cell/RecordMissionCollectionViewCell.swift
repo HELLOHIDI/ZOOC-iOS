@@ -118,14 +118,14 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     }
     
     
-    func dataBind(model: RecordMissionModel, index: IndexPath) {
-        cardQuestion.text = model.question
+    func dataBind(model: RecordMissionListModel, index: IndexPath) {
+        cardQuestion.text = model.mission_content
         indexPath = index
-        if model.image == nil {
-            galleryImageView.image = Image.gallery
-        } else {
-            galleryImageView.image = model.image
-        }
+//        if model.image == nil {
+//            galleryImageView.image = Image.gallery
+//        } else {
+//            galleryImageView.image = model.image
+//        }
         /* 여기서 UIImage에 대한 분기처리 해야 하고, text도 분기처리 해야 할 듯? */
     }
     

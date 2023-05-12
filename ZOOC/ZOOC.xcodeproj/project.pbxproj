@@ -15,7 +15,6 @@
 		4C6B1868296B930B0059840D /* RecordRegisterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B1867296B930B0059840D /* RecordRegisterCollectionViewCell.swift */; };
 		4C6B186A296C82850059840D /* RecordRegisterFourCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B1869296C82850059840D /* RecordRegisterFourCollectionViewCell.swift */; };
 		4C6B186C296CB8730059840D /* RecordCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B186B296CB8730059840D /* RecordCompleteViewController.swift */; };
-		4C6B186E296DBFE40059840D /* RecordAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B186D296DBFE40059840D /* RecordAlertViewController.swift */; };
 		4C84C33C298CD662003B899E /* RecordMissionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C84C33B298CD662003B899E /* RecordMissionModel.swift */; };
 		4C84C33E298CD737003B899E /* RecordMissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C84C33D298CD737003B899E /* RecordMissionViewController.swift */; };
 		4C84C341298E2E7B003B899E /* RecordMissionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C84C340298E2E7B003B899E /* RecordMissionCollectionViewCell.swift */; };
@@ -188,6 +187,7 @@
 		D27D95D5296DDF4F0097CD03 /* MyFamilyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D95D4296DDF4F0097CD03 /* MyFamilyCollectionViewCell.swift */; };
 		D27D95D7296DE0E30097CD03 /* MyFamilySectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D95D6296DE0E30097CD03 /* MyFamilySectionCollectionViewCell.swift */; };
 		D2AE5F372A0CBFF8003048E1 /* RecordMissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AE5F362A0CBFF8003048E1 /* RecordMissionView.swift */; };
+		D2AE5F3A2A0CD00B003048E1 /* RecordMissionListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AE5F392A0CD00B003048E1 /* RecordMissionListModel.swift */; };
 		D2DD45C7297D9612001722A1 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DD45C6297D9612001722A1 /* BaseButton.swift */; };
 		D2EA37EF29BEAB57007EF4B7 /* OnboardingBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA37EE29BEAB57007EF4B7 /* OnboardingBaseView.swift */; };
 		D2F193612970B3FB00AD87D3 /* HomeNoticeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F193602970B3FB00AD87D3 /* HomeNoticeModel.swift */; };
@@ -207,7 +207,6 @@
 		4C6B1867296B930B0059840D /* RecordRegisterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRegisterCollectionViewCell.swift; sourceTree = "<group>"; };
 		4C6B1869296C82850059840D /* RecordRegisterFourCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRegisterFourCollectionViewCell.swift; sourceTree = "<group>"; };
 		4C6B186B296CB8730059840D /* RecordCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCompleteViewController.swift; sourceTree = "<group>"; };
-		4C6B186D296DBFE40059840D /* RecordAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordAlertViewController.swift; sourceTree = "<group>"; };
 		4C84C33B298CD662003B899E /* RecordMissionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMissionModel.swift; sourceTree = "<group>"; };
 		4C84C33D298CD737003B899E /* RecordMissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMissionViewController.swift; sourceTree = "<group>"; };
 		4C84C340298E2E7B003B899E /* RecordMissionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMissionCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -373,6 +372,7 @@
 		D27D95D4296DDF4F0097CD03 /* MyFamilyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFamilyCollectionViewCell.swift; sourceTree = "<group>"; };
 		D27D95D6296DE0E30097CD03 /* MyFamilySectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFamilySectionCollectionViewCell.swift; sourceTree = "<group>"; };
 		D2AE5F362A0CBFF8003048E1 /* RecordMissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMissionView.swift; sourceTree = "<group>"; };
+		D2AE5F392A0CD00B003048E1 /* RecordMissionListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMissionListModel.swift; sourceTree = "<group>"; };
 		D2D686BA299B59F400C290A8 /* ZOOC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZOOC.entitlements; sourceTree = "<group>"; };
 		D2DD45C6297D9612001722A1 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		D2EA37EE29BEAB57007EF4B7 /* OnboardingBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBaseView.swift; sourceTree = "<group>"; };
@@ -408,6 +408,8 @@
 		4C84C33F298E2E62003B899E /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				4C6B1869296C82850059840D /* RecordRegisterFourCollectionViewCell.swift */,
+				4C6B1867296B930B0059840D /* RecordRegisterCollectionViewCell.swift */,
 				4C84C340298E2E7B003B899E /* RecordMissionCollectionViewCell.swift */,
 			);
 			path = Cell;
@@ -710,8 +712,6 @@
 		87A76A93295F6DB10096F669 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				4C6B1867296B930B0059840D /* RecordRegisterCollectionViewCell.swift */,
-				4C6B1869296C82850059840D /* RecordRegisterFourCollectionViewCell.swift */,
 				4C66FB0229C9A20E0006359E /* RecordMissionIndicatorView.swift */,
 				D2AE5F362A0CBFF8003048E1 /* RecordMissionView.swift */,
 			);
@@ -722,7 +722,6 @@
 			isa = PBXGroup;
 			children = (
 				87A76A91295F6DA50096F669 /* RecordViewController.swift */,
-				4C6B186D296DBFE40059840D /* RecordAlertViewController.swift */,
 				4C6B1861296B69070059840D /* RecordRegisterViewController.swift */,
 				4C6B186B296CB8730059840D /* RecordCompleteViewController.swift */,
 				4C84C33D298CD737003B899E /* RecordMissionViewController.swift */,
@@ -830,6 +829,7 @@
 		87A76AB0295F6F090096F669 /* APIModel */ = {
 			isa = PBXGroup;
 			children = (
+				D2AE5F392A0CD00B003048E1 /* RecordMissionListModel.swift */,
 				871EA35A2970BE8400D0E8CC /* RecordPetResult.swift */,
 				4C54E80329BF482300B76052 /* RecordMissonRequest.swift */,
 			);
@@ -1167,6 +1167,7 @@
 				8765549F295846F3006BBDA9 /* ZoocTabBarController.swift in Sources */,
 				D26C8602296B285700AEAF9B /* OnboardingCompleteProfileViewController.swift in Sources */,
 				D26C68E6296DE61F0088DC9A /* MyRegisterPetTableViewCell.swift in Sources */,
+				D2AE5F3A2A0CD00B003048E1 /* RecordMissionListModel.swift in Sources */,
 				D23502F52961A69E00F01101 /* MyView.swift in Sources */,
 				D26C8616296BEF9800AEAF9B /* OnboardingRegisterPetViewController.swift in Sources */,
 				8781DE4E29B273FB005ABF23 /* OnboardingFamilyResult.swift in Sources */,
@@ -1259,7 +1260,6 @@
 				8747389E299E84B400C4CC52 /* EmojiBottomSheetViewController.swift in Sources */,
 				8718A06829ADB423001C7460 /* GalleryAlertController.swift in Sources */,
 				D26C85FA296B109500AEAF9B /* OnboardingChooseFamilyRoleViewController.swift in Sources */,
-				4C6B186E296DBFE40059840D /* RecordAlertViewController.swift in Sources */,
 				874AE9FA29B4A12F007A637D /* OnboardingJoinUserResult.swift in Sources */,
 				872BBD9529F959FC002E2C71 /* UserDefaultWrapper.swift in Sources */,
 				87A76AA5295F6EC40096F669 /* HomeAPI.swift in Sources */,

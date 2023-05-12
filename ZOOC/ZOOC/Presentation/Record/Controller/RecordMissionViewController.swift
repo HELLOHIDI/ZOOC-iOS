@@ -17,27 +17,15 @@ final class RecordMissionViewController : BaseViewController {
     var petImage: UIImage?
     private var missionData = RecordMissionModel()
     private let placeHolderText: String = "오늘 어떤 일이 있었는지 공유해보세요"
-    private let screenInset: CGFloat = 30
-    private let cardLineSpacing: CGFloat = 13
-    private var missionList: [RecordMissionModel] = [
-        RecordMissionModel(question: """
-                                    반려동물이 사람처럼 느껴진
-                                    순간은 언제인가요?
-                                    """),
-        RecordMissionModel(question: "반려동물의 가장 웃겼던 자세는 무엇인가요?"),
-        RecordMissionModel(question: "자주 찾게 되는 반려동물 사진은 무엇인가요?"),
-        RecordMissionModel(question: "반려동물이 내 옆에서 자는 모습을 찍어봐요."),
-        RecordMissionModel(question: "반려동물의 제일 꼬질꼬질한 모습을 남겨봐요."),
-        RecordMissionModel(question: "가족과 반려동물이 함께 찍은 사진을 기록해봐요"),
-    ]
-    var tappedCellIndex: Int = 100
+    private var missionList: [RecordMissionListModel] = []
+    
+    var tappedCellIndex: Int?
     var galleryImageIsRegistered: Bool = false
     var contentTextViewIsRegistered: Bool = false
     
     //MARK: - UI Components
     
     private let rootView = RecordMissionView()
-    
     
     //MARK: - Life Cycle
     
@@ -50,7 +38,13 @@ final class RecordMissionViewController : BaseViewController {
         
         target()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
+        requestMissionAPI()
+    }
+    
     //MARK: - Custom Method
     
     func target() {
@@ -80,12 +74,12 @@ final class RecordMissionViewController : BaseViewController {
 extension RecordMissionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenWidth = UIScreen.main.bounds.width
-        let cardWidth = screenWidth - (screenInset * 2)
+        let cardWidth = screenWidth - (30 * 2)
         return CGSize(width: cardWidth, height: 477)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return cardLineSpacing
+        return 13
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -94,7 +88,7 @@ extension RecordMissionViewController: UICollectionViewDelegateFlowLayout {
     
     func scrollViewWillEndDragging (_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let screenWidth = UIScreen.main.bounds.width
-        let cardWidth = screenWidth - (screenInset * 2)
+        let cardWidth = screenWidth - (30 * 2)
         
         let scrolledOffsetX = targetContentOffset.pointee.x + scrollView.contentInset.left
         let cellWidth = cardWidth + 13
@@ -128,35 +122,44 @@ extension RecordMissionViewController: RecordMissionCollectionViewCellDelegate {
         present(imagePicker, animated: true)
         tappedCellIndex = index.row
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == rootView.missionCollectionView {
+            
+            let scroll = scrollView.contentOffset.x + scrollView.contentInset.left
+            let width = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
+            let scrollRatio = scroll / width
+            
+            rootView.missionIndicatorView.leftOffsetRatio = scrollRatio
+        }
+    }
 }
 
 extension RecordMissionViewController: UIImagePickerControllerDelegate  {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-    
+        
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            missionList[tappedCellIndex].image = image
+            //missionList[tappedCellIndex ?? 0].image = image
             rootView.missionCollectionView.reloadData()
             print(image)
-            if missionList[tappedCellIndex].image == nil {
-                print("이미지를 선택해주세요")
-            } else {
-                galleryImageIsRegistered = true
-                updateUIViewController(galleryImageIsRegistered: galleryImageIsRegistered, contentTextViewIsRegistered: contentTextViewIsRegistered)
-            }
+            //if missionList[tappedCellIndex ?? 0].image == nil {
+            print("이미지를 선택해주세요")
+        } else {
+            galleryImageIsRegistered = true
+            updateUIViewController(galleryImageIsRegistered: galleryImageIsRegistered, contentTextViewIsRegistered: contentTextViewIsRegistered)
         }
     }
 }
+
 
 extension RecordMissionViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == placeHolderText {
             textView.text = nil
             textView.textColor = .black
-        } else {
-            
         }
     }
-
+    
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             textView.text = placeHolderText
@@ -178,26 +181,14 @@ extension RecordMissionViewController: UITextViewDelegate {
 //MARK: - ScrollViewDelegate
 
 extension RecordMissionViewController {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == rootView.missionCollectionView {
-            
-            let scroll = scrollView.contentOffset.x + scrollView.contentInset.left
-            let width = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
-            let scrollRatio = scroll / width
-            
-            rootView.missionIndicatorView.leftOffsetRatio = scrollRatio
-        }
-    }
-    
     func pushToRecordViewController() {
         let recordViewController = RecordViewController()
         navigationController?.pushViewController(recordViewController, animated: true)
         print(#function)
     }
-        
+    
     func pushToRecordAlertViewController() {
-        let recordAlertViewController = RecordAlertViewController()
+        let recordAlertViewController = ZoocAlertViewController()
         recordAlertViewController.modalPresentationStyle = .overFullScreen
         self.present(recordAlertViewController, animated: false, completion: nil)
     }
@@ -208,7 +199,7 @@ extension RecordMissionViewController {
         recordRegisterViewController.dataBind(data: missionData)
         navigationController?.pushViewController(recordRegisterViewController, animated: true)
         print(#function)
-
+        
     }
     
     private func updateUIViewController(galleryImageIsRegistered: Bool, contentTextViewIsRegistered: Bool) {
@@ -229,4 +220,24 @@ extension RecordMissionViewController {
             self.rootView.missionIndicatorView.layoutIfNeeded()
         }
     }
+    
+    private func requestMissionAPI() {
+        RecordAPI.shared.getMission { result in
+            guard let result = self.validateResult(result) as? [RecordMissionListModel] else { return }
+            self.missionList = result
+            self.rootView.missionCollectionView.reloadData()
+        }
+    }
 }
+
+//HomeAPI.shared.getTotalPet(familyID: User.shared.familyID) { result in
+//
+//    guard let result = self.validateResult(result) as? [HomePetResult] else { return }
+//
+//    self.petData = result
+//    guard let id = self.petData.first?.id else { return }
+//    self.selectPetCollectionView(petID: id)
+//
+//
+//}
+

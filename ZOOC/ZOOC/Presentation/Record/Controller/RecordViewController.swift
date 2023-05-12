@@ -220,7 +220,7 @@ final class RecordViewController : BaseViewController{
     }
     
     func pushToRecordAlertViewController() {
-        let recordAlertViewController = RecordAlertViewController()
+        let recordAlertViewController = ZoocAlertViewController()
         recordAlertViewController.modalPresentationStyle = .overFullScreen
         self.present(recordAlertViewController, animated: false, completion: nil)
     }

@@ -41,7 +41,7 @@
 		872BBD9229F9576E002E2C71 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872BBD9129F9576E002E2C71 /* UIApplication+.swift */; };
 		872BBD9529F959FC002E2C71 /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */; };
 		872BBD9729F95BE2002E2C71 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872BBD9629F95BE2002E2C71 /* UserDefaultsManager.swift */; };
-		872F638929B89D9B002EC413 /* HomeGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872F638829B89D9B002EC413 /* HomeGuideView.swift */; };
+		872F638929B89D9B002EC413 /* HomeGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872F638829B89D9B002EC413 /* HomeGuideViewController.swift */; };
 		8731C4B029A93EF500006743 /* EmojiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8731C4AF29A93EF500006743 /* EmojiModel.swift */; };
 		8731C4B229A9400D00006743 /* EmojiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8731C4B129A9400D00006743 /* EmojiCollectionViewCell.swift */; };
 		8731C4B429A94A6900006743 /* HomeEmojiCommentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8731C4B329A94A6900006743 /* HomeEmojiCommentRequest.swift */; };
@@ -64,7 +64,7 @@
 		8764833B29523C0100F74882 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 8764833A29523C0100F74882 /* Kingfisher */; };
 		8765549F295846F3006BBDA9 /* ZoocTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8765549E295846F3006BBDA9 /* ZoocTabBarController.swift */; };
 		876554A3295848D6006BBDA9 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876554A2295848D5006BBDA9 /* BaseViewController.swift */; };
-		876554A529584912006BBDA9 /* HomeGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876554A429584912006BBDA9 /* HomeGuideViewController.swift */; };
+		876554A529584912006BBDA9 /* HomeGuideVC_Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876554A429584912006BBDA9 /* HomeGuideVC_Deprecated.swift */; };
 		876554A72958494B006BBDA9 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876554A62958494B006BBDA9 /* MyViewController.swift */; };
 		877184382A052BF500AB7DE4 /* ZoocInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877184372A052BF500AB7DE4 /* ZoocInterceptor.swift */; };
 		8771843D2A0541B700AB7DE4 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8771843C2A0541B700AB7DE4 /* AuthService.swift */; };
@@ -235,7 +235,7 @@
 		872BBD9129F9576E002E2C71 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
 		872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
 		872BBD9629F95BE2002E2C71 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
-		872F638829B89D9B002EC413 /* HomeGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGuideView.swift; sourceTree = "<group>"; };
+		872F638829B89D9B002EC413 /* HomeGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGuideViewController.swift; sourceTree = "<group>"; };
 		8731C4AF29A93EF500006743 /* EmojiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiModel.swift; sourceTree = "<group>"; };
 		8731C4B129A9400D00006743 /* EmojiCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCollectionViewCell.swift; sourceTree = "<group>"; };
 		8731C4B329A94A6900006743 /* HomeEmojiCommentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEmojiCommentRequest.swift; sourceTree = "<group>"; };
@@ -254,7 +254,7 @@
 		8764832A295238EB00F74882 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		8765549E295846F3006BBDA9 /* ZoocTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocTabBarController.swift; sourceTree = "<group>"; };
 		876554A2295848D5006BBDA9 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		876554A429584912006BBDA9 /* HomeGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGuideViewController.swift; sourceTree = "<group>"; };
+		876554A429584912006BBDA9 /* HomeGuideVC_Deprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGuideVC_Deprecated.swift; sourceTree = "<group>"; };
 		876554A62958494B006BBDA9 /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		877184372A052BF500AB7DE4 /* ZoocInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocInterceptor.swift; sourceTree = "<group>"; };
 		8771843C2A0541B700AB7DE4 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -631,7 +631,6 @@
 			isa = PBXGroup;
 			children = (
 				870D0629297BEB7900ADAD04 /* HomeView.swift */,
-				872F638829B89D9B002EC413 /* HomeGuideView.swift */,
 				8782C7EA296AC58B00C9324B /* HomeArchiveIndicatorView.swift */,
 				8782C7F4296DB7FC00C9324B /* HomeDetailArchiveCommentTextField.swift */,
 				87DDDD91298E5BE500CBEC79 /* HomeDetailArchiveCommentView.swift */,
@@ -681,7 +680,8 @@
 		87A76A8D295F6D840096F669 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				876554A429584912006BBDA9 /* HomeGuideViewController.swift */,
+				872F638829B89D9B002EC413 /* HomeGuideViewController.swift */,
+				876554A429584912006BBDA9 /* HomeGuideVC_Deprecated.swift */,
 				87D5AF6329649DC100CA7F12 /* HomeViewController.swift */,
 				877E57F12966D13E006D82FC /* HomeDetailArchiveViewController.swift */,
 				D26C68F12970AD810088DC9A /* HomeNoticeViewController.swift */,
@@ -1173,7 +1173,7 @@
 				D2DC80D52A0DFDF600F48209 /* RecordRegisterView.swift in Sources */,
 				D26C860A296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift in Sources */,
 				D26C85CF2968681900AEAF9B /* MyPetCollectionFooterView.swift in Sources */,
-				872F638929B89D9B002EC413 /* HomeGuideView.swift in Sources */,
+				872F638929B89D9B002EC413 /* HomeGuideViewController.swift in Sources */,
 				8765549F295846F3006BBDA9 /* ZoocTabBarController.swift in Sources */,
 				D26C8602296B285700AEAF9B /* OnboardingCompleteProfileViewController.swift in Sources */,
 				D26C68E6296DE61F0088DC9A /* MyRegisterPetTableViewCell.swift in Sources */,
@@ -1258,7 +1258,7 @@
 				87DDDD94298E607C00CBEC79 /* Device.swift in Sources */,
 				87D5AF5A29606AC900CA7F12 /* NetworkResult.swift in Sources */,
 				4C8A7C33297063F400783979 /* OnboardingInviteResult.swift in Sources */,
-				876554A529584912006BBDA9 /* HomeGuideViewController.swift in Sources */,
+				876554A529584912006BBDA9 /* HomeGuideVC_Deprecated.swift in Sources */,
 				8782C7EF296C41B200C9324B /* HomeArchiveGridCollectionViewCell.swift in Sources */,
 				D26C860E296B6E8600AEAF9B /* UILabel+.swift in Sources */,
 				872BBD9729F95BE2002E2C71 /* UserDefaultsManager.swift in Sources */,
@@ -1469,7 +1469,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1510,7 +1510,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

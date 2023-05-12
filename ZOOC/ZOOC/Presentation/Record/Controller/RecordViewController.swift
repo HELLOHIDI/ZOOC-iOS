@@ -28,6 +28,89 @@ final class RecordViewController : BaseViewController{
     
     private let rootView = RecordView()
     
+    private let topBarView = UIView()
+    
+    private lazy var xmarkButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Image.xmark,
+                        for: .normal)
+        button.addTarget(self,
+                         action: #selector(xButtonDidTap),
+                         for: .touchUpInside)
+        return button
+    }()
+    
+    private let buttonsContainerView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
+    private lazy var dailyButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("일상", for: .normal)
+        button.titleLabel?.font = .zoocSubhead1
+        button.setTitleColor(.zoocDarkGray1, for: .normal)
+        return button
+    }()
+    
+    private lazy var missionButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("미션", for: .normal)
+        button.titleLabel?.font = .zoocSubhead1
+        button.setTitleColor(.zoocGray1, for: .normal)
+        button.addTarget(self,
+                         action: #selector(missionButtonDidTap),
+                         for: .touchUpInside)
+        return button
+    }()
+    
+    private let cardView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 24
+        view.layer.shadowColor = UIColor.zoocSubGreen.cgColor
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowRadius = 14
+        view.layer.shadowOffset = CGSize(width: 0, height: 0)
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    private let galleryImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = Image.gallery
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 12
+        imageView.contentMode = .scaleAspectFill
+        imageView.isUserInteractionEnabled = true
+        return imageView
+    }()
+    
+    private lazy var contentTextView: UITextView = {
+        let textView = UITextView()
+        textView.textContainerInset = UIEdgeInsets(top: 16.0, left: 18.0, bottom: 16.0, right: 18.0)
+        textView.font = .zoocBody2
+        textView.text = placeHoldText
+        textView.textColor = .zoocGray1
+        textView.backgroundColor = .zoocWhite2
+        textView.clipsToBounds = true
+        textView.layer.cornerRadius = 12
+        return textView
+    }()
+    
+    private lazy var nextButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("다음", for: .normal)
+        button.titleLabel?.font = .zoocSubhead2
+        button.setTitleColor(.zoocWhite1, for: .normal)
+        button.backgroundColor = .zoocGray1
+        button.isEnabled = false
+        button.layer.cornerRadius = 27
+        button.addTarget(self,
+                         action: #selector(nextButtonDidTap),
+                         for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Life Cycle
     
     override func loadView() {

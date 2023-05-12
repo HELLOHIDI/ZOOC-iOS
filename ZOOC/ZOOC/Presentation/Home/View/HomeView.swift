@@ -44,9 +44,11 @@ final class HomeView : UIView{
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
     
     //MARK: - Custom Method
-    
+
+extension HomeView {
     
     private func style() {
         
@@ -77,7 +79,6 @@ final class HomeView : UIView{
         
         listButton.do {
             $0.isSelected = true
-            $0.tintColor = .systemPink
             $0.setImage(Image.list, for: .normal)
             $0.setImage(Image.listFill, for: .selected)
         }
@@ -105,6 +106,8 @@ final class HomeView : UIView{
             $0.backgroundColor = .clear
             $0.showsHorizontalScrollIndicator = false
         }
+        
+        
     }
    
     
@@ -157,19 +160,21 @@ final class HomeView : UIView{
         }
         
         archiveListCollectionView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(petCollectionView.snp.bottom).offset(29)
-            $0.height.equalTo(438)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(archiveBottomView.snp.top)
         }
         
         archiveGridCollectionView.snp.makeConstraints {
-            $0.edges.equalTo(archiveListCollectionView)
+            $0.top.equalTo(archiveListCollectionView)
+            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.bottom.equalTo(self.safeAreaLayoutGuide)
         }
         
         archiveBottomView.snp.makeConstraints {
-            $0.top.equalTo(archiveListCollectionView.snp.bottom)
-            $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(self.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(80)
         }
         
         //MARK: missionView

@@ -97,6 +97,8 @@ final class MyRegisterPetViewController: BaseViewController {
             guard let result = self.validateResult(result) as? [MyRegisterPetResult] else {
                 return
             }
+            guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
+            tabVC.homeViewController.updateUI()
             self.navigationController?.popViewController(animated: true)
         }
         

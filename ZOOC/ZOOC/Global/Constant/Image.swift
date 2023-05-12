@@ -20,6 +20,7 @@ public enum Image{
     static let arrowDown = UIImage(named: "arrow.down")
     static let backCircle = UIImage(named: "back.circle")!
     static let back = UIImage(named: "back")!
+    static let backWhite = UIImage(named: "back.white")!
     static let cameraCircleBig = UIImage(named: "camera.circle.big")!
     static let cameraCircleGreen = UIImage(named: "camera.circle.green")!
     static let cameraCircle = UIImage(named: "camera.circle")!
@@ -45,6 +46,7 @@ public enum Image{
     static let smile = UIImage(named: "smile")!
     static let upload = UIImage(named: "upload")!
     static let xmark = UIImage(named: "xmark")!
+    static let xmarkWhite = UIImage(named: "xmark.white")!
     
     //MARK: - Default
     

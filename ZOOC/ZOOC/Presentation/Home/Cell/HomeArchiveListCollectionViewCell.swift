@@ -14,13 +14,39 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
     enum ViewType{
         case folded
         case expanded
+        
+        var isHidden: Bool {
+            switch self{
+            case .folded:
+                return true
+            case .expanded:
+                return false
+            }
+        }
+        
+        var alpha: CGFloat {
+            switch self{
+            case .folded:
+                return 0
+            case .expanded:
+                return 1
+            }
+        }
     }
     
     //MARK: - Properties
     
-    private var commentWriterData : [CommentWriterResult] = []
+    private var commentWriterData : [CommentWriterResult] = [] {
+        didSet {
+            writerCollectionView.reloadData()
+        }
+    }
     
-    public var viewType : ViewType = .folded
+    public var viewType : ViewType = .folded {
+        didSet {
+            updateUI()
+        }
+    }
     
     override var isSelected: Bool {
         didSet {
@@ -28,9 +54,8 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
                 switch viewType {
                 case .folded:
                     viewType = .expanded
-                    updateUI()
                 case .expanded:
-                 break
+                    break
                 }
             } else{
                 switch viewType {
@@ -38,11 +63,8 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
                     break
                 case .expanded:
                     viewType = .folded
-                    updateUI()
                 }
             }
-            
-            
         }
     }
     
@@ -87,6 +109,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         let label = UILabel()
         label.font = .zoocCaption
         label.textColor = .zoocGray2
+        label.textAlignment = .center
         return label
     }()
     
@@ -119,10 +142,12 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         super.init(frame: frame)
         
         register()
-        setUI()
-        setLayout()
-        foldedLayout()
-        foldedAlpha()
+        style()
+        hierarchy()
+        layout()
+        
+        updateHidden()
+        updateAlpha()
     }
     
     required init?(coder: NSCoder) {
@@ -131,11 +156,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
         viewType = .folded
-        foldedAlpha()
-        foldedLayout()
-        foldedAnimatedLayout()
     }
     
     //MARK: - Custom Method
@@ -148,27 +169,29 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         writerCollectionView.register(HomeArchiveListWriterCollectionViewCell.self, forCellWithReuseIdentifier: HomeArchiveListWriterCollectionViewCell.cellIdentifier)
     }
     
-    private func setUI() {
+    private func style() {
         contentView.backgroundColor = .zoocWhite1
         contentView.layer.cornerRadius = 12
         contentView.clipsToBounds = true
     }
     
-    private func setLayout() {
-        
-        
+    private func hierarchy() {
         contentView.addSubviews(petImageView,
-                                writerCollectionView,
-                                writerProfileImageView,
-                                contentLabel,
-                                hStackView)
+                                    writerCollectionView,
+                                    writerProfileImageView,
+                                    contentLabel,
+                                    hStackView,
+                                    dateLabel)
         
-        hStackView.addArrangedSubViews(writerLabel, spacing, dateLabel)
+        hStackView.addArrangedSubViews(writerLabel, spacing)
+    }
+    
+    private func layout() {
         
         petImageView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(280)
+            $0.height.equalTo(contentView.snp.height).dividedBy(1.6)
         }
         
         writerCollectionView.snp.makeConstraints {
@@ -184,123 +207,38 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         
         
         writerProfileImageView.snp.makeConstraints {
-            $0.bottom.equalTo(hStackView.snp.top).offset(-9)
+            $0.bottom.equalTo(dateLabel.snp.top).offset(-9)
             $0.centerX.equalToSuperview()
             $0.height.width.equalTo(24)
         }
         
         hStackView.snp.makeConstraints {
             $0.bottom.equalToSuperview().offset(-20)
-            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
         }
         
         dateLabel.snp.makeConstraints {
-            $0.width.equalTo(dateLabel.intrinsicContentSize).priority(.init(990))
+            $0.bottom.equalToSuperview().offset(-20)
+            $0.leading.trailing.equalToSuperview()
         }
         
         writerLabel.snp.makeConstraints {
             $0.width.equalTo(writerLabel.intrinsicContentSize.width + 14).priority(.init(751))
         }
+        
         spacing.snp.makeConstraints {
             $0.size.equalTo(24).priority(.init(251))
         }
-        
-    
     }
     
-    
-    private func foldedLayout() {
-        writerCollectionView.isHidden = true
-        contentLabel.isHidden = true
-        writerLabel.isHidden = true
-        spacing.isHidden = true
-    }
-    
-    private func foldedAlpha() {
-        writerCollectionView.alpha = 0
-        contentLabel.alpha = 0
-        writerLabel.alpha = 0
-    }
-    
-    
-    private func expandedLayout() {
-        writerCollectionView.isHidden = false
-        contentLabel.isHidden = false
-        writerLabel.isHidden = false
-        spacing.isHidden = false
-    }
-    
-    private func expandedAlpha() {
-        writerCollectionView.alpha = 1
-        contentLabel.alpha = 1
-        writerLabel.alpha = 1
-    }
-    
-    private func foldedAnimatedLayout() {
-        self.writerProfileImageView.snp.remakeConstraints {
-            $0.top.equalTo(self.petImageView.snp.bottom).offset(84)
-            $0.centerX.equalToSuperview()
-            $0.height.width.equalTo(24)
-        }
-        
-        self.hStackView.snp.remakeConstraints {
-            $0.bottom.equalToSuperview().offset(-20)
-            $0.centerX.equalToSuperview()
-        }
-    }
-    
-    private func expandedFirstAnimatedLayout() {
-        self.writerProfileImageView.snp.remakeConstraints {
-            $0.leading.equalToSuperview().offset(18)
-            $0.bottom.equalToSuperview().offset(-20)
-            $0.height.width.equalTo(24)
-        }
-        
-        self.hStackView.snp.remakeConstraints {
-            $0.leading.equalTo(writerProfileImageView.snp.trailing).offset(7)
-            $0.bottom.equalToSuperview().offset(-20)
-            $0.trailing.equalToSuperview().offset(-18)
-        }
-    }
-    
-    private func expandedSecondAnimatedLayout() {
-        
-        self.expandedLayout()
-        UIView.animate(withDuration: 0.2) {
-            self.expandedAlpha()
-        }
-        
-        self.contentLabel.snp.remakeConstraints {
-            $0.top.equalTo(self.petImageView.snp.bottom).offset(19)
-            $0.leading.trailing.equalToSuperview().inset(20)
-        }
-        dateLabel.snp.makeConstraints {
-            $0.width.equalTo(dateLabel.intrinsicContentSize).priority(.init(990))
-        }
-        writerLabel.snp.makeConstraints {
-            $0.width.equalTo(writerLabel.intrinsicContentSize.width + 14).priority(.init(751))
-        }
-        spacing.snp.makeConstraints {
-            $0.size.equalTo(24).priority(.init(251))
-        }
-        
-//        self.writerLabel.snp.remakeConstraints {
-//            $0.leading.equalTo(self.writerProfileImageView.snp.trailing).offset(7)
-//            $0.centerY.equalTo(self.writerProfileImageView)
-//            $0.height.equalTo(24)
-//            //$0.trailing.lessThanOrEqualTo(dateLabel.snp.leading).offset(-20).priority(900)
-//            $0.width.lessThanOrEqualTo(writerLabel.intrinsicContentSize.width + 14).priority(.medium)
-//        }
-        
-        
-    }
     private func updateUI() {
+        
+        updateHidden()
         
         switch viewType{
             
         case .folded:
-            foldedLayout()
-            
+            updateAlpha()
             UIView.animate(withDuration: 0.3, animations: {
                 self.foldedAnimatedLayout()
                 self.layoutIfNeeded()
@@ -317,12 +255,77 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         }
     }
     
-    func dataBind(data: HomeArchiveModel) {
-        petImageView.image = data.petImage
-        contentLabel.text = data.content
-        writerProfileImageView.image = data.profileImage
-        writerLabel.text = data.writerName
-        dateLabel.text = data.date
+    
+    private func updateHidden() {
+        writerCollectionView.isHidden = viewType.isHidden
+        contentLabel.isHidden = viewType.isHidden
+        writerLabel.isHidden = viewType.isHidden
+        spacing.isHidden = viewType.isHidden
+    }
+    
+    private func updateAlpha() {
+        writerCollectionView.alpha = viewType.alpha
+        contentLabel.alpha = viewType.alpha
+        writerLabel.alpha = viewType.alpha
+        spacing.alpha = viewType.alpha
+    }
+    
+    private func foldedAnimatedLayout() {
+        self.writerProfileImageView.snp.remakeConstraints {
+            $0.bottom.equalTo(dateLabel.snp.top).offset(-9)
+            $0.centerX.equalToSuperview()
+            $0.height.width.equalTo(24)
+        }
+        
+        self.hStackView.snp.remakeConstraints {
+            $0.bottom.equalToSuperview().offset(-20)
+            $0.leading.trailing.equalToSuperview()
+        }
+        dateLabel.snp.remakeConstraints {
+            $0.bottom.equalToSuperview().offset(-20)
+            $0.leading.trailing.equalToSuperview()
+        }
+    }
+    
+    private func expandedFirstAnimatedLayout() {
+        self.writerProfileImageView.snp.remakeConstraints {
+            $0.leading.equalToSuperview().offset(18)
+            $0.bottom.equalToSuperview().offset(-20)
+            $0.height.width.equalTo(24)
+        }
+        
+        self.hStackView.snp.remakeConstraints {
+            $0.bottom.equalToSuperview().offset(-20)
+            $0.leading.equalTo(writerProfileImageView.snp.trailing).offset(7)
+            //$0.trailing.equalTo(dateLabel.snp.leading).offset(-5)
+        }
+        
+        self.dateLabel.snp.remakeConstraints {
+            $0.width.equalTo(dateLabel.intrinsicContentSize).priority(.init(990))
+            $0.bottom.equalToSuperview().offset(-20)
+            $0.leading.equalTo(hStackView.snp.trailing).offset(5)
+            $0.trailing.equalToSuperview().offset(-18)
+        }
+    }
+    
+    private func expandedSecondAnimatedLayout() {
+        
+        UIView.animate(withDuration: 0.2) {
+            self.updateAlpha()
+        }
+        
+        contentLabel.snp.remakeConstraints {
+            $0.top.equalTo(self.petImageView.snp.bottom).offset(19)
+            $0.leading.trailing.equalToSuperview().inset(20)
+        }
+        
+        writerLabel.snp.remakeConstraints {
+            $0.width.equalTo(writerLabel.intrinsicContentSize.width + 14).priority(.init(751))
+        }
+        
+        spacing.snp.remakeConstraints {
+            $0.size.equalTo(24).priority(.init(251))
+        }
     }
     
     func dataBind(data: HomeArchiveResult) {
@@ -333,11 +336,7 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
             self.writerProfileImageView.kfSetImage(url: data.record.writerPhoto ?? "")
         }
         
-        
         petImageView.kfSetImage(url: data.record.photo)
-        
-        
-        
         
         contentLabel.text = data.record.content
         writerLabel.text = data.record.writerName
@@ -345,14 +344,11 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         commentWriterData = data.commentWriters
     }
     
-    func updateWriterCollectionViewCell() {
-        writerCollectionView.reloadData()
-    }
-    
 }
 
 //MARK: - UICollectionViewDataSource
 extension HomeArchiveListCollectionViewCell: UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return commentWriterData.count
     }

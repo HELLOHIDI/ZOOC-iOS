@@ -41,7 +41,7 @@ final class MyRegisterPetViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dismissKeyboardWhenTappedAround()
+        //dismissKeyboardWhenTappedAround()
         
         register()
         target()

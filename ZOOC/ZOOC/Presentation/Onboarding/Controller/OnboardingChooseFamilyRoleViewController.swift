@@ -34,7 +34,7 @@ final class OnboardingChooseFamilyRoleViewController: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        dismissKeyboardWhenTappedAround()
+        //dismissKeyboardWhenTappedAround()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

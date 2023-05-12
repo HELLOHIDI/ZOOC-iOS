@@ -44,7 +44,7 @@ final class OnboardingRegisterPetViewController: BaseViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        dismissKeyboardWhenTappedAround()
+        //dismissKeyboardWhenTappedAround()
     }
     
     //MARK: - Custom Method

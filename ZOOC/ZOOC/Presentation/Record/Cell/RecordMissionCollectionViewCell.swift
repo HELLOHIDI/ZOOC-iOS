@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol RecordMissionCollectionViewCellDelegate: AnyObject {
-    func sendTapEvent(index: IndexPath)
+    func sendTapEvent(tag: Int)
 }
 
 final class RecordMissionCollectionViewCell: UICollectionViewCell {
@@ -20,7 +20,7 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     let placeHolderText: String = "오늘 어떤 일이 있었는지 공유해보세요"
     weak var delegate: RecordMissionCollectionViewCellDelegate?
     
-    var indexPath: IndexPath?
+    var missonID: Int?
     var enableNextButton: Bool = false
     
     // MARK: - UI Components
@@ -118,26 +118,19 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     }
     
     
-    func dataBind(model: RecordMissionListModel, index: IndexPath) {
+    func dataBind(model: RecordMissionListModel) {
         cardQuestion.text = model.mission_content
-        indexPath = index
-//        if model.image == nil {
-//            galleryImageView.image = Image.gallery
-//        } else {
-//            galleryImageView.image = model.image
-//        }
-        /* 여기서 UIImage에 대한 분기처리 해야 하고, text도 분기처리 해야 할 듯? */
+        self.missonID = model.id
     }
     
     //MARK: - Action Method
     
-    @objc
-    private func galleryImageViewDidTap(){
-        if let index: IndexPath = indexPath {
-            delegate?.sendTapEvent(index: index)
-        } else {
+    @objc private func galleryImageViewDidTap() {
+        guard let missonID = missonID else {
             print("indexPath가 nil인가 봐요!")
+            return
         }
+        delegate?.sendTapEvent(tag: missonID)
     }
 }
 

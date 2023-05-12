@@ -14,20 +14,33 @@ final class RecordMissionViewController : BaseViewController {
     
     //MARK: - Properties
     
-    var petImage: UIImage?
-    private var missionData = RecordMissionModel()
+    private var recordMissionViewModel: RecordMissionViewModel {
+        didSet {
+            self.recordMissionViewModel.updateNextButtonState(
+                button: &self.rootView.nextButton.isEnabled,
+                color: &self.rootView.nextButton.backgroundColor
+            )
+        }
+    }
     private let placeHolderText: String = "오늘 어떤 일이 있었는지 공유해보세요"
     private var missionList: [RecordMissionListModel] = []
-    
-    var tappedCellIndex: Int?
-    var galleryImageIsRegistered: Bool = false
-    var contentTextViewIsRegistered: Bool = false
+    private let galleryAlertController = GalleryAlertController()
+    private lazy var imagePickerController = UIImagePickerController()
     
     //MARK: - UI Components
     
     private let rootView = RecordMissionView()
     
     //MARK: - Life Cycle
+    
+    init(recordMissionViewModel: RecordMissionViewModel, missionList: [RecordMissionListModel]) {
+        self.recordMissionViewModel = recordMissionViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         self.view = rootView
@@ -50,6 +63,7 @@ final class RecordMissionViewController : BaseViewController {
     func target() {
         rootView.missionCollectionView.delegate = self
         rootView.missionCollectionView.dataSource = self
+        self.galleryAlertController.delegate = self
         
         rootView.xmarkButton.addTarget(self, action: #selector(xButtonDidTap), for: .touchUpInside)
         rootView.dailyButton.addTarget(self, action: #selector(dailyButtonDidTap), for: .touchUpInside)
@@ -103,24 +117,32 @@ extension RecordMissionViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let missionCell = collectionView.dequeueReusableCell(withReuseIdentifier: RecordMissionCollectionViewCell.cellIdentifier, for: indexPath) as? RecordMissionCollectionViewCell else { return UICollectionViewCell() }
-        missionCell.dataBind(model: missionList[indexPath.item], index: indexPath)
-        missionCell.delegate = self
-        missionCell.contentTextView.delegate = self
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecordMissionCollectionViewCell.cellIdentifier, for: indexPath) as? RecordMissionCollectionViewCell else { return UICollectionViewCell() }
+        cell.dataBind(model: missionList[indexPath.item])
+        cell.delegate = self
         
-        return missionCell
+        [cell.galleryImageView,
+         cell.contentTextView].forEach { $0.tag = indexPath.row }
+        
+        cell.galleryImageView.image = self.recordMissionViewModel.missionData[indexPath.row].image
+        cell.contentTextView.text = self.recordMissionViewModel.missionData[indexPath.row].content
+        
+        cell.contentTextView.delegate = self
+        return cell
     }
 }
 
 extension RecordMissionViewController: RecordMissionCollectionViewCellDelegate {
-    
-    func sendTapEvent(index: IndexPath) {
-        print("셀이 누른 이벤트가 뷰컨트롤러에 전달되었슴다~")
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: true)
-        tappedCellIndex = index.row
+    func sendTapEvent(tag: Int) {
+        print(#function)
+        checkAlbumPermission()
+        guard let isPermission else { return }
+        if isPermission {
+            self.recordMissionViewModel.index = tag
+            present(galleryAlertController,animated: true)
+        } else {
+            showAccessDenied()
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -137,19 +159,28 @@ extension RecordMissionViewController: RecordMissionCollectionViewCellDelegate {
 
 extension RecordMissionViewController: UIImagePickerControllerDelegate  {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            //missionList[tappedCellIndex ?? 0].image = image
-            rootView.missionCollectionView.reloadData()
-            print(image)
-            //if missionList[tappedCellIndex ?? 0].image == nil {
-            print("이미지를 선택해주세요")
-        } else {
-            galleryImageIsRegistered = true
-            updateUIViewController(galleryImageIsRegistered: galleryImageIsRegistered, contentTextViewIsRegistered: contentTextViewIsRegistered)
-        }
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        self.recordMissionViewModel.missionData[self.recordMissionViewModel.index].image = image
+//        self.recordMissionViewModel.updateNextButtonState(
+//            button: &self.rootView.nextButton.isEnabled,
+//            color: &self.rootView.nextButton.backgroundColor
+//        )
+        self.rootView.missionCollectionView.reloadData()
     }
 }
+
+extension RecordMissionViewController: GalleryAlertControllerDelegate {
+    func galleryButtonDidTap() {
+        print(#function)
+        present(imagePickerController, animated: true)
+    }
+    
+    func deleteButtonDidTap() {
+        self.recordMissionViewModel.missionData[self.recordMissionViewModel.index].image = Image.gallery
+        self.rootView.missionCollectionView.reloadData()
+    }
+}
+
 
 
 extension RecordMissionViewController: UITextViewDelegate {
@@ -169,11 +200,10 @@ extension RecordMissionViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         if textView.text == "오늘 어떤 일이 있었는지 공유해보세요" || textView.text.isEmpty {
-            print("contentView 입력해줘..")
+            presentBottomAlert("반려동물과 있었던 일을 작성해주세요~")
         } else {
-            missionData.content = textView.text
-            contentTextViewIsRegistered = true
-            updateUIViewController(galleryImageIsRegistered: galleryImageIsRegistered, contentTextViewIsRegistered: true)
+            self.recordMissionViewModel.missionData[self.recordMissionViewModel.index].content = textView.text
+            self.rootView.missionCollectionView.reloadData()
         }
     }
 }
@@ -184,7 +214,6 @@ extension RecordMissionViewController {
     func pushToRecordViewController() {
         let recordViewController = RecordViewController()
         navigationController?.pushViewController(recordViewController, animated: true)
-        print(#function)
     }
     
     func pushToRecordAlertViewController() {
@@ -195,21 +224,10 @@ extension RecordMissionViewController {
     
     func pushToRecordRegisterViewController() {
         let recordRegisterViewController = RecordRegisterViewController()
-        
-        recordRegisterViewController.dataBind(data: missionData)
+        recordRegisterViewController.dataBind(data: self.recordMissionViewModel.missionData[self.recordMissionViewModel.index])
         navigationController?.pushViewController(recordRegisterViewController, animated: true)
         print(#function)
         
-    }
-    
-    private func updateUIViewController(galleryImageIsRegistered: Bool, contentTextViewIsRegistered: Bool) {
-        if galleryImageIsRegistered == true && contentTextViewIsRegistered == true {
-            rootView.nextButton.backgroundColor = .zoocGradientGreen
-            rootView.nextButton.isEnabled = true
-        } else {
-            rootView.nextButton.backgroundColor = .zoocGray1
-            rootView.nextButton.isEnabled = false
-        }
     }
     
     private func configIndicatorBarWidth(_ scrollView: UIScrollView) {
@@ -225,19 +243,14 @@ extension RecordMissionViewController {
         RecordAPI.shared.getMission { result in
             guard let result = self.validateResult(result) as? [RecordMissionListModel] else { return }
             self.missionList = result
+            
+            for _ in 0..<result.count {
+                self.recordMissionViewModel.missionData.append(RecordModel(image: Image.gallery))
+            }
+            
             self.rootView.missionCollectionView.reloadData()
         }
     }
 }
 
-//HomeAPI.shared.getTotalPet(familyID: User.shared.familyID) { result in
-//
-//    guard let result = self.validateResult(result) as? [HomePetResult] else { return }
-//
-//    self.petData = result
-//    guard let id = self.petData.first?.id else { return }
-//    self.selectPetCollectionView(petID: id)
-//
-//
-//}
 

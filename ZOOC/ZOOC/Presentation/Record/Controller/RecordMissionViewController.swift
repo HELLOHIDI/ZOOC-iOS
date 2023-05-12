@@ -24,12 +24,12 @@ final class RecordMissionViewController : BaseViewController {
     }
     private let placeHolderText: String = "오늘 어떤 일이 있었는지 공유해보세요"
     private var missionList: [RecordMissionListModel] = []
-    private let galleryAlertController = GalleryAlertController()
-    private lazy var imagePickerController = UIImagePickerController()
     
     //MARK: - UI Components
     
     private let rootView = RecordMissionView()
+    private let galleryAlertController = GalleryAlertController()
+    private lazy var imagePickerController = UIImagePickerController()
     
     //MARK: - Life Cycle
     
@@ -64,6 +64,7 @@ final class RecordMissionViewController : BaseViewController {
         rootView.missionCollectionView.delegate = self
         rootView.missionCollectionView.dataSource = self
         self.galleryAlertController.delegate = self
+        self.imagePickerController.delegate = self
         
         rootView.xmarkButton.addTarget(self, action: #selector(xButtonDidTap), for: .touchUpInside)
         rootView.dailyButton.addTarget(self, action: #selector(dailyButtonDidTap), for: .touchUpInside)
@@ -121,10 +122,10 @@ extension RecordMissionViewController: UICollectionViewDataSource {
         cell.dataBind(model: missionList[indexPath.item])
         cell.delegate = self
         
-        [cell.galleryImageView,
+        [cell.galleryButton,
          cell.contentTextView].forEach { $0.tag = indexPath.row }
         
-        cell.galleryImageView.image = self.recordMissionViewModel.missionData[indexPath.row].image
+        cell.galleryButton.setImage(self.recordMissionViewModel.missionData[indexPath.row].image, for: .normal)
         cell.contentTextView.text = self.recordMissionViewModel.missionData[indexPath.row].content
         
         cell.contentTextView.delegate = self
@@ -133,7 +134,7 @@ extension RecordMissionViewController: UICollectionViewDataSource {
 }
 
 extension RecordMissionViewController: RecordMissionCollectionViewCellDelegate {
-    func sendTapEvent(tag: Int) {
+    func galleryButtonDidTap(tag: Int) {
         print(#function)
         checkAlbumPermission()
         guard let isPermission else { return }
@@ -159,12 +160,12 @@ extension RecordMissionViewController: RecordMissionCollectionViewCellDelegate {
 
 extension RecordMissionViewController: UIImagePickerControllerDelegate  {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        print(#function)
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
+            print("삐약")
+            return
+        }
         self.recordMissionViewModel.missionData[self.recordMissionViewModel.index].image = image
-//        self.recordMissionViewModel.updateNextButtonState(
-//            button: &self.rootView.nextButton.isEnabled,
-//            color: &self.rootView.nextButton.backgroundColor
-//        )
         self.rootView.missionCollectionView.reloadData()
     }
 }
@@ -224,7 +225,11 @@ extension RecordMissionViewController {
     
     func pushToRecordRegisterViewController() {
         let recordRegisterViewController = RecordRegisterViewController()
-        recordRegisterViewController.dataBind(data: self.recordMissionViewModel.missionData[self.recordMissionViewModel.index])
+        recordRegisterViewController.dataBind(
+            data: self.recordMissionViewModel.missionData[self.recordMissionViewModel.index],
+            missionID: self.missionList[self.recordMissionViewModel.index].id
+        )
+        
         navigationController?.pushViewController(recordRegisterViewController, animated: true)
         print(#function)
         

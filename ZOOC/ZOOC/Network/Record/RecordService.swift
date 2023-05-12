@@ -11,7 +11,7 @@ import Moya
 enum RecordService{
     case getTotalPet(familyID: String)
     case postRecord(familyID: String, photo: UIImage, content: String, pets: [Int])
-    case postMission(familyID: String, missionID: String, photo: UIImage, content: String, pets: [Int])
+    case postMission(familyID: String, missionID: Int, photo: UIImage, content: String, pets: [Int])
     case getMissionList(familyID: String)
 }
 

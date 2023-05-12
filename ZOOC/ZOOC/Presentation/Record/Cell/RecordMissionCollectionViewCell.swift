@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol RecordMissionCollectionViewCellDelegate: AnyObject {
-    func sendTapEvent(tag: Int)
+    func galleryButtonDidTap(tag: Int)
 }
 
 final class RecordMissionCollectionViewCell: UICollectionViewCell {
@@ -27,7 +27,7 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     
     private let cardContainerView = UIView()
     private let cardQuestion = UILabel()
-    lazy var galleryImageView = UIImageView()
+    lazy var galleryButton = UIButton()
     lazy var contentTextView = UITextView()
     
     // MARK: - Life Cycle
@@ -68,12 +68,12 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
             $0.textAlignment = .center
         }
         
-        galleryImageView.do {
+        galleryButton.do {
             $0.layer.masksToBounds = true
             $0.layer.cornerRadius = 12
             $0.contentMode = .scaleAspectFill
             $0.isUserInteractionEnabled = true
-            $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(galleryImageViewDidTap)))
+            $0.addTarget(self, action: #selector(galleryImageViewDidTap), for: .touchUpInside)
         }
         
         contentTextView.do {
@@ -89,7 +89,7 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     
     private func hierarchy() {
         contentView.addSubview(cardContainerView)
-        cardContainerView.addSubviews(cardQuestion, galleryImageView, contentTextView)
+        cardContainerView.addSubviews(cardQuestion, galleryButton, contentTextView)
     }
     
     private func layout() {
@@ -102,7 +102,7 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
             $0.centerX.equalToSuperview()
         }
         
-        galleryImageView.snp.makeConstraints {
+        galleryButton.snp.makeConstraints {
             $0.bottom.equalTo(contentTextView.snp.top).offset(-12)
             $0.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(22)
@@ -125,12 +125,8 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Action Method
     
-    @objc private func galleryImageViewDidTap() {
-        guard let missonID = missonID else {
-            print("indexPath가 nil인가 봐요!")
-            return
-        }
-        delegate?.sendTapEvent(tag: missonID)
+    @objc private func galleryImageViewDidTap(sender: UIButton) {
+        delegate?.galleryButtonDidTap(tag: sender.tag)
     }
 }
 

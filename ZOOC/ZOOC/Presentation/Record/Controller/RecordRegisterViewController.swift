@@ -17,6 +17,7 @@ final class RecordRegisterViewController : BaseViewController{
     var recordData: RecordModel = RecordModel()
     var petList: [RecordRegisterModel] = []
     var selectedPetIDList: [Int] = []
+    var missionID: Int?
     
     //MARK: - UI Components
     
@@ -55,9 +56,9 @@ final class RecordRegisterViewController : BaseViewController{
         rootView.petCollectionView.dataSource = self
     }
     
-    
-    func dataBind(data: RecordModel){
+    func dataBind(data: RecordModel, missionID: Int?){
         self.recordData = data
+        self.missionID = missionID
     }
     
     //MARK: - Action Method
@@ -79,19 +80,7 @@ final class RecordRegisterViewController : BaseViewController{
     }
     
     @objc private func registerButtonDidTap(){
-        petList.forEach {
-            if $0.isSelected {
-                selectedPetIDList.append($0.petID)
-            }
-        }
-        rootView.registerButton.isEnabled = false
-        rootView.registerButton.backgroundColor = .zoocGray1
-        
-        RecordAPI.shared.postRecord(photo: recordData.image ?? UIImage(),
-                                    content: recordData.content ?? "",
-                                    pets: selectedPetIDList) { result in
-            self.pushToRecordCompleteViewController()
-        }
+        reqeustPostRecord()
     }
     
     private func activateButton(indexPathArray: [IndexPath]?) {
@@ -186,6 +175,32 @@ extension RecordRegisterViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+}
+
+extension RecordRegisterViewController {
+    func reqeustPostRecord() {
+        petList.forEach {
+            if $0.isSelected {
+                selectedPetIDList.append($0.petID)
+            }
+        }
+        rootView.registerButton.isEnabled = false
+        rootView.registerButton.backgroundColor = .zoocGray1
+        
+        if let missionID = self.missionID {
+            RecordAPI.shared.postMission(photo: recordData.image ?? UIImage(),
+                                         missionID: missionID,
+                                         content: recordData.content ?? "",
+                                         pets: selectedPetIDList) { result in
+            }
+        } else {
+            RecordAPI.shared.postRecord(photo: recordData.image ?? UIImage(),
+                                        content: recordData.content ?? "",
+                                        pets: selectedPetIDList) { result in
+            }
+        }
+        self.pushToRecordCompleteViewController()
     }
 }
 

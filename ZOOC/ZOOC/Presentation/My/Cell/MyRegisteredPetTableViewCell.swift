@@ -36,7 +36,7 @@ final class MyRegisteredPetTableViewCell: UITableViewCell {
         self.backgroundColor = .zoocWhite2
         
         petProfileImageView.do {
-            $0.makeCornerRadius(ratio: 30)
+            $0.makeCornerRound(radius: 30)
             $0.contentMode = .scaleAspectFill
         }
         

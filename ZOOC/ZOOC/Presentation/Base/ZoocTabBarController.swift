@@ -15,7 +15,6 @@ class ZoocTabBarController: UITabBarController {
     
     //MARK: - Properties
 
-    let homeGuideViewController = HomeGuideViewController()
     let homeViewController = HomeViewController()
     let myViewController = MyViewController()
     
@@ -104,11 +103,12 @@ class ZoocTabBarController: UITabBarController {
     //MARK: - Action Method
     
     @objc func plusButtonDidTap(){
-        let recordViewController = RecordViewController()
-        let recordNavigationController = UINavigationController(rootViewController: recordViewController)
-        recordNavigationController.modalPresentationStyle = .fullScreen
-        recordNavigationController.setNavigationBarHidden(true, animated: true)
-        present(recordNavigationController, animated: true)
+        print(#function)
+        let recordVC = RecordViewController()
+        let recordNVC = UINavigationController(rootViewController: recordVC)
+        recordNVC.modalPresentationStyle = .fullScreen
+        recordNVC.setNavigationBarHidden(true, animated: true)
+        present(recordNVC, animated: true)
     }
 
 }

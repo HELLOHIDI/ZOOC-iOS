@@ -64,7 +64,7 @@ final class MyPetSectionCollectionViewCell: UICollectionViewCell {
     private func style() {
         self.do {
             $0.backgroundColor = .white
-            $0.makeCornerRadius(ratio: 12)
+            $0.makeCornerRound(radius: 12)
         }
         
         petLabel.do {

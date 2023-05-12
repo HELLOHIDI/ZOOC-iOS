@@ -54,7 +54,7 @@ final class OnboardingJoinFamilyView: OnboardingBaseView {
             $0.font = .zoocBody2
             $0.textColor = .zoocDarkGreen
             $0.placeholder = "  ex) SEF33210"
-            $0.makeCornerRadius(ratio: 8)
+            $0.makeCornerRound(radius: 8)
             $0.addLeftPadding(inset: 6)
         }
         
@@ -68,7 +68,7 @@ final class OnboardingJoinFamilyView: OnboardingBaseView {
             $0.setTitleColor(.zoocWhite1, for: .normal)
             $0.titleLabel?.font = .zoocSubhead1
             $0.titleLabel?.textAlignment = .center
-            $0.makeCornerRadius(ratio: 27)
+            $0.makeCornerRound(radius: 27)
             $0.backgroundColor = .zoocGray1
         }
     }

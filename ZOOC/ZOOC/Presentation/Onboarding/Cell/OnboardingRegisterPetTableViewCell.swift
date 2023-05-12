@@ -70,7 +70,7 @@ final class OnboardingRegisterPetTableViewCell: UITableViewCell {
         
         petProfileImageButton.do {
             $0.makeCornerBorder(borderWidth: 5, borderColor: UIColor.zoocWhite1)
-            $0.makeCornerRadius(ratio: 35)
+            $0.makeCornerRound(radius: 35)
             $0.contentMode = .scaleAspectFit
         }
         
@@ -79,7 +79,7 @@ final class OnboardingRegisterPetTableViewCell: UITableViewCell {
             $0.addLeftPadding(inset: 10)
             $0.textColor = .zoocDarkGreen
             $0.font = .zoocBody1
-            $0.makeCornerRadius(ratio: 20)
+            $0.makeCornerRound(radius: 20)
             $0.makeCornerBorder(borderWidth: 1, borderColor: UIColor.zoocLightGray)
         }
         

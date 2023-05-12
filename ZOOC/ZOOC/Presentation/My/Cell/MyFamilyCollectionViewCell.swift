@@ -74,7 +74,7 @@ final class MyFamilyCollectionViewCell: UICollectionViewCell {
     
     private func style() {
         profileImageView.do {
-            $0.makeCornerRadius(ratio: 24)
+            $0.makeCornerRound(radius: 24)
             $0.contentMode = .scaleAspectFill
         }
         

@@ -7,12 +7,12 @@
 
 import UIKit
 
-extension UIView{
-    func addSubviews(_ views: UIView...){
+extension UIView {
+    func addSubviews (_ views: UIView...){
         views.forEach { self.addSubview($0) }
     }
     
-    func makeShadow(
+    func makeShadow (
         color: UIColor,
         offset : CGSize,
         radius : CGFloat,
@@ -25,13 +25,17 @@ extension UIView{
         layer.masksToBounds = false
     }
     
-    func makeCornerRadius(ratio: CGFloat){
-        layer.cornerRadius = ratio
-        layer.masksToBounds = false
-        clipsToBounds = true
+    func makeCornerRound (radius: CGFloat){
+        layer.cornerRadius = radius
+        layer.masksToBounds = true
     }
     
-    func makeCornerBorder(borderWidth: CGFloat, borderColor: UIColor) {
+    func makeCornerRound (ratio : CGFloat) {
+        layer.cornerRadius = self.frame.height / ratio
+        layer.masksToBounds = true
+    }
+    
+    func makeCornerBorder (borderWidth: CGFloat, borderColor: UIColor) {
         layer.borderWidth = borderWidth
         layer.borderColor = borderColor.cgColor
     }

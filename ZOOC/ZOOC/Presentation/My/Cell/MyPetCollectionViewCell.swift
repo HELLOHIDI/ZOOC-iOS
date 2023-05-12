@@ -33,7 +33,7 @@ final class MyPetCollectionViewCell: UICollectionViewCell {
     private func style() {
         contentView.do {
             $0.backgroundColor = .zoocWhite2
-            $0.makeCornerRadius(ratio: 21)
+            $0.makeCornerRound(radius: 21)
             $0.makeCornerBorder(borderWidth: 1, borderColor: .zoocLightGray)
         }
         

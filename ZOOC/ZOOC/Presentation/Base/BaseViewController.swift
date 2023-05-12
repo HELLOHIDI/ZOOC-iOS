@@ -65,18 +65,21 @@ class BaseViewController : UIViewController{
         
     }
     
-    func checkAlbumPermission() {
+    func checkAlbumPermission(completion: @escaping (Bool) -> Void) {
         print(#function)
-        PHPhotoLibrary.requestAuthorization( { status in
+        
+        PHPhotoLibrary.requestAuthorization { status in
             switch status{
             case .authorized:
                 self.isPermission = true
+                completion(true)
             case .denied, .restricted, .notDetermined:
                 self.isPermission = false
+                completion(false)
             default:
-                break
+                completion(false)
             }
-        })
+        }
     }
     
     func showAccessDenied() {

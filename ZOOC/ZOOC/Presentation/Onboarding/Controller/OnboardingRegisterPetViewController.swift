@@ -167,17 +167,21 @@ extension OnboardingRegisterPetViewController: UITableViewDataSource {
 
 extension OnboardingRegisterPetViewController: DeleteButtonTappedDelegate {
     func petProfileImageButtonDidTap(tag: Int) {
-        checkAlbumPermission()
-        guard let isPermission else { return }
-        if isPermission {
-            self.onboardingPetRegisterViewModel.index = tag
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = .photoLibrary
-            self.present(imagePicker, animated: true)
-        } else {
-            self.showAccessDenied()
+        checkAlbumPermission { hasPermission in
+            if hasPermission {
+                self.onboardingPetRegisterViewModel.index = tag
+                DispatchQueue.main.async {
+                    let imagePicker = UIImagePickerController()
+                    imagePicker.delegate = self
+                    imagePicker.sourceType = .photoLibrary
+                    self.present(imagePicker, animated: true)
+                }
+            } else {
+                print("퍼미션이 false")
+                self.showAccessDenied()
+            }
         }
+     
     }
     
     func deleteButtonTapped(tag: Int) {

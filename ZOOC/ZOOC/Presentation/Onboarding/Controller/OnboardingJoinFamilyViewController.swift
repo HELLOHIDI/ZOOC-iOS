@@ -56,9 +56,17 @@ extension OnboardingJoinFamilyViewController {
         guard let code = onboardingJoinFamilyView.familyCodeTextField.text else { return }
         let param = OnboardingJoinFamilyRequest(code: code)
         OnboardingAPI.shared.postJoinFamily(requset: param) { result in
-            guard let result = self.validateResult(result) as? OnboardingJoinFamilyResult else { return }
-            User.shared.familyID = String(result.familyID)
-            self.requestFCMTokenAPI()
+            
+            switch result {
+            case .success(let data):
+                guard let result = data as? OnboardingJoinFamilyResult else { return }
+                User.shared.familyID = String(result.familyID)
+                self.requestFCMTokenAPI()
+            case .requestErr(let msg):
+                self.presentBottomAlert(msg)
+            default:
+                self.validateResult(result)
+            }
         }
     }
     

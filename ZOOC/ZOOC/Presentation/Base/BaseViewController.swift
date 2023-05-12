@@ -98,6 +98,7 @@ class BaseViewController : UIViewController{
         present(alert, animated: false, completion: nil)
     }
     
+    @discardableResult
     func validateResult(_ result: NetworkResult<Any>) -> Any?{
         switch result{
         case .success(let data):

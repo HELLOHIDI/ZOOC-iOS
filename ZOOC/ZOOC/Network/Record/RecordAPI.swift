@@ -52,7 +52,7 @@ extension RecordAPI{
     func getMission(completion: @escaping (NetworkResult<Any>) -> Void) {
         recordProvider.request(.getMissionList(familyID: User.shared.familyID)) { (result) in
             self.disposeNetwork(result,
-                                dataModel: [RecordMissionListModel].self,
+                                dataModel: [RecordMissionResult].self,
                                 completion: completion)
         }
     }

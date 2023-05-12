@@ -15,7 +15,7 @@ final class RecordMissionViewController : BaseViewController {
     //MARK: - Properties
     
     private var recordMissionViewModel = RecordMissionViewModel()
-    private var missionList: [RecordMissionListModel] = []
+    private var missionList: [RecordMissionResult] = []
     
     //MARK: - UI Components
     
@@ -25,7 +25,7 @@ final class RecordMissionViewController : BaseViewController {
     
     //MARK: - Life Cycle
     
-    init(recordMissionViewModel: RecordMissionViewModel, missionList: [RecordMissionListModel]) {
+    init(recordMissionViewModel: RecordMissionViewModel, missionList: [RecordMissionResult]) {
         self.recordMissionViewModel = recordMissionViewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -251,7 +251,7 @@ extension RecordMissionViewController {
     
     private func requestMissionAPI() {
         RecordAPI.shared.getMission { result in
-            guard let result = self.validateResult(result) as? [RecordMissionListModel] else { return }
+            guard let result = self.validateResult(result) as? [RecordMissionResult] else { return }
             self.missionList = result
             
             for _ in 0..<result.count {

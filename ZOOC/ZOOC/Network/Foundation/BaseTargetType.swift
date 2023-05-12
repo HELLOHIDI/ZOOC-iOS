@@ -16,7 +16,7 @@ extension BaseTargetType{
         return URL(string: (Bundle.main.infoDictionary?["BASE_URL"] as! String))!
     }
     
-    var headers: [String : String]?{
+    var headers: [String : String]? {
         return APIConstants.hasTokenHeader
     }
     

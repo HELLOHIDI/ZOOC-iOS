@@ -123,8 +123,8 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     }
     
     
-    func dataBind(model: RecordMissionListModel) {
-        cardQuestion.text = model.mission_content
+    func dataBind(model: RecordMissionResult) {
+        cardQuestion.text = model.missionContent
         self.missonID = model.id
     }
     

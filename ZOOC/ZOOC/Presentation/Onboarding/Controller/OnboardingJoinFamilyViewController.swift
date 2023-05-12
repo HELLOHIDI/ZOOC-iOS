@@ -60,19 +60,18 @@ extension OnboardingJoinFamilyViewController {
             User.shared.familyID = String(result.familyID)
             self.requestFCMTokenAPI()
         }
-        self.pushToParticipateCompletedView()
     }
     
     private func requestFCMTokenAPI() {
         OnboardingAPI.shared.patchFCMToken(fcmToken: User.shared.fcmToken) { result in
-            self.pushToParticipateCompletedView()
+            self.pushToJoinCompletedViewController()
             
         }
     }
     
-    func pushToParticipateCompletedView() {
-        let onboardingParticipateCompletedViewController = OnboardingJoinFamilyCompletedViewController()
-        self.navigationController?.pushViewController(onboardingParticipateCompletedViewController, animated: true)
+    func pushToJoinCompletedViewController() {
+        let joinCompletedVC = OnboardingJoinFamilyCompletedViewController()
+        self.navigationController?.pushViewController(joinCompletedVC, animated: true)
     }
 }
 

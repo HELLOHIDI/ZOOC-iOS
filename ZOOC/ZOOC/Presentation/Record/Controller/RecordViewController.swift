@@ -151,6 +151,7 @@ extension RecordViewController {
     
     func pushToRecordAlertViewController() {
         let recordAlertViewController = ZoocAlertViewController()
+        recordAlertViewController.presentingVC = .record
         recordAlertViewController.modalPresentationStyle = .overFullScreen
         self.present(recordAlertViewController, animated: false, completion: nil)
     }

@@ -51,6 +51,7 @@ final class RecordRegisterViewController : BaseViewController{
         rootView.dailyButton.addTarget(self, action: #selector(dailyButtonDidTap), for: .touchUpInside)
         rootView.missionButton.addTarget(self, action: #selector(missionButtonDidTap), for: .touchUpInside)
         rootView.backButton.addTarget(self, action: #selector(backButtonDidTap),for: .touchUpInside)
+        rootView.registerButton.addTarget(self, action: #selector(registerButtonDidTap), for: .touchUpInside)
         
         rootView.petCollectionView.delegate = self
         rootView.petCollectionView.dataSource = self
@@ -189,12 +190,14 @@ extension RecordRegisterViewController {
         rootView.registerButton.backgroundColor = .zoocGray1
         
         if let missionID = self.missionID {
+            print("🐶🐶🐶🐶🐶🐶🐶🐶")
             RecordAPI.shared.postMission(photo: recordData.image ?? UIImage(),
                                          missionID: missionID,
                                          content: recordData.content ?? "",
                                          pets: selectedPetIDList) { result in
             }
         } else {
+            print("🐶🐶🐶🐶🐶🐶🐶🐶")
             RecordAPI.shared.postRecord(photo: recordData.image ?? UIImage(),
                                         content: recordData.content ?? "",
                                         pets: selectedPetIDList) { result in

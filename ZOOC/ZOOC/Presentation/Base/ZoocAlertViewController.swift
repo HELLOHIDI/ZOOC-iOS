@@ -10,9 +10,16 @@ import UIKit
 import SnapKit
 import Then
 
+enum PresentingVC {
+    case record
+    case editProfile
+}
+
 final class ZoocAlertViewController: UIViewController {
     
     //MARK: - Properties
+    
+    public var presentingVC: PresentingVC?
     
     //MARK: - UI Components
     
@@ -144,12 +151,30 @@ final class ZoocAlertViewController: UIViewController {
 
 extension ZoocAlertViewController {
     private func popToMyView() {
-        guard let presentingNVC = self.presentingViewController as? UINavigationController else { return }
-        guard let presentingTVC = presentingNVC.topViewController as? UITabBarController else { return }
+        switch self.presentingVC {
+        case .record:
+            popRecordVC()
+        case .editProfile:
+            popEditVC()
+        case .none: break
+            
+        }
+    }
+    
+    private func popEditVC() {
+        guard let presentingTVC = self.presentingViewController as? UITabBarController else { return }
+        print(presentingTVC)
         guard let presentingNVC2 = presentingTVC.selectedViewController as? UINavigationController else { return }
+        print(presentingNVC2)
         guard let presentingVC = presentingNVC2.topViewController else { return }
+        print(presentingVC)
         
+        print("⛑⛑⛑⛑⛑⛑⛑⛑⛑⛑⛑")
         presentingVC.navigationController?.popViewController(animated: true)
         self.dismiss(animated: false)
+    }
+    
+    private func popRecordVC() {
+        self.presentingViewController?.presentingViewController?.dismiss(animated: false)
     }
 }

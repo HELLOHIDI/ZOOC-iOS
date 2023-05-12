@@ -14,6 +14,12 @@ final class HomeViewController : BaseViewController {
     
     //MARK: - Properties
     
+    private var missionData: [RecordMissionResult] = [] {
+        didSet {
+            rootView.missionLabel.text = missionData[0].missionContent
+        }
+    }
+    
     private var petData: [HomePetResult] = [] {
         didSet{
             rootView.petCollectionView.reloadData()
@@ -22,7 +28,6 @@ final class HomeViewController : BaseViewController {
     
     private var archiveData: [HomeArchiveResult] = [] {
         didSet {
-            
             rootView.archiveListCollectionView.reloadData()
             rootView.archiveGridCollectionView.reloadData()
             
@@ -163,9 +168,8 @@ final class HomeViewController : BaseViewController {
     private func requestMissionAPI() {
         HomeAPI.shared.getMission(familyID: User.shared.familyID) { result in
             
-            guard let result = self.validateResult(result) as? [HomeMissionResult] else { return }
-            
-            self.rootView.missionLabel.text = result[0].missionContent //TODO: 미션용 API 필요
+            guard let result = self.validateResult(result) as? [RecordMissionResult] else { return }
+            self.missionData = result
         }
     }
     
@@ -198,7 +202,7 @@ final class HomeViewController : BaseViewController {
     
     @objc
     private func missionViewDidTap() {
-        let missionVC = RecordMissionViewController()
+        let missionVC = RecordMissionViewController(recordMissionViewModel: RecordMissionViewModel(), missionList: missionData)
         let missionNVC = UINavigationController(rootViewController: missionVC)
         missionNVC.modalPresentationStyle = .fullScreen
         missionNVC.setNavigationBarHidden(true, animated: true)

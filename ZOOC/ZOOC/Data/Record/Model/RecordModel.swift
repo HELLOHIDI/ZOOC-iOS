@@ -10,4 +10,5 @@ import UIKit
 struct RecordModel {
     var image: UIImage?
     var content: String?
+    var missionID: Int?
 }

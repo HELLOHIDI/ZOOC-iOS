@@ -281,6 +281,10 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
             $0.bottom.equalToSuperview().offset(-20)
             $0.leading.trailing.equalToSuperview()
         }
+        dateLabel.snp.remakeConstraints {
+            $0.bottom.equalToSuperview().offset(-20)
+            $0.leading.trailing.equalToSuperview()
+        }
     }
     
     private func expandedFirstAnimatedLayout() {
@@ -293,12 +297,13 @@ final class HomeArchiveListCollectionViewCell : UICollectionViewCell{
         self.hStackView.snp.remakeConstraints {
             $0.bottom.equalToSuperview().offset(-20)
             $0.leading.equalTo(writerProfileImageView.snp.trailing).offset(7)
-            $0.trailing.equalTo(dateLabel.snp.leading).offset(-5)
+            //$0.trailing.equalTo(dateLabel.snp.leading).offset(-5)
         }
         
         self.dateLabel.snp.remakeConstraints {
             $0.width.equalTo(dateLabel.intrinsicContentSize).priority(.init(990))
             $0.bottom.equalToSuperview().offset(-20)
+            $0.leading.equalTo(hStackView.snp.trailing).offset(5)
             $0.trailing.equalToSuperview().offset(-18)
         }
     }

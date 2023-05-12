@@ -19,8 +19,8 @@ final class ZoocInterceptor: RequestInterceptor {
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         
         let headersKey = urlRequest.allHTTPHeaderFields?.keys
-        var url = urlRequest.url
-        var kakaoURL = URL(string: (Bundle.main.infoDictionary?["BASE_URL"] as! String) + URLs.kakaoLogin)
+        let url = urlRequest.url
+        let kakaoURL = URL(string: (Bundle.main.infoDictionary?["BASE_URL"] as! String) + URLs.kakaoLogin)
         
         guard headersKey != APIConstants.noTokenHeader.keys,
                 url != kakaoURL
@@ -58,7 +58,7 @@ final class ZoocInterceptor: RequestInterceptor {
                 guard let data = data as? OnboardingJWTTokenResult else { return }
                 User.shared.zoocAccessToken = data.accessToken
                 User.shared.zoocRefreshToken = data.refreshToken
-                print("👽 401을 받은 API를 재호출합니다❗️")
+                print("👽 AccessToken 갱신에 성공했습니다! \n 401을 받은 API를 재호출합니다❗️")
                 completion(.retry) // 401을 받은 API를 재호출합니다.
                 
             case .authorizationFail(let data):

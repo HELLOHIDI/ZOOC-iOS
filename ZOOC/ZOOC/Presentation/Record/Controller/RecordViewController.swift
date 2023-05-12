@@ -24,7 +24,7 @@ final class RecordViewController : BaseViewController{
     
     //MARK: - UI Components
     
-    private let imagePickerController: UIImagePickerController = {
+    private lazy var imagePickerController: UIImagePickerController = {
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
         return picker

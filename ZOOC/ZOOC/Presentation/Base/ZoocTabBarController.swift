@@ -15,7 +15,6 @@ class ZoocTabBarController: UITabBarController {
     
     //MARK: - Properties
 
-    let homeGuideViewController = HomeGuideVC_Deprecated()
     let homeViewController = HomeViewController()
     let myViewController = MyViewController()
     
@@ -104,6 +103,7 @@ class ZoocTabBarController: UITabBarController {
     //MARK: - Action Method
     
     @objc func plusButtonDidTap(){
+        print(#function)
         let recordVC = RecordViewController()
         let recordNVC = UINavigationController(rootViewController: recordVC)
         recordNVC.modalPresentationStyle = .fullScreen

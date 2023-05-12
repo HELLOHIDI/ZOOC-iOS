@@ -14,15 +14,7 @@ final class RecordMissionViewController : BaseViewController {
     
     //MARK: - Properties
     
-    private var recordMissionViewModel: RecordMissionViewModel {
-        didSet {
-            self.recordMissionViewModel.updateNextButtonState(
-                button: &self.rootView.nextButton.isEnabled,
-                color: &self.rootView.nextButton.backgroundColor
-            )
-        }
-    }
-    private let placeHolderText: String = "오늘 어떤 일이 있었는지 공유해보세요"
+    private var recordMissionViewModel = RecordMissionViewModel()
     private var missionList: [RecordMissionListModel] = []
     
     //MARK: - UI Components
@@ -100,11 +92,11 @@ extension RecordMissionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
     }
-    
+
     func scrollViewWillEndDragging (_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let screenWidth = UIScreen.main.bounds.width
         let cardWidth = screenWidth - (30 * 2)
-        
+
         let scrolledOffsetX = targetContentOffset.pointee.x + scrollView.contentInset.left
         let cellWidth = cardWidth + 13
         let index = round(scrolledOffsetX / cellWidth)
@@ -129,6 +121,11 @@ extension RecordMissionViewController: UICollectionViewDataSource {
         cell.contentTextView.text = self.recordMissionViewModel.missionData[indexPath.row].content
         
         cell.contentTextView.delegate = self
+        
+        self.recordMissionViewModel.updateNextButtonState(
+            button: &self.rootView.nextButton.isEnabled,
+            color: &self.rootView.nextButton.backgroundColor
+        )
         return cell
     }
 }
@@ -148,11 +145,11 @@ extension RecordMissionViewController: RecordMissionCollectionViewCellDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == rootView.missionCollectionView {
-            
+
             let scroll = scrollView.contentOffset.x + scrollView.contentInset.left
             let width = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
             let scrollRatio = scroll / width
-            
+
             rootView.missionIndicatorView.leftOffsetRatio = scrollRatio
         }
     }
@@ -186,25 +183,30 @@ extension RecordMissionViewController: GalleryAlertControllerDelegate {
 
 extension RecordMissionViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == placeHolderText {
+        print(#function)
+        if textView.text == self.recordMissionViewModel.placeHolderText {
             textView.text = nil
             textView.textColor = .black
         }
     }
-    
+
     func textViewDidEndEditing(_ textView: UITextView) {
+        print(#function)
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = placeHolderText
+            textView.text = self.recordMissionViewModel.placeHolderText
             textView.textColor = .zoocGray1
-        }
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
-        if textView.text == "오늘 어떤 일이 있었는지 공유해보세요" || textView.text.isEmpty {
-            presentBottomAlert("반려동물과 있었던 일을 작성해주세요~")
         } else {
             self.recordMissionViewModel.missionData[self.recordMissionViewModel.index].content = textView.text
             self.rootView.missionCollectionView.reloadData()
+        }
+    }
+
+    func textViewDidChange(_ textView: UITextView) {
+        print(#function)
+        if textView.text == "오늘 어떤 일이 있었는지 공유해보세요" || textView.text.isEmpty {
+            presentBottomAlert("반려동물과 있었던 일을 작성해주세요~")
+        } else {
+            
         }
     }
 }
@@ -250,9 +252,13 @@ extension RecordMissionViewController {
             self.missionList = result
             
             for _ in 0..<result.count {
-                self.recordMissionViewModel.missionData.append(RecordModel(image: Image.gallery))
+                self.recordMissionViewModel.missionData.append(
+                    RecordModel(
+                        image: self.recordMissionViewModel.defaultImage,
+                        content: self.recordMissionViewModel.placeHolderText
+                    )
+                )
             }
-            
             self.rootView.missionCollectionView.reloadData()
         }
     }

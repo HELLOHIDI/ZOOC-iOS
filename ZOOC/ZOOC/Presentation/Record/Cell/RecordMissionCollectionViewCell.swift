@@ -35,6 +35,8 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        target()
+        
         style()
         hierarchy()
         layout()
@@ -45,6 +47,9 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - Custom Method
+    private func target() {
+        galleryButton.addTarget(self, action: #selector(galleryImageViewDidTap), for: .touchUpInside)
+    }
     
     private func style() {
         self.do {
@@ -73,7 +78,7 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
             $0.layer.cornerRadius = 12
             $0.contentMode = .scaleAspectFill
             $0.isUserInteractionEnabled = true
-            $0.addTarget(self, action: #selector(galleryImageViewDidTap), for: .touchUpInside)
+            
         }
         
         contentTextView.do {

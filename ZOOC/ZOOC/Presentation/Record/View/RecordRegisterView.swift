@@ -67,7 +67,7 @@ final class RecordRegisterView : UIView{
         dailyButton.do {
             $0.setTitle("일상", for: .normal)
             $0.titleLabel?.font = .zoocSubhead1
-            $0.setTitleColor(.zoocDarkGray1, for: .normal)
+            $0.setTitleColor(.zoocGray1, for: .normal)
         }
         
         missionButton.do {

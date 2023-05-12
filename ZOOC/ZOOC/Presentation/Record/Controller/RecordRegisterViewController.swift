@@ -33,6 +33,8 @@ final class RecordRegisterViewController : BaseViewController{
         super.viewDidLoad()
         
         target()
+        
+        style()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,6 +57,14 @@ final class RecordRegisterViewController : BaseViewController{
         
         rootView.petCollectionView.delegate = self
         rootView.petCollectionView.dataSource = self
+    }
+    
+    private func style() {
+        if missionID != nil {
+            rootView.missionButton.setTitleColor(.zoocDarkGray1, for: .normal)
+        } else {
+            rootView.dailyButton.setTitleColor(.zoocDarkGray1, for: .normal)
+        }
     }
     
     func dataBind(data: RecordModel, missionID: Int?){
@@ -190,14 +200,12 @@ extension RecordRegisterViewController {
         rootView.registerButton.backgroundColor = .zoocGray1
         
         if let missionID = self.missionID {
-            print("🐶🐶🐶🐶🐶🐶🐶🐶")
             RecordAPI.shared.postMission(photo: recordData.image ?? UIImage(),
                                          missionID: missionID,
                                          content: recordData.content ?? "",
                                          pets: selectedPetIDList) { result in
             }
         } else {
-            print("🐶🐶🐶🐶🐶🐶🐶🐶")
             RecordAPI.shared.postRecord(photo: recordData.image ?? UIImage(),
                                         content: recordData.content ?? "",
                                         pets: selectedPetIDList) { result in

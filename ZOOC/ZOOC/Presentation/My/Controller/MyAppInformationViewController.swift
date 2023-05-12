@@ -58,8 +58,6 @@ extension MyAppInformationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 43
     }
-    
-    
 }
 
 //MARK: - UITableViewDataSource

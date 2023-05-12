@@ -49,7 +49,7 @@ final class OnboardingAgreementViewModel {
     func updateNextButton(button: inout Bool, color: inout UIColor?) {
         if (agreementList[0].isSelected &&
             agreementList[1].isSelected &&
-            agreementList[3].isSelected == true) {
+            agreementList[2].isSelected == true) {
             button = true
             color = .zoocGradientGreen
         } else {

@@ -70,7 +70,7 @@ final class OnboardingRegisterPetView: OnboardingBaseView {
         registerPetTableView.do {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.separatorStyle = .none
-            $0.isScrollEnabled = false
+            //$0.isScrollEnabled = false
             $0.backgroundColor = .zoocBackgroundGreen
         }
         
@@ -111,11 +111,11 @@ final class OnboardingRegisterPetView: OnboardingBaseView {
         registerPetTableView.snp.makeConstraints {
             $0.top.equalTo(self.registerPetSubTitleLabel.snp.bottom).offset(24)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(424)
+            $0.bottom.equalTo(registerPetButton.snp.top).offset(-66)
         }
         
         registerPetButton.snp.makeConstraints {
-            $0.top.equalTo(self.registerPetTableView.snp.bottom)
+            $0.bottom.equalTo(safeAreaLayoutGuide).offset(-14)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(315)
             $0.height.equalTo(54)

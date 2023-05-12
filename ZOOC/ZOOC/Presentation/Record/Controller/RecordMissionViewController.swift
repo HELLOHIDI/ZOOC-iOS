@@ -135,13 +135,13 @@ extension RecordMissionViewController: UICollectionViewDataSource {
 extension RecordMissionViewController: RecordMissionCollectionViewCellDelegate {
     func galleryButtonDidTap(tag: Int) {
         print(#function)
-        checkAlbumPermission()
-        guard let isPermission else { return }
-        if isPermission {
-            self.recordMissionViewModel.index = tag
-            present(galleryAlertController,animated: true)
-        } else {
-            showAccessDenied()
+        checkAlbumPermission { hasPermission in
+            if hasPermission {
+                self.recordMissionViewModel.index = tag
+                self.present(self.galleryAlertController,animated: true)
+            } else {
+                self.showAccessDenied()
+            }
         }
     }
     

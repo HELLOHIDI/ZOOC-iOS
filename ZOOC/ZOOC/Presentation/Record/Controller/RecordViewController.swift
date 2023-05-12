@@ -169,10 +169,12 @@ final class RecordViewController : BaseViewController{
     }
     
     @objc private func galleryImageViewDidTap(){
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: true)
+        DispatchQueue.main.async {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            self.present(imagePicker, animated: true)
+        }
     }
     
     @objc
@@ -263,12 +265,13 @@ extension RecordViewController {
     
     private func ImageViewDidTap(tag: Int) {
         print(#function)
-        checkAlbumPermission()
-        guard let isPermission else { return }
-        if isPermission {
-            present(galleryAlertController,animated: true)
-        } else {
-            showAccessDenied()
+        
+        checkAlbumPermission { hasPermission in
+            if hasPermission {
+                self.present(self.galleryAlertController,animated: true)
+            } else {
+                self.showAccessDenied()
+            }
         }
     }
 }

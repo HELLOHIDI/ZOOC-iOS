@@ -59,12 +59,13 @@ final class OnboardingCompleteProfileViewController: UIViewController{
 
 private extension OnboardingCompleteProfileViewController {
     func updateCompleteProfileView() {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-            self.onboardingCompleteProfileView.completeProfileLabel.textColor = .zoocGray1
-            self.onboardingCompleteProfileView.completeProfileSubLabel.isHidden = false
-            self.onboardingCompleteProfileView.completeImage.isHidden = false
-            self.onboardingCompleteProfileView.getCodeButton.isHidden = false
-            self.onboardingCompleteProfileView.notGetCodeButton.isHidden = false
+        
+        UIView.animate(withDuration: 1, delay: 1) {
+            self.onboardingCompleteProfileView.completeProfileLabel.alpha = 0.4
+            self.onboardingCompleteProfileView.completeProfileSubLabel.alpha = 1
+            self.onboardingCompleteProfileView.completeImage.alpha = 1
+            self.onboardingCompleteProfileView.getCodeButton.alpha = 1
+            self.onboardingCompleteProfileView.notGetCodeButton.alpha = 1
         }
     }
     

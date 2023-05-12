@@ -56,12 +56,12 @@ final class OnboardingCompleteProfileView: OnboardingBaseView {
             $0.textAlignment = .left
             $0.font = .zoocDisplay1
             $0.asColor(targetString: "가족 코드", color: .zoocGradientGreen)
-            $0.isHidden = true
+            $0.alpha = 0
         }
         
         completeImage.do {
             $0.image = Image.graphics2
-            $0.isHidden = true
+            $0.alpha = 0
             $0.contentMode = .scaleAspectFit
         }
         
@@ -72,7 +72,7 @@ final class OnboardingCompleteProfileView: OnboardingBaseView {
             $0.titleLabel?.textAlignment = .center
             $0.makeCornerRound(radius: 27)
             $0.backgroundColor = .zoocGradientGreen
-            $0.isHidden = true
+            $0.alpha = 0
         }
         
         notGetCodeButton.do {
@@ -82,7 +82,7 @@ final class OnboardingCompleteProfileView: OnboardingBaseView {
             $0.titleLabel?.textAlignment = .center
             $0.makeCornerRound(radius: 27)
             $0.backgroundColor = .zoocGradientGreen
-            $0.isHidden = true
+            $0.alpha = 0
         }
     }
     

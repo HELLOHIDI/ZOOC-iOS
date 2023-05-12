@@ -47,8 +47,10 @@ final class RecordMissionViewController : BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        addKeyboardNotifications()
         requestMissionAPI()
     }
+        
     
     //MARK: - Custom Method
     
@@ -221,6 +223,7 @@ extension RecordMissionViewController {
     
     func pushToRecordAlertViewController() {
         let recordAlertViewController = ZoocAlertViewController()
+        recordAlertViewController.presentingVC = .record
         recordAlertViewController.modalPresentationStyle = .overFullScreen
         self.present(recordAlertViewController, animated: false, completion: nil)
     }

@@ -10,11 +10,10 @@ import UIKit
 import SnapKit
 import Then
 
-final class OnboardingChooseFamilyRoleView: OnboardingBaseView {
+final class OnboardingChooseRoleView: OnboardingBaseView {
     
     //MARK: - UI Components
     
-    public let completedProgressBarView = UIView()
     private let chooseFamilyLabel = UILabel()
     private let chooseFamilySubLabel = UILabel()
     public lazy var chooseFamilyTextField = UITextField()

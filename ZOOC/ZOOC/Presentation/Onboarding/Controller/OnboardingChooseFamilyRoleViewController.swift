@@ -16,7 +16,7 @@ final class OnboardingChooseFamilyRoleViewController: UIViewController{
     
     //MARK: - Properties
     
-    private let onboardingChooseFamilyRoleView = OnboardingChooseFamilyRoleView()
+    private let onboardingChooseFamilyRoleView = OnboardingChooseRoleView()
     private var registerMyProfileData = EditProfileRequest(hasPhoto: false)
     
     //MARK: - Life Cycle

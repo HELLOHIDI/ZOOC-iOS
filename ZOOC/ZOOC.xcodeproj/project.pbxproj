@@ -115,6 +115,7 @@
 		87DDDD92298E5BE500CBEC79 /* HomeDetailArchiveCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DDDD91298E5BE500CBEC79 /* HomeDetailArchiveCommentView.swift */; };
 		87DDDD94298E607C00CBEC79 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DDDD93298E607C00CBEC79 /* Device.swift */; };
 		87E462E62A10FA60006FC35D /* EnternalURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462E52A10FA60006FC35D /* EnternalURL.swift */; };
+		87E462E92A10FFC7006FC35D /* CGColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462E82A10FFC7006FC35D /* CGColor+.swift */; };
 		D21CEC5C29AB9B3D00854A36 /* BaseTextFieldState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC5B29AB9B3D00854A36 /* BaseTextFieldState.swift */; };
 		D21CEC6029ABC01200854A36 /* MyRegisterPetRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC5F29ABC01200854A36 /* MyRegisterPetRequestDto.swift */; };
 		D21CEC6229ABC1F900854A36 /* MyRegisterPetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC6129ABC1F900854A36 /* MyRegisterPetResult.swift */; };
@@ -304,6 +305,7 @@
 		87DDDD91298E5BE500CBEC79 /* HomeDetailArchiveCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDetailArchiveCommentView.swift; sourceTree = "<group>"; };
 		87DDDD93298E607C00CBEC79 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		87E462E52A10FA60006FC35D /* EnternalURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnternalURL.swift; sourceTree = "<group>"; };
+		87E462E82A10FFC7006FC35D /* CGColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGColor+.swift"; sourceTree = "<group>"; };
 		D21CEC5B29AB9B3D00854A36 /* BaseTextFieldState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextFieldState.swift; sourceTree = "<group>"; };
 		D21CEC5F29ABC01200854A36 /* MyRegisterPetRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetRequestDto.swift; sourceTree = "<group>"; };
 		D21CEC6129ABC1F900854A36 /* MyRegisterPetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetResult.swift; sourceTree = "<group>"; };
@@ -485,6 +487,7 @@
 				871EA33D296F529C00D0E8CC /* UIImageView+.swift */,
 				871EA35229704CD200D0E8CC /* UIImage+.swift */,
 				871EA35E2971628D00D0E8CC /* Encodable+.swift */,
+				87E462E82A10FFC7006FC35D /* CGColor+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1230,6 +1233,7 @@
 				D26C85E12968C63F00AEAF9B /* OnboardingLoginViewController.swift in Sources */,
 				D26C85EA2968CF7E00AEAF9B /* OnboardingAgreementModel.swift in Sources */,
 				87648329295237B500F74882 /* Adjusted+.swift in Sources */,
+				87E462E92A10FFC7006FC35D /* CGColor+.swift in Sources */,
 				8782C7F1296CADE300C9324B /* HomeDetailArchiveModel.swift in Sources */,
 				D27D95D7296DE0E30097CD03 /* MyFamilySectionCollectionViewCell.swift in Sources */,
 				87A76AA9295F6ED70096F669 /* MyAPI.swift in Sources */,

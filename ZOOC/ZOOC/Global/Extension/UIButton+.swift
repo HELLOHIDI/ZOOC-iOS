@@ -9,6 +9,23 @@ import UIKit
 import Kingfisher
 
 extension UIButton {
+    
+    open override var backgroundColor: UIColor? {
+        didSet{
+            if backgroundColor == .zoocGradientGreen {
+                let gradientLayer = CAGradientLayer()
+                var colors:[CGColor] = [.init(red: CGFloat(66)/255, green: CGFloat(200)/255, blue: CGFloat(127)/255, alpha: 1),
+                                         .init(red: CGFloat(59)/255, green: CGFloat(188)/255, blue: CGFloat(116)/255, alpha: 1)]
+                
+                gradientLayer.frame = self.bounds
+                gradientLayer.colors = colors
+                gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+                gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+                self.layer.insertSublayer(gradientLayer, at: 0)
+            }
+            
+        }
+    }
     func setUnderline() {
         guard let title = title(for: .normal) else { return }
         let attributedString = NSMutableAttributedString(string: title)

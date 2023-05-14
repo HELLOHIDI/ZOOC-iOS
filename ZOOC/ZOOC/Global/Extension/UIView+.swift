@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIView {
+    
     func addSubviews (_ views: UIView...){
         views.forEach { self.addSubview($0) }
     }
@@ -38,6 +39,21 @@ extension UIView {
     func makeCornerBorder (borderWidth: CGFloat, borderColor: UIColor) {
         layer.borderWidth = borderWidth
         layer.borderColor = borderColor.cgColor
+    }
+    
+    func setZoocGradientColor() {
+        let gradientLayer = CAGradientLayer()
+        var colors: [CGColor] = [.init(red: 66/255, green: 200/255, blue: 127/255, alpha: 1),
+                                 .init(red: 59/255, green: 188/255, blue: 116/255, alpha: 1)]
+        colors = [.init(red: CGFloat(66)/255, green: CGFloat(200)/255, blue: CGFloat(127)/255, alpha: 1),
+                                 .init(red: CGFloat(59)/255, green: CGFloat(188)/255, blue: CGFloat(116)/255, alpha: 1)]
+        
+        gradientLayer.frame = self.bounds
+        gradientLayer.colors = colors
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+
+        self.layer.addSublayer(gradientLayer)
     }
 }
 

@@ -94,7 +94,7 @@ final class OnboardingAgreementView: OnboardingBaseView {
             $0.top.equalTo(self.agreeTitleLabel.snp.bottom).offset(43)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(315)
-            $0.height.equalTo(213)
+            $0.bottom.equalTo(signUpButton.snp.top)
         }
         
         signUpButton.snp.makeConstraints {

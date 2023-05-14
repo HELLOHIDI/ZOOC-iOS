@@ -25,6 +25,7 @@ final class OnboardingAgreementTableViewCell: UITableViewCell {
     //MARK: - UI Components
     
     public var menuLabel = UILabel()
+    private let nextButton = UIButton()
     public lazy var checkedButton = BaseButton()
     
     //MARK: - Life Cycles
@@ -54,6 +55,13 @@ final class OnboardingAgreementTableViewCell: UITableViewCell {
         self.backgroundColor = .zoocBackgroundGreen
         self.selectionStyle = .none
         
+        nextButton.do {
+            $0.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+            $0.tintColor = .zoocGray1
+            $0.contentMode = .scaleAspectFit
+            $0.isUserInteractionEnabled = false
+        }
+        
         menuLabel.do {
             $0.textColor = .zoocGray3
             $0.font = .zoocBody1
@@ -62,17 +70,28 @@ final class OnboardingAgreementTableViewCell: UITableViewCell {
     }
     
     private func hierarchy() {
-        contentView.addSubviews(menuLabel, checkedButton)
+        contentView.addSubviews(menuLabel, nextButton, checkedButton)
     }
     
     private func layout() {
         menuLabel.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(10)
         }
         
+//        nextButton.snp.makeConstraints {
+//            $0.centerY.equalTo(menuLabel)
+//            $0.leading.equalTo(menuLabel.snp.trailing).offset(10)
+//            $0.size.equalTo(14)
+//        }
+        nextButton.snp.makeConstraints {
+            $0.centerY.equalTo(menuLabel)
+            $0.trailing.equalTo(checkedButton.snp.leading).offset(-15)
+            $0.size.equalTo(14)
+        }
+        
         checkedButton.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(20)
             $0.size.equalTo(20)
         }

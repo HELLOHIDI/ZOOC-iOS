@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 import SnapKit
 import Then
@@ -71,6 +72,22 @@ extension OnboardingAgreementViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 37
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var url = ExternalURL.zoocDefaultURL
+        switch indexPath.row {
+        case 0: url = ExternalURL.termsOfUse
+        case 1: url = ExternalURL.privacyPolicy
+        case 2: url = ExternalURL.meltGithub
+        case 3: url = ExternalURL.hidiGithub
+        default: break
+        }
+        let safariViewController = SFSafariViewController(url: URL(string: url)!)
+        safariViewController.modalPresentationStyle = .fullScreen
+        self.present(safariViewController, animated: true)
+        
+        return
     }
 }
 

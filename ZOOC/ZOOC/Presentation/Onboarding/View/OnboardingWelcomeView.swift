@@ -70,7 +70,6 @@ final class OnboardingWelcomeView: OnboardingBaseView {
             $0.setTitleColor(.zoocWhite1, for: .normal)
             $0.titleLabel?.font = .zoocSubhead1
             $0.titleLabel?.textAlignment = .center
-            $0.makeCornerRound(radius: 27)
             $0.alpha = 0
         }
     }

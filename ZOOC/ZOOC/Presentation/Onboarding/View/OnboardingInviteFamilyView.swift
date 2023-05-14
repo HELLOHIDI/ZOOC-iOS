@@ -74,8 +74,6 @@ final class OnboardingReInviteFamilyView: OnboardingBaseView {
             $0.setTitle("다음", for: .normal)
             $0.setTitleColor(.zoocWhite1, for: .normal)
             $0.titleLabel?.font = .zoocSubhead1
-            $0.backgroundColor = .zoocGradientGreen
-            $0.makeCornerRound(radius: 27)
         }
     }
     

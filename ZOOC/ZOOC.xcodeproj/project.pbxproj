@@ -117,6 +117,7 @@
 		87E462E62A10FA60006FC35D /* EnternalURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462E52A10FA60006FC35D /* EnternalURL.swift */; };
 		87E462EE2A110867006FC35D /* ZoocGradinetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */; };
 		87E462F12A110E18006FC35D /* CGColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462F02A110E18006FC35D /* CGColor+.swift */; };
+		87E462F32A113A37006FC35D /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462F22A113A37006FC35D /* CALayer+.swift */; };
 		D21CEC5C29AB9B3D00854A36 /* BaseTextFieldState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC5B29AB9B3D00854A36 /* BaseTextFieldState.swift */; };
 		D21CEC6029ABC01200854A36 /* MyRegisterPetRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC5F29ABC01200854A36 /* MyRegisterPetRequestDto.swift */; };
 		D21CEC6229ABC1F900854A36 /* MyRegisterPetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC6129ABC1F900854A36 /* MyRegisterPetResult.swift */; };
@@ -308,6 +309,7 @@
 		87E462E52A10FA60006FC35D /* EnternalURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnternalURL.swift; sourceTree = "<group>"; };
 		87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocGradinetButton.swift; sourceTree = "<group>"; };
 		87E462F02A110E18006FC35D /* CGColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGColor+.swift"; sourceTree = "<group>"; };
+		87E462F22A113A37006FC35D /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
 		D21CEC5B29AB9B3D00854A36 /* BaseTextFieldState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextFieldState.swift; sourceTree = "<group>"; };
 		D21CEC5F29ABC01200854A36 /* MyRegisterPetRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetRequestDto.swift; sourceTree = "<group>"; };
 		D21CEC6129ABC1F900854A36 /* MyRegisterPetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetResult.swift; sourceTree = "<group>"; };
@@ -490,6 +492,7 @@
 				871EA35229704CD200D0E8CC /* UIImage+.swift */,
 				871EA35E2971628D00D0E8CC /* Encodable+.swift */,
 				87E462F02A110E18006FC35D /* CGColor+.swift */,
+				87E462F22A113A37006FC35D /* CALayer+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1296,6 +1299,7 @@
 				D2AE5F372A0CBFF8003048E1 /* RecordMissionView.swift in Sources */,
 				8718A06A29ADE6E8001C7460 /* BaseTextField.swift in Sources */,
 				874AE9F829B49D5A007A637D /* VoidResult.swift in Sources */,
+				87E462F32A113A37006FC35D /* CALayer+.swift in Sources */,
 				87E462E62A10FA60006FC35D /* EnternalURL.swift in Sources */,
 				8747389E299E84B400C4CC52 /* EmojiBottomSheetViewController.swift in Sources */,
 				8718A06829ADB423001C7460 /* GalleryAlertController.swift in Sources */,

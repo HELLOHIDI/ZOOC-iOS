@@ -27,21 +27,14 @@ final class ZoocGradientButton: UIButton {
     
     private var gradientColors: [CGColor] {
         didSet {
-            gradientLayer.colors = gradientColors
+            gradientLayer?.colors = gradientColors
         }
     }
     //MARK: - UI Components
     
+    private var gradientLayer: CAGradientLayer?
+    private var shadowLayer: CALayer?
     
-    private let gradientLayer: CAGradientLayer = {
-        let layer = CAGradientLayer()
-        layer.startPoint = CGPoint(x: 0.5, y: 0.0)
-        layer.endPoint = CGPoint(x: 0.5, y: 1.0)
-        return layer
-    }()
-    
-    
-    private
     
     //MARK: - Life Cycle
 
@@ -50,22 +43,44 @@ final class ZoocGradientButton: UIButton {
         
         super.init(frame: frame)
         
-        gradientLayer.colors = gradientColors
-        self.layer.addSublayer(gradientLayer)
-       
+
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        gradientLayer.frame = self.bounds
-        self.makeShadow(color: .zoocGray1,
-                        offset: CGSize(width: 0, height: 5),
-                        radius: 4,
-                        opacity: 1)
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        configureLayers(rect)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Custom Method
+    
+    private func configureLayers(_ rect: CGRect) {
+          if shadowLayer == nil {
+              let shadowLayer = CALayer()
+              shadowLayer.applySketchShadow(color: .init(r: 23, g: 143, b: 66),
+                                            alpha: 0.2,
+                                            x: 5,
+                                            y: 5,
+                                            blur: 18,
+                                            spread: 0)
+              layer.insertSublayer(shadowLayer, at: 0)
+              self.shadowLayer = shadowLayer
+          }
+        
+        if gradientLayer == nil {
+            let layer = CAGradientLayer()
+            layer.frame = rect
+            layer.masksToBounds = true
+            layer.startPoint = CGPoint(x: 0.5, y: 0.0)
+            layer.endPoint = CGPoint(x: 0.5, y: 1.0)
+            layer.cornerRadius = rect.height / 2
+            layer.colors = gradientColors
+            
+            self.layer.insertSublayer(layer, at: 1)
+            self.gradientLayer = layer
+        }
+      }
 }

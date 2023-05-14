@@ -74,7 +74,6 @@ final class OnboardingChooseRoleView: OnboardingBaseView {
             $0.setTitleColor(.white, for: .normal)
             $0.titleLabel?.font = .zoocSubhead1
             $0.titleLabel?.textAlignment = .center
-            $0.makeCornerRound(radius: 27)
             $0.isEnabled = false
             $0.inActiveColor = .zoocGray1
             $0.activeColorTop = .zoocGradientGreenFirst

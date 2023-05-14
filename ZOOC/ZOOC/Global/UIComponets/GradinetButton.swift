@@ -16,7 +16,7 @@ final class GradientButton: UIButton {
             if isEnabled {
                 gradientColors = [activeColorTop, activeColorBottom]
             } else {
-                gradientColors = [inActiveColor]
+                gradientColors = [inActiveColor, inActiveColor]
             }
         }
     }
@@ -27,33 +27,38 @@ final class GradientButton: UIButton {
     var activeColorTop: CGColor = .zoocGradientGreenFirst
     var activeColorBottom: CGColor = .zoocGradientGreenLast
     
+    private let gradientLayer: CAGradientLayer = {
+        let layer = CAGradientLayer()
+        layer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        layer.endPoint = CGPoint(x: 0.5, y: 1.0)
+        return layer
+    }()
+    
     private var gradientColors: [CGColor] {
         didSet {
             gradientLayer.colors = gradientColors
         }
     }
     
-    private lazy var gradientLayer : CAGradientLayer = {
-        let layer = CAGradientLayer()
-        layer.colors = gradientColors
-        layer.startPoint = CGPoint(x: 0.5, y: 0.0)
-        layer.endPoint = CGPoint(x: 0.5, y: 1.0)
-        return
-    }()
     
     //MARK: - Life Cycle
 
     override init(frame: CGRect) {
+        self.gradientColors = [activeColorTop, activeColorBottom]
+        
         super.init(frame: frame)
         
-        gradientLayer.frame = self.bounds
-        self.layer.insertSublayer(gradientLayer ,at: 0)
+        gradientLayer.colors = gradientColors
+        self.layer.addSublayer(gradientLayer)
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = self.bounds
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
 }

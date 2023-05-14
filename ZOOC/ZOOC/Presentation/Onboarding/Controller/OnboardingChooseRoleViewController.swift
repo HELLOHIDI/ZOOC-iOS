@@ -12,17 +12,17 @@ import Then
 
 
 
-final class OnboardingChooseFamilyRoleViewController: UIViewController{
+final class OnboardingChooseRoleViewController: UIViewController{
     
     //MARK: - Properties
     
-    private let onboardingChooseFamilyRoleView = OnboardingChooseRoleView()
+    private let rootView = OnboardingChooseRoleView()
     private var registerMyProfileData = EditProfileRequest(hasPhoto: false)
     
     //MARK: - Life Cycle
     
     override func loadView() {
-        self.view = onboardingChooseFamilyRoleView
+        self.view = rootView
     }
     
     override func viewDidLoad() {
@@ -31,23 +31,13 @@ final class OnboardingChooseFamilyRoleViewController: UIViewController{
         target()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        //dismissKeyboardWhenTappedAround()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
     //MARK: - Custom Method
     
     func target() {
         NotificationCenter.default.addObserver(self, selector: #selector(textDidChange), name: UITextField.textDidChangeNotification, object: nil)
         
-        onboardingChooseFamilyRoleView.chooseFamilyButton.addTarget(self, action: #selector(chooseFamilyButtonDidTap), for: .touchUpInside)
-        onboardingChooseFamilyRoleView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        rootView.nextButton.addTarget(self, action: #selector(chooseFamilyButtonDidTap), for: .touchUpInside)
+        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
     }
     
     //MARK: - Action Method
@@ -70,15 +60,15 @@ final class OnboardingChooseFamilyRoleViewController: UIViewController{
         }
         
         textFieldState.setTextFieldState(
-            textField: onboardingChooseFamilyRoleView.chooseFamilyTextField,
-            underLineView: onboardingChooseFamilyRoleView.chooseFamilyTextFeildUnderLineView,
-            button: onboardingChooseFamilyRoleView.chooseFamilyButton,
+            textField: rootView.roleTextField,
+            underLineView: rootView.textFieldUnderLineView,
+            button: rootView.nextButton,
             label: nil
         )
     }
     
     @objc private func chooseFamilyButtonDidTap() {
-        registerMyProfileData.nickName = onboardingChooseFamilyRoleView.chooseFamilyTextField.text!
+        registerMyProfileData.nickName = rootView.roleTextField.text!
         MyAPI.shared.patchMyProfile(requset: registerMyProfileData) { result in
             //guard let result = self.validateResult(result) as? UserResult else { return }
             self.pushToCompleteProfileView()
@@ -90,7 +80,7 @@ final class OnboardingChooseFamilyRoleViewController: UIViewController{
     }
 }
 
-extension OnboardingChooseFamilyRoleViewController {
+extension OnboardingChooseRoleViewController {
     func pushToCompleteProfileView() {
         let onboardingCompleteProfileViewController = OnboardingCompleteProfileViewController()
         self.navigationController?.pushViewController(onboardingCompleteProfileViewController, animated: true)

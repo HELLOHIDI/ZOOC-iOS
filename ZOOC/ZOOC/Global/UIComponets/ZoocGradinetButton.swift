@@ -42,8 +42,7 @@ final class ZoocGradientButton: UIButton {
         self.gradientColors = [activeColorTop, activeColorBottom]
         
         super.init(frame: frame)
-        
-
+        style()
     }
     
     override func draw(_ rect: CGRect) {
@@ -56,6 +55,12 @@ final class ZoocGradientButton: UIButton {
     }
     
     //MARK: - Custom Method
+    
+    private func style() {
+        setTitleColor(.zoocWhite1, for: .normal)
+        titleLabel?.font = .zoocSubhead1
+        titleLabel?.textAlignment = .center
+    }
     
     private func configureLayers(_ rect: CGRect) {
           if shadowLayer == nil {

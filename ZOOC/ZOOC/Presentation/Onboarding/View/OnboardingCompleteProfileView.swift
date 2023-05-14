@@ -67,17 +67,11 @@ final class OnboardingCompleteProfileView: OnboardingBaseView {
         
         getCodeButton.do {
             $0.setTitle("코드를 받았어요", for: .normal)
-            $0.setTitleColor(.white, for: .normal)
-            $0.titleLabel?.font = .zoocSubhead1
-            $0.titleLabel?.textAlignment = .center
             $0.alpha = 0
         }
         
         notGetCodeButton.do {
             $0.setTitle("아니요", for: .normal)
-            $0.setTitleColor(.white, for: .normal)
-            $0.titleLabel?.font = .zoocSubhead1
-            $0.titleLabel?.textAlignment = .center
             $0.alpha = 0
         }
     }

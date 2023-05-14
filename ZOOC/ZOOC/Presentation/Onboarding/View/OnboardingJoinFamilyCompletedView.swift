@@ -1,8 +1,8 @@
 //
-//  OnboardingInviteCompletedFamilyView.swift
+//  OnboardingParticipateCompletedView.swift
 //  ZOOC
 //
-//  Created by 류희재 on 2023/01/10.
+//  Created by 류희재 on 2023/01/09.
 //
 
 import UIKit
@@ -10,10 +10,10 @@ import UIKit
 import SnapKit
 import Then
 
-final class OnboardingInviteCompletedFamilyView: OnboardingBaseView {
+final class OnboardingJoinFamilyCompletedView: OnboardingBaseView {
 
     //MARK: - UI Components
-    
+
     private let completeProfileLabel = UILabel()
     private let completeProfileSubLabel = UILabel()
     private let completeImage = UIImageView()
@@ -41,15 +41,14 @@ final class OnboardingInviteCompletedFamilyView: OnboardingBaseView {
         thirdStep()
         
         completeProfileLabel.do {
-            $0.text = "이제 추억을 쌓을 시간이에요!"
-            $0.textColor = .zoocDarkGray1
+            $0.text = "가족 합류 완료!"
+            $0.textColor = .zoocMainGreen
             $0.textAlignment = .left
             $0.font = .zoocDisplay1
-            $0.numberOfLines = 2
         }
         
         completeProfileSubLabel.do {
-            $0.text = "가족과 기록한 순간들이 \nZOOC 소중한 추억으로 남을게예요"
+            $0.text = "가족에 올바르게 합류가\n완료되었어요!"
             $0.textColor = .zoocGray1
             $0.textAlignment = .left
             $0.font = .zoocBody2
@@ -58,7 +57,7 @@ final class OnboardingInviteCompletedFamilyView: OnboardingBaseView {
         }
         
         completeImage.do {
-            $0.image = Image.graphics4
+            $0.image = Image.graphics9
             $0.contentMode = .scaleAspectFit
         }
         
@@ -77,25 +76,25 @@ final class OnboardingInviteCompletedFamilyView: OnboardingBaseView {
     }
     
     private func layout() {
+        
         completeProfileLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(103)
+            $0.top.equalTo(self.backButton.snp.bottom).offset(56)
             $0.leading.equalToSuperview().offset(30)
-            $0.width.equalTo(290)
+            $0.width.equalTo(315)
             $0.height.equalTo(34)
         }
         
         completeProfileSubLabel.snp.makeConstraints {
             $0.top.equalTo(self.completeProfileLabel.snp.bottom).offset(20)
             $0.leading.equalToSuperview().offset(30)
-            $0.width.equalTo(220)
-            $0.height.equalTo(50)
+            $0.width.equalTo(155)
+            $0.height.equalTo(48)
         }
         
         completeImage.snp.makeConstraints {
-            $0.top.equalTo(self.completeProfileSubLabel.snp.bottom).offset(30)
-            $0.bottom.equalTo(self.startButton.snp.top).offset(-10)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(375)
+            $0.top.equalTo(self.completeProfileSubLabel.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(self.startButton.snp.top).offset(-20)
         }
         
         startButton.snp.makeConstraints {

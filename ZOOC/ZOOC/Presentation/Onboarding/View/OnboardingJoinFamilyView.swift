@@ -1,5 +1,5 @@
 //
-//  OnboardingParticipateCompletedView.swift
+//  OnboardingParticipateView.swift
 //  ZOOC
 //
 //  Created by 류희재 on 2023/01/09.
@@ -10,14 +10,14 @@ import UIKit
 import SnapKit
 import Then
 
-final class OnboardingJoinFamilyCompletedView: OnboardingBaseView {
-
+final class OnboardingJoinFamilyView: OnboardingBaseView {
+    
     //MARK: - UI Components
-
-    private let completeProfileLabel = UILabel()
-    private let completeProfileSubLabel = UILabel()
-    private let completeImage = UIImageView()
-    public lazy var startButton = ZoocGradientButton()
+    
+    private let participateTitleLabel = UILabel()
+    public lazy var familyCodeTextField = UITextField()
+    private let participateImage = UIImageView()
+    public lazy var nextButton = ZoocGradientButton()
     
     //MARK: - Life Cycles
     
@@ -38,74 +38,72 @@ final class OnboardingJoinFamilyCompletedView: OnboardingBaseView {
     private func style() {
         self.backgroundColor = .zoocBackgroundGreen
         
-        thirdStep()
+        secondStep()
         
-        completeProfileLabel.do {
-            $0.text = "가족 합류 완료!"
-            $0.textColor = .zoocMainGreen
+        participateTitleLabel.do {
+            $0.text = "전달받은 가족코드를 \n입력해주세요"
+            $0.textColor = .zoocDarkGray1
             $0.textAlignment = .left
             $0.font = .zoocDisplay1
-        }
-        
-        completeProfileSubLabel.do {
-            $0.text = "가족에 올바르게 합류가\n완료되었어요!"
-            $0.textColor = .zoocGray1
-            $0.textAlignment = .left
-            $0.font = .zoocBody2
             $0.numberOfLines = 2
-            $0.setLineSpacing(spacing: 2)
+            $0.setAttributeLabel(targetString: ["가족코드"], color: .zoocMainGreen, spacing: 6)
         }
         
-        completeImage.do {
-            $0.image = Image.graphics9
+        familyCodeTextField.do {
+            $0.backgroundColor = .zoocWhite2
+            $0.font = .zoocBody2
+            $0.textColor = .zoocDarkGreen
+            $0.placeholder = "  ex) SEF33210"
+            $0.makeCornerRound(radius: 8)
+            $0.addLeftPadding(inset: 6)
+        }
+        
+        participateImage.do {
+            $0.image = Image.graphics5
             $0.contentMode = .scaleAspectFit
         }
         
-        startButton.do {
-            $0.setTitle("시작하기", for: .normal)
-            $0.setTitleColor(.white, for: .normal)
-            $0.titleLabel?.font = .zoocSubhead1
-            $0.titleLabel?.textAlignment = .center
+        nextButton.do {
+            $0.setTitle("입력하기", for: .normal)
             $0.isEnabled = false
         }
     }
     
     private func hierarchy() {
         self.addSubviews(
-            completeProfileLabel,
-            completeProfileSubLabel,
-            completeImage,
-            startButton
+            participateTitleLabel,
+            familyCodeTextField,
+            participateImage,
+            nextButton
         )
     }
     
     private func layout() {
-        
-        completeProfileLabel.snp.makeConstraints {
-            $0.top.equalTo(self.backButton.snp.bottom).offset(56)
+        participateTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(103)
             $0.leading.equalToSuperview().offset(30)
-            $0.width.equalTo(315)
-            $0.height.equalTo(34)
+            $0.width.equalTo(200)
+            $0.height.equalTo(68)
         }
         
-        completeProfileSubLabel.snp.makeConstraints {
-            $0.top.equalTo(self.completeProfileLabel.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().offset(30)
-            $0.width.equalTo(155)
-            $0.height.equalTo(48)
+        familyCodeTextField.snp.makeConstraints {
+            $0.top.equalTo(self.participateTitleLabel.snp.bottom).offset(40)
+            $0.leading.equalTo(self.participateTitleLabel)
+            $0.width.equalTo(162)
+            $0.height.equalTo(41)
         }
         
-        completeImage.snp.makeConstraints {
-            $0.top.equalTo(self.completeProfileSubLabel.snp.bottom).offset(20)
+        participateImage.snp.makeConstraints {
+            $0.top.equalTo(self.familyCodeTextField.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(self.startButton.snp.top).offset(-20)
+            $0.bottom.equalTo(self.nextButton.snp.top).offset(-20)
         }
         
-        startButton.snp.makeConstraints {
+        nextButton.snp.makeConstraints {
             $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(30)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(315)
-            $0.height.equalTo(50)
+            $0.height.equalTo(54)
         }
     }
 }

@@ -86,7 +86,7 @@ extension OnboardingJoinFamilyViewController {
 //MARK: - UITextFieldDelegate
 
 extension OnboardingJoinFamilyViewController: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        self.onboardingJoinFamilyView.nextButton.isEnabled = true
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        self.onboardingJoinFamilyView.nextButton.isEnabled = textField.hasText
     }
 }

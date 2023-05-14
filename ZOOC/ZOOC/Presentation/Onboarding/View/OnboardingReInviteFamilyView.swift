@@ -71,8 +71,6 @@ final class OnboardingInviteFamilyView: OnboardingBaseView {
         
         inviteButton.do {
             $0.setTitle("초대하기", for: .normal)
-            $0.setTitleColor(.zoocWhite1, for: .normal)
-            $0.titleLabel?.font = .zoocSubhead1
         }
     }
     

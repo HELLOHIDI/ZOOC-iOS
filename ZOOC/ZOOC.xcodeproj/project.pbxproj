@@ -170,9 +170,9 @@
 		D26C85FA296B109500AEAF9B /* OnboardingChooseRoleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85F9296B109500AEAF9B /* OnboardingChooseRoleViewController.swift */; };
 		D26C8600296B27B100AEAF9B /* OnboardingCompleteProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85FF296B27B100AEAF9B /* OnboardingCompleteProfileView.swift */; };
 		D26C8602296B285700AEAF9B /* OnboardingCompleteProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8601296B285700AEAF9B /* OnboardingCompleteProfileViewController.swift */; };
-		D26C8608296B585600AEAF9B /* OnboardingParticipateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8607296B585600AEAF9B /* OnboardingParticipateView.swift */; };
+		D26C8608296B585600AEAF9B /* OnboardingJoinFamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8607296B585600AEAF9B /* OnboardingJoinFamilyView.swift */; };
 		D26C860A296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8609296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift */; };
-		D26C860C296B650900AEAF9B /* OnboardingJoinFamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C860B296B650900AEAF9B /* OnboardingJoinFamilyView.swift */; };
+		D26C860C296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C860B296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift */; };
 		D26C860E296B6E8600AEAF9B /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C860D296B6E8600AEAF9B /* UILabel+.swift */; };
 		D26C8610296B761900AEAF9B /* OnboardingJoinFamilyCompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C860F296B761900AEAF9B /* OnboardingJoinFamilyCompletedViewController.swift */; };
 		D26C8612296B7CA500AEAF9B /* OnboardingRegisterPetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8611296B7CA500AEAF9B /* OnboardingRegisterPetView.swift */; };
@@ -362,9 +362,9 @@
 		D26C85F9296B109500AEAF9B /* OnboardingChooseRoleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingChooseRoleViewController.swift; sourceTree = "<group>"; };
 		D26C85FF296B27B100AEAF9B /* OnboardingCompleteProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCompleteProfileView.swift; sourceTree = "<group>"; };
 		D26C8601296B285700AEAF9B /* OnboardingCompleteProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCompleteProfileViewController.swift; sourceTree = "<group>"; };
-		D26C8607296B585600AEAF9B /* OnboardingParticipateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingParticipateView.swift; sourceTree = "<group>"; };
+		D26C8607296B585600AEAF9B /* OnboardingJoinFamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyView.swift; sourceTree = "<group>"; };
 		D26C8609296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyViewController.swift; sourceTree = "<group>"; };
-		D26C860B296B650900AEAF9B /* OnboardingJoinFamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyView.swift; sourceTree = "<group>"; };
+		D26C860B296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyCompletedView.swift; sourceTree = "<group>"; };
 		D26C860D296B6E8600AEAF9B /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		D26C860F296B761900AEAF9B /* OnboardingJoinFamilyCompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyCompletedViewController.swift; sourceTree = "<group>"; };
 		D26C8611296B7CA500AEAF9B /* OnboardingRegisterPetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRegisterPetView.swift; sourceTree = "<group>"; };
@@ -680,8 +680,8 @@
 				D26C85EF29693C8500AEAF9B /* OnboardingWelcomeView.swift */,
 				D26C85F7296B0B4E00AEAF9B /* OnboardingChooseRoleView.swift */,
 				D26C85FF296B27B100AEAF9B /* OnboardingCompleteProfileView.swift */,
-				D26C8607296B585600AEAF9B /* OnboardingParticipateView.swift */,
-				D26C860B296B650900AEAF9B /* OnboardingJoinFamilyView.swift */,
+				D26C8607296B585600AEAF9B /* OnboardingJoinFamilyView.swift */,
+				D26C860B296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift */,
 				D26C8611296B7CA500AEAF9B /* OnboardingRegisterPetView.swift */,
 				D27D9567296CB5930097CD03 /* OnboardingReInviteFamilyView.swift */,
 				D27D955F296C9F5D0097CD03 /* OnboardingInviteFamilyView.swift */,
@@ -1184,7 +1184,7 @@
 				871EA35F2971628D00D0E8CC /* Encodable+.swift in Sources */,
 				87DDDD92298E5BE500CBEC79 /* HomeDetailArchiveCommentView.swift in Sources */,
 				D27D956C296CBA2D0097CD03 /* UIButton+.swift in Sources */,
-				D26C8608296B585600AEAF9B /* OnboardingParticipateView.swift in Sources */,
+				D26C8608296B585600AEAF9B /* OnboardingJoinFamilyView.swift in Sources */,
 				871EA35D2970CFA700D0E8CC /* SimpleResponse.swift in Sources */,
 				87A76A92295F6DA50096F669 /* RecordViewController.swift in Sources */,
 				87648325295236BE00F74882 /* UIFont+.swift in Sources */,
@@ -1228,7 +1228,7 @@
 				D26C85D929689D0800AEAF9B /* MyDeleteAccountAlertViewController.swift in Sources */,
 				871EA35B2970BE8400D0E8CC /* RecordPetResult.swift in Sources */,
 				4C54E80429BF482300B76052 /* RecordMissonRequest.swift in Sources */,
-				D26C860C296B650900AEAF9B /* OnboardingJoinFamilyView.swift in Sources */,
+				D26C860C296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift in Sources */,
 				876554A72958494B006BBDA9 /* MyViewController.swift in Sources */,
 				D2350309296490A700F01101 /* MyEditProfileView.swift in Sources */,
 				87B6624129521E7500B6FFA9 /* AppDelegate.swift in Sources */,

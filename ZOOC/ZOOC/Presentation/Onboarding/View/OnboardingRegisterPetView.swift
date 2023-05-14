@@ -76,9 +76,6 @@ final class OnboardingRegisterPetView: OnboardingBaseView {
         
         registerPetButton.do {
             $0.setTitle("등록하기", for: .normal)
-            $0.setTitleColor(.zoocWhite1, for: .normal)
-            $0.titleLabel?.font = .zoocSubhead1
-            $0.titleLabel?.textAlignment = .center
             $0.isEnabled = false
         }
     }

@@ -67,9 +67,6 @@ final class OnboardingWelcomeView: OnboardingBaseView {
         
         nextButton.do {
             $0.setTitle("다음", for: .normal)
-            $0.setTitleColor(.zoocWhite1, for: .normal)
-            $0.titleLabel?.font = .zoocSubhead1
-            $0.titleLabel?.textAlignment = .center
             $0.alpha = 0
         }
     }

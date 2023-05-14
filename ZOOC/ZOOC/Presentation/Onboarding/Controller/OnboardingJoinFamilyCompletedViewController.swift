@@ -42,7 +42,7 @@ final class OnboardingJoinFamilyCompletedViewController: BaseViewController{
     }
     
     @objc private func startButtonDidTap(){
-        let onboardingInviteFamilyCompletedViewController = OnboardingInviteFamilyCompletedViewController()
-        self.navigationController?.pushViewController(onboardingInviteFamilyCompletedViewController, animated: true)
+        let inviteFamilyCompletedVC = OnboardingInviteFamilyCompletedViewController()
+        self.navigationController?.pushViewController(inviteFamilyCompletedVC, animated: true)
     }
 }

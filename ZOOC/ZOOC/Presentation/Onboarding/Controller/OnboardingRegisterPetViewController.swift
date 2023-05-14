@@ -44,7 +44,7 @@ final class OnboardingRegisterPetViewController: BaseViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        dismissKeyboardWhenTappedAround()
+        //dismissKeyboardWhenTappedAround()
     }
     
     //MARK: - Custom Method
@@ -140,9 +140,7 @@ extension OnboardingRegisterPetViewController: UITableViewDataSource {
         }
         
         self.onboardingPetRegisterViewModel.checkCanRegister(
-            button:&self.onboardingRegisterPetView.registerPetButton.isEnabled,
-            color:&self.onboardingRegisterPetView.registerPetButton.backgroundColor
-        )
+            button:&self.onboardingRegisterPetView.registerPetButton.isEnabled)
         
         self.onboardingPetRegisterViewModel.hideDeleteButton(button: &cell.deletePetProfileButton.isHidden)
         
@@ -167,17 +165,21 @@ extension OnboardingRegisterPetViewController: UITableViewDataSource {
 
 extension OnboardingRegisterPetViewController: DeleteButtonTappedDelegate {
     func petProfileImageButtonDidTap(tag: Int) {
-        checkAlbumPermission()
-        guard let isPermission else { return }
-        if isPermission {
-            self.onboardingPetRegisterViewModel.index = tag
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = .photoLibrary
-            self.present(imagePicker, animated: true)
-        } else {
-            self.showAccessDenied()
+        checkAlbumPermission { hasPermission in
+            if hasPermission {
+                self.onboardingPetRegisterViewModel.index = tag
+                DispatchQueue.main.async {
+                    let imagePicker = UIImagePickerController()
+                    imagePicker.delegate = self
+                    imagePicker.sourceType = .photoLibrary
+                    self.present(imagePicker, animated: true)
+                }
+            } else {
+                print("퍼미션이 false")
+                self.showAccessDenied()
+            }
         }
+     
     }
     
     func deleteButtonTapped(tag: Int) {
@@ -186,10 +188,8 @@ extension OnboardingRegisterPetViewController: DeleteButtonTappedDelegate {
     
     func canRegister(canRegister: Bool) {
         if canRegister {
-            onboardingRegisterPetView.registerPetButton.backgroundColor = .zoocGradientGreen
             onboardingRegisterPetView.registerPetButton.isEnabled = true
         } else {
-            onboardingRegisterPetView.registerPetButton.backgroundColor = .zoocGray1
             onboardingRegisterPetView.registerPetButton.isEnabled = false
         }
     }
@@ -200,9 +200,7 @@ extension OnboardingRegisterPetViewController: DeleteButtonTappedDelegate {
         }
         
         self.onboardingPetRegisterViewModel.checkCanRegister(
-            button:&self.onboardingRegisterPetView.registerPetButton.isEnabled,
-            color:&self.onboardingRegisterPetView.registerPetButton.backgroundColor
-        )
+            button:&self.onboardingRegisterPetView.registerPetButton.isEnabled)
     }
 }
 

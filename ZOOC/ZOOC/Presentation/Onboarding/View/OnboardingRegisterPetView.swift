@@ -17,7 +17,7 @@ final class OnboardingRegisterPetView: OnboardingBaseView {
     private let registerPetTitleLabel = UILabel()
     private let registerPetSubTitleLabel = UILabel()
     public lazy var registerPetTableView = UITableView(frame: .zero, style: .plain)
-    public lazy var registerPetButton =  UIButton()
+    public lazy var registerPetButton =  ZoocGradientButton()
     
     //MARK: - Life Cycles
     
@@ -70,17 +70,12 @@ final class OnboardingRegisterPetView: OnboardingBaseView {
         registerPetTableView.do {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.separatorStyle = .none
-            $0.isScrollEnabled = false
+            //$0.isScrollEnabled = false
             $0.backgroundColor = .zoocBackgroundGreen
         }
         
         registerPetButton.do {
             $0.setTitle("등록하기", for: .normal)
-            $0.setTitleColor(.zoocWhite1, for: .normal)
-            $0.titleLabel?.font = .zoocSubhead1
-            $0.titleLabel?.textAlignment = .center
-            $0.makeCornerRound(radius: 27)
-            $0.backgroundColor = .zoocGray1
             $0.isEnabled = false
         }
     }
@@ -111,11 +106,11 @@ final class OnboardingRegisterPetView: OnboardingBaseView {
         registerPetTableView.snp.makeConstraints {
             $0.top.equalTo(self.registerPetSubTitleLabel.snp.bottom).offset(24)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(424)
+            $0.bottom.equalTo(registerPetButton.snp.top).offset(-66)
         }
         
         registerPetButton.snp.makeConstraints {
-            $0.top.equalTo(self.registerPetTableView.snp.bottom)
+            $0.bottom.equalTo(safeAreaLayoutGuide).offset(-14)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(315)
             $0.height.equalTo(54)

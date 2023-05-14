@@ -18,7 +18,7 @@ final class OnboardingReInviteFamilyView: OnboardingBaseView {
     private let descriptionLabel = UILabel()
     private let inviteImageView = UIImageView()
     public lazy var inviteLatelyButton = UIButton()
-    public lazy var inviteButton = UIButton()
+    public lazy var inviteButton = ZoocGradientButton()
     
     //MARK: - Life Cycle
     
@@ -67,15 +67,10 @@ final class OnboardingReInviteFamilyView: OnboardingBaseView {
             $0.setTitleColor(.zoocGray1, for: .normal)
             $0.titleLabel?.font = .zoocSubhead1
             $0.setUnderline()
-            
         }
         
         inviteButton.do {
             $0.setTitle("다음", for: .normal)
-            $0.setTitleColor(.zoocWhite1, for: .normal)
-            $0.titleLabel?.font = .zoocSubhead1
-            $0.backgroundColor = .zoocGradientGreen
-            $0.makeCornerRound(radius: 27)
         }
     }
     

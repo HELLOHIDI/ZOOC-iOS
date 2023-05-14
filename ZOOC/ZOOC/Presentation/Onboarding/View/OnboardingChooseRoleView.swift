@@ -10,16 +10,15 @@ import UIKit
 import SnapKit
 import Then
 
-final class OnboardingChooseFamilyRoleView: OnboardingBaseView {
+final class OnboardingChooseRoleView: OnboardingBaseView {
     
     //MARK: - UI Components
     
-    public let completedProgressBarView = UIView()
-    private let chooseFamilyLabel = UILabel()
-    private let chooseFamilySubLabel = UILabel()
-    public lazy var chooseFamilyTextField = UITextField()
-    public let chooseFamilyTextFeildUnderLineView = UIView()
-    public lazy var chooseFamilyButton = UIButton()
+    private let titleLabel = UILabel()
+    private let subLabel = UILabel()
+    public lazy var roleTextField = UITextField()
+    public let textFieldUnderLineView = UIView()
+    public lazy var nextButton = ZoocGradientButton()
     
     //MARK: - Life Cycles
     
@@ -35,6 +34,8 @@ final class OnboardingChooseFamilyRoleView: OnboardingBaseView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    
     //MARK: - Custom Method
     
     private func style() {
@@ -42,7 +43,7 @@ final class OnboardingChooseFamilyRoleView: OnboardingBaseView {
         
         firstStep()
         
-        chooseFamilyLabel.do {
+        titleLabel.do {
             $0.text = "가족에서 \n어떤 역할을 맡고 있나요?"
             $0.textColor = .zoocDarkGray1
             $0.textAlignment = .left
@@ -50,70 +51,65 @@ final class OnboardingChooseFamilyRoleView: OnboardingBaseView {
             $0.numberOfLines = 2
         }
         
-        chooseFamilySubLabel.do {
+        subLabel.do {
             $0.text = "우리 가족에서 저는"
             $0.textColor = .zoocDarkGray1
             $0.textAlignment = .left
             $0.font = .zoocBody3
         }
         
-        chooseFamilyTextField.do {
+        roleTextField.do {
             $0.font = .zoocBody3
             $0.textColor = .zoocGray1
             $0.textAlignment = .left
             $0.placeholder = "ex) 엄마, 아빠, 첫째딸, 둘째딸 (10자 이내)"
         }
         
-        chooseFamilyTextFeildUnderLineView.do {
+        textFieldUnderLineView.do {
             $0.backgroundColor = .zoocGray1
         }
         
-        chooseFamilyButton.do {
+        nextButton.do {
             $0.setTitle("이렇게 불러주세요", for: .normal)
-            $0.setTitleColor(.white, for: .normal)
-            $0.titleLabel?.font = .zoocSubhead1
-            $0.titleLabel?.textAlignment = .center
-            $0.makeCornerRound(radius: 27)
-            $0.backgroundColor = .zoocGray1
             $0.isEnabled = false
         }
     }
     
     private func hierarchy() {
         self.addSubviews(
-            chooseFamilyLabel,
-            chooseFamilySubLabel,
-            chooseFamilyTextField,
-            chooseFamilyTextFeildUnderLineView,
-            chooseFamilyButton
+            titleLabel,
+            subLabel,
+            roleTextField,
+            textFieldUnderLineView,
+            nextButton
         )
     }
     
     private func layout() {
         
-        chooseFamilyLabel.snp.makeConstraints {
+        titleLabel.snp.makeConstraints {
             $0.top.equalTo(backButton.snp.bottom).offset(56)
             $0.leading.equalTo(self.safeAreaLayoutGuide).offset(30)
         }
         
-        chooseFamilySubLabel.snp.makeConstraints {
-            $0.top.equalTo(self.chooseFamilyLabel.snp.bottom).offset(40)
-            $0.leading.equalTo(self.chooseFamilyLabel)
+        subLabel.snp.makeConstraints {
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(40)
+            $0.leading.equalTo(self.titleLabel)
         }
         
-        chooseFamilyTextField.snp.makeConstraints {
-            $0.top.equalTo(self.chooseFamilySubLabel.snp.bottom).offset(17)
-            $0.leading.equalTo(self.chooseFamilyLabel)
+        roleTextField.snp.makeConstraints {
+            $0.top.equalTo(self.subLabel.snp.bottom).offset(17)
+            $0.leading.equalTo(self.titleLabel)
         }
         
-        chooseFamilyTextFeildUnderLineView.snp.makeConstraints {
-            $0.top.equalTo(self.chooseFamilyTextField.snp.bottom).offset(5)
-            $0.leading.equalTo(self.chooseFamilyLabel)
+        textFieldUnderLineView.snp.makeConstraints {
+            $0.top.equalTo(self.roleTextField.snp.bottom).offset(5)
+            $0.leading.equalTo(self.titleLabel)
             $0.width.equalTo(314)
             $0.height.equalTo(1)
         }
         
-        chooseFamilyButton.snp.makeConstraints {
+        nextButton.snp.makeConstraints {
             $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(30)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(315)

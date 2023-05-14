@@ -56,31 +56,37 @@ extension OnboardingJoinFamilyViewController {
         guard let code = onboardingJoinFamilyView.familyCodeTextField.text else { return }
         let param = OnboardingJoinFamilyRequest(code: code)
         OnboardingAPI.shared.postJoinFamily(requset: param) { result in
-            guard let result = self.validateResult(result) as? OnboardingJoinFamilyResult else { return }
-            User.shared.familyID = String(result.familyID)
-            self.requestFCMTokenAPI()
+            
+            switch result {
+            case .success(let data):
+                guard let result = data as? OnboardingJoinFamilyResult else { return }
+                User.shared.familyID = String(result.familyID)
+                self.requestFCMTokenAPI()
+            case .requestErr(let msg):
+                self.presentBottomAlert(msg)
+            default:
+                self.validateResult(result)
+            }
         }
-        self.pushToParticipateCompletedView()
     }
     
     private func requestFCMTokenAPI() {
         OnboardingAPI.shared.patchFCMToken(fcmToken: User.shared.fcmToken) { result in
-            self.pushToParticipateCompletedView()
+            self.pushToJoinCompletedViewController()
             
         }
     }
     
-    func pushToParticipateCompletedView() {
-        let onboardingParticipateCompletedViewController = OnboardingJoinFamilyCompletedViewController()
-        self.navigationController?.pushViewController(onboardingParticipateCompletedViewController, animated: true)
+    func pushToJoinCompletedViewController() {
+        let joinCompletedVC = OnboardingJoinFamilyCompletedViewController()
+        self.navigationController?.pushViewController(joinCompletedVC, animated: true)
     }
 }
 
 //MARK: - UITextFieldDelegate
 
 extension OnboardingJoinFamilyViewController: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        self.onboardingJoinFamilyView.nextButton.backgroundColor = .zoocGradientGreen
-        self.onboardingJoinFamilyView.nextButton.isEnabled = true
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        self.onboardingJoinFamilyView.nextButton.isEnabled = textField.hasText
     }
 }

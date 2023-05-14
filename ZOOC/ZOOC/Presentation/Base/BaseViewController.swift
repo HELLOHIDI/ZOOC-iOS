@@ -25,7 +25,7 @@ class BaseViewController : UIViewController{
         }
         
     }
-    public var isPermission: Bool?
+    //public var isPermission: Bool?
     
     //MARK: - UI Components
     
@@ -36,7 +36,6 @@ class BaseViewController : UIViewController{
         
         setUI()
         setLayout()
-        dismissKeyboardWhenTappedAround()
         
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.navigationController?.isNavigationBarHidden = true
@@ -66,18 +65,19 @@ class BaseViewController : UIViewController{
         
     }
     
-    func checkAlbumPermission() {
+    func checkAlbumPermission(completion: @escaping (Bool) -> Void) {
         print(#function)
-        PHPhotoLibrary.requestAuthorization( { status in
+        
+        PHPhotoLibrary.requestAuthorization { status in
             switch status{
             case .authorized:
-                self.isPermission = true
+                completion(true)
             case .denied, .restricted, .notDetermined:
-                self.isPermission = false
+                completion(false)
             default:
-                break
+                completion(false)
             }
-        })
+        }
     }
     
     func showAccessDenied() {
@@ -99,6 +99,7 @@ class BaseViewController : UIViewController{
         present(alert, animated: false, completion: nil)
     }
     
+    @discardableResult
     func validateResult(_ result: NetworkResult<Any>) -> Any?{
         switch result{
         case .success(let data):

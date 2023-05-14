@@ -14,12 +14,12 @@ final class OnboardingWelcomeViewController: UIViewController{
     
     //MARK: - Properties
     
-    private let onboardingWelcomeView = OnboardingWelcomeView()
+    private let rootView = OnboardingWelcomeView()
     
     //MARK: - Life Cycle
     
     override func loadView() {
-        self.view = onboardingWelcomeView
+        self.view = rootView
     }
     
     override func viewDidLoad() {
@@ -30,15 +30,20 @@ final class OnboardingWelcomeViewController: UIViewController{
         style()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateWelcomeView()
+    }
+    
     //MARK: - Custom Method
     
     private func target() {
-        onboardingWelcomeView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        onboardingWelcomeView.nextButton.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
+        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        rootView.nextButton.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
     }
     
     private func style() {
-        updateWelcomeView()
+        
     }
     
     //MARK: - Action Method
@@ -54,16 +59,16 @@ final class OnboardingWelcomeViewController: UIViewController{
 
 extension OnboardingWelcomeViewController {
     private func updateWelcomeView() {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-            self.onboardingWelcomeView.welcomeLabel.textColor = .zoocGray1
-            self.onboardingWelcomeView.welcomeSubLabel.isHidden = false
-            self.onboardingWelcomeView.welcomeImage.isHidden = false
-            self.onboardingWelcomeView.nextButton.isHidden = false
+        UIView.animate(withDuration: 1, delay: 1) {
+            self.rootView.welcomeLabel.alpha = 0.4
+            self.rootView.welcomeSubLabel.alpha = 1
+            self.rootView.welcomeImage.alpha = 1
+            self.rootView.nextButton.alpha = 1
         }
     }
     
     private func pushToChooseFamilyRoleView() {
-        let onboardingChooseFamilyRoleViewController = OnboardingChooseFamilyRoleViewController()
+        let onboardingChooseFamilyRoleViewController = OnboardingChooseRoleViewController()
         self.navigationController?.pushViewController(onboardingChooseFamilyRoleViewController, animated: true)
     }
 }

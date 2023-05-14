@@ -25,7 +25,7 @@ class BaseViewController : UIViewController{
         }
         
     }
-    public var isPermission: Bool?
+    //public var isPermission: Bool?
     
     //MARK: - UI Components
     
@@ -71,10 +71,8 @@ class BaseViewController : UIViewController{
         PHPhotoLibrary.requestAuthorization { status in
             switch status{
             case .authorized:
-                self.isPermission = true
                 completion(true)
             case .denied, .restricted, .notDetermined:
-                self.isPermission = false
                 completion(false)
             default:
                 completion(false)

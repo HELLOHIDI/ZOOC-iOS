@@ -16,7 +16,7 @@ final class OnboardingAgreementView: OnboardingBaseView {
     
     private let agreeTitleLabel = UILabel()
     public lazy var agreementTableView = UITableView(frame: .zero, style: .grouped)
-    public lazy var signUpButton = UIButton()
+    public lazy var signUpButton = ZoocGradientButton()
     
     //MARK: - Life Cycles
     
@@ -70,7 +70,6 @@ final class OnboardingAgreementView: OnboardingBaseView {
             $0.titleLabel?.font = .zoocSubhead1
             $0.titleLabel?.textAlignment = .center
             $0.makeCornerRound(radius: 27)
-            $0.backgroundColor = .zoocGray1
             $0.isEnabled = false
         }
     }

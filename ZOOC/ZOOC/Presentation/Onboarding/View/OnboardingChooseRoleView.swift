@@ -18,7 +18,7 @@ final class OnboardingChooseRoleView: OnboardingBaseView {
     private let subLabel = UILabel()
     public lazy var roleTextField = UITextField()
     public let textFieldUnderLineView = UIView()
-    public lazy var nextButton = GradientButton()
+    public lazy var nextButton = ZoocGradientButton()
     
     //MARK: - Life Cycles
     

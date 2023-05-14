@@ -17,7 +17,7 @@ final class OnboardingRegisterPetView: OnboardingBaseView {
     private let registerPetTitleLabel = UILabel()
     private let registerPetSubTitleLabel = UILabel()
     public lazy var registerPetTableView = UITableView(frame: .zero, style: .plain)
-    public lazy var registerPetButton =  UIButton()
+    public lazy var registerPetButton =  ZoocGradientButton()
     
     //MARK: - Life Cycles
     
@@ -80,7 +80,6 @@ final class OnboardingRegisterPetView: OnboardingBaseView {
             $0.titleLabel?.font = .zoocSubhead1
             $0.titleLabel?.textAlignment = .center
             $0.makeCornerRound(radius: 27)
-            $0.backgroundColor = .zoocGray1
             $0.isEnabled = false
         }
     }

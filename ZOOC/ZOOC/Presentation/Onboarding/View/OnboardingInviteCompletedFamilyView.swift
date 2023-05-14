@@ -17,7 +17,7 @@ final class OnboardingInviteCompletedFamilyView: OnboardingBaseView {
     private let completeProfileLabel = UILabel()
     private let completeProfileSubLabel = UILabel()
     private let completeImage = UIImageView()
-    public lazy var startButton = UIButton()
+    public lazy var startButton = ZoocGradientButton()
     
     //MARK: - Life Cycles
     
@@ -68,7 +68,6 @@ final class OnboardingInviteCompletedFamilyView: OnboardingBaseView {
             $0.titleLabel?.font = .zoocSubhead1
             $0.titleLabel?.textAlignment = .center
             $0.makeCornerRound(radius: 27)
-            $0.backgroundColor = .zoocGradientGreen
         }
     }
     

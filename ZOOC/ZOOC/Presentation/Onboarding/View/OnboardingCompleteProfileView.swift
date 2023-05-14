@@ -17,8 +17,8 @@ final class OnboardingCompleteProfileView: OnboardingBaseView {
     public let completeProfileLabel = UILabel()
     public let completeProfileSubLabel = UILabel()
     public let completeImage = UIImageView()
-    public lazy var getCodeButton = UIButton()
-    public lazy var notGetCodeButton = UIButton()
+    public lazy var getCodeButton = ZoocGradientButton()
+    public lazy var notGetCodeButton = ZoocGradientButton()
     
     //MARK: - Life Cycles
     
@@ -71,7 +71,9 @@ final class OnboardingCompleteProfileView: OnboardingBaseView {
             $0.titleLabel?.font = .zoocSubhead1
             $0.titleLabel?.textAlignment = .center
             $0.makeCornerRound(radius: 27)
-            $0.backgroundColor = .zoocGradientGreen
+            $0.inActiveColor = .zoocGray1
+            $0.activeColorTop = .zoocGradientGreenFirst
+            $0.activeColorBottom = .zoocGradientGreenLast
             $0.alpha = 0
         }
         
@@ -81,7 +83,6 @@ final class OnboardingCompleteProfileView: OnboardingBaseView {
             $0.titleLabel?.font = .zoocSubhead1
             $0.titleLabel?.textAlignment = .center
             $0.makeCornerRound(radius: 27)
-            $0.backgroundColor = .zoocGradientGreen
             $0.alpha = 0
         }
     }

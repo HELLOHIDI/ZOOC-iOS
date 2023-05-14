@@ -18,7 +18,7 @@ final class OnboardingInviteFamilyView: OnboardingBaseView {
     private let descriptionLabel = UILabel()
     private let inviteImageView = UIImageView()
     public lazy var inviteLatelyButton = UIButton()
-    public lazy var inviteButton = UIButton()
+    public lazy var inviteButton = ZoocGradientButton()
     
     //MARK: - Life Cycle
     

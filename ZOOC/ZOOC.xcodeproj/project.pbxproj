@@ -115,7 +115,7 @@
 		87DDDD92298E5BE500CBEC79 /* HomeDetailArchiveCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DDDD91298E5BE500CBEC79 /* HomeDetailArchiveCommentView.swift */; };
 		87DDDD94298E607C00CBEC79 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DDDD93298E607C00CBEC79 /* Device.swift */; };
 		87E462E62A10FA60006FC35D /* EnternalURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462E52A10FA60006FC35D /* EnternalURL.swift */; };
-		87E462EE2A110867006FC35D /* GradinetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462ED2A110867006FC35D /* GradinetButton.swift */; };
+		87E462EE2A110867006FC35D /* ZoocGradinetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */; };
 		87E462F12A110E18006FC35D /* CGColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462F02A110E18006FC35D /* CGColor+.swift */; };
 		D21CEC5C29AB9B3D00854A36 /* BaseTextFieldState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC5B29AB9B3D00854A36 /* BaseTextFieldState.swift */; };
 		D21CEC6029ABC01200854A36 /* MyRegisterPetRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC5F29ABC01200854A36 /* MyRegisterPetRequestDto.swift */; };
@@ -306,7 +306,7 @@
 		87DDDD91298E5BE500CBEC79 /* HomeDetailArchiveCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDetailArchiveCommentView.swift; sourceTree = "<group>"; };
 		87DDDD93298E607C00CBEC79 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		87E462E52A10FA60006FC35D /* EnternalURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnternalURL.swift; sourceTree = "<group>"; };
-		87E462ED2A110867006FC35D /* GradinetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradinetButton.swift; sourceTree = "<group>"; };
+		87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocGradinetButton.swift; sourceTree = "<group>"; };
 		87E462F02A110E18006FC35D /* CGColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGColor+.swift"; sourceTree = "<group>"; };
 		D21CEC5B29AB9B3D00854A36 /* BaseTextFieldState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextFieldState.swift; sourceTree = "<group>"; };
 		D21CEC5F29ABC01200854A36 /* MyRegisterPetRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetRequestDto.swift; sourceTree = "<group>"; };
@@ -1006,7 +1006,7 @@
 		87E462EC2A110858006FC35D /* UIComponets */ = {
 			isa = PBXGroup;
 			children = (
-				87E462ED2A110867006FC35D /* GradinetButton.swift */,
+				87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */,
 			);
 			path = UIComponets;
 			sourceTree = "<group>";
@@ -1277,7 +1277,7 @@
 				D235030B2964991700F01101 /* MyEditProfileViewController.swift in Sources */,
 				87D5AF5629605C0100CA7F12 /* URLs.swift in Sources */,
 				D26C85E32968C88800AEAF9B /* OnboardingAgreementView.swift in Sources */,
-				87E462EE2A110867006FC35D /* GradinetButton.swift in Sources */,
+				87E462EE2A110867006FC35D /* ZoocGradinetButton.swift in Sources */,
 				871EA3462970109E00D0E8CC /* HomeArchiveListWriterCollectionViewCell.swift in Sources */,
 				871EA340296F6E5000D0E8CC /* BaseAPI.swift in Sources */,
 				D26C85EC2968D2E100AEAF9B /* OnboardingAgreementTableHeaderView.swift in Sources */,

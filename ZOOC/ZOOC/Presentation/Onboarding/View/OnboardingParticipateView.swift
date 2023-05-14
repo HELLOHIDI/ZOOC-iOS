@@ -17,7 +17,7 @@ final class OnboardingJoinFamilyView: OnboardingBaseView {
     private let participateTitleLabel = UILabel()
     public lazy var familyCodeTextField = UITextField()
     private let participateImage = UIImageView()
-    public lazy var nextButton = UIButton()
+    public lazy var nextButton = ZoocGradientButton()
     
     //MARK: - Life Cycles
     
@@ -69,7 +69,6 @@ final class OnboardingJoinFamilyView: OnboardingBaseView {
             $0.titleLabel?.font = .zoocSubhead1
             $0.titleLabel?.textAlignment = .center
             $0.makeCornerRound(radius: 27)
-            $0.backgroundColor = .zoocGray1
         }
     }
     

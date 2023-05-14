@@ -17,7 +17,7 @@ final class OnboardingJoinFamilyCompletedView: OnboardingBaseView {
     private let completeProfileLabel = UILabel()
     private let completeProfileSubLabel = UILabel()
     private let completeImage = UIImageView()
-    public lazy var startButton = UIButton()
+    public lazy var startButton = ZoocGradientButton()
     
     //MARK: - Life Cycles
     

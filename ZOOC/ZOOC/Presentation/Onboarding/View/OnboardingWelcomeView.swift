@@ -17,7 +17,7 @@ final class OnboardingWelcomeView: OnboardingBaseView {
     public let welcomeLabel = UILabel()
     public let welcomeSubLabel = UILabel()
     public let welcomeImage = UIImageView()
-    public lazy var nextButton = UIButton()
+    public lazy var nextButton = ZoocGradientButton()
     
     //MARK: - Life Cycles
     
@@ -71,7 +71,6 @@ final class OnboardingWelcomeView: OnboardingBaseView {
             $0.titleLabel?.font = .zoocSubhead1
             $0.titleLabel?.textAlignment = .center
             $0.makeCornerRound(radius: 27)
-            $0.backgroundColor = .zoocGradientGreen
             $0.alpha = 0
         }
     }

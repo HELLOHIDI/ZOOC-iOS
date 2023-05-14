@@ -17,11 +17,11 @@ extension CGColor{
     }
     
     static var zoocGradientGreenFirst: CGColor {
-        return CGColor(red: CGFloat(6)/255, green: CGFloat(2)/255, blue: CGFloat(127)/255, alpha: 1)
+        return CGColor(red: CGFloat(66)/255, green: CGFloat(200)/255, blue: CGFloat(144)/255, alpha: 1)
     }
     
     static var zoocGradientGreenLast: CGColor {
-        return CGColor(red: CGFloat(59)/255, green: CGFloat(188)/255, blue: CGFloat(116)/255, alpha: 1)
+        return CGColor(red: CGFloat(59)/255, green: CGFloat(183)/255, blue: CGFloat(116)/255, alpha: 1)
     }
     
 }

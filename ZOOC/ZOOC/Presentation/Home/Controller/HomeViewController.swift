@@ -124,29 +124,35 @@ final class HomeViewController : BaseViewController {
         navigationController?.pushViewController(noticeVC, animated: true)
     }
     
-    private func deselectAllOfListArchiveCollectionViewCell() {
+    private func deselectAllOfListArchiveCollectionViewCell(completion: (() -> Void)?) {
         rootView.archiveListCollectionView.indexPathsForSelectedItems?.forEach {
                 rootView.archiveListCollectionView.deselectItem(at: $0, animated: false)
         }
         
-        rootView.archiveListCollectionView.performBatchUpdates(nil, completion: nil)
+        rootView.archiveListCollectionView.performBatchUpdates(nil) { bool in
+            if bool {
+                completion?()
+            }
+            
+        }
     }
     
     func selectPetCollectionView(petID: Int) {
         var index = 0
-        for pet in petData{
+        for pet in self.petData{
             if pet.id == petID{ break }
             index += 1
         }
         
-        guard index < petData.count else { return }
+        guard index < self.petData.count else { return }
         
-        rootView.petCollectionView.selectItem(at:IndexPath(item: index, section: 0),
+        self.rootView.petCollectionView.selectItem(at:IndexPath(item: index, section: 0),
                                               animated: false,
                                               scrollPosition: .centeredHorizontally)
-        view.layoutIfNeeded()
-        rootView.petCollectionView.performBatchUpdates(nil)
-        requestTotalArchiveAPI(petID: petData[index].id)
+        //self.view.layoutIfNeeded()
+        self.rootView.petCollectionView.performBatchUpdates(nil)
+        self.requestTotalArchiveAPI(petID: self.petData[index].id)
+
     }
     
     private func configIndicatorBarWidth(_ scrollView: UIScrollView) {
@@ -181,8 +187,6 @@ final class HomeViewController : BaseViewController {
             self.petData = result
             guard let id = self.petData.first?.id else { return }
             self.selectPetCollectionView(petID: id)
-            
-            
         }
     }
     
@@ -236,7 +240,7 @@ final class HomeViewController : BaseViewController {
     
     @objc
     private func bottomViewDidTap() {
-        deselectAllOfListArchiveCollectionViewCell()
+        deselectAllOfListArchiveCollectionViewCell(completion: nil)
     }
 }
 
@@ -319,8 +323,9 @@ extension HomeViewController {
     {
         if collectionView == rootView.petCollectionView {
             collectionView.performBatchUpdates(nil)
-            requestTotalArchiveAPI(petID: petData[indexPath.item].id )
-            
+            deselectAllOfListArchiveCollectionViewCell {
+                self.requestTotalArchiveAPI(petID: self.petData[indexPath.item].id )
+            }
         }
         
         if collectionView == rootView.archiveListCollectionView {

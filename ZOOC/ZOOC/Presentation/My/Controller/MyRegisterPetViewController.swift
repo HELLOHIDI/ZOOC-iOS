@@ -203,7 +203,10 @@ extension MyRegisterPetViewController: MyDeleteButtonTappedDelegate {
         checkAlbumPermission { hasPermission in
             if hasPermission {
                 self.myPetRegisterViewModel.index = tag
-                self.present(self.galleryAlertController,animated: true)
+                DispatchQueue.main.async {
+                    self.present(self.galleryAlertController,animated: true)
+                }
+            
             } else {
                 print("퍼미션이 false")
                 self.showAccessDenied()

@@ -138,7 +138,9 @@ extension RecordMissionViewController: RecordMissionCollectionViewCellDelegate {
         checkAlbumPermission { hasPermission in
             if hasPermission {
                 self.recordMissionViewModel.index = tag
-                self.present(self.galleryAlertController,animated: true)
+                DispatchQueue.main.async {
+                    self.present(self.galleryAlertController,animated: true)
+                }
             } else {
                 self.showAccessDenied()
             }

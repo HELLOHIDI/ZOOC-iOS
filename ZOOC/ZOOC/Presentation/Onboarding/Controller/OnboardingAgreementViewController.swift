@@ -118,8 +118,7 @@ extension OnboardingAgreementViewController: UITableViewDataSource {
             self.onboardingAgreementView.agreementTableView.reloadData()
         }
         self.onboardingAgreementViewModel.updateNextButton(
-            button:&onboardingAgreementView.signUpButton.isEnabled,
-            color: &onboardingAgreementView.signUpButton.backgroundColor)
+            button:&onboardingAgreementView.signUpButton.isEnabled)
         return cell
     }
     
@@ -138,8 +137,7 @@ extension OnboardingAgreementViewController: UITableViewDataSource {
             self.onboardingAgreementView.agreementTableView.reloadData()
         }
         self.onboardingAgreementViewModel.updateNextButton(
-            button:&onboardingAgreementView.signUpButton.isEnabled,
-            color: &onboardingAgreementView.signUpButton.backgroundColor)
+            button:&onboardingAgreementView.signUpButton.isEnabled)
         return cell
     }
 }

@@ -140,9 +140,7 @@ extension OnboardingRegisterPetViewController: UITableViewDataSource {
         }
         
         self.onboardingPetRegisterViewModel.checkCanRegister(
-            button:&self.onboardingRegisterPetView.registerPetButton.isEnabled,
-            color:&self.onboardingRegisterPetView.registerPetButton.backgroundColor
-        )
+            button:&self.onboardingRegisterPetView.registerPetButton.isEnabled)
         
         self.onboardingPetRegisterViewModel.hideDeleteButton(button: &cell.deletePetProfileButton.isHidden)
         
@@ -190,10 +188,8 @@ extension OnboardingRegisterPetViewController: DeleteButtonTappedDelegate {
     
     func canRegister(canRegister: Bool) {
         if canRegister {
-            onboardingRegisterPetView.registerPetButton.backgroundColor = .zoocGradientGreen
             onboardingRegisterPetView.registerPetButton.isEnabled = true
         } else {
-            onboardingRegisterPetView.registerPetButton.backgroundColor = .zoocGray1
             onboardingRegisterPetView.registerPetButton.isEnabled = false
         }
     }
@@ -204,9 +200,7 @@ extension OnboardingRegisterPetViewController: DeleteButtonTappedDelegate {
         }
         
         self.onboardingPetRegisterViewModel.checkCanRegister(
-            button:&self.onboardingRegisterPetView.registerPetButton.isEnabled,
-            color:&self.onboardingRegisterPetView.registerPetButton.backgroundColor
-        )
+            button:&self.onboardingRegisterPetView.registerPetButton.isEnabled)
     }
 }
 

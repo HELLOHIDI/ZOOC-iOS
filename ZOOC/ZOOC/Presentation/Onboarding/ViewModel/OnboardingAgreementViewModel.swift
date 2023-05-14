@@ -46,15 +46,13 @@ final class OnboardingAgreementViewModel {
     }
     
     // 4. 다음 버튼 활성화 메소드
-    func updateNextButton(button: inout Bool, color: inout UIColor?) {
+    func updateNextButton(button: inout Bool) {
         if (agreementList[0].isSelected &&
             agreementList[1].isSelected &&
             agreementList[2].isSelected == true) {
             button = true
-            color = .zoocGradientGreen
         } else {
             button = false
-            color = .zoocGray1
         }
     }
     

@@ -75,9 +75,6 @@ final class OnboardingChooseRoleView: OnboardingBaseView {
             $0.titleLabel?.font = .zoocSubhead1
             $0.titleLabel?.textAlignment = .center
             $0.isEnabled = false
-            $0.inActiveColor = .zoocGray1
-            $0.activeColorTop = .zoocGradientGreenFirst
-            $0.activeColorBottom = .zoocGradientGreenLast
         }
     }
     

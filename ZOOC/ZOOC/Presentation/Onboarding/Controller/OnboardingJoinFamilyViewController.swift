@@ -87,7 +87,6 @@ extension OnboardingJoinFamilyViewController {
 
 extension OnboardingJoinFamilyViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        self.onboardingJoinFamilyView.nextButton.backgroundColor = .zoocGradientGreen
         self.onboardingJoinFamilyView.nextButton.isEnabled = true
     }
 }

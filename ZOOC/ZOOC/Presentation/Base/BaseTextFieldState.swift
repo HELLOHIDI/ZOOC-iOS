@@ -73,7 +73,6 @@ enum BaseTextFieldState {
                            label: UILabel?) {
         underLineView?.backgroundColor = self.backgroundColor
         textField?.textColor = self.textColor
-        button?.backgroundColor = self.buttonColor
         button?.isEnabled = self.isEnabled
         label?.textColor = self.indexColor
     }

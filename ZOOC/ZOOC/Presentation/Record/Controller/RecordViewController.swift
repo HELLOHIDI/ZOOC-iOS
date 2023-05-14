@@ -268,7 +268,9 @@ extension RecordViewController {
         
         checkAlbumPermission { hasPermission in
             if hasPermission {
-                self.present(self.galleryAlertController,animated: true)
+                DispatchQueue.main.async {
+                    self.present(self.galleryAlertController,animated: true)
+                }
             } else {
                 self.showAccessDenied()
             }

@@ -96,12 +96,6 @@ final class HomePetCollectionViewCell: UICollectionViewCell {
         updateUI()
     }
     
-    public func dataBind(data: HomePetModel) {
-        
-        self.petImageView.image = data.image
-        self.petNameLabel.text = data.name
-    }
-    
     public func dataBind(data: HomePetResult) {
         if data.photo == nil {
             self.petImageView.image = Image.defaultProfile

@@ -19,8 +19,6 @@ final class HomeDetailArchiveViewController : BaseViewController {
         case right
     }
     
-    private var detailArchiveMockData: HomeDetailArchiveModel = HomeDetailArchiveModel.mockData
-    
     var petID: String = "1"
     var isNewPage = true
     

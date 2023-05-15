@@ -128,13 +128,6 @@ final class HomeCommentCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func dataBind(data: ArchiveCommentModel) {
-        writerImageView.image = data.writerImage
-        writerLabel.text = data.writerName
-        commentLabel.text = data.comment
-        dateLabel.text = data.date
-    }
-    
     func dataBind(data: CommentResult) {
         if data.isEmoji {
              

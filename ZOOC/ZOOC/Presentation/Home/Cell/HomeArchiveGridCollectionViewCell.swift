@@ -51,10 +51,6 @@ final class HomeArchiveGridCollectionViewCell : UICollectionViewCell {
     
     }
     
-    func dataBind(data: HomeArchiveModel) {
-        petImageView.image = data.petImage
-    }
-    
     func dataBind(data: HomeArchiveResult) {
         petImageView.kfSetImage(url: data.record.photo)
     }

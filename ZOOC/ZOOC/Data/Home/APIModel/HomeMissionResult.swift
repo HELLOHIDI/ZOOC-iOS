@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 struct HomeMissionResult: Codable{
     let id: Int
     let missionContent: String

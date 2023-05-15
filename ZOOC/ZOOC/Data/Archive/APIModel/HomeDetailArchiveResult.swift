@@ -20,6 +20,7 @@ struct HomeDetailArchiveResult: Codable {
 }
 
 // MARK: - Comment
+
 struct CommentResult: Codable {
     let isEmoji: Bool
     let nickName: String

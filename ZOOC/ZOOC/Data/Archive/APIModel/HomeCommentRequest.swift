@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 struct HomeCommentReqeust: Codable{
     let content: String
 }

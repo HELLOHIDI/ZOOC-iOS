@@ -13,8 +13,7 @@ enum HomeService {
     case getMission(familyID: String)
     case getTotalPet(familyID: String)
     case getTotalArchive(familyID: String,petID: String)
-    case getDetailArchive(familyID: String, recordID: String)
-    case getDetailPetArchive(familyID: String, recordID: String, petID: String)
+    case getDetailPetArchive(familyID: String, recordID: Int, petID: Int)
     case getNotice
     case postComment(recordID: String, comment: String)
     case postEmojiComment(recordID: String, emojiID: Int)
@@ -23,8 +22,8 @@ enum HomeService {
 extension HomeService: BaseTargetType {
      
     var path: String {
+        
         switch self {
-            
         case .getMission(let familyID):
             return URLs.getMission
                 .replacingOccurrences(of: "{familyId}", with: familyID)
@@ -38,18 +37,13 @@ extension HomeService: BaseTargetType {
                 .replacingOccurrences(of: "{familyId}", with: familyID)
                 .replacingOccurrences(of: "{petId}", with: petID)
             
-        case .getDetailArchive(familyID: let familyID, recordID: let recordID):  //아마 사용안함
-            return URLs.detailRecord
-                .replacingOccurrences(of: "{familyId}", with: familyID)
-                .replacingOccurrences(of: "{recordId}", with: recordID)
-            
         case .getDetailPetArchive(familyID: let familyID,
                                   recordID: let recordID,
                                   petID: let petID):
             return URLs.detailPetRecord
                 .replacingOccurrences(of: "{familyId}", with: familyID)
-                .replacingOccurrences(of: "{petId}", with: petID)
-                .replacingOccurrences(of: "{recordId}", with: recordID)
+                .replacingOccurrences(of: "{petId}", with: String(petID))
+                .replacingOccurrences(of: "{recordId}", with: String(recordID))
             
         case .getNotice:
             return URLs.getNotice
@@ -75,9 +69,6 @@ extension HomeService: BaseTargetType {
         case .getTotalArchive:
             return .get
             
-        case .getDetailArchive:
-            return .get
-            
         case .getNotice:
             return .get
             
@@ -101,9 +92,6 @@ extension HomeService: BaseTargetType {
             return .requestPlain
             
         case .getTotalArchive:
-            return .requestPlain
-            
-        case .getDetailArchive:
             return .requestPlain
             
         case .getDetailPetArchive:

@@ -105,15 +105,14 @@ final class HomeViewController : BaseViewController {
         requestTotalPetAPI()
     }
     
-    private func pushToDetailViewController(recordID: String) {
+    private func pushToDetailViewController(recordID: Int) {
         guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
             fatalError("선택된 펫이 없습니다.")
         }
+        let petID = petData[index].id
         
         let detailVC = ArchiveViewController()
-        let petID = String(petData[index].id)
-        detailVC.petID = petID
-        detailVC.requestDetailArchiveAPI(recordID: recordID, petID: petID)
+        detailVC.dataBind(recordID: recordID, petID: petID)
         detailVC.modalPresentationStyle = .fullScreen
         present(detailVC, animated: true)
     }
@@ -129,11 +128,8 @@ final class HomeViewController : BaseViewController {
                 rootView.archiveListCollectionView.deselectItem(at: $0, animated: false)
         }
         
-        rootView.archiveListCollectionView.performBatchUpdates(nil) { bool in
-            if bool {
-                completion?()
-            }
-            
+        rootView.archiveListCollectionView.performBatchUpdates(nil) { _ in
+            completion?()
         }
     }
     
@@ -309,7 +305,7 @@ extension HomeViewController {
             case .folded:
                 return true
             case .expanded:
-                let id = String(archiveData[indexPath.item].record.id)
+                let id = archiveData[indexPath.item].record.id
                 pushToDetailViewController(recordID: id)
                 return false
             }
@@ -333,7 +329,7 @@ extension HomeViewController {
         }
         
         if collectionView == rootView.archiveGridCollectionView {
-            let id = String(archiveData[indexPath.item].record.id)
+            let id = archiveData[indexPath.item].record.id
             pushToDetailViewController(recordID: id)
         }
         

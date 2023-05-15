@@ -19,8 +19,9 @@ final class ArchiveViewController : BaseViewController {
         case right
     }
     
-    var petID: String = "1"
-    var isNewPage = true
+    private var isNewPage = true
+    
+    private var archiveModel: ArchiveModel?
     
     private var archiveData: ArchiveResult? {
         didSet{
@@ -99,6 +100,13 @@ final class ArchiveViewController : BaseViewController {
     }
 
     //MARK: - Custom Method
+    
+    func dataBind(recordID: Int, petID: Int) {
+        let data = ArchiveModel(recordID: recordID, petID: petID)
+        archiveModel = data
+        guard let archiveModel else { return }
+        requestDetailArchiveAPI(request: archiveModel)
+    }
     
     private func register() {
         commentCollectionView.delegate = self
@@ -211,6 +219,7 @@ final class ArchiveViewController : BaseViewController {
     }
     
     private func hierarchy() {
+        
         view.addSubviews(scrollView,
                          commentView)
         
@@ -321,10 +330,9 @@ final class ArchiveViewController : BaseViewController {
         }
     }
     
-    private func updateNewUI(direction: PageDirection) {
+    private func updateNewPage(direction: PageDirection) {
         var message: String
         var id: Int?
-        
         switch direction {
         case .left:
             message = "가장 최근 페이지입니다."
@@ -334,12 +342,16 @@ final class ArchiveViewController : BaseViewController {
             id = archiveData?.rightID
         }
         
-        guard let id = id else {
+        guard let id else {
             presentBottomAlert(message)
             return
         }
         
-        requestDetailArchiveAPI(recordID: String(id), petID: petID)
+        archiveModel?.recordID = id
+        
+        guard let archiveModel else { return }
+        
+        requestDetailArchiveAPI(request: archiveModel)
     }
     
     private func updateArchiveUI() {
@@ -368,14 +380,18 @@ final class ArchiveViewController : BaseViewController {
             isNewPage = false
         } else{
             scrollView.layoutSubviews()
-            self.scrollView.setContentOffset(CGPoint(x: 0, y: self.scrollView.contentSize.height - self.scrollView.bounds.height), animated: true)
+            self.scrollView.setContentOffset(CGPoint(x: 0,
+                                                     y: self.scrollView.contentSize.height - self.scrollView.bounds.height),
+                                             animated: true)
         }
         
     }
     
-    func requestDetailArchiveAPI(recordID: String, petID: String) {
-        HomeAPI.shared.getDetailPetArchive(recordID: recordID, petID: petID) { result in
-            guard let result = self.validateResult(result) as?  ArchiveResult else { return }
+    func requestDetailArchiveAPI(request: ArchiveModel) {
+        HomeAPI.shared.getDetailPetArchive(recordID: request.recordID,
+                                           petID: request.petID) { result in
+            
+            guard let result = self.validateResult(result) as? ArchiveResult else { return }
             
             self.isNewPage = true
             self.archiveData = result
@@ -416,9 +432,9 @@ final class ArchiveViewController : BaseViewController {
         guard let gesture = gesture as? UISwipeGestureRecognizer else { return }
         switch gesture.direction {
         case .left:
-            updateNewUI(direction: .right)
+            updateNewPage(direction: .right)
         case .right:
-            updateNewUI(direction: .left)
+            updateNewPage(direction: .left)
         default:
             return
         }
@@ -428,7 +444,7 @@ final class ArchiveViewController : BaseViewController {
     @objc
     private func directionButtonDidTap(_ sender: UIButton) {
         guard let direction = PageDirection.init(rawValue: sender.tag) else { return }
-       updateNewUI(direction: direction)
+       updateNewPage(direction: direction)
     }
     
     @objc
@@ -463,6 +479,7 @@ final class ArchiveViewController : BaseViewController {
 }
 
 //MARK: - UICollectionViewDataSource
+
 extension ArchiveViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {

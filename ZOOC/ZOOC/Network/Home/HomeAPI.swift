@@ -44,7 +44,7 @@ extension HomeAPI{
     func getDetailArchive(recordID: String, completion: @escaping (NetworkResult<Any>) -> Void) {
         homeProvider.request(.getDetailArchive(familyID: User.shared.familyID, recordID: recordID)) { (result) in
             self.disposeNetwork(result,
-                                dataModel: HomeDetailArchiveResult.self,
+                                dataModel: ArchiveResult.self,
                                 completion: completion)
         }
     } //아마 사용안함
@@ -52,7 +52,7 @@ extension HomeAPI{
     func getDetailPetArchive(recordID: String, petID: String ,completion: @escaping (NetworkResult<Any>) -> Void) {
         homeProvider.request(.getDetailPetArchive(familyID: User.shared.familyID, recordID: recordID, petID: petID)) { (result) in
             self.disposeNetwork(result,
-                                dataModel: HomeDetailArchiveResult.self,
+                                dataModel: ArchiveResult.self,
                                 completion: completion)
         }
     }

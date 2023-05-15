@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class HomeDetailArchiveViewController : BaseViewController {
+final class ArchiveViewController : BaseViewController {
     
     //MARK: - Properties
     
@@ -22,7 +22,7 @@ final class HomeDetailArchiveViewController : BaseViewController {
     var petID: String = "1"
     var isNewPage = true
     
-    private var detailArchiveData: HomeDetailArchiveResult? {
+    private var archiveData: ArchiveResult? {
         didSet{
             updateArchiveUI()
         }
@@ -33,8 +33,6 @@ final class HomeDetailArchiveViewController : BaseViewController {
             updateCommentsUI()
         }
     }
-    
-
     
     
     //MARK: - UI Components
@@ -59,7 +57,7 @@ final class HomeDetailArchiveViewController : BaseViewController {
 
     private let commentCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
     
-    private let commentView = HomeDetailArchiveCommentView()
+    private let commentView = ArchiveCommentView()
     
     //MARK: - Life Cycle
     
@@ -108,8 +106,8 @@ final class HomeDetailArchiveViewController : BaseViewController {
         commentView.delegate = self
         emojiBottomSheetViewController.delegate = self
         
-        commentCollectionView.register(HomeCommentCollectionViewCell.self,
-                                       forCellWithReuseIdentifier: HomeCommentCollectionViewCell.cellIdentifier)
+        commentCollectionView.register(ArchiveCommentCollectionViewCell.self,
+                                       forCellWithReuseIdentifier: ArchiveCommentCollectionViewCell.cellIdentifier)
     }
     
     private func gesture() {
@@ -330,10 +328,10 @@ final class HomeDetailArchiveViewController : BaseViewController {
         switch direction {
         case .left:
             message = "가장 최근 페이지입니다."
-            id = detailArchiveData?.leftID
+            id = archiveData?.leftID
         case .right:
             message = "마지막 페이지 입니다."
-            id = detailArchiveData?.rightID
+            id = archiveData?.rightID
         }
         
         guard let id = id else {
@@ -345,16 +343,16 @@ final class HomeDetailArchiveViewController : BaseViewController {
     }
     
     private func updateArchiveUI() {
-        if let imageURL = detailArchiveData?.record.writerPhoto{
+        if let imageURL = archiveData?.record.writerPhoto{
             self.writerImageView.kfSetImage(url: imageURL)
         } else {
             self.writerImageView.image = Image.defaultProfile
         }
         
-        self.petImageView.kfSetImage(url: detailArchiveData?.record.photo)
-        self.dateLabel.text = detailArchiveData?.record.date
-        self.writerNameLabel.text = detailArchiveData?.record.writerName
-        self.contentLabel.text = detailArchiveData?.record.content
+        self.petImageView.kfSetImage(url: archiveData?.record.photo)
+        self.dateLabel.text = archiveData?.record.date
+        self.writerNameLabel.text = archiveData?.record.writerName
+        self.contentLabel.text = archiveData?.record.content
     }
     
     private func updateCommentsUI() {
@@ -377,10 +375,10 @@ final class HomeDetailArchiveViewController : BaseViewController {
     
     func requestDetailArchiveAPI(recordID: String, petID: String) {
         HomeAPI.shared.getDetailPetArchive(recordID: recordID, petID: petID) { result in
-            guard let result = self.validateResult(result) as?  HomeDetailArchiveResult else { return }
+            guard let result = self.validateResult(result) as?  ArchiveResult else { return }
             
             self.isNewPage = true
-            self.detailArchiveData = result
+            self.archiveData = result
             self.commentsData = result.comments
         }
     }
@@ -465,7 +463,7 @@ final class HomeDetailArchiveViewController : BaseViewController {
 }
 
 //MARK: - UICollectionViewDataSource
-extension HomeDetailArchiveViewController: UICollectionViewDataSource {
+extension ArchiveViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
         return commentsData.count
@@ -473,7 +471,7 @@ extension HomeDetailArchiveViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCommentCollectionViewCell.cellIdentifier, for: indexPath) as? HomeCommentCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ArchiveCommentCollectionViewCell.cellIdentifier, for: indexPath) as? ArchiveCommentCollectionViewCell else { return UICollectionViewCell() }
         
         cell.dataBind(data: commentsData[indexPath.item])
         return cell
@@ -482,7 +480,7 @@ extension HomeDetailArchiveViewController: UICollectionViewDataSource {
 
 //MARK: - UICollectionViewDelegateFlowLayout
 
-extension HomeDetailArchiveViewController: UICollectionViewDelegateFlowLayout {
+extension ArchiveViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -522,10 +520,10 @@ extension HomeDetailArchiveViewController: UICollectionViewDelegateFlowLayout {
 
 //MARK: - CommentViewDelegate
 
-extension HomeDetailArchiveViewController: HomeCommentViewDelegate {
+extension ArchiveViewController: ArchiveCommentViewDelegate {
    
     func uploadButtonDidTap(_ textField: UITextField, text: String) {
-        guard let recordID = detailArchiveData?.record.id else { return }
+        guard let recordID = archiveData?.record.id else { return }
         textField.text = nil
         requestCommentsAPI(recordID: String(recordID), text: text)
     }
@@ -537,9 +535,9 @@ extension HomeDetailArchiveViewController: HomeCommentViewDelegate {
 
 //MARK: - 구역
 
-extension HomeDetailArchiveViewController: EmojiBottomSheetDelegate{
+extension ArchiveViewController: EmojiBottomSheetDelegate{
     func emojiDidSelected(emojiID: Int) {
-        guard let recordID = detailArchiveData?.record.id else { return }
+        guard let recordID = archiveData?.record.id else { return }
         requestEmojiCommentAPI(recordID: String(recordID), emojiID: emojiID)
     }
 }

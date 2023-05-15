@@ -110,7 +110,7 @@ final class HomeViewController : BaseViewController {
             fatalError("선택된 펫이 없습니다.")
         }
         
-        let detailVC = HomeDetailArchiveViewController()
+        let detailVC = ArchiveViewController()
         let petID = String(petData[index].id)
         detailVC.petID = petID
         detailVC.requestDetailArchiveAPI(recordID: recordID, petID: petID)

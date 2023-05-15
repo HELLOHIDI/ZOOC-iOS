@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class HomeCommentCollectionViewCell: UICollectionViewCell {
+final class ArchiveCommentCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Properties
     

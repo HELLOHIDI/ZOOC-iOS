@@ -113,11 +113,11 @@ extension HomeService: BaseTargetType {
             return .requestPlain
             
         case .postComment(recordID: _, comment: let comment):
-            let body = HomeCommentReqeust(content: comment)
+            let body = ArchiveCommentReqeust(content: comment)
             return .requestJSONEncodable(body)
             
         case .postEmojiComment(recordID: _, emojiID: let emojiID):
-            let body = HomeEmojiCommentReqeust(emoji: emojiID)
+            let body = ArchiveEmojiCommentReqeust(emoji: emojiID)
             return .requestJSONEncodable(body)
         }
     }

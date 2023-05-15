@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HomeDetailArchiveResult: Codable {
+struct ArchiveResult: Codable {
     let leftID, rightID: Int?
     let record: RecordResult
     let comments: [CommentResult]

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "emoji_sad.png",
+      "filename" : "graphics_11.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "emo_sad@2x.png",
+      "filename" : "Group 48095951@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "emo_sad@3x.png",
+      "filename" : "Group 48095951@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

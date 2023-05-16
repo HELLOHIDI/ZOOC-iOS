@@ -38,6 +38,7 @@
 		871EA35D2970CFA700D0E8CC /* SimpleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871EA35C2970CFA700D0E8CC /* SimpleResponse.swift */; };
 		871EA35F2971628D00D0E8CC /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871EA35E2971628D00D0E8CC /* Encodable+.swift */; };
 		872367112A12AC4E00DCBBFF /* ArchiveModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872367102A12AC4E00DCBBFF /* ArchiveModel.swift */; };
+		872367132A136C7300DCBBFF /* ArchiveGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872367122A136C7300DCBBFF /* ArchiveGuideViewController.swift */; };
 		872BBD9229F9576E002E2C71 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872BBD9129F9576E002E2C71 /* UIApplication+.swift */; };
 		872BBD9529F959FC002E2C71 /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */; };
 		872BBD9729F95BE2002E2C71 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872BBD9629F95BE2002E2C71 /* UserDefaultsManager.swift */; };
@@ -233,6 +234,7 @@
 		871EA35C2970CFA700D0E8CC /* SimpleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleResponse.swift; sourceTree = "<group>"; };
 		871EA35E2971628D00D0E8CC /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
 		872367102A12AC4E00DCBBFF /* ArchiveModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveModel.swift; sourceTree = "<group>"; };
+		872367122A136C7300DCBBFF /* ArchiveGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveGuideViewController.swift; sourceTree = "<group>"; };
 		872BBD9129F9576E002E2C71 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
 		872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
 		872BBD9629F95BE2002E2C71 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
@@ -1038,6 +1040,7 @@
 			isa = PBXGroup;
 			children = (
 				877E57F12966D13E006D82FC /* ArchiveViewController.swift */,
+				872367122A136C7300DCBBFF /* ArchiveGuideViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1377,6 +1380,7 @@
 				87D5AF622960CFE500CA7F12 /* HomeGuideCollectionViewCell.swift in Sources */,
 				4C6B186A296C82850059840D /* RecordRegisterFourCollectionViewCell.swift in Sources */,
 				D26C68F62970B0640088DC9A /* HomeNoticeTableViewCell.swift in Sources */,
+				872367132A136C7300DCBBFF /* ArchiveGuideViewController.swift in Sources */,
 				872BBD9229F9576E002E2C71 /* UIApplication+.swift in Sources */,
 				D23502E22961898C00F01101 /* MyProfileSectionCollectionViewCell.swift in Sources */,
 				D27D956A296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift in Sources */,

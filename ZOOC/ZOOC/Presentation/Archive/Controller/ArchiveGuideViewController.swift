@@ -31,6 +31,8 @@ final class ArchiveGuideViewController : UIViewController{
         style()
         hierarchy()
         layout()
+        
+        UserDefaultsManager.isFirstUser = false
     }
     
     //MARK: - Custom Method
@@ -43,8 +45,8 @@ final class ArchiveGuideViewController : UIViewController{
         }
         
         backgroundView.do {
-            $0.backgroundColor = .zoocDarkGray1
-            $0.alpha = 0.95
+            $0.backgroundColor = .black
+            $0.alpha = 0.80
         }
         
         graphicsImageView.do {

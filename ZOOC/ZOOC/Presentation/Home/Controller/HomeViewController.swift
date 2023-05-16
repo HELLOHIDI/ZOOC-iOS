@@ -156,8 +156,10 @@ final class HomeViewController : BaseViewController {
             let allWidth = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
             let showingWidth = scrollView.bounds.width
             if allWidth >= showingWidth {
+                self.rootView.archiveIndicatorView.isHidden = false
                 self.rootView.archiveIndicatorView.widthRatio = showingWidth / allWidth
             } else {
+                self.rootView.archiveIndicatorView.isHidden = true
                 self.rootView.archiveIndicatorView.widthRatio = 0
             }
              

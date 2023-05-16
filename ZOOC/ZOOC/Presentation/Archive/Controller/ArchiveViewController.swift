@@ -47,8 +47,6 @@ final class ArchiveViewController : BaseViewController {
     private let etcButton = UIButton()
     
     private let petImageView = UIImageView()
-    private let leftButton = UIButton()
-    private let rightButton = UIButton ()
     
     private let dateLabel = UILabel()
     private let writerImageView = UIImageView()
@@ -134,14 +132,6 @@ final class ArchiveViewController : BaseViewController {
         etcButton.addTarget(self,
                             action: #selector(etcButtonDidTap),
                             for: .touchUpInside)
-         
-        leftButton.addTarget(self,
-                                 action: #selector(directionButtonDidTap),
-                                 for: .touchUpInside)
-        
-        rightButton.addTarget(self,
-                             action: #selector(directionButtonDidTap),
-                             for: .touchUpInside)
         
         
         let swipeGestureLeft = UISwipeGestureRecognizer(target: self,
@@ -182,16 +172,6 @@ final class ArchiveViewController : BaseViewController {
         petImageView.do {
             $0.contentMode = .scaleAspectFill
             $0.clipsToBounds = true
-        }
-        
-        leftButton.do {
-            $0.setImage(Image.previous, for: .normal)
-            $0.tag = 0
-        }
-        
-        rightButton.do {
-            $0.setImage(Image.next, for: .normal)
-            $0.tag = 1
         }
         
         dateLabel.do {
@@ -241,8 +221,6 @@ final class ArchiveViewController : BaseViewController {
         contentView.addSubviews(petImageView,
                                  backButton,
                                  etcButton,
-                                 leftButton,
-                                 rightButton,
                                  dateLabel,
                                  writerImageView,
                                  writerNameLabel,
@@ -293,18 +271,6 @@ final class ArchiveViewController : BaseViewController {
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview()
             $0.height.equalTo(petImageView.snp.width)
-        }
-        
-        leftButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(185)
-            $0.leading.equalToSuperview().offset(13)
-            $0.width.height.equalTo(46)
-        }
-        
-        rightButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(185)
-            $0.trailing.equalToSuperview().offset(-13)
-            $0.width.height.equalTo(46)
         }
         
         dateLabel.snp.makeConstraints {
@@ -474,12 +440,6 @@ final class ArchiveViewController : BaseViewController {
             return
         }
         
-    }
-    
-    @objc
-    private func directionButtonDidTap(_ sender: UIButton) {
-        guard let direction = PageDirection.init(rawValue: sender.tag) else { return }
-       updateNewPage(direction: direction)
     }
     
     @objc

@@ -9,15 +9,6 @@ import UIKit
 
 import SnapKit
 import Then
-public var backButton = UIButton()
-private var titleLabel = UILabel()
-
-public var profileImageButton = UIButton()
-private var cameraIconImageView = UIImageView()
-public var nameTextField = UITextField()
-public var underLineView = UIView()
-public var numberOfNameCharactersLabel = UILabel()
-public var completeButton = UIButton()
 
 final class MyEditProfileViewController: BaseViewController {
     

@@ -1039,8 +1039,8 @@
 		87E462FB2A129BC3006FC35D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				877E57F12966D13E006D82FC /* ArchiveViewController.swift */,
 				872367122A136C7300DCBBFF /* ArchiveGuideViewController.swift */,
+				877E57F12966D13E006D82FC /* ArchiveViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

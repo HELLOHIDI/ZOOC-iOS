@@ -87,6 +87,12 @@ final class ArchiveViewController : BaseViewController {
                                                object: nil)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        let guideVC = ArchiveGuideViewController()
+        guideVC.modalPresentationStyle = .overFullScreen
+        present(guideVC, animated: false)
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -573,6 +579,7 @@ extension ArchiveViewController: ArchiveCommentViewDelegate {
     }
     
     func emojiButtonDidTap() {
+        dismissKeyboard()
         present(emojiBottomSheetViewController, animated: false)
     }
 }

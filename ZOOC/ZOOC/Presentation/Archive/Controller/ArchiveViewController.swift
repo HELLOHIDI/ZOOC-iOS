@@ -424,7 +424,30 @@ final class ArchiveViewController : BaseViewController {
     
     @objc
     private func etcButtonDidTap() {
-        presentBottomAlert("더보기 기능은 곧 만나요~")
+        let alert = UIAlertController(title: nil,
+                                      message: nil,
+                                      preferredStyle: .actionSheet)
+
+        // 메시지 창 컨트롤러에 들어갈 버튼 액션 객체 생성
+        let defaultAction =  UIAlertAction(title: "신고하기", style: .default) { action in
+            self.presentBottomAlert("\(action.title!) 기능은 다음 버전에 업데이트 됩니다.")
+        }
+        
+        let destructiveAction = UIAlertAction(title: "삭제하기",
+                                              style: .destructive) { action in
+            
+            self.presentBottomAlert("\(action.title!) 기능은 다음 버전에 업데이트 됩니다.")
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+
+        //메시지 창 컨트롤러에 버튼 액션을 추가
+        alert.addAction(defaultAction)
+        alert.addAction(destructiveAction)
+        alert.addAction(cancelAction)
+
+        //메시지 창 컨트롤러를 표시
+        self.present(alert, animated: true)
     }
     
     @objc

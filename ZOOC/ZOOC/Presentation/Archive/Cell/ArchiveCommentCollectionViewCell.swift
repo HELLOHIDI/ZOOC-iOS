@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class HomeCommentCollectionViewCell: UICollectionViewCell {
+final class ArchiveCommentCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Properties
     
@@ -126,13 +126,6 @@ final class HomeCommentCollectionViewCell: UICollectionViewCell {
             $0.trailing.equalToSuperview()
             $0.height.width.equalTo(42)
         }
-    }
-    
-    func dataBind(data: ArchiveCommentModel) {
-        writerImageView.image = data.writerImage
-        writerLabel.text = data.writerName
-        commentLabel.text = data.comment
-        dateLabel.text = data.date
     }
     
     func dataBind(data: CommentResult) {

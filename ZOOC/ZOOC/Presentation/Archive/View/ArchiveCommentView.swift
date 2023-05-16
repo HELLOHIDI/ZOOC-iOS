@@ -10,26 +10,28 @@ import UIKit
 import SnapKit
 import Then
 
-protocol HomeCommentViewDelegate: UITextFieldDelegate{
+protocol ArchiveCommentViewDelegate: UITextFieldDelegate{
     func uploadButtonDidTap(_ textField: UITextField, text: String)
     func emojiButtonDidTap()
 }
 
 
-final class HomeDetailArchiveCommentView : UIView {
+final class ArchiveCommentView : UIView {
     
     //MARK: - Properties
     
     private var text : String?
-    weak var delegate: HomeCommentViewDelegate? 
+    weak var delegate: ArchiveCommentViewDelegate? 
     
     //MARK: - UI Components
+    
     private let lineView = UIView()
     private let commentTextField = UITextField()
     private let commentEmojiButton = UIButton()
     private let hStackView = UIStackView()
     private let uploadButton = UIButton()
     private let containerRightView = UIView()
+    
     //MARK: - Life Cycle
     
     override init(frame: CGRect) {
@@ -157,12 +159,9 @@ final class HomeDetailArchiveCommentView : UIView {
     private func emojiButtonDidTap() {
         delegate?.emojiButtonDidTap()
     }
-   
-    
-    
     
 }
 
-extension HomeDetailArchiveCommentView: UITextFieldDelegate{
+extension ArchiveCommentView: UITextFieldDelegate{
     
 }

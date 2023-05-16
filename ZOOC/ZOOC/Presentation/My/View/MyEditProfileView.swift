@@ -22,7 +22,7 @@ final class MyEditProfileView: UIView {
     public var nameTextField = BaseTextField()
     public var underLineView = UIView()
     public var numberOfNameCharactersLabel = UILabel()
-    public var completeButton = UIButton()
+    public var completeButton = ZoocGradientButton()
     
     //MARK: - Life Cycles
     
@@ -36,6 +36,12 @@ final class MyEditProfileView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        profileImageButton.makeCornerRound(ratio: 2)
+        cameraIconImageView.makeCornerRound(ratio: 2)
     }
     
     //MARK: - Custom Method
@@ -55,14 +61,12 @@ final class MyEditProfileView: UIView {
         
         profileImageButton.do {
             $0.setImage(Image.logoSymbol, for: .normal)
-            $0.makeCornerRound(radius: self.frame.width / 2)
             $0.contentMode = .scaleAspectFill
         }
         
         cameraIconImageView.do {
             $0.image = Image.cameraCircleGreen
             $0.contentMode = .scaleAspectFill
-            $0.makeCornerRound(radius: self.frame.width / 2)
         }
         
         nameTextField.do {
@@ -82,9 +86,8 @@ final class MyEditProfileView: UIView {
         }
         
         completeButton.do {
-            $0.backgroundColor = .zoocGray1
             $0.setTitle("완료", for: .normal)
-            $0.makeCornerRound(radius: 27)
+            $0.isEnabled = false
         }
     }
     

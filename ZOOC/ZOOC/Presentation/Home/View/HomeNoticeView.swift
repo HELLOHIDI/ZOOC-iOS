@@ -58,6 +58,7 @@ final class HomeNoticeView: UIView {
         
         defaultView.do {
             $0.image = Image.graphics10
+            $0.contentMode = .scaleAspectFit
             $0.isHidden = true
         }
     }

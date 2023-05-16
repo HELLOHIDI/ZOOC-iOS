@@ -21,7 +21,8 @@ final class EmojiBottomSheetViewController: UIViewController {
     
     weak var delegate: EmojiBottomSheetDelegate?
     private let emojisData = EmojiModel.data
-    private lazy var dimmedTapGesture = UITapGestureRecognizer(target: self, action: #selector(dimmedViewTapped))
+    private lazy var dimmedTapGesture = UITapGestureRecognizer(target: self,
+                                                               action: #selector(dimmedViewTapped))
     
     //MARK: - UI Components
     

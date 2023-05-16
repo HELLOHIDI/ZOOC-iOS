@@ -61,6 +61,7 @@ final class OnboardingAgreementView: OnboardingBaseView {
         agreementTableView.do {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.separatorStyle = .none
+            $0.backgroundColor = .clear
             $0.isScrollEnabled = false
         }
         

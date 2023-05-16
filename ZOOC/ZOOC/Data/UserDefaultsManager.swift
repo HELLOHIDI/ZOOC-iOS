@@ -11,7 +11,7 @@ enum UserDefaultKeys: String, CaseIterable {
     case fcmToken
     case zoocAccessToken
     case zoocRefreshToken
-    case isActiveUser
+    case isFirstUser
     case familyID
 }
 
@@ -25,11 +25,13 @@ struct UserDefaultsManager {
     @UserDefaultWrapper<String>(key: UserDefaultKeys.zoocRefreshToken.rawValue)
     static var zoocRefreshToken: String?
     
-    @UserDefaultWrapper<Bool>(key: UserDefaultKeys.isActiveUser.rawValue)
-    static var isActiveUser: Bool?
+    @UserDefaultWrapper<Bool>(key: UserDefaultKeys.isFirstUser.rawValue)
+    static var isFirstUser: Bool?
     
     @UserDefaultWrapper<String>(key: UserDefaultKeys.familyID.rawValue)
     static var familyID: String?
+    
+    
 }
 
 extension UserDefaultsManager {
@@ -45,15 +47,22 @@ extension UserDefaultsManager {
 
 
 extension UserDefaultsManager {
-    static func getUserType() -> UserType {
-        guard zoocAccessToken != nil else {
-            return UserType.visitor
-        }
-        
-        return getUserActivation() ? UserType.active: UserType.inactive
-    }
+
+    //    SOPT iOS 코드
+//    static func getUserType() -> UserType {
+//        guard zoocAccessToken != nil else {
+//            return UserType.visitor
+//        }
+//
+//        return getUserActivation() ? UserType.active: UserType.inactive
+//    }
     
-    public static func getUserActivation() -> Bool {
-        UserDefaultsManager.isActiveUser ?? false
+    public static func checkFirstUser() -> Bool {
+        guard let isFirstUser = UserDefaultsManager.isFirstUser else {
+            UserDefaultsManager.isFirstUser = true
+            return true
+        }
+       
+        return isFirstUser
     }
 }

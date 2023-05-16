@@ -8,18 +8,17 @@
 import UIKit
 import SnapKit
 
-protocol CommentTextFieldDelegate: UITextFieldDelegate{
+protocol ArchiveCommentTextFieldDelegate: UITextFieldDelegate{
     
-    func commentTextFieldDidUplaod(_ textfield: HomeDetailArchiveCommentTextField,
-                                   text: String
-                                    )
+    func commentTextFieldDidUplaod(_ textfield: ArchiveCommentTextField_Deprecated,
+                                   text: String)
 }
 
-final class HomeDetailArchiveCommentTextField: UITextField{
+final class ArchiveCommentTextField_Deprecated: UITextField{
     
     //MARK: - Properties
     
-    weak var commentDelegate: CommentTextFieldDelegate?
+    weak var commentDelegate: ArchiveCommentTextFieldDelegate?
     
     //MARK: - UI Components
     

@@ -6,6 +6,7 @@
 //
 
 import Foundation
-struct HomeCommentReqeust: Codable{
+
+struct ArchiveCommentReqeust: Codable{
     let content: String
 }

@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class HomeDetailArchiveViewController : BaseViewController {
+final class ArchiveViewController : BaseViewController {
     
     //MARK: - Properties
     
@@ -19,12 +19,11 @@ final class HomeDetailArchiveViewController : BaseViewController {
         case right
     }
     
-    private var detailArchiveMockData: HomeDetailArchiveModel = HomeDetailArchiveModel.mockData
+    private var isNewPage = true
     
-    var petID: String = "1"
-    var isNewPage = true
+    private var archiveModel: ArchiveModel?
     
-    private var detailArchiveData: HomeDetailArchiveResult? {
+    private var archiveData: ArchiveResult? {
         didSet{
             updateArchiveUI()
         }
@@ -35,8 +34,6 @@ final class HomeDetailArchiveViewController : BaseViewController {
             updateCommentsUI()
         }
     }
-    
-
     
     
     //MARK: - UI Components
@@ -50,8 +47,6 @@ final class HomeDetailArchiveViewController : BaseViewController {
     private let etcButton = UIButton()
     
     private let petImageView = UIImageView()
-    private let leftButton = UIButton()
-    private let rightButton = UIButton ()
     
     private let dateLabel = UILabel()
     private let writerImageView = UIImageView()
@@ -61,7 +56,7 @@ final class HomeDetailArchiveViewController : BaseViewController {
 
     private let commentCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
     
-    private let commentView = HomeDetailArchiveCommentView()
+    private let commentView = ArchiveCommentView()
     
     //MARK: - Life Cycle
     
@@ -78,7 +73,7 @@ final class HomeDetailArchiveViewController : BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        dismissKeyboardWhenTappedAround()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow),
                                                name: UIResponder.keyboardWillShowNotification ,
@@ -88,6 +83,14 @@ final class HomeDetailArchiveViewController : BaseViewController {
                                                selector: #selector(keyboardWillHide),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if UserDefaultsManager.checkFirstUser() {
+            let guideVC = ArchiveGuideViewController()
+            guideVC.modalPresentationStyle = .overFullScreen
+            present(guideVC, animated: false)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -104,14 +107,21 @@ final class HomeDetailArchiveViewController : BaseViewController {
 
     //MARK: - Custom Method
     
+    func dataBind(recordID: Int, petID: Int) {
+        let data = ArchiveModel(recordID: recordID, petID: petID)
+        archiveModel = data
+        guard let archiveModel else { return }
+        requestDetailArchiveAPI(request: archiveModel)
+    }
+    
     private func register() {
         commentCollectionView.delegate = self
         commentCollectionView.dataSource = self
         commentView.delegate = self
         emojiBottomSheetViewController.delegate = self
         
-        commentCollectionView.register(HomeCommentCollectionViewCell.self,
-                                       forCellWithReuseIdentifier: HomeCommentCollectionViewCell.cellIdentifier)
+        commentCollectionView.register(ArchiveCommentCollectionViewCell.self,
+                                       forCellWithReuseIdentifier: ArchiveCommentCollectionViewCell.cellIdentifier)
     }
     
     private func gesture() {
@@ -122,20 +132,14 @@ final class HomeDetailArchiveViewController : BaseViewController {
         etcButton.addTarget(self,
                             action: #selector(etcButtonDidTap),
                             for: .touchUpInside)
-         
-        leftButton.addTarget(self,
-                                 action: #selector(directionButtonDidTap),
-                                 for: .touchUpInside)
-        
-        rightButton.addTarget(self,
-                             action: #selector(directionButtonDidTap),
-                             for: .touchUpInside)
         
         
-        let swipeGestureLeft = UISwipeGestureRecognizer(target: self, action: #selector(handlePageSwipeGesture(_:)))
+        let swipeGestureLeft = UISwipeGestureRecognizer(target: self,
+                                                        action: #selector(handlePageSwipeGesture(_:)))
         swipeGestureLeft.direction = .left
         
-        let swipeGestureRight = UISwipeGestureRecognizer(target: self, action: #selector(handlePageSwipeGesture(_:)))
+        let swipeGestureRight = UISwipeGestureRecognizer(target: self,
+                                                         action: #selector(handlePageSwipeGesture(_:)))
         swipeGestureRight.direction = .right
         
         view.addGestureRecognizer(swipeGestureLeft)
@@ -156,26 +160,18 @@ final class HomeDetailArchiveViewController : BaseViewController {
         }
         
         backButton.do {
-            $0.setImage(Image.xmark, for: .normal)
+            $0.setImage(UIImage(systemName: "xmark"), for: .normal)
+            $0.tintColor = .white
         }
         
         etcButton.do {
-            $0.setImage(Image.etc, for: .normal)
+            $0.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+            $0.tintColor = .white
         }
         
         petImageView.do {
             $0.contentMode = .scaleAspectFill
             $0.clipsToBounds = true
-        }
-        
-        leftButton.do {
-            $0.setImage(Image.previous, for: .normal)
-            $0.tag = 0
-        }
-        
-        rightButton.do {
-            $0.setImage(Image.next, for: .normal)
-            $0.tag = 1
         }
         
         dateLabel.do {
@@ -215,6 +211,7 @@ final class HomeDetailArchiveViewController : BaseViewController {
     }
     
     private func hierarchy() {
+        
         view.addSubviews(scrollView,
                          commentView)
         
@@ -224,8 +221,6 @@ final class HomeDetailArchiveViewController : BaseViewController {
         contentView.addSubviews(petImageView,
                                  backButton,
                                  etcButton,
-                                 leftButton,
-                                 rightButton,
                                  dateLabel,
                                  writerImageView,
                                  writerNameLabel,
@@ -278,18 +273,6 @@ final class HomeDetailArchiveViewController : BaseViewController {
             $0.height.equalTo(petImageView.snp.width)
         }
         
-        leftButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(185)
-            $0.leading.equalToSuperview().offset(13)
-            $0.width.height.equalTo(46)
-        }
-        
-        rightButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(185)
-            $0.trailing.equalToSuperview().offset(-13)
-            $0.width.height.equalTo(46)
-        }
-        
         dateLabel.snp.makeConstraints {
             $0.top.equalTo(petImageView.snp.bottom).offset(22)
             $0.leading.equalToSuperview().offset(30)
@@ -325,38 +308,41 @@ final class HomeDetailArchiveViewController : BaseViewController {
         }
     }
     
-    private func updateNewUI(direction: PageDirection) {
+    private func updateNewPage(direction: PageDirection) {
         var message: String
         var id: Int?
-        
         switch direction {
         case .left:
             message = "가장 최근 페이지입니다."
-            id = detailArchiveData?.leftID
+            id = archiveData?.leftID
         case .right:
             message = "마지막 페이지 입니다."
-            id = detailArchiveData?.rightID
+            id = archiveData?.rightID
         }
         
-        guard let id = id else {
+        guard let id else {
             presentBottomAlert(message)
             return
         }
         
-        requestDetailArchiveAPI(recordID: String(id), petID: petID)
+        archiveModel?.recordID = id
+        
+        guard let archiveModel else { return }
+        
+        requestDetailArchiveAPI(request: archiveModel)
     }
     
     private func updateArchiveUI() {
-        if let imageURL = detailArchiveData?.record.writerPhoto{
+        if let imageURL = archiveData?.record.writerPhoto{
             self.writerImageView.kfSetImage(url: imageURL)
         } else {
             self.writerImageView.image = Image.defaultProfile
         }
         
-        self.petImageView.kfSetImage(url: detailArchiveData?.record.photo)
-        self.dateLabel.text = detailArchiveData?.record.date
-        self.writerNameLabel.text = detailArchiveData?.record.writerName
-        self.contentLabel.text = detailArchiveData?.record.content
+        self.petImageView.kfSetImage(url: archiveData?.record.photo)
+        self.dateLabel.text = archiveData?.record.date
+        self.writerNameLabel.text = archiveData?.record.writerName
+        self.contentLabel.text = archiveData?.record.content
     }
     
     private func updateCommentsUI() {
@@ -372,17 +358,21 @@ final class HomeDetailArchiveViewController : BaseViewController {
             isNewPage = false
         } else{
             scrollView.layoutSubviews()
-            self.scrollView.setContentOffset(CGPoint(x: 0, y: self.scrollView.contentSize.height - self.scrollView.bounds.height), animated: true)
+            self.scrollView.setContentOffset(CGPoint(x: 0,
+                                                     y: self.scrollView.contentSize.height - self.scrollView.bounds.height),
+                                             animated: true)
         }
         
     }
     
-    func requestDetailArchiveAPI(recordID: String, petID: String) {
-        HomeAPI.shared.getDetailPetArchive(recordID: recordID, petID: petID) { result in
-            guard let result = self.validateResult(result) as?  HomeDetailArchiveResult else { return }
+    func requestDetailArchiveAPI(request: ArchiveModel) {
+        HomeAPI.shared.getDetailPetArchive(recordID: request.recordID,
+                                           petID: request.petID) { result in
+            
+            guard let result = self.validateResult(result) as? ArchiveResult else { return }
             
             self.isNewPage = true
-            self.detailArchiveData = result
+            self.archiveData = result
             self.commentsData = result.comments
         }
     }
@@ -412,7 +402,30 @@ final class HomeDetailArchiveViewController : BaseViewController {
     
     @objc
     private func etcButtonDidTap() {
-        presentBottomAlert("더보기 기능은 곧 만나요~")
+        let alert = UIAlertController(title: nil,
+                                      message: nil,
+                                      preferredStyle: .actionSheet)
+
+        // 메시지 창 컨트롤러에 들어갈 버튼 액션 객체 생성
+        let defaultAction =  UIAlertAction(title: "신고하기", style: .default) { action in
+            self.presentBottomAlert("\(action.title!) 기능은 다음 버전에 업데이트 됩니다.")
+        }
+        
+        let destructiveAction = UIAlertAction(title: "삭제하기",
+                                              style: .destructive) { action in
+            
+            self.presentBottomAlert("\(action.title!) 기능은 다음 버전에 업데이트 됩니다.")
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+
+        //메시지 창 컨트롤러에 버튼 액션을 추가
+        alert.addAction(defaultAction)
+        alert.addAction(destructiveAction)
+        alert.addAction(cancelAction)
+
+        //메시지 창 컨트롤러를 표시
+        self.present(alert, animated: true)
     }
     
     @objc
@@ -420,19 +433,13 @@ final class HomeDetailArchiveViewController : BaseViewController {
         guard let gesture = gesture as? UISwipeGestureRecognizer else { return }
         switch gesture.direction {
         case .left:
-            updateNewUI(direction: .right)
+            updateNewPage(direction: .right)
         case .right:
-            updateNewUI(direction: .left)
+            updateNewPage(direction: .left)
         default:
             return
         }
         
-    }
-    
-    @objc
-    private func directionButtonDidTap(_ sender: UIButton) {
-        guard let direction = PageDirection.init(rawValue: sender.tag) else { return }
-       updateNewUI(direction: direction)
     }
     
     @objc
@@ -467,7 +474,8 @@ final class HomeDetailArchiveViewController : BaseViewController {
 }
 
 //MARK: - UICollectionViewDataSource
-extension HomeDetailArchiveViewController: UICollectionViewDataSource {
+
+extension ArchiveViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
         return commentsData.count
@@ -475,7 +483,7 @@ extension HomeDetailArchiveViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCommentCollectionViewCell.cellIdentifier, for: indexPath) as? HomeCommentCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ArchiveCommentCollectionViewCell.cellIdentifier, for: indexPath) as? ArchiveCommentCollectionViewCell else { return UICollectionViewCell() }
         
         cell.dataBind(data: commentsData[indexPath.item])
         return cell
@@ -484,7 +492,7 @@ extension HomeDetailArchiveViewController: UICollectionViewDataSource {
 
 //MARK: - UICollectionViewDelegateFlowLayout
 
-extension HomeDetailArchiveViewController: UICollectionViewDelegateFlowLayout {
+extension ArchiveViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -524,24 +532,25 @@ extension HomeDetailArchiveViewController: UICollectionViewDelegateFlowLayout {
 
 //MARK: - CommentViewDelegate
 
-extension HomeDetailArchiveViewController: HomeCommentViewDelegate {
+extension ArchiveViewController: ArchiveCommentViewDelegate {
    
     func uploadButtonDidTap(_ textField: UITextField, text: String) {
-        guard let recordID = detailArchiveData?.record.id else { return }
+        guard let recordID = archiveData?.record.id else { return }
         textField.text = nil
         requestCommentsAPI(recordID: String(recordID), text: text)
     }
     
     func emojiButtonDidTap() {
+        dismissKeyboard()
         present(emojiBottomSheetViewController, animated: false)
     }
 }
 
 //MARK: - 구역
 
-extension HomeDetailArchiveViewController: EmojiBottomSheetDelegate{
+extension ArchiveViewController: EmojiBottomSheetDelegate{
     func emojiDidSelected(emojiID: Int) {
-        guard let recordID = detailArchiveData?.record.id else { return }
+        guard let recordID = archiveData?.record.id else { return }
         requestEmojiCommentAPI(recordID: String(recordID), emojiID: emojiID)
     }
 }

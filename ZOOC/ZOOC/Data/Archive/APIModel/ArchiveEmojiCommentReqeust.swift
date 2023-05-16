@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct HomeEmojiCommentReqeust: Codable{
+struct ArchiveEmojiCommentReqeust: Codable{
     let emoji: Int
 }

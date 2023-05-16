@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HomeDetailArchiveResult: Codable {
+struct ArchiveResult: Codable {
     let leftID, rightID: Int?
     let record: RecordResult
     let comments: [CommentResult]
@@ -20,6 +20,7 @@ struct HomeDetailArchiveResult: Codable {
 }
 
 // MARK: - Comment
+
 struct CommentResult: Codable {
     let isEmoji: Bool
     let nickName: String

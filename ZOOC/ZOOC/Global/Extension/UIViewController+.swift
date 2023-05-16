@@ -100,7 +100,7 @@ extension UIViewController{
         print(#function)
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
                                                                  action: #selector(self.dismissKeyboard))
-        tap.cancelsTouchesInView = false
+        tap.cancelsTouchesInView = true
         self.view.addGestureRecognizer(tap)
     }
     

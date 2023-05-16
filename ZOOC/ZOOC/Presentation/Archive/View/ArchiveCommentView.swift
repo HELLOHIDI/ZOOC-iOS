@@ -159,9 +159,6 @@ final class ArchiveCommentView : UIView {
     private func emojiButtonDidTap() {
         delegate?.emojiButtonDidTap()
     }
-   
-    
-    
     
 }
 

@@ -75,7 +75,7 @@ final class ArchiveViewController : BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        dismissKeyboardWhenTappedAround()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow),
                                                name: UIResponder.keyboardWillShowNotification ,
@@ -136,10 +136,12 @@ final class ArchiveViewController : BaseViewController {
                              for: .touchUpInside)
         
         
-        let swipeGestureLeft = UISwipeGestureRecognizer(target: self, action: #selector(handlePageSwipeGesture(_:)))
+        let swipeGestureLeft = UISwipeGestureRecognizer(target: self,
+                                                        action: #selector(handlePageSwipeGesture(_:)))
         swipeGestureLeft.direction = .left
         
-        let swipeGestureRight = UISwipeGestureRecognizer(target: self, action: #selector(handlePageSwipeGesture(_:)))
+        let swipeGestureRight = UISwipeGestureRecognizer(target: self,
+                                                         action: #selector(handlePageSwipeGesture(_:)))
         swipeGestureRight.direction = .right
         
         view.addGestureRecognizer(swipeGestureLeft)
@@ -565,6 +567,7 @@ extension ArchiveViewController: UICollectionViewDelegateFlowLayout {
 extension ArchiveViewController: ArchiveCommentViewDelegate {
    
     func uploadButtonDidTap(_ textField: UITextField, text: String) {
+        print("\(#function) - \(text)")
         guard let recordID = archiveData?.record.id else { return }
         textField.text = nil
         requestCommentsAPI(recordID: String(recordID), text: text)

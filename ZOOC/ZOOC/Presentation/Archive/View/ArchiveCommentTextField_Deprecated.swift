@@ -10,11 +10,11 @@ import SnapKit
 
 protocol ArchiveCommentTextFieldDelegate: UITextFieldDelegate{
     
-    func commentTextFieldDidUplaod(_ textfield: ArchiveCommentTextField,
+    func commentTextFieldDidUplaod(_ textfield: ArchiveCommentTextField_Deprecated,
                                    text: String)
 }
 
-final class ArchiveCommentTextField: UITextField{
+final class ArchiveCommentTextField_Deprecated: UITextField{
     
     //MARK: - Properties
     

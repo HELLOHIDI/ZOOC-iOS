@@ -567,7 +567,6 @@ extension ArchiveViewController: UICollectionViewDelegateFlowLayout {
 extension ArchiveViewController: ArchiveCommentViewDelegate {
    
     func uploadButtonDidTap(_ textField: UITextField, text: String) {
-        print("\(#function) - \(text)")
         guard let recordID = archiveData?.record.id else { return }
         textField.text = nil
         requestCommentsAPI(recordID: String(recordID), text: text)

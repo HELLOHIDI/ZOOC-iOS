@@ -22,7 +22,7 @@ final class MyEditProfileView: UIView {
     public var nameTextField = BaseTextField()
     public var underLineView = UIView()
     public var numberOfNameCharactersLabel = UILabel()
-    public var completeButton = UIButton()
+    public var completeButton = ZoocGradientButton()
     
     //MARK: - Life Cycles
     
@@ -82,9 +82,8 @@ final class MyEditProfileView: UIView {
         }
         
         completeButton.do {
-            $0.backgroundColor = .zoocGray1
             $0.setTitle("완료", for: .normal)
-            $0.makeCornerRound(radius: 27)
+            $0.isEnabled = false
         }
     }
     

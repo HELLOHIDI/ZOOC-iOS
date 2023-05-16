@@ -160,11 +160,13 @@ final class ArchiveViewController : BaseViewController {
         }
         
         backButton.do {
-            $0.setImage(Image.xmark, for: .normal)
+            $0.setImage(UIImage(systemName: "xmark"), for: .normal)
+            $0.tintColor = .white
         }
         
         etcButton.do {
-            $0.setImage(Image.etc, for: .normal)
+            $0.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+            $0.tintColor = .white
         }
         
         petImageView.do {

@@ -38,6 +38,12 @@ final class MyEditProfileView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        profileImageButton.makeCornerRound(ratio: 2)
+        cameraIconImageView.makeCornerRound(ratio: 2)
+    }
+    
     //MARK: - Custom Method
     
     private func style() {
@@ -55,14 +61,12 @@ final class MyEditProfileView: UIView {
         
         profileImageButton.do {
             $0.setImage(Image.logoSymbol, for: .normal)
-            $0.makeCornerRound(radius: self.frame.width / 2)
             $0.contentMode = .scaleAspectFill
         }
         
         cameraIconImageView.do {
             $0.image = Image.cameraCircleGreen
             $0.contentMode = .scaleAspectFill
-            $0.makeCornerRound(radius: self.frame.width / 2)
         }
         
         nameTextField.do {

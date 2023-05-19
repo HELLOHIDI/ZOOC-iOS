@@ -106,7 +106,7 @@ final class OnboardingRegisterPetView: OnboardingBaseView {
         registerPetTableView.snp.makeConstraints {
             $0.top.equalTo(self.registerPetSubTitleLabel.snp.bottom).offset(24)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(registerPetButton.snp.top).offset(-66)
+            $0.bottom.equalTo(registerPetButton.snp.top).offset(-20)
         }
         
         registerPetButton.snp.makeConstraints {

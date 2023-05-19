@@ -29,18 +29,13 @@ final class HomeViewController : BaseViewController {
     private var archiveData: [HomeArchiveResult] = [] {
         didSet {
             rootView.archiveListCollectionView.reloadData()
-            rootView.archiveGridCollectionView.reloadData()
-            
-            if archiveData.count == 0 {
-                let guideVC = HomeGuideViewController()
-                guideVC.modalPresentationStyle = .overCurrentContext
-                present(guideVC, animated: false)
-            }
+            rootView.archiveGridCollectionView.reloadData() 
         }
     }
     
     //MARK: - UI Components
     
+    private let guideVC = HomeGuideViewController()
     private let rootView = HomeView()
     
     //MARK: - Life Cycle
@@ -57,6 +52,10 @@ final class HomeViewController : BaseViewController {
         
         requestMissionAPI()
         requestTotalPetAPI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        updateGuideVC()
     }
     
     //MARK: - Custom Method
@@ -105,6 +104,14 @@ final class HomeViewController : BaseViewController {
         requestTotalPetAPI()
     }
     
+    
+    private func updateGuideVC() {
+        if archiveData.count == 0 {
+            
+            guideVC.modalPresentationStyle = .overCurrentContext
+            present(guideVC, animated: false)
+        }
+    }
     private func pushToDetailViewController(recordID: Int) {
         guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
             fatalError("선택된 펫이 없습니다.")

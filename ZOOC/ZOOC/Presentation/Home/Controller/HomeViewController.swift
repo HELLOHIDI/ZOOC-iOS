@@ -147,12 +147,17 @@ final class HomeViewController : BaseViewController {
             index += 1
         }
         
-        guard index < self.petData.count else { return }
+        guard index < self.petData.count else {
+            print("\(#function)의 가드문")
+
+            return
+                  
+                  }
         
         self.rootView.petCollectionView.selectItem(at:IndexPath(item: index, section: 0),
                                               animated: false,
                                               scrollPosition: .centeredHorizontally)
-        //self.view.layoutIfNeeded()
+        self.view.layoutIfNeeded()
         self.rootView.petCollectionView.performBatchUpdates(nil)
         self.requestTotalArchiveAPI(petID: self.petData[index].id)
 

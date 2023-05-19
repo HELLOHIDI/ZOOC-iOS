@@ -53,14 +53,14 @@ final class AppInformationTableViewCell: UITableViewCell {
         separatorLine.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(315)
+            $0.width.equalToSuperview()
             $0.height.equalTo(1)
         }
         
         appInformationButton.snp.makeConstraints {
             $0.top.equalTo(self.separatorLine.snp.bottom).offset(12)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(315)
+            $0.width.equalToSuperview()
             $0.height.equalTo(40)
         }
         

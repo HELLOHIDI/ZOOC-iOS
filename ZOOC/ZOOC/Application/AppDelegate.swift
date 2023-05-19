@@ -17,9 +17,10 @@ import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         print(#function)
+        User.shared.fcmToken = "hellohidiFCM"
         
         
         KakaoSDK.initSDK(appKey: "d594d72f1d6a6935702b35865faf122f")
@@ -42,7 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        
+        print("🔫🔫🔫🔫🔫🔫🔫🔫🔫")
+        print(#function)
         print("Firebase registration token: \(String(describing: fcmToken))")
 
           let dataDict: [String: String] = ["token": fcmToken ?? ""]
@@ -66,16 +68,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("🔫🔫🔫🔫🔫🔫🔫🔫🔫")
+        print(#function)
         
         Messaging.messaging().apnsToken = deviceToken
     }
     
     func application(_ application: UIApplication,
                       didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("🔫🔫🔫🔫🔫🔫🔫🔫🔫")
+        print(#function)
        print("Unable to register for remote notifications: \(error.localizedDescription)")
      }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print("🔫🔫🔫🔫🔫🔫🔫🔫🔫")
+        print(#function)
         completionHandler([UNNotificationPresentationOptions.alert,
                           UNNotificationPresentationOptions.badge,
                           UNNotificationPresentationOptions.sound])

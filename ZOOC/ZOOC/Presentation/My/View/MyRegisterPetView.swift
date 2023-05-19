@@ -126,7 +126,7 @@ final class MyRegisterPetView: UIView {
         }
         
         registerPetButton.snp.makeConstraints {
-            $0.top.equalTo(self.registerPetSubTitleLabel.snp.bottom).offset(549)
+            $0.bottom.equalToSuperview().inset(50)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(315)
             $0.height.equalTo(54)

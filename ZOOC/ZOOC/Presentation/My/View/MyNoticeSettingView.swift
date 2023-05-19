@@ -117,7 +117,7 @@ final class MyNoticeSettingView: UIView {
         noticeSettingSubView.snp.makeConstraints {
             $0.top.equalTo(self.backButton.snp.bottom).offset(34)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(375)
+            $0.width.equalToSuperview()
             $0.height.equalTo(91)
         }
         

@@ -45,18 +45,18 @@ final class MyAppInformationHeaderView: UITableViewHeaderFooterView {
     }
     
     private func hierarchy() {
-        addSubviews(currentVersionTitleLabel, currentVersionLabel)
+        contentView.addSubviews(currentVersionTitleLabel, currentVersionLabel)
     }
     
     private func layout() {
         currentVersionTitleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(3)
-            $0.leading.equalToSuperview().offset(40)
+            $0.leading.equalToSuperview().offset(10)
         }
         
         currentVersionLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(8)
-            $0.trailing.equalToSuperview().inset(30)
+            $0.trailing.equalToSuperview()
         }
     }
 }

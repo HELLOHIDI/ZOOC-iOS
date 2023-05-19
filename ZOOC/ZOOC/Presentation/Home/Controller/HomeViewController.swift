@@ -55,7 +55,15 @@ final class HomeViewController : BaseViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        updateGuideVC()
+        if UserDefaultsManager.validateGuideVCInHome() {
+            let guideVC = HomeGuideViewController()
+            guideVC.modalPresentationStyle = .overFullScreen
+            present(guideVC, animated: false)
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        guideVC.dismiss(animated: false)
     }
     
     //MARK: - Custom Method
@@ -104,14 +112,6 @@ final class HomeViewController : BaseViewController {
         requestTotalPetAPI()
     }
     
-    
-    private func updateGuideVC() {
-        if archiveData.count == 0 {
-            
-            guideVC.modalPresentationStyle = .overCurrentContext
-            present(guideVC, animated: false)
-        }
-    }
     private func pushToDetailViewController(recordID: Int) {
         guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
             fatalError("선택된 펫이 없습니다.")

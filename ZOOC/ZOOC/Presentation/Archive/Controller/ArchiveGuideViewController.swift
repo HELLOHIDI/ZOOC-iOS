@@ -32,7 +32,7 @@ final class ArchiveGuideViewController : UIViewController{
         hierarchy()
         layout()
         
-        UserDefaultsManager.isFirstUser = false
+        UserDefaultsManager.isFirstAttemptArchive = false
     }
     
     //MARK: - Custom Method

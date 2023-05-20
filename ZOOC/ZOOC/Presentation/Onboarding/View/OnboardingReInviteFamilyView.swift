@@ -1,5 +1,5 @@
 //
-//  OnboardingInviteFamilyView.swift
+//  OnboardingReInviteFamilyView.swift
 //  ZOOC
 //
 //  Created by 류희재 on 2023/01/10.
@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class OnboardingInviteFamilyView: OnboardingBaseView {
+final class OnboardingReInviteFamilyView: OnboardingBaseView {
     
     //MARK: - UI Components
     
@@ -49,7 +49,7 @@ final class OnboardingInviteFamilyView: OnboardingBaseView {
         }
         
         descriptionLabel.do {
-            $0.text = "함께 추억을 공유하고 싶은 가족들에게 \n초대링크를 보내보세요"
+            $0.text = "다시 링크를 복사하고 싶으면 \n하단의 초대링크 복사를 눌러보세요"
             $0.textColor = .zoocGray1
             $0.textAlignment = .left
             $0.font = .zoocBody3
@@ -57,20 +57,20 @@ final class OnboardingInviteFamilyView: OnboardingBaseView {
             $0.setLineSpacing(spacing: 2)
         }
         
-        inviteImageView .do {
+        inviteImageView.do {
             $0.image = Image.graphics3
             $0.contentMode = .scaleAspectFill
         }
         
         inviteLatelyButton.do {
-            $0.setTitle("나중에 초대할게요", for: .normal)
+            $0.setTitle("초대링크 복사", for: .normal)
             $0.setTitleColor(.zoocGray1, for: .normal)
             $0.titleLabel?.font = .zoocSubhead1
             $0.setUnderline()
         }
         
         inviteButton.do {
-            $0.setTitle("초대하기", for: .normal)
+            $0.setTitle("다음", for: .normal)
         }
     }
     

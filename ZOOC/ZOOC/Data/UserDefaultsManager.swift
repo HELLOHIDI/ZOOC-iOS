@@ -26,7 +26,10 @@ struct UserDefaultsManager {
     static var zoocRefreshToken: String?
     
     @UserDefaultWrapper<Bool>(key: UserDefaultKeys.isFirstUser.rawValue)
-    static var isFirstUser: Bool?
+    static var isFirstAttemptArchive: Bool?
+    
+    @UserDefaultWrapper<Bool>(key: UserDefaultKeys.isFirstUser.rawValue)
+    static var isFirstAttemptHome: Bool?
     
     @UserDefaultWrapper<String>(key: UserDefaultKeys.familyID.rawValue)
     static var familyID: String?
@@ -56,10 +59,18 @@ extension UserDefaultsManager {
 //
 //        return getUserActivation() ? UserType.active: UserType.inactive
 //    }
+    public static func validateGuideVCInHome() -> Bool {
+        guard let isFirstUser = UserDefaultsManager.isFirstAttemptHome else {
+            UserDefaultsManager.isFirstAttemptHome = true
+            return true
+        }
+       
+        return isFirstUser
+    }
     
-    public static func checkFirstUser() -> Bool {
-        guard let isFirstUser = UserDefaultsManager.isFirstUser else {
-            UserDefaultsManager.isFirstUser = true
+    public static func validateGuideVCInArchive() -> Bool {
+        guard let isFirstUser = UserDefaultsManager.isFirstAttemptArchive else {
+            UserDefaultsManager.isFirstAttemptArchive = true
             return true
         }
        

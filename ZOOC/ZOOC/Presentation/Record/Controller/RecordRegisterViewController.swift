@@ -204,14 +204,16 @@ extension RecordRegisterViewController {
                                          missionID: missionID,
                                          content: recordData.content ?? "",
                                          pets: selectedPetIDList) { result in
+                self.pushToRecordCompleteViewController()
             }
         } else {
             RecordAPI.shared.postRecord(photo: recordData.image ?? UIImage(),
                                         content: recordData.content ?? "",
                                         pets: selectedPetIDList) { result in
+                self.pushToRecordCompleteViewController()
             }
         }
-        self.pushToRecordCompleteViewController()
+        
     }
 }
 

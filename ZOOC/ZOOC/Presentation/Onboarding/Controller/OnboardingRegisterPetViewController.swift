@@ -44,7 +44,7 @@ final class OnboardingRegisterPetViewController: BaseViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //dismissKeyboardWhenTappedAround()
+        dismissKeyboardWhenTappedAround()
     }
     
     //MARK: - Custom Method
@@ -76,7 +76,6 @@ final class OnboardingRegisterPetViewController: BaseViewController{
     
     @objc private func registerPetButtonDidTap() {
         onboardingRegisterPetView.registerPetButton.isEnabled = false
-        onboardingRegisterPetView.registerPetButton.backgroundColor = .zoocGray1
         
         var names: [String] = []
         var photos: [Data] = []

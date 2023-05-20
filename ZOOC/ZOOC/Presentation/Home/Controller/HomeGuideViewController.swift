@@ -33,6 +33,7 @@ final class HomeGuideViewController : UIViewController{
         style()
         hierarchy()
         layout()
+        UserDefaultsManager.isFirstAttemptHome = false
     }
     
     //MARK: - Custom Method

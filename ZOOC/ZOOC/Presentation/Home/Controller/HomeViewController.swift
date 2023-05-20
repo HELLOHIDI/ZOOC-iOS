@@ -29,18 +29,13 @@ final class HomeViewController : BaseViewController {
     private var archiveData: [HomeArchiveResult] = [] {
         didSet {
             rootView.archiveListCollectionView.reloadData()
-            rootView.archiveGridCollectionView.reloadData()
-            
-            if archiveData.count == 0 {
-                let guideVC = HomeGuideViewController()
-                guideVC.modalPresentationStyle = .overCurrentContext
-                present(guideVC, animated: false)
-            }
+            rootView.archiveGridCollectionView.reloadData() 
         }
     }
     
     //MARK: - UI Components
     
+    private let guideVC = HomeGuideViewController()
     private let rootView = HomeView()
     
     //MARK: - Life Cycle
@@ -57,6 +52,18 @@ final class HomeViewController : BaseViewController {
         
         requestMissionAPI()
         requestTotalPetAPI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if UserDefaultsManager.validateGuideVCInHome() {
+            let guideVC = HomeGuideViewController()
+            guideVC.modalPresentationStyle = .overFullScreen
+            present(guideVC, animated: false)
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        guideVC.dismiss(animated: false)
     }
     
     //MARK: - Custom Method
@@ -140,12 +147,17 @@ final class HomeViewController : BaseViewController {
             index += 1
         }
         
-        guard index < self.petData.count else { return }
+        guard index < self.petData.count else {
+            print("\(#function)의 가드문")
+
+            return
+                  
+                  }
         
         self.rootView.petCollectionView.selectItem(at:IndexPath(item: index, section: 0),
                                               animated: false,
                                               scrollPosition: .centeredHorizontally)
-        //self.view.layoutIfNeeded()
+        self.view.layoutIfNeeded()
         self.rootView.petCollectionView.performBatchUpdates(nil)
         self.requestTotalArchiveAPI(petID: self.petData[index].id)
 

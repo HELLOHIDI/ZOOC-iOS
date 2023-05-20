@@ -14,9 +14,13 @@ import KakaoSDKAuth
 import FirebaseMessaging
 import FirebaseCore
 
+import Sentry
+
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
+class AppDelegate: UIResponder,
+                    UIApplicationDelegate,
+                    UNUserNotificationCenterDelegate, MessagingDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         print(#function)
@@ -26,6 +30,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         KakaoSDK.initSDK(appKey: "d594d72f1d6a6935702b35865faf122f")
         FirebaseApp.configure()
         
+        SentrySDK.start { options in
+                options.dsn = "https://d231bfb30d614722b80fa6f2fe5c43f5@o4505115856666624.ingest.sentry.io/4505115938127872"
+                options.debug = true // Enabled debug when first installing is always helpful
+            }
+        
+       
+        
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
 
@@ -34,10 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
           options: authOptions,
           completionHandler: { _, _ in }
         )
-        application.registerForRemoteNotifications()
-        
-        
-        
+        application.registerForRemoteNotifications()        
         
         return true
     }
@@ -103,6 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
+
 
 
 

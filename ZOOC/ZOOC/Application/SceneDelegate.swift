@@ -99,7 +99,7 @@ extension SceneDelegate {
         requestFCMTokenAPI(window)
     }
     
-    private func autoLoginFail(_ window: UIWindow?) {
+    private func autoLoginFail (_ window: UIWindow?) {
         let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
         onboardingNVC.setNavigationBarHidden(true, animated: true)
         window?.rootViewController = onboardingNVC

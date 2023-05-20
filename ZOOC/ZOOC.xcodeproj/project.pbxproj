@@ -39,6 +39,8 @@
 		871EA35F2971628D00D0E8CC /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871EA35E2971628D00D0E8CC /* Encodable+.swift */; };
 		872367112A12AC4E00DCBBFF /* ArchiveModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872367102A12AC4E00DCBBFF /* ArchiveModel.swift */; };
 		872367132A136C7300DCBBFF /* ArchiveGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872367122A136C7300DCBBFF /* ArchiveGuideViewController.swift */; };
+		872367162A19062700DCBBFF /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 872367152A19062700DCBBFF /* Sentry */; };
+		872367192A19080600DCBBFF /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872367182A19080600DCBBFF /* AuthError.swift */; };
 		872BBD9229F9576E002E2C71 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872BBD9129F9576E002E2C71 /* UIApplication+.swift */; };
 		872BBD9529F959FC002E2C71 /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */; };
 		872BBD9729F95BE2002E2C71 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872BBD9629F95BE2002E2C71 /* UserDefaultsManager.swift */; };
@@ -235,6 +237,7 @@
 		871EA35E2971628D00D0E8CC /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
 		872367102A12AC4E00DCBBFF /* ArchiveModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveModel.swift; sourceTree = "<group>"; };
 		872367122A136C7300DCBBFF /* ArchiveGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveGuideViewController.swift; sourceTree = "<group>"; };
+		872367182A19080600DCBBFF /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 		872BBD9129F9576E002E2C71 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
 		872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
 		872BBD9629F95BE2002E2C71 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
@@ -404,6 +407,7 @@
 				8781DE4829B20F61005ABF23 /* FirebaseMessaging in Frameworks */,
 				871EA35629706F4300D0E8CC /* Lottie in Frameworks */,
 				8764833229523BBD00F74882 /* SnapKit in Frameworks */,
+				872367162A19062700DCBBFF /* Sentry in Frameworks */,
 				8764833529523BCA00F74882 /* Then in Frameworks */,
 				87A76ABA295F760C0096F669 /* KakaoSDKUser in Frameworks */,
 				8764833829523BEE00F74882 /* Moya in Frameworks */,
@@ -458,6 +462,14 @@
 			path = Lottie;
 			sourceTree = "<group>";
 		};
+		872367172A1907FC00DCBBFF /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				872367182A19080600DCBBFF /* AuthError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
 		872BBD9329F959E2002E2C71 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -496,6 +508,7 @@
 		876483162952351500F74882 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				872367172A1907FC00DCBBFF /* Error */,
 				87E462EC2A110858006FC35D /* UIComponets */,
 				872BBD9329F959E2002E2C71 /* Utility */,
 				876483172952355A00F74882 /* Constant */,
@@ -1148,6 +1161,7 @@
 				8782C7D9296857A600C9324B /* KakaoSDKShare */,
 				871EA35529706F4300D0E8CC /* Lottie */,
 				8781DE4729B20F61005ABF23 /* FirebaseMessaging */,
+				872367152A19062700DCBBFF /* Sentry */,
 			);
 			productName = ZOOC;
 			productReference = 87B6623D29521E7500B6FFA9 /* ZOOC.app */;
@@ -1185,6 +1199,7 @@
 				87A76AB4295F760C0096F669 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				871EA35429706F4300D0E8CC /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				8781DE4629B20F61005ABF23 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				872367142A19062700DCBBFF /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			productRefGroup = 87B6623E29521E7500B6FFA9 /* Products */;
 			projectDirPath = "";
@@ -1323,6 +1338,7 @@
 				87B6624329521E7500B6FFA9 /* SceneDelegate.swift in Sources */,
 				87A76ABF2960423C0096F669 /* GenericResponse.swift in Sources */,
 				8782C7E42968B03500C9324B /* HomePetCollectionViewCell.swift in Sources */,
+				872367192A19080600DCBBFF /* AuthError.swift in Sources */,
 				D26989A829A60EE7008A5ACC /* OnboardingAgreementViewModel.swift in Sources */,
 				D26C68EE296EB2040088DC9A /* MyRegisteredPetTableViewCell.swift in Sources */,
 				D235030B2964991700F01101 /* MyEditProfileViewController.swift in Sources */,
@@ -1639,6 +1655,14 @@
 				kind = branch;
 			};
 		};
+		872367142A19062700DCBBFF /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		8764833029523BBD00F74882 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -1694,6 +1718,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 871EA35429706F4300D0E8CC /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		872367152A19062700DCBBFF /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 872367142A19062700DCBBFF /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
 		};
 		8764833129523BBD00F74882 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

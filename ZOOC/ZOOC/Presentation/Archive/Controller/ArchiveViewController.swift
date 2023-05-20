@@ -393,6 +393,14 @@ final class ArchiveViewController : BaseViewController {
         }
     }
     
+    private func requestDeleteArchiveAPI(recordID: String) {
+        ArchiveAPI.shared.deleteArchive(recordID: recordID) { result in
+            let result = self.validateResult(result)
+            print("게시물 삭제 완료!")
+                    
+        }
+    }
+    
     //MARK: - Action Method
     
     @objc
@@ -413,8 +421,9 @@ final class ArchiveViewController : BaseViewController {
         
         let destructiveAction = UIAlertAction(title: "삭제하기",
                                               style: .destructive) { action in
-            
-            self.presentBottomAlert("\(action.title!) 기능은 다음 버전에 업데이트 됩니다.")
+            guard let recordID = self.archiveData?.record.id else { return }
+            let id = String(recordID)
+            self.requestDeleteArchiveAPI(recordID: id)
         }
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)

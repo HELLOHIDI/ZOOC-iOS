@@ -396,6 +396,15 @@ final class ArchiveViewController : BaseViewController {
     private func requestDeleteArchiveAPI(recordID: String) {
         ArchiveAPI.shared.deleteArchive(recordID: recordID) { result in
             let result = self.validateResult(result)
+            guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController
+            else { return }
+
+            guard let petID = archiveData?.record.petID else {
+                return }
+            
+            print("가드문 통과")
+            tabVC.homeViewController.selectPetCollectionView(petID: petID)
+            dismiss(animated: true)
             print("게시물 삭제 완료!")
                     
         }
@@ -415,7 +424,7 @@ final class ArchiveViewController : BaseViewController {
                                       preferredStyle: .actionSheet)
 
         // 메시지 창 컨트롤러에 들어갈 버튼 액션 객체 생성
-        let defaultAction =  UIAlertAction(title: "신고하기", style: .default) { action in
+        let reportAction =  UIAlertAction(title: "신고하기", style: .default) { action in
             self.presentBottomAlert("\(action.title!) 기능은 다음 버전에 업데이트 됩니다.")
         }
         
@@ -429,7 +438,12 @@ final class ArchiveViewController : BaseViewController {
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
 
         //메시지 창 컨트롤러에 버튼 액션을 추가
-        alert.addAction(defaultAction)
+        alert.addAction(reportAction)
+        
+        //TODO: 삭제하기 분기처리해야됨
+//        if UserDefaultsManager.checkAuthor(authorID: archiveData?.record.) {
+//            alert.addAction(destructiveAction)
+//        }
         alert.addAction(destructiveAction)
         alert.addAction(cancelAction)
 

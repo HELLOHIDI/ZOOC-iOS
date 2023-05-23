@@ -17,4 +17,5 @@ struct ExternalURL {
     
     static let meltGithub = "https://github.com/meltsplit"
     static let hidiGithub = "https://github.com/HELLOHIDI"
+    static let reportURL = "https://www.police.go.kr/www/security/report/report01.jsp"
 }

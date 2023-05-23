@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SafariServices
+
 import SnapKit
 import Then
 
@@ -395,16 +397,17 @@ final class ArchiveViewController : BaseViewController {
     
     private func requestDeleteArchiveAPI(recordID: String) {
         ArchiveAPI.shared.deleteArchive(recordID: recordID) { result in
-            let result = self.validateResult(result)
-            guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController
-            else { return }
+            self.validateResult(result)
+            
 
-            guard let petID = archiveData?.record.petID else {
-                return }
+            guard let petID = self.archiveModel?.petID else { return }
             
             print("가드문 통과")
+            
+            
+            guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
             tabVC.homeViewController.selectPetCollectionView(petID: petID)
-            dismiss(animated: true)
+            self.dismiss(animated: true)
             print("게시물 삭제 완료!")
                     
         }
@@ -422,10 +425,16 @@ final class ArchiveViewController : BaseViewController {
         let alert = UIAlertController(title: nil,
                                       message: nil,
                                       preferredStyle: .actionSheet)
-
-        // 메시지 창 컨트롤러에 들어갈 버튼 액션 객체 생성
+        //TODO: 신고하기 링크로 연동
         let reportAction =  UIAlertAction(title: "신고하기", style: .default) { action in
-            self.presentBottomAlert("\(action.title!) 기능은 다음 버전에 업데이트 됩니다.")
+            guard let url = URL(string: ExternalURL.reportURL) else {
+                presentBottomAlert("잘못된 URL입니다. ")
+                return
+            }
+            
+            let safariViewController = SFSafariViewController(url: url)
+            safariViewController.modalPresentationStyle = .fullScreen
+            self.present(safariViewController, animated: true)
         }
         
         let destructiveAction = UIAlertAction(title: "삭제하기",
@@ -440,14 +449,12 @@ final class ArchiveViewController : BaseViewController {
         //메시지 창 컨트롤러에 버튼 액션을 추가
         alert.addAction(reportAction)
         
-        //TODO: 삭제하기 분기처리해야됨
-//        if UserDefaultsManager.checkAuthor(authorID: archiveData?.record.) {
-//            alert.addAction(destructiveAction)
-//        }
-        alert.addAction(destructiveAction)
+        
+        if archiveData?.record.isMyRecord ?? false {
+            alert.addAction(destructiveAction)
+        }
         alert.addAction(cancelAction)
 
-        //메시지 창 컨트롤러를 표시
         self.present(alert, animated: true)
     }
     

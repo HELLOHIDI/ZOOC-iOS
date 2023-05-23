@@ -83,7 +83,13 @@ extension OnboardingAgreementViewController: UITableViewDelegate {
         case 3: url = ExternalURL.hidiGithub
         default: break
         }
-        let safariViewController = SFSafariViewController(url: URL(string: url)!)
+        
+        guard let url = URL(string: url) else {
+            presentBottomAlert("잘못된 URL입니다. ")
+            return
+        }
+        
+        let safariViewController = SFSafariViewController(url: url)
         safariViewController.modalPresentationStyle = .fullScreen
         self.present(safariViewController, animated: true)
         

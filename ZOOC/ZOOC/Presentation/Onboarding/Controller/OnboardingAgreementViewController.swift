@@ -84,15 +84,7 @@ extension OnboardingAgreementViewController: UITableViewDelegate {
         default: break
         }
         
-        guard let url = URL(string: url) else {
-            presentBottomAlert("잘못된 URL입니다. ")
-            return
-        }
-        
-        let safariViewController = SFSafariViewController(url: url)
-        safariViewController.modalPresentationStyle = .fullScreen
-        self.present(safariViewController, animated: true)
-        
+        presentSafariViewController(url)
         return
     }
 }

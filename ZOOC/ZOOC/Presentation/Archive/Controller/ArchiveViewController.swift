@@ -428,7 +428,7 @@ final class ArchiveViewController : BaseViewController {
         //TODO: 신고하기 링크로 연동
         let reportAction =  UIAlertAction(title: "신고하기", style: .default) { action in
             guard let url = URL(string: ExternalURL.reportURL) else {
-                presentBottomAlert("잘못된 URL입니다. ")
+                self.presentBottomAlert("잘못된 URL입니다. ")
                 return
             }
             

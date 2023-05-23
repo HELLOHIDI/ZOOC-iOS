@@ -8,6 +8,7 @@
 import Foundation
 
 enum UserDefaultKeys: String, CaseIterable {
+    case userID
     case fcmToken
     case zoocAccessToken
     case zoocRefreshToken
@@ -16,6 +17,10 @@ enum UserDefaultKeys: String, CaseIterable {
 }
 
 struct UserDefaultsManager {
+    
+    @UserDefaultWrapper<Int>(key: UserDefaultKeys.userID.rawValue)
+    static var userID: Int?
+    
     @UserDefaultWrapper<String>(key: UserDefaultKeys.fcmToken.rawValue)
     static var fcmToken: String?
     
@@ -59,6 +64,11 @@ extension UserDefaultsManager {
 //
 //        return getUserActivation() ? UserType.active: UserType.inactive
 //    }
+    public static func checkAuthor(authorID: Int) -> Bool {
+        return UserDefaultsManager.userID == userID
+    }
+    
+    
     public static func validateGuideVCInHome() -> Bool {
         guard let isFirstUser = UserDefaultsManager.isFirstAttemptHome else {
             UserDefaultsManager.isFirstAttemptHome = true

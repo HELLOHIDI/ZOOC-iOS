@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SafariServices
+
 import SnapKit
 import Then
 
@@ -393,6 +395,24 @@ final class ArchiveViewController : BaseViewController {
         }
     }
     
+    private func requestDeleteArchiveAPI(recordID: String) {
+        ArchiveAPI.shared.deleteArchive(recordID: recordID) { result in
+            self.validateResult(result)
+            
+
+            guard let petID = self.archiveModel?.petID else { return }
+            
+            print("가드문 통과")
+            
+            
+            guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
+            tabVC.homeViewController.selectPetCollectionView(petID: petID)
+            self.dismiss(animated: true)
+            print("게시물 삭제 완료!")
+                    
+        }
+    }
+    
     //MARK: - Action Method
     
     @objc
@@ -405,26 +425,36 @@ final class ArchiveViewController : BaseViewController {
         let alert = UIAlertController(title: nil,
                                       message: nil,
                                       preferredStyle: .actionSheet)
-
-        // 메시지 창 컨트롤러에 들어갈 버튼 액션 객체 생성
-        let defaultAction =  UIAlertAction(title: "신고하기", style: .default) { action in
-            self.presentBottomAlert("\(action.title!) 기능은 다음 버전에 업데이트 됩니다.")
+        //TODO: 신고하기 링크로 연동
+        let reportAction =  UIAlertAction(title: "신고하기", style: .default) { action in
+            guard let url = URL(string: ExternalURL.reportURL) else {
+                self.presentBottomAlert("잘못된 URL입니다. ")
+                return
+            }
+            
+            let safariViewController = SFSafariViewController(url: url)
+            safariViewController.modalPresentationStyle = .fullScreen
+            self.present(safariViewController, animated: true)
         }
         
         let destructiveAction = UIAlertAction(title: "삭제하기",
                                               style: .destructive) { action in
-            
-            self.presentBottomAlert("\(action.title!) 기능은 다음 버전에 업데이트 됩니다.")
+            guard let recordID = self.archiveData?.record.id else { return }
+            let id = String(recordID)
+            self.requestDeleteArchiveAPI(recordID: id)
         }
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
 
         //메시지 창 컨트롤러에 버튼 액션을 추가
-        alert.addAction(defaultAction)
-        alert.addAction(destructiveAction)
+        alert.addAction(reportAction)
+        
+        
+        if archiveData?.record.isMyRecord ?? false {
+            alert.addAction(destructiveAction)
+        }
         alert.addAction(cancelAction)
 
-        //메시지 창 컨트롤러를 표시
         self.present(alert, animated: true)
     }
     

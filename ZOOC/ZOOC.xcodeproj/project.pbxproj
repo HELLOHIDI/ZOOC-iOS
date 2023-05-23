@@ -41,6 +41,8 @@
 		872367132A136C7300DCBBFF /* ArchiveGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872367122A136C7300DCBBFF /* ArchiveGuideViewController.swift */; };
 		872367162A19062700DCBBFF /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 872367152A19062700DCBBFF /* Sentry */; };
 		872367192A19080600DCBBFF /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872367182A19080600DCBBFF /* AuthError.swift */; };
+		8723671C2A19276A00DCBBFF /* ArchiveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8723671B2A19276A00DCBBFF /* ArchiveService.swift */; };
+		8723671E2A19277300DCBBFF /* ArchiveAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8723671D2A19277300DCBBFF /* ArchiveAPI.swift */; };
 		872BBD9229F9576E002E2C71 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872BBD9129F9576E002E2C71 /* UIApplication+.swift */; };
 		872BBD9529F959FC002E2C71 /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */; };
 		872BBD9729F95BE2002E2C71 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872BBD9629F95BE2002E2C71 /* UserDefaultsManager.swift */; };
@@ -238,6 +240,8 @@
 		872367102A12AC4E00DCBBFF /* ArchiveModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveModel.swift; sourceTree = "<group>"; };
 		872367122A136C7300DCBBFF /* ArchiveGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveGuideViewController.swift; sourceTree = "<group>"; };
 		872367182A19080600DCBBFF /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
+		8723671B2A19276A00DCBBFF /* ArchiveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveService.swift; sourceTree = "<group>"; };
+		8723671D2A19277300DCBBFF /* ArchiveAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveAPI.swift; sourceTree = "<group>"; };
 		872BBD9129F9576E002E2C71 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
 		872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
 		872BBD9629F95BE2002E2C71 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
@@ -468,6 +472,15 @@
 				872367182A19080600DCBBFF /* AuthError.swift */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		8723671A2A19275600DCBBFF /* Archive */ = {
+			isa = PBXGroup;
+			children = (
+				8723671B2A19276A00DCBBFF /* ArchiveService.swift */,
+				8723671D2A19277300DCBBFF /* ArchiveAPI.swift */,
+			);
+			path = Archive;
 			sourceTree = "<group>";
 		};
 		872BBD9329F959E2002E2C71 /* Utility */ = {
@@ -988,6 +1001,7 @@
 				8771843B2A0541AA00AB7DE4 /* Auth */,
 				87A76A9A295F6E540096F669 /* Onboarding */,
 				87A76A9B295F6E640096F669 /* Home */,
+				8723671A2A19275600DCBBFF /* Archive */,
 				87A76A9D295F6E6F0096F669 /* My */,
 				87A76A9C295F6E680096F669 /* Record */,
 			);
@@ -1237,6 +1251,7 @@
 				8731C4B229A9400D00006743 /* EmojiCollectionViewCell.swift in Sources */,
 				87A76AA3295F6EB80096F669 /* HomeService.swift in Sources */,
 				D26C68E8296DE65E0088DC9A /* MyRegisterPetViewController.swift in Sources */,
+				8723671E2A19277300DCBBFF /* ArchiveAPI.swift in Sources */,
 				8764831D2952368100F74882 /* UIView+.swift in Sources */,
 				871EA33E296F529C00D0E8CC /* UIImageView+.swift in Sources */,
 				D2F1936729713FCD00AD87D3 /* OnboardingJWTTokenResult.swift in Sources */,
@@ -1261,6 +1276,7 @@
 				D2F193612970B3FB00AD87D3 /* HomeNoticeModel.swift in Sources */,
 				87D5AF6429649DC100CA7F12 /* HomeViewController.swift in Sources */,
 				870D062A297BEB7900ADAD04 /* HomeView.swift in Sources */,
+				8723671C2A19276A00DCBBFF /* ArchiveService.swift in Sources */,
 				87A76AC32960427C0096F669 /* APIConstants.swift in Sources */,
 				4C84C341298E2E7B003B899E /* RecordMissionCollectionViewCell.swift in Sources */,
 				D2DC80D52A0DFDF600F48209 /* RecordRegisterView.swift in Sources */,

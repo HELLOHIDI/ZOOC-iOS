@@ -28,13 +28,18 @@ final class MyPetCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
+        makeCornerRound(ratio: 2)
+        makeCornerBorder(borderWidth: 1, borderColor: .zoocLightGray)
+    }
+    
     //MARK: - Custom Method
     
     private func style() {
         contentView.do {
             $0.backgroundColor = .zoocWhite2
-            $0.makeCornerRound(radius: 21)
-            $0.makeCornerBorder(borderWidth: 1, borderColor: .zoocLightGray)
         }
         
         petImageView.do {

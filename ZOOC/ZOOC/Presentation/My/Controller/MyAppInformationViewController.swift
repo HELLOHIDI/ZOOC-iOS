@@ -15,6 +15,9 @@ final class MyAppInformationViewController: BaseViewController {
     //MARK: - Properties
     
     private lazy var appInformationView = MyAppInformationView()
+    private let externalURLs = [ExternalURL.termsOfUse,
+                                ExternalURL.privacyPolicy,
+                                ExternalURL.consentMarketing]
     
     //MARK: - Life Cycle
     
@@ -58,6 +61,10 @@ extension MyAppInformationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 43
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presentSafariViewController(externalURLs[indexPath.row])
+    }
 }
 
 //MARK: - UITableViewDataSource
@@ -68,8 +75,8 @@ extension MyAppInformationViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: AppInformationTableViewCell.cellIdentifier, for: indexPath) as?
-                AppInformationTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MyAppInformationTableViewCell.cellIdentifier, for: indexPath) as?
+                MyAppInformationTableViewCell else { return UITableViewCell() }
         cell.dataBind(model: MyAppInformationModel.appInformationData[indexPath.row])
         return cell
     }

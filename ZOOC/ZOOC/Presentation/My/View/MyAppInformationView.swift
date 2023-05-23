@@ -37,8 +37,8 @@ final class MyAppInformationView: UIView {
     
     private func register() {
         appInformationTableView.register(
-            AppInformationTableViewCell.self,
-            forCellReuseIdentifier: AppInformationTableViewCell.cellIdentifier)
+            MyAppInformationTableViewCell.self,
+            forCellReuseIdentifier: MyAppInformationTableViewCell.cellIdentifier)
         
         appInformationTableView.register(MyAppInformationHeaderView.self, forHeaderFooterViewReuseIdentifier: MyAppInformationHeaderView.cellIdentifier)
     }

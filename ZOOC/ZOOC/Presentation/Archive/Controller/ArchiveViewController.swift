@@ -460,7 +460,7 @@ final class ArchiveViewController : BaseViewController {
     private func petImageViewDidTap() {
         let imageVC = ZoocImageViewController()
         imageVC.dataBind(image: petImageView.image)
-        imageVC.modalPresentationStyle = .fullScreen
+        imageVC.modalPresentationStyle = .overFullScreen
         present(imageVC, animated: true)
     }
     

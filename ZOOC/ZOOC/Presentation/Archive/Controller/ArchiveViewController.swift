@@ -427,14 +427,8 @@ final class ArchiveViewController : BaseViewController {
                                       preferredStyle: .actionSheet)
         //TODO: 신고하기 링크로 연동
         let reportAction =  UIAlertAction(title: "신고하기", style: .default) { action in
-            guard let url = URL(string: ExternalURL.reportURL) else {
-                self.presentBottomAlert("잘못된 URL입니다. ")
-                return
-            }
-            
-            let safariViewController = SFSafariViewController(url: url)
-            safariViewController.modalPresentationStyle = .fullScreen
-            self.present(safariViewController, animated: true)
+           
+            self.presentSafariViewController(ExternalURL.reportURL)
         }
         
         let destructiveAction = UIAlertAction(title: "삭제하기",

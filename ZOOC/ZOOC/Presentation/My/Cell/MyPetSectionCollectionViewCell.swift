@@ -123,7 +123,9 @@ final class MyPetSectionCollectionViewCell: UICollectionViewCell {
 
 extension MyPetSectionCollectionViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 86, height: 40)
+        let cell = MyPetCollectionViewCell()
+        cell.dataBind(data: myPetMemberData[indexPath.item])
+        return cell.sizeFittingWith(cellHeight: 40)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {

@@ -97,9 +97,25 @@ final class MyViewController: BaseViewController {
     }
 }
 
+//MARK: - UICollectionView Delegate
+
+extension MyViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        switch indexPath.section {
+        case 0:
+            pushToEditProfileView()
+        case 2:
+            pushToRegisterPetView()
+        default: return
+        }
+    }
+}
+
 //MARK: - UICollectionViewDelegateFlowLayout
 
 extension MyViewController: UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.section {
         case 0:
@@ -138,6 +154,7 @@ extension MyViewController: UICollectionViewDelegateFlowLayout {
 //MARK: - UICollectionViewDataSource
 
 extension MyViewController: UICollectionViewDataSource {
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 5
     }

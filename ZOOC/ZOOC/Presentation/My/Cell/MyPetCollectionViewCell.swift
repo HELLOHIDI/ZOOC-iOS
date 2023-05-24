@@ -28,13 +28,18 @@ final class MyPetCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
+        makeCornerRound(ratio: 2)
+        makeCornerBorder(borderWidth: 1, borderColor: .zoocLightGray)
+    }
+    
     //MARK: - Custom Method
     
     private func style() {
         contentView.do {
             $0.backgroundColor = .zoocWhite2
-            $0.makeCornerRound(radius: 21)
-            $0.makeCornerBorder(borderWidth: 1, borderColor: .zoocLightGray)
         }
         
         petImageView.do {
@@ -57,20 +62,27 @@ final class MyPetCollectionViewCell: UICollectionViewCell {
     private func layout() {
         petImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().offset(3)
+            $0.leading.equalToSuperview().inset(3)
             $0.size.equalTo(34)
         }
         
         petNameLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(self.petImageView.snp.trailing).offset(8)
-            $0.trailing.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(14)
         }
     }
     
     public func dataBind(data: PetResult) {
         petNameLabel.text = data.name
         data.photo == nil ? setDefaultPetProfileImage() : setPetMemberProfileImage(photo: data.photo!)
+    }
+    
+    func sizeFittingWith(cellHeight: CGFloat) -> CGSize {
+        let targetSize = CGSize(width: UIView.layoutFittingCompressedSize.width, height: cellHeight)
+        return self.contentView.systemLayoutSizeFitting(targetSize,
+                                                        withHorizontalFittingPriority: .fittingSizeLevel,
+                                                        verticalFittingPriority: .required)
     }
 }
 

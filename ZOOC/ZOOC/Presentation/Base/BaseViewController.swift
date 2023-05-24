@@ -8,6 +8,8 @@
 import Photos
 import UIKit
 
+import SafariServices
+
 import SnapKit
 import Then
 
@@ -63,6 +65,16 @@ class BaseViewController : UIViewController{
     private func setLayout(){
         
         
+    }
+    
+    func presentSafariViewController(_ url: String) {
+        guard let url = URL(string: url) else {
+            self.presentBottomAlert("잘못된 URL입니다.")
+            return
+        }
+        let safariViewController = SFSafariViewController(url: url)
+        safariViewController.modalPresentationStyle = .fullScreen
+        self.present(safariViewController, animated: true)
     }
     
     func checkAlbumPermission(completion: @escaping (Bool) -> Void) {

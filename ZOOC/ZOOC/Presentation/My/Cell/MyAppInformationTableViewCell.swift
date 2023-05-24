@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class AppInformationTableViewCell: UITableViewCell {
+final class MyAppInformationTableViewCell: UITableViewCell {
     
     //MARK: - UI Components
     
@@ -45,8 +45,7 @@ final class AppInformationTableViewCell: UITableViewCell {
     }
     
     private func hierarchy() {
-        contentView.addSubviews(separatorLine, appInformationButton)
-        appInformationButton.addSubview(appInformationLabel)
+        contentView.addSubviews(separatorLine, appInformationLabel)
     }
     
     private func layout() {
@@ -57,15 +56,8 @@ final class AppInformationTableViewCell: UITableViewCell {
             $0.height.equalTo(1)
         }
         
-        appInformationButton.snp.makeConstraints {
-            $0.top.equalTo(self.separatorLine.snp.bottom).offset(12)
-            $0.centerX.equalToSuperview()
-            $0.width.equalToSuperview()
-            $0.height.equalTo(40)
-        }
-        
         appInformationLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(8)
+            $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(10)
         }
     }

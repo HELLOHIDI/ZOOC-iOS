@@ -135,6 +135,8 @@ final class ArchiveViewController : BaseViewController {
                             action: #selector(etcButtonDidTap),
                             for: .touchUpInside)
         
+        let tapGesture = UITapGestureRecognizer(target: self,
+                                                action: #selector(petImageViewDidTap))
         
         let swipeGestureLeft = UISwipeGestureRecognizer(target: self,
                                                         action: #selector(handlePageSwipeGesture(_:)))
@@ -144,6 +146,7 @@ final class ArchiveViewController : BaseViewController {
                                                          action: #selector(handlePageSwipeGesture(_:)))
         swipeGestureRight.direction = .right
         
+        petImageView.addGestureRecognizer(tapGesture)
         view.addGestureRecognizer(swipeGestureLeft)
         view.addGestureRecognizer(swipeGestureRight)
         
@@ -174,6 +177,7 @@ final class ArchiveViewController : BaseViewController {
         petImageView.do {
             $0.contentMode = .scaleAspectFill
             $0.clipsToBounds = true
+            $0.isUserInteractionEnabled = true
         }
         
         dateLabel.do {
@@ -450,6 +454,14 @@ final class ArchiveViewController : BaseViewController {
         alert.addAction(cancelAction)
 
         self.present(alert, animated: true)
+    }
+    
+    @objc
+    private func petImageViewDidTap() {
+        let imageVC = ZoocImageViewController()
+        imageVC.dataBind(image: petImageView.image)
+        imageVC.modalPresentationStyle = .overFullScreen
+        present(imageVC, animated: true)
     }
     
     @objc

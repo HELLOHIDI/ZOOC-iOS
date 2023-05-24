@@ -169,7 +169,7 @@ class BaseViewController : UIViewController{
                 }
             case .ended:
                 // 해당 뷰의 y값이 400보다 작으면(작게 이동 시) 뷰의 위치를 다시 원상복구하겠다. = 즉, 다시 y=0인 지점으로 리셋
-                if viewTranslation.y < 250 {
+                if viewTranslation.y < 50 {
                     UIView.animate(withDuration: 0.1, animations: {
                         self.view.transform = .identity
                     })

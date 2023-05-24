@@ -46,7 +46,7 @@ final class ZoocImageViewController : BaseViewController {
         }
         
         imageView.do {
-            $0.contentMode = .scaleAspectFill
+            $0.contentMode = .scaleAspectFit
         }
         
         etcButton.do {
@@ -59,8 +59,8 @@ final class ZoocImageViewController : BaseViewController {
     }
     
     private func hierarchy() {
-        view.addSubviews(dismissButton,
-                         imageView,
+        view.addSubviews(imageView,
+                         dismissButton,
                          etcButton)
     }
     
@@ -74,6 +74,7 @@ final class ZoocImageViewController : BaseViewController {
         imageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.horizontalEdges.equalToSuperview()
+            $0.verticalEdges.lessThanOrEqualToSuperview().inset(50)
         }
         
         etcButton.snp.makeConstraints {

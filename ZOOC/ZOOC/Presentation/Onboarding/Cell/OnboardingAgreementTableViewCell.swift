@@ -101,9 +101,9 @@ final class OnboardingAgreementTableViewCell: UITableViewCell {
         menuLabel.text = text
         menuLabel.asColor(targetString: "[필수]", color: .zoocMainGreen)
         
-        if tag == 2 {
-            seeLabel.isHidden = true
-        }
+        
+        seeLabel.isHidden = (tag == 2)
+       
     }
     
     //MARK: - Action Method

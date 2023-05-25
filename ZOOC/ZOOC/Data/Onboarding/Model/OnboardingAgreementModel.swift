@@ -13,12 +13,14 @@ struct OnboardingAgreementModel {
 }
 
 extension OnboardingAgreementModel {
+    
     static var agreementData: [OnboardingAgreementModel] = [
-        OnboardingAgreementModel(title: "ZOOC 이용약관 (필수)", isSelected: false),
-        OnboardingAgreementModel(title: "개인정보 이용약관 동의 (필수)", isSelected: false),
-        OnboardingAgreementModel(title: "만 14세 이상 확인 (필수)", isSelected: false),
-        OnboardingAgreementModel(title: "마케팅 정보 수신 동의 (선택)", isSelected: false)
+        OnboardingAgreementModel(title: "[필수] 이용약관 동의", isSelected: false),
+        OnboardingAgreementModel(title: "[필수] 개인정보 처리방침 동의", isSelected: false),
+        OnboardingAgreementModel(title: "[필수] 만 14세 이상 확인", isSelected: false),
+        OnboardingAgreementModel(title: "[선택] 마케팅 정보 수신 동의", isSelected: false)
     ]
+    
 }
 
 

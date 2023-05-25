@@ -48,8 +48,12 @@ final class OnboardingAgreementViewController: BaseViewController {
     }
     
     private func target() {
-        onboardingAgreementView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        onboardingAgreementView.signUpButton.addTarget(self, action: #selector(signUpButtonDidTap), for: .touchUpInside)
+        onboardingAgreementView.backButton.addTarget(self,
+                                                     action: #selector(backButtonDidTap),
+                                                     for: .touchUpInside)
+        onboardingAgreementView.signUpButton.addTarget(self,
+                                                       action: #selector(signUpButtonDidTap),
+                                                       for: .touchUpInside)
     }
     
     //MARK: - Action Method
@@ -74,12 +78,12 @@ extension OnboardingAgreementViewController: UITableViewDelegate {
         return 37
     }
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var url = ExternalURL.zoocDefaultURL
         switch indexPath.row {
         case 0: url = ExternalURL.termsOfUse
         case 1: url = ExternalURL.privacyPolicy
-        case 2: url = ExternalURL.meltGithub
         case 3: url = ExternalURL.hidiGithub
         default: break
         }
@@ -100,8 +104,8 @@ extension OnboardingAgreementViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: OnboardingAgreementTableViewCell.cellIdentifier, for: indexPath) as?
                 OnboardingAgreementTableViewCell else { return UITableViewCell() }
         cell.delegate = self
-        cell.checkedButton.tag = indexPath.row
-        cell.menuLabel.text = self.onboardingAgreementViewModel.agreementList[indexPath.row].title
+        cell.dataBind(tag: indexPath.row,
+                      text: onboardingAgreementViewModel.agreementList[indexPath.row].title)
         
         if self.onboardingAgreementViewModel.agreementList[indexPath.row].isSelected {
             cell.checkedButton.setImage(Image.checkBoxFill, for: .normal)

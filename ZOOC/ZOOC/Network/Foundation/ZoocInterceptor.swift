@@ -23,7 +23,7 @@ final class ZoocInterceptor: RequestInterceptor {
         
         let headersKey = urlRequest.allHTTPHeaderFields?.keys
         let url = urlRequest.url
-        let kakaoURL = URL(string: (Bundle.main.infoDictionary?["BASE_URL"] as! String) + URLs.kakaoLogin)
+        let kakaoURL = URL(string: Config.baseURL + URLs.kakaoLogin)
         
         guard headersKey != APIConstants.noTokenHeader.keys,
                 url != kakaoURL

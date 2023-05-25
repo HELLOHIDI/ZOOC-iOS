@@ -25,8 +25,9 @@ final class OnboardingAgreementTableViewCell: UITableViewCell {
     //MARK: - UI Components
     
     public var menuLabel = UILabel()
-    private let nextButton = UIButton()
+    private let seeLabel = UILabel()
     public lazy var checkedButton = BaseButton()
+    
     
     //MARK: - Life Cycles
     
@@ -45,6 +46,8 @@ final class OnboardingAgreementTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+
+    
     //MARK: - Custom Method
     
     private func target() {
@@ -55,22 +58,24 @@ final class OnboardingAgreementTableViewCell: UITableViewCell {
         self.backgroundColor = .zoocBackgroundGreen
         self.selectionStyle = .none
         
-        nextButton.do {
-            $0.setImage(UIImage(systemName: "chevron.right"), for: .normal)
-            $0.tintColor = .zoocGray1
-            $0.contentMode = .scaleAspectFit
-            $0.isUserInteractionEnabled = false
-        }
-        
         menuLabel.do {
             $0.textColor = .zoocGray3
             $0.font = .zoocBody1
             $0.textAlignment = .left
         }
+        
+        seeLabel.do {
+            $0.text = "보기"
+            $0.textColor = .zoocGray2
+            $0.font = .zoocBody1
+            $0.asUnderLine($0.text)
+        }
     }
     
     private func hierarchy() {
-        contentView.addSubviews(menuLabel, nextButton, checkedButton)
+        contentView.addSubviews(menuLabel,
+                                seeLabel,
+                                checkedButton)
     }
     
     private func layout() {
@@ -79,15 +84,9 @@ final class OnboardingAgreementTableViewCell: UITableViewCell {
             $0.leading.equalToSuperview().offset(10)
         }
         
-//        nextButton.snp.makeConstraints {
-//            $0.centerY.equalTo(menuLabel)
-//            $0.leading.equalTo(menuLabel.snp.trailing).offset(10)
-//            $0.size.equalTo(14)
-//        }
-        nextButton.snp.makeConstraints {
-            $0.centerY.equalTo(menuLabel)
-            $0.trailing.equalTo(checkedButton.snp.leading).offset(-15)
-            $0.size.equalTo(14)
+        seeLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(menuLabel.snp.trailing).offset(10)
         }
         
         checkedButton.snp.makeConstraints {
@@ -95,6 +94,16 @@ final class OnboardingAgreementTableViewCell: UITableViewCell {
             $0.trailing.equalToSuperview().inset(20)
             $0.size.equalTo(20)
         }
+    }
+    
+    func dataBind(tag: Int, text: String) {
+        checkedButton.tag = tag
+        menuLabel.text = text
+        menuLabel.asColor(targetString: "[필수]", color: .zoocMainGreen)
+        
+        
+        seeLabel.isHidden = (tag == 2)
+       
     }
     
     //MARK: - Action Method

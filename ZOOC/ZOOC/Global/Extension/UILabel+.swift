@@ -16,6 +16,14 @@ extension UILabel {
         attributedText = attributedString
     }
     
+    func asUnderLine(_ targetString: String?) {
+        guard let targetString else { return }
+        let attributedString = NSAttributedString(string: targetString,
+                                                  attributes: [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue])
+
+        attributedText = attributedString
+    }
+    
     func setLineSpacing(spacing: CGFloat) {
         guard let text = text else { return }
         

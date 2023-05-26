@@ -177,6 +177,8 @@ extension OnboardingLoginViewController: ASAuthorizationControllerPresentationCo
             if  let authorizationCode = appleIDCredential.authorizationCode,
                 let identityToken = appleIDCredential.identityToken,
                 let identityTokenString = String(data: identityToken, encoding: .utf8) {
+                
+                
                 requestZOOCAppleSocialLoginAPI(identityTokenString)
                 print("identityTokenString: \(identityTokenString)")
             }

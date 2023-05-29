@@ -15,7 +15,6 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
     
     private var size: CGFloat? {
         didSet {
-            print("🕊🕊🕊🕊🕊🕊🕊🕊\(size)🕊🕊🕊🕊🕊🕊🕊🕊")
             profilePetImageView.snp.updateConstraints {
                 $0.leading.equalToSuperview().offset(40)
                 $0.centerY.equalToSuperview()
@@ -52,10 +51,6 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
     private func style() {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
-        
-        profilePetImageView.do {
-            $0.makeCornerRound(radius: (size ?? 0) / 2)
-        }
         
         borderView.do {
             $0.backgroundColor = .zoocWhite3

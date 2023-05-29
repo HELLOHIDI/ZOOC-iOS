@@ -203,7 +203,5 @@ final class RecordRegisterView : UIView{
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
-        
-        
     }
 }

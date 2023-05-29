@@ -172,11 +172,25 @@ extension RecordRegisterViewController: UICollectionViewDelegate {
 
 extension RecordRegisterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if(petList.count <= 3) {
-            let cellHeight = collectionView.frame.height / CGFloat(petList.count)
-            return CGSize(width: collectionView.frame.width, height: cellHeight)
-        } else {
-            return CGSize(width: collectionView.frame.width / 2, height: 177)
+        switch petList.count {
+        case 1:
+            print(1)
+            print(collectionView.frame.height)
+            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+        case 2:
+            print(2)
+            print(collectionView.frame.height / 2)
+            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height/2)
+        case 3:
+            print(3)
+            print(collectionView.frame.height / 3)
+            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height/3)
+        case 4:
+            print(4)
+            print(collectionView.frame.height / 4)
+            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height/2)
+        default:
+            return CGSize(width: 0, height: 0)
         }
     }
     

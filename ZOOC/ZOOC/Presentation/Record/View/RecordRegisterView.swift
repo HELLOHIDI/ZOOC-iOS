@@ -168,18 +168,19 @@ final class RecordRegisterView : UIView{
         cardView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(30)
-            $0.height.equalTo(477)
+            $0.top.equalToSuperview().offset(140)
+            $0.bottom.equalToSuperview().inset(195)
         }
         
         headerView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(125)
+            $0.height.equalTo(124)
         }
         
         backButton.snp.makeConstraints {
             $0.top.leading.equalToSuperview().offset(20)
-            $0.width.height.equalTo(42)
+            $0.size.equalTo(42)
         }
         
         titleLabel.snp.makeConstraints {
@@ -193,9 +194,9 @@ final class RecordRegisterView : UIView{
         }
         
         petCollectionView.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
+            $0.top.equalTo(self.headerView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(352)
+            $0.bottom.equalToSuperview()
         }
         
         registerButton.snp.makeConstraints {

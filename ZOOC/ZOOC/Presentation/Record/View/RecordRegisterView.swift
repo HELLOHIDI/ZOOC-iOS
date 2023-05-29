@@ -165,11 +165,16 @@ final class RecordRegisterView : UIView{
             $0.height.equalTo(42)
         }
         
-        cardView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+        registerButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(50)
             $0.leading.trailing.equalToSuperview().inset(30)
-            $0.top.equalToSuperview().offset(140)
-            $0.bottom.equalToSuperview().inset(195)
+            $0.height.equalTo(54)
+        }
+        
+        cardView.snp.makeConstraints {
+            $0.top.equalTo(self.topBarView.snp.bottom).offset(55)
+            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.bottom.equalTo(self.registerButton).inset(135)
         }
         
         headerView.snp.makeConstraints {
@@ -199,10 +204,6 @@ final class RecordRegisterView : UIView{
             $0.bottom.equalToSuperview()
         }
         
-        registerButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(50)
-            $0.leading.trailing.equalToSuperview().inset(30)
-            $0.height.equalTo(54)
-        }
+        
     }
 }

@@ -123,7 +123,7 @@ extension RecordRegisterViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RecordRegisterCollectionViewCell.cellIdentifier, for: indexPath)
                     as? RecordRegisterCollectionViewCell else { return UICollectionViewCell() }
-            cell.dataBind(data: petList[indexPath.item])
+            cell.dataBind(data: petList[indexPath.item], cellHeight: Int(collectionView.frame.height) / petList.count)
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(
@@ -174,8 +174,6 @@ extension RecordRegisterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch petList.count {
         case 1:
-            print(1)
-            print(collectionView.frame.height)
             return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
         case 2:
             print(2)

@@ -147,10 +147,16 @@ final class RecordView: UIView {
             $0.height.equalTo(42)
         }
         
-        cardView.snp.makeConstraints {
-            $0.top.equalTo(self.missionButton).offset(55)
+        nextButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(50)
             $0.leading.trailing.equalToSuperview().inset(30)
-            $0.bottom.equalToSuperview().inset(151)
+            $0.height.equalTo(54)
+        }
+        
+        cardView.snp.makeConstraints {
+            $0.top.equalTo(self.topBarView.snp.bottom).offset(55)
+            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.bottom.equalTo(self.nextButton).inset(135)
         }
         
         galleryImageView.snp.makeConstraints {
@@ -161,12 +167,6 @@ final class RecordView: UIView {
         contentTextView.snp.makeConstraints {
             $0.top.equalTo(self.galleryImageView.snp.bottom).offset(12)
             $0.bottom.leading.trailing.equalToSuperview().inset(22)
-        }
-        
-        nextButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(50)
-            $0.leading.trailing.equalToSuperview().inset(30)
-            $0.height.equalTo(54)
         }
     }
 }

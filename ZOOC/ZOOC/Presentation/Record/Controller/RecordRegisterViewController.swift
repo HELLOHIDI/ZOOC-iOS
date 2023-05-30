@@ -129,7 +129,7 @@ extension RecordRegisterViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RecordRegisterFourCollectionViewCell.cellIdentifier, for: indexPath)
                     as? RecordRegisterFourCollectionViewCell else { return UICollectionViewCell() }
-            cell.dataBind(data: petList[indexPath.item])
+            cell.dataBind(data: petList[indexPath.item], cellHeight: Int(collectionView.frame.height) / 2)
             return cell
         }
     }
@@ -176,17 +176,11 @@ extension RecordRegisterViewController: UICollectionViewDelegateFlowLayout {
         case 1:
             return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
         case 2:
-            print(2)
-            print(collectionView.frame.height / 2)
             return CGSize(width: collectionView.frame.width, height: collectionView.frame.height/2)
         case 3:
-            print(3)
-            print(collectionView.frame.height / 3)
             return CGSize(width: collectionView.frame.width, height: collectionView.frame.height/3)
         case 4:
-            print(4)
-            print(collectionView.frame.height / 4)
-            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height/2)
+            return CGSize(width: collectionView.frame.width / 2, height: collectionView.frame.height / 2)
         default:
             return CGSize(width: 0, height: 0)
         }

@@ -84,8 +84,9 @@ final class RecordCompleteViewController : BaseViewController {
         
         cardView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(30)
-            $0.height.equalTo(456)
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(0.84)
+            $0.height.equalToSuperview().multipliedBy(0.56)
         }
         
         titleLabel.snp.makeConstraints {
@@ -101,15 +102,15 @@ final class RecordCompleteViewController : BaseViewController {
         notifyImageView.snp.makeConstraints {
             $0.top.equalTo(self.subtitleLabel.snp.bottom).offset(19)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(227)
-            $0.height.equalTo(227)
+            $0.width.equalToSuperview().multipliedBy(0.5)
+            $0.height.equalToSuperview().multipliedBy(0.5)
         }
         
         goArchiveButton.snp.makeConstraints {
-            $0.top.equalTo(self.notifyImageView.snp.bottom).offset(40)
-            $0.centerX.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(22)
             $0.bottom.equalToSuperview().inset(22)
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(0.86)
+            $0.height.equalToSuperview().multipliedBy(0.11)
         }
     }
     

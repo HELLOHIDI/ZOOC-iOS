@@ -15,12 +15,13 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
     
     private var size: CGFloat? {
         didSet {
+            guard let size = self.size else { return }
             profilePetImageView.snp.updateConstraints {
-                $0.leading.equalToSuperview().offset(40)
-                $0.centerY.equalToSuperview()
-                $0.size.equalTo(size ?? 0)
+                $0.top.equalToSuperview().offset(49)
+                $0.centerX.equalToSuperview()
+                $0.size.equalTo(size)
             }
-            profilePetImageView.makeCornerRound(radius: (size ?? 0)/2)
+            profilePetImageView.makeCornerRound(radius: size / 2)
         }
     }
     

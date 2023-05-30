@@ -25,7 +25,7 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Components
     
-    private let cardContainerView = UIStackView()
+    private let cardContainerView = UIView()
     private let cardQuestion = UILabel()
     lazy var galleryButton = UIButton()
     lazy var contentTextView = UITextView()
@@ -64,15 +64,6 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
             $0.layer.shadowRadius = 14
             $0.layer.shadowOffset = CGSize(width: 0, height: 0)
             $0.backgroundColor = .white
-            $0.axis = .vertical
-            $0.distribution = .fillEqually
-            $0.alignment = .fill
-            $0.spacing = 12
-            $0.isLayoutMarginsRelativeArrangement = true
-            $0.layoutMargins.left = 22
-            $0.layoutMargins.right = 22
-            $0.layoutMargins.top = 30
-            $0.layoutMargins.bottom = 22
         }
         
         cardQuestion.do {
@@ -102,9 +93,7 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     
     private func hierarchy() {
         contentView.addSubviews(cardContainerView)
-        cardContainerView.addArrangedSubview(cardQuestion)
-        cardContainerView.addArrangedSubview(galleryButton)
-        cardContainerView.addArrangedSubview(contentTextView)
+        cardContainerView.addSubviews(cardQuestion,galleryButton,contentTextView)
     }
     
     private func layout() {
@@ -115,6 +104,20 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
         cardQuestion.snp.makeConstraints {
             $0.top.equalToSuperview().offset(30)
             $0.centerX.equalToSuperview()
+        }
+        
+        galleryButton.snp.makeConstraints {
+            $0.top.equalTo(self.cardQuestion.snp.bottom).offset(20)
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(0.86)
+            $0.height.equalToSuperview().multipliedBy(0.44)
+        }
+        
+        contentTextView.snp.makeConstraints {
+            $0.top.equalTo(self.galleryButton.snp.bottom).offset(12)
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(0.86)
+            $0.height.equalToSuperview().multipliedBy(0.28)
         }
     }
     

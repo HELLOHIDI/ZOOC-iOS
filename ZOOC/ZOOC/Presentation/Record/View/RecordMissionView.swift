@@ -22,7 +22,6 @@ final class RecordMissionView : UIView {
     public lazy var dailyButton = UIButton()
     private lazy var missionButton = UIButton()
     public var missionCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-    public let missionIndicatorView = RecordMissionIndicatorView()
     public lazy var nextButton = UIButton()
     
     //MARK: - Life Cycle
@@ -88,7 +87,7 @@ final class RecordMissionView : UIView {
     }
     
     private func hierarchy() {
-        self.addSubviews(topBarView, missionCollectionView, missionIndicatorView, nextButton)
+        self.addSubviews(topBarView,  nextButton, missionCollectionView)
         topBarView.addSubviews(xmarkButton, buttonsContainerView)
         buttonsContainerView.addSubviews(dailyButton, missionButton)
     }
@@ -128,24 +127,17 @@ final class RecordMissionView : UIView {
             $0.height.equalTo(42)
         }
         
-        missionCollectionView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(477)
-        }
-        
-        missionIndicatorView.snp.makeConstraints {
-            $0.top.equalTo(missionCollectionView.snp.bottom).offset(34)
-            $0.width.equalTo(232)
-            $0.height.equalTo(4)
-            $0.centerX.equalToSuperview()
-        }
-        
         nextButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(50)
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(54)
+        }
+        
+        missionCollectionView.snp.makeConstraints {
+            $0.top.equalTo(self.topBarView.snp.bottom).offset(41)
+            $0.width.equalToSuperview()
+            $0.bottom.equalTo(self.nextButton).inset(135)
         }
     }
 }

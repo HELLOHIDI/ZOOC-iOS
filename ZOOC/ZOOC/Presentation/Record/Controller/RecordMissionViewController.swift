@@ -84,7 +84,7 @@ extension RecordMissionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenWidth = UIScreen.main.bounds.width
         let cardWidth = screenWidth - (30 * 2)
-        return CGSize(width: cardWidth, height: 477)
+        return CGSize(width: cardWidth, height: collectionView.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -144,17 +144,6 @@ extension RecordMissionViewController: RecordMissionCollectionViewCellDelegate {
             } else {
                 self.showAccessDenied()
             }
-        }
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == rootView.missionCollectionView {
-
-            let scroll = scrollView.contentOffset.x + scrollView.contentInset.left
-            let width = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
-            let scrollRatio = scroll / width
-
-            rootView.missionIndicatorView.leftOffsetRatio = scrollRatio
         }
     }
 }
@@ -240,15 +229,6 @@ extension RecordMissionViewController {
         navigationController?.pushViewController(recordRegisterViewController, animated: true)
         print(#function)
         
-    }
-    
-    private func configIndicatorBarWidth(_ scrollView: UIScrollView) {
-        UIView.animate(withDuration: 0.5) {
-            let allWidth = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
-            let showingWidth = scrollView.bounds.width
-            self.rootView.missionIndicatorView.widthRatio = showingWidth / allWidth
-            self.rootView.missionIndicatorView.layoutIfNeeded()
-        }
     }
     
     private func requestMissionAPI() {

@@ -25,7 +25,7 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Components
     
-    private let cardContainerView = UIView()
+    private let cardContainerView = UIStackView()
     private let cardQuestion = UILabel()
     lazy var galleryButton = UIButton()
     lazy var contentTextView = UITextView()
@@ -64,6 +64,15 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
             $0.layer.shadowRadius = 14
             $0.layer.shadowOffset = CGSize(width: 0, height: 0)
             $0.backgroundColor = .white
+            $0.axis = .vertical
+            $0.distribution = .fillEqually
+            $0.alignment = .fill
+            $0.spacing = 12
+            $0.isLayoutMarginsRelativeArrangement = true
+            $0.layoutMargins.left = 22
+            $0.layoutMargins.right = 22
+            $0.layoutMargins.top = 30
+            $0.layoutMargins.bottom = 22
         }
         
         cardQuestion.do {
@@ -78,7 +87,6 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
             $0.layer.cornerRadius = 12
             $0.contentMode = .scaleAspectFill
             $0.isUserInteractionEnabled = true
-            
         }
         
         contentTextView.do {
@@ -93,8 +101,10 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     }
     
     private func hierarchy() {
-        contentView.addSubview(cardContainerView)
-        cardContainerView.addSubviews(cardQuestion, galleryButton, contentTextView)
+        contentView.addSubviews(cardContainerView)
+        cardContainerView.addArrangedSubview(cardQuestion)
+        cardContainerView.addArrangedSubview(galleryButton)
+        cardContainerView.addArrangedSubview(contentTextView)
     }
     
     private func layout() {
@@ -106,22 +116,7 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
             $0.top.equalToSuperview().offset(30)
             $0.centerX.equalToSuperview()
         }
-        
-        galleryButton.snp.makeConstraints {
-            $0.bottom.equalTo(contentTextView.snp.top).offset(-12)
-            $0.centerX.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(22)
-            $0.height.equalTo(210)
-        }
-        
-        contentTextView.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(22)
-            $0.centerX.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(22)
-            $0.height.equalTo(135)
-        }
     }
-    
     
     func dataBind(model: RecordMissionResult) {
         cardQuestion.text = model.missionContent

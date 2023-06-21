@@ -52,7 +52,7 @@ final class HomeNoticeView: UIView {
         noticeTableView.do {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.separatorStyle = .none
-            $0.isScrollEnabled = false
+            $0.isScrollEnabled = true
             $0.backgroundColor = .zoocBackgroundGreen
         }
         

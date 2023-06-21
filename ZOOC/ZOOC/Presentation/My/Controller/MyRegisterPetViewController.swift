@@ -200,21 +200,16 @@ extension MyRegisterPetViewController: UITableViewDataSource {
 
 extension MyRegisterPetViewController: MyDeleteButtonTappedDelegate {
     func petProfileImageButtonDidTap(tag: Int) {
-        print(#function)
-        
         checkAlbumPermission { hasPermission in
             if hasPermission {
                 self.myPetRegisterViewModel.index = tag
                 DispatchQueue.main.async {
                     self.present(self.galleryAlertController,animated: true)
                 }
-            
             } else {
-                print("퍼미션이 false")
                 self.showAccessDenied()
             }
         }
-        
     }
     
     func deleteButtonTapped(tag: Int) {
@@ -239,6 +234,8 @@ extension MyRegisterPetViewController: UIImagePickerControllerDelegate {
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         self.myPetRegisterViewModel.petList[self.myPetRegisterViewModel.index].image = image
         self.rootView.registerPetTableView.reloadData()
+        self.dismiss(animated: true)
+        
     }
 }
 

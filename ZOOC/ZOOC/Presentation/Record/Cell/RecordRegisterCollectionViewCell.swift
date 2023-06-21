@@ -18,7 +18,7 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
             guard let size = self.size else { return }
             profilePetImageView.snp.updateConstraints {
                 $0.top.equalToSuperview().offset(49)
-                $0.centerX.equalToSuperview()
+                $0.leading.equalToSuperview().offset(40)
                 $0.size.equalTo(size)
             }
             profilePetImageView.makeCornerRound(radius: size / 2)

@@ -13,7 +13,7 @@ final class MyRegisteredPetTableViewCell: UITableViewCell {
     
     //MARK: - UI Components
     
-    public lazy var petProfileImageView = UIImageView()
+    public lazy var petProfileButton = UIButton()
     public var petProfileNameLabel = UILabel()
     
     //MARK: - Life Cycles
@@ -35,7 +35,7 @@ final class MyRegisteredPetTableViewCell: UITableViewCell {
     private func cellStyle() {
         self.backgroundColor = .zoocWhite2
         
-        petProfileImageView.do {
+        petProfileButton.do {
             $0.makeCornerRound(radius: 30)
             $0.contentMode = .scaleAspectFill
         }
@@ -47,11 +47,11 @@ final class MyRegisteredPetTableViewCell: UITableViewCell {
     }
     
     private func hierarchy() {
-        contentView.addSubviews(petProfileImageView, petProfileNameLabel)
+        contentView.addSubviews(petProfileButton, petProfileNameLabel)
     }
     
     private func layout() {
-        petProfileImageView.snp.makeConstraints {
+        petProfileButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(30)
             $0.size.equalTo(60)
@@ -59,7 +59,7 @@ final class MyRegisteredPetTableViewCell: UITableViewCell {
         
         petProfileNameLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalTo(self.petProfileImageView.snp.trailing).offset(9)
+            $0.leading.equalTo(self.petProfileButton.snp.trailing).offset(9)
             $0.width.equalTo(196)
             $0.height.equalTo(36)
         }
@@ -73,11 +73,11 @@ final class MyRegisteredPetTableViewCell: UITableViewCell {
 
 extension MyRegisteredPetTableViewCell {
     func setDefaultPetProfileImage() {
-        petProfileImageView.image = Image.cameraCircle
+        petProfileButton.setImage(Image.cameraCircle, for: .normal)
     }
     
     func setPetMemberProfileImage(photo: String) {
-        petProfileImageView.kfSetImage(url: photo)
+        petProfileButton.kfSetButtonImage(url: photo)
     }
 }
 

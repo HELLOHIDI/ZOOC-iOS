@@ -165,21 +165,28 @@ final class RecordRegisterView : UIView{
             $0.height.equalTo(42)
         }
         
-        cardView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+        registerButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(50)
             $0.leading.trailing.equalToSuperview().inset(30)
-            $0.height.equalTo(477)
+            $0.height.equalTo(54)
+        }
+        
+        cardView.snp.makeConstraints {
+            $0.top.equalTo(self.topBarView.snp.bottom).offset(55)
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(0.84)
+            $0.height.equalToSuperview().multipliedBy(0.58)
         }
         
         headerView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(125)
+            $0.height.equalToSuperview().multipliedBy(0.26)
         }
         
         backButton.snp.makeConstraints {
             $0.top.leading.equalToSuperview().offset(20)
-            $0.width.height.equalTo(42)
+            $0.size.equalTo(42)
         }
         
         titleLabel.snp.makeConstraints {
@@ -193,15 +200,9 @@ final class RecordRegisterView : UIView{
         }
         
         petCollectionView.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
+            $0.top.equalTo(self.headerView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(352)
-        }
-        
-        registerButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(50)
-            $0.leading.trailing.equalToSuperview().inset(30)
-            $0.height.equalTo(54)
+            $0.bottom.equalToSuperview()
         }
     }
 }

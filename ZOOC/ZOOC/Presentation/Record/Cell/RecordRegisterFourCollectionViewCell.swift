@@ -14,6 +14,18 @@ final class RecordRegisterFourCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
+    private var size: CGFloat? {
+        didSet {
+            guard let size = self.size else { return }
+            profilePetImageView.snp.updateConstraints {
+                $0.centerY.equalToSuperview()
+                $0.centerX.equalToSuperview()
+                $0.size.equalTo(size)
+            }
+            profilePetImageView.makeCornerRound(radius: size / 2)
+        }
+    }
+    
     // MARK: - UI Components
     
     private let borderView: UIView = {
@@ -57,7 +69,10 @@ final class RecordRegisterFourCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setLayout()
+        
+        style()
+        hierarchy()
+        layout()
     }
     
     required init?(coder: NSCoder) {
@@ -66,14 +81,44 @@ final class RecordRegisterFourCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Custom Method
     
-    private func setLayout(){
+    private func style() {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
         
+        borderView.do {
+            $0.backgroundColor = .zoocWhite3
+        }
+        
+        selectImageView.do {
+            $0.image = Image.check
+            $0.contentMode = .scaleAspectFill
+            $0.isHidden = true
+        }
+        
+        profilePetImageView.do {
+            $0.layer.masksToBounds = true
+            $0.layer.cornerRadius = 25
+            $0.contentMode = .scaleAspectFill
+        }
+        
+        profileAlphaView.do {
+            $0.backgroundColor = .zoocMainGreen
+            $0.alpha = 0.1
+            $0.isHidden = true
+        }
+        
+        petNameLabel.do {
+            $0.font = .zoocSubhead1
+            $0.textColor = .zoocGray2
+        }
+    }
+    private func hierarchy() {
         contentView.addSubviews(borderView, profilePetImageView, petNameLabel, selectImageView)
         
         profilePetImageView.addSubview(profileAlphaView)
-        
+    }
+    
+    private func layout() {
         borderView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(1)
@@ -83,12 +128,6 @@ final class RecordRegisterFourCollectionViewCell: UICollectionViewCell {
             $0.top.leading.equalToSuperview().offset(28)
             $0.width.equalTo(18)
             $0.height.equalTo(11)
-        }
-        
-        profilePetImageView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(49)
-            $0.centerX.equalToSuperview()
-            $0.width.height.equalTo(50)
         }
         
         profileAlphaView.snp.makeConstraints {
@@ -103,7 +142,7 @@ final class RecordRegisterFourCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Action Method
     
-    func dataBind(data: RecordRegisterModel) {
+    func dataBind(data: RecordRegisterModel, cellHeight: Int) {
         
         if let imageURL = data.petImageURL{
             profilePetImageView.kfSetImage(url: imageURL)
@@ -112,11 +151,8 @@ final class RecordRegisterFourCollectionViewCell: UICollectionViewCell {
         }
             
         petNameLabel.text = data.petName
-        if data.isSelected {
-            selectImageView.isHidden = false
-        } else {
-            selectImageView.isHidden = true
-        }
+        selectImageView.isHidden = data.isSelected ? false : true
+        self.size = CGFloat(cellHeight * 5/12)
     }
     
     func updateUI(isSelected: Bool){

@@ -123,13 +123,13 @@ extension RecordRegisterViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RecordRegisterCollectionViewCell.cellIdentifier, for: indexPath)
                     as? RecordRegisterCollectionViewCell else { return UICollectionViewCell() }
-            cell.dataBind(data: petList[indexPath.item])
+            cell.dataBind(data: petList[indexPath.item], cellHeight: Int(collectionView.frame.height) / petList.count)
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RecordRegisterFourCollectionViewCell.cellIdentifier, for: indexPath)
                     as? RecordRegisterFourCollectionViewCell else { return UICollectionViewCell() }
-            cell.dataBind(data: petList[indexPath.item])
+            cell.dataBind(data: petList[indexPath.item], cellHeight: Int(collectionView.frame.height) / 2)
             return cell
         }
     }
@@ -172,11 +172,17 @@ extension RecordRegisterViewController: UICollectionViewDelegate {
 
 extension RecordRegisterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if(petList.count <= 3) {
-            let cellHeight = collectionView.frame.height / CGFloat(petList.count)
-            return CGSize(width: collectionView.frame.width, height: cellHeight)
-        } else {
-            return CGSize(width: collectionView.frame.width / 2, height: 177)
+        switch petList.count {
+        case 1:
+            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+        case 2:
+            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height/2)
+        case 3:
+            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height/3)
+        case 4:
+            return CGSize(width: collectionView.frame.width / 2, height: collectionView.frame.height / 2)
+        default:
+            return CGSize(width: 0, height: 0)
         }
     }
     

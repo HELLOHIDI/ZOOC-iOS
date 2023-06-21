@@ -13,50 +13,34 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
+    private var size: CGFloat? {
+        didSet {
+            guard let size = self.size else { return }
+            profilePetImageView.snp.updateConstraints {
+                $0.top.equalToSuperview().offset(49)
+                $0.centerX.equalToSuperview()
+                $0.size.equalTo(size)
+            }
+            profilePetImageView.makeCornerRound(radius: size / 2)
+        }
+    }
+    
     // MARK: - UI Components
     
-    private let borderView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .zoocWhite3
-        return view
-    }()
-    
-    private var profilePetImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.layer.masksToBounds = true
-        imageView.layer.cornerRadius = 25
-        imageView.contentMode = .scaleAspectFill
-        return imageView
-    }()
-    
-    private let profileAlphaView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .zoocMainGreen
-        view.alpha = 0.1
-        view.isHidden = true
-        return view
-    }()
-    
-    private let petNameLabel: UILabel = {
-        let label = UILabel()
-        label.font = .zoocSubhead1
-        label.textColor = .zoocGray2
-        return label
-    }()
-    
-    private let selectImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = Image.check
-        imageView.contentMode = .scaleAspectFill
-        imageView.isHidden = true
-        return imageView
-    }()
+    private let borderView = UIView()
+    private var profilePetImageView = UIImageView()
+    private let profileAlphaView = UIView()
+    private let petNameLabel = UILabel()
+    private let selectImageView = UIImageView()
     
     // MARK: - Life Cycles
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setLayout()
+        
+        style()
+        hierarchy()
+        layout()
     }
     
     required init?(coder: NSCoder) {
@@ -65,23 +49,45 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Custom Method
     
-    private func setLayout(){
+    private func style() {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
         
-        contentView.addSubviews(borderView, profilePetImageView, petNameLabel, selectImageView)
-                
-        profilePetImageView.addSubview(profileAlphaView)
+        borderView.do {
+            $0.backgroundColor = .zoocWhite3
+        }
         
+        profilePetImageView.do {
+            $0.layer.masksToBounds = true
+            $0.contentMode = .scaleAspectFill
+        }
+        
+        profileAlphaView.do {
+            $0.backgroundColor = .zoocMainGreen
+            $0.alpha = 0.1
+            $0.isHidden = true
+        }
+        
+        petNameLabel.do {
+            $0.font = .zoocSubhead1
+            $0.textColor = .zoocGray2
+        }
+
+        selectImageView.do {
+            $0.image = Image.check
+            $0.contentMode = .scaleAspectFill
+            $0.isHidden = true
+        }
+    }
+    
+    private func hierarchy() {
+        contentView.addSubviews(borderView, profilePetImageView, petNameLabel, selectImageView)
+        profilePetImageView.addSubview(profileAlphaView)
+    }
+    private func layout() {
         borderView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(1)
-        }
-        
-        profilePetImageView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(40)
-            $0.centerY.equalToSuperview()
-            $0.width.height.equalTo(50)
         }
         
         profileAlphaView.snp.makeConstraints {
@@ -103,7 +109,7 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Action Method
     
-    func dataBind(data: RecordRegisterModel) {
+    func dataBind(data: RecordRegisterModel, cellHeight: Int) {
         if let imageURL = data.petImageURL {
             profilePetImageView.kfSetImage(url: imageURL)
         } else {
@@ -111,12 +117,8 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
         }
         
         petNameLabel.text = data.petName
-        
-        if data.isSelected {
-            selectImageView.isHidden = false
-        } else {
-            selectImageView.isHidden = true
-        }
+        selectImageView.isHidden = data.isSelected ? false : true
+        self.size = CGFloat(cellHeight * 5/12)
     }
     
     func updateUI(isSelected: Bool){

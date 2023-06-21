@@ -29,7 +29,7 @@ final class RecordView: UIView {
     private let buttonsContainerView = UIView()
     private lazy var dailyButton = UIButton()
     public lazy var missionButton = UIButton()
-    private let cardView = UIView()
+    public let cardView = UIStackView()
     public let galleryImageView = UIImageView()
     public lazy var contentTextView = UITextView()
     public lazy var nextButton = UIButton()
@@ -73,6 +73,14 @@ final class RecordView: UIView {
             $0.layer.shadowRadius = 14
             $0.layer.shadowOffset = CGSize(width: 0, height: 0)
             $0.backgroundColor = .white
+            $0.axis = .vertical
+            $0.distribution = .fillEqually
+            $0.spacing = 12
+            $0.isLayoutMarginsRelativeArrangement = true
+            $0.layoutMargins.left = 22
+            $0.layoutMargins.right = 22
+            $0.layoutMargins.top = 22
+            $0.layoutMargins.bottom = 22
         }
         
         galleryImageView.do {
@@ -94,7 +102,6 @@ final class RecordView: UIView {
             $0.layer.cornerRadius = 12
         }
 
-        
         nextButton.do {
             $0.setTitle("다음", for: .normal)
             $0.titleLabel?.font = .zoocSubhead2
@@ -109,7 +116,8 @@ final class RecordView: UIView {
         self.addSubviews(topBarView, cardView, nextButton)
         topBarView.addSubviews(xmarkButton, buttonsContainerView)
         buttonsContainerView.addSubviews(dailyButton, missionButton)
-        cardView.addSubviews(galleryImageView, contentTextView)
+        cardView.addArrangedSubview(galleryImageView)
+        cardView.addArrangedSubview(contentTextView)
     }
     
     private func layout() {
@@ -147,26 +155,17 @@ final class RecordView: UIView {
             $0.height.equalTo(42)
         }
         
-        cardView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(30)
-            $0.height.equalTo(477)
-        }
-        
-        galleryImageView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview().inset(22)
-            $0.height.equalTo(210)
-        }
-        
-        contentTextView.snp.makeConstraints {
-            $0.bottom.leading.trailing.equalToSuperview().inset(22)
-            $0.height.equalTo(210)
-        }
-        
         nextButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(50)
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.height.equalTo(54)
+        }
+        
+        cardView.snp.makeConstraints {
+            $0.top.equalTo(self.topBarView.snp.bottom).offset(55)
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(0.84)
+            $0.height.equalToSuperview().multipliedBy(0.58)
         }
     }
 }

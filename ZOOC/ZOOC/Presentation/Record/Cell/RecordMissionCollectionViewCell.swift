@@ -78,7 +78,6 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
             $0.layer.cornerRadius = 12
             $0.contentMode = .scaleAspectFill
             $0.isUserInteractionEnabled = true
-            
         }
         
         contentTextView.do {
@@ -93,8 +92,8 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
     }
     
     private func hierarchy() {
-        contentView.addSubview(cardContainerView)
-        cardContainerView.addSubviews(cardQuestion, galleryButton, contentTextView)
+        contentView.addSubviews(cardContainerView)
+        cardContainerView.addSubviews(cardQuestion,galleryButton,contentTextView)
     }
     
     private func layout() {
@@ -108,20 +107,19 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
         }
         
         galleryButton.snp.makeConstraints {
-            $0.bottom.equalTo(contentTextView.snp.top).offset(-12)
+            $0.top.equalTo(self.cardQuestion.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(22)
-            $0.height.equalTo(210)
+            $0.width.equalToSuperview().multipliedBy(0.86)
+            $0.height.equalToSuperview().multipliedBy(0.44)
         }
         
         contentTextView.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(22)
+            $0.top.equalTo(self.galleryButton.snp.bottom).offset(12)
             $0.centerX.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(22)
-            $0.height.equalTo(135)
+            $0.width.equalToSuperview().multipliedBy(0.86)
+            $0.height.equalToSuperview().multipliedBy(0.28)
         }
     }
-    
     
     func dataBind(model: RecordMissionResult) {
         cardQuestion.text = model.missionContent

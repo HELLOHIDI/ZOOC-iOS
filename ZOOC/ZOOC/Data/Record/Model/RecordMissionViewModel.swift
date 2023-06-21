@@ -21,6 +21,10 @@ final class RecordMissionViewModel {
             button = true
             color = .zoocGradientGreen
         }
+        else {
+            button = false
+            color = .zoocGray1
+        }
         
     }
     

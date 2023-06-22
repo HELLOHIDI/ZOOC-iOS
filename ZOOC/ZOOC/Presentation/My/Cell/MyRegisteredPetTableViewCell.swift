@@ -8,14 +8,10 @@
 import UIKit
 
 protocol MyRegisterdPetTappedDelegate: AnyObject {
-    func petProfileButtonDidTap(tag: Int?)
+    func petProfileButtonDidTap(tag: Int)
 }
 
 final class MyRegisteredPetTableViewCell: UITableViewCell {
-    
-    //MARK: - Properties
-    
-    var id: Int?
     
     //MARK: - UI Components
     
@@ -80,15 +76,14 @@ final class MyRegisteredPetTableViewCell: UITableViewCell {
     }
     
     func dataBind(data: PetResult) {
-        self.id = data.id
         petProfileNameLabel.text = data.name
         data.photo == nil ? setDefaultPetProfileImage() : setPetMemberProfileImage(photo: data.photo!)
     }
     
     //MARK: - Action Method
     
-    @objc func profileButtonDidTap() {
-        delegate?.petProfileButtonDidTap(tag: id)
+    @objc func profileButtonDidTap(sender: UIButton) {
+        delegate?.petProfileButtonDidTap(tag: sender.tag)
     }
 }
 

@@ -62,9 +62,9 @@ final class MyEditPetProfileViewController: BaseViewController {
         rootView.numberOfNameCharactersLabel.text = "\(rootView.nameTextField.text!.count)/4"
     }
 
-    func dataBind(data: UserResult?) {
-        rootView.nameTextField.text = data?.nickName
-        editMyProfileData.nickName = data?.nickName ?? ""
+    func dataBind(data: PetResult?) {
+        rootView.nameTextField.text = data?.name
+        editMyProfileData.nickName = data?.name ?? ""
         
         if let photoURL = data?.photo{
             rootView.profileImageButton.kfSetButtonImage(url: photoURL)

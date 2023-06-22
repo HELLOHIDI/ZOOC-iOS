@@ -21,14 +21,21 @@ final class RecordMissionViewModel {
             button = true
             color = .zoocGradientGreen
         }
+        else {
+            button = false
+            color = .zoocGray1
+        }
         
     }
     
-    func updateContentTextView(placeholderText: inout String) {
-        for mission in missionData {
-            if let content = mission.content {
-                placeholderText = "오늘 있었던 일을 얘기해줘"
-            }
+    func updateContentTextView(index: Int, contentText: String) {
+        if contentText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            print("yes")
+            missionData[index].content = self.placeHolderText
+            missionData[index].textColor = .zoocGray1
+        } else {
+            missionData[index].content = contentText
+            missionData[index].textColor = .zoocDarkGray1
         }
     }
 }

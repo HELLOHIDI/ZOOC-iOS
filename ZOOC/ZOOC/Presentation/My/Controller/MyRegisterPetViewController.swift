@@ -20,7 +20,7 @@ final class MyRegisterPetViewController: BaseViewController {
     
     //MARK: - UI Components
     
-    private let myRegisterPetView = MyRegisterPetView()
+    private let rootView = MyRegisterPetView()
     private let galleryAlertController = GalleryAlertController()
     private lazy var imagePickerController = UIImagePickerController()
     
@@ -36,7 +36,7 @@ final class MyRegisterPetViewController: BaseViewController {
     }
     
     override func loadView() {
-        self.view = myRegisterPetView
+        self.view = rootView
     }
     
     override func viewDidLoad() {
@@ -50,16 +50,16 @@ final class MyRegisterPetViewController: BaseViewController {
     //MARK: - Custom Method
     
     private func register() {
-        myRegisterPetView.registerPetTableView.delegate = self
-        myRegisterPetView.registerPetTableView.dataSource = self
+        rootView.registerPetTableView.delegate = self
+        rootView.registerPetTableView.dataSource = self
     }
     
     private func target() {
         galleryAlertController.delegate = self
         imagePickerController.delegate = self
         
-        myRegisterPetView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        myRegisterPetView.registerPetButton.addTarget(self, action: #selector(registerPetButtonDidTap), for: .touchUpInside)
+        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        rootView.registerPetButton.addTarget(self, action: #selector(registerPetButtonDidTap), for: .touchUpInside)
     }
     
     func dataSend(myPetMemberData: [PetResult]) {
@@ -74,6 +74,8 @@ final class MyRegisterPetViewController: BaseViewController {
     }
     
     @objc private func registerPetButtonDidTap() {
+        rootView.registerPetButton.isEnabled = false
+        rootView.registerPetButton.backgroundColor = .zoocGray1
         var names: [String] = []
         var photos: [Data] = []
         var photo: Data
@@ -159,12 +161,12 @@ extension MyRegisterPetViewController: UITableViewDataSource {
             
             cell.myPetRegisterViewModel.deleteCellClosure = {
                 self.myPetRegisterViewModel.deleteCell(index: self.myPetRegisterViewModel.index)
-                self.myRegisterPetView.registerPetTableView.reloadData()
+                self.rootView.registerPetTableView.reloadData()
             }
             
             self.myPetRegisterViewModel.checkCanRegister(
-                button:&self.myRegisterPetView.registerPetButton.isEnabled,
-                color:&self.myRegisterPetView.registerPetButton.backgroundColor
+                button:&self.rootView.registerPetButton.isEnabled,
+                color:&self.rootView.registerPetButton.backgroundColor
             )
             
             self.myPetRegisterViewModel.hideDeleteButton(button: &cell.deletePetProfileButton.isHidden)
@@ -184,7 +186,7 @@ extension MyRegisterPetViewController: UITableViewDataSource {
             cell.myPetRegisterViewModel.addCellClosure = { [weak self] in
                 guard let self = self else { return }
                 self.myPetRegisterViewModel.addCell()
-                self.myRegisterPetView.registerPetTableView.reloadData()
+                self.rootView.registerPetTableView.reloadData()
             }
             self.myPetRegisterViewModel.hideFooterView(button: &cell.addPetProfileButton.isHidden)
             return cell
@@ -198,21 +200,16 @@ extension MyRegisterPetViewController: UITableViewDataSource {
 
 extension MyRegisterPetViewController: MyDeleteButtonTappedDelegate {
     func petProfileImageButtonDidTap(tag: Int) {
-        print(#function)
-        
         checkAlbumPermission { hasPermission in
             if hasPermission {
                 self.myPetRegisterViewModel.index = tag
                 DispatchQueue.main.async {
                     self.present(self.galleryAlertController,animated: true)
                 }
-            
             } else {
-                print("퍼미션이 false")
                 self.showAccessDenied()
             }
         }
-        
     }
     
     func deleteButtonTapped(tag: Int) {
@@ -220,12 +217,12 @@ extension MyRegisterPetViewController: MyDeleteButtonTappedDelegate {
     }
     
     func collectionViewCell(valueChangedIn textField: UITextField, delegatedFrom cell: UITableViewCell, tag: Int, image: UIImage) {
-        if let _ = myRegisterPetView.registerPetTableView.indexPath(for: cell), let text = textField.text {
+        if let _ = rootView.registerPetTableView.indexPath(for: cell), let text = textField.text {
             self.myPetRegisterViewModel.petList[tag] = MyPetRegisterModel(name: text, image: image)
         }
         self.myPetRegisterViewModel.checkCanRegister(
-            button: &self.myRegisterPetView.registerPetButton.isEnabled,
-            color: &self.myRegisterPetView.registerPetButton.backgroundColor)
+            button: &self.rootView.registerPetButton.isEnabled,
+            color: &self.rootView.registerPetButton.backgroundColor)
     }
     
 }
@@ -236,7 +233,9 @@ extension MyRegisterPetViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         self.myPetRegisterViewModel.petList[self.myPetRegisterViewModel.index].image = image
-        self.myRegisterPetView.registerPetTableView.reloadData()
+        self.rootView.registerPetTableView.reloadData()
+        self.dismiss(animated: true)
+        
     }
 }
 
@@ -256,7 +255,7 @@ extension MyRegisterPetViewController: GalleryAlertControllerDelegate {
     
     func deleteButtonDidTap() {
         self.myPetRegisterViewModel.petList[self.myPetRegisterViewModel.index].image = Image.cameraCircle
-        self.myRegisterPetView.registerPetTableView.reloadData()
+        self.rootView.registerPetTableView.reloadData()
     }
 }
 

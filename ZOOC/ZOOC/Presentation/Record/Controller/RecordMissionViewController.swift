@@ -13,7 +13,10 @@ import Then
 final class RecordMissionViewController : BaseViewController {
     
     //MARK: - Properties
-    
+    private let placeHoldText: String = """
+                                        ex) 2023년 2월 30일
+                                        가족에게 어떤 순간이었는지 남겨주세요
+                                        """
     private var recordMissionViewModel = RecordMissionViewModel()
     private var missionList: [RecordMissionResult] = []
     
@@ -102,6 +105,7 @@ extension RecordMissionViewController: UICollectionViewDelegateFlowLayout {
         let scrolledOffsetX = targetContentOffset.pointee.x + scrollView.contentInset.left
         let cellWidth = cardWidth + 13
         let index = round(scrolledOffsetX / cellWidth)
+        self.recordMissionViewModel.index = Int(index)
         targetContentOffset.pointee = CGPoint(x: index * cellWidth - scrollView.contentInset.left, y: scrollView.contentInset.top)
     }
 }
@@ -121,6 +125,8 @@ extension RecordMissionViewController: UICollectionViewDataSource {
         
         cell.galleryButton.setImage(self.recordMissionViewModel.missionData[indexPath.row].image, for: .normal)
         cell.contentTextView.text = self.recordMissionViewModel.missionData[indexPath.row].content
+        cell.contentTextView.textColor =
+            self.recordMissionViewModel.missionData[indexPath.row].textColor
         
         cell.contentTextView.delegate = self
         
@@ -150,19 +156,16 @@ extension RecordMissionViewController: RecordMissionCollectionViewCellDelegate {
 
 extension RecordMissionViewController: UIImagePickerControllerDelegate  {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        print(#function)
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
-            print("삐약")
-            return
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            self.recordMissionViewModel.missionData[self.recordMissionViewModel.index].image = image
+            self.rootView.missionCollectionView.reloadData()
         }
-        self.recordMissionViewModel.missionData[self.recordMissionViewModel.index].image = image
-        self.rootView.missionCollectionView.reloadData()
+        dismiss(animated: true)
     }
 }
 
 extension RecordMissionViewController: GalleryAlertControllerDelegate {
     func galleryButtonDidTap() {
-        print(#function)
         present(imagePickerController, animated: true)
     }
     
@@ -172,8 +175,6 @@ extension RecordMissionViewController: GalleryAlertControllerDelegate {
     }
 }
 
-
-
 extension RecordMissionViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         print(#function)
@@ -182,27 +183,25 @@ extension RecordMissionViewController: UITextViewDelegate {
             textView.textColor = .black
         }
     }
-
+    
     func textViewDidEndEditing(_ textView: UITextView) {
-        print(#function)
-        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = self.recordMissionViewModel.placeHolderText
-            textView.textColor = .zoocGray1
-        } else {
-            self.recordMissionViewModel.missionData[self.recordMissionViewModel.index].content = textView.text
-            self.rootView.missionCollectionView.reloadData()
-        }
-    }
-
-    func textViewDidChange(_ textView: UITextView) {
-        print(#function)
-        if textView.text == "오늘 어떤 일이 있었는지 공유해보세요" || textView.text.isEmpty {
-            presentBottomAlert("반려동물과 있었던 일을 작성해주세요~")
-        } else {
-            
-        }
+        self.recordMissionViewModel.updateContentTextView(
+            index: self.recordMissionViewModel.index,
+            contentText: textView.text
+        )
+        self.rootView.missionCollectionView.reloadData()
     }
 }
+//        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+//            self.recordMissionViewModel.missionData[self.recordMissionViewModel.index].content = self.recordMissionViewModel.placeHolderText
+//            textView.textColor = .zoocGray1
+//        } else {
+//            self.recordMissionViewModel.missionData[self.recordMissionViewModel.index].content = textView.text
+//            textView.textColor = .zoocDarkGray1
+//        }
+        
+//    }
+
 
 //MARK: - ScrollViewDelegate
 
@@ -228,7 +227,6 @@ extension RecordMissionViewController {
         
         navigationController?.pushViewController(recordRegisterViewController, animated: true)
         print(#function)
-        
     }
     
     private func requestMissionAPI() {

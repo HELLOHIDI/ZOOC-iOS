@@ -120,15 +120,12 @@ extension RecordViewController: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        if textView.text == """
-                                        ex) 2023년 2월 30일
-                                        가족에게 어떤 순간이었는지 남겨주세요
-                                        """ || textView.text.isEmpty {
-            presentBottomAlert("글을 입력해주세요!")
+        if textView.text == placeHoldText || textView.text.isEmpty {
+            contentTextViewIsRegistered = false
         } else {
             contentTextViewIsRegistered = true
-            updateUI()
         }
+        updateUI()
     }
 }
 

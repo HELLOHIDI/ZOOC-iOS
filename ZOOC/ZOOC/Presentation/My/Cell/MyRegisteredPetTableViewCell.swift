@@ -7,11 +7,19 @@
 
 import UIKit
 
+protocol MyRegisterdPetTappedDelegate: AnyObject {
+    func petProfileButtonDidTap(tag: Int?)
+}
+
 final class MyRegisteredPetTableViewCell: UITableViewCell {
     
     //MARK: - Properties
     
+    var id: Int?
+    
     //MARK: - UI Components
+    
+    weak var delegate: MyRegisterdPetTappedDelegate?
     
     public lazy var petProfileButton = UIButton()
     public var petProfileNameLabel = UILabel()
@@ -20,6 +28,8 @@ final class MyRegisteredPetTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        target()
         
         cellStyle()
         hierarchy()
@@ -31,6 +41,10 @@ final class MyRegisteredPetTableViewCell: UITableViewCell {
     }
     
     //MARK: - Custom Method
+    
+    private func target() {
+        petProfileButton.addTarget(self, action: #selector(profileButtonDidTap), for: .touchUpInside)
+    }
     
     private func cellStyle() {
         self.backgroundColor = .zoocWhite2
@@ -65,9 +79,16 @@ final class MyRegisteredPetTableViewCell: UITableViewCell {
         }
     }
     
-    func dataBind(data: PetResult, index: Int, petData: [PetResult]) {
+    func dataBind(data: PetResult) {
+        self.id = data.id
         petProfileNameLabel.text = data.name
         data.photo == nil ? setDefaultPetProfileImage() : setPetMemberProfileImage(photo: data.photo!)
+    }
+    
+    //MARK: - Action Method
+    
+    @objc func profileButtonDidTap() {
+        delegate?.petProfileButtonDidTap(tag: id)
     }
 }
 

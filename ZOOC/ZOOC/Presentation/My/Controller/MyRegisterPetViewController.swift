@@ -144,7 +144,8 @@ extension MyRegisterPetViewController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MyRegisteredPetTableViewCell.cellIdentifier, for: indexPath)
                     as? MyRegisteredPetTableViewCell else { return UITableViewCell() }
             cell.selectionStyle = .none
-            cell.dataBind(data: myPetMemberData[indexPath.row], index: indexPath.row, petData: myPetMemberData)
+            cell.dataBind(data: myPetMemberData[indexPath.row])
+            cell.delegate = self
             return cell
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MyRegisterPetTableViewCell.cellIdentifier, for: indexPath)
@@ -193,6 +194,15 @@ extension MyRegisterPetViewController: UITableViewDataSource {
         default:
             return UIView()
         }
+    }
+}
+
+//MARK: - MyRegisterdPetTappedDelegate
+
+extension MyRegisterPetViewController: MyRegisterdPetTappedDelegate {
+    func petProfileButtonDidTap(tag: Int?) {
+        guard let tag = tag else { return }
+        print(tag)
     }
 }
 

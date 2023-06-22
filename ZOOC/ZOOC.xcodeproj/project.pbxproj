@@ -207,6 +207,7 @@
 		D2F1936729713FCD00AD87D3 /* OnboardingJWTTokenResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F1936629713FCD00AD87D3 /* OnboardingJWTTokenResult.swift */; };
 		D2F3D5FE2A4411D300C90A5A /* MyEditPetProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F3D5FD2A4411D300C90A5A /* MyEditPetProfileViewController.swift */; };
 		D2F3D6002A4411FF00C90A5A /* MyEditPetProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F3D5FF2A4411FF00C90A5A /* MyEditPetProfileView.swift */; };
+		D2F3D6022A441AC900C90A5A /* EditPetProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F3D6012A441AC900C90A5A /* EditPetProfileModel.swift */; };
 		D2F98F9D2967154D00CC82DE /* ZoocAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F98F9C2967154D00CC82DE /* ZoocAlertViewController.swift */; };
 		D2F98F9F29676E3300CC82DE /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F98F9E29676E3300CC82DE /* UINavigationController+.swift */; };
 /* End PBXBuildFile section */
@@ -405,6 +406,7 @@
 		D2F1936629713FCD00AD87D3 /* OnboardingJWTTokenResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJWTTokenResult.swift; sourceTree = "<group>"; };
 		D2F3D5FD2A4411D300C90A5A /* MyEditPetProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditPetProfileViewController.swift; sourceTree = "<group>"; };
 		D2F3D5FF2A4411FF00C90A5A /* MyEditPetProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditPetProfileView.swift; sourceTree = "<group>"; };
+		D2F3D6012A441AC900C90A5A /* EditPetProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPetProfileModel.swift; sourceTree = "<group>"; };
 		D2F98F9C2967154D00CC82DE /* ZoocAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocAlertViewController.swift; sourceTree = "<group>"; };
 		D2F98F9E29676E3300CC82DE /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -860,6 +862,7 @@
 			isa = PBXGroup;
 			children = (
 				8718A06329AD3445001C7460 /* EditProfileRequest.swift */,
+				D2F3D6012A441AC900C90A5A /* EditPetProfileModel.swift */,
 				D26C68EF296F693E0088DC9A /* MyResult.swift */,
 				D21CEC5F29ABC01200854A36 /* MyRegisterPetRequestDto.swift */,
 				D21CEC6129ABC1F900854A36 /* MyRegisterPetResult.swift */,
@@ -1410,6 +1413,7 @@
 				876483272952370F00F74882 /* UIStackView+.swift in Sources */,
 				D23502FD2961F85100F01101 /* MySettingModel.swift in Sources */,
 				877184382A052BF500AB7DE4 /* ZoocInterceptor.swift in Sources */,
+				D2F3D6022A441AC900C90A5A /* EditPetProfileModel.swift in Sources */,
 				D26C85F229693CFA00AEAF9B /* OnboardingWelcomeViewController.swift in Sources */,
 				871EA35329704CD200D0E8CC /* UIImage+.swift in Sources */,
 				4C66FB0329C9A20E0006359E /* RecordMissionIndicatorView.swift in Sources */,

@@ -125,6 +125,8 @@ extension RecordMissionViewController: UICollectionViewDataSource {
         
         cell.galleryButton.setImage(self.recordMissionViewModel.missionData[indexPath.row].image, for: .normal)
         cell.contentTextView.text = self.recordMissionViewModel.missionData[indexPath.row].content
+        cell.contentTextView.textColor =
+            self.recordMissionViewModel.missionData[indexPath.row].textColor
         
         cell.contentTextView.delegate = self
         
@@ -164,7 +166,6 @@ extension RecordMissionViewController: UIImagePickerControllerDelegate  {
 
 extension RecordMissionViewController: GalleryAlertControllerDelegate {
     func galleryButtonDidTap() {
-        print(#function)
         present(imagePickerController, animated: true)
     }
     
@@ -182,17 +183,25 @@ extension RecordMissionViewController: UITextViewDelegate {
             textView.textColor = .black
         }
     }
-
+    
     func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            self.recordMissionViewModel.missionData[self.recordMissionViewModel.index].content = self.recordMissionViewModel.placeHolderText
-            textView.textColor = .zoocGray1
-        } else {
-            self.recordMissionViewModel.missionData[self.recordMissionViewModel.index].content = textView.text
-        }
+        self.recordMissionViewModel.updateContentTextView(
+            index: self.recordMissionViewModel.index,
+            contentText: textView.text
+        )
         self.rootView.missionCollectionView.reloadData()
     }
 }
+//        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+//            self.recordMissionViewModel.missionData[self.recordMissionViewModel.index].content = self.recordMissionViewModel.placeHolderText
+//            textView.textColor = .zoocGray1
+//        } else {
+//            self.recordMissionViewModel.missionData[self.recordMissionViewModel.index].content = textView.text
+//            textView.textColor = .zoocDarkGray1
+//        }
+        
+//    }
+
 
 //MARK: - ScrollViewDelegate
 

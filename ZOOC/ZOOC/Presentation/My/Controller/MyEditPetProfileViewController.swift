@@ -14,8 +14,9 @@ final class MyEditPetProfileViewController: BaseViewController {
     
     //MARK: - Properties
     
+    private var id: Int?
     private var myProfileData: PetResult?
-    private var editMyProfileData = EditProfileRequest()
+    private var editPetProfileData = EditPetProfileRequest()
     
     //MARK: - UIComponents
     
@@ -64,7 +65,8 @@ final class MyEditPetProfileViewController: BaseViewController {
 
     func dataBind(data: PetResult?) {
         rootView.nameTextField.text = data?.name
-        editMyProfileData.nickName = data?.name ?? ""
+        self.id = data?.id
+        editPetProfileData.nickName = data?.name ?? ""
         
         if let photoURL = data?.photo{
             rootView.profileImageButton.kfSetButtonImage(url: photoURL)
@@ -74,11 +76,9 @@ final class MyEditPetProfileViewController: BaseViewController {
     }
     
     private func requestPatchUserProfileAPI() {
-        MyAPI.shared.patchMyProfile(requset: editMyProfileData) { result in
-            //guard let result = self.validateResult(result) as? UserResult else { return }
-            guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
-            tabVC.homeViewController.updateUI()
-            self.popToMyProfileView()
+        guard let id = self.id else { return }
+        MyAPI.shared.patchPetProfile(requset: editPetProfileData, id: id) { result in
+            print(result)
         }
     }
     
@@ -128,7 +128,7 @@ final class MyEditPetProfileViewController: BaseViewController {
     
     @objc func editCompleteButtonDidTap(){
         guard let nickName = rootView.nameTextField.text else { return }
-        self.editMyProfileData.nickName = nickName
+        self.editPetProfileData.nickName = nickName
         requestPatchUserProfileAPI()
     }
 }
@@ -162,7 +162,7 @@ extension MyEditPetProfileViewController: GalleryAlertControllerDelegate {
     
     func deleteButtonDidTap() {
         rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
-        editMyProfileData.hasPhoto = false
+        editPetProfileData.photo = false
     }
 }
 
@@ -175,7 +175,7 @@ extension MyEditPetProfileViewController: UIImagePickerControllerDelegate {
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         rootView.profileImageButton.setImage(image, for: .normal)
         rootView.completeButton.isEnabled = true
-        self.editMyProfileData.profileImage = image
+        self.editPetProfileData.file = image
         dismiss(animated: true)
     }
 }

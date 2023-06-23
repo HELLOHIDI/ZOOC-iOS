@@ -58,4 +58,13 @@ extension MyAPI{
                                 completion: completion)
         }
     }
+    
+    public func patchPetProfile(requset: EditPetProfileRequest, id: Int,
+                        completion: @escaping (NetworkResult<Any>) -> Void){
+        myProvider.request(.patchPetProfile(requset,id)) { result in
+            self.disposeNetwork(result,
+                                dataModel: EditPetProfileResult.self,
+                                completion: completion)
+        }
+    }
 }

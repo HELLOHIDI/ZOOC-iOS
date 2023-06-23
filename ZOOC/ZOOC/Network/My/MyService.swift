@@ -12,7 +12,7 @@ import Moya
 enum MyService {
     case getMyPageData
     case patchUserProfile(_ request: EditProfileRequest)
-    case patchPetProfile(_ request: EditPetProfileRequest, _ id: String)
+    case patchPetProfile(_ request: EditPetProfileRequest, _ id: Int)
     case deleteAccount
     case postRegisterPet(param: MyRegisterPetRequest)
     case logout
@@ -32,7 +32,7 @@ extension MyService: BaseTargetType {
         case .logout:
             return URLs.logout
         case .patchPetProfile(_, let id):
-            return URLs.patchPet.replacingOccurrences(of: "{petId}", with: id)
+            return URLs.patchPet.replacingOccurrences(of: "{petId}", with: "\(id)")
         }
     }
     
@@ -120,15 +120,19 @@ extension MyService: BaseTargetType {
                     name: "nickName"
                 )
             )
-            multipartFormDates.append(
-                MultipartFormData(
-                    provider: .data(request.file),
-                    name: "files",
-                    fileName: "image.jpeg",
-                    mimeType: "image/jpeg"
+            if let photo = request.file {
+                print("포토있음")
+                let photo = photo.jpegData(compressionQuality: 1.0) ?? Data()
+                multipartFormDates.append(
+                    MultipartFormData(
+                        provider: .data(photo),
+                        name: "files",
+                        fileName: "image.jpeg",
+                        mimeType: "image/jpeg"
+                    )
                 )
-            )
-            return .uploadCompositeMultipart(multipartFormDates, urlParameters: ["photo" : request.photo] )
+            }
+            return .uploadCompositeMultipart(multipartFormDates, urlParameters: ["photo" : request.photo ? "true" : "false"] )
         }
     }
     

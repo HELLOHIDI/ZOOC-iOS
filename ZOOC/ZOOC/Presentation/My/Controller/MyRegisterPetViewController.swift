@@ -94,7 +94,7 @@ final class MyRegisterPetViewController: BaseViewController {
         }
         
         MyAPI.shared.registerPet(
-            param: MyRegisterPetRequestDto(petNames: names, files: photos, isPetPhotos: isPhotos)
+            param: MyRegisterPetRequest(petNames: names, files: photos, isPetPhotos: isPhotos)
         ) { result in
             guard let result = self.validateResult(result) as? [MyRegisterPetResult] else {
                 return

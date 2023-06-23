@@ -42,7 +42,7 @@ extension MyAPI{
         }
     }
     
-    public func registerPet(param: MyRegisterPetRequestDto, completion: @escaping (NetworkResult<Any>) -> Void) {
+    public func registerPet(param: MyRegisterPetRequest, completion: @escaping (NetworkResult<Any>) -> Void) {
         myProvider.request(.postRegisterPet(param: param)) {
             (result) in
             self.disposeNetwork(result,

@@ -13,6 +13,7 @@ import Then
 //MARK: - MyRegisterPetButtonTappedDelegate
 
 protocol MyRegisterPetButtonTappedDelegate {
+    func petCellTapped(pet: PetResult)
     func myRegisterPetButtonTapped(isSelected: Bool)
 }
 
@@ -157,6 +158,11 @@ extension MyPetSectionCollectionViewCell: UICollectionViewDataSource {
               let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MyPetCollectionFooterView.reuseCellIdentifier, for: indexPath) as? MyPetCollectionFooterView else { return UICollectionReusableView() }
         footer.delegate = self
         return footer
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(#function)
+        delegate?.petCellTapped(pet: myPetMemberData[indexPath.item])
     }
 }
 

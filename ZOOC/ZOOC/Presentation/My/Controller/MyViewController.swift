@@ -223,9 +223,15 @@ extension MyViewController: SettingMenuTableViewCellDelegate {
 //MARK: - MyRegisterPetButtonTappedDelegate
 
 extension MyViewController: MyRegisterPetButtonTappedDelegate {
+    func petCellTapped(pet: PetResult) {
+        presentToEditPetProfileView(pet: pet)
+    }
+    
     func myRegisterPetButtonTapped(isSelected: Bool) {
         pushToRegisterPetView()
     }
+    
+
 }
 
 extension MyViewController: MyDeleteAccountSectionCollectionViewCellDelegate {
@@ -262,6 +268,13 @@ extension MyViewController {
         let registerPetViewController = MyRegisterPetViewController(myPetRegisterViewModel: MyPetRegisterViewModel())
         registerPetViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(registerPetViewController, animated: true)
+    }
+    
+    private func presentToEditPetProfileView(pet: PetResult) {
+        let editPetProfileView = MyEditPetProfileViewController()
+        editPetProfileView.modalPresentationStyle = .fullScreen
+        editPetProfileView.dataBind(data: pet)
+        self.present(editPetProfileView, animated: true)
     }
     
     private func shareInviteCode() {

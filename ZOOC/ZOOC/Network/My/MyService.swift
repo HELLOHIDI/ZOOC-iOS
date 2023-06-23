@@ -77,7 +77,7 @@ extension MyService: BaseTargetType {
             
             
             multipartFormData.append(nickNameData)
-            return .uploadCompositeMultipart(multipartFormData, urlParameters: ["photo": request.hasPhoto ? "true" : "false"])
+            return .uploadCompositeMultipart(multipartFormData, urlParameters: ["photo": request.hasPhoto])
             
             
         case .deleteAccount:
@@ -126,7 +126,7 @@ extension MyService: BaseTargetType {
                 multipartFormDates.append(
                     MultipartFormData(
                         provider: .data(photo),
-                        name: "files",
+                        name: "file",
                         fileName: "image.jpeg",
                         mimeType: "image/jpeg"
                     )

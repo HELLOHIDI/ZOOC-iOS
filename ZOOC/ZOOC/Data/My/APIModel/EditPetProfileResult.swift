@@ -8,5 +8,5 @@
 struct EditPetProfileResult: Codable {
     let id: Int
     let name: String
-    let photo: String
+    let photo: String?
 }

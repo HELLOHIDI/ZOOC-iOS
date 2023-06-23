@@ -261,7 +261,6 @@ extension MyViewController {
     private func pushToRegisterPetView() {
         let registerPetViewController = MyRegisterPetViewController(myPetRegisterViewModel: MyPetRegisterViewModel())
         registerPetViewController.hidesBottomBarWhenPushed = true
-        registerPetViewController.dataSend(myPetMemberData: myPetMemberData)
         self.navigationController?.pushViewController(registerPetViewController, animated: true)
     }
     

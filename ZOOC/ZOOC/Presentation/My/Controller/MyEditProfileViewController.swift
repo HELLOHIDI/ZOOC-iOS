@@ -46,7 +46,6 @@ final class MyEditProfileViewController: BaseViewController {
     
     private func target() {
         rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        
         rootView.completeButton.addTarget(self, action: #selector(editCompleteButtonDidTap), for: .touchUpInside)
         
         rootView.profileImageButton.addTarget(self, action: #selector(profileImageButtonDidTap) , for: .touchUpInside)
@@ -75,7 +74,7 @@ final class MyEditProfileViewController: BaseViewController {
     
     private func requestPatchUserProfileAPI() {
         MyAPI.shared.patchMyProfile(requset: editMyProfileData) { result in
-            //guard let result = self.validateResult(result) as? UserResult else { return }
+//            guard let result = self.validateResult(result) as? UserResult else { return }
             guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
             tabVC.homeViewController.updateUI()
             self.popToMyProfileView()

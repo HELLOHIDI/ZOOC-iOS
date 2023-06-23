@@ -78,7 +78,9 @@ final class MyEditPetProfileViewController: BaseViewController {
     private func requestPatchUserProfileAPI() {
         guard let id = self.id else { return }
         MyAPI.shared.patchPetProfile(requset: editPetProfileData, id: id) { result in
+            guard let result = self.validateResult(result) as? EditPetProfileResult else { return }
             print(result)
+            self.popToMyProfileView()
         }
     }
     
@@ -91,7 +93,7 @@ final class MyEditPetProfileViewController: BaseViewController {
     
     @objc func backButtonDidTap() {
         let myAlertViewController = ZoocAlertViewController()
-        myAlertViewController.presentingVC = .editProfile
+        myAlertViewController.presentingVC = .editPetProfile
         myAlertViewController.modalPresentationStyle = .overFullScreen
         present(myAlertViewController, animated: false)
     }
@@ -128,8 +130,14 @@ final class MyEditPetProfileViewController: BaseViewController {
     
     @objc func editCompleteButtonDidTap(){
         guard let nickName = rootView.nameTextField.text else { return }
-        self.editPetProfileData.nickName = nickName
-        requestPatchUserProfileAPI()
+        if nickName.count > 0 {
+            self.editPetProfileData.nickName = nickName
+            requestPatchUserProfileAPI()
+            rootView.completeButton.isEnabled = false
+        } else {
+            presentBottomAlert("반려동물의 이름을 작성해주세요!")
+        }
+        
     }
 }
 
@@ -147,9 +155,7 @@ extension MyEditPetProfileViewController {
     }
     
     private func popToMyProfileView() {
-        guard let beforeVC = self.navigationController?.previousViewController as? MyViewController else { return }
-        beforeVC.requestMyPageAPI()
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true)
     }
 }
 
@@ -163,6 +169,7 @@ extension MyEditPetProfileViewController: GalleryAlertControllerDelegate {
     func deleteButtonDidTap() {
         rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
         editPetProfileData.photo = false
+        rootView.completeButton.isEnabled = true
     }
 }
 

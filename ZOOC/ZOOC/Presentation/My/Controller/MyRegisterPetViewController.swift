@@ -47,6 +47,10 @@ final class MyRegisterPetViewController: BaseViewController {
         target()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        requestPetResult()
+    }
+    
     //MARK: - Custom Method
     
     private func register() {
@@ -62,10 +66,10 @@ final class MyRegisterPetViewController: BaseViewController {
         rootView.registerPetButton.addTarget(self, action: #selector(registerPetButtonDidTap), for: .touchUpInside)
     }
     
-    func dataSend(myPetMemberData: [PetResult]) {
-        self.myPetMemberData = myPetMemberData
-        myPetRegisterViewModel.petCount = self.myPetMemberData.count
-    }
+//    func dataSend(myPetMemberData: [PetResult]) {
+//        self.myPetMemberData = myPetMemberData
+//        myPetRegisterViewModel.petCount = self.myPetMemberData.count
+//    }
     
     //MARK: - Action Method
     
@@ -253,8 +257,13 @@ extension MyRegisterPetViewController: UIImagePickerControllerDelegate {
 }
 
 extension MyRegisterPetViewController {
-    func registerPet() {
-        self.navigationController?.popViewController(animated: true)
+    func requestPetResult() {
+        MyAPI.shared.getMyPageData() { result in
+            
+            guard let result = self.validateResult(result) as? MyResult else { return }
+            self.myPetMemberData = result.pet
+            self.rootView.registerPetTableView.reloadData()
+        }
     }
 }
 

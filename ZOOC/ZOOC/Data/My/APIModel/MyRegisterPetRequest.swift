@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MyRegisterPetRequestDto: Codable {
+struct MyRegisterPetRequest: Codable {
     let petNames: [String]
     let files: [Data?]
     let isPetPhotos: [Bool]

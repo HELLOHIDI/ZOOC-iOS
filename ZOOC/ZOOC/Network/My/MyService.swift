@@ -12,8 +12,9 @@ import Moya
 enum MyService {
     case getMyPageData
     case patchUserProfile(_ request: EditProfileRequest)
+    case patchPetProfile(_ request: EditPetProfileRequest, _ id: Int)
     case deleteAccount
-    case postRegisterPet(param: MyRegisterPetRequestDto)
+    case postRegisterPet(param: MyRegisterPetRequest)
     case logout
 }
 
@@ -30,6 +31,8 @@ extension MyService: BaseTargetType {
             return URLs.registerPet.replacingOccurrences(of: "{familyId}", with: User.shared.familyID) //TODO: 이 위치가 맞을까..
         case .logout:
             return URLs.logout
+        case .patchPetProfile(_, let id):
+            return URLs.patchPet.replacingOccurrences(of: "{petId}", with: "\(id)")
         }
     }
     
@@ -45,11 +48,12 @@ extension MyService: BaseTargetType {
             return .post
         case .logout:
             return .delete
+        case .patchPetProfile:
+            return .patch
         }
     }
     
     var task: Moya.Task {
-        
         switch self {
         case .getMyPageData:
             return .requestPlain
@@ -73,9 +77,9 @@ extension MyService: BaseTargetType {
             
             
             multipartFormData.append(nickNameData)
-            return .uploadCompositeMultipart(multipartFormData, urlParameters: ["photo": request.hasPhoto ? "true" : "false"])
-
-
+            return .uploadCompositeMultipart(multipartFormData, urlParameters: ["photo": request.hasPhoto])
+            
+            
         case .deleteAccount:
             return .requestPlain
             
@@ -87,14 +91,14 @@ extension MyService: BaseTargetType {
                     provider: .data("\(name)".data(using: .utf8)!),
                     name: "petNames[]"))
             }
-
+            
             //photo! 나중에 바꿔주기
             for photo in param.files {
-                    multipartFormDatas.append(MultipartFormData(
-                        provider: .data(photo!),
-                        name: "files",
-                        fileName: "image.jpeg",
-                        mimeType: "image/jpeg"))
+                multipartFormDatas.append(MultipartFormData(
+                    provider: .data(photo!),
+                    name: "files",
+                    fileName: "image.jpeg",
+                    mimeType: "image/jpeg"))
             }
             
             for isPhoto in param.isPetPhotos {
@@ -102,16 +106,37 @@ extension MyService: BaseTargetType {
                     provider: .data("\(isPhoto)".data(using: .utf8)!),
                     name: "isPetPhotos[]"))
             }
-
+            
             return .uploadMultipart(multipartFormDatas)
             
         case .logout:
             return .requestParameters(parameters: ["fcmToken": User.shared.fcmToken],
                                       encoding: JSONEncoding.default)
+        case .patchPetProfile(let request, _):
+            var multipartFormDates: [MultipartFormData] = []
+            multipartFormDates.append(
+                MultipartFormData(
+                    provider: .data(request.nickName.data(using: .utf8)!),
+                    name: "nickName"
+                )
+            )
+            if let photo = request.file {
+                print("포토있음")
+                let photo = photo.jpegData(compressionQuality: 1.0) ?? Data()
+                multipartFormDates.append(
+                    MultipartFormData(
+                        provider: .data(photo),
+                        name: "file",
+                        fileName: "image.jpeg",
+                        mimeType: "image/jpeg"
+                    )
+                )
+            }
+            return .uploadCompositeMultipart(multipartFormDates, urlParameters: ["photo" : request.photo ? "true" : "false"] )
         }
     }
     
-    var headers: [String : String]?{
+    var headers: [String : String]? {
         switch self {
         case .getMyPageData:
             return APIConstants.hasTokenHeader
@@ -123,7 +148,8 @@ extension MyService: BaseTargetType {
             return APIConstants.multipartHeader
         case .logout:
             return APIConstants.hasTokenHeader
+        case .patchPetProfile:
+            return APIConstants.multipartHeader
         }
-        
     }
 }

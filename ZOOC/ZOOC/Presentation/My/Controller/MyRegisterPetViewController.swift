@@ -47,6 +47,10 @@ final class MyRegisterPetViewController: BaseViewController {
         target()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        requestPetResult()
+    }
+    
     //MARK: - Custom Method
     
     private func register() {
@@ -62,10 +66,10 @@ final class MyRegisterPetViewController: BaseViewController {
         rootView.registerPetButton.addTarget(self, action: #selector(registerPetButtonDidTap), for: .touchUpInside)
     }
     
-    func dataSend(myPetMemberData: [PetResult]) {
-        self.myPetMemberData = myPetMemberData
-        myPetRegisterViewModel.petCount = self.myPetMemberData.count
-    }
+//    func dataSend(myPetMemberData: [PetResult]) {
+//        self.myPetMemberData = myPetMemberData
+//        myPetRegisterViewModel.petCount = self.myPetMemberData.count
+//    }
     
     //MARK: - Action Method
     
@@ -94,7 +98,7 @@ final class MyRegisterPetViewController: BaseViewController {
         }
         
         MyAPI.shared.registerPet(
-            param: MyRegisterPetRequestDto(petNames: names, files: photos, isPetPhotos: isPhotos)
+            param: MyRegisterPetRequest(petNames: names, files: photos, isPetPhotos: isPhotos)
         ) { result in
             guard let result = self.validateResult(result) as? [MyRegisterPetResult] else {
                 return
@@ -144,7 +148,9 @@ extension MyRegisterPetViewController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MyRegisteredPetTableViewCell.cellIdentifier, for: indexPath)
                     as? MyRegisteredPetTableViewCell else { return UITableViewCell() }
             cell.selectionStyle = .none
-            cell.dataBind(data: myPetMemberData[indexPath.row], index: indexPath.row, petData: myPetMemberData)
+            cell.petProfileButton.tag = indexPath.row
+            cell.dataBind(data: myPetMemberData[indexPath.row])
+            cell.delegate = self
             return cell
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MyRegisterPetTableViewCell.cellIdentifier, for: indexPath)
@@ -196,6 +202,17 @@ extension MyRegisterPetViewController: UITableViewDataSource {
     }
 }
 
+//MARK: - MyRegisterdPetTappedDelegate
+
+extension MyRegisterPetViewController: MyRegisterdPetTappedDelegate {
+    func petProfileButtonDidTap(tag: Int) {
+        let editPetProfileView = MyEditPetProfileViewController()
+        editPetProfileView.modalPresentationStyle = .fullScreen
+        editPetProfileView.dataBind(data: myPetMemberData[tag])
+        self.present(editPetProfileView, animated: true)
+    }
+}
+
 //MARK: - MyDeleteButtonTappedDelegate
 
 extension MyRegisterPetViewController: MyDeleteButtonTappedDelegate {
@@ -240,8 +257,13 @@ extension MyRegisterPetViewController: UIImagePickerControllerDelegate {
 }
 
 extension MyRegisterPetViewController {
-    func registerPet() {
-        self.navigationController?.popViewController(animated: true)
+    func requestPetResult() {
+        MyAPI.shared.getMyPageData() { result in
+            
+            guard let result = self.validateResult(result) as? MyResult else { return }
+            self.myPetMemberData = result.pet
+            self.rootView.registerPetTableView.reloadData()
+        }
     }
 }
 

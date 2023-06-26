@@ -13,6 +13,7 @@ import Then
 enum PresentingVC {
     case record
     case editProfile
+    case editPetProfile
 }
 
 final class ZoocAlertViewController: UIViewController {
@@ -156,8 +157,10 @@ extension ZoocAlertViewController {
             popRecordVC()
         case .editProfile:
             popEditVC()
-        case .none: break
-            
+        case .editPetProfile:
+            popEditPetVC()
+        case .none:
+            break
         }
     }
     
@@ -175,6 +178,10 @@ extension ZoocAlertViewController {
     }
     
     private func popRecordVC() {
+        self.presentingViewController?.presentingViewController?.dismiss(animated: false)
+    }
+    
+    private func popEditPetVC() {
         self.presentingViewController?.presentingViewController?.dismiss(animated: false)
     }
 }

@@ -1,8 +1,8 @@
 //
-//  EditProfileViewController.swift
+//  MyEditPetProfileViewController.swift
 //  ZOOC
 //
-//  Created by 류희재 on 2023/01/04.
+//  Created by 류희재 on 2023/06/22.
 //
 
 import UIKit
@@ -10,12 +10,13 @@ import UIKit
 import SnapKit
 import Then
 
-final class MyEditProfileViewController: BaseViewController {
+final class MyEditPetProfileViewController: BaseViewController {
     
     //MARK: - Properties
     
-    private var myProfileData: UserResult?
-    private var editMyProfileData = EditProfileRequest()
+    private var id: Int?
+    private var myProfileData: PetResult?
+    private var editPetProfileData = EditPetProfileRequest()
     
     //MARK: - UIComponents
     
@@ -46,6 +47,7 @@ final class MyEditProfileViewController: BaseViewController {
     
     private func target() {
         rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        
         rootView.completeButton.addTarget(self, action: #selector(editCompleteButtonDidTap), for: .touchUpInside)
         
         rootView.profileImageButton.addTarget(self, action: #selector(profileImageButtonDidTap) , for: .touchUpInside)
@@ -54,16 +56,17 @@ final class MyEditProfileViewController: BaseViewController {
     }
     
     private func style() {
-        imagePickerController.do { 
+        imagePickerController.do {
             $0.sourceType = .photoLibrary
         }
         
-        rootView.numberOfNameCharactersLabel.text = "\(rootView.nameTextField.text!.count)/10"
+        rootView.numberOfNameCharactersLabel.text = "\(rootView.nameTextField.text!.count)/4"
     }
 
-    func dataBind(data: UserResult?) {
-        rootView.nameTextField.text = data?.nickName
-        editMyProfileData.nickName = data?.nickName ?? ""
+    func dataBind(data: PetResult?) {
+        rootView.nameTextField.text = data?.name
+        self.id = data?.id
+        editPetProfileData.nickName = data?.name ?? ""
         
         if let photoURL = data?.photo{
             rootView.profileImageButton.kfSetButtonImage(url: photoURL)
@@ -73,10 +76,10 @@ final class MyEditProfileViewController: BaseViewController {
     }
     
     private func requestPatchUserProfileAPI() {
-        MyAPI.shared.patchMyProfile(requset: editMyProfileData) { result in
-//            guard let result = self.validateResult(result) as? UserResult else { return }
-            guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
-            tabVC.homeViewController.updateUI()
+        guard let id = self.id else { return }
+        MyAPI.shared.patchPetProfile(requset: editPetProfileData, id: id) { result in
+            guard let result = self.validateResult(result) as? EditPetProfileResult else { return }
+            print(result)
             self.popToMyProfileView()
         }
     }
@@ -90,7 +93,7 @@ final class MyEditProfileViewController: BaseViewController {
     
     @objc func backButtonDidTap() {
         let myAlertViewController = ZoocAlertViewController()
-        myAlertViewController.presentingVC = .editProfile
+        myAlertViewController.presentingVC = .editPetProfile
         myAlertViewController.modalPresentationStyle = .overFullScreen
         present(myAlertViewController, animated: false)
     }
@@ -100,11 +103,11 @@ final class MyEditProfileViewController: BaseViewController {
         guard let text = textField.text else { return }
         var textFieldState: BaseTextFieldState
         switch text.count {
-        case 1...9:
+        case 1...3:
             textFieldState = .isWritten
-        case 10...:
+        case 4...:
             textFieldState = .isFull
-            let fixedText = text.substring(from: 0, to:9)
+            let fixedText = text.substring(from: 0, to:3)
             textField.text = fixedText + " "
             
             let when = DispatchTime.now() + 0.01
@@ -127,14 +130,20 @@ final class MyEditProfileViewController: BaseViewController {
     
     @objc func editCompleteButtonDidTap(){
         guard let nickName = rootView.nameTextField.text else { return }
-        self.editMyProfileData.nickName = nickName
-        requestPatchUserProfileAPI()
+        if nickName.count > 0 {
+            self.editPetProfileData.nickName = nickName
+            requestPatchUserProfileAPI()
+            rootView.completeButton.isEnabled = false
+        } else {
+            presentBottomAlert("반려동물의 이름을 작성해주세요!")
+        }
+        
     }
 }
 
-extension MyEditProfileViewController {
+extension MyEditPetProfileViewController {
     func setTextFieldText(textCount: Int) {
-        rootView.numberOfNameCharactersLabel.text =  textCount < 10 ? "\(textCount)/10" : "10/10"
+        rootView.numberOfNameCharactersLabel.text =  textCount < 4 ? "\(textCount)/4" : "4/4"
     }
     
     func setDefaultProfileImage() {
@@ -146,35 +155,36 @@ extension MyEditProfileViewController {
     }
     
     private func popToMyProfileView() {
-        guard let beforeVC = self.navigationController?.previousViewController as? MyViewController else { return }
-        beforeVC.requestMyPageAPI()
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true)
     }
 }
 
 //MARK: - GalleryAlertControllerDelegate
 
-extension MyEditProfileViewController: GalleryAlertControllerDelegate {
+extension MyEditPetProfileViewController: GalleryAlertControllerDelegate {
     func galleryButtonDidTap() {
         present(imagePickerController, animated: true)
     }
     
     func deleteButtonDidTap() {
         rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
-        editMyProfileData.hasPhoto = false
+        editPetProfileData.photo = false
+        rootView.completeButton.isEnabled = true
     }
 }
 
 //MARK: - UIImagePickerControllerDelegate
 
-extension MyEditProfileViewController: UIImagePickerControllerDelegate {
+extension MyEditPetProfileViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         rootView.profileImageButton.setImage(image, for: .normal)
         rootView.completeButton.isEnabled = true
-        self.editMyProfileData.profileImage = image
+        self.editPetProfileData.file = image
         dismiss(animated: true)
     }
 }
+
+

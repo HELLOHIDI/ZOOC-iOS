@@ -18,6 +18,7 @@ public enum URLs{
     static let getInviteCode = "/family/code/{familyId}"
     static let registerPet = "/family/pets/{familyId}"
     static let joinFamily = "/family/user"
+    static let patchPet = "/pet/{petId}/profile"
     
     //MARK: - User
     

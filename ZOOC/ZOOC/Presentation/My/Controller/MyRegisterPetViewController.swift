@@ -209,7 +209,7 @@ extension MyRegisterPetViewController: MyRegisterdPetTappedDelegate {
         let editPetProfileView = MyEditPetProfileViewController()
         editPetProfileView.modalPresentationStyle = .fullScreen
         editPetProfileView.dataBind(data: myPetMemberData[tag])
-        self.present(editPetProfileView, animated: true)
+        self.navigationController?.pushViewController(editPetProfileView, animated: true)
     }
 }
 

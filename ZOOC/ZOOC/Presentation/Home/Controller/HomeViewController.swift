@@ -209,7 +209,9 @@ final class HomeViewController : BaseViewController {
             
             self.archiveData = result
             self.rootView.emptyView.isHidden = !result.isEmpty
-            self.rootView.emptyView.isHidden = self.guideVC.isViewLoaded
+            if self.guideVC.isViewLoaded {
+                self.rootView.emptyView.isHidden = false
+            }
             self.view.layoutIfNeeded()
             self.configIndicatorBarWidth(self.rootView.archiveListCollectionView)
         }

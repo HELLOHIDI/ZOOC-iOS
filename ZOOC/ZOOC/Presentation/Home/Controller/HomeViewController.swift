@@ -57,7 +57,7 @@ final class HomeViewController : BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         if UserDefaultsManager.validateGuideVCInHome() {
             let guideVC = HomeGuideViewController()
-            guideVC.modalPresentationStyle = .overFullScreen
+            guideVC.modalPresentationStyle = .overCurrentContext
             present(guideVC, animated: false)
         }
     }

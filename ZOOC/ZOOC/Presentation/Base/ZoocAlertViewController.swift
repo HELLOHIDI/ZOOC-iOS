@@ -10,17 +10,22 @@ import UIKit
 import SnapKit
 import Then
 
-enum PresentingVC {
+enum AlertType {
     case record
     case editProfile
     case editPetProfile
+}
+
+protocol ZoocAlertViewControllerDelegate: AnyObject {
+    func exitButtonDidTap()
 }
 
 final class ZoocAlertViewController: UIViewController {
     
     //MARK: - Properties
     
-    public var presentingVC: PresentingVC?
+    public var alertType: AlertType?
+    weak var delegate: ZoocAlertViewControllerDelegate?
     
     //MARK: - UI Components
     
@@ -28,8 +33,8 @@ final class ZoocAlertViewController: UIViewController {
     private var contentView = UIView()
     private var alertTitleLabel = UILabel()
     private var alertSubTitleLabel = UILabel()
-    private lazy var keepEditButton = UIButton()
-    private lazy var popToMyViewButton = UIButton()
+    private lazy var keepButton = UIButton()
+    private lazy var exitButton = UIButton()
     
     //MARK: - Life Cycle
     
@@ -47,8 +52,8 @@ final class ZoocAlertViewController: UIViewController {
     //MARK: - Custom Method
     
     private func target() {
-        popToMyViewButton.addTarget(self, action: #selector(popToMyViewButtonDidTap), for: .touchUpInside)
-        keepEditButton.addTarget(self, action: #selector(keepButtonDidTap), for: .touchUpInside)
+        exitButton.addTarget(self, action: #selector(popToMyViewButtonDidTap), for: .touchUpInside)
+        keepButton.addTarget(self, action: #selector(keepButtonDidTap), for: .touchUpInside)
     }
     
     private func style() {
@@ -80,7 +85,7 @@ final class ZoocAlertViewController: UIViewController {
             $0.textAlignment = .center
         }
         
-        keepEditButton.do {
+        keepButton.do {
             $0.backgroundColor = .zoocMainGreen
             $0.setTitle("이어 쓰기", for: .normal)
             $0.setTitleColor(.zoocWhite1, for: .normal)
@@ -88,7 +93,7 @@ final class ZoocAlertViewController: UIViewController {
             $0.titleLabel?.font = .zoocSubhead1
         }
         
-        popToMyViewButton.do {
+        exitButton.do {
             $0.backgroundColor = .zoocWhite3
             $0.setTitle("나가기", for: .normal)
             $0.setTitleColor(.zoocDarkGray2, for: .normal)
@@ -99,7 +104,7 @@ final class ZoocAlertViewController: UIViewController {
     
     private func hierarchy() {
         view.addSubviews(contentView,alertView)
-        alertView.addSubviews(alertTitleLabel, alertSubTitleLabel, keepEditButton, popToMyViewButton)
+        alertView.addSubviews(alertTitleLabel, alertSubTitleLabel, keepButton, exitButton)
     }
     
     private func layout() {
@@ -124,16 +129,16 @@ final class ZoocAlertViewController: UIViewController {
             $0.centerX.equalToSuperview()
         }
         
-        keepEditButton.snp.makeConstraints {
+        keepButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(126)
             $0.leading.equalToSuperview()
             $0.width.equalTo(179)
             $0.height.equalTo(54)
         }
         
-        popToMyViewButton.snp.makeConstraints {
-            $0.top.equalTo(self.keepEditButton)
-            $0.leading.equalTo(self.keepEditButton.snp.trailing)
+        exitButton.snp.makeConstraints {
+            $0.top.equalTo(self.keepButton)
+            $0.leading.equalTo(self.keepButton.snp.trailing)
             $0.width.equalTo(120)
             $0.height.equalTo(54)
         }
@@ -142,46 +147,11 @@ final class ZoocAlertViewController: UIViewController {
     //MARK: - Action Method
     
     @objc func popToMyViewButtonDidTap() {
-        popToMyView()
+        dismiss(animated: false)
+        delegate?.exitButtonDidTap()
     }
     
     @objc func keepButtonDidTap() {
         self.dismiss(animated: false)
-    }
-}
-
-extension ZoocAlertViewController {
-    private func popToMyView() {
-        switch self.presentingVC {
-        case .record:
-            popRecordVC()
-        case .editProfile:
-            popEditVC()
-        case .editPetProfile:
-            popEditPetVC()
-        case .none:
-            break
-        }
-    }
-    
-    private func popEditVC() {
-        guard let presentingTVC = self.presentingViewController as? UITabBarController else { return }
-        print(presentingTVC)
-        guard let presentingNVC2 = presentingTVC.selectedViewController as? UINavigationController else { return }
-        print(presentingNVC2)
-        guard let presentingVC = presentingNVC2.topViewController else { return }
-        print(presentingVC)
-        
-        print("⛑⛑⛑⛑⛑⛑⛑⛑⛑⛑⛑")
-        presentingVC.navigationController?.popViewController(animated: true)
-        self.dismiss(animated: false)
-    }
-    
-    private func popRecordVC() {
-        self.presentingViewController?.presentingViewController?.dismiss(animated: false)
-    }
-    
-    private func popEditPetVC() {
-        self.presentingViewController?.presentingViewController?.dismiss(animated: false)
     }
 }

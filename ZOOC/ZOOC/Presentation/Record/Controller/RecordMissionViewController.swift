@@ -71,7 +71,7 @@ final class RecordMissionViewController : BaseViewController {
     //MARK: - Action Method
     
     @objc private func xButtonDidTap(){
-        pushToRecordAlertViewController()
+        presentAlertViewController()
     }
     
     @objc private func dailyButtonDidTap(){
@@ -211,11 +211,12 @@ extension RecordMissionViewController {
         navigationController?.pushViewController(recordViewController, animated: true)
     }
     
-    func pushToRecordAlertViewController() {
-        let recordAlertViewController = ZoocAlertViewController()
-        recordAlertViewController.presentingVC = .record
-        recordAlertViewController.modalPresentationStyle = .overFullScreen
-        self.present(recordAlertViewController, animated: false, completion: nil)
+    func presentAlertViewController() {
+        let zoocAlertVC = ZoocAlertViewController()
+        zoocAlertVC.delegate = self
+        zoocAlertVC.alertType = .record
+        zoocAlertVC.modalPresentationStyle = .overFullScreen
+        self.present(zoocAlertVC, animated: false, completion: nil)
     }
     
     func pushToRecordRegisterViewController() {
@@ -245,6 +246,17 @@ extension RecordMissionViewController {
             self.rootView.missionCollectionView.reloadData()
         }
     }
+}
+
+//MARK: - ZoocAlertViewControllerDelegate
+
+extension RecordMissionViewController: ZoocAlertViewControllerDelegate {
+    
+    func exitButtonDidTap() {
+        dismiss(animated: true)
+    }
+    
+    
 }
 
 

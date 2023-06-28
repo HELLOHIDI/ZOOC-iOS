@@ -77,7 +77,7 @@ final class RecordViewController : BaseViewController{
     //MARK: - Action Method
     
     @objc private func xButtonDidTap(){
-        pushToRecordAlertViewController()
+        presentAlertViewController()
     }
     
     @objc private func missionButtonDidTap(){
@@ -147,11 +147,12 @@ extension RecordViewController {
         navigationController?.pushViewController(recordMissionViewController, animated: true)
     }
     
-    func pushToRecordAlertViewController() {
-        let recordAlertViewController = ZoocAlertViewController()
-        recordAlertViewController.presentingVC = .record
-        recordAlertViewController.modalPresentationStyle = .overFullScreen
-        self.present(recordAlertViewController, animated: false, completion: nil)
+    func presentAlertViewController() {
+        let zoocAlertVC = ZoocAlertViewController()
+        zoocAlertVC.delegate = self
+        zoocAlertVC.alertType = .record
+        zoocAlertVC.modalPresentationStyle = .overFullScreen
+        self.present(zoocAlertVC, animated: false, completion: nil)
     }
     
     func pushToRecordRegisterViewController() {
@@ -187,4 +188,14 @@ extension RecordViewController {
             }
         }
     }
+}
+
+//MARK: - ZoocAlertViewControllerDelegate
+
+extension RecordViewController: ZoocAlertViewControllerDelegate {
+    func exitButtonDidTap() {
+        dismiss(animated: true)
+    }
+
+    
 }

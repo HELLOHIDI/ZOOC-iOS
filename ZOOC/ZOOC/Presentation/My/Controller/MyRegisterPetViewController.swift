@@ -206,10 +206,10 @@ extension MyRegisterPetViewController: UITableViewDataSource {
 
 extension MyRegisterPetViewController: MyRegisterdPetTappedDelegate {
     func petProfileButtonDidTap(tag: Int) {
-        let editPetProfileView = MyEditPetProfileViewController()
-        editPetProfileView.modalPresentationStyle = .fullScreen
-        editPetProfileView.dataBind(data: myPetMemberData[tag])
-        self.navigationController?.pushViewController(editPetProfileView, animated: true)
+        let editPetProfileVC = MyEditPetProfileViewController()
+        editPetProfileVC.modalPresentationStyle = .fullScreen
+        editPetProfileVC.dataBind(data: myPetMemberData[tag])
+        navigationController?.pushViewController(editPetProfileVC, animated: true)
     }
 }
 

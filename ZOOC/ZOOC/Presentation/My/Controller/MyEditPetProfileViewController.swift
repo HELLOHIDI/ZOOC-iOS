@@ -92,10 +92,11 @@ final class MyEditPetProfileViewController: BaseViewController {
     }
     
     @objc func backButtonDidTap() {
-        let myAlertViewController = ZoocAlertViewController()
-        myAlertViewController.presentingVC = .editPetProfile
-        myAlertViewController.modalPresentationStyle = .overFullScreen
-        present(myAlertViewController, animated: false)
+        let zoocAlertVC = ZoocAlertViewController()
+        zoocAlertVC.delegate = self
+        zoocAlertVC.alertType = .leavePage
+        zoocAlertVC.modalPresentationStyle = .overFullScreen
+        present(zoocAlertVC, animated: false)
     }
     
     @objc private func textDidChange(_ notification: Notification) {
@@ -185,6 +186,17 @@ extension MyEditPetProfileViewController: UIImagePickerControllerDelegate {
         self.editPetProfileData.file = image
         dismiss(animated: true)
     }
+}
+
+//MARK: - ZoocAlertViewControllerDelegate
+
+extension MyEditPetProfileViewController: ZoocAlertViewControllerDelegate {
+    func exitButtonDidTap() {
+        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
+    }
+    
+    
 }
 
 

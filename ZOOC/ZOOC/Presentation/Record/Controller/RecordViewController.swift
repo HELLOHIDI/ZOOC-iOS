@@ -14,6 +14,13 @@ final class RecordViewController : BaseViewController{
     
     //MARK: - Properties
     
+    enum DestinationType {
+        case home
+        case mission
+    }
+    
+    private var destinationType: DestinationType = .home
+    
     var petImage: UIImage?
     private var recordData = RecordModel()
     private let placeHoldText: String = """
@@ -77,11 +84,13 @@ final class RecordViewController : BaseViewController{
     //MARK: - Action Method
     
     @objc private func xButtonDidTap(){
-        pushToRecordAlertViewController()
+        destinationType = .home
+        presentAlertViewController()
     }
     
     @objc private func missionButtonDidTap(){
-        pushToRecordMissionViewController()
+        destinationType = .mission
+        presentAlertViewController()
     }
     
     @objc private func galleryImageViewDidTap(){
@@ -144,14 +153,15 @@ extension RecordViewController: UIImagePickerControllerDelegate {
 extension RecordViewController {
     func pushToRecordMissionViewController() {
         let recordMissionViewController = RecordMissionViewController(recordMissionViewModel: RecordMissionViewModel(), missionList: [])
-        navigationController?.pushViewController(recordMissionViewController, animated: true)
+        navigationController?.pushViewController(recordMissionViewController, animated: false)
     }
     
-    func pushToRecordAlertViewController() {
-        let recordAlertViewController = ZoocAlertViewController()
-        recordAlertViewController.presentingVC = .record
-        recordAlertViewController.modalPresentationStyle = .overFullScreen
-        self.present(recordAlertViewController, animated: false, completion: nil)
+    func presentAlertViewController() {
+        let zoocAlertVC = ZoocAlertViewController()
+        zoocAlertVC.delegate = self
+        zoocAlertVC.alertType = .leavePage
+        zoocAlertVC.modalPresentationStyle = .overFullScreen
+        self.present(zoocAlertVC, animated: false, completion: nil)
     }
     
     func pushToRecordRegisterViewController() {
@@ -187,4 +197,22 @@ extension RecordViewController {
             }
         }
     }
+}
+
+//MARK: - ZoocAlertViewControllerDelegate
+
+extension RecordViewController: ZoocAlertViewControllerDelegate {
+    
+    func exitButtonDidTap() {
+        switch destinationType {
+            
+        case .home:
+            dismiss(animated: true)
+        case .mission:
+            pushToRecordMissionViewController()
+        }
+        
+    }
+
+    
 }

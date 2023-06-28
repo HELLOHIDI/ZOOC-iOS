@@ -42,6 +42,7 @@ final class MyEditProfileViewController: BaseViewController {
     private func delegate() {
         galleryAlertController.delegate = self
         imagePickerController.delegate = self
+        
     }
     
     private func target() {
@@ -89,10 +90,11 @@ final class MyEditProfileViewController: BaseViewController {
     }
     
     @objc func backButtonDidTap() {
-        let myAlertViewController = ZoocAlertViewController()
-        myAlertViewController.presentingVC = .editProfile
-        myAlertViewController.modalPresentationStyle = .overFullScreen
-        present(myAlertViewController, animated: false)
+        let zoocAlertVC = ZoocAlertViewController()
+        zoocAlertVC.delegate = self
+        zoocAlertVC.alertType = .leavePage
+        zoocAlertVC.modalPresentationStyle = .overFullScreen
+        present(zoocAlertVC, animated: false)
     }
     
     @objc private func textDidChange(_ notification: Notification) {
@@ -176,5 +178,13 @@ extension MyEditProfileViewController: UIImagePickerControllerDelegate {
         rootView.completeButton.isEnabled = true
         self.editMyProfileData.profileImage = image
         dismiss(animated: true)
+    }
+}
+
+//MARK: - 구역
+
+extension MyEditProfileViewController: ZoocAlertViewControllerDelegate {
+    func exitButtonDidTap() {
+        navigationController?.popViewController(animated: true)
     }
 }

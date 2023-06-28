@@ -237,9 +237,11 @@ extension MyViewController: MyRegisterPetButtonTappedDelegate {
 extension MyViewController: MyDeleteAccountSectionCollectionViewCellDelegate {
     func deleteAccountButtonDidTapped() {
         print(#function)
-        let deleteAccountAlertViewController = DeleteAccountAlertViewController()
-        deleteAccountAlertViewController.modalPresentationStyle = .overFullScreen
-        present(deleteAccountAlertViewController, animated: false)
+        let zoocAlertVC = ZoocAlertViewController()
+        zoocAlertVC.delegate = self
+        zoocAlertVC.alertType = .deleteAccount
+        zoocAlertVC.modalPresentationStyle = .overFullScreen
+        present(zoocAlertVC, animated: false)
     }
 }
 
@@ -309,4 +311,18 @@ extension MyViewController {
         alert.addAction(okAction)
         present(alert, animated: false, completion: nil)
     }
+}
+
+
+extension MyViewController: ZoocAlertViewControllerDelegate {
+    func exitButtonDidTap() {
+        MyAPI.shared.deleteAccount() { result in
+            User.shared.clearData()
+            let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
+            onboardingNVC.setNavigationBarHidden(true, animated: true)
+            UIApplication.shared.changeRootViewController(onboardingNVC)
+        }
+    }
+    
+    
 }

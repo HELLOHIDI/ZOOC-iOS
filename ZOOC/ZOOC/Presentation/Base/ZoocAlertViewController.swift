@@ -40,7 +40,7 @@ enum AlertType {
         case .deleteArchive:
             return "삭제하면 글과 사진이 모두 삭제돼요"
         case .deleteAccount:
-            return "회원 탈퇴 시 자동으로 가족에서 탈퇴되고\n작성한 글과 댓글이 모두 삭제됩니다"
+            return "회원 탈퇴 시 자동으로 가족에서 탈퇴되고\n   작성한 글과 댓글이 모두 삭제됩니다"
         }
     }
     
@@ -111,6 +111,27 @@ final class ZoocAlertViewController: UIViewController {
         
     }
     
+    override func viewDidLayoutSubviews() {
+        switch alertType {
+        case .deleteAccount:
+            titleLabel.snp.remakeConstraints {
+                $0.top.equalToSuperview().offset(32)
+                $0.centerX.equalToSuperview()
+            }
+            
+            descriptionLabel.do {
+                let attrString = NSMutableAttributedString(string: $0.text!)
+                let paragraphStyle = NSMutableParagraphStyle()
+                paragraphStyle.lineSpacing = 3
+                attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
+                $0.attributedText = attrString
+            }
+            
+        default:
+            return
+        }
+    }
+    
     //MARK: - Custom Method
     
     private func target() {
@@ -143,6 +164,7 @@ final class ZoocAlertViewController: UIViewController {
             $0.font = .zoocBody1
             $0.textColor = .zoocGray1
             $0.textAlignment = .center
+            $0.numberOfLines = 0
         }
         
         keepButton.do {
@@ -178,12 +200,12 @@ final class ZoocAlertViewController: UIViewController {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(44)
+            $0.top.equalToSuperview().offset(41)
             $0.centerX.equalToSuperview()
         }
         
         descriptionLabel.snp.makeConstraints {
-            $0.top.equalTo(self.titleLabel.snp.bottom).offset(6)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(8)
             $0.centerX.equalToSuperview()
         }
         
@@ -207,6 +229,8 @@ final class ZoocAlertViewController: UIViewController {
         descriptionLabel.text = alertType?.description
         keepButton.setTitle(alertType?.keep, for: .normal)
         exitButton.setTitle(alertType?.exit, for: .normal)
+        
+        view.layoutIfNeeded()
     }
     
     //MARK: - Action Method

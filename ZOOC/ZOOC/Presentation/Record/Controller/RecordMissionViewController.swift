@@ -13,6 +13,14 @@ import Then
 final class RecordMissionViewController : BaseViewController {
     
     //MARK: - Properties
+    
+    enum DestinationType {
+        case home
+        case daily
+    }
+    
+    private var destinationType: DestinationType = .home
+    
     private let placeHoldText: String = """
                                         ex) 2023년 2월 30일
                                         가족에게 어떤 순간이었는지 남겨주세요
@@ -71,11 +79,13 @@ final class RecordMissionViewController : BaseViewController {
     //MARK: - Action Method
     
     @objc private func xButtonDidTap(){
+        destinationType = .home
         presentAlertViewController()
     }
     
     @objc private func dailyButtonDidTap(){
-        pushToRecordViewController()
+        destinationType = .daily
+        presentAlertViewController()
     }
     
     @objc private func nextButtonDidTap(_ sender: Any) {
@@ -253,7 +263,14 @@ extension RecordMissionViewController {
 extension RecordMissionViewController: ZoocAlertViewControllerDelegate {
     
     func exitButtonDidTap() {
-        dismiss(animated: true)
+        switch destinationType {
+            
+        case .home:
+            dismiss(animated: true)
+        case .daily:
+            pushToRecordViewController()
+        }
+        
     }
     
     

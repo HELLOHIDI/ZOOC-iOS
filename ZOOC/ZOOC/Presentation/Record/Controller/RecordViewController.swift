@@ -14,6 +14,13 @@ final class RecordViewController : BaseViewController{
     
     //MARK: - Properties
     
+    enum DestinationType {
+        case home
+        case mission
+    }
+    
+    private var destinationType: DestinationType = .home
+    
     var petImage: UIImage?
     private var recordData = RecordModel()
     private let placeHoldText: String = """
@@ -77,11 +84,13 @@ final class RecordViewController : BaseViewController{
     //MARK: - Action Method
     
     @objc private func xButtonDidTap(){
+        destinationType = .home
         presentAlertViewController()
     }
     
     @objc private func missionButtonDidTap(){
-        pushToRecordMissionViewController()
+        destinationType = .mission
+        presentAlertViewController()
     }
     
     @objc private func galleryImageViewDidTap(){
@@ -193,8 +202,16 @@ extension RecordViewController {
 //MARK: - ZoocAlertViewControllerDelegate
 
 extension RecordViewController: ZoocAlertViewControllerDelegate {
+    
     func exitButtonDidTap() {
-        dismiss(animated: true)
+        switch destinationType {
+            
+        case .home:
+            dismiss(animated: true)
+        case .mission:
+            pushToRecordMissionViewController()
+        }
+        
     }
 
     

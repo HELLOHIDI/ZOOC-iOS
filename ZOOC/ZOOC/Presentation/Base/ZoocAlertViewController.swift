@@ -91,10 +91,10 @@ final class ZoocAlertViewController: UIViewController {
     
     //MARK: - UI Components
     
-    private var alertView = UIView()
-    private var contentView = UIView()
-    private var titleLabel = UILabel()
-    private var descriptionLabel = UILabel()
+    private let alertView = UIView()
+    private let contentView = UIView()
+    private let titleLabel = UILabel()
+    private let descriptionLabel = UILabel()
     private lazy var keepButton = UIButton()
     private lazy var exitButton = UIButton()
     
@@ -112,8 +112,8 @@ final class ZoocAlertViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        switch alertType {
-        case .deleteAccount:
+        
+        if alertType == .deleteAccount {
             titleLabel.snp.remakeConstraints {
                 $0.top.equalToSuperview().offset(32)
                 $0.centerX.equalToSuperview()
@@ -126,9 +126,6 @@ final class ZoocAlertViewController: UIViewController {
                 attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
                 $0.attributedText = attrString
             }
-            
-        default:
-            return
         }
     }
     

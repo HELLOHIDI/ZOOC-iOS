@@ -56,7 +56,7 @@ final class HomeViewController : BaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         if UserDefaultsManager.validateGuideVCInHome() {
-            let guideVC = HomeGuideViewController()
+            //let guideVC = HomeGuideViewController()
             guideVC.modalPresentationStyle = .overCurrentContext
             present(guideVC, animated: false)
         }

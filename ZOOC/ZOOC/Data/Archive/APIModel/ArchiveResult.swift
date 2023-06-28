@@ -22,6 +22,8 @@ struct ArchiveResult: Codable {
 // MARK: - Comment
 
 struct CommentResult: Codable {
+    let commentId: Int
+    let writerId: Int
     let isEmoji: Bool
     let nickName: String
     let photo: String?

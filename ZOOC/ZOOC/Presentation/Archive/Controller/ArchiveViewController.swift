@@ -417,6 +417,16 @@ final class ArchiveViewController : BaseViewController {
         }
     }
     
+    private func requestDeleteCommentAPI(commentID: String) {
+        ArchiveAPI.shared.deleteComment(commentID: commentID) { result in
+            self.validateResult(result)
+            
+            guard let archiveModel = self.archiveModel else { return }
+            
+            self.requestDetailArchiveAPI(request: archiveModel)
+        }
+    }
+    
     //MARK: - Action Method
     
     @objc
@@ -520,7 +530,7 @@ extension ArchiveViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ArchiveCommentCollectionViewCell.cellIdentifier, for: indexPath) as? ArchiveCommentCollectionViewCell else { return UICollectionViewCell() }
-        
+        cell.delegate = self
         cell.dataBind(data: commentsData[indexPath.item])
         return cell
     }
@@ -582,7 +592,42 @@ extension ArchiveViewController: ArchiveCommentViewDelegate {
     }
 }
 
-//MARK: - 구역
+//MARK: - ArchiveCommentCellDelegate
+
+extension ArchiveViewController: ArchiveCommentCellDelegate {
+    func commentEtcButtonDidTap(isMyComment: Bool, id: Int) {
+        let alert = UIAlertController(title: nil,
+                                      message: nil,
+                                      preferredStyle: .actionSheet)
+        //TODO: 신고하기 링크로 연동
+        let reportAction =  UIAlertAction(title: "신고하기", style: .default) { action in
+           
+            self.presentSafariViewController(ExternalURL.reportURL)
+        }
+        
+        let destructiveAction = UIAlertAction(title: "삭제하기",
+                                              style: .destructive) { action in
+            let id = String(id)
+            self.requestDeleteCommentAPI(commentID: id)
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+
+        //메시지 창 컨트롤러에 버튼 액션을 추가
+        alert.addAction(reportAction)
+        
+        if isMyComment {
+            alert.addAction(destructiveAction)
+        }
+        alert.addAction(cancelAction)
+
+        self.present(alert, animated: true)
+    }
+    
+   
+}
+
+//MARK: - EmojiBottomSheetDelegate
 
 extension ArchiveViewController: EmojiBottomSheetDelegate{
     func emojiDidSelected(emojiID: Int) {

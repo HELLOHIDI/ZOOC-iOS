@@ -45,6 +45,6 @@ public enum URLs{
     
     static let postComment = "/comment/{recordId}"
     static let postEmojiComment = "/comment/emoji/{recordId}"
-    static let deleteComment = "/record/{commentId}"
+    static let deleteComment = "/comment/{commentId}"
     
 }

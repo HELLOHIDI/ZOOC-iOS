@@ -14,6 +14,7 @@ enum ArchiveService {
     case postComment(recordID: String, comment: String)
     case postEmojiComment(recordID: String, emojiID: Int)
     case deleteArchive(recordID: String)
+    case deleteComment(commentID: String)
 }
 
 extension ArchiveService: BaseTargetType {
@@ -36,9 +37,14 @@ extension ArchiveService: BaseTargetType {
         case .postEmojiComment(recordID: let recordID, emojiID: _):
             return URLs.postEmojiComment
                 .replacingOccurrences(of: "{recordId}", with: recordID)
+            
         case .deleteArchive(recordID: let recordID):
             return URLs.deleteRecord
                 .replacingOccurrences(of: "{recordId}", with: recordID)
+            
+        case .deleteComment(commentID: let commentID):
+            return URLs.deleteComment
+                .replacingOccurrences(of: "{commentId}", with: commentID)
         }
     }
         
@@ -55,6 +61,9 @@ extension ArchiveService: BaseTargetType {
             
         case .deleteArchive:
             return .delete
+            
+        case .deleteComment:
+            return .delete
         }
     }
     
@@ -66,7 +75,6 @@ extension ArchiveService: BaseTargetType {
         case .postComment(recordID: _, comment: let comment):
             let body = ArchiveCommentReqeust(content: comment)
             return .requestJSONEncodable(body)
-    
             
         case .postEmojiComment(recordID: _, emojiID: let emojiID):
             let body = ArchiveEmojiCommentReqeust(emoji: emojiID)
@@ -74,6 +82,10 @@ extension ArchiveService: BaseTargetType {
             
         case .deleteArchive:
             return .requestPlain
+            
+        case .deleteComment:
+            return .requestPlain
+            
         }
     }
 }

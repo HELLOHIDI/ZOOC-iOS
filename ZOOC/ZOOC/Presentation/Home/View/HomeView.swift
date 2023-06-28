@@ -16,6 +16,8 @@ final class HomeView : UIView{
     
     //MARK: - UI Components
     
+    public let emptyView = UIImageView()
+    
     public let missionView = UIView()
     public let missionWordLabel = UILabel()
     public let missionLabel = UILabel()
@@ -51,6 +53,12 @@ final class HomeView : UIView{
 extension HomeView {
     
     private func style() {
+        
+        emptyView.do {
+            $0.image = Image.graphics12
+            $0.contentMode = .scaleAspectFit
+            $0.isHidden = true
+        }
         
         missionWordLabel.do {
             $0.text = "미션"
@@ -119,7 +127,8 @@ extension HomeView {
                          gridButton,
                          archiveBottomView,
                          archiveListCollectionView,
-                         archiveGridCollectionView)
+                         archiveGridCollectionView,
+                         emptyView)
                           
         
         missionView.addSubviews(missionWordLabel,
@@ -169,6 +178,10 @@ extension HomeView {
             $0.top.equalTo(archiveListCollectionView)
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.bottom.equalTo(self.safeAreaLayoutGuide)
+        }
+        
+        emptyView.snp.makeConstraints {
+            $0.edges.equalTo(archiveListCollectionView).inset(65)
         }
         
         archiveBottomView.snp.makeConstraints {

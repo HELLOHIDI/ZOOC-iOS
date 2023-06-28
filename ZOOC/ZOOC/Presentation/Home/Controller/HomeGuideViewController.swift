@@ -10,10 +10,16 @@ import UIKit
 import SnapKit
 import Then
 
+protocol HomeGuideViewControllerDelegate: AnyObject {
+    func dismiss()
+}
+
 
 final class HomeGuideViewController : UIViewController{
     
     //MARK: - Properties
+    
+    weak var delegate: HomeGuideViewControllerDelegate?
     
     //MARK: - UI Components
     
@@ -46,8 +52,8 @@ final class HomeGuideViewController : UIViewController{
         }
         
         backgroundView.do {
-            $0.backgroundColor = .zoocDarkGray1
-            $0.alpha = 0.95
+            $0.backgroundColor = .black
+            $0.alpha = 0.85
         }
         
         graphicsImageView.do {
@@ -77,6 +83,7 @@ final class HomeGuideViewController : UIViewController{
             $0.contentMode = .scaleAspectFit
             $0.addAction(UIAction(handler: { _ in
                 self.dismiss(animated: false)
+                self.delegate?.dismiss()
             }), for: .touchUpInside)
         }
     }

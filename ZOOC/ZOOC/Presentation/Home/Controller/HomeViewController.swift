@@ -56,8 +56,8 @@ final class HomeViewController : BaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         if UserDefaultsManager.validateGuideVCInHome() {
-            let guideVC = HomeGuideViewController()
-            guideVC.modalPresentationStyle = .overFullScreen
+            rootView.emptyView.isHidden = true
+            guideVC.modalPresentationStyle = .overCurrentContext
             present(guideVC, animated: false)
         }
     }
@@ -69,6 +69,8 @@ final class HomeViewController : BaseViewController {
     //MARK: - Custom Method
     
     private func register() {
+        guideVC.delegate = self
+        
         rootView.petCollectionView.delegate = self
         rootView.petCollectionView.dataSource = self
         
@@ -206,6 +208,8 @@ final class HomeViewController : BaseViewController {
             guard let result = self.validateResult(result) as? [HomeArchiveResult] else { return }
             
             self.archiveData = result
+            self.rootView.emptyView.isHidden = !result.isEmpty
+            self.rootView.emptyView.isHidden = self.guideVC.isViewLoaded
             self.view.layoutIfNeeded()
             self.configIndicatorBarWidth(self.rootView.archiveListCollectionView)
         }
@@ -476,6 +480,12 @@ extension HomeViewController {
         if contentOffsetX > collectionViewContentSizeX - paginationX {
             requestTotalPetAPI()
         }
+    }
+}
+
+extension HomeViewController: HomeGuideViewControllerDelegate {
+    func dismiss() {
+        rootView.emptyView.isHidden = !archiveData.isEmpty
     }
 }
 

@@ -129,8 +129,8 @@ final class ArchiveCommentView : UIView {
         }
         
         hStackView.snp.makeConstraints {
-            $0.top.equalTo(lineView.snp.bottom).offset(5)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.top.equalTo(lineView.snp.bottom).offset(14)
+            $0.horizontalEdges.equalToSuperview().inset(20)
             $0.height.equalTo(46)
         }
         

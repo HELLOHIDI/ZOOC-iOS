@@ -214,7 +214,7 @@ extension RecordMissionViewController {
     func presentAlertViewController() {
         let zoocAlertVC = ZoocAlertViewController()
         zoocAlertVC.delegate = self
-        zoocAlertVC.alertType = .record
+        zoocAlertVC.alertType = .leavePage
         zoocAlertVC.modalPresentationStyle = .overFullScreen
         self.present(zoocAlertVC, animated: false, completion: nil)
     }

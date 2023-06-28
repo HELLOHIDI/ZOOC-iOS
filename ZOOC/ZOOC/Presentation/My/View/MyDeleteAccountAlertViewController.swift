@@ -36,7 +36,7 @@ final class DeleteAccountAlertViewController: BaseViewController {
     
     private var alertSubTitleLabel = UILabel().then {
         $0.font = .zoocBody1
-        $0.text = "회원 탈퇴 시 자동으로 가족에서 탈퇴되고 \n  작성한 글과 댓글이 모두 삭제됩니다"
+        $0.text = "회원 탈퇴 시 자동으로 가족에서 탈퇴되고\n작성한 글과 댓글이 모두 삭제됩니다"
         $0.textColor = .zoocGray1
         $0.textAlignment = .center
         $0.numberOfLines = 2

@@ -157,7 +157,6 @@
 		D26C85CF2968681900AEAF9B /* MyPetCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85CE2968681900AEAF9B /* MyPetCollectionFooterView.swift */; };
 		D26C85D1296869DD00AEAF9B /* UICollectionReusableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85D0296869DD00AEAF9B /* UICollectionReusableView+.swift */; };
 		D26C85D7296888D000AEAF9B /* MyDeleteAccountSectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85D6296888D000AEAF9B /* MyDeleteAccountSectionCollectionViewCell.swift */; };
-		D26C85D929689D0800AEAF9B /* MyDeleteAccountAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85D829689D0800AEAF9B /* MyDeleteAccountAlertViewController.swift */; };
 		D26C85DB2968A12000AEAF9B /* MyNoticeSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85DA2968A12000AEAF9B /* MyNoticeSettingView.swift */; };
 		D26C85DD2968B0A500AEAF9B /* MyNoticeSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85DC2968B0A500AEAF9B /* MyNoticeSettingViewController.swift */; };
 		D26C85DF2968C26500AEAF9B /* OnboardingLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85DE2968C26500AEAF9B /* OnboardingLoginView.swift */; };
@@ -356,7 +355,6 @@
 		D26C85CE2968681900AEAF9B /* MyPetCollectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPetCollectionFooterView.swift; sourceTree = "<group>"; };
 		D26C85D0296869DD00AEAF9B /* UICollectionReusableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionReusableView+.swift"; sourceTree = "<group>"; };
 		D26C85D6296888D000AEAF9B /* MyDeleteAccountSectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDeleteAccountSectionCollectionViewCell.swift; sourceTree = "<group>"; };
-		D26C85D829689D0800AEAF9B /* MyDeleteAccountAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDeleteAccountAlertViewController.swift; sourceTree = "<group>"; };
 		D26C85DA2968A12000AEAF9B /* MyNoticeSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoticeSettingView.swift; sourceTree = "<group>"; };
 		D26C85DC2968B0A500AEAF9B /* MyNoticeSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoticeSettingViewController.swift; sourceTree = "<group>"; };
 		D26C85DE2968C26500AEAF9B /* OnboardingLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginView.swift; sourceTree = "<group>"; };
@@ -735,7 +733,6 @@
 				D23502F42961A69E00F01101 /* MyView.swift */,
 				D2350308296490A700F01101 /* MyEditProfileView.swift */,
 				D26C85DA2968A12000AEAF9B /* MyNoticeSettingView.swift */,
-				D26C85D829689D0800AEAF9B /* MyDeleteAccountAlertViewController.swift */,
 				D26C68E2296DE4F80088DC9A /* MyRegisterPetView.swift */,
 				8718A06729ADB423001C7460 /* GalleryAlertController.swift */,
 				D2F3D5FF2A4411FF00C90A5A /* MyEditPetProfileView.swift */,
@@ -1325,7 +1322,6 @@
 				8771843F2A0541C500AB7DE4 /* AuthAPI.swift in Sources */,
 				8782C7F3296CC13A00C9324B /* ArchiveCommentCollectionViewCell.swift in Sources */,
 				D23502FB2961F44700F01101 /* MySettingTableViewCell.swift in Sources */,
-				D26C85D929689D0800AEAF9B /* MyDeleteAccountAlertViewController.swift in Sources */,
 				871EA35B2970BE8400D0E8CC /* RecordPetResult.swift in Sources */,
 				4C54E80429BF482300B76052 /* RecordMissonRequest.swift in Sources */,
 				D26C860C296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift in Sources */,

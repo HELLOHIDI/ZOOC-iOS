@@ -53,8 +53,8 @@ final class OnboardingRegisterPetTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        petProfileImageButton.makeCornerRound(ratio: 2)
         
+        petProfileImageButton.makeCornerRound(ratio: 2)
         petProfileNameTextField.makeCornerRound(ratio: 2)
     }
     

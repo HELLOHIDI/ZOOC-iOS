@@ -208,7 +208,7 @@ extension RecordMissionViewController: UITextViewDelegate {
 extension RecordMissionViewController {
     func pushToRecordViewController() {
         let recordViewController = RecordViewController()
-        navigationController?.pushViewController(recordViewController, animated: true)
+        navigationController?.pushViewController(recordViewController, animated: false)
     }
     
     func presentAlertViewController() {

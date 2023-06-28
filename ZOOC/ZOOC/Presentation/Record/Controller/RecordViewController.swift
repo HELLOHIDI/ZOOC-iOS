@@ -144,7 +144,7 @@ extension RecordViewController: UIImagePickerControllerDelegate {
 extension RecordViewController {
     func pushToRecordMissionViewController() {
         let recordMissionViewController = RecordMissionViewController(recordMissionViewModel: RecordMissionViewModel(), missionList: [])
-        navigationController?.pushViewController(recordMissionViewController, animated: true)
+        navigationController?.pushViewController(recordMissionViewController, animated: false)
     }
     
     func presentAlertViewController() {

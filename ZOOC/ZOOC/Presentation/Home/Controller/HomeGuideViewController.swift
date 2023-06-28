@@ -46,8 +46,8 @@ final class HomeGuideViewController : UIViewController{
         }
         
         backgroundView.do {
-            $0.backgroundColor = .zoocDarkGray1
-            $0.alpha = 0.95
+            $0.backgroundColor = .black
+            $0.alpha = 0.85
         }
         
         graphicsImageView.do {

@@ -12,7 +12,8 @@ enum UserDefaultKeys: String, CaseIterable {
     case fcmToken
     case zoocAccessToken
     case zoocRefreshToken
-    case isFirstUser
+    case isFirstHome
+    case isFirstArchive
     case familyID
 }
 
@@ -30,10 +31,10 @@ struct UserDefaultsManager {
     @UserDefaultWrapper<String>(key: UserDefaultKeys.zoocRefreshToken.rawValue)
     static var zoocRefreshToken: String?
     
-    @UserDefaultWrapper<Bool>(key: UserDefaultKeys.isFirstUser.rawValue)
+    @UserDefaultWrapper<Bool>(key: UserDefaultKeys.isFirstHome.rawValue)
     static var isFirstAttemptArchive: Bool?
     
-    @UserDefaultWrapper<Bool>(key: UserDefaultKeys.isFirstUser.rawValue)
+    @UserDefaultWrapper<Bool>(key: UserDefaultKeys.isFirstArchive.rawValue)
     static var isFirstAttemptHome: Bool?
     
     @UserDefaultWrapper<String>(key: UserDefaultKeys.familyID.rawValue)

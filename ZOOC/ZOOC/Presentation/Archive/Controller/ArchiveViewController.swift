@@ -371,6 +371,23 @@ final class ArchiveViewController : BaseViewController {
         
     }
     
+    private func deleteArchive() {
+        guard let recordID = self.archiveData?.record.id else { return }
+        let id = String(recordID)
+        
+        self.requestDeleteArchiveAPI(recordID: id)
+    }
+    
+    private func presentZoocAlertVC() {
+        let zoocAlertVC = ZoocAlertViewController()
+        zoocAlertVC.delegate = self
+        zoocAlertVC.alertType = .deleteArchive
+        zoocAlertVC.modalPresentationStyle = .overFullScreen
+        present(zoocAlertVC, animated: false)
+    }
+    
+    //MARK: - API Method
+    
     func requestDetailArchiveAPI(request: ArchiveModel) {
         HomeAPI.shared.getDetailPetArchive(recordID: request.recordID,
                                            petID: request.petID) { result in
@@ -447,9 +464,7 @@ final class ArchiveViewController : BaseViewController {
         
         let destructiveAction = UIAlertAction(title: "삭제하기",
                                               style: .destructive) { action in
-            guard let recordID = self.archiveData?.record.id else { return }
-            let id = String(recordID)
-            self.requestDeleteArchiveAPI(recordID: id)
+            self.presentZoocAlertVC()
         }
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
@@ -623,7 +638,6 @@ extension ArchiveViewController: ArchiveCommentCellDelegate {
 
         self.present(alert, animated: true)
     }
-    
    
 }
 
@@ -634,4 +648,15 @@ extension ArchiveViewController: EmojiBottomSheetDelegate{
         guard let recordID = archiveData?.record.id else { return }
         requestEmojiCommentAPI(recordID: String(recordID), emojiID: emojiID)
     }
+    
+}
+
+//MARK: - 구역
+
+extension ArchiveViewController: ZoocAlertViewControllerDelegate {
+    
+    func exitButtonDidTap() {
+        deleteArchive()
+    }
+    
 }

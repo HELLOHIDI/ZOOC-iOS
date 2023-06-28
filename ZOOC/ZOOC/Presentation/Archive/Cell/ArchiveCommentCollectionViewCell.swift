@@ -9,9 +9,20 @@ import UIKit
 
 import SnapKit
 
+protocol ArchiveCommentCellDelegate: AnyObject {
+    func commentEtcButtonDidTap(isMyComment: Bool, id: Int)
+}
+
 final class ArchiveCommentCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Properties
+    
+    weak var delegate: ArchiveCommentCellDelegate?
+    private var data: CommentResult? {
+        didSet {
+            updateUI()
+        }
+    }
     
     //MARK: - UI Components
     
@@ -52,10 +63,13 @@ final class ArchiveCommentCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let etcButton: UIButton = {
+    private lazy var etcButton: UIButton = {
         let button = UIButton()
         button.setImage(Image.etc, for: .normal)
         button.contentMode = .scaleAspectFit
+        button.addTarget(self,
+                         action: #selector(commentEtcButtonDidTap),
+                         for: .touchUpInside)
         return button
     }()
     
@@ -129,6 +143,11 @@ final class ArchiveCommentCollectionViewCell: UICollectionViewCell {
     }
     
     func dataBind(data: CommentResult) {
+        self.data = data
+    }
+    
+    private func updateUI() {
+        guard let data else { return }
         if data.isEmoji {
              
             commentLabel.isHidden = true
@@ -150,4 +169,11 @@ final class ArchiveCommentCollectionViewCell: UICollectionViewCell {
         writerLabel.text = data.nickName
         dateLabel.text = data.date
     }
+    
+    @objc
+    private func commentEtcButtonDidTap() {
+        guard let data else { return }
+        delegate?.commentEtcButtonDidTap(isMyComment: data.isMyComment, id: data.commentId)
+    }
 }
+

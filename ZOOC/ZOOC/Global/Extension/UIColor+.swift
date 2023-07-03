@@ -28,7 +28,7 @@ extension UIColor{
     }
     
     class var zoocGradientGreen: UIColor {
-        return UIColor(r: 104, g: 212, b: 154)  //TODO: 그라데이션 기능 구현하기 
+        return UIColor(r: 104, g: 212, b: 154)   
     }
     
     //MARK: Gray Scale Colors

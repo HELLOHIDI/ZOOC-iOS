@@ -28,7 +28,7 @@ extension MyService: BaseTargetType {
         case .deleteAccount:
             return URLs.deleteUser
         case .postRegisterPet(param: _):
-            return URLs.registerPet.replacingOccurrences(of: "{familyId}", with: User.shared.familyID) //TODO: 이 위치가 맞을까..
+            return URLs.registerPet.replacingOccurrences(of: "{familyId}", with: User.shared.familyID) 
         case .logout:
             return URLs.logout
         case .patchPetProfile(_, let id):

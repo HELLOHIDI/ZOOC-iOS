@@ -39,7 +39,7 @@ final class MyAppInformationHeaderView: UITableViewHeaderFooterView {
         
         currentVersionLabel.do {
             $0.font = .zoocCaption
-            $0.text = "v1.0.0"
+            $0.text = Device.getCurrentVersion()
             $0.textColor = .zoocDarkGreen
         }
     }

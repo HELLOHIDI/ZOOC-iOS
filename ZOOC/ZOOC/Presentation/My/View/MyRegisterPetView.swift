@@ -80,7 +80,6 @@ final class MyRegisterPetView: UIView {
         }
         
         registerPetTableView.do {
-            $0.translatesAutoresizingMaskIntoConstraints = false
             $0.separatorStyle = .none
             $0.isScrollEnabled = false
             $0.backgroundColor = .zoocBackgroundGreen

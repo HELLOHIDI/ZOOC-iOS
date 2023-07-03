@@ -84,7 +84,7 @@ extension OnboardingAgreementViewController: UITableViewDelegate {
         switch indexPath.row {
         case 0: url = ExternalURL.termsOfUse
         case 1: url = ExternalURL.privacyPolicy
-        case 3: url = ExternalURL.hidiGithub
+        case 3: url = ExternalURL.consentMarketing
         default: break
         }
         

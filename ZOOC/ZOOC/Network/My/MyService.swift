@@ -77,7 +77,7 @@ extension MyService: BaseTargetType {
             
             
             multipartFormData.append(nickNameData)
-            return .uploadCompositeMultipart(multipartFormData, urlParameters: ["photo": request.hasPhoto])
+            return .uploadCompositeMultipart(multipartFormData, urlParameters: ["photo": request.hasPhoto ? "true" : "false" ])
             
             
         case .deleteAccount:

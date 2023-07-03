@@ -175,8 +175,9 @@ extension MyEditProfileViewController: UIImagePickerControllerDelegate {
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         rootView.profileImageButton.setImage(image, for: .normal)
+        editMyProfileData.profileImage = image
         rootView.completeButton.isEnabled = true
-        self.editMyProfileData.profileImage = image
+        
         dismiss(animated: true)
     }
 }

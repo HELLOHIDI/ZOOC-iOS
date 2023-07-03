@@ -39,5 +39,40 @@ struct TextLiteral {
                                         -------------------
                                         """
     
+    static func mailRecordReportBody(recordID: Int) -> String {
+        
+        return """
+                게시글 ID: \(recordID)
+                -------------------
+                
+                1. 신고사유:
+                
+                -------------------
+                
+                Device Model : \(Device.getDeviceIdentifier())
+                Device OS : \(Device.osVersion)
+                App Version : \(Device.getCurrentVersion())
+                - 신고 관련은 스크린 샷을 첨부하시면 더욱 빠르게 확인할 수 있습니다.
+                -------------------
+                """
+    }
+    
+    static func mailCommentReportBody(commentID: Int) -> String {
+        return """
+                댓글 ID: \(commentID)
+                -------------------
+                
+                1. 신고사유:
+                
+                -------------------
+                
+                Device Model : \(Device.getDeviceIdentifier())
+                Device OS : \(Device.osVersion)
+                App Version : \(Device.getCurrentVersion())
+                - 신고 관련은 스크린 샷을 첨부하시면 더욱 빠르게 확인할 수 있습니다.
+                -------------------
+                """
+    }
+    
     
 }

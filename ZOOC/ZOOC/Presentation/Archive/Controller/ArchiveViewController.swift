@@ -8,6 +8,7 @@
 import UIKit
 
 import SafariServices
+import MessageUI
 
 import SnapKit
 import Then
@@ -453,13 +454,14 @@ final class ArchiveViewController : BaseViewController {
     
     @objc
     private func etcButtonDidTap() {
+        guard let archiveModel else { return }
         let alert = UIAlertController(title: nil,
                                       message: nil,
                                       preferredStyle: .actionSheet)
         //TODO: 신고하기 링크로 연동
         let reportAction =  UIAlertAction(title: "신고하기", style: .default) { action in
            
-            self.presentSafariViewController(ExternalURL.reportURL)
+            self.sendMail(subject: "[ZOOC] 게시글 신고하기", body: TextLiteral.mailRecordReportBody(recordID: archiveModel.recordID))
         }
         
         let destructiveAction = UIAlertAction(title: "삭제하기",
@@ -614,10 +616,9 @@ extension ArchiveViewController: ArchiveCommentCellDelegate {
         let alert = UIAlertController(title: nil,
                                       message: nil,
                                       preferredStyle: .actionSheet)
-        //TODO: 신고하기 링크로 연동
         let reportAction =  UIAlertAction(title: "신고하기", style: .default) { action in
            
-            self.presentSafariViewController(ExternalURL.reportURL)
+            self.sendMail(subject: "[ZOOC] 댓글 신고하기", body: TextLiteral.mailCommentReportBody(commentID: id))
         }
         
         let destructiveAction = UIAlertAction(title: "삭제하기",
@@ -659,4 +660,50 @@ extension ArchiveViewController: ZoocAlertViewControllerDelegate {
         deleteArchive()
     }
     
+}
+
+extension ArchiveViewController: MFMailComposeViewControllerDelegate {
+    private func sendMail(subject: String, body: String) {
+        if MFMailComposeViewController.canSendMail() {
+                let composeViewController = MFMailComposeViewController()
+                composeViewController.mailComposeDelegate = self
+            
+                
+                composeViewController.setToRecipients(["thekimhyo@gmail.com"])
+                composeViewController.setSubject(subject)
+                composeViewController.setMessageBody(body, isHTML: false)
+                
+                self.present(composeViewController, animated: true, completion: nil)
+            } else {
+                print("메일 보내기 실패")
+                let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "메일을 보내려면 'Mail' 앱이 필요합니다. App Store에서 해당 앱을 복원하거나 이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+                let goAppStoreAction = UIAlertAction(title: "App Store로 이동하기", style: .default) { _ in
+                    // 앱스토어로 이동하기(Mail)
+                    let url = "https://apps.apple.com/kr/app/mail/id1108187098"
+                    self.presentSafariViewController(url)
+                }
+                let cancleAction = UIAlertAction(title: "취소", style: .destructive, handler: nil)
+                
+                sendMailErrorAlert.addAction(goAppStoreAction)
+                sendMailErrorAlert.addAction(cancleAction)
+                self.present(sendMailErrorAlert, animated: true, completion: nil)
+            }
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        switch result {
+        case .cancelled:
+            presentBottomAlert("신고가 취소되었습니다.")
+        case .sent:
+            presentBottomAlert("신고가 접수되었습니다.")
+        case .saved:
+            presentBottomAlert("신고내용이 저장되었습니다.")
+        case .failed:
+            presentBottomAlert("신고하기 실패")
+        default:
+            break
+        }
+        controller.dismiss(animated: true, completion: nil)
+    }
+
 }

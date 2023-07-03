@@ -406,6 +406,8 @@ final class ArchiveViewController : BaseViewController {
             guard let result = self.validateResult(result) as? [CommentResult] else { return }
             
             self.commentsData = result
+            NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
+            
         }
     }
     
@@ -414,6 +416,7 @@ final class ArchiveViewController : BaseViewController {
             guard let result = self.validateResult(result) as? [CommentResult] else { return }
             
             self.commentsData = result
+            NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
         }
     }
     

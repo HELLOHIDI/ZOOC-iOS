@@ -21,13 +21,11 @@ public enum Image{
     static let backCircle = UIImage(named: "back.circle")!
     static let back = UIImage(named: "back")!
     static let backWhite = UIImage(named: "back.white")!
-    static let cameraCircleBig = UIImage(named: "camera.circle.big")!
     static let cameraCircleGreen = UIImage(named: "camera.circle.green")!
     static let cameraCircle = UIImage(named: "camera.circle")!
     static let check = UIImage(named: "check")!
     static let checkBoxFill = UIImage(named: "checkbox.fill")!
     static let checkBox = UIImage(named: "checkbox")!
-    static let checkBoxTint = UIImage(named: "checkbox.tint")!
     static let delete = UIImage(named: "delete")!
     static let etc = UIImage(named: "etc")!
     static let gallery = UIImage(named: "gallery")!
@@ -37,11 +35,9 @@ public enum Image{
     static let kakaoLogin = UIImage(named: "kakaoLogin")!
     static let listFill = UIImage(named: "list.fill")!
     static let list = UIImage(named: "list")!
-    static let next = UIImage(named: "next")!
     static let person = UIImage(named: "person")!
     static let plus = UIImage(named: "plus")!
     static let plusTabCircle = UIImage(named: "plus.tab.circle")!
-    static let previous = UIImage(named: "previous")!
     static let ring = UIImage(named: "ring")!
     static let smile = UIImage(named: "smile")!
     static let upload = UIImage(named: "upload")!

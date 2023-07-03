@@ -34,6 +34,7 @@ final class MyViewController: BaseViewController {
         super.viewDidLoad()
         
         register()
+        setNotificationCenter()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,10 +50,24 @@ final class MyViewController: BaseViewController {
         myView.myCollectionView.dataSource = self
     }
     
+    private func setNotificationCenter() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateUI),
+            name: .myPageUpdate,
+            object: nil
+        )
+    }
+    
     func dataSend(myprofileData: UserResult?) {
         guard let nickNameData = myProfileData?.nickName else { return }
         guard let photoData = myProfileData?.photo else { return }
         myView.myCollectionView.reloadData()
+    }
+    
+    @objc
+    private func updateUI() {
+        requestMyPageAPI()
     }
     
     func requestMyPageAPI(){

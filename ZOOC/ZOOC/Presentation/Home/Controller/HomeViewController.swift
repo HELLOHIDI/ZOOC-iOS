@@ -50,6 +50,8 @@ final class HomeViewController : BaseViewController {
         register()
         gesture()
         
+        setNotificationCenter()
+        
         requestMissionAPI()
         requestTotalPetAPI()
     }
@@ -110,6 +112,17 @@ final class HomeViewController : BaseViewController {
                                         action: #selector(bottomViewDidTap)))
     }
     
+    private func setNotificationCenter() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateUI),
+            name: .homeVCUpdate,
+            object: nil
+        )
+    }
+    
+    
+    @objc
     public func updateUI() {
         requestTotalPetAPI()
     }

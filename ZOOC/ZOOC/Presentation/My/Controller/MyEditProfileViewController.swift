@@ -75,10 +75,10 @@ final class MyEditProfileViewController: BaseViewController {
     
     private func requestPatchUserProfileAPI() {
         MyAPI.shared.patchMyProfile(requset: editMyProfileData) { result in
-//            guard let result = self.validateResult(result) as? UserResult else { return }
-            guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
-            tabVC.homeViewController.updateUI()
-            self.popToMyProfileView()
+            self.validateResult(result)
+            NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
+            NotificationCenter.default.post(name: .myPageUpdate, object: nil)
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
@@ -147,11 +147,6 @@ extension MyEditProfileViewController {
         rootView.profileImageButton.kfSetButtonImage(url: photo)
     }
     
-    private func popToMyProfileView() {
-        guard let beforeVC = self.navigationController?.previousViewController as? MyViewController else { return }
-        beforeVC.requestMyPageAPI()
-        self.navigationController?.popViewController(animated: true)
-    }
 }
 
 //MARK: - GalleryAlertControllerDelegate
@@ -175,8 +170,9 @@ extension MyEditProfileViewController: UIImagePickerControllerDelegate {
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         rootView.profileImageButton.setImage(image, for: .normal)
+        editMyProfileData.profileImage = image
         rootView.completeButton.isEnabled = true
-        self.editMyProfileData.profileImage = image
+        
         dismiss(animated: true)
     }
 }

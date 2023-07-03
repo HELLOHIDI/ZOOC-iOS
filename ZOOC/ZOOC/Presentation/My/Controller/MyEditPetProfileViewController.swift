@@ -75,12 +75,15 @@ final class MyEditPetProfileViewController: BaseViewController {
         }
     }
     
-    private func requestPatchUserProfileAPI() {
+    private func requestPatchPetAPI() {
         guard let id = self.id else { return }
         MyAPI.shared.patchPetProfile(requset: editPetProfileData, id: id) { result in
             guard let result = self.validateResult(result) as? EditPetProfileResult else { return }
             print(result)
-            self.popToMyProfileView()
+            NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
+            NotificationCenter.default.post(name: .myPageUpdate, object: nil)
+            self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: true)
         }
     }
     
@@ -133,7 +136,7 @@ final class MyEditPetProfileViewController: BaseViewController {
         guard let nickName = rootView.nameTextField.text else { return }
         if nickName.count > 0 {
             self.editPetProfileData.nickName = nickName
-            requestPatchUserProfileAPI()
+            requestPatchPetAPI()
             rootView.completeButton.isEnabled = false
         } else {
             presentBottomAlert("반려동물의 이름을 작성해주세요!")
@@ -153,10 +156,6 @@ extension MyEditPetProfileViewController {
     
     func setFamilyMemberProfileImage(photo: String) {
         rootView.profileImageButton.kfSetButtonImage(url: photo)
-    }
-    
-    private func popToMyProfileView() {
-        self.dismiss(animated: true)
     }
 }
 

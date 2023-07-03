@@ -78,6 +78,7 @@
 		8771843F2A0541C500AB7DE4 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8771843E2A0541C500AB7DE4 /* AuthAPI.swift */; };
 		877BAFC2295EEA6900C2AA1C /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 877BAFC1295EEA6900C2AA1C /* Pretendard-SemiBold.otf */; };
 		877BAFC4295EEA7700C2AA1C /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 877BAFC3295EEA7700C2AA1C /* Pretendard-Medium.otf */; };
+		877DF3292A534DF2001CD452 /* NotificationName+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877DF3282A534DF2001CD452 /* NotificationName+.swift */; };
 		877E57EE2966AAE6006D82FC /* HomeArchiveListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877E57ED2966AAE6006D82FC /* HomeArchiveListCollectionViewCell.swift */; };
 		877E57F22966D13E006D82FC /* ArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877E57F12966D13E006D82FC /* ArchiveViewController.swift */; };
 		8781DE4829B20F61005ABF23 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 8781DE4729B20F61005ABF23 /* FirebaseMessaging */; };
@@ -278,6 +279,7 @@
 		8771843E2A0541C500AB7DE4 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
 		877BAFC1295EEA6900C2AA1C /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		877BAFC3295EEA7700C2AA1C /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		877DF3282A534DF2001CD452 /* NotificationName+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+.swift"; sourceTree = "<group>"; };
 		877E57EA2966332F006D82FC /* MemberModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberModel.swift; sourceTree = "<group>"; };
 		877E57ED2966AAE6006D82FC /* HomeArchiveListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeArchiveListCollectionViewCell.swift; sourceTree = "<group>"; };
 		877E57F12966D13E006D82FC /* ArchiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveViewController.swift; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 		872BBD9329F959E2002E2C71 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				87DDDD93298E607C00CBEC79 /* Device.swift */,
 				872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */,
 			);
 			path = Utility;
@@ -524,6 +527,7 @@
 				871EA35E2971628D00D0E8CC /* Encodable+.swift */,
 				87E462F02A110E18006FC35D /* CGColor+.swift */,
 				87E462F22A113A37006FC35D /* CALayer+.swift */,
+				877DF3282A534DF2001CD452 /* NotificationName+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -545,7 +549,6 @@
 			children = (
 				876483182952366A00F74882 /* Image.swift */,
 				87D5AF5529605C0100CA7F12 /* URLs.swift */,
-				87DDDD93298E607C00CBEC79 /* Device.swift */,
 				87E462E52A10FA60006FC35D /* EnternalURL.swift */,
 				871DC6C72A1F7CDF006BA780 /* Config.swift */,
 			);
@@ -1383,6 +1386,7 @@
 				D26C85EC2968D2E100AEAF9B /* OnboardingAgreementTableHeaderView.swift in Sources */,
 				D26C85D7296888D000AEAF9B /* MyDeleteAccountSectionCollectionViewCell.swift in Sources */,
 				87DDDD94298E607C00CBEC79 /* Device.swift in Sources */,
+				877DF3292A534DF2001CD452 /* NotificationName+.swift in Sources */,
 				87D5AF5A29606AC900CA7F12 /* NetworkResult.swift in Sources */,
 				4C8A7C33297063F400783979 /* OnboardingInviteResult.swift in Sources */,
 				876554A529584912006BBDA9 /* HomeGuideVC_Deprecated.swift in Sources */,

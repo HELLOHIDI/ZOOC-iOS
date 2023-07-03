@@ -51,6 +51,14 @@ final class OnboardingRegisterPetTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        petProfileImageButton.makeCornerRound(ratio: 2)
+        petProfileNameTextField.makeCornerRound(ratio: 2)
+    }
+    
+    
     //MARK: - Custom Method
     
     private func register() {
@@ -69,18 +77,20 @@ final class OnboardingRegisterPetTableViewCell: UITableViewCell {
         self.backgroundColor = .zoocBackgroundGreen
         
         petProfileImageButton.do {
-            $0.makeCornerBorder(borderWidth: 5, borderColor: UIColor.zoocWhite1)
-            $0.makeCornerRound(radius: 35)
+            
+            petProfileImageButton.makeCornerBorder(borderWidth: 5,
+                                                   borderColor: .zoocWhite1)
             $0.contentMode = .scaleAspectFit
         }
         
         petProfileNameTextField.do {
-            $0.attributedPlaceholder = NSAttributedString(string: "ex) 사랑,토리 (4자 이내)", attributes: [NSAttributedString.Key.foregroundColor: UIColor.zoocGray1, NSAttributedString.Key.font: UIFont.zoocBody1])
-            $0.addLeftPadding(inset: 10)
             $0.textColor = .zoocDarkGreen
             $0.font = .zoocBody1
-            $0.makeCornerRound(radius: 20)
-            $0.makeCornerBorder(borderWidth: 1, borderColor: UIColor.zoocLightGray)
+            $0.addLeftPadding(inset: 16)
+            petProfileNameTextField.makeCornerBorder(borderWidth: 1,
+                                                     borderColor: .zoocLightGray)
+            $0.attributedPlaceholder = NSAttributedString(string: "ex) 사랑,토리 (4자 이내)",
+                                                          attributes: [NSAttributedString.Key.foregroundColor: UIColor.zoocGray1, NSAttributedString.Key.font: UIFont.zoocBody1])
         }
         
         deletePetProfileButton.do {
@@ -113,6 +123,8 @@ final class OnboardingRegisterPetTableViewCell: UITableViewCell {
             $0.leading.equalTo(self.petProfileNameTextField.snp.trailing).offset(10)
             $0.size.equalTo(30)
         }
+        
+        contentView.layoutIfNeeded()
     }
     
     //MARK: - Action Method

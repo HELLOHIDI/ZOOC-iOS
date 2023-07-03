@@ -34,6 +34,12 @@ final class OnboardingRegisterPetTableFooterView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        addPetProfileButton.makeCornerRound(ratio: 2)
+    }
+    
     //MARK: - Custom Method
     
     private func target() {
@@ -53,8 +59,7 @@ final class OnboardingRegisterPetTableFooterView: UITableViewHeaderFooterView {
             $0.setTitleColor(.zoocDarkGreen, for: .normal)
             $0.titleLabel?.font = .zoocBody2
             $0.titleLabel?.textAlignment = .center
-            $0.makeCornerRound(radius: 23.5)
-            $0.makeCornerBorder(borderWidth: 1, borderColor: UIColor.zoocLightGray)
+            $0.makeCornerBorder(borderWidth: 1, borderColor: .zoocLightGray)
         }
     }
     

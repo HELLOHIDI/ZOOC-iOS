@@ -247,7 +247,7 @@ final class ArchiveViewController : BaseViewController {
             $0.top.equalTo(scrollView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().inset(19)
-            $0.height.equalTo(64)
+            $0.height.equalTo(77)
         }
         
         //MARK: scrollView Layout

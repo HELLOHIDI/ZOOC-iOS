@@ -51,6 +51,29 @@ struct Device {
     static var bottomInset: CGFloat {
         return UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0
     }
+    
+    static var osVersion: String {
+        return UIDevice.current.systemVersion
+    }
+    
+    static func getDeviceIdentifier() -> String {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        let machineMirror = Mirror(reflecting: systemInfo.machine)
+        let identifier = machineMirror.children.reduce("") { identifier, element in
+            guard let value = element.value as? Int8, value != 0 else { return identifier }
+            return identifier + String(UnicodeScalar(UInt8(value)))
+        }
+        
+        return identifier
+    }
+
+    // 현재 버전 가져오기
+    static func getCurrentVersion() -> String {
+        guard let dictionary = Bundle.main.infoDictionary,
+              let version = dictionary["CFBundleShortVersionString"] as? String else { return "" }
+        return version
+    }
 }
 
 

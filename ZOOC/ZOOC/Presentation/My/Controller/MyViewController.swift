@@ -11,6 +11,8 @@ import SnapKit
 import Then
 import Moya
 
+import MessageUI
+
 final class MyViewController: BaseViewController {
     
     //MARK: - Properties
@@ -223,11 +225,18 @@ extension MyViewController: UICollectionViewDataSource {
 extension MyViewController: SettingMenuTableViewCellDelegate {
     func selectedSettingMenuTableViewCell(indexPath: IndexPath) {
         switch indexPath.row {
-        case 0:
+        case 0: // 알림설정
             pushToNoticeSettingView()
-        case 4:
+        case 1: // 공지사항
+            let url = ExternalURL.zoocDefaultURL
+            presentSafariViewController(url)
+        case 2: // 문의하기
+            sendMail(subject: "[ZOOC] 문의하기", body: TextLiteral.mailInquiryBody)
+        case 3: // 미션 제안하기
+            sendMail(subject: "[ZOOC] 미션 제안하기", body: TextLiteral.mailMissionAdviceBody)
+        case 4: // 앱 정보
             pushToAppInformationView()
-        case 5:
+        case 5: // 로그아웃
             requestLogoutAPI()
         default:
             break
@@ -340,4 +349,51 @@ extension MyViewController: ZoocAlertViewControllerDelegate {
     }
     
     
+}
+
+
+extension MyViewController: MFMailComposeViewControllerDelegate {
+    private func sendMail(subject: String, body: String) {
+        if MFMailComposeViewController.canSendMail() {
+                let composeViewController = MFMailComposeViewController()
+                composeViewController.mailComposeDelegate = self
+            
+                
+                composeViewController.setToRecipients(["thekimhyo@gmail.com"])
+                composeViewController.setSubject(subject)
+                composeViewController.setMessageBody(body, isHTML: false)
+                
+                self.present(composeViewController, animated: true, completion: nil)
+            } else {
+                print("메일 보내기 실패")
+                let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "메일을 보내려면 'Mail' 앱이 필요합니다. App Store에서 해당 앱을 복원하거나 이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+                let goAppStoreAction = UIAlertAction(title: "App Store로 이동하기", style: .default) { _ in
+                    // 앱스토어로 이동하기(Mail)
+                    let url = "https://apps.apple.com/kr/app/mail/id1108187098"
+                    self.presentSafariViewController(url)
+                }
+                let cancleAction = UIAlertAction(title: "취소", style: .destructive, handler: nil)
+                
+                sendMailErrorAlert.addAction(goAppStoreAction)
+                sendMailErrorAlert.addAction(cancleAction)
+                self.present(sendMailErrorAlert, animated: true, completion: nil)
+            }
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        switch result {
+        case .cancelled:
+            presentBottomAlert("메일 보내기가 취소되었습니다.")
+        case .sent:
+            presentBottomAlert("메일이 성공적으로 보내졌습니다.")
+        case .saved:
+            presentBottomAlert("메일이 저장되었습니다.")
+        case .failed:
+            presentBottomAlert("메일 보내기 실패")
+        default:
+            break
+        }
+        controller.dismiss(animated: true, completion: nil)
+    }
+
 }

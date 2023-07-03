@@ -41,7 +41,6 @@ final class MyRegisterPetViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dismissKeyboardWhenTappedAround()
         
         register()
         target()
@@ -117,6 +116,14 @@ extension MyRegisterPetViewController: UITableViewDelegate {
         let height: CGFloat = (section == 1) ? 64 : 0
         return height
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(#function)
+        let editPetProfileVC = MyEditPetProfileViewController()
+        editPetProfileVC.modalPresentationStyle = .fullScreen
+        editPetProfileVC.dataBind(data: myPetMemberData[indexPath.row])
+        navigationController?.pushViewController(editPetProfileVC, animated: true)
+    }
 }
 
 //MARK: - UITableViewDataSource
@@ -145,7 +152,6 @@ extension MyRegisterPetViewController: UITableViewDataSource {
             cell.selectionStyle = .none
             cell.petProfileButton.tag = indexPath.row
             cell.dataBind(data: myPetMemberData[indexPath.row])
-            cell.delegate = self
             return cell
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MyRegisterPetTableViewCell.cellIdentifier, for: indexPath)
@@ -197,16 +203,7 @@ extension MyRegisterPetViewController: UITableViewDataSource {
     }
 }
 
-//MARK: - MyRegisterdPetTappedDelegate
 
-extension MyRegisterPetViewController: MyRegisterdPetTappedDelegate {
-    func petProfileButtonDidTap(tag: Int) {
-        let editPetProfileVC = MyEditPetProfileViewController()
-        editPetProfileVC.modalPresentationStyle = .fullScreen
-        editPetProfileVC.dataBind(data: myPetMemberData[tag])
-        navigationController?.pushViewController(editPetProfileVC, animated: true)
-    }
-}
 
 //MARK: - MyDeleteButtonTappedDelegate
 

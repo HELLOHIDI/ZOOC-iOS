@@ -66,11 +66,6 @@ final class MyRegisterPetViewController: BaseViewController {
         rootView.registerPetButton.addTarget(self, action: #selector(registerPetButtonDidTap), for: .touchUpInside)
     }
     
-//    func dataSend(myPetMemberData: [PetResult]) {
-//        self.myPetMemberData = myPetMemberData
-//        myPetRegisterViewModel.petCount = self.myPetMemberData.count
-//    }
-    
     //MARK: - Action Method
     
     @objc private func backButtonDidTap() {
@@ -103,8 +98,8 @@ final class MyRegisterPetViewController: BaseViewController {
             guard let result = self.validateResult(result) as? [MyRegisterPetResult] else {
                 return
             }
-            guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
-            tabVC.homeViewController.updateUI()
+            NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
+            NotificationCenter.default.post(name: .myPageUpdate, object: nil)
             self.navigationController?.popViewController(animated: true)
         }
         

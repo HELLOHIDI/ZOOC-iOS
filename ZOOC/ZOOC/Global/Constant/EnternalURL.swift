@@ -8,8 +8,6 @@
 import Foundation
 
 
-//TODO: 기획이 주는 URL으로 수정해야함.
-
 struct ExternalURL {
     static let zoocDefaultURL = "https://melt-split.notion.site/ZOOC-db143aea709a452ba5a91f7dc31aad0f?pvs=4"
     static let termsOfUse = "https://melt-split.notion.site/8c417ba2156d4720b77f480d80ace49d?pvs=4"

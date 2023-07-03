@@ -458,7 +458,7 @@ final class ArchiveViewController : BaseViewController {
         let alert = UIAlertController(title: nil,
                                       message: nil,
                                       preferredStyle: .actionSheet)
-        //TODO: 신고하기 링크로 연동
+        
         let reportAction =  UIAlertAction(title: "신고하기", style: .default) { action in
            
             self.sendMail(subject: "[ZOOC] 게시글 신고하기", body: TextLiteral.mailRecordReportBody(recordID: archiveModel.recordID))

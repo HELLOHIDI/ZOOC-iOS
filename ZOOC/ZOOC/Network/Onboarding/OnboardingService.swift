@@ -105,11 +105,10 @@ extension OnboardingService: BaseTargetType {
                     name: "petNames[]"))
             }
 
-            //TODO: photo! 나중에 바꿔주기
             for photo in param.files {
-                    
+                guard let photo else { return .requestPlain}
                     multipartFormDatas.append(MultipartFormData(
-                        provider: .data(photo!),
+                        provider: .data(photo),
                         name: "files",
                         fileName: "image.jpeg",
                         mimeType: "image/jpeg"))

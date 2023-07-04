@@ -31,7 +31,7 @@ final class RecordRegisterView : UIView{
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
     public lazy var petCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-    public lazy var registerButton = UIButton()
+    public lazy var registerButton = ZoocGradientButton()
     
     //MARK: - Life Cycle
     
@@ -116,10 +116,7 @@ final class RecordRegisterView : UIView{
         
         registerButton.do {
             $0.setTitle("기록하기", for: .normal)
-            $0.setTitleColor(.zoocWhite1, for: .normal)
-            $0.backgroundColor = .zoocGray1
-            $0.titleLabel?.font = .zoocSubhead1
-            $0.layer.cornerRadius = 27
+            $0.isEnabled = false
         }
     }
     

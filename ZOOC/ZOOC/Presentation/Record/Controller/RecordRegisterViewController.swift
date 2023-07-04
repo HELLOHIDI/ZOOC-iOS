@@ -99,10 +99,8 @@ final class RecordRegisterViewController : BaseViewController{
     
     private func activateButton(indexPathArray: [IndexPath]?) {
         if (indexPathArray?.count == 0) {
-            rootView.registerButton.backgroundColor = .zoocGray1
             rootView.registerButton.isEnabled = false
         } else {
-            rootView.registerButton.backgroundColor = .zoocGradientGreen
             rootView.registerButton.isEnabled = true
         }
     }
@@ -206,7 +204,6 @@ extension RecordRegisterViewController {
             }
         }
         rootView.registerButton.isEnabled = false
-        rootView.registerButton.backgroundColor = .zoocGray1
         
         if let missionID = self.missionID {
             RecordAPI.shared.postMission(photo: recordData.image ?? UIImage(),

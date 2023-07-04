@@ -82,8 +82,13 @@ final class MyEditPetProfileViewController: BaseViewController {
             print(result)
             NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
             NotificationCenter.default.post(name: .myPageUpdate, object: nil)
-            self.navigationController?.popViewController(animated: true)
-            self.dismiss(animated: true)
+            
+            if let navigationController = self.navigationController {
+                navigationController.popViewController(animated: true)
+            } else {
+                self.dismiss(animated: true)
+            }
+            
         }
     }
     

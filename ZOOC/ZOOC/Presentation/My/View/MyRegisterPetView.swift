@@ -19,7 +19,7 @@ final class MyRegisterPetView: UIView {
     private var registerPetTitleLabel = UILabel()
     private var registerPetSubTitleLabel = UILabel()
     public var registerPetTableView = UITableView(frame: .zero, style: .plain)
-    public var registerPetButton =  UIButton()
+    public var registerPetButton =  ZoocGradientButton()
     
     //MARK: - Life Cycles
     
@@ -87,11 +87,6 @@ final class MyRegisterPetView: UIView {
         
         registerPetButton.do {
             $0.setTitle("등록하기", for: .normal)
-            $0.setTitleColor(.zoocWhite1, for: .normal)
-            $0.titleLabel?.font = .zoocSubhead1
-            $0.titleLabel?.textAlignment = .center
-            $0.makeCornerRound(radius: 27)
-            $0.backgroundColor = .zoocGray1
             $0.isEnabled = false
         }
     }

@@ -75,14 +75,12 @@ final class MyRegisterPetViewController: BaseViewController {
         rootView.registerPetButton.isEnabled = false
         var names: [String] = []
         var photos: [Data] = []
-        var photo: Data
         var isPhotos: [Bool] = []
         var isPhoto: Bool = true
         
         for pet in self.myPetRegisterViewModel.petList {
             isPhoto = pet.image != Image.cameraCircle
             guard let photo = pet.image.jpegData(compressionQuality: 1.0) else {
-                photo = Data()
                 isPhoto = false
                 return
             }
@@ -94,9 +92,7 @@ final class MyRegisterPetViewController: BaseViewController {
         MyAPI.shared.registerPet(
             param: MyRegisterPetRequest(petNames: names, files: photos, isPetPhotos: isPhotos)
         ) { result in
-            guard let result = self.validateResult(result) as? [MyRegisterPetResult] else {
-                return
-            }
+            self.validateResult(result)
             NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
             NotificationCenter.default.post(name: .myPageUpdate, object: nil)
             self.navigationController?.popViewController(animated: true)

@@ -163,7 +163,7 @@ extension RecordRegisterViewController: UICollectionViewDelegate {
             petList[indexPath.row].isSelected = false
             cell.updateUI(isSelected: false)
         }
-        rootView.registerButton.backgroundColor = .zoocGray2
+        rootView.registerButton.isEnabled = false
         let indexPathArray = collectionView.indexPathsForSelectedItems
         activateButton(indexPathArray: indexPathArray)
     }

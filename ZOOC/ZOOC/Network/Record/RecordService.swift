@@ -22,7 +22,7 @@ extension RecordService: BaseTargetType{
             return URLs.totalPet.replacingOccurrences(of: "{familyId}", with: familyID)
         case .postRecord(familyID: let familyID, photo: _, content: _, pets: _):
             return URLs.postRecord.replacingOccurrences(of: "{familyId}", with: familyID)
-        case .postMission(familyID: let familyID, missionID: let missionID, photo: _, content: _, pets: _):
+        case .postMission(familyID: let familyID, missionID: _, photo: _, content: _, pets: _):
             return URLs.postMission.replacingOccurrences(of: "{familyId}", with: familyID)
         case .getMissionList(let familyID):
             return URLs.getMission.replacingOccurrences(of: "{familyId}", with: familyID)

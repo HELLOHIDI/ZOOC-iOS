@@ -79,7 +79,6 @@ final class OnboardingRegisterPetViewController: BaseViewController{
         
         var names: [String] = []
         var photos: [Data] = []
-        var photo: Data
         var isPhotos: [Bool] = []
         var isPhoto: Bool = true
         
@@ -88,7 +87,6 @@ final class OnboardingRegisterPetViewController: BaseViewController{
             
             guard let photo = pet.image.jpegData(compressionQuality: 1.0) else {
                 print("가드문 들어옴")
-                photo = Data()
                 isPhoto = false
                 return
             }

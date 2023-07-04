@@ -61,8 +61,6 @@ final class MyView: UIView  {
     
     private func style() {
         myCollectionView.do {
-            let layout = UICollectionViewFlowLayout()
-            
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.isScrollEnabled = true
             $0.showsVerticalScrollIndicator = false

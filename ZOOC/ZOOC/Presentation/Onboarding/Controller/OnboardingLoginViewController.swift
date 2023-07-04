@@ -121,7 +121,6 @@ private extension OnboardingLoginViewController {
             User.shared.zoocAccessToken = result.accessToken
             User.shared.zoocRefreshToken = result.refreshToken
             print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
-            print(UserDefaultsManager.zoocAccessToken)
             if result.isExistedUser{
                 self.requestFamilyAPI()
             } else {
@@ -148,7 +147,7 @@ private extension OnboardingLoginViewController {
     private func requestFCMTokenAPI() {
         OnboardingAPI.shared.patchFCMToken(fcmToken: User.shared.fcmToken) { result in
             switch result {
-            case .success(let data):
+            case .success:
                 UIApplication.shared.changeRootViewController(ZoocTabBarController())
             default:
                 self.presentBottomAlert("FCM토큰을 재발급 받으세요")
@@ -174,8 +173,7 @@ extension OnboardingLoginViewController: ASAuthorizationControllerPresentationCo
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            if  let authorizationCode = appleIDCredential.authorizationCode,
-                let identityToken = appleIDCredential.identityToken,
+            if let identityToken = appleIDCredential.identityToken,
                 let identityTokenString = String(data: identityToken, encoding: .utf8) {
                 
                 

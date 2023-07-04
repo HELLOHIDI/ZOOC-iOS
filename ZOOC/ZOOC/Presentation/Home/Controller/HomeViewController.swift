@@ -16,7 +16,7 @@ final class HomeViewController : BaseViewController {
     
     private var missionData: [RecordMissionResult] = [] {
         didSet {
-            rootView.missionLabel.text = missionData[0].missionContent
+            updateMissionUI()
         }
     }
     
@@ -127,6 +127,14 @@ final class HomeViewController : BaseViewController {
         requestTotalPetAPI()
     }
     
+    private func updateMissionUI() {
+        if !missionData.isEmpty {
+            rootView.missionLabel.text = missionData[0].missionContent
+        } else {
+            rootView.missionLabel.text = "모든 미션을 완료했어요 😃"
+        }
+    }
+    
     private func pushToDetailViewController(recordID: Int) {
         guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
             fatalError("선택된 펫이 없습니다.")
@@ -196,7 +204,7 @@ final class HomeViewController : BaseViewController {
     
     //MARK: - Network
     
-    private func requestMissionAPI() {
+    func requestMissionAPI() {
         HomeAPI.shared.getMission(familyID: User.shared.familyID) { result in
             
             guard let result = self.validateResult(result) as? [RecordMissionResult] else { return }

@@ -134,7 +134,7 @@ final class RecordCompleteViewController : BaseViewController {
         
         print("가드문 통과")
         tabVC.homeViewController.selectPetCollectionView(petID: petID)
-        
+        tabVC.homeViewController.requestMissionAPI()
         self.navigationController?.previousViewController?.navigationController?.previousViewController?.dismiss(animated: true)
     }
 }

@@ -66,6 +66,7 @@ final class MyRegisterPetTableViewCell: UITableViewCell {
         petProfileImageButton.do {
             $0.makeCornerBorder(borderWidth: 5, borderColor: UIColor.zoocWhite1)
             $0.makeCornerRound(radius: 35)
+            $0.imageView?.contentMode = .scaleAspectFill
         }
         
         petProfileNameTextField.do {

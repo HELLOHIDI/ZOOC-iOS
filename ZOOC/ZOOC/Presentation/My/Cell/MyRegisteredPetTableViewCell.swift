@@ -35,7 +35,7 @@ final class MyRegisteredPetTableViewCell: UITableViewCell {
         
         petProfileButton.do {
             $0.makeCornerRound(radius: 30)
-            $0.contentMode = .scaleAspectFill
+            $0.imageView?.contentMode = .scaleAspectFill
         }
         
         petProfileNameLabel.do {

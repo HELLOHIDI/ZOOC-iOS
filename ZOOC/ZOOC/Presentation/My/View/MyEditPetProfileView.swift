@@ -61,7 +61,7 @@ final class MyEditPetProfileView: UIView {
         
         profileImageButton.do {
             $0.setImage(Image.logoSymbol, for: .normal)
-            $0.contentMode = .scaleAspectFill
+            $0.imageView?.contentMode = .scaleAspectFill
         }
         
         cameraIconImageView.do {

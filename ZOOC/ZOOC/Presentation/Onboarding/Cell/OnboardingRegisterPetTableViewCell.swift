@@ -80,7 +80,7 @@ final class OnboardingRegisterPetTableViewCell: UITableViewCell {
             
             petProfileImageButton.makeCornerBorder(borderWidth: 5,
                                                    borderColor: .zoocWhite1)
-            $0.contentMode = .scaleAspectFit
+            $0.imageView?.contentMode = .scaleAspectFill
         }
         
         petProfileNameTextField.do {

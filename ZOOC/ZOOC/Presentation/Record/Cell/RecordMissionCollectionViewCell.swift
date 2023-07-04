@@ -76,7 +76,7 @@ final class RecordMissionCollectionViewCell: UICollectionViewCell {
         galleryButton.do {
             $0.layer.masksToBounds = true
             $0.layer.cornerRadius = 12
-            $0.contentMode = .scaleAspectFill
+            $0.imageView?.contentMode = .scaleAspectFill
             $0.isUserInteractionEnabled = true
         }
         

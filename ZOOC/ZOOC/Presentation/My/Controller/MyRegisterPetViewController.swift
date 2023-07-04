@@ -73,7 +73,6 @@ final class MyRegisterPetViewController: BaseViewController {
     
     @objc private func registerPetButtonDidTap() {
         rootView.registerPetButton.isEnabled = false
-        rootView.registerPetButton.backgroundColor = .zoocGray1
         var names: [String] = []
         var photos: [Data] = []
         var photo: Data

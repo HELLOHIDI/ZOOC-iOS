@@ -15,20 +15,19 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
     
     private var size: CGFloat? {
         didSet {
-            guard let size = self.size else { return }
-            profilePetImageView.snp.updateConstraints {
-                $0.top.equalToSuperview().offset(49)
-                $0.leading.equalToSuperview().offset(40)
-                $0.size.equalTo(size)
-            }
-            profilePetImageView.makeCornerRound(radius: size / 2)
+//            guard let size = self.size else { return }
+//            profilePetImageView.snp.updateConstraints {
+//                $0.top.equalToSuperview().offset(49)
+//                $0.leading.equalToSuperview().offset(40)
+//                $0.size.equalTo(50)
+//            }
         }
     }
     
     // MARK: - UI Components
     
     private let borderView = UIView()
-    private var profilePetImageView = UIImageView()
+    private let profilePetImageView = UIImageView()
     private let profileAlphaView = UIView()
     private let petNameLabel = UILabel()
     private let selectImageView = UIImageView()
@@ -58,8 +57,8 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
         }
         
         profilePetImageView.do {
-            $0.layer.masksToBounds = true
             $0.contentMode = .scaleAspectFill
+            $0.makeCornerRound(radius: 25)
         }
         
         profileAlphaView.do {
@@ -99,6 +98,12 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
             $0.centerY.equalToSuperview()
         }
         
+        profilePetImageView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().inset(40)
+            $0.width.height.equalTo(50)
+        }
+        
         selectImageView.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(42)
             $0.centerY.equalToSuperview()
@@ -115,10 +120,9 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
         } else {
             profilePetImageView.image = Image.defaultProfile
         }
-        
         petNameLabel.text = data.petName
         selectImageView.isHidden = data.isSelected ? false : true
-        self.size = CGFloat(cellHeight * 5/12)
+        //self.size = CGFloat(cellHeight * 5/12)
     }
     
     func updateUI(isSelected: Bool){
@@ -131,7 +135,7 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
             selectImageView.isHidden = false
         } else {
             contentView.backgroundColor = .zoocWhite1
-            profilePetImageView.layer.borderColor = nil
+            profilePetImageView.layer.borderColor = UIColor.clear.cgColor
             profilePetImageView.layer.borderWidth = 0
             profileAlphaView.isHidden = true
             petNameLabel.textColor = .zoocGray2

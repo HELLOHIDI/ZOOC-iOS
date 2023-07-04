@@ -48,6 +48,16 @@ final class RecordViewController : BaseViewController{
         target()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        addKeyboardNotifications()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        removeKeyboardNotifications()
+    }
+    
     // MARK: - Custom Method
     
     private func target() {

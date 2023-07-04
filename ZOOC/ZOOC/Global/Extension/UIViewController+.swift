@@ -117,6 +117,7 @@ extension UIViewController{
         if let view = notification.object as? UIView{
             view.frame.origin.y -= keyboardHeight
         }
+        guard view.frame.origin.y == 0 else { return }
         self.view.frame.origin.y -= keyboardHeight
     }
 
@@ -130,8 +131,12 @@ extension UIViewController{
         
         if let view = notification.object as? UIView{
             view.frame.origin.y += keyboardHeight
+        } else {
+            guard view.frame.origin.y < 0 else { return }
+            self.view.frame.origin.y += keyboardHeight
         }
-        self.view.frame.origin.y += keyboardHeight
+        
+        
     }
     
     @objc func dismissKeyboard() {

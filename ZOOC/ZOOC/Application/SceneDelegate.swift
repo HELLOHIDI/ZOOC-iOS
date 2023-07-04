@@ -22,8 +22,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         print(#function)
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        let vc = UIViewController()
+        vc.view.backgroundColor = .zoocMainGreen
+        
         window = UIWindow(windowScene: windowScene)
-        autoLogin(window)
+        
+        window?.rootViewController = vc
+        
+        self.window?.backgroundColor = .white
+        window?.makeKeyAndVisible()
+        autoLogin()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -63,18 +72,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 extension SceneDelegate {
     
-    private func autoLogin(_ window: UIWindow?) {
+    private func autoLogin() {
         guard !User.shared.zoocAccessToken.isEmpty else {
             print("📌 DB에 AccessToken 값이 없습니다. 온보딩을 시작합니다.")
-            autoLoginFail(window)
+            autoLoginFail()
             return
         }
-        requestFamilyAPI(window)
+        requestFamilyAPI()
     }
     
     
     
-    private func requestFamilyAPI(_ window: UIWindow?) {
+    private func requestFamilyAPI() {
         OnboardingAPI.shared.getFamily { result in
             switch result{
                 
@@ -83,36 +92,39 @@ extension SceneDelegate {
                 if data.count != 0 {
                     let familyID = String(data[0].id)
                     User.shared.familyID = familyID
-                    self.autoLoginSuccess(window)
+                    self.autoLoginSuccess()
                 } else {
-                    self.autoLoginFail(window)
+                    self.autoLoginFail()
                 }
             default:
                 print("자동로그인 실패")
-                self.autoLoginFail(window)
+                self.autoLoginFail()
             }
         }
     }
     
-    private func autoLoginSuccess(_ window: UIWindow?) {
+    private func autoLoginSuccess() {
         print(#function)
-        requestFCMTokenAPI(window)
+        requestFCMTokenAPI()
     }
     
-    private func autoLoginFail (_ window: UIWindow?) {
+    private func autoLoginFail () {
         let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
         onboardingNVC.setNavigationBarHidden(true, animated: true)
-        window?.rootViewController = onboardingNVC
-        self.window?.backgroundColor = .white
-        window?.makeKeyAndVisible()
+        
+        UIApplication.shared.changeRootViewController(onboardingNVC)
+//        window?.rootViewController = onboardingNVC
+//        self.window?.backgroundColor = .white
+//        window?.makeKeyAndVisible()
     }
     
-    private func requestFCMTokenAPI(_ window: UIWindow?) {
+    private func requestFCMTokenAPI() {
         OnboardingAPI.shared.patchFCMToken(fcmToken: User.shared.fcmToken) { result in
             let mainVC = ZoocTabBarController()
-            window?.rootViewController = mainVC
-            self.window?.backgroundColor = .white
-            window?.makeKeyAndVisible()
+            UIApplication.shared.changeRootViewController(mainVC)
+//            window?.rootViewController = mainVC
+//            self.window?.backgroundColor = .white
+//            window?.makeKeyAndVisible()
         }
     }
 

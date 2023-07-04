@@ -61,6 +61,12 @@ final class RecordMissionViewController : BaseViewController {
         addKeyboardNotifications()
         requestMissionAPI()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        removeKeyboardNotifications()
+    }
         
     
     //MARK: - Custom Method
@@ -141,8 +147,7 @@ extension RecordMissionViewController: UICollectionViewDataSource {
         cell.contentTextView.delegate = self
         
         self.recordMissionViewModel.updateNextButtonState(
-            button: &self.rootView.nextButton.isEnabled,
-            color: &self.rootView.nextButton.backgroundColor
+            button: &self.rootView.nextButton.isEnabled
         )
         return cell
     }
@@ -150,12 +155,17 @@ extension RecordMissionViewController: UICollectionViewDataSource {
 
 extension RecordMissionViewController: RecordMissionCollectionViewCellDelegate {
     func galleryButtonDidTap(tag: Int) {
+        
+        
         print(#function)
         checkAlbumPermission { hasPermission in
             if hasPermission {
                 self.recordMissionViewModel.index = tag
                 DispatchQueue.main.async {
-                    self.present(self.galleryAlertController,animated: true)
+                    let imagePicker = UIImagePickerController()
+                    imagePicker.delegate = self
+                    imagePicker.sourceType = .photoLibrary
+                    self.present(imagePicker, animated: true)
                 }
             } else {
                 self.showAccessDenied()

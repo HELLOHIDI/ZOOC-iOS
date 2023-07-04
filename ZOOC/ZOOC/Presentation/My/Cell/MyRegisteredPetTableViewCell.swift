@@ -36,6 +36,7 @@ final class MyRegisteredPetTableViewCell: UITableViewCell {
         petProfileButton.do {
             $0.makeCornerRound(radius: 30)
             $0.imageView?.contentMode = .scaleAspectFill
+            $0.isUserInteractionEnabled = false
         }
         
         petProfileNameLabel.do {
@@ -73,7 +74,7 @@ final class MyRegisteredPetTableViewCell: UITableViewCell {
 
 extension MyRegisteredPetTableViewCell {
     func setDefaultPetProfileImage() {
-        petProfileButton.setImage(Image.cameraCircle, for: .normal)
+        petProfileButton.setImage(Image.defaultProfile, for: .normal)
     }
     
     func setPetMemberProfileImage(photo: String) {

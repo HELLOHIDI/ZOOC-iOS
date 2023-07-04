@@ -16,14 +16,12 @@ final class RecordMissionViewModel {
     var placeHolderText: String = "오늘 어떤 일이 있었는지 공유해보세요"
     
     
-    func updateNextButtonState(button: inout Bool, color: inout UIColor?) {
+    func updateNextButtonState(button: inout Bool) {
         if (missionData[index].image != defaultImage && missionData[index].content != placeHolderText ) {
             button = true
-            color = .zoocGradientGreen
         }
         else {
             button = false
-            color = .zoocGray1
         }
         
     }

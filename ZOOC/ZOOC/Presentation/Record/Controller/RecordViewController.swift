@@ -55,8 +55,6 @@ final class RecordViewController : BaseViewController{
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
         removeKeyboardNotifications()
     }
     
@@ -178,10 +176,8 @@ extension RecordViewController {
     
     private func updateUI(){
         if contentTextViewIsRegistered == false || recordData.image == nil {
-            rootView.nextButton.backgroundColor = .zoocGray1
             rootView.nextButton.isEnabled = false
         } else {
-            rootView.nextButton.backgroundColor = .zoocGradientGreen
             rootView.nextButton.isEnabled = true
         }
     }

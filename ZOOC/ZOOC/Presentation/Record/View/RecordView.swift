@@ -32,7 +32,7 @@ final class RecordView: UIView {
     public let cardView = UIStackView()
     public let galleryImageView = UIImageView()
     public lazy var contentTextView = UITextView()
-    public lazy var nextButton = UIButton()
+    public lazy var nextButton = ZoocGradientButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -106,7 +106,6 @@ final class RecordView: UIView {
             $0.setTitle("다음", for: .normal)
             $0.titleLabel?.font = .zoocSubhead2
             $0.setTitleColor(.zoocWhite1, for: .normal)
-            $0.backgroundColor = .zoocGray1
             $0.isEnabled = false
             $0.layer.cornerRadius = 27
         }

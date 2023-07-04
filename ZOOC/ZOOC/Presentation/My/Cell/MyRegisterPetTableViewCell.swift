@@ -75,6 +75,7 @@ final class MyRegisterPetTableViewCell: UITableViewCell {
             $0.textColor = .zoocDarkGreen
             $0.font = .zoocBody1
             $0.makeCornerRound(radius: 20)
+            $0.returnKeyType = .done
             $0.makeCornerBorder(borderWidth: 1, borderColor: UIColor.zoocLightGray)
         }
         
@@ -134,4 +135,11 @@ extension MyRegisterPetTableViewCell: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         delegate?.collectionViewCell(valueChangedIn: petProfileNameTextField, delegatedFrom: self, tag: textField.tag, image: petProfileImageButton.currentImage!)
     }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
 }

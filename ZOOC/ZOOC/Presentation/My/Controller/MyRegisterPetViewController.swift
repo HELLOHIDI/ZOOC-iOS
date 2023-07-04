@@ -81,6 +81,7 @@ final class MyRegisterPetViewController: BaseViewController {
         var isPhoto: Bool = true
         
         for pet in self.myPetRegisterViewModel.petList {
+            isPhoto = pet.image != Image.cameraCircle
             guard let photo = pet.image.jpegData(compressionQuality: 1.0) else {
                 photo = Data()
                 isPhoto = false
@@ -119,10 +120,14 @@ extension MyRegisterPetViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(#function)
-        let editPetProfileVC = MyEditPetProfileViewController()
-        editPetProfileVC.modalPresentationStyle = .fullScreen
-        editPetProfileVC.dataBind(data: myPetMemberData[indexPath.row])
-        navigationController?.pushViewController(editPetProfileVC, animated: true)
+        switch indexPath.section {
+        case 0:
+            let editPetProfileVC = MyEditPetProfileViewController()
+            editPetProfileVC.dataBind(data: myPetMemberData[indexPath.row])
+            navigationController?.pushViewController(editPetProfileVC, animated: true)
+        default:
+            return
+        }
     }
 }
 
@@ -172,8 +177,7 @@ extension MyRegisterPetViewController: UITableViewDataSource {
             }
             
             self.myPetRegisterViewModel.checkCanRegister(
-                button:&self.rootView.registerPetButton.isEnabled,
-                color:&self.rootView.registerPetButton.backgroundColor
+                button:&self.rootView.registerPetButton.isEnabled
             )
             
             self.myPetRegisterViewModel.hideDeleteButton(button: &cell.deletePetProfileButton.isHidden)
@@ -230,8 +234,7 @@ extension MyRegisterPetViewController: MyDeleteButtonTappedDelegate {
             self.myPetRegisterViewModel.petList[tag] = MyPetRegisterModel(name: text, image: image)
         }
         self.myPetRegisterViewModel.checkCanRegister(
-            button: &self.rootView.registerPetButton.isEnabled,
-            color: &self.rootView.registerPetButton.backgroundColor)
+            button: &self.rootView.registerPetButton.isEnabled)
     }
     
 }

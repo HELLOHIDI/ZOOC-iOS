@@ -61,12 +61,6 @@ final class MyViewController: BaseViewController {
         )
     }
     
-    func dataSend(myprofileData: UserResult?) {
-        guard let nickNameData = myProfileData?.nickName else { return }
-        guard let photoData = myProfileData?.photo else { return }
-        myView.myCollectionView.reloadData()
-    }
-    
     @objc
     private func updateUI() {
         requestMyPageAPI()

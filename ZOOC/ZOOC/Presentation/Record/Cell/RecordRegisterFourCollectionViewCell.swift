@@ -165,7 +165,7 @@ final class RecordRegisterFourCollectionViewCell: UICollectionViewCell {
             selectImageView.isHidden = false
         } else {
             contentView.backgroundColor = .zoocWhite1
-            profilePetImageView.layer.borderColor = nil
+            profilePetImageView.layer.borderColor = UIColor.clear.cgColor
             profilePetImageView.layer.borderWidth = 0
             profileAlphaView.isHidden = true
             petNameLabel.textColor = .zoocGray2

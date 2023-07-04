@@ -47,6 +47,9 @@ final class OnboardingInviteFamilyViewController: BaseViewController {
         super.viewDidLoad()
         
         target()
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        navigationController?.delegate = nil
     }
     
     //MARK: - Custom Method

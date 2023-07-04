@@ -141,8 +141,7 @@ extension RecordMissionViewController: UICollectionViewDataSource {
         cell.contentTextView.delegate = self
         
         self.recordMissionViewModel.updateNextButtonState(
-            button: &self.rootView.nextButton.isEnabled,
-            color: &self.rootView.nextButton.backgroundColor
+            button: &self.rootView.nextButton.isEnabled
         )
         return cell
     }

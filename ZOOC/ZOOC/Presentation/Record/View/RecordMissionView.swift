@@ -22,7 +22,7 @@ final class RecordMissionView : UIView {
     public lazy var dailyButton = UIButton()
     private lazy var missionButton = UIButton()
     public var missionCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-    public lazy var nextButton = UIButton()
+    public lazy var nextButton = ZoocGradientButton()
     
     //MARK: - Life Cycle
     
@@ -80,7 +80,6 @@ final class RecordMissionView : UIView {
             $0.setTitle("다음", for: .normal)
             $0.titleLabel?.font = .zoocSubhead2
             $0.setTitleColor(.zoocWhite1, for: .normal)
-            $0.backgroundColor = .zoocGray1
             $0.isEnabled = false
             $0.layer.cornerRadius = 27
         }

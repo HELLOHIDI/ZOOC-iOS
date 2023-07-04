@@ -117,6 +117,8 @@
 		87D5AF602960CD5900CA7F12 /* HomeMissionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D5AF5F2960CD5900CA7F12 /* HomeMissionCollectionViewCell.swift */; };
 		87D5AF622960CFE500CA7F12 /* HomeGuideCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D5AF612960CFE500CA7F12 /* HomeGuideCollectionViewCell.swift */; };
 		87D5AF6429649DC100CA7F12 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D5AF6329649DC100CA7F12 /* HomeViewController.swift */; };
+		87DC47822A545A1C007823CB /* noise.png in Resources */ = {isa = PBXBuildFile; fileRef = 87DC47802A545A1C007823CB /* noise.png */; };
+		87DC47832A545A1C007823CB /* symbol_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 87DC47812A545A1C007823CB /* symbol_logo.png */; };
 		87DDDD92298E5BE500CBEC79 /* ArchiveCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DDDD91298E5BE500CBEC79 /* ArchiveCommentView.swift */; };
 		87DDDD94298E607C00CBEC79 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DDDD93298E607C00CBEC79 /* Device.swift */; };
 		87E462E62A10FA60006FC35D /* EnternalURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462E52A10FA60006FC35D /* EnternalURL.swift */; };
@@ -316,6 +318,8 @@
 		87D5AF5F2960CD5900CA7F12 /* HomeMissionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMissionCollectionViewCell.swift; sourceTree = "<group>"; };
 		87D5AF612960CFE500CA7F12 /* HomeGuideCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGuideCollectionViewCell.swift; sourceTree = "<group>"; };
 		87D5AF6329649DC100CA7F12 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		87DC47802A545A1C007823CB /* noise.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noise.png; sourceTree = "<group>"; };
+		87DC47812A545A1C007823CB /* symbol_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = symbol_logo.png; sourceTree = "<group>"; };
 		87DDDD91298E5BE500CBEC79 /* ArchiveCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveCommentView.swift; sourceTree = "<group>"; };
 		87DDDD93298E607C00CBEC79 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		87E462E52A10FA60006FC35D /* EnternalURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnternalURL.swift; sourceTree = "<group>"; };
@@ -967,6 +971,7 @@
 		87B6625429521EAC00B6FFA9 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				87B6624B29521E7600B6FFA9 /* LaunchScreen.storyboard */,
 				87B6624029521E7500B6FFA9 /* AppDelegate.swift */,
 				87B6624229521E7500B6FFA9 /* SceneDelegate.swift */,
 				87B6624E29521E7600B6FFA9 /* Info.plist */,
@@ -990,8 +995,8 @@
 		87B6625629521EBC00B6FFA9 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				87DC47772A5458F4007823CB /* LaunchScreenAsset */,
 				87B6624929521E7600B6FFA9 /* Assets.xcassets */,
-				87B6624B29521E7600B6FFA9 /* LaunchScreen.storyboard */,
 				87B6625929521EFF00B6FFA9 /* Font */,
 				871EA357297078B500D0E8CC /* Lottie */,
 			);
@@ -1034,6 +1039,15 @@
 				877BAFC3295EEA7700C2AA1C /* Pretendard-Medium.otf */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		87DC47772A5458F4007823CB /* LaunchScreenAsset */ = {
+			isa = PBXGroup;
+			children = (
+				87DC47802A545A1C007823CB /* noise.png */,
+				87DC47812A545A1C007823CB /* symbol_logo.png */,
+			);
+			path = LaunchScreenAsset;
 			sourceTree = "<group>";
 		};
 		87E462EC2A110858006FC35D /* UIComponets */ = {
@@ -1247,11 +1261,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87DC47832A545A1C007823CB /* symbol_logo.png in Resources */,
 				877BAFC2295EEA6900C2AA1C /* Pretendard-SemiBold.otf in Resources */,
 				87B6624D29521E7600B6FFA9 /* LaunchScreen.storyboard in Resources */,
 				87B6624A29521E7600B6FFA9 /* Assets.xcassets in Resources */,
 				877BAFC4295EEA7700C2AA1C /* Pretendard-Medium.otf in Resources */,
 				871EA359297078C900D0E8CC /* loading.json in Resources */,
+				87DC47822A545A1C007823CB /* noise.png in Resources */,
 				8781DE4C29B25472005ABF23 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1517,7 +1533,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1571,7 +1587,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1601,7 +1617,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "반려동물을 기록하기 위해선 갤러리 접근 권한이 필요합니다. 계속하시겠습니까?";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "'ZOOC'이(가) 사용자의 사진에 접근하려고 합니다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1645,7 +1661,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "반려동물을 기록하기 위해선 갤러리 접근 권한이 필요합니다. 계속하시겠습니까?";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "'ZOOC'이(가) 사용자의 사진에 접근하려고 합니다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

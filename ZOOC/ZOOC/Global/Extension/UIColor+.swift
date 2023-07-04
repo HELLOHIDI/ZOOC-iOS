@@ -20,7 +20,7 @@ extension UIColor{
     
     //MARK: Brand Colors
     class var zoocMainGreen: UIColor {
-        return UIColor(r: 94, g: 203, b: 144)
+        return UIColor(r: 66, g: 200, b: 127)
     }
     
     class var zoocSubGreen: UIColor {

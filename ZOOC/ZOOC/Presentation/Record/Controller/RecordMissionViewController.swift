@@ -95,6 +95,7 @@ final class RecordMissionViewController : BaseViewController {
     }
     
     @objc private func nextButtonDidTap(_ sender: Any) {
+        view.endEditing(true)
         pushToRecordRegisterViewController()
     }
 }

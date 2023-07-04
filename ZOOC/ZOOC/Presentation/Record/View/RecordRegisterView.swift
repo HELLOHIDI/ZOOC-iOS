@@ -68,12 +68,14 @@ final class RecordRegisterView : UIView{
             $0.setTitle("일상", for: .normal)
             $0.titleLabel?.font = .zoocSubhead1
             $0.setTitleColor(.zoocGray1, for: .normal)
+            $0.isEnabled = false
         }
         
         missionButton.do {
             $0.setTitle("미션", for: .normal)
             $0.titleLabel?.font = .zoocSubhead1
             $0.setTitleColor(.zoocGray1, for: .normal)
+            $0.isEnabled = false
         }
         
         cardView.do {

@@ -48,10 +48,12 @@ final class RecordRegisterViewController : BaseViewController{
         }
     }
     
+    //MARK: - Custom Method
+    
     private func target() {
         rootView.xmarkButton.addTarget(self, action: #selector(xButtonDidTap), for: .touchUpInside)
-        rootView.dailyButton.addTarget(self, action: #selector(dailyButtonDidTap), for: .touchUpInside)
-        rootView.missionButton.addTarget(self, action: #selector(missionButtonDidTap), for: .touchUpInside)
+//        rootView.dailyButton.addTarget(self, action: #selector(dailyButtonDidTap), for: .touchUpInside)
+//        rootView.missionButton.addTarget(self, action: #selector(missionButtonDidTap), for: .touchUpInside)
         rootView.backButton.addTarget(self, action: #selector(backButtonDidTap),for: .touchUpInside)
         rootView.registerButton.addTarget(self, action: #selector(registerButtonDidTap), for: .touchUpInside)
         
@@ -72,19 +74,20 @@ final class RecordRegisterViewController : BaseViewController{
         self.missionID = missionID
     }
     
+    private func presentAlertViewController() {
+        let zoocAlertVC = ZoocAlertViewController()
+        zoocAlertVC.delegate = self
+        zoocAlertVC.alertType = .leavePage
+        zoocAlertVC.modalPresentationStyle = .overFullScreen
+        self.present(zoocAlertVC, animated: false, completion: nil)
+    }
+    
     //MARK: - Action Method
     
     @objc private func xButtonDidTap(){
-        dismiss(animated: true)
+        presentAlertViewController()
     }
     
-    @objc private func dailyButtonDidTap(){
-        dismiss(animated: true)
-    }
-    
-    @objc private func missionButtonDidTap(){
-        dismiss(animated: true)
-    }
     
     @objc private func backButtonDidTap(){
         navigationController?.popViewController(animated: true)
@@ -223,3 +226,10 @@ extension RecordRegisterViewController {
     }
 }
 
+extension RecordRegisterViewController: ZoocAlertViewControllerDelegate {
+    func exitButtonDidTap() {
+        dismiss(animated: true)
+    }
+    
+    
+}

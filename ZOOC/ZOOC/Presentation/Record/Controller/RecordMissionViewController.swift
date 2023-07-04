@@ -155,12 +155,17 @@ extension RecordMissionViewController: UICollectionViewDataSource {
 
 extension RecordMissionViewController: RecordMissionCollectionViewCellDelegate {
     func galleryButtonDidTap(tag: Int) {
+        
+        
         print(#function)
         checkAlbumPermission { hasPermission in
             if hasPermission {
                 self.recordMissionViewModel.index = tag
                 DispatchQueue.main.async {
-                    self.present(self.galleryAlertController,animated: true)
+                    let imagePicker = UIImagePickerController()
+                    imagePicker.delegate = self
+                    imagePicker.sourceType = .photoLibrary
+                    self.present(imagePicker, animated: true)
                 }
             } else {
                 self.showAccessDenied()

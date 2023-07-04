@@ -84,12 +84,15 @@ final class OnboardingRegisterPetViewController: BaseViewController{
         var isPhoto: Bool = true
         
         for pet in self.onboardingPetRegisterViewModel.petList {
+            isPhoto = pet.image != Image.cameraCircle
+            
             guard let photo = pet.image.jpegData(compressionQuality: 1.0) else {
                 print("가드문 들어옴")
                 photo = Data()
                 isPhoto = false
                 return
             }
+            
             names.append(pet.name)
             photos.append(photo)
             isPhotos.append(isPhoto)

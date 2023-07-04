@@ -73,7 +73,7 @@ final class MyRegisteredPetTableViewCell: UITableViewCell {
 
 extension MyRegisteredPetTableViewCell {
     func setDefaultPetProfileImage() {
-        petProfileButton.setImage(Image.cameraCircle, for: .normal)
+        petProfileButton.setImage(Image.defaultProfile, for: .normal)
     }
     
     func setPetMemberProfileImage(photo: String) {

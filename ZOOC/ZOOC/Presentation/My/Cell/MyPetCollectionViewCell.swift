@@ -88,7 +88,7 @@ final class MyPetCollectionViewCell: UICollectionViewCell {
 
 extension MyPetCollectionViewCell {
     func setDefaultPetProfileImage() {
-        petImageView.image = Image.cameraCircle
+        petImageView.image = Image.defaultProfile
     }
     
     func setPetMemberProfileImage(photo: String) {

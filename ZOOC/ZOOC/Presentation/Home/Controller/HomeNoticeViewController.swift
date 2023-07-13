@@ -67,13 +67,18 @@ final class HomeNoticeViewController: BaseViewController {
     }
 }
 
+//MARK: - UITableViewDelegate
+
 extension HomeNoticeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 76
     }
 }
 
+//MARK: - UITableViewDataSource
+
 extension HomeNoticeViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return homeNoticeData.count
     }
@@ -84,6 +89,16 @@ extension HomeNoticeViewController: UITableViewDataSource {
         cell.selectionStyle = .none
         cell.dataBind(data: homeNoticeData[indexPath.row])
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let recordID = homeNoticeData[indexPath.row].recordID
+        let petID = homeNoticeData[indexPath.row].petIDs[0]
+        
+        let archiveVC = ArchiveViewController()
+        archiveVC.dataBind(recordID: recordID, petID: petID)
+        archiveVC.modalPresentationStyle = .fullScreen
+        present(archiveVC, animated: true)
     }
 }
 

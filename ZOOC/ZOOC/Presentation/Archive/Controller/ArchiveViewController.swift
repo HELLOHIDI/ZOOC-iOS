@@ -166,7 +166,7 @@ final class ArchiveViewController : BaseViewController {
         }
         
         backButton.do {
-            $0.setImage(UIImage(systemName: "xmark"), for: .normal)
+            $0.setImage(Image.xmarkWhite, for: .normal)
             $0.tintColor = .white
         }
         
@@ -226,14 +226,14 @@ final class ArchiveViewController : BaseViewController {
         
         
         contentView.addSubviews(petImageView,
-                                 backButton,
-                                 etcButton,
-                                 dateLabel,
-                                 writerImageView,
-                                 writerNameLabel,
-                                 contentLabel,
-                                 lineView,
-                                 commentCollectionView)
+                                backButton,
+                                etcButton,
+                                dateLabel,
+                                writerImageView,
+                                writerNameLabel,
+                                contentLabel,
+                                lineView,
+                                commentCollectionView)
     }
     
     private func layout() {

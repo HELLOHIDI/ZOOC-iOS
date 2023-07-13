@@ -10,8 +10,17 @@ import Foundation
 // MARK: - HomeAlarmResult
 
 struct HomeNoticeResult: Codable {
+    let recordID: Int
+    let petIDs: [Int]
     let writer: HomeNoticeWriter
-    let created_time: String
+    let createdTime: String
+    
+    enum CodingKeys: String, CodingKey {
+        case recordID = "record_id"
+        case petIDs = "pet_ids"
+        case writer
+        case createdTime = "created_time"
+    }
 }
 
 // MARK: - HomeAlarmWriter

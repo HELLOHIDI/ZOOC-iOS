@@ -89,7 +89,7 @@ final class HomeNoticeTableViewCell: UITableViewCell {
         }
         
         alarmContentLabel.text = "\(data.writer.nickName)님이 새로운 게시물을 올렸습니다."
-        createdTimeLabel.text = data.created_time
+        createdTimeLabel.text = data.createdTime
     }
 }
 

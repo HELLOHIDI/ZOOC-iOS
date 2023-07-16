@@ -17,6 +17,7 @@ struct User {
     static var shared = User()
     private init() {}
     
+    
     var familyID: String {
         get {
             UserDefaultsManager.familyID ?? ""

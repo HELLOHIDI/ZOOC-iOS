@@ -113,18 +113,12 @@ extension SceneDelegate {
         onboardingNVC.setNavigationBarHidden(true, animated: true)
         
         UIApplication.shared.changeRootViewController(onboardingNVC)
-//        window?.rootViewController = onboardingNVC
-//        self.window?.backgroundColor = .white
-//        window?.makeKeyAndVisible()
     }
     
     private func requestFCMTokenAPI() {
         OnboardingAPI.shared.patchFCMToken(fcmToken: User.shared.fcmToken) { result in
             let mainVC = ZoocTabBarController()
             UIApplication.shared.changeRootViewController(mainVC)
-//            window?.rootViewController = mainVC
-//            self.window?.backgroundColor = .white
-//            window?.makeKeyAndVisible()
         }
     }
 

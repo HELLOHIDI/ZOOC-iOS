@@ -35,7 +35,6 @@ final class ZoocGradientButton: UIButton {
     private var gradientLayer: CAGradientLayer?
     private var shadowLayer: CALayer?
     
-    
     //MARK: - Life Cycle
 
     override init(frame: CGRect) {

@@ -59,8 +59,6 @@ extension HomeAPI{
             self.disposeNetwork(result, dataModel: [CommentResult].self, completion: completion)
         }
     }
-    
-    
 }
 
 

@@ -21,7 +21,6 @@ enum HomeService {
 extension HomeService: BaseTargetType {
      
     var path: String {
-        
         switch self {
         case .getTotalPet(let familyID):
             return URLs.totalPet

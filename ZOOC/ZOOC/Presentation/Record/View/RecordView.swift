@@ -15,7 +15,6 @@ final class RecordView: UIView {
     //MARK: - Properties
     
     var petImage: UIImage?
-    private var recordData = RecordMissionModel()
     private let placeHoldText: String = """
                                         ex) 2023년 2월 30일
                                         가족에게 어떤 순간이었는지 남겨주세요

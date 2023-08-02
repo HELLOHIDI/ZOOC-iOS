@@ -11,8 +11,6 @@ import Moya
 enum RecordService{
     case getTotalPet(familyID: String)
     case postRecord(familyID: String, photo: UIImage, content: String, pets: [Int])
-    case postMission(familyID: String, missionID: Int, photo: UIImage, content: String, pets: [Int])
-    case getMissionList(familyID: String)
 }
 
 extension RecordService: BaseTargetType{
@@ -22,12 +20,7 @@ extension RecordService: BaseTargetType{
             return URLs.totalPet.replacingOccurrences(of: "{familyId}", with: familyID)
         case .postRecord(familyID: let familyID, photo: _, content: _, pets: _):
             return URLs.postRecord.replacingOccurrences(of: "{familyId}", with: familyID)
-        case .postMission(familyID: let familyID, missionID: _, photo: _, content: _, pets: _):
-            return URLs.postMission.replacingOccurrences(of: "{familyId}", with: familyID)
-        case .getMissionList(let familyID):
-            return URLs.getMission.replacingOccurrences(of: "{familyId}", with: familyID)
         }
-        
     }
     
     var method: Moya.Method {
@@ -36,17 +29,14 @@ extension RecordService: BaseTargetType{
             return .get
         case .postRecord:
             return .post
-        case .postMission:
-            return .post
-        case .getMissionList:
-            return .get
         }
     }
     
     var task: Moya.Task {
-        switch self{
+        switch self {
         case .getTotalPet:
             return .requestPlain
+            
         case .postRecord(familyID: _, photo: let photo, content: let content, pets: let pets):
             
             var multipartFormData: [MultipartFormData] = []
@@ -61,50 +51,20 @@ extension RecordService: BaseTargetType{
                 
                 multipartFormData.append(petData)
             }
-
-
+            
+            
             let contentData = MultipartFormData(provider: .data(content.data(using: String.Encoding.utf8)!),
-                                                           name: "content",
-                                                           mimeType: "application/json")
+                                                name: "content",
+                                                mimeType: "application/json")
             let imageData = MultipartFormData(provider: .data(photo),
-                                                          name: "file",
-                                                          fileName: "image.jpeg",
-                                                          mimeType: "image/jpeg")
+                                              name: "file",
+                                              fileName: "image.jpeg",
+                                              mimeType: "image/jpeg")
             
             multipartFormData.append(contentData)
             multipartFormData.append(imageData)
             
             return .uploadMultipart(multipartFormData)
-            
-        case .postMission(familyID: _, missionID: let missionID, photo: let photo, content: let content, pets: let pets):
-            
-            var multipartFormData: [MultipartFormData] = []
-            
-            let photo = photo.jpegData(compressionQuality: 1.0) ?? Data()
-            
-            for i in 0...pets.count - 1 {
-                let pet = pets[i].description.data(using: .utf8) ?? Data()
-                let petData = MultipartFormData(provider: .data(pet),
-                                                name: "pet[\(i)]",
-                                                mimeType: "application/json")
-                
-                multipartFormData.append(petData)
-            }
-            
-            let contentData = MultipartFormData(provider: .data(content.data(using: String.Encoding.utf8)!),
-                                                           name: "content",
-                                                           mimeType: "application/json")
-            let imageData = MultipartFormData(provider: .data(photo),
-                                                          name: "file",
-                                                          fileName: "image.jpeg",
-                                                          mimeType: "image/jpeg")
-            
-            multipartFormData.append(contentData)
-            multipartFormData.append(imageData)
-            
-            return .uploadCompositeMultipart(multipartFormData, urlParameters: ["missionId" : missionID])
-        case .getMissionList:
-            return .requestPlain
         }
     }
 }

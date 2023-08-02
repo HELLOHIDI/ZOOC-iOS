@@ -15,7 +15,6 @@
 		4C6B186A296C82850059840D /* RecordRegisterFourCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B1869296C82850059840D /* RecordRegisterFourCollectionViewCell.swift */; };
 		4C6B186C296CB8730059840D /* RecordCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B186B296CB8730059840D /* RecordCompleteViewController.swift */; };
 		4C84C33C298CD662003B899E /* RecordMissionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C84C33B298CD662003B899E /* RecordMissionModel.swift */; };
-		4C84C341298E2E7B003B899E /* RecordMissionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C84C340298E2E7B003B899E /* RecordMissionCollectionViewCell.swift */; };
 		4C8A7C33297063F400783979 /* OnboardingInviteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A7C32297063F400783979 /* OnboardingInviteResult.swift */; };
 		870D062A297BEB7900ADAD04 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870D0629297BEB7900ADAD04 /* HomeView.swift */; };
 		8718A06429AD3445001C7460 /* EditProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8718A06329AD3445001C7460 /* EditProfileRequest.swift */; };
@@ -221,7 +220,6 @@
 		4C6B1869296C82850059840D /* RecordRegisterFourCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRegisterFourCollectionViewCell.swift; sourceTree = "<group>"; };
 		4C6B186B296CB8730059840D /* RecordCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCompleteViewController.swift; sourceTree = "<group>"; };
 		4C84C33B298CD662003B899E /* RecordMissionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMissionModel.swift; sourceTree = "<group>"; };
-		4C84C340298E2E7B003B899E /* RecordMissionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMissionCollectionViewCell.swift; sourceTree = "<group>"; };
 		4C8A7C32297063F400783979 /* OnboardingInviteResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInviteResult.swift; sourceTree = "<group>"; };
 		870D0629297BEB7900ADAD04 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		8718A06329AD3445001C7460 /* EditProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileRequest.swift; sourceTree = "<group>"; };
@@ -438,7 +436,6 @@
 			children = (
 				4C6B1869296C82850059840D /* RecordRegisterFourCollectionViewCell.swift */,
 				4C6B1867296B930B0059840D /* RecordRegisterCollectionViewCell.swift */,
-				4C84C340298E2E7B003B899E /* RecordMissionCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1304,7 +1301,6 @@
 				870D062A297BEB7900ADAD04 /* HomeView.swift in Sources */,
 				8723671C2A19276A00DCBBFF /* ArchiveService.swift in Sources */,
 				87A76AC32960427C0096F669 /* APIConstants.swift in Sources */,
-				4C84C341298E2E7B003B899E /* RecordMissionCollectionViewCell.swift in Sources */,
 				D2DC80D52A0DFDF600F48209 /* RecordRegisterView.swift in Sources */,
 				D26C860A296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift in Sources */,
 				D26C85CF2968681900AEAF9B /* MyPetCollectionFooterView.swift in Sources */,

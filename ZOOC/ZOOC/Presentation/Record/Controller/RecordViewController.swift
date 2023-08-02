@@ -14,12 +14,10 @@ final class RecordViewController : BaseViewController{
     
     //MARK: - Properties
     
-    enum DestinationType {
-        case home
-        case mission
-    }
-    
-    private var destinationType: DestinationType = .home
+//    enum DestinationType {
+//        case home
+//        case mission
+//    }
     
     var petImage: UIImage?
     private var recordData = RecordModel()
@@ -64,9 +62,6 @@ final class RecordViewController : BaseViewController{
         rootView.xmarkButton.addTarget(self,
                                        action: #selector(xButtonDidTap),
                                        for: .touchUpInside)
-        rootView.missionButton.addTarget(self,
-                                         action: #selector(missionButtonDidTap),
-                                         for: .touchUpInside)
         rootView.nextButton.addTarget(self,
                                       action: #selector(nextButtonDidTap),
                                       for: .touchUpInside)
@@ -82,12 +77,11 @@ final class RecordViewController : BaseViewController{
     //MARK: - Action Method
     
     @objc private func xButtonDidTap(){
-        destinationType = .home
         presentAlertViewController()
     }
     
     @objc private func missionButtonDidTap(){
-        destinationType = .mission
+        presentBottomAlert("삭제된 기능입니다")
         presentAlertViewController()
     }
     
@@ -198,6 +192,4 @@ extension RecordViewController: ZoocAlertViewControllerDelegate {
     func exitButtonDidTap() {
         dismiss(animated: true)
     }
-    
-    
 }

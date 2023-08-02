@@ -62,16 +62,16 @@ final class RecordViewController : BaseViewController{
     
     private func target() {
         rootView.xmarkButton.addTarget(self,
-                         action: #selector(xButtonDidTap),
-                         for: .touchUpInside)
+                                       action: #selector(xButtonDidTap),
+                                       for: .touchUpInside)
         rootView.missionButton.addTarget(self,
-                         action: #selector(missionButtonDidTap),
-                         for: .touchUpInside)
+                                         action: #selector(missionButtonDidTap),
+                                         for: .touchUpInside)
         rootView.nextButton.addTarget(self,
-                         action: #selector(nextButtonDidTap),
-                         for: .touchUpInside)
+                                      action: #selector(nextButtonDidTap),
+                                      for: .touchUpInside)
     }
-
+    
     private func gesture(){
         self.imagePickerController.delegate = self
         rootView.contentTextView.delegate = self
@@ -119,7 +119,7 @@ extension RecordViewController: UITextViewDelegate {
             textView.textColor = .black
         }
     }
-
+    
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             textView.text = placeHoldText
@@ -150,11 +150,6 @@ extension RecordViewController: UIImagePickerControllerDelegate {
 }
 
 extension RecordViewController {
-    func pushToRecordMissionViewController() {
-        let recordMissionViewController = RecordMissionViewController(recordMissionViewModel: RecordMissionViewModel(), missionList: [])
-        navigationController?.pushViewController(recordMissionViewController, animated: false)
-    }
-    
     func presentAlertViewController() {
         let zoocAlertVC = ZoocAlertViewController()
         zoocAlertVC.delegate = self
@@ -201,15 +196,8 @@ extension RecordViewController {
 extension RecordViewController: ZoocAlertViewControllerDelegate {
     
     func exitButtonDidTap() {
-        switch destinationType {
-            
-        case .home:
-            dismiss(animated: true)
-        case .mission:
-            pushToRecordMissionViewController()
-        }
-        
+        dismiss(animated: true)
     }
-
+    
     
 }

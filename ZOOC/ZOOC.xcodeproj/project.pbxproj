@@ -320,6 +320,9 @@
 		87D5AF6329649DC100CA7F12 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		87DC47802A545A1C007823CB /* noise.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noise.png; sourceTree = "<group>"; };
 		87DC47812A545A1C007823CB /* symbol_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = symbol_logo.png; sourceTree = "<group>"; };
+		87DC47F02A7B4CB2007823CB /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		87DC47F12A7B4CBF007823CB /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		87DC47F22A7B4D00007823CB /* Config Docs.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Config Docs.md"; sourceTree = "<group>"; };
 		87DDDD91298E5BE500CBEC79 /* ArchiveCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveCommentView.swift; sourceTree = "<group>"; };
 		87DDDD93298E607C00CBEC79 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		87E462E52A10FA60006FC35D /* EnternalURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnternalURL.swift; sourceTree = "<group>"; };
@@ -956,9 +959,8 @@
 		87B6623F29521E7500B6FFA9 /* ZOOC */ = {
 			isa = PBXGroup;
 			children = (
-				87DC47EF2A7ADF66007823CB /* Configuration */,
-				8781DE4B29B25471005ABF23 /* GoogleService-Info.plist */,
 				D2D686BA299B59F400C290A8 /* ZOOC.entitlements */,
+				87DC47EF2A7ADF66007823CB /* Configuration */,
 				87B6625429521EAC00B6FFA9 /* Application */,
 				876483162952351500F74882 /* Global */,
 				87B6625629521EBC00B6FFA9 /* Resource */,
@@ -1054,6 +1056,10 @@
 		87DC47EF2A7ADF66007823CB /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				87DC47F22A7B4D00007823CB /* Config Docs.md */,
+				8781DE4B29B25471005ABF23 /* GoogleService-Info.plist */,
+				87DC47F02A7B4CB2007823CB /* Debug.xcconfig */,
+				87DC47F12A7B4CBF007823CB /* Release.xcconfig */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -1607,10 +1613,10 @@
 		};
 		87B6625229521E7600B6FFA9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 87DC47F02A7B4CB2007823CB /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				BASE_URL = "http://3.36.236.44:3000";
 				CODE_SIGN_ENTITLEMENTS = ZOOC/ZOOC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1636,7 +1642,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.meltsplit.ZOOC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1650,10 +1656,10 @@
 		};
 		87B6625329521E7600B6FFA9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 87DC47F12A7B4CBF007823CB /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				BASE_URL = "http://3.36.236.44:3000";
 				CODE_SIGN_ENTITLEMENTS = ZOOC/ZOOC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1679,7 +1685,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.meltsplit.ZOOC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

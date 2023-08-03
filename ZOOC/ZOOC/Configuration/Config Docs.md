@@ -19,7 +19,7 @@
 
 - App Name
 - Base URL
-- Kakao SDK App Key
+- Kakao App Key
 - 
 
 

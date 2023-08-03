@@ -956,6 +956,7 @@
 		87B6623F29521E7500B6FFA9 /* ZOOC */ = {
 			isa = PBXGroup;
 			children = (
+				87DC47EF2A7ADF66007823CB /* Configuration */,
 				8781DE4B29B25471005ABF23 /* GoogleService-Info.plist */,
 				D2D686BA299B59F400C290A8 /* ZOOC.entitlements */,
 				87B6625429521EAC00B6FFA9 /* Application */,
@@ -1048,6 +1049,13 @@
 				87DC47812A545A1C007823CB /* symbol_logo.png */,
 			);
 			path = LaunchScreenAsset;
+			sourceTree = "<group>";
+		};
+		87DC47EF2A7ADF66007823CB /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Configuration;
 			sourceTree = "<group>";
 		};
 		87E462EC2A110858006FC35D /* UIComponets */ = {

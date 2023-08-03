@@ -15,7 +15,6 @@ final class RecordView: UIView {
     //MARK: - Properties
     
     var petImage: UIImage?
-    private var recordData = RecordMissionModel()
     private let placeHoldText: String = """
                                         ex) 2023년 2월 30일
                                         가족에게 어떤 순간이었는지 남겨주세요
@@ -26,9 +25,6 @@ final class RecordView: UIView {
     
     private let topBarView = UIView()
     public lazy var xmarkButton = UIButton()
-    private let buttonsContainerView = UIView()
-    private lazy var dailyButton = UIButton()
-    public lazy var missionButton = UIButton()
     public let cardView = UIStackView()
     public let galleryImageView = UIImageView()
     public lazy var contentTextView = UITextView()
@@ -49,21 +45,8 @@ final class RecordView: UIView {
     // MARK: - Custom Method
     
     private func style() {
-        
         xmarkButton.do {
             $0.setImage(Image.xmark, for: .normal)
-        }
-
-        dailyButton.do {
-            $0.setTitle("일상", for: .normal)
-            $0.titleLabel?.font = .zoocSubhead1
-            $0.setTitleColor(.zoocDarkGray1, for: .normal)
-        }
-
-        missionButton.do {
-            $0.setTitle("미션", for: .normal)
-            $0.titleLabel?.font = .zoocSubhead1
-            $0.setTitleColor(.zoocGray1, for: .normal)
         }
 
         cardView.do {
@@ -113,8 +96,7 @@ final class RecordView: UIView {
     
     private func hierarchy() {
         self.addSubviews(topBarView, cardView, nextButton)
-        topBarView.addSubviews(xmarkButton, buttonsContainerView)
-        buttonsContainerView.addSubviews(dailyButton, missionButton)
+        topBarView.addSubviews(xmarkButton)
         cardView.addArrangedSubview(galleryImageView)
         cardView.addArrangedSubview(contentTextView)
     }
@@ -130,27 +112,6 @@ final class RecordView: UIView {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(22)
             $0.width.equalTo(42)
-            $0.height.equalTo(42)
-        }
-        
-        buttonsContainerView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(22)
-            $0.width.equalTo(112)
-            $0.height.equalTo(42)
-        }
-        
-        dailyButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalTo(self.missionButton.snp.leading)
-            $0.width.equalTo(56)
-            $0.height.equalTo(42)
-        }
-        
-        missionButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.width.equalTo(56)
             $0.height.equalTo(42)
         }
         

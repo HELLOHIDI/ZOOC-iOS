@@ -16,15 +16,6 @@ class HomeAPI: BaseAPI {
 }
 
 extension HomeAPI{
-    
-    public func getMission(familyID: String ,completion: @escaping (NetworkResult<Any>) -> Void) {
-        homeProvider.request(.getMission(familyID: familyID)) { (result) in
-            self.disposeNetwork(result,
-                                dataModel: [RecordMissionResult].self,
-                                completion: completion)
-        }
-    }
-    
     public func getTotalPet(familyID: String ,completion: @escaping (NetworkResult<Any>) -> Void) {
         homeProvider.request(.getTotalPet(familyID: familyID)) { (result) in
             self.disposeNetwork(result,
@@ -68,8 +59,6 @@ extension HomeAPI{
             self.disposeNetwork(result, dataModel: [CommentResult].self, completion: completion)
         }
     }
-    
-    
 }
 
 

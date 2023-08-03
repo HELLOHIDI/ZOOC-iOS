@@ -14,12 +14,10 @@ final class RecordViewController : BaseViewController{
     
     //MARK: - Properties
     
-    enum DestinationType {
-        case home
-        case mission
-    }
-    
-    private var destinationType: DestinationType = .home
+//    enum DestinationType {
+//        case home
+//        case mission
+//    }
     
     var petImage: UIImage?
     private var recordData = RecordModel()
@@ -62,16 +60,13 @@ final class RecordViewController : BaseViewController{
     
     private func target() {
         rootView.xmarkButton.addTarget(self,
-                         action: #selector(xButtonDidTap),
-                         for: .touchUpInside)
-        rootView.missionButton.addTarget(self,
-                         action: #selector(missionButtonDidTap),
-                         for: .touchUpInside)
+                                       action: #selector(xButtonDidTap),
+                                       for: .touchUpInside)
         rootView.nextButton.addTarget(self,
-                         action: #selector(nextButtonDidTap),
-                         for: .touchUpInside)
+                                      action: #selector(nextButtonDidTap),
+                                      for: .touchUpInside)
     }
-
+    
     private func gesture(){
         self.imagePickerController.delegate = self
         rootView.contentTextView.delegate = self
@@ -82,12 +77,11 @@ final class RecordViewController : BaseViewController{
     //MARK: - Action Method
     
     @objc private func xButtonDidTap(){
-        destinationType = .home
         presentAlertViewController()
     }
     
     @objc private func missionButtonDidTap(){
-        destinationType = .mission
+        presentBottomAlert("삭제된 기능입니다")
         presentAlertViewController()
     }
     
@@ -119,7 +113,7 @@ extension RecordViewController: UITextViewDelegate {
             textView.textColor = .black
         }
     }
-
+    
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             textView.text = placeHoldText
@@ -150,11 +144,6 @@ extension RecordViewController: UIImagePickerControllerDelegate {
 }
 
 extension RecordViewController {
-    func pushToRecordMissionViewController() {
-        let recordMissionViewController = RecordMissionViewController(recordMissionViewModel: RecordMissionViewModel(), missionList: [])
-        navigationController?.pushViewController(recordMissionViewController, animated: false)
-    }
-    
     func presentAlertViewController() {
         let zoocAlertVC = ZoocAlertViewController()
         zoocAlertVC.delegate = self
@@ -201,15 +190,6 @@ extension RecordViewController {
 extension RecordViewController: ZoocAlertViewControllerDelegate {
     
     func exitButtonDidTap() {
-        switch destinationType {
-            
-        case .home:
-            dismiss(animated: true)
-        case .mission:
-            pushToRecordMissionViewController()
-        }
-        
+        dismiss(animated: true)
     }
-
-    
 }

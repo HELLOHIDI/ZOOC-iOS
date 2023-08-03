@@ -14,12 +14,6 @@ final class HomeViewController : BaseViewController {
     
     //MARK: - Properties
     
-    private var missionData: [RecordMissionResult] = [] {
-        didSet {
-            updateMissionUI()
-        }
-    }
-    
     private var petData: [HomePetResult] = [] {
         didSet{
             rootView.petCollectionView.reloadData()
@@ -52,7 +46,6 @@ final class HomeViewController : BaseViewController {
         
         setNotificationCenter()
         
-        requestMissionAPI()
         requestTotalPetAPI()
     }
     
@@ -103,10 +96,6 @@ final class HomeViewController : BaseViewController {
                                       action: #selector(galleryButtonDidTap),
                                       for: .touchUpInside)
         
-        rootView.missionView
-            .addGestureRecognizer(UITapGestureRecognizer(target: self,
-                                        action: #selector(missionViewDidTap)))
-        
         rootView.archiveBottomView
             .addGestureRecognizer(UITapGestureRecognizer(target: self,
                                         action: #selector(bottomViewDidTap)))
@@ -125,14 +114,6 @@ final class HomeViewController : BaseViewController {
     @objc
     public func updateUI() {
         requestTotalPetAPI()
-    }
-    
-    private func updateMissionUI() {
-        if !missionData.isEmpty {
-            rootView.missionLabel.text = missionData[0].missionContent
-        } else {
-            rootView.missionLabel.text = "모든 미션을 완료했어요 😃"
-        }
     }
     
     private func pushToDetailViewController(recordID: Int) {
@@ -204,14 +185,6 @@ final class HomeViewController : BaseViewController {
     
     //MARK: - Network
     
-    func requestMissionAPI() {
-        HomeAPI.shared.getMission(familyID: User.shared.familyID) { result in
-            
-            guard let result = self.validateResult(result) as? [RecordMissionResult] else { return }
-            self.missionData = result
-        }
-    }
-    
     private func requestTotalPetAPI() {
         HomeAPI.shared.getTotalPet(familyID: User.shared.familyID) { result in
             
@@ -240,15 +213,6 @@ final class HomeViewController : BaseViewController {
     
     
     //MARK: - Action Method
-    
-    @objc
-    private func missionViewDidTap() {
-        let missionVC = RecordMissionViewController(recordMissionViewModel: RecordMissionViewModel(), missionList: missionData)
-        let missionNVC = UINavigationController(rootViewController: missionVC)
-        missionNVC.modalPresentationStyle = .fullScreen
-        missionNVC.setNavigationBarHidden(true, animated: true)
-        present(missionNVC, animated: true)
-    }
     
     @objc
     private func noticeButtonDidTap() {

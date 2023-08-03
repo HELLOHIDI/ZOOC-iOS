@@ -52,8 +52,8 @@ final class RecordRegisterViewController : BaseViewController{
     
     private func target() {
         rootView.xmarkButton.addTarget(self, action: #selector(xButtonDidTap), for: .touchUpInside)
-//        rootView.dailyButton.addTarget(self, action: #selector(dailyButtonDidTap), for: .touchUpInside)
-//        rootView.missionButton.addTarget(self, action: #selector(missionButtonDidTap), for: .touchUpInside)
+        //        rootView.dailyButton.addTarget(self, action: #selector(dailyButtonDidTap), for: .touchUpInside)
+        //        rootView.missionButton.addTarget(self, action: #selector(missionButtonDidTap), for: .touchUpInside)
         rootView.backButton.addTarget(self, action: #selector(backButtonDidTap),for: .touchUpInside)
         rootView.registerButton.addTarget(self, action: #selector(registerButtonDidTap), for: .touchUpInside)
         
@@ -205,19 +205,10 @@ extension RecordRegisterViewController {
         }
         rootView.registerButton.isEnabled = false
         
-        if let missionID = self.missionID {
-            RecordAPI.shared.postMission(photo: recordData.image ?? UIImage(),
-                                         missionID: missionID,
-                                         content: recordData.content ?? "",
-                                         pets: selectedPetIDList) { result in
-                self.pushToRecordCompleteViewController()
-            }
-        } else {
-            RecordAPI.shared.postRecord(photo: recordData.image ?? UIImage(),
-                                        content: recordData.content ?? "",
-                                        pets: selectedPetIDList) { result in
-                self.pushToRecordCompleteViewController()
-            }
+        RecordAPI.shared.postRecord(photo: recordData.image ?? UIImage(),
+                                    content: recordData.content ?? "",
+                                    pets: selectedPetIDList) { result in
+            self.pushToRecordCompleteViewController()
         }
         
     }
@@ -227,6 +218,4 @@ extension RecordRegisterViewController: ZoocAlertViewControllerDelegate {
     func exitButtonDidTap() {
         dismiss(animated: true)
     }
-    
-    
 }

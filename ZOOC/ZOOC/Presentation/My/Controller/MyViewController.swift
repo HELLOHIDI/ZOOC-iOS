@@ -19,6 +19,7 @@ final class MyViewController: BaseViewController {
     
     private let viewModel: MyViewModel
     private let myNetworkManager: MyAPI
+    
     init(viewModel: MyViewModel, myNetworkManger: MyAPI) {
         self.viewModel = viewModel
         self.myNetworkManager = myNetworkManger
@@ -34,12 +35,12 @@ final class MyViewController: BaseViewController {
     
     //MARK: - UI Components
     
-    private lazy var myView = MyView()
+    private lazy var rootView = MyView()
     
     //MARK: - Life Cycle
     
     override func loadView() {
-        self.view = myView
+        self.view = rootView
     }
     
     override func viewDidLoad() {
@@ -58,8 +59,8 @@ final class MyViewController: BaseViewController {
     //MARK: - Custom Method
     
     private func register() {
-        myView.myCollectionView.delegate = self
-        myView.myCollectionView.dataSource = self
+        rootView.myCollectionView.delegate = self
+        rootView.myCollectionView.dataSource = self
     }
     
     private func setNotificationCenter() {
@@ -78,14 +79,13 @@ final class MyViewController: BaseViewController {
     
     func requestMyPageAPI(){
         viewModel.requestMyPageAPI(myNetworkManager: myNetworkManager) { success, error in
-            if success { self.myView.myCollectionView.reloadData() }
+            if success { self.rootView.myCollectionView.reloadData() }
             else { self.presentBottomAlert(error!) }
         }
     }
     
     private func requestLogoutAPI() {
-        MyAPI.shared.logout { result in
-            User.shared.clearData()
+        viewModel.requestLogoutAPI(myNetworkManager: myNetworkManager) { _,_  in
             let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
             onboardingNVC.setNavigationBarHidden(true, animated: true)
             UIApplication.shared.changeRootViewController(onboardingNVC)
@@ -100,11 +100,6 @@ final class MyViewController: BaseViewController {
     
     @objc private func appInformationButtonDidTap() {
         pushToAppInformationView()
-    }
-    
-    @objc func deleteAccountButtonDidTap() {
-        print(#function)
-
     }
     
     @objc func inviteButtonDidTap() {
@@ -258,7 +253,6 @@ extension MyViewController: MyRegisterPetButtonTappedDelegate {
 
 extension MyViewController: MyDeleteAccountSectionCollectionViewCellDelegate {
     func deleteAccountButtonDidTapped() {
-        print(#function)
         let zoocAlertVC = ZoocAlertViewController()
         zoocAlertVC.delegate = self
         zoocAlertVC.alertType = .deleteAccount

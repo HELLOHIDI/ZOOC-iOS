@@ -17,6 +17,7 @@ protocol MyViewModelOutput {
 
 protocol MyNetworkHandlerProtocol {
     func requestMyPageAPI(myNetworkManager: MyAPI, completion: @escaping (Bool, String?) -> Void)
+    func requestLogoutAPI(myNetworkManager: MyAPI, completion: @escaping (Bool, String?) -> Void)
 }
 
 
@@ -59,6 +60,13 @@ extension MyViewModel: MyNetworkHandlerProtocol {
             self?.myProfileData = result.user
             self?.myFamilyMemberData = result.familyMember
             self?.myPetMemberData = result.pet
+            completion(true, nil)
+        }
+    }
+    
+    func requestLogoutAPI(myNetworkManager: MyAPI, completion: @escaping (Bool, String?) -> Void) {
+        myNetworkManager.logout() { result in
+            User.shared.clearData()
             completion(true, nil)
         }
     }

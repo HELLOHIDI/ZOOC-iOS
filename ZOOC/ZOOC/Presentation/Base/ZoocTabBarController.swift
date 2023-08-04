@@ -16,8 +16,7 @@ class ZoocTabBarController: UITabBarController {
     //MARK: - Properties
 
     let homeViewController = HomeViewController()
-    let myViewController = MyViewController()
-    
+    let myViewController = MyViewController(viewModel: MyViewModel(), myNetworkManger: MyAPI())
     lazy var homeNavigationContrller = UINavigationController(rootViewController: homeViewController)
     lazy var myNavigationController = UINavigationController(rootViewController: myViewController)
     

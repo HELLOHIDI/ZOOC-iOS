@@ -17,9 +17,19 @@ final class MyViewController: BaseViewController {
     
     //MARK: - Properties
     
-    private var myFamilyMemberData: [UserResult] = []
-    private var myPetMemberData: [PetResult] = []
-    private var myProfileData: UserResult?
+    private let viewModel: MyViewModel
+    private let myNetworkManager: MyAPI
+    init(viewModel: MyViewModel, myNetworkManger: MyAPI) {
+        self.viewModel = viewModel
+        self.myNetworkManager = myNetworkManger
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private var invitedCode: String = "우르르롺끼"
     
     //MARK: - UI Components
@@ -67,15 +77,9 @@ final class MyViewController: BaseViewController {
     }
     
     func requestMyPageAPI(){
-        MyAPI.shared.getMyPageData() { result in
-            
-            guard let result = self.validateResult(result) as? MyResult else { return }
-            
-            self.myProfileData = result.user
-            self.myFamilyMemberData = result.familyMember
-            self.myPetMemberData = result.pet
-            
-            self.myView.myCollectionView.reloadData()
+        viewModel.requestMyPageAPI(myNetworkManager: myNetworkManager) { success, error in
+            if success { self.myView.myCollectionView.reloadData() }
+            else { self.presentBottomAlert(error!) }
         }
     }
     
@@ -179,21 +183,21 @@ extension MyViewController: UICollectionViewDataSource {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyProfileSectionCollectionViewCell.cellIdentifier, for: indexPath)
                     as? MyProfileSectionCollectionViewCell else { return UICollectionViewCell() }
-            cell.dataBind(data: myProfileData)
+            cell.dataBind(data: viewModel.myProfileData)
             cell.editProfileButton.addTarget(self, action: #selector(editProfileButtonDidTap), for: .touchUpInside)
             return cell
             
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyFamilySectionCollectionViewCell.cellIdentifier, for: indexPath)
                     as? MyFamilySectionCollectionViewCell else { return UICollectionViewCell() }
-            cell.dataBind(myFamilyData: myFamilyMemberData, myProfileData: myProfileData)
+            cell.dataBind(myFamilyData: viewModel.myFamilyMemberData, myProfileData: viewModel.myProfileData)
             cell.inviteButton.addTarget(self, action: #selector(inviteButtonDidTap), for: .touchUpInside)
             return cell
             
         case 2:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyPetSectionCollectionViewCell.cellIdentifier, for: indexPath)
                     as? MyPetSectionCollectionViewCell else { return UICollectionViewCell() }
-            cell.dataBind(myPetMemberData: myPetMemberData)
+            cell.dataBind(myPetMemberData: viewModel.myPetMemberData)
             cell.delegate = self
             return cell
             
@@ -267,7 +271,7 @@ extension MyViewController {
     private func pushToEditProfileView() {
         let editProfileViewController = MyEditProfileViewController()
         editProfileViewController.hidesBottomBarWhenPushed = true
-        editProfileViewController.dataBind(data: myProfileData)
+        editProfileViewController.dataBind(data: viewModel.myProfileData)
         
         self.navigationController?.pushViewController(editProfileViewController, animated: true)
     }

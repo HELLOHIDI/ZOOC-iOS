@@ -87,7 +87,6 @@ extension AppDelegate {
     }
     
     private func setFirebaseMessaging() {
-        User.shared.fcmToken = "defaultFCM"
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         Messaging.messaging().isAutoInitEnabled = true

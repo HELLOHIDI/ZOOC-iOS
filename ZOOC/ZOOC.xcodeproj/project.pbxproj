@@ -82,7 +82,6 @@
 		877E57EE2966AAE6006D82FC /* HomeArchiveListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877E57ED2966AAE6006D82FC /* HomeArchiveListCollectionViewCell.swift */; };
 		877E57F22966D13E006D82FC /* ArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877E57F12966D13E006D82FC /* ArchiveViewController.swift */; };
 		8781DE4829B20F61005ABF23 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 8781DE4729B20F61005ABF23 /* FirebaseMessaging */; };
-		8781DE4C29B25472005ABF23 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8781DE4B29B25471005ABF23 /* GoogleService-Info.plist */; };
 		8781DE4E29B273FB005ABF23 /* OnboardingFamilyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8781DE4D29B273FB005ABF23 /* OnboardingFamilyResult.swift */; };
 		8782C7DA296857A600C9324B /* KakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = 8782C7D9296857A600C9324B /* KakaoSDKShare */; };
 		8782C7E42968B03500C9324B /* HomePetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782C7E32968B03500C9324B /* HomePetCollectionViewCell.swift */; };
@@ -119,6 +118,8 @@
 		87D5AF6429649DC100CA7F12 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D5AF6329649DC100CA7F12 /* HomeViewController.swift */; };
 		87DC47822A545A1C007823CB /* noise.png in Resources */ = {isa = PBXBuildFile; fileRef = 87DC47802A545A1C007823CB /* noise.png */; };
 		87DC47832A545A1C007823CB /* symbol_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 87DC47812A545A1C007823CB /* symbol_logo.png */; };
+		87DC47F42A7B7D53007823CB /* Release-GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8781DE4B29B25471005ABF23 /* Release-GoogleService-Info.plist */; };
+		87DC47F52A7B7D55007823CB /* Debug-GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87DC47F32A7B7A74007823CB /* Debug-GoogleService-Info.plist */; };
 		87DDDD92298E5BE500CBEC79 /* ArchiveCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DDDD91298E5BE500CBEC79 /* ArchiveCommentView.swift */; };
 		87DDDD94298E607C00CBEC79 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DDDD93298E607C00CBEC79 /* Device.swift */; };
 		87E462E62A10FA60006FC35D /* EnternalURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462E52A10FA60006FC35D /* EnternalURL.swift */; };
@@ -285,7 +286,7 @@
 		877E57EA2966332F006D82FC /* MemberModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberModel.swift; sourceTree = "<group>"; };
 		877E57ED2966AAE6006D82FC /* HomeArchiveListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeArchiveListCollectionViewCell.swift; sourceTree = "<group>"; };
 		877E57F12966D13E006D82FC /* ArchiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveViewController.swift; sourceTree = "<group>"; };
-		8781DE4B29B25471005ABF23 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8781DE4B29B25471005ABF23 /* Release-GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Release-GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8781DE4D29B273FB005ABF23 /* OnboardingFamilyResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFamilyResult.swift; sourceTree = "<group>"; };
 		8782C7E32968B03500C9324B /* HomePetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePetCollectionViewCell.swift; sourceTree = "<group>"; };
 		8782C7EA296AC58B00C9324B /* HomeArchiveIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeArchiveIndicatorView.swift; sourceTree = "<group>"; };
@@ -323,6 +324,7 @@
 		87DC47F02A7B4CB2007823CB /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		87DC47F12A7B4CBF007823CB /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		87DC47F22A7B4D00007823CB /* Config Docs.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Config Docs.md"; sourceTree = "<group>"; };
+		87DC47F32A7B7A74007823CB /* Debug-GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Debug-GoogleService-Info.plist"; sourceTree = "<group>"; };
 		87DDDD91298E5BE500CBEC79 /* ArchiveCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveCommentView.swift; sourceTree = "<group>"; };
 		87DDDD93298E607C00CBEC79 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		87E462E52A10FA60006FC35D /* EnternalURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnternalURL.swift; sourceTree = "<group>"; };
@@ -1056,8 +1058,9 @@
 		87DC47EF2A7ADF66007823CB /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				87DC47F32A7B7A74007823CB /* Debug-GoogleService-Info.plist */,
+				8781DE4B29B25471005ABF23 /* Release-GoogleService-Info.plist */,
 				87DC47F22A7B4D00007823CB /* Config Docs.md */,
-				8781DE4B29B25471005ABF23 /* GoogleService-Info.plist */,
 				87DC47F02A7B4CB2007823CB /* Debug.xcconfig */,
 				87DC47F12A7B4CBF007823CB /* Release.xcconfig */,
 			);
@@ -1204,6 +1207,7 @@
 				87B6623929521E7500B6FFA9 /* Sources */,
 				87B6623A29521E7500B6FFA9 /* Frameworks */,
 				87B6623B29521E7500B6FFA9 /* Resources */,
+				87DC47F62A7B881B007823CB /* Firebase plist */,
 			);
 			buildRules = (
 			);
@@ -1281,12 +1285,34 @@
 				87B6624A29521E7600B6FFA9 /* Assets.xcassets in Resources */,
 				877BAFC4295EEA7700C2AA1C /* Pretendard-Medium.otf in Resources */,
 				871EA359297078C900D0E8CC /* loading.json in Resources */,
+				87DC47F52A7B7D55007823CB /* Debug-GoogleService-Info.plist in Resources */,
+				87DC47F42A7B7D53007823CB /* Release-GoogleService-Info.plist in Resources */,
 				87DC47822A545A1C007823CB /* noise.png in Resources */,
-				8781DE4C29B25472005ABF23 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		87DC47F62A7B881B007823CB /* Firebase plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Firebase plist";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "case \"${CONFIGURATION}\" in\n\n  \"Debug\" )\n        cp -r \"$SRCROOT/ZOOC/Configuration/Debug-GoogleService-Info.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n\n  \"Release\" )\n        cp -r \"$SRCROOT/ZOOC/Configuration/Release-GoogleService-Info.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n    *)\n;;\nesac\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		87B6623929521E7500B6FFA9 /* Sources */ = {
@@ -1713,7 +1739,7 @@
 				87B6625029521E7600B6FFA9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		87B6625129521E7600B6FFA9 /* Build configuration list for PBXNativeTarget "ZOOC" */ = {
 			isa = XCConfigurationList;
@@ -1722,7 +1748,7 @@
 				87B6625329521E7600B6FFA9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 

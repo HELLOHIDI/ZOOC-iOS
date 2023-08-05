@@ -1,7 +1,8 @@
 #  Configuration 정보
 
 ## Configuration은 총 4개의 파일이 존재한다.
-- Config Docs
+- Config Docs.md
+- Config.swift
 - Debug-GoogleService-Info.plist
 - Release-GoogleService-Info.plist
 - Debug.xcconfig
@@ -9,6 +10,9 @@
 
 ### Config Docs
 - 현재 보고 있는 파일
+
+### Config.swift
+- Config 상수 편하게 쓰기 위한 Swift 파일
 
 ### GoogleService-Info.plist
 - Firebase를 사용하기 위해 필요한 파일
@@ -18,11 +22,11 @@
   파일명을 Release-GoogleService-Info -> GoogleService-Info.plist 로 바꿔주는 작업을 거친다.
 
 ### Debug.xcconfig, Release.xcconfig
-- Debug / Release 빌드를 나누기 위해 존재하는 파일
+- Debug / Release 빌드 설정값을 달리 하기위해 분리된 xcconfig 파일
 
 ### 각 파일이 담고있는 Key-Value
 - App Name
 - Base URL
 - Kakao App Key
-
-
+- Bundle Identifier
+- App Icon

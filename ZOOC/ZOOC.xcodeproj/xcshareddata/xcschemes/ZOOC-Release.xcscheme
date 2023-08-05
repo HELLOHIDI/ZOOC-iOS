@@ -24,7 +24,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "87B6623C29521E7500B6FFA9"
-               BuildableName = "ZOOC.app"
+               BuildableName = "ZOOC-Dev.app"
                BlueprintName = "ZOOC"
                ReferencedContainer = "container:ZOOC.xcodeproj">
             </BuildableReference>
@@ -53,7 +53,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "87B6623C29521E7500B6FFA9"
-            BuildableName = "ZOOC.app"
+            BuildableName = "ZOOC-Dev.app"
             BlueprintName = "ZOOC"
             ReferencedContainer = "container:ZOOC.xcodeproj">
          </BuildableReference>
@@ -70,7 +70,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "87B6623C29521E7500B6FFA9"
-            BuildableName = "ZOOC.app"
+            BuildableName = "ZOOC-Dev.app"
             BlueprintName = "ZOOC"
             ReferencedContainer = "container:ZOOC.xcodeproj">
          </BuildableReference>

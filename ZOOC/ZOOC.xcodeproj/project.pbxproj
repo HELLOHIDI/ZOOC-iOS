@@ -542,7 +542,6 @@
 				876483182952366A00F74882 /* Image.swift */,
 				87D5AF5529605C0100CA7F12 /* URLs.swift */,
 				87E462E52A10FA60006FC35D /* EnternalURL.swift */,
-				871DC6C72A1F7CDF006BA780 /* Config.swift */,
 				87C6C4C82A537902003DA38A /* TextLiteral.swift */,
 			);
 			path = Constant;
@@ -1034,9 +1033,10 @@
 		87DC47EF2A7ADF66007823CB /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				87DC47F22A7B4D00007823CB /* Config Docs.md */,
+				871DC6C72A1F7CDF006BA780 /* Config.swift */,
 				87DC47F32A7B7A74007823CB /* Debug-GoogleService-Info.plist */,
 				8781DE4B29B25471005ABF23 /* Release-GoogleService-Info.plist */,
-				87DC47F22A7B4D00007823CB /* Config Docs.md */,
 				87DC47F02A7B4CB2007823CB /* Debug.xcconfig */,
 				87DC47F12A7B4CBF007823CB /* Release.xcconfig */,
 			);

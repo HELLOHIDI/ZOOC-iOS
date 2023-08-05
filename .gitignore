@@ -135,7 +135,8 @@ iOSInjectionProject/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 ### Config ### 
-*.xcconfig
-ZOOC/ZOOC/Configuration/*.plist
+## GitHub Private 이면 아래 두 파일 ignore하지 않아도 됨 (2023.8.5 Github 레포지토리 Private 으로 변경)
+#*.xcconfig
+#ZOOC/ZOOC/Configuration/*.plist
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,xcode,swift

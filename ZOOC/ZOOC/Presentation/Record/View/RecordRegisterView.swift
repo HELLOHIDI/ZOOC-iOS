@@ -14,7 +14,6 @@ final class RecordRegisterView : UIView{
     
     // MARK: - Properties
     
-    var recordData: RecordMissionModel = RecordMissionModel()
     var petList: [RecordRegisterModel] = []
     var selectedPetIDList: [Int] = []
     

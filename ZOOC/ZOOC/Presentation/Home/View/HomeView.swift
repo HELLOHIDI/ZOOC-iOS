@@ -67,6 +67,7 @@ extension HomeView {
         }
         
         missionLabel.do {
+            $0.text = "미션하기 기능이 종료되었어요 😭"
             $0.font = .zoocBody3
             $0.textColor = .zoocGray3
         }

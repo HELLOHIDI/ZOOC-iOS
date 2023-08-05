@@ -22,11 +22,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         print("👼🏻 \(#function)")
-        
+        print(Config.baseURL)
+        #if DEBUG
+        print("디버그야!!!")
+        #else
+        print("디버그 아니야!!!")
+        #endif
         setUserNotification(application)
         setKaKaoSDK()
         setFirebaseMessaging()
         setSentry()
+        
+        
         
         return true
     }
@@ -80,7 +87,6 @@ extension AppDelegate {
     }
     
     private func setFirebaseMessaging() {
-        User.shared.fcmToken = "defaultFCM"
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         Messaging.messaging().isAutoInitEnabled = true

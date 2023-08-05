@@ -291,7 +291,7 @@
 		87A76ABE2960423C0096F669 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
 		87A76AC22960427C0096F669 /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
 		87A76AC7296043090096F669 /* MoyaLoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLoggerPlugin.swift; sourceTree = "<group>"; };
-		87B6623D29521E7500B6FFA9 /* ZOOC-Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ZOOC-Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		87B6623D29521E7500B6FFA9 /* .app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = .app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87B6624029521E7500B6FFA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		87B6624229521E7500B6FFA9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		87B6624929521E7600B6FFA9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -928,7 +928,7 @@
 		87B6623E29521E7500B6FFA9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				87B6623D29521E7500B6FFA9 /* ZOOC-Dev.app */,
+				87B6623D29521E7500B6FFA9 /* .app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1204,7 +1204,7 @@
 				872367152A19062700DCBBFF /* Sentry */,
 			);
 			productName = ZOOC;
-			productReference = 87B6623D29521E7500B6FFA9 /* ZOOC-Dev.app */;
+			productReference = 87B6623D29521E7500B6FFA9 /* .app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

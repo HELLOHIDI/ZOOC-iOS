@@ -28,7 +28,8 @@ struct User {
     }
     var zoocAccessToken: String {
         get {
-            return UserDefaultsManager.zoocAccessToken ?? ""
+//            return UserDefaultsManager.zoocAccessToken ?? ""
+            return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY3MzQ2MzMxMiwiZXhwIjoyMDAwMDAwMDAwfQ.z5cpzI9uwDwbThC9XqoGX0Z1YKSdpMc7AWL393dc8wc"
         }
         set {
             UserDefaultsManager.zoocAccessToken = newValue

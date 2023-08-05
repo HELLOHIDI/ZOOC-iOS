@@ -14,6 +14,8 @@ final class HomeViewController : BaseViewController {
     
     //MARK: - Properties
     
+    private var id: Int?
+    private var limit: Int = 2
     private var petData: [HomePetResult] = [] {
         didSet{
             rootView.petCollectionView.reloadData()
@@ -23,7 +25,9 @@ final class HomeViewController : BaseViewController {
     private var archiveData: [HomeArchiveResult] = [] {
         didSet {
             rootView.archiveListCollectionView.reloadData()
-            rootView.archiveGridCollectionView.reloadData() 
+            rootView.archiveGridCollectionView.reloadData()
+            id  = archiveData.last?.record.id
+            print("\(id)가 마지막입니다람쥐🐿🐿🐿🐿🐿🐿🐿🐿🐿")
         }
     }
     
@@ -98,7 +102,7 @@ final class HomeViewController : BaseViewController {
         
         rootView.archiveBottomView
             .addGestureRecognizer(UITapGestureRecognizer(target: self,
-                                        action: #selector(bottomViewDidTap)))
+                                                         action: #selector(bottomViewDidTap)))
     }
     
     private func setNotificationCenter() {
@@ -136,7 +140,7 @@ final class HomeViewController : BaseViewController {
     
     private func deselectAllOfListArchiveCollectionViewCell(completion: (() -> Void)?) {
         rootView.archiveListCollectionView.indexPathsForSelectedItems?.forEach {
-                rootView.archiveListCollectionView.deselectItem(at: $0, animated: false)
+            rootView.archiveListCollectionView.deselectItem(at: $0, animated: false)
         }
         
         rootView.archiveListCollectionView.performBatchUpdates(nil) { _ in
@@ -153,18 +157,18 @@ final class HomeViewController : BaseViewController {
         
         guard index < self.petData.count else {
             print("\(#function)의 가드문")
-
+            
             return
-                  
-                  }
+            
+        }
         
         self.rootView.petCollectionView.selectItem(at:IndexPath(item: index, section: 0),
-                                              animated: false,
-                                              scrollPosition: .centeredHorizontally)
+                                                   animated: false,
+                                                   scrollPosition: .centeredHorizontally)
         self.view.layoutIfNeeded()
         self.rootView.petCollectionView.performBatchUpdates(nil)
         self.requestTotalArchiveAPI(petID: self.petData[index].id)
-
+        
     }
     
     private func configIndicatorBarWidth(_ scrollView: UIScrollView) {
@@ -178,7 +182,7 @@ final class HomeViewController : BaseViewController {
                 self.rootView.archiveIndicatorView.isHidden = true
                 self.rootView.archiveIndicatorView.widthRatio = 0
             }
-             
+            
             self.rootView.archiveIndicatorView.layoutIfNeeded()
         }
     }
@@ -197,7 +201,7 @@ final class HomeViewController : BaseViewController {
     }
     
     private func requestTotalArchiveAPI(petID: Int) {
-        HomeAPI.shared.getTotalArchive(petID: String(petID)) { result in
+        HomeAPI.shared.getTotalArchive(petID: String(petID), limit: String(limit), after: id) { result in
             
             guard let result = self.validateResult(result) as? [HomeArchiveResult] else { return }
             
@@ -226,7 +230,7 @@ final class HomeViewController : BaseViewController {
         rootView.archiveBottomView.isHidden = false
         rootView.listButton.isSelected = true
         rootView.gridButton.isSelected = false
-
+        
     }
     
     @objc

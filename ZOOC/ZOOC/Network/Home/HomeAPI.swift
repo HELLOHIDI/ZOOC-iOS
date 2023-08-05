@@ -24,8 +24,8 @@ extension HomeAPI{
         }
     }
     
-    func getTotalArchive(petID: String, completion: @escaping (NetworkResult<Any>) -> Void) {
-        homeProvider.request(.getTotalArchive(familyID: User.shared.familyID, petID: petID)) { (result) in
+    func getTotalArchive(petID: String, limit: String, after: Int?, completion: @escaping (NetworkResult<Any>) -> Void) {
+        homeProvider.request(.getTotalArchive(familyID: User.shared.familyID, petID: petID, limit: limit, after: after)) { (result) in
             self.disposeNetwork(result,
                                 dataModel: [HomeArchiveResult].self,
                                 completion: completion)

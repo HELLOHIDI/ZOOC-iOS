@@ -13,11 +13,15 @@ protocol MyViewModelOutput {
     var myFamilyMemberData: [UserResult] { get }
     var myPetMemberData: [PetResult] { get }
     var myProfileData: UserResult? { get }
+    var myNetworkManager: MyAPI  { get }
+    var onboardingNetworkManager: OnboardingAPI  { get }
 }
 
 protocol MyNetworkHandlerProtocol {
-    func requestMyPageAPI(myNetworkManager: MyAPI, completion: @escaping (Bool, String?) -> Void)
-    func requestLogoutAPI(myNetworkManager: MyAPI, completion: @escaping (Bool, String?) -> Void)
+    func requestMyPageAPI(completion: @escaping (Bool, String?) -> Void)
+    func requestLogoutAPI(completion: @escaping () -> Void)
+    func getInviteCode(completion: @escaping () -> Void)
+    func deleteAccount(completion: @escaping() -> Void)
 }
 
 
@@ -25,7 +29,16 @@ final class MyViewModel: MyViewModelInput, MyViewModelOutput {
     var myFamilyMemberData: [UserResult] = []
     var myPetMemberData: [PetResult] = []
     var myProfileData: UserResult?
-
+    var inviteCode: String?
+    
+    var myNetworkManager: MyAPI
+    var onboardingNetworkManager: OnboardingAPI
+    
+    init(myNetworkManager: MyAPI, onboardingNetworkManager: OnboardingAPI) {
+        self.myNetworkManager = myNetworkManager
+        self.onboardingNetworkManager = onboardingNetworkManager
+    }
+    
     @discardableResult
     func validateResult(_ result: NetworkResult<Any>) -> Any?{
         switch result{
@@ -50,7 +63,13 @@ final class MyViewModel: MyViewModelInput, MyViewModelOutput {
 }
 
 extension MyViewModel: MyNetworkHandlerProtocol {
-    func requestMyPageAPI(myNetworkManager: MyAPI, completion: @escaping (Bool, String?) -> Void) {
+    func deleteAccount(completion: @escaping () -> Void) {
+        myNetworkManager.deleteAccount() { result in
+            User.shared.clearData()
+        }
+    }
+    
+    func requestMyPageAPI(completion: @escaping (Bool, String?) -> Void) {
         myNetworkManager.getMyPageData() { [weak self] result in
             guard let result = self?.validateResult(result) as? MyResult else {
                 let errorMessage = self?.validateResult(result) as? String
@@ -64,10 +83,18 @@ extension MyViewModel: MyNetworkHandlerProtocol {
         }
     }
     
-    func requestLogoutAPI(myNetworkManager: MyAPI, completion: @escaping (Bool, String?) -> Void) {
+    func requestLogoutAPI(completion: @escaping () -> Void) {
         myNetworkManager.logout() { result in
             User.shared.clearData()
-            completion(true, nil)
+            completion()
+        }
+    }
+    
+    func getInviteCode(completion: @escaping () -> Void) {
+        onboardingNetworkManager.getInviteCode(familyID: User.shared.familyID) { result in
+            guard let result = self.validateResult(result) as? OnboardingInviteResult else { return }
+            let code = result.code
+            self.inviteCode = code
         }
     }
 }

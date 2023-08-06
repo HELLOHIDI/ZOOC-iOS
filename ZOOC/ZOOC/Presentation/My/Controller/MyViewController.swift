@@ -18,11 +18,14 @@ final class MyViewController: BaseViewController {
     //MARK: - Properties
     
     private let viewModel: MyViewModel
-    private let myNetworkManager: MyAPI
+//    private let coordinator: MyCoordinator?
     
-    init(viewModel: MyViewModel, myNetworkManger: MyAPI) {
+    init(
+        viewModel: MyViewModel
+        //        coordinator: MyCoordinator?,
+    ) {
         self.viewModel = viewModel
-        self.myNetworkManager = myNetworkManger
+        //        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -30,8 +33,6 @@ final class MyViewController: BaseViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private var invitedCode: String = "우르르롺끼"
     
     //MARK: - UI Components
     
@@ -72,20 +73,19 @@ final class MyViewController: BaseViewController {
         )
     }
     
-    @objc
-    private func updateUI() {
+    @objc private func updateUI() {
         requestMyPageAPI()
     }
     
     func requestMyPageAPI(){
-        viewModel.requestMyPageAPI(myNetworkManager: myNetworkManager) { success, error in
+        viewModel.requestMyPageAPI() { success, error in
             if success { self.rootView.myCollectionView.reloadData() }
             else { self.presentBottomAlert(error!) }
         }
     }
     
     private func requestLogoutAPI() {
-        viewModel.requestLogoutAPI(myNetworkManager: myNetworkManager) { _,_  in
+        viewModel.requestLogoutAPI() {
             let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
             onboardingNVC.setNavigationBarHidden(true, animated: true)
             UIApplication.shared.changeRootViewController(onboardingNVC)
@@ -94,7 +94,7 @@ final class MyViewController: BaseViewController {
     
     //MARK: - Action Method
     
-    @objc private func editProfileButtonDidTap() {
+    @objc private func editProfileButtonDidTap() { // -> 개방 폐쇄의 원리
         pushToEditProfileView()
     }
     
@@ -103,7 +103,9 @@ final class MyViewController: BaseViewController {
     }
     
     @objc func inviteButtonDidTap() {
-        getInviteCode()
+        viewModel.getInviteCode() {
+            self.shareInviteCode(code: self.viewModel.inviteCode!)
+        }
     }
 }
 
@@ -111,7 +113,6 @@ final class MyViewController: BaseViewController {
 
 extension MyViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         switch indexPath.section {
         case 0:
             pushToEditProfileView()
@@ -247,8 +248,6 @@ extension MyViewController: MyRegisterPetButtonTappedDelegate {
     func myRegisterPetButtonTapped(isSelected: Bool) {
         pushToRegisterPetView()
     }
-    
-
 }
 
 extension MyViewController: MyDeleteAccountSectionCollectionViewCellDelegate {
@@ -262,7 +261,7 @@ extension MyViewController: MyDeleteAccountSectionCollectionViewCellDelegate {
 }
 
 extension MyViewController {
-    private func pushToEditProfileView() {
+    func pushToEditProfileView() {
         let editProfileViewController = MyEditProfileViewController()
         editProfileViewController.hidesBottomBarWhenPushed = true
         editProfileViewController.dataBind(data: viewModel.myProfileData)
@@ -270,19 +269,19 @@ extension MyViewController {
         self.navigationController?.pushViewController(editProfileViewController, animated: true)
     }
     
-    private func pushToAppInformationView() {
+    func pushToAppInformationView() {
         let appInformationViewController = MyAppInformationViewController()
         appInformationViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(appInformationViewController, animated: true)
     }
     
-    private func pushToNoticeSettingView() {
+    func pushToNoticeSettingView() {
         let noticeSettingViewController = MyNoticeSettingViewController()
         noticeSettingViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(noticeSettingViewController, animated: true)
     }
     
-    private func pushToRegisterPetView() {
+    func pushToRegisterPetView() {
         let registerPetViewController = MyRegisterPetViewController(myPetRegisterViewModel: MyPetRegisterViewModel())
         registerPetViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(registerPetViewController, animated: true)
@@ -295,10 +294,10 @@ extension MyViewController {
         self.present(editPetProfileView, animated: true)
     }
     
-    private func shareInviteCode() {
+    private func shareInviteCode(code: String) {
         var objectToShare = [String]()
         
-        objectToShare.append(invitedCode)
+        objectToShare.append(code)
         
         let activityViewController = UIActivityViewController(activityItems : objectToShare, applicationActivities: nil)
         
@@ -309,15 +308,6 @@ extension MyViewController {
             let message = success ? "초대 코드 복사에 성공했습니다"  : "초대 코드 복사에 실패했습니다"
             let title = success ? "복사 성공" : "복사 실패"
             self.showAlertCopyCompleted(message: message, title: title)
-        }
-    }
-    
-    private func getInviteCode() {
-        OnboardingAPI.shared.getInviteCode(familyID: User.shared.familyID) { result in
-            guard let result = self.validateResult(result) as? OnboardingInviteResult else { return }
-            let code = result.code
-            self.invitedCode = code
-            self.shareInviteCode()
         }
     }
     
@@ -332,44 +322,42 @@ extension MyViewController {
 
 extension MyViewController: ZoocAlertViewControllerDelegate {
     func exitButtonDidTap() {
-        MyAPI.shared.deleteAccount() { result in
-            User.shared.clearData()
+        viewModel.deleteAccount() {
             let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
             onboardingNVC.setNavigationBarHidden(true, animated: true)
             UIApplication.shared.changeRootViewController(onboardingNVC)
+            
         }
     }
-    
-    
 }
 
 
 extension MyViewController: MFMailComposeViewControllerDelegate {
     private func sendMail(subject: String, body: String) {
         if MFMailComposeViewController.canSendMail() {
-                let composeViewController = MFMailComposeViewController()
-                composeViewController.mailComposeDelegate = self
+            let composeViewController = MFMailComposeViewController()
+            composeViewController.mailComposeDelegate = self
             
-                
-                composeViewController.setToRecipients(["thekimhyo@gmail.com"])
-                composeViewController.setSubject(subject)
-                composeViewController.setMessageBody(body, isHTML: false)
-                
-                self.present(composeViewController, animated: true, completion: nil)
-            } else {
-                print("메일 보내기 실패")
-                let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "메일을 보내려면 'Mail' 앱이 필요합니다. App Store에서 해당 앱을 복원하거나 이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
-                let goAppStoreAction = UIAlertAction(title: "App Store로 이동하기", style: .default) { _ in
-                    // 앱스토어로 이동하기(Mail)
-                    let url = "https://apps.apple.com/kr/app/mail/id1108187098"
-                    self.presentSafariViewController(url)
-                }
-                let cancleAction = UIAlertAction(title: "취소", style: .destructive, handler: nil)
-                
-                sendMailErrorAlert.addAction(goAppStoreAction)
-                sendMailErrorAlert.addAction(cancleAction)
-                self.present(sendMailErrorAlert, animated: true, completion: nil)
+            
+            composeViewController.setToRecipients(["thekimhyo@gmail.com"])
+            composeViewController.setSubject(subject)
+            composeViewController.setMessageBody(body, isHTML: false)
+            
+            self.present(composeViewController, animated: true, completion: nil)
+        } else {
+            print("메일 보내기 실패")
+            let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "메일을 보내려면 'Mail' 앱이 필요합니다. App Store에서 해당 앱을 복원하거나 이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+            let goAppStoreAction = UIAlertAction(title: "App Store로 이동하기", style: .default) { _ in
+                // 앱스토어로 이동하기(Mail)
+                let url = "https://apps.apple.com/kr/app/mail/id1108187098"
+                self.presentSafariViewController(url)
             }
+            let cancleAction = UIAlertAction(title: "취소", style: .destructive, handler: nil)
+            
+            sendMailErrorAlert.addAction(goAppStoreAction)
+            sendMailErrorAlert.addAction(cancleAction)
+            self.present(sendMailErrorAlert, animated: true, completion: nil)
+        }
     }
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
@@ -387,5 +375,4 @@ extension MyViewController: MFMailComposeViewControllerDelegate {
         }
         controller.dismiss(animated: true, completion: nil)
     }
-
 }

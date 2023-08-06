@@ -14,13 +14,13 @@ class ZoocTabBarController: UITabBarController {
     
     
     //MARK: - Properties
-
+    
     let homeViewController = HomeViewController()
-    let myViewController = MyViewController(viewModel: MyViewModel(), myNetworkManger: MyAPI())
+    let myViewController = MyViewController(viewModel: MyViewModel(myNetworkManager: MyAPI(), onboardingNetworkManager: OnboardingAPI()))
     lazy var homeNavigationContrller = UINavigationController(rootViewController: homeViewController)
     lazy var myNavigationController = UINavigationController(rootViewController: myViewController)
     
-        
+    
     
     //MARK: - UI Components
     
@@ -34,7 +34,7 @@ class ZoocTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-            
+        
         setTabBar()
         setLayout()
         setNavigationController()
@@ -44,13 +44,13 @@ class ZoocTabBarController: UITabBarController {
         
     }
     
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//
-//        tabBar.frame.size.height = 96
-//        tabBar.frame.origin.y = view.frame.height - 96
-//
-//    }
+    //    override func viewDidLayoutSubviews() {
+    //        super.viewDidLayoutSubviews()
+    //
+    //        tabBar.frame.size.height = 96
+    //        tabBar.frame.origin.y = view.frame.height - 96
+    //
+    //    }
     
     //MARK: - Custom Method
     
@@ -67,7 +67,7 @@ class ZoocTabBarController: UITabBarController {
     
     private func setLayout(){
         tabBar.addSubview(plusButton)
-
+        
         plusButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.centerY.equalTo(tabBar.snp.top).offset(17)
@@ -89,12 +89,12 @@ class ZoocTabBarController: UITabBarController {
     private func setViewController(){
         
         homeNavigationContrller.tabBarItem = UITabBarItem(title: "",
-                                                    image: Image.home,
-                                                    selectedImage: Image.home)
+                                                          image: Image.home,
+                                                          selectedImage: Image.home)
         
         myNavigationController.tabBarItem = UITabBarItem(title: "",
-                                                   image: Image.person,
-                                                   selectedImage: Image.person)
+                                                         image: Image.person,
+                                                         selectedImage: Image.person)
         
         viewControllers = [homeNavigationContrller,myNavigationController]
     }
@@ -109,7 +109,7 @@ class ZoocTabBarController: UITabBarController {
         recordNVC.setNavigationBarHidden(true, animated: true)
         present(recordNVC, animated: true)
     }
-
+    
 }
 
 

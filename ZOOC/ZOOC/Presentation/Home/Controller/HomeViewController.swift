@@ -14,8 +14,10 @@ final class HomeViewController : BaseViewController {
     
     //MARK: - Properties
     
+    private var petID: Int = 0
     private var id: Int?
-    private var limit: Int = 2
+    private var limit: Int = 5
+    private var isFetchingData = false
     private var petData: [HomePetResult] = [] {
         didSet{
             rootView.petCollectionView.reloadData()
@@ -124,7 +126,7 @@ final class HomeViewController : BaseViewController {
         guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
             fatalError("선택된 펫이 없습니다.")
         }
-        let petID = petData[index].id
+        petID = petData[index].id
         
         let detailVC = ArchiveViewController()
         detailVC.dataBind(recordID: recordID, petID: petID)
@@ -191,11 +193,11 @@ final class HomeViewController : BaseViewController {
     
     private func requestTotalPetAPI() {
         HomeAPI.shared.getTotalPet(familyID: User.shared.familyID) { result in
-            
             guard let result = self.validateResult(result) as? [HomePetResult] else { return }
             
             self.petData = result
             guard let id = self.petData.first?.id else { return }
+            self.petID = id
             self.selectPetCollectionView(petID: id)
         }
     }
@@ -205,13 +207,16 @@ final class HomeViewController : BaseViewController {
             
             guard let result = self.validateResult(result) as? [HomeArchiveResult] else { return }
             
-            self.archiveData = result
-            self.rootView.emptyView.isHidden = !result.isEmpty
+            for data in result {
+                self.archiveData.append(data)
+            }
+            self.rootView.emptyView.isHidden = !self.archiveData.isEmpty
             if self.guideVC.isViewLoaded {
                 self.rootView.emptyView.isHidden = true
             }
             self.view.layoutIfNeeded()
             self.configIndicatorBarWidth(self.rootView.archiveListCollectionView)
+            self.isFetchingData = false
         }
     }
     
@@ -450,26 +455,20 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 extension HomeViewController {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == rootView.archiveListCollectionView{
-            pagination(scrollView)
-            
-            let scroll = scrollView.contentOffset.x + scrollView.contentInset.left
-            let width = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
-            let scrollRatio = scroll / width
-            
-            self.rootView.archiveIndicatorView.leftOffsetRatio = scrollRatio
-            
-            
-        }
+        pagination(rootView.archiveListCollectionView)
     }
     
     func pagination(_ scrollView: UIScrollView) {
-        let contentOffsetX = scrollView.contentOffset.y
-        let collectionViewContentSizeX = rootView.archiveListCollectionView.contentSize.height
-        let paginationX = collectionViewContentSizeX * 0.5
         
-        if contentOffsetX > collectionViewContentSizeX - paginationX {
-            requestTotalPetAPI()
+        
+        let contentOffsetX = scrollView.contentOffset.x
+        let collectionViewContentSizeX = rootView.archiveListCollectionView.contentSize.width
+        let paginationX = collectionViewContentSizeX * 0.1
+        print("contentOffsetX: \(contentOffsetX), 비교길이: \(paginationX)")
+        if contentOffsetX > paginationX && !isFetchingData {
+            isFetchingData = true // Mark that a server request is in progress
+            print("🦖🦖🦖🦖🦖🦖🦖🦖🦖")
+            requestTotalArchiveAPI(petID: petID)
         }
     }
 }

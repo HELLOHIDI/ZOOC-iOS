@@ -14,6 +14,10 @@ final class HomeViewController : BaseViewController {
     
     //MARK: - Properties
     
+    private var petID: Int = 0
+    private var id: Int?
+    private var limit: Int = 5
+    private var isFetchingData = false
     private var petData: [HomePetResult] = [] {
         didSet{
             rootView.petCollectionView.reloadData()
@@ -23,7 +27,9 @@ final class HomeViewController : BaseViewController {
     private var archiveData: [HomeArchiveResult] = [] {
         didSet {
             rootView.archiveListCollectionView.reloadData()
-            rootView.archiveGridCollectionView.reloadData() 
+            rootView.archiveGridCollectionView.reloadData()
+            id  = archiveData.last?.record.id
+            print("\(id)가 마지막입니다람쥐🐿🐿🐿🐿🐿🐿🐿🐿🐿")
         }
     }
     
@@ -98,7 +104,7 @@ final class HomeViewController : BaseViewController {
         
         rootView.archiveBottomView
             .addGestureRecognizer(UITapGestureRecognizer(target: self,
-                                        action: #selector(bottomViewDidTap)))
+                                                         action: #selector(bottomViewDidTap)))
     }
     
     private func setNotificationCenter() {
@@ -120,7 +126,7 @@ final class HomeViewController : BaseViewController {
         guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
             fatalError("선택된 펫이 없습니다.")
         }
-        let petID = petData[index].id
+        petID = petData[index].id
         
         let detailVC = ArchiveViewController()
         detailVC.dataBind(recordID: recordID, petID: petID)
@@ -136,7 +142,7 @@ final class HomeViewController : BaseViewController {
     
     private func deselectAllOfListArchiveCollectionViewCell(completion: (() -> Void)?) {
         rootView.archiveListCollectionView.indexPathsForSelectedItems?.forEach {
-                rootView.archiveListCollectionView.deselectItem(at: $0, animated: false)
+            rootView.archiveListCollectionView.deselectItem(at: $0, animated: false)
         }
         
         rootView.archiveListCollectionView.performBatchUpdates(nil) { _ in
@@ -153,18 +159,18 @@ final class HomeViewController : BaseViewController {
         
         guard index < self.petData.count else {
             print("\(#function)의 가드문")
-
+            
             return
-                  
-                  }
+            
+        }
         
         self.rootView.petCollectionView.selectItem(at:IndexPath(item: index, section: 0),
-                                              animated: false,
-                                              scrollPosition: .centeredHorizontally)
+                                                   animated: false,
+                                                   scrollPosition: .centeredHorizontally)
         self.view.layoutIfNeeded()
         self.rootView.petCollectionView.performBatchUpdates(nil)
         self.requestTotalArchiveAPI(petID: self.petData[index].id)
-
+        
     }
     
     private func configIndicatorBarWidth(_ scrollView: UIScrollView) {
@@ -178,7 +184,7 @@ final class HomeViewController : BaseViewController {
                 self.rootView.archiveIndicatorView.isHidden = true
                 self.rootView.archiveIndicatorView.widthRatio = 0
             }
-             
+            
             self.rootView.archiveIndicatorView.layoutIfNeeded()
         }
     }
@@ -187,27 +193,30 @@ final class HomeViewController : BaseViewController {
     
     private func requestTotalPetAPI() {
         HomeAPI.shared.getTotalPet(familyID: User.shared.familyID) { result in
-            
             guard let result = self.validateResult(result) as? [HomePetResult] else { return }
             
             self.petData = result
             guard let id = self.petData.first?.id else { return }
+            self.petID = id
             self.selectPetCollectionView(petID: id)
         }
     }
     
     private func requestTotalArchiveAPI(petID: Int) {
-        HomeAPI.shared.getTotalArchive(petID: String(petID)) { result in
+        HomeAPI.shared.getTotalArchive(petID: String(petID), limit: String(limit), after: id) { result in
             
             guard let result = self.validateResult(result) as? [HomeArchiveResult] else { return }
             
-            self.archiveData = result
-            self.rootView.emptyView.isHidden = !result.isEmpty
+            for data in result {
+                self.archiveData.append(data)
+            }
+            self.rootView.emptyView.isHidden = !self.archiveData.isEmpty
             if self.guideVC.isViewLoaded {
                 self.rootView.emptyView.isHidden = true
             }
             self.view.layoutIfNeeded()
             self.configIndicatorBarWidth(self.rootView.archiveListCollectionView)
+            self.isFetchingData = false
         }
     }
     
@@ -226,7 +235,7 @@ final class HomeViewController : BaseViewController {
         rootView.archiveBottomView.isHidden = false
         rootView.listButton.isSelected = true
         rootView.gridButton.isSelected = false
-
+        
     }
     
     @objc
@@ -446,26 +455,20 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 extension HomeViewController {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == rootView.archiveListCollectionView{
-            pagination(scrollView)
-            
-            let scroll = scrollView.contentOffset.x + scrollView.contentInset.left
-            let width = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
-            let scrollRatio = scroll / width
-            
-            self.rootView.archiveIndicatorView.leftOffsetRatio = scrollRatio
-            
-            
-        }
+        pagination(rootView.archiveListCollectionView)
     }
     
     func pagination(_ scrollView: UIScrollView) {
-        let contentOffsetX = scrollView.contentOffset.y
-        let collectionViewContentSizeX = rootView.archiveListCollectionView.contentSize.height
-        let paginationX = collectionViewContentSizeX * 0.5
         
-        if contentOffsetX > collectionViewContentSizeX - paginationX {
-            requestTotalPetAPI()
+        
+        let contentOffsetX = scrollView.contentOffset.x
+        let collectionViewContentSizeX = rootView.archiveListCollectionView.contentSize.width
+        let paginationX = collectionViewContentSizeX * 0.1
+        print("contentOffsetX: \(contentOffsetX), 비교길이: \(paginationX)")
+        if contentOffsetX > paginationX && !isFetchingData {
+            isFetchingData = true // Mark that a server request is in progress
+            print("🦖🦖🦖🦖🦖🦖🦖🦖🦖")
+            requestTotalArchiveAPI(petID: petID)
         }
     }
 }

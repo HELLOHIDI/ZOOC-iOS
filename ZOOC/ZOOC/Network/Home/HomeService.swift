@@ -11,7 +11,7 @@ import Moya
 
 enum HomeService {
     case getTotalPet(familyID: String)
-    case getTotalArchive(familyID: String,petID: String)
+    case getTotalArchive(familyID: String, petID: String, limit: String, after: Int?)
     case getDetailPetArchive(familyID: String, recordID: Int, petID: Int)
     case getNotice
     case postComment(recordID: String, comment: String)
@@ -19,14 +19,14 @@ enum HomeService {
 }
 
 extension HomeService: BaseTargetType {
-     
+    
     var path: String {
         switch self {
         case .getTotalPet(let familyID):
             return URLs.totalPet
                 .replacingOccurrences(of: "{familyId}", with: familyID)
             
-        case .getTotalArchive(familyID: let familyID, petID: let petID):
+        case .getTotalArchive(familyID: let familyID, petID: let petID, limit: let limit, after: let after):
             return URLs.totalRecord
                 .replacingOccurrences(of: "{familyId}", with: familyID)
                 .replacingOccurrences(of: "{petId}", with: petID)
@@ -51,7 +51,7 @@ extension HomeService: BaseTargetType {
                 .replacingOccurrences(of: "{recordId}", with: recordID)
         }
     }
-        
+    
     var method: Moya.Method {
         switch self {
         case .getTotalPet:
@@ -59,7 +59,7 @@ extension HomeService: BaseTargetType {
             
         case .getTotalArchive:
             return .get
-            
+
         case .getNotice:
             return .get
             
@@ -79,8 +79,14 @@ extension HomeService: BaseTargetType {
         case .getTotalPet:
             return .requestPlain
             
-        case .getTotalArchive:
-            return .requestPlain
+        case .getTotalArchive(familyID: _, petID: _, limit: let limit, after: let after):
+            var parameters: [String: Any]
+            if let after = after {
+                parameters = ["limit" : limit, "after" : after]
+            } else {
+                parameters = ["limit" : limit]
+            }
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
             
         case .getDetailPetArchive:
             return .requestPlain

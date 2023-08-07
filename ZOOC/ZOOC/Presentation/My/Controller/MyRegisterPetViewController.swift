@@ -249,7 +249,6 @@ extension MyRegisterPetViewController: UIImagePickerControllerDelegate {
 extension MyRegisterPetViewController {
     func requestPetResult() {
         MyAPI.shared.getMyPageData() { result in
-            
             guard let result = self.validateResult(result) as? MyResult else { return }
             self.myPetMemberData = result.pet
             self.rootView.registerPetTableView.reloadData()
@@ -259,7 +258,6 @@ extension MyRegisterPetViewController {
 
 extension MyRegisterPetViewController: GalleryAlertControllerDelegate {
     func galleryButtonDidTap() {
-        print(#function)
         DispatchQueue.main.async {
             self.present(self.imagePickerController, animated: true)
         }

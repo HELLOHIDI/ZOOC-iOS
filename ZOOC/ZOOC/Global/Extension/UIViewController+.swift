@@ -106,34 +106,41 @@ extension UIViewController{
     
     //MARK: - Action Method
     
-    @objc private func keyboardWillShow(_ notification: NSNotification){
+    @objc private func keyboardWillShow(_ notification: NSNotification) {
         // 키보드의 높이만큼 화면을 올려준다.
         print("키보드 올라감")
         
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         let keyboardRectangle = keyboardFrame.cgRectValue
         let keyboardHeight = keyboardRectangle.height
+        print("🍎키보드가 올라갈때 높이 \(keyboardHeight)")
+        print("🍎뷰의 높이 \(view.frame.origin.y)")
         
         if let view = notification.object as? UIView{
             view.frame.origin.y -= keyboardHeight
         }
         guard view.frame.origin.y == 0 else { return }
         self.view.frame.origin.y -= keyboardHeight
+        Device.keyBoardHeight = keyboardHeight
     }
 
     // 키보드가 사라졌다는 알림을 받으면 실행할 메서드
     @objc private func keyboardWillHide(_ notification: NSNotification){
         // 키보드의 높이만큼 화면을 내려준다.
         print("키보드 내려감")
-        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-        let keyboardRectangle = keyboardFrame.cgRectValue
-        let keyboardHeight = keyboardRectangle.height
+//        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+//        let keyboardRectangle = keyboardFrame.cgRectValue
+//        let keyboardHeight = keyboardRectangle.height
+        
+//        print("🍏키보드가 내려갈때 높이 \(keyboardHeight)")
+        print("🍏뷰의 높이 \(view.frame.origin.y)")
         
         if let view = notification.object as? UIView{
-            view.frame.origin.y += keyboardHeight
+            view.frame.origin.y += Device.keyBoardHeight
+
         } else {
             guard view.frame.origin.y < 0 else { return }
-            self.view.frame.origin.y += keyboardHeight
+            self.view.frame.origin.y += Device.keyBoardHeight
         }
         
         

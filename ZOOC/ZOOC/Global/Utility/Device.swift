@@ -40,6 +40,7 @@ struct Device {
         return UITabBarController().tabBar.frame.height
     }
     
+    static var keyBoardHeight: CGFloat = 0
     // MARK: 디바이스의 위쪽 여백 (Safe Area 위쪽 여백)
     // ** 위쪽 여백의 전체 높이 : topInset + statusBarHeight + navigationBarHeight(존재하는 경우) **
     static var topInset: CGFloat {

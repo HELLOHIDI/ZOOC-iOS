@@ -455,6 +455,17 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 extension HomeViewController {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == rootView.archiveListCollectionView{
+            pagination(scrollView)
+            
+            let scroll = scrollView.contentOffset.x + scrollView.contentInset.left
+            let width = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
+            let scrollRatio = scroll / width
+            
+            self.rootView.archiveIndicatorView.leftOffsetRatio = scrollRatio
+            
+            
+        }
         pagination(rootView.archiveListCollectionView)
     }
     

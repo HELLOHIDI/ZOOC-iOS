@@ -12,7 +12,7 @@ final class OnboardingAPI: BaseAPI {
     static let shared = OnboardingAPI()
     var onboardingProvider = MoyaProvider<OnboardingService>(session: Session(interceptor: ZoocInterceptor()),
                                                              plugins: [MoyaLoggingPlugin()])
-    override init() {}
+    private override init() {}
 }
 
 extension OnboardingAPI {

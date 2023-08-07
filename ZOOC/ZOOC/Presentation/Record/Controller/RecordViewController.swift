@@ -112,22 +112,7 @@ extension RecordViewController: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        let size = CGSize(width: view.frame.width, height: .infinity)
-        let estimatedSize = textView.sizeThatFits(size)
-        
-        textView.constraints.forEach { (constraint) in
-            
-            /// 180 이하일때는 더 이상 줄어들지 않게하기
-            if estimatedSize.height <= 180 {
-                
-            }
-            else {
-                if constraint.firstAttribute == .height {
-                    constraint.constant = estimatedSize.height
-                }
-            }
-        }
-        if textView.text == placeHoldText || textView.text.isEmpty {
+        if textView.text == placeHoldText || textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty  {
             contentTextViewIsRegistered = false
         } else {
             contentTextViewIsRegistered = true

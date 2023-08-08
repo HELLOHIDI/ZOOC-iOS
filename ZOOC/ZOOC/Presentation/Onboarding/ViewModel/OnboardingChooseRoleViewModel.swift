@@ -1,33 +1,30 @@
 //
-//  MyEditProfileViewModel.swift
+//  OnboardingChooseRoleViewModel.swift
 //  ZOOC
 //
-//  Created by 류희재 on 2023/08/08.
+//  Created by 류희재 on 2023/08/09.
 //
 
 import UIKit
 
 import Kingfisher
 
-protocol MyEditProfileModelInput {
+protocol OnboardingChooseRoleViewModelInput {
     func nameTextFieldDidChangeEvent(_ text: String)
     func editCompleteButtonDidTap()
-    func deleteButtonDidTap()
-    func editProfileImageEvent(_ image: UIImage)
 }
 
-protocol MyEditProfileModelOutput {
+protocol OnboardingChooseRoleViewModelOutput {
     var ableToEditProfile: Observable<Bool> { get }
     var textFieldState: Observable<BaseTextFieldState> { get }
     var editCompletedOutput: Observable<Bool?> { get }
-    var editProfileDataOutput: Observable<EditProfileRequest> { get }
 }
 
-protocol MyEditNetworkHandlerProtocol {
-    func patchMyPetProfile()
+protocol OnboardingChooseRoleNetworkHandlerProtocol {
+    func patchMyProfile()
 }
 
-final class MyEditProfileViewModel: MyEditProfileModelInput, MyEditProfileModelOutput {
+final class OnboardingChooseRoleViewModel: OnboardingChooseRoleViewModelInput, OnboardingChooseRoleViewModelOutput {
     
     var ableToEditProfile: Observable<Bool> = Observable(false)
     var textFieldState: Observable<BaseTextFieldState> = Observable(.isEmpty)
@@ -63,29 +60,18 @@ final class MyEditProfileViewModel: MyEditProfileModelInput, MyEditProfileModelO
         return editProfileDataOutput.value.nickName.count >= limit
     }
     
+    
     func editCompleteButtonDidTap() {
-        patchMyPetProfile()
-    }
-    
-    func deleteButtonDidTap() {
-        self.editProfileDataOutput.value.profileImage = nil
-        self.editProfileDataOutput.value.hasPhoto = false
-    }
-    
-    func editProfileImageEvent(_ image: UIImage) {
-        self.editProfileDataOutput.value.profileImage = image
-        self.editProfileDataOutput.value.hasPhoto = true
+        patchMyProfile()
     }
 }
 
-extension MyEditProfileViewModel: MyEditNetworkHandlerProtocol {
-    func patchMyPetProfile() {
+extension OnboardingChooseRoleViewModel: OnboardingChooseRoleNetworkHandlerProtocol {
+    func patchMyProfile() {
         MyAPI.shared.patchMyProfile(requset: editProfileDataOutput.value) { result in
             switch result {
             case .success(_):
                 self.editCompletedOutput.value = true
-                NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
-                NotificationCenter.default.post(name: .myPageUpdate, object: nil)
             default:
                 self.editCompletedOutput.value = false
             }

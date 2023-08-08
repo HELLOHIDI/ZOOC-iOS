@@ -16,7 +16,7 @@ final class OnboardingChooseRoleView: OnboardingBaseView {
     
     private let titleLabel = UILabel()
     private let subLabel = UILabel()
-    public lazy var roleTextField = UITextField()
+    public lazy var roleTextField = MyEditTextField(textFieldType: .profile)
     public let textFieldUnderLineView = UIView()
     public lazy var nextButton = ZoocGradientButton()
     

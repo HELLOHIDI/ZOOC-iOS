@@ -17,9 +17,18 @@ final class OnboardingChooseRoleViewController: UIViewController{
     //MARK: - Properties
     
     private let rootView = OnboardingChooseRoleView()
-    private var registerMyProfileData = EditProfileRequest(hasPhoto: false)
+    private var viewModel: OnboardingChooseRoleViewModel
     
     //MARK: - Life Cycle
+    
+    init(viewModel: OnboardingChooseRoleViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         self.view = rootView
@@ -28,50 +37,47 @@ final class OnboardingChooseRoleViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bind()
+        delegate()
         target()
+        
     }
     
     //MARK: - Custom Method
     
-    func target() {
-        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange), name: UITextField.textDidChangeNotification, object: nil)
+    func bind() {
+        viewModel.ableToEditProfile.observe(on: self) { [weak self] isEnabled in
+            self?.rootView.nextButton.isEnabled = isEnabled
+        }
         
+        viewModel.textFieldState.observe(on: self) { [weak self] state in
+            self?.updateTextFieldUI(state)
+        }
+        
+        viewModel.editCompletedOutput.observe(on: self) { [weak self] isSuccess in
+            guard let isSuccess else { return }
+            if isSuccess {
+                self?.pushToCompleteProfileView()
+            } else {
+                self?.presentBottomAlert("다시 시도해주세요")
+            }
+        }
+    }
+    
+    func delegate() {
+        rootView.roleTextField.editDelegate = self
+    }
+    
+    func target() {
         rootView.nextButton.addTarget(self, action: #selector(chooseFamilyButtonDidTap), for: .touchUpInside)
         rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
     }
     
     //MARK: - Action Method
-    
-    @objc private func textDidChange(_ notification: Notification) {
-        guard let textField = notification.object as? UITextField else { return }
-        guard let text = textField.text else { return }
-        var textFieldState: BaseTextFieldState
-        switch text.count {
-        case 1...9:
-            textFieldState = .isWritten
-        case 10...:
-            textFieldState = .isFull
-            textField.resignFirstResponder()
-            let index = text.index(text.startIndex, offsetBy: 10)
-            let newString = text[text.startIndex..<index]
-            textField.text = String(newString)
-        default:
-            textFieldState = .isEmpty
-        }
 
-        textFieldState.setTextFieldState(
-            textField: rootView.roleTextField,
-            underLineView: rootView.textFieldUnderLineView,
-            label: nil
-        )
-    }
     
     @objc private func chooseFamilyButtonDidTap() {
-        registerMyProfileData.nickName = rootView.roleTextField.text!
-        MyAPI.shared.patchMyProfile(requset: registerMyProfileData) { result in
-            //guard let result = self.validateResult(result) as? UserResult else { return }
-            self.pushToCompleteProfileView()
-        }
+        viewModel.patchMyProfile()
     }
     
     @objc private func backButtonDidTap() {
@@ -84,5 +90,23 @@ extension OnboardingChooseRoleViewController {
         let onboardingCompleteProfileViewController = OnboardingCompleteProfileViewController()
         self.navigationController?.pushViewController(onboardingCompleteProfileViewController, animated: true)
     }
+    
+    private func updateTextFieldUI(_ textFieldState: BaseTextFieldState) {
+        rootView.textFieldUnderLineView.backgroundColor = textFieldState.underLineColor
+        rootView.roleTextField.textColor = textFieldState.textColor
+    }
 }
 
+extension OnboardingChooseRoleViewController: MyTextFieldDelegate {
+    func myTextFieldTextDidChange(_ textFieldType: MyEditTextField.TextFieldType, text: String) {
+        self.viewModel.nameTextFieldDidChangeEvent(text)
+
+        if viewModel.isTextCountExceeded(for: textFieldType) {
+            let fixedText = text.substring(from: 0, to:9)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                self.rootView.roleTextField.text = fixedText
+            }
+        }
+    }
+}

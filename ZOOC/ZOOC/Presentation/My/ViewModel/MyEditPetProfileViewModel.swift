@@ -19,7 +19,6 @@ protocol MyEditPetProfileModelInput {
 protocol MyEditPetProfileModelOutput {
     var ableToEditPetProfile: Observable<Bool> { get }
     var textFieldState: Observable<BaseTextFieldState> { get }
-    var textFieldCharacterCount: Observable<Int> { get }
     var editCompletedOutput: Observable<Bool?> { get }
     var editPetProfileDataOutput: Observable<EditPetProfileRequest> { get }
 }
@@ -31,7 +30,6 @@ protocol MyEditPetNetworkHandlerProtocol {
 final class MyEditPetProfileViewModel: MyEditPetProfileModelInput, MyEditPetProfileModelOutput {
     var ableToEditPetProfile: Observable<Bool> = Observable(false)
     var textFieldState: Observable<BaseTextFieldState> = Observable(.isEmpty)
-    var textFieldCharacterCount: Observable<Int> = Observable(0)
     var editCompletedOutput: Observable<Bool?> = Observable(nil)
     var editPetProfileDataOutput: Observable<EditPetProfileRequest> = Observable(EditPetProfileRequest())
     
@@ -53,12 +51,10 @@ final class MyEditPetProfileViewModel: MyEditPetProfileModelInput, MyEditPetProf
         case 4...:
             textFieldState = .isFull
             ableToEditPetProfile.value = true
-            
         default:
             textFieldState = .isEmpty
             ableToEditPetProfile.value = false
         }
-        
         self.textFieldState.value = textFieldState
     }
     
@@ -66,7 +62,6 @@ final class MyEditPetProfileViewModel: MyEditPetProfileModelInput, MyEditPetProf
         let limit = type.limit
         return editPetProfileDataOutput.value.nickName.count >= limit
     }
-    
     
     func editCompleteButtonDidTap() {
         patchPetProfile()

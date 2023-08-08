@@ -33,9 +33,9 @@ final class ZoocInterceptor: RequestInterceptor {
             return
         }
         
-        print("🦫 Header값을 'User.shared.zoocAccessToken'으로 Adapt를 수행합니다!")
+        print("🦫 Header값을 'UserDefaultsManager.zoocAccessToken'으로 Adapt를 수행합니다!")
         var request = urlRequest
-        request.setValue(User.shared.zoocAccessToken, forHTTPHeaderField: APIConstants.auth)
+        request.setValue(UserDefaultsManager.zoocAccessToken, forHTTPHeaderField: APIConstants.auth)
         completion(.success(request))
     }
     
@@ -76,8 +76,8 @@ extension ZoocInterceptor {
         case .success(let data):
             
             guard let data = data as? OnboardingJWTTokenResult else { return }
-            User.shared.zoocAccessToken = data.accessToken
-            User.shared.zoocRefreshToken = data.refreshToken
+            UserDefaultsManager.zoocAccessToken = data.accessToken
+            UserDefaultsManager.zoocRefreshToken = data.refreshToken
             print("👽 AccessToken 갱신에 성공했습니다! \n 401을 받은 API를 재호출합니다❗️")
             completion(.retry) // 401을 받은 API를 재호출합니다.
             

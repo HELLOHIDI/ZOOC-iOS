@@ -62,7 +62,7 @@ final class OnboardingRegisterPetViewController: BaseViewController{
     private func requestMakeFamilyAPI(_ request: OnboardingRegisterPetRequest) {
         OnboardingAPI.shared.postMakeFamily(request: request) { result in
             guard let result = self.validateResult(result) as? OnboardingMakeFamilyResult else { return }
-            User.shared.familyID = String(result.familyId)
+            UserDefaultsManager.familyID = String(result.familyId)
             
             self.pushToInviteFamilyViewController()
         }

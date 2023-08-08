@@ -13,48 +13,48 @@ enum UserType {
     case visitor
 }
 
-struct User {
-    static var shared = User()
-    private init() {}
-    
-    
-    var familyID: String {
-        get {
-            UserDefaultsManager.familyID ?? ""
-        }
-        set {
-            UserDefaultsManager.familyID = newValue
-        }
-    }
-    var zoocAccessToken: String {
-        get {
-            return UserDefaultsManager.zoocAccessToken ?? ""
-        }
-        set {
-            UserDefaultsManager.zoocAccessToken = newValue
-        }
-    }
-    
-    var zoocRefreshToken: String {
-        get {
-            UserDefaultsManager.zoocRefreshToken ?? ""
-        }
-        set {
-            UserDefaultsManager.zoocRefreshToken = newValue
-        }
-    }
-    var fcmToken: String {
-        get {
-            UserDefaultsManager.fcmToken ?? ""
-        }
-        set {
-            UserDefaultsManager.fcmToken = newValue
-        }
-    }
-    
-    public mutating func clearData() {
-        UserDefaultsManager.reset()
-    }
-}
-
-
+//struct User {
+//    //static var shared = User()
+//    private init() {}
+//    
+//    
+//    var familyID: String {
+//        get {
+//            UserDefaultsManager.familyID ?? ""
+//        }
+//        set {
+//            UserDefaultsManager.familyID = newValue
+//        }
+//    }
+//    var zoocAccessToken: String {
+//        get {
+//            return UserDefaultsManager.zoocAccessToken ?? ""
+//        }
+//        set {
+//            UserDefaultsManager.zoocAccessToken = newValue
+//        }
+//    }
+//    
+//    var zoocRefreshToken: String {
+//        get {
+//            UserDefaultsManager.zoocRefreshToken ?? ""
+//        }
+//        set {
+//            UserDefaultsManager.zoocRefreshToken = newValue
+//        }
+//    }
+//    var fcmToken: String {
+//        get {
+//            UserDefaultsManager.fcmToken ?? ""
+//        }
+//        set {
+//            UserDefaultsManager.fcmToken = newValue
+//        }
+//    }
+//    
+//    public func clearData() {
+//        UserDefaultsManager.reset()
+//    }
+//}
+//
+//

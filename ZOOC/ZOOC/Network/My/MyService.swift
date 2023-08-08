@@ -22,13 +22,13 @@ extension MyService: BaseTargetType {
     var path: String {
         switch self {
         case .getMyPageData:
-            return URLs.myPage.replacingOccurrences(of: "{familyId}", with: User.shared.familyID)
+            return URLs.myPage.replacingOccurrences(of: "{familyId}", with: UserDefaultsManager.familyID)
         case .patchUserProfile:
             return URLs.editProfile
         case .deleteAccount:
             return URLs.deleteUser
         case .postRegisterPet(param: _):
-            return URLs.registerPet.replacingOccurrences(of: "{familyId}", with: User.shared.familyID) 
+            return URLs.registerPet.replacingOccurrences(of: "{familyId}", with: UserDefaultsManager.familyID)
         case .logout:
             return URLs.logout
         case .patchPetProfile(_, let id):
@@ -110,7 +110,7 @@ extension MyService: BaseTargetType {
             return .uploadMultipart(multipartFormDatas)
             
         case .logout:
-            return .requestParameters(parameters: ["fcmToken": User.shared.fcmToken],
+            return .requestParameters(parameters: ["fcmToken": UserDefaultsManager.fcmToken],
                                       encoding: JSONEncoding.default)
         case .patchPetProfile(let request, _):
             var multipartFormDates: [MultipartFormData] = []

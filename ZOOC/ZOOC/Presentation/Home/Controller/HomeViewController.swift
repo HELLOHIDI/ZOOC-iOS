@@ -56,7 +56,7 @@ final class HomeViewController : BaseViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if UserDefaultsManager.validateGuideVCInHome() {
+        if UserDefaultsManager.isFirstAttemptHome {
             rootView.emptyView.isHidden = true
             guideVC.modalPresentationStyle = .overCurrentContext
             present(guideVC, animated: false)
@@ -192,7 +192,7 @@ final class HomeViewController : BaseViewController {
     //MARK: - Network
     
     private func requestTotalPetAPI() {
-        HomeAPI.shared.getTotalPet(familyID: User.shared.familyID) { result in
+        HomeAPI.shared.getTotalPet(familyID: UserDefaultsManager.familyID) { result in
             guard let result = self.validateResult(result) as? [HomePetResult] else { return }
             
             self.petData = result

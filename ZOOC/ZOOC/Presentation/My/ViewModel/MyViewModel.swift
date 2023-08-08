@@ -65,7 +65,7 @@ final class MyViewModel: MyViewModelInput, MyViewModelOutput {
 extension MyViewModel: MyNetworkHandlerProtocol {
     func deleteAccount(completion: @escaping () -> Void) {
         myNetworkManager.deleteAccount() { result in
-            User.shared.clearData()
+            UserDefaultsManager.reset()
         }
     }
     
@@ -85,13 +85,13 @@ extension MyViewModel: MyNetworkHandlerProtocol {
     
     func requestLogoutAPI(completion: @escaping () -> Void) {
         myNetworkManager.logout() { result in
-            User.shared.clearData()
+            UserDefaultsManager.reset()
             completion()
         }
     }
     
     func getInviteCode(completion: @escaping () -> Void) {
-        onboardingNetworkManager.getInviteCode(familyID: User.shared.familyID) { result in
+        onboardingNetworkManager.getInviteCode(familyID: UserDefaultsManager.familyID) { result in
             guard let result = self.validateResult(result) as? OnboardingInviteResult else { return }
             let code = result.code
             self.inviteCode = code

@@ -37,7 +37,7 @@ final class OnboardingInviteFamilyCompletedViewController: UIViewController{
     
     
     private func requestFCMTokenAPI() {
-        OnboardingAPI.shared.patchFCMToken(fcmToken: User.shared.fcmToken) { result in
+        OnboardingAPI.shared.patchFCMToken(fcmToken: UserDefaultsManager.fcmToken) { result in
             switch result {
             case .success(_):
                 UIApplication.shared.changeRootViewController(ZoocTabBarController())

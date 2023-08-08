@@ -89,7 +89,7 @@ final class ArchiveViewController : BaseViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if UserDefaultsManager.validateGuideVCInArchive() {
+        if UserDefaultsManager.isFirstAttemptArchive {
             let guideVC = ArchiveGuideViewController()
             guideVC.modalPresentationStyle = .overFullScreen
             present(guideVC, animated: false)

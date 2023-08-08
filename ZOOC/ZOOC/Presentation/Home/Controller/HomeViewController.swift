@@ -125,8 +125,9 @@ final class HomeViewController : BaseViewController {
             fatalError("선택된 펫이 없습니다.")
         }
         let petID = petData[index].id
-        
-        let archiveVC = ArchiveViewController(ArchiveModel(recordID: recordID, petID: petID))
+        let archiveModel = ArchiveModel(recordID: recordID,
+                                        petID: petID)
+        let archiveVC = ArchiveViewController(archiveModel, scrollDown: false)
         archiveVC.modalPresentationStyle = .fullScreen
         present(archiveVC, animated: true)
     }

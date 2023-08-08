@@ -92,10 +92,9 @@ extension HomeNoticeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let recordID = homeNoticeData[indexPath.row].recordID
-        let petID = homeNoticeData[indexPath.row].petIDs[0]
-        
-        let archiveVC = ArchiveViewController(ArchiveModel(recordID: recordID, petID: petID))
+        let archiveModel = ArchiveModel(recordID: homeNoticeData[indexPath.row].recordID,
+                                        petID: homeNoticeData[indexPath.row].petIDs[0])
+        let archiveVC = ArchiveViewController(archiveModel, scrollDown: false)
         archiveVC.modalPresentationStyle = .fullScreen
         present(archiveVC, animated: true)
     }

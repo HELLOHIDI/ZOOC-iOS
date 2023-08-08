@@ -22,7 +22,7 @@ final class ArchiveViewController : BaseViewController {
         case right
     }
     
-    private var isNewPage = true
+    private var scrollDown = false
     
     private var archiveModel: ArchiveModel
     
@@ -63,8 +63,9 @@ final class ArchiveViewController : BaseViewController {
     
     //MARK: - Life Cycle
     
-    init(_ archiveModel: ArchiveModel) {
+    init(_ archiveModel: ArchiveModel, scrollDown: Bool) {
         self.archiveModel = archiveModel
+        self.scrollDown = scrollDown
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -370,13 +371,15 @@ final class ArchiveViewController : BaseViewController {
             $0.height.greaterThanOrEqualTo(height)
         }
         
-        if isNewPage{
-            isNewPage = false
-        } else{
+        if scrollDown{
             scrollView.layoutSubviews()
-            self.scrollView.setContentOffset(CGPoint(x: 0,
-                                                     y: self.scrollView.contentSize.height - self.scrollView.bounds.height),
-                                             animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                self.scrollView.setContentOffset(CGPoint(x: 0,
+                                                         y: self.scrollView.contentSize.height - self.scrollView.bounds.height),
+                                                 animated: true)
+            }
+        } else{
+            scrollDown = true
         }
         
     }
@@ -404,7 +407,7 @@ final class ArchiveViewController : BaseViewController {
             
             guard let result = self.validateResult(result) as? ArchiveResult else { return }
             
-            self.isNewPage = true
+            //self.scrollDown = false
             self.archiveData = result
             self.commentsData = result.comments
         }
@@ -608,6 +611,7 @@ extension ArchiveViewController: ArchiveCommentViewDelegate {
     func uploadButtonDidTap(_ textField: UITextField, text: String) {
         guard let recordID = archiveData?.record.id else { return }
         textField.text = nil
+        view.endEditing(true)
         requestCommentsAPI(recordID: String(recordID), text: text)
     }
     

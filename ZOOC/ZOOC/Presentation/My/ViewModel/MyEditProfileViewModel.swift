@@ -20,69 +20,79 @@ protocol MyEditProfileModelOutput {
     var ableToEditProfile: Observable<Bool> { get }
     var textFieldState: Observable<BaseTextFieldState> { get }
     var textFieldCharacterCount: Observable<Int> { get }
-        
+    var editCompletedOutput: Observable<Bool?> { get }
+    var editProfileDataOutput: Observable<EditProfileRequest> { get }
+}
+
+protocol MyEditNetworkHandlerProtocol {
+    func patchMyPetProfile()
 }
 
 final class MyEditProfileViewModel: MyEditProfileModelInput, MyEditProfileModelOutput {
-    var name: String
-    var photo: UIImage?
-    var hasPhoto: Bool
     
-    var ableToEditProfile: Observable<Bool> = Observable(true)
+    var ableToEditProfile: Observable<Bool> = Observable(false)
     var textFieldState: Observable<BaseTextFieldState> = Observable(.isEmpty)
     var textFieldCharacterCount: Observable<Int> = Observable(0)
+    var editCompletedOutput: Observable<Bool?> = Observable(nil)
+    var editProfileDataOutput: Observable<EditProfileRequest> = Observable(EditProfileRequest())
     
-    init(name: String,
-         photo: UIImage?,
-         hasPhoto: Bool) {
-        self.name = name
-        self.photo = photo
-        self.hasPhoto = hasPhoto
+    
+    init(editProfileData: EditProfileRequest) {
+        self.editProfileDataOutput.value = editProfileData
     }
     
     func nameTextFieldDidChangeEvent(_ text: String) {
         print(#function)
-        self.name = text
+        self.editProfileDataOutput.value.nickName = text
         var textFieldState: BaseTextFieldState
         switch text.count {
         case 1...9:
             textFieldState = .isWritten
+            ableToEditProfile.value = true
         case 10...:
             textFieldState = .isFull
+            ableToEditProfile.value = true
             
         default:
             textFieldState = .isEmpty
+            ableToEditProfile.value = false
         }
         
-        // 상태 변경 후 옵저버 호출
         self.textFieldState.value = textFieldState
     }
     
     func isTextCountExceeded(for type: MyEditTextField.TextFieldType) -> Bool {
-        print(#function)
         let limit = type.limit
-        print("🦖 \(limit)")
-        return name.count >= limit
+        return editProfileDataOutput.value.nickName.count >= limit
     }
-
-   
+    
+    
     func editCompleteButtonDidTap() {
-        if ableToEditProfile.value {
-            let editProfileData = EditProfileRequest(
-                hasPhoto: hasPhoto,
-                nickName: name,
-                profileImage: photo
-            )
-        }
+        patchMyPetProfile()
     }
     
     func deleteButtonDidTap() {
-        self.photo = nil
-        self.hasPhoto = false
+        self.editProfileDataOutput.value.profileImage = nil
+        self.editProfileDataOutput.value.hasPhoto = false
     }
     
     func editProfileImageEvent(_ image: UIImage) {
-        self.photo = image
-        self.hasPhoto = true
+        self.editProfileDataOutput.value.profileImage = image
+        self.editProfileDataOutput.value.hasPhoto = true
+    }
+}
+
+extension MyEditProfileViewModel: MyEditNetworkHandlerProtocol {
+    func patchMyPetProfile() {
+        MyAPI.shared.patchMyProfile(requset: editProfileDataOutput.value) { result in
+            switch result {
+            case .success(_):
+                self.editCompletedOutput.value = true
+                NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
+                NotificationCenter.default.post(name: .myPageUpdate, object: nil)
+            default:
+                self.editCompletedOutput.value = false
+            }
+        }
     }
 }

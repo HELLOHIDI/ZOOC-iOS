@@ -129,9 +129,12 @@ extension MyRegisterPetViewController: UITableViewDelegate {
             let editPetProfileVC = MyEditPetProfileViewController(
                 viewModel: MyEditPetProfileViewModel(
                     id: petData.id,
-                    name: petData.name,
-                    photo: photo,
-                    hasPhoto: hasPhoto
+                    editPetProfileRequest: EditPetProfileRequest(
+                        photo: hasPhoto,
+                        nickName: petData.name,
+                        file: photo
+                        
+                    )
                 )
             )
             navigationController?.pushViewController(editPetProfileVC, animated: true)

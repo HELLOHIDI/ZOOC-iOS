@@ -263,9 +263,12 @@ extension MyViewController {
         let photo = hasPhoto ? image : nil
         let editProfileViewController = MyEditProfileViewController(
             viewModel: MyEditProfileViewModel(
-                name: viewModel.myProfileData?.nickName ?? "",
-                photo: photo,
-                hasPhoto: hasPhoto)
+                editProfileData: EditProfileRequest(
+                    hasPhoto: hasPhoto,
+                    nickName: viewModel.myProfileData?.nickName ?? "",
+                    profileImage: photo
+                )
+            )
         )
         editProfileViewController.hidesBottomBarWhenPushed = true
         
@@ -299,9 +302,11 @@ extension MyViewController {
         let editPetProfileView = MyEditPetProfileViewController(
             viewModel: MyEditPetProfileViewModel(
                 id: pet.id,
-                name: pet.name,
-                photo: photo,
-                hasPhoto: hasPhoto
+                editPetProfileRequest: EditPetProfileRequest(
+                    photo: hasPhoto,
+                    nickName: pet.name,
+                    file: photo
+                )
             )
         )
         editPetProfileView.modalPresentationStyle = .fullScreen

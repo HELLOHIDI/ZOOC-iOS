@@ -25,8 +25,6 @@ final class MyEditPetProfileViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var editPetProfileData = EditPetProfileRequest()
-    
     //MARK: - UIComponents
     
     private lazy var rootView = MyEditPetProfileView()
@@ -52,8 +50,29 @@ final class MyEditPetProfileViewController: BaseViewController {
     //MARK: - Custom Method
     
     private func bind() {
+        viewModel.editPetProfileDataOutput.observe(on: self) { [weak self] editPetProfileData in
+            self?.updateUI(editPetProfileData)
+        }
+        
         viewModel.ableToEditPetProfile.observe(on: self) { [weak self] isEnabled in
-            self?.updateButtonUI(isEnabled)
+            self?.rootView.completeButton.isEnabled = isEnabled
+        }
+        
+        viewModel.textFieldState.observe(on: self) { [weak self] state in
+            self?.updateTextFieldUI(state)
+        }
+        
+        viewModel.editCompletedOutput.observe(on: self) { [weak self] isSuccess in
+            guard let isSuccess else { return }
+            if isSuccess {
+                if let navigationController = self?.navigationController {
+                    navigationController.popViewController(animated: true)
+                } else {
+                    self?.dismiss(animated: true)
+                }
+            } else {
+                self?.presentBottomAlert("다시 시도해주세요")
+            }
         }
     }
     
@@ -69,36 +88,11 @@ final class MyEditPetProfileViewController: BaseViewController {
         rootView.completeButton.addTarget(self, action: #selector(editCompleteButtonDidTap), for: .touchUpInside)
         
         rootView.profileImageButton.addTarget(self, action: #selector(profileImageButtonDidTap) , for: .touchUpInside)
-        
     }
     
     private func style() {
         imagePickerController.do {
             $0.sourceType = .photoLibrary
-        }
-        rootView.nameTextField.text = viewModel.name
-        
-        if viewModel.photo != nil{
-            rootView.profileImageButton.setImage(viewModel.photo, for: .normal)
-        } else {
-            rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
-        }
-        rootView.numberOfNameCharactersLabel.text = "\(viewModel.name.count)/4"
-    }
-    
-    private func requestPatchPetAPI() {
-        MyAPI.shared.patchPetProfile(requset: editPetProfileData, id: viewModel.id) { result in
-            guard let result = self.validateResult(result) as? EditPetProfileResult else { return }
-            print(result)
-            NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
-            NotificationCenter.default.post(name: .myPageUpdate, object: nil)
-            
-            if let navigationController = self.navigationController {
-                navigationController.popViewController(animated: true)
-            } else {
-                self.dismiss(animated: true)
-            }
-            
         }
     }
     
@@ -117,22 +111,7 @@ final class MyEditPetProfileViewController: BaseViewController {
     }
     
     @objc func editCompleteButtonDidTap(){
-        requestPatchPetAPI()
-        rootView.completeButton.isEnabled = false
-    }
-}
-
-extension MyEditPetProfileViewController {
-    private func updateButtonUI(_ isEnabled: Bool) {
-        let backgroundColor: UIColor = isEnabled ? .zoocGradientGreen : .zoocGray1
-        rootView.completeButton.backgroundColor = backgroundColor
-        rootView.completeButton.isEnabled = isEnabled
-    }
-    
-    private func updateTextFieldUI(_ textFieldState: BaseTextFieldState) {
-        rootView.underLineView.backgroundColor = textFieldState.underLineColor
-        rootView.nameTextField.textColor = textFieldState.textColor
-        rootView.numberOfNameCharactersLabel.textColor = textFieldState.indexColor
+        viewModel.patchPetProfile()
     }
 }
 
@@ -172,18 +151,37 @@ extension MyEditPetProfileViewController: ZoocAlertViewControllerDelegate {
 }
 
 //MARK: - MyTextFieldDelegate
+
 extension MyEditPetProfileViewController: MyTextFieldDelegate {
     func myTextFieldTextDidChange(_ textFieldType: MyEditTextField.TextFieldType, text: String) {
         self.viewModel.nameTextFieldDidChangeEvent(text)
-
+        
         if viewModel.isTextCountExceeded(for: textFieldType) {
             let fixedText = text.substring(from: 0, to:3)
-
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                 self.rootView.nameTextField.text = fixedText
             }
         }
         rootView.numberOfNameCharactersLabel.text =  text.count < 4 ? "\(text.count)/4" : "4/4"
+    }
+}
+
+extension MyEditPetProfileViewController {
+    private func updateTextFieldUI(_ textFieldState: BaseTextFieldState) {
+        rootView.underLineView.backgroundColor = textFieldState.underLineColor
+        rootView.nameTextField.textColor = textFieldState.textColor
+        rootView.numberOfNameCharactersLabel.textColor = textFieldState.indexColor
+    }
+    
+    private func updateUI(_ editProfileData: EditPetProfileRequest) {
+        rootView.nameTextField.text = editProfileData.nickName
+        if editProfileData.file != nil {
+            rootView.profileImageButton.setImage(editProfileData.file, for: .normal)
+        } else {
+            rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
+        }
+        rootView.numberOfNameCharactersLabel.text = "\(editProfileData.nickName.count)/10"
     }
 }
 

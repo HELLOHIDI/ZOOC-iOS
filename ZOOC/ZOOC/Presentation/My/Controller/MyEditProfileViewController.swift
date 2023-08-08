@@ -25,8 +25,6 @@ final class MyEditProfileViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var editMyProfileData = EditProfileRequest()
-    
     //MARK: - UIComponents
     
     private lazy var rootView = MyEditProfileView()
@@ -52,12 +50,25 @@ final class MyEditProfileViewController: BaseViewController {
     //MARK: - Custom Method
     
     private func bind() {
+        viewModel.editProfileDataOutput.observe(on: self) { [weak self] editProfileData in
+            self?.updateUI(editProfileData)
+        }
+        
         viewModel.ableToEditProfile.observe(on: self) { [weak self] isEnabled in
-            self?.updateButtonUI(isEnabled)
+            self?.rootView.completeButton.isEnabled = isEnabled
         }
         
         viewModel.textFieldState.observe(on: self) { [weak self] state in
-            self?.updateTextFieldUI(state) // 텍스트 필드 UI 업데이트
+            self?.updateTextFieldUI(state)
+        }
+        
+        viewModel.editCompletedOutput.observe(on: self) { [weak self] isSuccess in
+            guard let isSuccess else { return }
+            if isSuccess {
+                self?.navigationController?.popViewController(animated: true)
+            } else {
+                self?.presentBottomAlert("다시 시도해주세요")
+            }
         }
     }
     
@@ -76,24 +87,11 @@ final class MyEditProfileViewController: BaseViewController {
     
     private func style() {
         imagePickerController.do { $0.sourceType = .photoLibrary }
-        rootView.nameTextField.text = viewModel.name
-        if viewModel.photo != nil {
-            rootView.profileImageButton.setImage(viewModel.photo, for: .normal)
-        } else {
-            rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
-        }
-        rootView.numberOfNameCharactersLabel.text = "\(viewModel.name.count)/10"
     }
     
     private func requestPatchUserProfileAPI() {
-        MyAPI.shared.patchMyProfile(requset: editMyProfileData) { result in
-            self.validateResult(result)
-            NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
-            NotificationCenter.default.post(name: .myPageUpdate, object: nil)
-            self.navigationController?.popViewController(animated: true)
-        }
+        viewModel.editCompleteButtonDidTap()
     }
-    
     //MARK: - Action Method
     
     @objc
@@ -164,15 +162,19 @@ extension MyEditProfileViewController: MyTextFieldDelegate {
 }
 
 extension MyEditProfileViewController {
-    private func updateButtonUI(_ isEnabled: Bool) {
-        let backgroundColor: UIColor = isEnabled ? .zoocGradientGreen : .zoocGray1
-        rootView.completeButton.backgroundColor = backgroundColor
-        rootView.completeButton.isEnabled = isEnabled
-    }
-    
     private func updateTextFieldUI(_ textFieldState: BaseTextFieldState) {
         rootView.underLineView.backgroundColor = textFieldState.underLineColor
         rootView.nameTextField.textColor = textFieldState.textColor
         rootView.numberOfNameCharactersLabel.textColor = textFieldState.indexColor
+    }
+    
+    private func updateUI(_ editProfileData: EditProfileRequest) {
+        rootView.nameTextField.text = editProfileData.nickName
+        if editProfileData.profileImage != nil {
+            rootView.profileImageButton.setImage(editProfileData.profileImage, for: .normal)
+        } else {
+            rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
+        }
+        rootView.numberOfNameCharactersLabel.text = "\(editProfileData.nickName.count)/10"
     }
 }

@@ -74,7 +74,7 @@ func sceneDidEnterBackground(_ scene: UIScene) {
 extension SceneDelegate {
     
     private func autoLogin() {
-        guard UserDefaultsManager.zoocAccessToken.isEmpty else {
+        guard !UserDefaultsManager.zoocAccessToken.isEmpty else {
             print("📌 DB에 AccessToken 값이 없습니다. 온보딩을 시작합니다.")
             autoLoginFail()
             return

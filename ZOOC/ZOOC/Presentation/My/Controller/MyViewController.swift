@@ -276,9 +276,7 @@ extension MyViewController {
     }
     
     func pushToNoticeSettingView() {
-        let noticeSettingViewController = MyNoticeSettingViewController()
-        noticeSettingViewController.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(noticeSettingViewController, animated: true)
+        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
     }
     
     func pushToRegisterPetView() {

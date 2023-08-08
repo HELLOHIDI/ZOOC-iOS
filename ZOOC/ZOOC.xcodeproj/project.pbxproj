@@ -157,8 +157,6 @@
 		D26C85CF2968681900AEAF9B /* MyPetCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85CE2968681900AEAF9B /* MyPetCollectionFooterView.swift */; };
 		D26C85D1296869DD00AEAF9B /* UICollectionReusableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85D0296869DD00AEAF9B /* UICollectionReusableView+.swift */; };
 		D26C85D7296888D000AEAF9B /* MyDeleteAccountSectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85D6296888D000AEAF9B /* MyDeleteAccountSectionCollectionViewCell.swift */; };
-		D26C85DB2968A12000AEAF9B /* MyNoticeSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85DA2968A12000AEAF9B /* MyNoticeSettingView.swift */; };
-		D26C85DD2968B0A500AEAF9B /* MyNoticeSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85DC2968B0A500AEAF9B /* MyNoticeSettingViewController.swift */; };
 		D26C85DF2968C26500AEAF9B /* OnboardingLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85DE2968C26500AEAF9B /* OnboardingLoginView.swift */; };
 		D26C85E12968C63F00AEAF9B /* OnboardingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85E02968C63F00AEAF9B /* OnboardingLoginViewController.swift */; };
 		D26C85E32968C88800AEAF9B /* OnboardingAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85E22968C88800AEAF9B /* OnboardingAgreementView.swift */; };
@@ -356,8 +354,6 @@
 		D26C85CE2968681900AEAF9B /* MyPetCollectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPetCollectionFooterView.swift; sourceTree = "<group>"; };
 		D26C85D0296869DD00AEAF9B /* UICollectionReusableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionReusableView+.swift"; sourceTree = "<group>"; };
 		D26C85D6296888D000AEAF9B /* MyDeleteAccountSectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDeleteAccountSectionCollectionViewCell.swift; sourceTree = "<group>"; };
-		D26C85DA2968A12000AEAF9B /* MyNoticeSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoticeSettingView.swift; sourceTree = "<group>"; };
-		D26C85DC2968B0A500AEAF9B /* MyNoticeSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoticeSettingViewController.swift; sourceTree = "<group>"; };
 		D26C85DE2968C26500AEAF9B /* OnboardingLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginView.swift; sourceTree = "<group>"; };
 		D26C85E02968C63F00AEAF9B /* OnboardingLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginViewController.swift; sourceTree = "<group>"; };
 		D26C85E22968C88800AEAF9B /* OnboardingAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAgreementView.swift; sourceTree = "<group>"; };
@@ -735,7 +731,6 @@
 				D23503002964702400F01101 /* MyAppInformationView.swift */,
 				D23502F42961A69E00F01101 /* MyView.swift */,
 				D2350308296490A700F01101 /* MyEditProfileView.swift */,
-				D26C85DA2968A12000AEAF9B /* MyNoticeSettingView.swift */,
 				D26C68E2296DE4F80088DC9A /* MyRegisterPetView.swift */,
 				8718A06729ADB423001C7460 /* GalleryAlertController.swift */,
 				D2F3D5FF2A4411FF00C90A5A /* MyEditPetProfileView.swift */,
@@ -749,7 +744,6 @@
 				876554A62958494B006BBDA9 /* MyViewController.swift */,
 				D235030629647B4200F01101 /* MyAppInformationViewController.swift */,
 				D235030A2964991700F01101 /* MyEditProfileViewController.swift */,
-				D26C85DC2968B0A500AEAF9B /* MyNoticeSettingViewController.swift */,
 				D26C68E7296DE65E0088DC9A /* MyRegisterPetViewController.swift */,
 				D2F3D5FD2A4411D300C90A5A /* MyEditPetProfileViewController.swift */,
 			);
@@ -1350,7 +1344,6 @@
 				87A76A92295F6DA50096F669 /* RecordViewController.swift in Sources */,
 				D2F3D5FE2A4411D300C90A5A /* MyEditPetProfileViewController.swift in Sources */,
 				87648325295236BE00F74882 /* UIFont+.swift in Sources */,
-				D26C85DB2968A12000AEAF9B /* MyNoticeSettingView.swift in Sources */,
 				D27D9562296CA4640097CD03 /* OnboardingInviteFamilyViewController.swift in Sources */,
 				87D5AF602960CD5900CA7F12 /* HomeMissionCollectionViewCell.swift in Sources */,
 				D2F193632970B95E00AD87D3 /* HomeNoticeResult.swift in Sources */,
@@ -1410,7 +1403,6 @@
 				871EA351297042D800D0E8CC /* RecordResult.swift in Sources */,
 				D25323162A07330C00562D92 /* MyAppInformationHeaderView.swift in Sources */,
 				D23503052964743100F01101 /* MyAppInformationModel.swift in Sources */,
-				D26C85DD2968B0A500AEAF9B /* MyNoticeSettingViewController.swift in Sources */,
 				D2F3D6042A453E1000C90A5A /* EditPetProfileResult.swift in Sources */,
 				D26C85E12968C63F00AEAF9B /* OnboardingLoginViewController.swift in Sources */,
 				D26C85EA2968CF7E00AEAF9B /* OnboardingAgreementModel.swift in Sources */,
@@ -1653,7 +1645,7 @@
 				CODE_SIGN_ENTITLEMENTS = ZOOC/ZOOC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = T6DNHAHXG9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ZOOC/Application/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "";

@@ -24,7 +24,7 @@ final class ArchiveViewController : BaseViewController {
     
     private var isNewPage = true
     
-    private var archiveModel: ArchiveModel?
+    private var archiveModel: ArchiveModel
     
     private var archiveData: ArchiveResult? {
         didSet{
@@ -63,6 +63,16 @@ final class ArchiveViewController : BaseViewController {
     
     //MARK: - Life Cycle
     
+    init(_ archiveModel: ArchiveModel) {
+        self.archiveModel = archiveModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -72,6 +82,7 @@ final class ArchiveViewController : BaseViewController {
         style()
         hierarchy()
         layout()
+        requestDetailArchiveAPI(request: archiveModel)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -109,13 +120,13 @@ final class ArchiveViewController : BaseViewController {
     }
 
     //MARK: - Custom Method
-    
-    func dataBind(recordID: Int, petID: Int) {
-        let data = ArchiveModel(recordID: recordID, petID: petID)
-        archiveModel = data
-        guard let archiveModel else { return }
-        requestDetailArchiveAPI(request: archiveModel)
-    }
+//
+//    func dataBind(data: ArchiveModelrecordID: Int, petID: Int) {
+//        let data = ArchiveModel(recordID: recordID, petID: petID)
+//        archiveModel = data
+//        guard let archiveModel else { return }
+//        requestDetailArchiveAPI(request: archiveModel)
+//    }
     
     private func register() {
         commentCollectionView.delegate = self
@@ -332,9 +343,7 @@ final class ArchiveViewController : BaseViewController {
             return
         }
         
-        archiveModel?.recordID = id
-        
-        guard let archiveModel else { return }
+        archiveModel.recordID = id
         
         requestDetailArchiveAPI(request: archiveModel)
     }
@@ -425,13 +434,11 @@ final class ArchiveViewController : BaseViewController {
             self.validateResult(result)
             
 
-            guard let petID = self.archiveModel?.petID else { return }
-            
             print("가드문 통과")
             
             
             guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
-            tabVC.homeViewController.selectPetCollectionView(petID: petID)
+            tabVC.homeViewController.selectPetCollectionView(petID: self.archiveModel.petID)
             self.dismiss(animated: true)
             print("게시물 삭제 완료!")
                     
@@ -442,9 +449,7 @@ final class ArchiveViewController : BaseViewController {
         ArchiveAPI.shared.deleteComment(commentID: commentID) { result in
             self.validateResult(result)
             
-            guard let archiveModel = self.archiveModel else { return }
-            
-            self.requestDetailArchiveAPI(request: archiveModel)
+            self.requestDetailArchiveAPI(request: self.archiveModel)
         }
     }
     
@@ -457,14 +462,14 @@ final class ArchiveViewController : BaseViewController {
     
     @objc
     private func etcButtonDidTap() {
-        guard let archiveModel else { return }
         let alert = UIAlertController(title: nil,
                                       message: nil,
                                       preferredStyle: .actionSheet)
         
         let reportAction =  UIAlertAction(title: "신고하기", style: .default) { action in
            
-            self.sendMail(subject: "[ZOOC] 게시글 신고하기", body: TextLiteral.mailRecordReportBody(recordID: archiveModel.recordID))
+            self.sendMail(subject: "[ZOOC] 게시글 신고하기",
+                          body: TextLiteral.mailRecordReportBody(recordID: self.archiveModel.recordID))
         }
         
         let destructiveAction = UIAlertAction(title: "삭제하기",

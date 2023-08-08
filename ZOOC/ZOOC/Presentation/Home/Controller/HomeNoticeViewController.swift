@@ -95,8 +95,7 @@ extension HomeNoticeViewController: UITableViewDataSource {
         let recordID = homeNoticeData[indexPath.row].recordID
         let petID = homeNoticeData[indexPath.row].petIDs[0]
         
-        let archiveVC = ArchiveViewController()
-        archiveVC.dataBind(recordID: recordID, petID: petID)
+        let archiveVC = ArchiveViewController(ArchiveModel(recordID: recordID, petID: petID))
         archiveVC.modalPresentationStyle = .fullScreen
         present(archiveVC, animated: true)
     }

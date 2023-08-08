@@ -29,7 +29,7 @@ final class MyEditPetProfileViewController: BaseViewController {
     
     //MARK: - UIComponents
     
-    private lazy var rootView = MyEditProfileView()
+    private lazy var rootView = MyEditPetProfileView()
     private let galleryAlertController = GalleryAlertController()
     private lazy var imagePickerController = UIImagePickerController()
     
@@ -70,7 +70,6 @@ final class MyEditPetProfileViewController: BaseViewController {
         
         rootView.profileImageButton.addTarget(self, action: #selector(profileImageButtonDidTap) , for: .touchUpInside)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange), name: UITextField.textDidChangeNotification, object: nil)
     }
     
     private func style() {
@@ -115,31 +114,6 @@ final class MyEditPetProfileViewController: BaseViewController {
         zoocAlertVC.alertType = .leavePage
         zoocAlertVC.modalPresentationStyle = .overFullScreen
         present(zoocAlertVC, animated: false)
-    }
-    
-    @objc private func textDidChange(_ notification: Notification) {
-        guard let textField = notification.object as? MyEditTextField else { return }
-        guard let text = textField.text else { return }
-        var textFieldState: BaseTextFieldState
-        switch text.count {
-        case 1...3:
-            textFieldState = .isWritten
-            viewModel.ableToEditPetProfile.value = true
-        case 4...:
-            textFieldState = .isFull
-            let fixedText = text.substring(from: 0, to:3)
-            textField.text = fixedText + " "
-            
-            let when = DispatchTime.now() + 0.01
-            DispatchQueue.main.asyncAfter(deadline: when) {
-                textField.text = fixedText
-            }
-            viewModel.ableToEditPetProfile.value = true
-        default:
-            textFieldState = .isEmpty
-            viewModel.ableToEditPetProfile.value = false
-        }
-        updateTextFieldUI(textFieldState)
     }
     
     @objc func editCompleteButtonDidTap(){
@@ -201,6 +175,15 @@ extension MyEditPetProfileViewController: ZoocAlertViewControllerDelegate {
 extension MyEditPetProfileViewController: MyTextFieldDelegate {
     func myTextFieldTextDidChange(_ textFieldType: MyEditTextField.TextFieldType, text: String) {
         self.viewModel.nameTextFieldDidChangeEvent(text)
+
+        if viewModel.isTextCountExceeded(for: textFieldType) {
+            let fixedText = text.substring(from: 0, to:3)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                self.rootView.nameTextField.text = fixedText
+            }
+        }
         rootView.numberOfNameCharactersLabel.text =  text.count < 4 ? "\(text.count)/4" : "4/4"
     }
 }
+

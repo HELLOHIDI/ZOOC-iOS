@@ -18,14 +18,20 @@ protocol MyEditPetProfileModelInput {
 
 protocol MyEditPetProfileModelOutput {
     var ableToEditPetProfile: Observable<Bool> { get }
+    var textFieldState: Observable<BaseTextFieldState> { get }
+    var textFieldCharacterCount: Observable<Int> { get }
 }
 
 final class MyEditPetProfileViewModel: MyEditPetProfileModelInput, MyEditPetProfileModelOutput {
+    
     var id: Int
     var name: String
     var photo: UIImage?
     var hasPhoto: Bool
+    
     var ableToEditPetProfile: Observable<Bool> = Observable(true)
+    var textFieldState: Observable<BaseTextFieldState> = Observable(.isEmpty)
+    var textFieldCharacterCount: Observable<Int> = Observable(0)
     
     init(
         id: Int,
@@ -40,7 +46,28 @@ final class MyEditPetProfileViewModel: MyEditPetProfileModelInput, MyEditPetProf
     
     func nameTextFieldDidChangeEvent(_ text: String) {
         self.name = text
+        var textFieldState: BaseTextFieldState
+        switch text.count {
+        case 1...9:
+            textFieldState = .isWritten
+        case 10...:
+            textFieldState = .isFull
+            
+        default:
+            textFieldState = .isEmpty
+        }
+        
+        // 상태 변경 후 옵저버 호출
+        self.textFieldState.value = textFieldState
     }
+    
+    func isTextCountExceeded(for type: MyEditTextField.TextFieldType) -> Bool {
+        print(#function)
+        let limit = type.limit
+        print("🦖 \(limit)")
+        return name.count >= limit
+    }
+
     
     
     func editCompleteButtonDidTap() {

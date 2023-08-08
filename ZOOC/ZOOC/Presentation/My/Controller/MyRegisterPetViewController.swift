@@ -42,6 +42,7 @@ final class MyRegisterPetViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        delegate()
         register()
         target()
     }
@@ -52,15 +53,17 @@ final class MyRegisterPetViewController: BaseViewController {
     
     //MARK: - Custom Method
     
+    private func delegate() {
+        galleryAlertController.delegate = self
+        imagePickerController.delegate = self
+    }
+    
     private func register() {
         rootView.registerPetTableView.delegate = self
         rootView.registerPetTableView.dataSource = self
     }
     
     private func target() {
-        galleryAlertController.delegate = self
-        imagePickerController.delegate = self
-        
         rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
         rootView.registerPetButton.addTarget(self, action: #selector(registerPetButtonDidTap), for: .touchUpInside)
     }

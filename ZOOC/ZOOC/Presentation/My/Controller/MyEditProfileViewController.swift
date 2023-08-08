@@ -55,18 +55,10 @@ final class MyEditProfileViewController: BaseViewController {
         viewModel.ableToEditProfile.observe(on: self) { [weak self] isEnabled in
             self?.updateButtonUI(isEnabled)
         }
-    }
-    
-    private func updateButtonUI(_ isEnabled: Bool) {
-        let backgroundColor: UIColor = isEnabled ? .zoocGradientGreen : .zoocGray1
-        rootView.completeButton.backgroundColor = backgroundColor
-        rootView.completeButton.isEnabled = isEnabled
-    }
-    
-    private func updateTextFieldUI(_ textFieldState: BaseTextFieldState) {
-        rootView.underLineView.backgroundColor = textFieldState.underLineColor
-        rootView.nameTextField.textColor = textFieldState.textColor
-        rootView.numberOfNameCharactersLabel.textColor = textFieldState.indexColor
+        
+        viewModel.textFieldState.observe(on: self) { [weak self] state in
+            self?.updateTextFieldUI(state) // 텍스트 필드 UI 업데이트
+        }
     }
     
     private func delegate() {
@@ -80,8 +72,6 @@ final class MyEditProfileViewController: BaseViewController {
         rootView.completeButton.addTarget(self, action: #selector(editCompleteButtonDidTap), for: .touchUpInside)
         
         rootView.profileImageButton.addTarget(self, action: #selector(profileImageButtonDidTap) , for: .touchUpInside)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange(_:)), name: UITextField.textDidChangeNotification, object: nil)
     }
     
     private func style() {
@@ -117,31 +107,6 @@ final class MyEditProfileViewController: BaseViewController {
         zoocAlertVC.alertType = .leavePage
         zoocAlertVC.modalPresentationStyle = .overFullScreen
         present(zoocAlertVC, animated: false)
-    }
-    
-    @objc private func textDidChange(_ notification: Notification) {
-        guard let textField = notification.object as? MyEditTextField else { return }
-        guard let text = textField.text else { return }
-        var textFieldState: BaseTextFieldState
-        switch text.count {
-        case 1...9:
-            textFieldState = .isWritten
-            viewModel.ableToEditProfile.value = true
-        case 10...:
-            textFieldState = .isFull
-            let fixedText = text.substring(from: 0, to:9)
-            textField.text = fixedText + " "
-            
-            let when = DispatchTime.now() + 0.01
-            DispatchQueue.main.asyncAfter(deadline: when) {
-                textField.text = fixedText
-            }
-            viewModel.ableToEditProfile.value = true
-        default:
-            textFieldState = .isEmpty
-            viewModel.ableToEditProfile.value = false
-        }
-        updateTextFieldUI(textFieldState)
     }
     
     @objc func editCompleteButtonDidTap(){
@@ -186,6 +151,28 @@ extension MyEditProfileViewController: ZoocAlertViewControllerDelegate {
 extension MyEditProfileViewController: MyTextFieldDelegate {
     func myTextFieldTextDidChange(_ textFieldType: MyEditTextField.TextFieldType, text: String) {
         self.viewModel.nameTextFieldDidChangeEvent(text)
+
+        if viewModel.isTextCountExceeded(for: textFieldType) {
+            let fixedText = text.substring(from: 0, to:9)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                self.rootView.nameTextField.text = fixedText
+            }
+        }
         rootView.numberOfNameCharactersLabel.text =  text.count < 10 ? "\(text.count)/10" : "10/10"
+    }
+}
+
+extension MyEditProfileViewController {
+    private func updateButtonUI(_ isEnabled: Bool) {
+        let backgroundColor: UIColor = isEnabled ? .zoocGradientGreen : .zoocGray1
+        rootView.completeButton.backgroundColor = backgroundColor
+        rootView.completeButton.isEnabled = isEnabled
+    }
+    
+    private func updateTextFieldUI(_ textFieldState: BaseTextFieldState) {
+        rootView.underLineView.backgroundColor = textFieldState.underLineColor
+        rootView.nameTextField.textColor = textFieldState.textColor
+        rootView.numberOfNameCharactersLabel.textColor = textFieldState.indexColor
     }
 }

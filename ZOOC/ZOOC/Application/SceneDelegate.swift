@@ -74,7 +74,7 @@ func sceneDidEnterBackground(_ scene: UIScene) {
 extension SceneDelegate {
     
     private func autoLogin() {
-        guard !User.shared.zoocAccessToken.isEmpty else {
+        guard UserDefaultsManager.zoocAccessToken.isEmpty else {
             print("📌 DB에 AccessToken 값이 없습니다. 온보딩을 시작합니다.")
             autoLoginFail()
             return
@@ -92,7 +92,7 @@ extension SceneDelegate {
                 guard let data = data as? [OnboardingFamilyResult] else { return }
                 if data.count != 0 {
                     let familyID = String(data[0].id)
-                    User.shared.familyID = familyID
+                    UserDefaultsManager.familyID = familyID
                     self.autoLoginSuccess()
                 } else {
                     self.autoLoginFail()
@@ -117,7 +117,7 @@ extension SceneDelegate {
     }
     
     private func requestFCMTokenAPI() {
-        OnboardingAPI.shared.patchFCMToken(fcmToken: User.shared.fcmToken) { result in
+        OnboardingAPI.shared.patchFCMToken(fcmToken: UserDefaultsManager.fcmToken) { result in
             let mainVC = ZoocTabBarController()
             UIApplication.shared.changeRootViewController(mainVC)
         }

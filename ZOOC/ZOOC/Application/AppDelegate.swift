@@ -123,7 +123,7 @@ extension AppDelegate: MessagingDelegate {
             if let error = error {
                 print("Error fetching FCM registration token: \(error)")
               } else if let token = token {
-                  User.shared.fcmToken = token
+                  UserDefaultsManager.fcmToken = token
                  print("FCM registration token: \(token)")
               }
         }

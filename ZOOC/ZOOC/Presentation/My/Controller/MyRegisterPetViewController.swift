@@ -42,6 +42,7 @@ final class MyRegisterPetViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        delegate()
         register()
         target()
     }
@@ -52,15 +53,17 @@ final class MyRegisterPetViewController: BaseViewController {
     
     //MARK: - Custom Method
     
+    private func delegate() {
+        galleryAlertController.delegate = self
+        imagePickerController.delegate = self
+    }
+    
     private func register() {
         rootView.registerPetTableView.delegate = self
         rootView.registerPetTableView.dataSource = self
     }
     
     private func target() {
-        galleryAlertController.delegate = self
-        imagePickerController.delegate = self
-        
         rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
         rootView.registerPetButton.addTarget(self, action: #selector(registerPetButtonDidTap), for: .touchUpInside)
     }
@@ -117,14 +120,30 @@ extension MyRegisterPetViewController: UITableViewDelegate {
         print(#function)
         switch indexPath.section {
         case 0:
-            let editPetProfileVC = MyEditPetProfileViewController()
-            editPetProfileVC.dataBind(data: myPetMemberData[indexPath.row])
+            let petData = myPetMemberData[indexPath.row]
+            let hasPhoto = petData.photo == nil ? false : true
+            let imageView = UIImageView()
+            imageView.kfSetImage(url: petData.photo)
+            let image = imageView.image
+            let photo = hasPhoto ? image : nil
+            let editPetProfileVC = MyEditPetProfileViewController(
+                viewModel: MyEditPetProfileViewModel(
+                    id: petData.id,
+                    editPetProfileRequest: EditPetProfileRequest(
+                        photo: hasPhoto,
+                        nickName: petData.name,
+                        file: photo
+                        
+                    )
+                )
+            )
             navigationController?.pushViewController(editPetProfileVC, animated: true)
         default:
             return
         }
     }
 }
+
 
 //MARK: - UITableViewDataSource
 
@@ -249,7 +268,6 @@ extension MyRegisterPetViewController: UIImagePickerControllerDelegate {
 extension MyRegisterPetViewController {
     func requestPetResult() {
         MyAPI.shared.getMyPageData() { result in
-            
             guard let result = self.validateResult(result) as? MyResult else { return }
             self.myPetMemberData = result.pet
             self.rootView.registerPetTableView.reloadData()
@@ -259,7 +277,6 @@ extension MyRegisterPetViewController {
 
 extension MyRegisterPetViewController: GalleryAlertControllerDelegate {
     func galleryButtonDidTap() {
-        print(#function)
         DispatchQueue.main.async {
             self.present(self.imagePickerController, animated: true)
         }

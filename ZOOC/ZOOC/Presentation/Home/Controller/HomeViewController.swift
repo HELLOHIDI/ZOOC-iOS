@@ -14,7 +14,6 @@ final class HomeViewController : BaseViewController {
     
     //MARK: - Properties
     
-    private var petID: Int = 0
     private var id: Int?
     private var limit: Int = 5
     private var isFetchingData = false
@@ -29,7 +28,6 @@ final class HomeViewController : BaseViewController {
             rootView.archiveListCollectionView.reloadData()
             rootView.archiveGridCollectionView.reloadData()
             id  = archiveData.last?.record.id
-            print("\(id)가 마지막입니다람쥐🐿🐿🐿🐿🐿🐿🐿🐿🐿")
         }
     }
     
@@ -126,7 +124,7 @@ final class HomeViewController : BaseViewController {
         guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
             fatalError("선택된 펫이 없습니다.")
         }
-        petID = petData[index].id
+        let petID = petData[index].id
         
         let archiveVC = ArchiveViewController(ArchiveModel(recordID: recordID, petID: petID))
         archiveVC.modalPresentationStyle = .fullScreen
@@ -168,7 +166,7 @@ final class HomeViewController : BaseViewController {
                                                    scrollPosition: .centeredHorizontally)
         self.view.layoutIfNeeded()
         self.rootView.petCollectionView.performBatchUpdates(nil)
-        self.requestTotalArchiveAPI(petID: self.petData[index].id)
+        self.requestTotalArchiveAPI(petID: self.petData[index].id, pagination: false)
         
     }
     
@@ -196,19 +194,23 @@ final class HomeViewController : BaseViewController {
             
             self.petData = result
             guard let id = self.petData.first?.id else { return }
-            self.petID = id
             self.selectPetCollectionView(petID: id)
         }
     }
     
-    private func requestTotalArchiveAPI(petID: Int) {
+    private func requestTotalArchiveAPI(petID: Int, pagination: Bool) {
         HomeAPI.shared.getTotalArchive(petID: String(petID), limit: String(limit), after: id) { result in
             
             guard let result = self.validateResult(result) as? [HomeArchiveResult] else { return }
             
-            for data in result {
-                self.archiveData.append(data)
+            if pagination {
+                for data in result {
+                    self.archiveData.append(data)
+                }
+            } else {
+                self.archiveData = result
             }
+            
             self.rootView.emptyView.isHidden = !self.archiveData.isEmpty
             if self.guideVC.isViewLoaded {
                 self.rootView.emptyView.isHidden = true
@@ -333,7 +335,7 @@ extension HomeViewController {
         if collectionView == rootView.petCollectionView {
             collectionView.performBatchUpdates(nil)
             deselectAllOfListArchiveCollectionViewCell {
-                self.requestTotalArchiveAPI(petID: self.petData[indexPath.item].id )
+                self.requestTotalArchiveAPI(petID: self.petData[indexPath.item].id, pagination: false)
             }
         }
         
@@ -454,6 +456,16 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 extension HomeViewController {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == rootView.archiveListCollectionView{
+            
+            let scroll = scrollView.contentOffset.x + scrollView.contentInset.left
+            let width = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
+            let scrollRatio = scroll / width
+            
+            self.rootView.archiveIndicatorView.leftOffsetRatio = scrollRatio
+            
+            
+        }
         pagination(rootView.archiveListCollectionView)
     }
     
@@ -463,11 +475,17 @@ extension HomeViewController {
         let contentOffsetX = scrollView.contentOffset.x
         let collectionViewContentSizeX = rootView.archiveListCollectionView.contentSize.width
         let paginationX = collectionViewContentSizeX * 0.1
-        print("contentOffsetX: \(contentOffsetX), 비교길이: \(paginationX)")
+        
+        guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
+            fatalError("선택된 펫이 없습니다.")
+        }
+        let petID = petData[index].id
+        
+//        print("contentOffsetX: \(contentOffsetX), 비교길이: \(paginationX)")
         if contentOffsetX > paginationX && !isFetchingData {
             isFetchingData = true // Mark that a server request is in progress
             print("🦖🦖🦖🦖🦖🦖🦖🦖🦖")
-            requestTotalArchiveAPI(petID: petID)
+            requestTotalArchiveAPI(petID: petID, pagination: true)
         }
     }
 }

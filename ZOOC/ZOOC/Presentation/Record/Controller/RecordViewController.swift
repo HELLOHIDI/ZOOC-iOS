@@ -14,11 +14,6 @@ final class RecordViewController : BaseViewController{
     
     //MARK: - Properties
     
-//    enum DestinationType {
-//        case home
-//        case mission
-//    }
-    
     var petImage: UIImage?
     private var recordData = RecordModel()
     private let placeHoldText: String = """
@@ -80,11 +75,6 @@ final class RecordViewController : BaseViewController{
         presentAlertViewController()
     }
     
-    @objc private func missionButtonDidTap(){
-        presentBottomAlert("삭제된 기능입니다")
-        presentAlertViewController()
-    }
-    
     @objc private func galleryImageViewDidTap(){
         DispatchQueue.main.async {
             let imagePicker = UIImagePickerController()
@@ -122,7 +112,7 @@ extension RecordViewController: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        if textView.text == placeHoldText || textView.text.isEmpty {
+        if textView.text == placeHoldText || textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty  {
             contentTextViewIsRegistered = false
         } else {
             contentTextViewIsRegistered = true

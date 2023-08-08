@@ -8,10 +8,9 @@
 import UIKit
 
 class BaseTextField: UITextField {
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        configure()
     }
 
     @available(*, unavailable)
@@ -30,4 +29,5 @@ class BaseTextField: UITextField {
 
     func configure() {}
     func bind() {}
+
 }

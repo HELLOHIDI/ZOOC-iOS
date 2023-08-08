@@ -18,17 +18,11 @@ final class MyViewController: BaseViewController {
     //MARK: - Properties
     
     private let viewModel: MyViewModel
-//    private let coordinator: MyCoordinator?
     
-    init(
-        viewModel: MyViewModel
-        //        coordinator: MyCoordinator?,
-    ) {
+    init(viewModel: MyViewModel) {
         self.viewModel = viewModel
-        //        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -262,9 +256,21 @@ extension MyViewController: MyDeleteAccountSectionCollectionViewCellDelegate {
 
 extension MyViewController {
     func pushToEditProfileView() {
-        let editProfileViewController = MyEditProfileViewController()
+        let hasPhoto = viewModel.myProfileData?.photo == nil ? false : true
+        let imageView = UIImageView()
+        imageView.kfSetImage(url: viewModel.myProfileData?.photo)
+        let image = imageView.image
+        let photo = hasPhoto ? image : nil
+        let editProfileViewController = MyEditProfileViewController(
+            viewModel: MyEditProfileViewModel(
+                editProfileData: EditProfileRequest(
+                    hasPhoto: hasPhoto,
+                    nickName: viewModel.myProfileData?.nickName ?? "",
+                    profileImage: photo
+                )
+            )
+        )
         editProfileViewController.hidesBottomBarWhenPushed = true
-        editProfileViewController.dataBind(data: viewModel.myProfileData)
         
         self.navigationController?.pushViewController(editProfileViewController, animated: true)
     }
@@ -286,9 +292,22 @@ extension MyViewController {
     }
     
     private func presentToEditPetProfileView(pet: PetResult) {
-        let editPetProfileView = MyEditPetProfileViewController()
+        let hasPhoto = pet.photo == nil ? false : true
+        let imageView = UIImageView()
+        imageView.kfSetImage(url: pet.photo)
+        let image = imageView.image
+        let photo = hasPhoto ? image : nil
+        let editPetProfileView = MyEditPetProfileViewController(
+            viewModel: MyEditPetProfileViewModel(
+                id: pet.id,
+                editPetProfileRequest: EditPetProfileRequest(
+                    photo: hasPhoto,
+                    nickName: pet.name,
+                    file: photo
+                )
+            )
+        )
         editPetProfileView.modalPresentationStyle = .fullScreen
-        editPetProfileView.dataBind(data: pet)
         self.present(editPetProfileView, animated: true)
     }
     

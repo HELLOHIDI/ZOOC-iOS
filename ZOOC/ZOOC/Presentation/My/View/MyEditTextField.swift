@@ -11,7 +11,7 @@ protocol MyTextFieldDelegate: AnyObject {
     func myTextFieldTextDidChange(_ textFieldType: MyEditTextField.TextFieldType, text: String)
 }
 
-final class MyEditTextField : BaseTextField {
+class MyEditTextField : BaseTextField {
     
     enum TextFieldType {
         case profile
@@ -45,14 +45,8 @@ final class MyEditTextField : BaseTextField {
 }
 
 extension MyEditTextField: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-//            updateEditingUI()
-        }
-    
     func textFieldDidChangeSelection(_ textField: UITextField) {
-            guard let text = textField.text else { return}
-//            updateClearButtonUI()
-            editDelegate?.myTextFieldTextDidChange(textFieldType, text: text)
-        }
+        guard let text = textField.text else { return}
+        editDelegate?.myTextFieldTextDidChange(textFieldType, text: text)
+    }
 }
-    

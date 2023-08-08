@@ -32,7 +32,7 @@ final class MyEditProfileViewController: BaseViewController {
     private lazy var rootView = MyEditProfileView()
     private let galleryAlertController = GalleryAlertController()
     private lazy var imagePickerController = UIImagePickerController()
-
+    
     //MARK: - Life Cycle
     
     override func loadView() {
@@ -63,6 +63,12 @@ final class MyEditProfileViewController: BaseViewController {
         rootView.completeButton.isEnabled = isEnabled
     }
     
+    private func updateTextFieldUI(_ textFieldState: BaseTextFieldState) {
+        rootView.underLineView.backgroundColor = textFieldState.underLineColor
+        rootView.nameTextField.textColor = textFieldState.textColor
+        rootView.numberOfNameCharactersLabel.textColor = textFieldState.indexColor
+    }
+    
     private func delegate() {
         rootView.nameTextField.editDelegate = self
         galleryAlertController.delegate = self
@@ -75,20 +81,18 @@ final class MyEditProfileViewController: BaseViewController {
         
         rootView.profileImageButton.addTarget(self, action: #selector(profileImageButtonDidTap) , for: .touchUpInside)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange), name: UITextField.textDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange(_:)), name: UITextField.textDidChangeNotification, object: nil)
     }
     
     private func style() {
-        imagePickerController.do { 
-            $0.sourceType = .photoLibrary
-        }
+        imagePickerController.do { $0.sourceType = .photoLibrary }
         rootView.nameTextField.text = viewModel.name
-        if let photoURL = viewModel.photo{
-            rootView.profileImageButton.kfSetButtonImage(url: photoURL)
+        if viewModel.photo != nil {
+            rootView.profileImageButton.setImage(viewModel.photo, for: .normal)
         } else {
             rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
         }
-        rootView.numberOfNameCharactersLabel.text = "\(rootView.nameTextField.text!.count)/10"
+        rootView.numberOfNameCharactersLabel.text = "\(viewModel.name.count)/10"
     }
     
     private func requestPatchUserProfileAPI() {
@@ -119,48 +123,29 @@ final class MyEditProfileViewController: BaseViewController {
         guard let textField = notification.object as? MyEditTextField else { return }
         guard let text = textField.text else { return }
         var textFieldState: BaseTextFieldState
-        var limit: Int = 0
-        switch textField.textFieldType {
-        case .profile:
-            limit = 4
-        case .pet:
-            limit = 10
-        }
         switch text.count {
-        case 1...limit-1:
+        case 1...9:
             textFieldState = .isWritten
-        case limit...:
+            viewModel.ableToEditProfile.value = true
+        case 10...:
             textFieldState = .isFull
-            let fixedText = text.substring(from: 0, to:limit-1)
+            let fixedText = text.substring(from: 0, to:9)
             textField.text = fixedText + " "
             
             let when = DispatchTime.now() + 0.01
             DispatchQueue.main.asyncAfter(deadline: when) {
                 textField.text = fixedText
             }
+            viewModel.ableToEditProfile.value = true
         default:
             textFieldState = .isEmpty
+            viewModel.ableToEditProfile.value = false
         }
-        
-        textFieldState.setTextFieldState(
-            textField: nil,
-            underLineView: rootView.underLineView,
-            label: rootView.numberOfNameCharactersLabel
-        )
-        setTextFieldText(textCount: text.count)
-        
+        updateTextFieldUI(textFieldState)
     }
     
     @objc func editCompleteButtonDidTap(){
-        guard let nickName = rootView.nameTextField.text else { return }
-        self.editMyProfileData.nickName = nickName
         requestPatchUserProfileAPI()
-    }
-}
-
-extension MyEditProfileViewController {
-    func setTextFieldText(textCount: Int) {
-        rootView.numberOfNameCharactersLabel.text =  textCount < 10 ? "\(textCount)/10" : "10/10"
     }
 }
 
@@ -172,8 +157,8 @@ extension MyEditProfileViewController: GalleryAlertControllerDelegate {
     }
     
     func deleteButtonDidTap() {
+        viewModel.deleteButtonDidTap()
         rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
-        editMyProfileData.hasPhoto = false
     }
 }
 
@@ -185,9 +170,7 @@ extension MyEditProfileViewController: UIImagePickerControllerDelegate {
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         rootView.profileImageButton.setImage(image, for: .normal)
-        editMyProfileData.profileImage = image
-        rootView.completeButton.isEnabled = true
-        
+        viewModel.editProfileImageEvent(image)
         dismiss(animated: true)
     }
 }
@@ -200,10 +183,9 @@ extension MyEditProfileViewController: ZoocAlertViewControllerDelegate {
     }
 }
 
-
 extension MyEditProfileViewController: MyTextFieldDelegate {
     func myTextFieldTextDidChange(_ textFieldType: MyEditTextField.TextFieldType, text: String) {
-        print(#function)
         self.viewModel.nameTextFieldDidChangeEvent(text)
+        rootView.numberOfNameCharactersLabel.text =  text.count < 10 ? "\(text.count)/10" : "10/10"
     }
 }

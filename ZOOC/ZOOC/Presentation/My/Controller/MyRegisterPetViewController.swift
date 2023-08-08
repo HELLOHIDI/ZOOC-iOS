@@ -117,14 +117,27 @@ extension MyRegisterPetViewController: UITableViewDelegate {
         print(#function)
         switch indexPath.section {
         case 0:
-            let editPetProfileVC = MyEditPetProfileViewController()
-            editPetProfileVC.dataBind(data: myPetMemberData[indexPath.row])
+            let petData = myPetMemberData[indexPath.row]
+            let hasPhoto = petData.photo == nil ? false : true
+            let imageView = UIImageView()
+            imageView.kfSetImage(url: petData.photo)
+            let image = imageView.image
+            let photo = hasPhoto ? image : nil
+            let editPetProfileVC = MyEditPetProfileViewController(
+                viewModel: MyEditPetProfileViewModel(
+                    id: petData.id,
+                    name: petData.name,
+                    photo: photo,
+                    hasPhoto: hasPhoto
+                )
+            )
             navigationController?.pushViewController(editPetProfileVC, animated: true)
         default:
             return
         }
     }
 }
+
 
 //MARK: - UITableViewDataSource
 

@@ -256,10 +256,16 @@ extension MyViewController: MyDeleteAccountSectionCollectionViewCellDelegate {
 
 extension MyViewController {
     func pushToEditProfileView() {
+        let hasPhoto = viewModel.myProfileData?.photo == nil ? false : true
+        let imageView = UIImageView()
+        imageView.kfSetImage(url: viewModel.myProfileData?.photo)
+        let image = imageView.image
+        let photo = hasPhoto ? image : nil
         let editProfileViewController = MyEditProfileViewController(
             viewModel: MyEditProfileViewModel(
                 name: viewModel.myProfileData?.nickName ?? "",
-                photo: viewModel.myProfileData?.photo)
+                photo: photo,
+                hasPhoto: hasPhoto)
         )
         editProfileViewController.hidesBottomBarWhenPushed = true
         
@@ -285,9 +291,20 @@ extension MyViewController {
     }
     
     private func presentToEditPetProfileView(pet: PetResult) {
-        let editPetProfileView = MyEditPetProfileViewController()
+        let hasPhoto = pet.photo == nil ? false : true
+        let imageView = UIImageView()
+        imageView.kfSetImage(url: pet.photo)
+        let image = imageView.image
+        let photo = hasPhoto ? image : nil
+        let editPetProfileView = MyEditPetProfileViewController(
+            viewModel: MyEditPetProfileViewModel(
+                id: pet.id,
+                name: pet.name,
+                photo: photo,
+                hasPhoto: hasPhoto
+            )
+        )
         editPetProfileView.modalPresentationStyle = .fullScreen
-        editPetProfileView.dataBind(data: pet)
         self.present(editPetProfileView, animated: true)
     }
     

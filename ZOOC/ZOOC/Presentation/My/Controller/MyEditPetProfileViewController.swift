@@ -14,8 +14,17 @@ final class MyEditPetProfileViewController: BaseViewController {
     
     //MARK: - Properties
     
-    private var id: Int?
-    private var myProfileData: PetResult?
+    private let viewModel: MyEditPetProfileViewModel
+    
+    init(viewModel: MyEditPetProfileViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private var editPetProfileData = EditPetProfileRequest()
     
     //MARK: - UIComponents
@@ -23,7 +32,7 @@ final class MyEditPetProfileViewController: BaseViewController {
     private lazy var rootView = MyEditProfileView()
     private let galleryAlertController = GalleryAlertController()
     private lazy var imagePickerController = UIImagePickerController()
-
+    
     //MARK: - Life Cycle
     
     override func loadView() {
@@ -33,14 +42,23 @@ final class MyEditPetProfileViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bind()
         delegate()
         target()
+        
         style()
     }
     
     //MARK: - Custom Method
     
+    private func bind() {
+        viewModel.ableToEditPetProfile.observe(on: self) { [weak self] isEnabled in
+            self?.updateButtonUI(isEnabled)
+        }
+    }
+    
     private func delegate() {
+        rootView.nameTextField.editDelegate = self
         galleryAlertController.delegate = self
         imagePickerController.delegate = self
     }
@@ -59,25 +77,18 @@ final class MyEditPetProfileViewController: BaseViewController {
         imagePickerController.do {
             $0.sourceType = .photoLibrary
         }
+        rootView.nameTextField.text = viewModel.name
         
-        rootView.numberOfNameCharactersLabel.text = "\(rootView.nameTextField.text!.count)/4"
-    }
-
-    func dataBind(data: PetResult?) {
-        rootView.nameTextField.text = data?.name
-        self.id = data?.id
-        editPetProfileData.nickName = data?.name ?? ""
-        
-        if let photoURL = data?.photo{
-            rootView.profileImageButton.kfSetButtonImage(url: photoURL)
+        if viewModel.photo != nil{
+            rootView.profileImageButton.setImage(viewModel.photo, for: .normal)
         } else {
             rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
         }
+        rootView.numberOfNameCharactersLabel.text = "\(viewModel.name.count)/4"
     }
     
     private func requestPatchPetAPI() {
-        guard let id = self.id else { return }
-        MyAPI.shared.patchPetProfile(requset: editPetProfileData, id: id) { result in
+        MyAPI.shared.patchPetProfile(requset: editPetProfileData, id: viewModel.id) { result in
             guard let result = self.validateResult(result) as? EditPetProfileResult else { return }
             print(result)
             NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
@@ -94,8 +105,7 @@ final class MyEditPetProfileViewController: BaseViewController {
     
     //MARK: - Action Method
     
-    @objc
-    private func profileImageButtonDidTap() {
+    @objc private func profileImageButtonDidTap() {
         present(galleryAlertController,animated: true)
     }
     
@@ -111,17 +121,11 @@ final class MyEditPetProfileViewController: BaseViewController {
         guard let textField = notification.object as? MyEditTextField else { return }
         guard let text = textField.text else { return }
         var textFieldState: BaseTextFieldState
-        var limit: Int = 0
-        switch textField.textFieldType {
-        case .profile:
-            limit = 4
-        case .pet:
-            limit = 10
-        }
         switch text.count {
-        case 1...limit-1:
+        case 1...3:
             textFieldState = .isWritten
-        case limit...:
+            viewModel.ableToEditPetProfile.value = true
+        case 4...:
             textFieldState = .isFull
             let fixedText = text.substring(from: 0, to:3)
             textField.text = fixedText + " "
@@ -130,43 +134,31 @@ final class MyEditPetProfileViewController: BaseViewController {
             DispatchQueue.main.asyncAfter(deadline: when) {
                 textField.text = fixedText
             }
+            viewModel.ableToEditPetProfile.value = true
         default:
             textFieldState = .isEmpty
+            viewModel.ableToEditPetProfile.value = false
         }
-        
-        textFieldState.setTextFieldState(
-            textField: nil,
-            underLineView: rootView.underLineView,
-            label: rootView.numberOfNameCharactersLabel
-        )
-        setTextFieldText(textCount: text.count)
-        
+        updateTextFieldUI(textFieldState)
     }
     
     @objc func editCompleteButtonDidTap(){
-        guard let nickName = rootView.nameTextField.text else { return }
-        if nickName.count > 0 {
-            self.editPetProfileData.nickName = nickName
-            requestPatchPetAPI()
-            rootView.completeButton.isEnabled = false
-        } else {
-            presentBottomAlert("반려동물의 이름을 작성해주세요!")
-        }
-        
+        requestPatchPetAPI()
+        rootView.completeButton.isEnabled = false
     }
 }
 
 extension MyEditPetProfileViewController {
-    func setTextFieldText(textCount: Int) {
-        rootView.numberOfNameCharactersLabel.text =  textCount < 4 ? "\(textCount)/4" : "4/4"
+    private func updateButtonUI(_ isEnabled: Bool) {
+        let backgroundColor: UIColor = isEnabled ? .zoocGradientGreen : .zoocGray1
+        rootView.completeButton.backgroundColor = backgroundColor
+        rootView.completeButton.isEnabled = isEnabled
     }
     
-    func setDefaultProfileImage() {
-        rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
-    }
-    
-    func setFamilyMemberProfileImage(photo: String) {
-        rootView.profileImageButton.kfSetButtonImage(url: photo)
+    private func updateTextFieldUI(_ textFieldState: BaseTextFieldState) {
+        rootView.underLineView.backgroundColor = textFieldState.underLineColor
+        rootView.nameTextField.textColor = textFieldState.textColor
+        rootView.numberOfNameCharactersLabel.textColor = textFieldState.indexColor
     }
 }
 
@@ -179,8 +171,7 @@ extension MyEditPetProfileViewController: GalleryAlertControllerDelegate {
     
     func deleteButtonDidTap() {
         rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
-        editPetProfileData.photo = false
-        rootView.completeButton.isEnabled = true
+        viewModel.deleteButtonDidTap()
     }
 }
 
@@ -192,8 +183,7 @@ extension MyEditPetProfileViewController: UIImagePickerControllerDelegate {
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         rootView.profileImageButton.setImage(image, for: .normal)
-        rootView.completeButton.isEnabled = true
-        self.editPetProfileData.file = image
+        viewModel.editPetProfileImageEvent(image)
         dismiss(animated: true)
     }
 }
@@ -205,8 +195,12 @@ extension MyEditPetProfileViewController: ZoocAlertViewControllerDelegate {
         navigationController?.popViewController(animated: true)
         dismiss(animated: true)
     }
-    
-    
 }
 
-
+//MARK: - MyTextFieldDelegate
+extension MyEditPetProfileViewController: MyTextFieldDelegate {
+    func myTextFieldTextDidChange(_ textFieldType: MyEditTextField.TextFieldType, text: String) {
+        self.viewModel.nameTextFieldDidChangeEvent(text)
+        rootView.numberOfNameCharactersLabel.text =  text.count < 4 ? "\(text.count)/4" : "4/4"
+    }
+}

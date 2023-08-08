@@ -1,5 +1,5 @@
 //
-//  MyEditProfileViewModel.swift
+//  MyEditPetProfileViewModel.swift
 //  ZOOC
 //
 //  Created by 류희재 on 2023/08/08.
@@ -9,30 +9,34 @@ import UIKit
 
 import Kingfisher
 
-protocol MyEditProfileModelInput {
+protocol MyEditPetProfileModelInput {
     func nameTextFieldDidChangeEvent(_ text: String)
     func editCompleteButtonDidTap()
     func deleteButtonDidTap()
-    func editProfileImageEvent(_ image: UIImage)
+    func editPetProfileImageEvent(_ image: UIImage)
 }
 
-protocol MyEditProfileModelOutput {
-    var ableToEditProfile: Observable<Bool> { get }
+protocol MyEditPetProfileModelOutput {
+    var ableToEditPetProfile: Observable<Bool> { get }
 }
 
-final class MyEditProfileViewModel: MyEditProfileModelInput, MyEditProfileModelOutput {
+final class MyEditPetProfileViewModel: MyEditPetProfileModelInput, MyEditPetProfileModelOutput {
+    var id: Int
     var name: String
     var photo: UIImage?
     var hasPhoto: Bool
-    var ableToEditProfile: Observable<Bool> = Observable(true)
+    var ableToEditPetProfile: Observable<Bool> = Observable(true)
     
-    init(name: String,
-         photo: UIImage?,
-         hasPhoto: Bool) {
-        self.name = name
-        self.photo = photo
-        self.hasPhoto = hasPhoto
-    }
+    init(
+        id: Int,
+        name: String,
+        photo: UIImage?,
+        hasPhoto: Bool) {
+            self.id = id
+            self.name = name
+            self.photo = photo
+            self.hasPhoto = hasPhoto
+        }
     
     func nameTextFieldDidChangeEvent(_ text: String) {
         self.name = text
@@ -40,7 +44,7 @@ final class MyEditProfileViewModel: MyEditProfileModelInput, MyEditProfileModelO
     
     
     func editCompleteButtonDidTap() {
-        if ableToEditProfile.value {
+        if ableToEditPetProfile.value {
             let editProfileData = EditProfileRequest(
                 hasPhoto: hasPhoto,
                 nickName: name,
@@ -54,8 +58,9 @@ final class MyEditProfileViewModel: MyEditProfileModelInput, MyEditProfileModelO
         self.hasPhoto = false
     }
     
-    func editProfileImageEvent(_ image: UIImage) {
+    func editPetProfileImageEvent(_ image: UIImage) {
         self.photo = image
         self.hasPhoto = true
     }
 }
+

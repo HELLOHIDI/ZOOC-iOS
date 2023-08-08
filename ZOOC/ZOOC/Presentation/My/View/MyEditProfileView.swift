@@ -19,7 +19,7 @@ final class MyEditProfileView: UIView {
     
     public var profileImageButton = UIButton()
     private var cameraIconImageView = UIImageView()
-    public var nameTextField = MyEditTextField.init(textFieldType: .profile)
+    public var nameTextField = MyEditTextField(textFieldType: .profile)
     public var underLineView = UIView()
     public var numberOfNameCharactersLabel = UILabel()
     public var completeButton = ZoocGradientButton()

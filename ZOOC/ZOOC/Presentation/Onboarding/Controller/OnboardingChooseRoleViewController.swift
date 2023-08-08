@@ -43,27 +43,27 @@ final class OnboardingChooseRoleViewController: UIViewController{
     //MARK: - Action Method
     
     @objc private func textDidChange(_ notification: Notification) {
-//        guard let textField = notification.object as? UITextField else { return }
-//        guard let text = textField.text else { return }
-//        var textFieldState: BaseTextFieldState
-//        switch text.count {
-//        case 1...9:
-//            textFieldState = .isWritten
-//        case 10...:
-//            textFieldState = .isFull
-//            textField.resignFirstResponder()
-//            let index = text.index(text.startIndex, offsetBy: 10)
-//            let newString = text[text.startIndex..<index]
-//            textField.text = String(newString)
-//        default:
-//            textFieldState = .isEmpty
-//        }
-//        
-//        textFieldState.setTextFieldState(
-//            textField: rootView.roleTextField,
-//            underLineView: rootView.textFieldUnderLineView,
-//            label: nil
-//        )
+        guard let textField = notification.object as? UITextField else { return }
+        guard let text = textField.text else { return }
+        var textFieldState: BaseTextFieldState
+        switch text.count {
+        case 1...9:
+            textFieldState = .isWritten
+        case 10...:
+            textFieldState = .isFull
+            textField.resignFirstResponder()
+            let index = text.index(text.startIndex, offsetBy: 10)
+            let newString = text[text.startIndex..<index]
+            textField.text = String(newString)
+        default:
+            textFieldState = .isEmpty
+        }
+
+        textFieldState.setTextFieldState(
+            textField: rootView.roleTextField,
+            underLineView: rootView.textFieldUnderLineView,
+            label: nil
+        )
     }
     
     @objc private func chooseFamilyButtonDidTap() {

@@ -44,4 +44,14 @@ enum BaseTextFieldState {
             return .zoocGradientGreen
         }
     }
+    
+    
+    func setTextFieldState(textField: UITextField?,
+                           underLineView: UIView?,
+                           label: UILabel?) {
+        underLineView?.backgroundColor = self.underLineColor
+        textField?.textColor = self.textColor
+        label?.textColor = self.indexColor
+    }
+    
 }

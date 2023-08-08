@@ -108,7 +108,7 @@ final class MyEditPetProfileViewController: BaseViewController {
     }
     
     @objc private func textDidChange(_ notification: Notification) {
-        guard let textField = notification.object as? BaseTextField else { return }
+        guard let textField = notification.object as? MyEditTextField else { return }
         guard let text = textField.text else { return }
         var textFieldState: BaseTextFieldState
         var limit: Int = 0

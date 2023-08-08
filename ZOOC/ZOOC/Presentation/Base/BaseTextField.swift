@@ -9,25 +9,8 @@ import UIKit
 
 class BaseTextField: UITextField {
     
-    enum TextFieldType {
-        case profile
-        case pet
-        
-        var limit: Int {
-            switch self {
-            case .profile: return 10
-            case .pet: return 4
-            }
-        }
-    }
-    
-    public var textFieldType: TextFieldType
-    
-    init(viewType: TextFieldType) {
-        self.textFieldType = viewType
-        super.init(frame: .zero)
-        
-        configure()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
     }
 
     @available(*, unavailable)
@@ -46,8 +29,5 @@ class BaseTextField: UITextField {
 
     func configure() {}
     func bind() {}
-    
-    func textFieldDidChange() {
-        
-    }
+
 }

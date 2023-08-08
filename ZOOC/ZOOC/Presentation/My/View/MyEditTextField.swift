@@ -11,7 +11,7 @@ protocol MyTextFieldDelegate: AnyObject {
     func myTextFieldTextDidChange(_ textFieldType: MyEditTextField.TextFieldType, text: String)
 }
 
-final class MyEditTextField : UITextField {
+final class MyEditTextField : BaseTextField {
     
     enum TextFieldType {
         case profile

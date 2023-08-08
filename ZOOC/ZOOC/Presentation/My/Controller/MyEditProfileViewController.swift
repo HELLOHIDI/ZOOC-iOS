@@ -45,6 +45,7 @@ final class MyEditProfileViewController: BaseViewController {
         bind()
         delegate()
         target()
+        
         style()
     }
     
@@ -81,19 +82,13 @@ final class MyEditProfileViewController: BaseViewController {
         imagePickerController.do { 
             $0.sourceType = .photoLibrary
         }
-        
-        rootView.numberOfNameCharactersLabel.text = "\(rootView.nameTextField.text!.count)/10"
-    }
-
-    func dataBind(data: UserResult?) {
-        rootView.nameTextField.text = data?.nickName
-        editMyProfileData.nickName = data?.nickName ?? ""
-        
-        if let photoURL = data?.photo{
+        rootView.nameTextField.text = viewModel.name
+        if let photoURL = viewModel.photo{
             rootView.profileImageButton.kfSetButtonImage(url: photoURL)
         } else {
             rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
         }
+        rootView.numberOfNameCharactersLabel.text = "\(rootView.nameTextField.text!.count)/10"
     }
     
     private func requestPatchUserProfileAPI() {
@@ -121,7 +116,7 @@ final class MyEditProfileViewController: BaseViewController {
     }
     
     @objc private func textDidChange(_ notification: Notification) {
-        guard let textField = notification.object as? BaseTextField else { return }
+        guard let textField = notification.object as? MyEditTextField else { return }
         guard let text = textField.text else { return }
         var textFieldState: BaseTextFieldState
         var limit: Int = 0

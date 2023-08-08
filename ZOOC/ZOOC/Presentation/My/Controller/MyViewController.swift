@@ -259,7 +259,7 @@ extension MyViewController {
         let editProfileViewController = MyEditProfileViewController(
             viewModel: MyEditProfileViewModel(
                 name: viewModel.myProfileData?.nickName ?? "",
-                image: viewModel.myProfileData?.photo)
+                photo: viewModel.myProfileData?.photo)
         )
         editProfileViewController.hidesBottomBarWhenPushed = true
         

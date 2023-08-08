@@ -107,14 +107,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 didReceive response: UNNotificationResponse) async {
         let userInfo = response.notification.request.content.userInfo
         
-       
-        
-        print(userInfo)
-        
         guard let apsValue = userInfo["aps"] as? [String : AnyObject] else { return }
         guard let alertValue = apsValue["data"] as? [String : Any] else { return }
         
-        guard let familyID = alertValue["familyId"] as? String,
+        guard let familyID = alertValue["familyId"] as? Int,
               let recordID = alertValue["recordId"] as? Int,
               let petID = alertValue["petId"] as? Int else {
             print("가드에막혔누")
@@ -123,9 +119,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         UserDefaultsManager.familyID = String(familyID)
         let archiveModel = ArchiveModel(recordID: recordID, petID: petID)
         let archiveVC = ArchiveViewController(archiveModel)
+        archiveVC.modalPresentationStyle = .fullScreen
+        
+        let tabVC = ZoocTabBarController()
         
         
-        UIApplication.shared.changeRootViewController(archiveVC)
+        UIApplication.shared.changeRootViewController(tabVC)
+        
+        tabVC.present(archiveVC, animated: true)
         
         
     }

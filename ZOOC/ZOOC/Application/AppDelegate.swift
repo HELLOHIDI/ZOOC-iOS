@@ -21,19 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        print("👼🏻 \(#function)")
-        print(Config.baseURL)
-        #if DEBUG
-        print("디버그야!!!")
-        #else
-        print("디버그 아니야!!!")
-        #endif
+        
         setUserNotification(application)
         setKaKaoSDK()
         setFirebaseMessaging()
         setSentry()
-        
-        
         
         return true
     }
@@ -109,6 +101,35 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
        completionHandler([.list, .banner, .sound])
    }
+    
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse) async {
+        let userInfo = response.notification.request.content.userInfo
+        
+        guard let apsValue = userInfo["aps"] as? [String : AnyObject] else { return }
+        guard let alertValue = apsValue["data"] as? [String : Any] else { return }
+        
+        guard let familyID = alertValue["familyId"] as? Int,
+              let recordID = alertValue["recordId"] as? Int,
+              let petID = alertValue["petId"] as? Int else {
+            print("가드에막혔누")
+            return }
+        
+        UserDefaultsManager.familyID = String(familyID)
+        let archiveModel = ArchiveModel(recordID: recordID, petID: petID)
+        let archiveVC = ArchiveViewController(archiveModel, scrollDown: true)
+        archiveVC.modalPresentationStyle = .fullScreen
+        
+        let tabVC = ZoocTabBarController()
+        
+        
+        UIApplication.shared.changeRootViewController(tabVC)
+        
+        tabVC.present(archiveVC, animated: true)
+        
+        
+    }
 }
 
 

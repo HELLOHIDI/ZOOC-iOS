@@ -26,17 +26,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let vc = UIViewController()
         vc.view.backgroundColor = .zoocMainGreen
         
-//        let navigationController = UINavigationController()
-//        let coordinator = MyCoordinator(navigationController: navigationController)
-//        coordinator.start()
-        
         window = UIWindow(windowScene: windowScene)
         
         window?.rootViewController = vc
         
         self.window?.backgroundColor = .white
         window?.makeKeyAndVisible()
-        autoLogin()
+        
+        guard let notificationResponse = connectionOptions.notificationResponse else {
+            autoLogin()
+            return
+        }
+        let userInfo = notificationResponse.notification.request.content.userInfo
+        self.configureInvitation(with: userInfo)
     }
 }
 
@@ -74,7 +76,7 @@ func sceneDidEnterBackground(_ scene: UIScene) {
 extension SceneDelegate {
     
     private func autoLogin() {
-        guard UserDefaultsManager.zoocAccessToken.isEmpty else {
+        guard !UserDefaultsManager.zoocAccessToken.isEmpty else {
             print("📌 DB에 AccessToken 값이 없습니다. 온보딩을 시작합니다.")
             autoLoginFail()
             return
@@ -121,6 +123,30 @@ extension SceneDelegate {
             let mainVC = ZoocTabBarController()
             UIApplication.shared.changeRootViewController(mainVC)
         }
+    }
+    
+    func configureInvitation(with userInfo: [AnyHashable: Any]){
+        
+        guard let apsValue = userInfo["aps"] as? [String : AnyObject] else { return }
+        guard let alertValue = apsValue["data"] as? [String : Any] else { return }
+        
+        guard let familyID = alertValue["familyId"] as? Int,
+              let recordID = alertValue["recordId"] as? Int,
+              let petID = alertValue["petId"] as? Int else {
+            print("가드에막혔누")
+            return }
+        
+        UserDefaultsManager.familyID = String(familyID)
+        let archiveModel = ArchiveModel(recordID: recordID, petID: petID)
+        let archiveVC = ArchiveViewController(archiveModel, scrollDown: true)
+        archiveVC.modalPresentationStyle = .fullScreen
+        
+        let tabVC = ZoocTabBarController()
+        
+        
+        UIApplication.shared.changeRootViewController(tabVC)
+        
+        tabVC.present(archiveVC, animated: true)
     }
     
     

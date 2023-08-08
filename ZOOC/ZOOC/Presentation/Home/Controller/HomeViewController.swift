@@ -120,16 +120,16 @@ final class HomeViewController : BaseViewController {
         requestTotalPetAPI()
     }
     
-    private func pushToDetailViewController(recordID: Int) {
+    private func pushToArchiveViewController(recordID: Int) {
         guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
             fatalError("선택된 펫이 없습니다.")
         }
         let petID = petData[index].id
-        
-        let detailVC = ArchiveViewController()
-        detailVC.dataBind(recordID: recordID, petID: petID)
-        detailVC.modalPresentationStyle = .fullScreen
-        present(detailVC, animated: true)
+        let archiveModel = ArchiveModel(recordID: recordID,
+                                        petID: petID)
+        let archiveVC = ArchiveViewController(archiveModel, scrollDown: false)
+        archiveVC.modalPresentationStyle = .fullScreen
+        present(archiveVC, animated: true)
     }
     
     private func pushToHomeAlarmViewController() {
@@ -322,7 +322,7 @@ extension HomeViewController {
                 return true
             case .expanded:
                 let id = archiveData[indexPath.item].record.id
-                pushToDetailViewController(recordID: id)
+                pushToArchiveViewController(recordID: id)
                 return false
             }
         }
@@ -346,7 +346,7 @@ extension HomeViewController {
         
         if collectionView == rootView.archiveGridCollectionView {
             let id = archiveData[indexPath.item].record.id
-            pushToDetailViewController(recordID: id)
+            pushToArchiveViewController(recordID: id)
         }
         
     }

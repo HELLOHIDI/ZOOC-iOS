@@ -18,17 +18,11 @@ final class MyViewController: BaseViewController {
     //MARK: - Properties
     
     private let viewModel: MyViewModel
-//    private let coordinator: MyCoordinator?
     
-    init(
-        viewModel: MyViewModel
-        //        coordinator: MyCoordinator?,
-    ) {
+    init(viewModel: MyViewModel) {
         self.viewModel = viewModel
-        //        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -262,9 +256,12 @@ extension MyViewController: MyDeleteAccountSectionCollectionViewCellDelegate {
 
 extension MyViewController {
     func pushToEditProfileView() {
-        let editProfileViewController = MyEditProfileViewController()
+        let editProfileViewController = MyEditProfileViewController(
+            viewModel: MyEditProfileViewModel(
+                name: viewModel.myProfileData?.nickName ?? "",
+                image: viewModel.myProfileData?.photo)
+        )
         editProfileViewController.hidesBottomBarWhenPushed = true
-        editProfileViewController.dataBind(data: viewModel.myProfileData)
         
         self.navigationController?.pushViewController(editProfileViewController, animated: true)
     }

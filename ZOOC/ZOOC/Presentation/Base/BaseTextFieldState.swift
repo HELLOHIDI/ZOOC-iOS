@@ -34,28 +34,6 @@ enum BaseTextFieldState {
         }
     }
     
-    var buttonColor: UIColor {
-        switch self {
-        case .isFull:
-            return .zoocGradientGreen
-        case .isEmpty:
-            return .zoocGray1
-        case .isWritten:
-            return .zoocGradientGreen
-        }
-    }
-    
-    var isEnabled: Bool {
-        switch self {
-        case .isFull:
-            return true
-        case .isEmpty:
-            return false
-        case .isWritten:
-            return true
-        }
-    }
-    
     var indexColor: UIColor {
         switch self {
         case .isFull:
@@ -69,11 +47,9 @@ enum BaseTextFieldState {
     
     func setTextFieldState(textField: UITextField?,
                            underLineView: UIView?,
-                           button: UIButton?,
                            label: UILabel?) {
         underLineView?.backgroundColor = self.backgroundColor
         textField?.textColor = self.textColor
-        button?.isEnabled = self.isEnabled
         label?.textColor = self.indexColor
     }
 }

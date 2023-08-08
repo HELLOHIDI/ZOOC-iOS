@@ -14,7 +14,17 @@ final class MyEditProfileViewController: BaseViewController {
     
     //MARK: - Properties
     
-    private var myProfileData: UserResult?
+    private let viewModel: MyEditProfileViewModel
+    
+    init(viewModel: MyEditProfileViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private var editMyProfileData = EditProfileRequest()
     
     //MARK: - UIComponents
@@ -32,6 +42,7 @@ final class MyEditProfileViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bind()
         delegate()
         target()
         style()
@@ -39,10 +50,22 @@ final class MyEditProfileViewController: BaseViewController {
     
     //MARK: - Custom Method
     
+    private func bind() {
+        viewModel.ableToEditProfile.observe(on: self) { [weak self] isEnabled in
+            self?.updateButtonUI(isEnabled)
+        }
+    }
+    
+    private func updateButtonUI(_ isEnabled: Bool) {
+        let backgroundColor: UIColor = isEnabled ? .zoocGradientGreen : .zoocGray1
+        rootView.completeButton.backgroundColor = backgroundColor
+        rootView.completeButton.isEnabled = isEnabled
+    }
+    
     private func delegate() {
+        rootView.nameTextField.editDelegate = self
         galleryAlertController.delegate = self
         imagePickerController.delegate = self
-        
     }
     
     private func target() {
@@ -98,15 +121,22 @@ final class MyEditProfileViewController: BaseViewController {
     }
     
     @objc private func textDidChange(_ notification: Notification) {
-        guard let textField = notification.object as? UITextField else { return }
+        guard let textField = notification.object as? BaseTextField else { return }
         guard let text = textField.text else { return }
         var textFieldState: BaseTextFieldState
+        var limit: Int = 0
+        switch textField.textFieldType {
+        case .profile:
+            limit = 4
+        case .pet:
+            limit = 10
+        }
         switch text.count {
-        case 1...9:
+        case 1...limit-1:
             textFieldState = .isWritten
-        case 10...:
+        case limit...:
             textFieldState = .isFull
-            let fixedText = text.substring(from: 0, to:9)
+            let fixedText = text.substring(from: 0, to:limit-1)
             textField.text = fixedText + " "
             
             let when = DispatchTime.now() + 0.01
@@ -120,7 +150,6 @@ final class MyEditProfileViewController: BaseViewController {
         textFieldState.setTextFieldState(
             textField: nil,
             underLineView: rootView.underLineView,
-            button: rootView.completeButton,
             label: rootView.numberOfNameCharactersLabel
         )
         setTextFieldText(textCount: text.count)
@@ -138,15 +167,6 @@ extension MyEditProfileViewController {
     func setTextFieldText(textCount: Int) {
         rootView.numberOfNameCharactersLabel.text =  textCount < 10 ? "\(textCount)/10" : "10/10"
     }
-    
-    func setDefaultProfileImage() {
-        rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
-    }
-    
-    func setFamilyMemberProfileImage(photo: String) {
-        rootView.profileImageButton.kfSetButtonImage(url: photo)
-    }
-    
 }
 
 //MARK: - GalleryAlertControllerDelegate
@@ -182,5 +202,13 @@ extension MyEditProfileViewController: UIImagePickerControllerDelegate {
 extension MyEditProfileViewController: ZoocAlertViewControllerDelegate {
     func exitButtonDidTap() {
         navigationController?.popViewController(animated: true)
+    }
+}
+
+
+extension MyEditProfileViewController: MyTextFieldDelegate {
+    func myTextFieldTextDidChange(_ textFieldType: MyEditTextField.TextFieldType, text: String) {
+        print(#function)
+        self.viewModel.nameTextFieldDidChangeEvent(text)
     }
 }

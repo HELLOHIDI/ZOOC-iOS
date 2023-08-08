@@ -62,7 +62,6 @@ final class OnboardingChooseRoleViewController: UIViewController{
         textFieldState.setTextFieldState(
             textField: rootView.roleTextField,
             underLineView: rootView.textFieldUnderLineView,
-            button: rootView.nextButton,
             label: nil
         )
     }

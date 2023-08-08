@@ -108,13 +108,20 @@ final class MyEditPetProfileViewController: BaseViewController {
     }
     
     @objc private func textDidChange(_ notification: Notification) {
-        guard let textField = notification.object as? UITextField else { return }
+        guard let textField = notification.object as? BaseTextField else { return }
         guard let text = textField.text else { return }
         var textFieldState: BaseTextFieldState
+        var limit: Int = 0
+        switch textField.textFieldType {
+        case .profile:
+            limit = 4
+        case .pet:
+            limit = 10
+        }
         switch text.count {
-        case 1...3:
+        case 1...limit-1:
             textFieldState = .isWritten
-        case 4...:
+        case limit...:
             textFieldState = .isFull
             let fixedText = text.substring(from: 0, to:3)
             textField.text = fixedText + " "
@@ -130,7 +137,6 @@ final class MyEditPetProfileViewController: BaseViewController {
         textFieldState.setTextFieldState(
             textField: nil,
             underLineView: rootView.underLineView,
-            button: rootView.completeButton,
             label: rootView.numberOfNameCharactersLabel
         )
         setTextFieldText(textCount: text.count)

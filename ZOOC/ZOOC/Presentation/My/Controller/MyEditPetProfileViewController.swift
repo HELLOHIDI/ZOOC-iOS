@@ -157,13 +157,12 @@ extension MyEditPetProfileViewController: MyTextFieldDelegate {
         self.viewModel.nameTextFieldDidChangeEvent(text)
         
         if viewModel.isTextCountExceeded(for: textFieldType) {
-            let fixedText = text.substring(from: 0, to:3)
+            let fixedText = text.substring(from: 0, to:textFieldType.limit-1)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                 self.rootView.nameTextField.text = fixedText
             }
         }
-        rootView.numberOfNameCharactersLabel.text =  text.count < 4 ? "\(text.count)/4" : "4/4"
     }
 }
 
@@ -181,7 +180,7 @@ extension MyEditPetProfileViewController {
         } else {
             rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
         }
-        rootView.numberOfNameCharactersLabel.text = "\(editProfileData.nickName.count)/10"
+        rootView.numberOfNameCharactersLabel.text = "\(editProfileData.nickName.count)/4"
     }
 }
 

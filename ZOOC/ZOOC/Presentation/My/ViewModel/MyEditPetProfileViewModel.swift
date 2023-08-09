@@ -41,7 +41,6 @@ final class MyEditPetProfileViewModel: MyEditPetProfileModelInput, MyEditPetProf
     }
     
     func nameTextFieldDidChangeEvent(_ text: String) {
-        print(#function)
         self.editPetProfileDataOutput.value.nickName = text
         var textFieldState: BaseTextFieldState
         switch text.count {

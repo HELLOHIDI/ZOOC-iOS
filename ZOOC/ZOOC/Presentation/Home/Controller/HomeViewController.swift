@@ -14,7 +14,7 @@ final class HomeViewController : BaseViewController {
     
     //MARK: - Properties
     
-    private var id: Int?
+    private var recordID: Int?
     private var limit: Int = 5
     private var isFetchingData = false
     private var petData: [HomePetResult] = [] {
@@ -22,12 +22,13 @@ final class HomeViewController : BaseViewController {
             rootView.petCollectionView.reloadData()
         }
     }
+    private var petID: Int?
     
     private var archiveData: [HomeArchiveResult] = [] {
         didSet {
             rootView.archiveListCollectionView.reloadData()
             rootView.archiveGridCollectionView.reloadData()
-            id  = archiveData.last?.record.id
+            recordID  = archiveData.last?.record.id
         }
     }
     
@@ -195,12 +196,13 @@ final class HomeViewController : BaseViewController {
             
             self.petData = result
             guard let id = self.petData.first?.id else { return }
+            self.petID = id
             self.selectPetCollectionView(petID: id)
         }
     }
     
     private func requestTotalArchiveAPI(petID: Int, pagination: Bool) {
-        HomeAPI.shared.getTotalArchive(petID: String(petID), limit: String(limit), after: id) { result in
+        HomeAPI.shared.getTotalArchive(petID: String(petID), limit: String(limit), after: recordID) { result in
             
             guard let result = self.validateResult(result) as? [HomeArchiveResult] else { return }
             
@@ -336,7 +338,12 @@ extension HomeViewController {
         if collectionView == rootView.petCollectionView {
             collectionView.performBatchUpdates(nil)
             deselectAllOfListArchiveCollectionViewCell {
-                self.requestTotalArchiveAPI(petID: self.petData[indexPath.item].id, pagination: false)
+                print("petID: \(self.petID), 바뀐 아이디: \(self.petData[indexPath.item].id)")
+                if self.petID != self.petData[indexPath.item].id {
+                    self.petID = self.petData[indexPath.item].id
+                    self.recordID = nil
+                    self.requestTotalArchiveAPI(petID: self.petData[indexPath.item].id, pagination: false)
+                }
             }
         }
         
@@ -475,17 +482,15 @@ extension HomeViewController {
         
         let contentOffsetX = scrollView.contentOffset.x
         let collectionViewContentSizeX = rootView.archiveListCollectionView.contentSize.width
-        let paginationX = collectionViewContentSizeX * 0.1
+        let paginationX = collectionViewContentSizeX * 0.3
         
         guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
             fatalError("선택된 펫이 없습니다.")
         }
-        let petID = petData[index].id
         
-//        print("contentOffsetX: \(contentOffsetX), 비교길이: \(paginationX)")
+        let petID = petData[index].id
         if contentOffsetX > paginationX && !isFetchingData {
-            isFetchingData = true // Mark that a server request is in progress
-            print("🦖🦖🦖🦖🦖🦖🦖🦖🦖")
+            isFetchingData = true
             requestTotalArchiveAPI(petID: petID, pagination: true)
         }
     }

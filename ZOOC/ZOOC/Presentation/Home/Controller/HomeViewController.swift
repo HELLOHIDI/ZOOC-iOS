@@ -64,6 +64,7 @@ final class HomeViewController : BaseViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         guideVC.dismiss(animated: false)
+        self.recordID = nil
     }
     
     //MARK: - Custom Method

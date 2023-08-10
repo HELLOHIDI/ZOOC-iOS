@@ -46,6 +46,7 @@ final class HomeViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        delegate()
         register()
         gesture()
         
@@ -68,7 +69,7 @@ final class HomeViewController : BaseViewController {
     
     //MARK: - Custom Method
     
-    private func register() {
+    private func delegate() {
         guideVC.delegate = self
         
         rootView.petCollectionView.delegate = self
@@ -78,7 +79,9 @@ final class HomeViewController : BaseViewController {
         rootView.archiveListCollectionView.dataSource = self
         rootView.archiveGridCollectionView.delegate = self
         rootView.archiveGridCollectionView.dataSource = self
-        
+    }
+    
+    private func register() {
         rootView.petCollectionView.register(HomePetCollectionViewCell.self,
                                             forCellWithReuseIdentifier:HomePetCollectionViewCell.cellIdentifier)
         
@@ -158,9 +161,7 @@ final class HomeViewController : BaseViewController {
         
         guard index < self.petData.count else {
             print("\(#function)의 가드문")
-            
             return
-            
         }
         
         self.rootView.petCollectionView.selectItem(at:IndexPath(item: index, section: 0),
@@ -213,9 +214,7 @@ final class HomeViewController : BaseViewController {
                 for data in result {
                     self.archiveData.append(data)
                 }
-            } else {
-                self.archiveData = result
-            }
+            } else { self.archiveData = result }
             
             self.rootView.emptyView.isHidden = !self.archiveData.isEmpty
             if self.guideVC.isViewLoaded {
@@ -223,7 +222,7 @@ final class HomeViewController : BaseViewController {
             }
             self.view.layoutIfNeeded()
             self.configIndicatorBarWidth(self.rootView.archiveListCollectionView)
-            self.isFetchingData = false
+            self.isFetchingData = result.isEmpty ? true : false // 마지막 게시물 아이디 이후엔 서버통신 금지
         }
     }
     
@@ -485,7 +484,7 @@ extension HomeViewController {
         
         let contentOffsetX = scrollView.contentOffset.x
         let collectionViewContentSizeX = rootView.archiveListCollectionView.contentSize.width
-        let paginationX = collectionViewContentSizeX * 0.3
+        let paginationX = collectionViewContentSizeX * 0.2
         
         guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
             fatalError("선택된 펫이 없습니다.")

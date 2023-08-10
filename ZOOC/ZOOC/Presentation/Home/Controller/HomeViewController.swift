@@ -17,13 +17,13 @@ final class HomeViewController : BaseViewController {
     var recordID: Int?
     private var limit: Int = 5
     private var isFetchingData = false
+    private let refreshControl = UIRefreshControl()
     private var petData: [HomePetResult] = [] {
         didSet{
             rootView.petCollectionView.reloadData()
         }
     }
     private var petID: Int?
-    
     private var archiveData: [HomeArchiveResult] = [] {
         didSet {
             rootView.archiveListCollectionView.reloadData()
@@ -53,7 +53,11 @@ final class HomeViewController : BaseViewController {
         setNotificationCenter()
         
         requestTotalPetAPI()
+        
+        
+        rootView.homeScrollView.refreshControl = refreshControl
     }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         if UserDefaultsManager.isFirstAttemptHome {
@@ -74,7 +78,7 @@ final class HomeViewController : BaseViewController {
         
         rootView.petCollectionView.delegate = self
         rootView.petCollectionView.dataSource = self
-        
+        rootView.homeScrollView.delegate = self
         rootView.archiveListCollectionView.delegate = self
         rootView.archiveListCollectionView.dataSource = self
         rootView.archiveGridCollectionView.delegate = self
@@ -107,6 +111,8 @@ final class HomeViewController : BaseViewController {
         rootView.archiveBottomView
             .addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                          action: #selector(bottomViewDidTap)))
+        
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     }
     
     private func setNotificationCenter() {
@@ -203,9 +209,6 @@ final class HomeViewController : BaseViewController {
     }
     
     private func requestTotalArchiveAPI(petID: Int, pagination: Bool) {
-        print("🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏")
-        print("레코드 아이디는 \(recordID)입니다, pagination은 \(pagination)입니다")
-        print("🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏")
         HomeAPI.shared.getTotalArchive(petID: String(petID), limit: String(limit), after: recordID) { result in
             
             guard let result = self.validateResult(result) as? [HomeArchiveResult] else { return }
@@ -257,6 +260,16 @@ final class HomeViewController : BaseViewController {
     @objc
     private func bottomViewDidTap() {
         deselectAllOfListArchiveCollectionViewCell(completion: nil)
+    }
+    
+    @objc
+    private func refreshData() {
+        self.recordID = nil
+        requestTotalPetAPI()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.refreshControl.endRefreshing()
+        }
     }
 }
 
@@ -313,7 +326,8 @@ extension HomeViewController: UICollectionViewDataSource {
 
 //MARK: - UICollectionViewDelegate
 
-extension HomeViewController {
+extension HomeViewController: UICollectionViewDelegate {
+    
     
     func collectionView(_ collectionView: UICollectionView,
                         shouldSelectItemAt indexPath: IndexPath) -> Bool
@@ -340,7 +354,6 @@ extension HomeViewController {
         if collectionView == rootView.petCollectionView {
             collectionView.performBatchUpdates(nil)
             deselectAllOfListArchiveCollectionViewCell {
-                print("petID: \(self.petID), 바뀐 아이디: \(self.petData[indexPath.item].id)")
                 if self.petID != self.petData[indexPath.item].id {
                     self.petID = self.petData[indexPath.item].id
                     self.recordID = nil
@@ -473,11 +486,11 @@ extension HomeViewController {
             let scrollRatio = scroll / width
             
             self.rootView.archiveIndicatorView.leftOffsetRatio = scrollRatio
-            
-            
+            pagination(rootView.archiveListCollectionView)
         }
-        pagination(rootView.archiveListCollectionView)
+        
     }
+    
     
     func pagination(_ scrollView: UIScrollView) {
         
@@ -489,6 +502,8 @@ extension HomeViewController {
         guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
             fatalError("선택된 펫이 없습니다.")
         }
+        
+        print("contentOffsetX: \(contentOffsetX), paginationX: \(paginationX)")
         
         let petID = petData[index].id
         if contentOffsetX > paginationX && !isFetchingData {

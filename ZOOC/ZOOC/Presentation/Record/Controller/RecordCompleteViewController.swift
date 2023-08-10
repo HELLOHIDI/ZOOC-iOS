@@ -133,7 +133,9 @@ final class RecordCompleteViewController : BaseViewController {
             return }
         
         print("가드문 통과")
+        tabVC.homeViewController.recordID = nil
         tabVC.homeViewController.selectPetCollectionView(petID: petID)
         self.navigationController?.previousViewController?.navigationController?.previousViewController?.dismiss(animated: true)
     }
 }
+

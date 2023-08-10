@@ -14,7 +14,7 @@ final class HomeViewController : BaseViewController {
     
     //MARK: - Properties
     
-    private var recordID: Int?
+    var recordID: Int?
     private var limit: Int = 5
     private var isFetchingData = false
     private var petData: [HomePetResult] = [] {
@@ -64,7 +64,6 @@ final class HomeViewController : BaseViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         guideVC.dismiss(animated: false)
-        self.recordID = nil
     }
     
     //MARK: - Custom Method
@@ -203,6 +202,9 @@ final class HomeViewController : BaseViewController {
     }
     
     private func requestTotalArchiveAPI(petID: Int, pagination: Bool) {
+        print("🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏")
+        print("레코드 아이디는 \(recordID)입니다, pagination은 \(pagination)입니다")
+        print("🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏")
         HomeAPI.shared.getTotalArchive(petID: String(petID), limit: String(limit), after: recordID) { result in
             
             guard let result = self.validateResult(result) as? [HomeArchiveResult] else { return }

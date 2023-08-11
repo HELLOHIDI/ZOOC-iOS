@@ -23,21 +23,25 @@ protocol MyEditPetProfileModelOutput {
     var editPetProfileDataOutput: Observable<EditPetProfileRequest> { get }
 }
 
-protocol MyEditPetNetworkHandlerProtocol {
-    func patchPetProfile()
-}
-
 final class MyEditPetProfileViewModel: MyEditPetProfileModelInput, MyEditPetProfileModelOutput {
+    var id: Int
+    let repository: MyEditPetProfileRepository
+    
     var ableToEditPetProfile: Observable<Bool> = Observable(false)
     var textFieldState: Observable<BaseTextFieldState> = Observable(.isEmpty)
     var editCompletedOutput: Observable<Bool?> = Observable(nil)
     var editPetProfileDataOutput: Observable<EditPetProfileRequest> = Observable(EditPetProfileRequest())
     
-    var id: Int
     
-    init(id: Int, editPetProfileRequest: EditPetProfileRequest) {
+    
+    init(
+        id: Int,
+        editPetProfileRequest: EditPetProfileRequest,
+        repository: MyEditPetProfileRepository
+    ) {
         self.id = id
         self.editPetProfileDataOutput.value = editPetProfileRequest
+        self.repository = repository
     }
     
     func nameTextFieldDidChangeEvent(_ text: String) {
@@ -77,9 +81,9 @@ final class MyEditPetProfileViewModel: MyEditPetProfileModelInput, MyEditPetProf
     }
 }
 
-extension MyEditPetProfileViewModel: MyEditPetNetworkHandlerProtocol {
+extension MyEditPetProfileViewModel {
     func patchPetProfile() {
-        MyAPI.shared.patchPetProfile(requset: editPetProfileDataOutput.value, id: id) { result in
+        repository.patchPetProfile(request: editPetProfileDataOutput.value, id: id) { result in
             switch result {
             case .success(_):
                 self.editCompletedOutput.value = true

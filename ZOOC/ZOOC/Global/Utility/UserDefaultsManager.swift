@@ -18,7 +18,7 @@ enum UserDefaultKeys: String, CaseIterable {
 
 struct UserDefaultsManager {
     
-    @UserDefaultWrapper<String>(key: UserDefaultKeys.fcmToken.rawValue, defaultValue: "")
+    @UserDefaultWrapper<String>(key: UserDefaultKeys.fcmToken.rawValue, defaultValue: "none")
     static var fcmToken: String
     
     @UserDefaultWrapper<String>(key: UserDefaultKeys.zoocAccessToken.rawValue, defaultValue: "")

@@ -42,13 +42,14 @@ final class MyViewController: BaseViewController {
         super.viewDidLoad()
         
         register()
+        bind()
         setNotificationCenter()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        requestMyPageAPI()
+        viewModel.requestMyPageAPI()
     }
     
     //MARK: - Custom Method
@@ -56,6 +57,44 @@ final class MyViewController: BaseViewController {
     private func register() {
         rootView.myCollectionView.delegate = self
         rootView.myCollectionView.dataSource = self
+    }
+    
+    private func bind() {
+        viewModel.myProfileData.observe(on: self) { [weak self] _ in
+            self?.rootView.myCollectionView.reloadData()
+        }
+        
+        viewModel.myFamilyMemberData.observe(on: self) { [weak self] _ in
+            self?.rootView.myCollectionView.reloadData()
+        }
+        
+        viewModel.myPetMemberData.observe(on: self) { [weak self] _ in
+            self?.rootView.myCollectionView.reloadData()
+        }
+        
+        viewModel.inviteCode.observe(on: self) { [weak self] inviteCode in
+            guard let code = inviteCode else { return }
+            self?.shareInviteCode(code: code)
+        }
+        
+        viewModel.logoutOutput.observe(on: self) { [weak self] isLogout in
+            guard let isLogout = isLogout  else { return }
+            if isLogout {
+                let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
+                onboardingNVC.setNavigationBarHidden(true, animated: true)
+                UIApplication.shared.changeRootViewController(onboardingNVC)}
+            else { self?.presentBottomAlert("로그아웃에 실패하였습니다!")}
+        }
+        
+        viewModel.deleteAccoutOutput.observe(on: self) { [weak self] isDeleted in
+            guard let isDeleted = isDeleted else { return }
+            if isDeleted {
+                let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
+                onboardingNVC.setNavigationBarHidden(true, animated: true)
+                UIApplication.shared.changeRootViewController(onboardingNVC)
+            } else { self?.presentBottomAlert("회원탈퇴에 실패하셨습니다!")}
+            
+        }
     }
     
     private func setNotificationCenter() {
@@ -67,27 +106,12 @@ final class MyViewController: BaseViewController {
         )
     }
     
-    @objc private func updateUI() {
-        requestMyPageAPI()
-    }
-    
-    func requestMyPageAPI(){
-        viewModel.requestMyPageAPI() { success, error in
-            if success { self.rootView.myCollectionView.reloadData() }
-            else { self.presentBottomAlert(error!) }
-        }
-    }
-    
-    private func requestLogoutAPI() {
-        viewModel.requestLogoutAPI() {
-            let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
-            onboardingNVC.setNavigationBarHidden(true, animated: true)
-            UIApplication.shared.changeRootViewController(onboardingNVC)
-        }
-    }
-    
     //MARK: - Action Method
     
+    @objc private func updateUI() {
+        viewModel.requestMyPageAPI()
+    }
+
     @objc private func editProfileButtonDidTap() { // -> 개방 폐쇄의 원리
         pushToEditProfileView()
     }
@@ -97,9 +121,7 @@ final class MyViewController: BaseViewController {
     }
     
     @objc func inviteButtonDidTap() {
-        viewModel.getInviteCode() {
-            self.shareInviteCode(code: self.viewModel.inviteCode!)
-        }
+        viewModel.getInviteCode()
     }
 }
 
@@ -173,21 +195,21 @@ extension MyViewController: UICollectionViewDataSource {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyProfileSectionCollectionViewCell.cellIdentifier, for: indexPath)
                     as? MyProfileSectionCollectionViewCell else { return UICollectionViewCell() }
-            cell.dataBind(data: viewModel.myProfileData)
+            cell.dataBind(data: viewModel.myProfileData.value)
             cell.editProfileButton.addTarget(self, action: #selector(editProfileButtonDidTap), for: .touchUpInside)
             return cell
             
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyFamilySectionCollectionViewCell.cellIdentifier, for: indexPath)
                     as? MyFamilySectionCollectionViewCell else { return UICollectionViewCell() }
-            cell.dataBind(myFamilyData: viewModel.myFamilyMemberData, myProfileData: viewModel.myProfileData)
+            cell.dataBind(myFamilyData: viewModel.myFamilyMemberData.value, myProfileData: viewModel.myProfileData.value)
             cell.inviteButton.addTarget(self, action: #selector(inviteButtonDidTap), for: .touchUpInside)
             return cell
             
         case 2:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyPetSectionCollectionViewCell.cellIdentifier, for: indexPath)
                     as? MyPetSectionCollectionViewCell else { return UICollectionViewCell() }
-            cell.dataBind(myPetMemberData: viewModel.myPetMemberData)
+            cell.dataBind(myPetMemberData: viewModel.myPetMemberData.value)
             cell.delegate = self
             return cell
             
@@ -225,7 +247,7 @@ extension MyViewController: SettingMenuTableViewCellDelegate {
         case 4: // 앱 정보
             pushToAppInformationView()
         case 5: // 로그아웃
-            requestLogoutAPI()
+            viewModel.requestLogoutAPI()
         default:
             break
         }
@@ -256,18 +278,19 @@ extension MyViewController: MyDeleteAccountSectionCollectionViewCellDelegate {
 
 extension MyViewController {
     func pushToEditProfileView() {
-        let hasPhoto = viewModel.myProfileData?.photo == nil ? false : true
+        let hasPhoto = viewModel.myProfileData.value?.photo == nil ? false : true
         let imageView = UIImageView()
-        imageView.kfSetImage(url: viewModel.myProfileData?.photo)
+        imageView.kfSetImage(url: viewModel.myProfileData.value?.photo)
         let image = imageView.image
         let photo = hasPhoto ? image : nil
         let editProfileViewController = MyEditProfileViewController(
             viewModel: MyEditProfileViewModel(
                 editProfileData: EditProfileRequest(
                     hasPhoto: hasPhoto,
-                    nickName: viewModel.myProfileData?.nickName ?? "",
+                    nickName: viewModel.myProfileData.value?.nickName ?? "",
                     profileImage: photo
-                )
+                ),
+                repository: MyEditProfileRepositoryImpl()
             )
         )
         editProfileViewController.hidesBottomBarWhenPushed = true
@@ -304,7 +327,8 @@ extension MyViewController {
                     photo: hasPhoto,
                     nickName: pet.name,
                     file: photo
-                )
+                ),
+                repository: MyEditPetProfileRepositoryImpl()
             )
         )
         editPetProfileView.modalPresentationStyle = .fullScreen
@@ -339,12 +363,7 @@ extension MyViewController {
 
 extension MyViewController: ZoocAlertViewControllerDelegate {
     func exitButtonDidTap() {
-        viewModel.deleteAccount() {
-            let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
-            onboardingNVC.setNavigationBarHidden(true, animated: true)
-            UIApplication.shared.changeRootViewController(onboardingNVC)
-            
-        }
+        viewModel.deleteAccount()
     }
 }
 

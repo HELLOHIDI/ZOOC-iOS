@@ -23,11 +23,9 @@ protocol MyEditProfileModelOutput {
     var editProfileDataOutput: Observable<EditProfileRequest> { get }
 }
 
-protocol MyEditNetworkHandlerProtocol {
-    func patchMyPetProfile()
-}
-
 final class MyEditProfileViewModel: MyEditProfileModelInput, MyEditProfileModelOutput {
+    
+    private let repository: MyEditProfileRepository
     
     var ableToEditProfile: Observable<Bool> = Observable(false)
     var textFieldState: Observable<BaseTextFieldState> = Observable(.isEmpty)
@@ -35,7 +33,8 @@ final class MyEditProfileViewModel: MyEditProfileModelInput, MyEditProfileModelO
     var editProfileDataOutput: Observable<EditProfileRequest> = Observable(EditProfileRequest())
     
     
-    init(editProfileData: EditProfileRequest) {
+    init(editProfileData: EditProfileRequest, repository: MyEditProfileRepository) {
+        self.repository = repository
         self.editProfileDataOutput.value = editProfileData
     }
     
@@ -78,9 +77,9 @@ final class MyEditProfileViewModel: MyEditProfileModelInput, MyEditProfileModelO
     }
 }
 
-extension MyEditProfileViewModel: MyEditNetworkHandlerProtocol {
+extension MyEditProfileViewModel {
     func patchMyPetProfile() {
-        MyAPI.shared.patchMyProfile(requset: editProfileDataOutput.value) { result in
+        repository.patchMyProfile(request: editProfileDataOutput.value) { result in
             switch result {
             case .success(_):
                 self.editCompletedOutput.value = true

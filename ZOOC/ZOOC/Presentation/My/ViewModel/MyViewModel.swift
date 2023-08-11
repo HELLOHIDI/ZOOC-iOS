@@ -7,94 +7,82 @@
 
 import Foundation
 
-protocol MyViewModelInput {}
+protocol MyViewModelInput {
+//    func logoutButtonDidTapEvent()
+}
 
 protocol MyViewModelOutput {
-    var myFamilyMemberData: [UserResult] { get }
-    var myPetMemberData: [PetResult] { get }
-    var myProfileData: UserResult? { get }
-    var myNetworkManager: MyAPI  { get }
-    var onboardingNetworkManager: OnboardingAPI  { get }
+    var myFamilyMemberData: Observable<[UserResult]> { get }
+    var myPetMemberData: Observable<[PetResult]> { get }
+    var myProfileData: Observable<UserResult?> { get }
+    var inviteCode: Observable<String?> { get }
+    var logoutOutput: Observable<Bool?> { get }
+    var deleteAccoutOutput: Observable<Bool?> { get }
 }
-
-protocol MyNetworkHandlerProtocol {
-    func requestMyPageAPI(completion: @escaping (Bool, String?) -> Void)
-    func requestLogoutAPI(completion: @escaping () -> Void)
-    func getInviteCode(completion: @escaping () -> Void)
-    func deleteAccount(completion: @escaping() -> Void)
-}
-
 
 final class MyViewModel: MyViewModelInput, MyViewModelOutput {
-    var myFamilyMemberData: [UserResult] = []
-    var myPetMemberData: [PetResult] = []
-    var myProfileData: UserResult?
-    var inviteCode: String?
+    var myFamilyMemberData: Observable<[UserResult]> = Observable([])
+    var myPetMemberData: Observable<[PetResult]> = Observable([])
+    var myProfileData: Observable<UserResult?> = Observable(nil)
+    var inviteCode: Observable<String?> = Observable(nil)
+    var logoutOutput: Observable<Bool?> = Observable(nil)
+    var deleteAccoutOutput: Observable<Bool?> = Observable(nil)
     
-    var myNetworkManager: MyAPI
-    var onboardingNetworkManager: OnboardingAPI
+    let repository: MyRepository
     
-    init(myNetworkManager: MyAPI, onboardingNetworkManager: OnboardingAPI) {
-        self.myNetworkManager = myNetworkManager
-        self.onboardingNetworkManager = onboardingNetworkManager
-    }
-    
-    @discardableResult
-    func validateResult(_ result: NetworkResult<Any>) -> Any?{
-        switch result{
-        case .success(let data):
-            print("성공했습니다.")
-            print(data)
-            return data
-        case .requestErr(let message):
-            return message
-        case .pathErr:
-            return "path 혹은 method 오류입니다."
-        case .serverErr:
-            return "서버 내 오류입니다."
-        case .networkFail:
-            return "네트워크가 불안정합니다."
-        case .decodedErr:
-            return "디코딩 오류가 발생했습니다."
-        case .authorizationFail(_):
-            return "인증 오류가 발생했습니다. 다시 로그인해주세요"
-        }
+    init(repository: MyRepository) {
+        self.repository = repository
     }
 }
 
-extension MyViewModel: MyNetworkHandlerProtocol {
-    func deleteAccount(completion: @escaping () -> Void) {
-        myNetworkManager.deleteAccount() { result in
-            UserDefaultsManager.reset()
-        }
-    }
-    
-    func requestMyPageAPI(completion: @escaping (Bool, String?) -> Void) {
-        myNetworkManager.getMyPageData() { [weak self] result in
-            guard let result = self?.validateResult(result) as? MyResult else {
-                let errorMessage = self?.validateResult(result) as? String
-                completion(false, errorMessage)
-                return
+extension MyViewModel {
+    func getInviteCode() {
+        repository.getInviteCode {  result in
+            switch result {
+            case .success(let data):
+                guard let result = data as? OnboardingInviteResult else { return }
+                self.inviteCode.value = result.code
+            default:
+                break
             }
-            self?.myProfileData = result.user
-            self?.myFamilyMemberData = result.familyMember
-            self?.myPetMemberData = result.pet
-            completion(true, nil)
         }
     }
     
-    func requestLogoutAPI(completion: @escaping () -> Void) {
-        myNetworkManager.logout() { result in
-            UserDefaultsManager.reset()
-            completion()
+    func deleteAccount() {
+        repository.deleteAccount() { result in
+            switch result {
+            case .success(_):
+                UserDefaultsManager.reset()
+                self.deleteAccoutOutput.value = true
+            default:
+                self.deleteAccoutOutput.value = true
+            }
+        }
+    }
+
+    func requestMyPageAPI() {
+        repository.requestMyPageAPI() {  result in
+            switch result {
+            case .success(let data):
+                guard let result = data as? MyResult else { return }
+                self.myProfileData.value = result.user
+                self.myFamilyMemberData.value = result.familyMember
+                self.myPetMemberData.value = result.pet
+            default:
+                break
+            }
         }
     }
     
-    func getInviteCode(completion: @escaping () -> Void) {
-        onboardingNetworkManager.getInviteCode(familyID: UserDefaultsManager.familyID) { result in
-            guard let result = self.validateResult(result) as? OnboardingInviteResult else { return }
-            let code = result.code
-            self.inviteCode = code
+    func requestLogoutAPI() {
+        repository.requestLogoutAPI() { result in
+            switch result {
+            case .success(_):
+                UserDefaultsManager.reset()
+                self.logoutOutput.value = true
+            default:
+                self.logoutOutput.value = false
+            }
         }
     }
 }

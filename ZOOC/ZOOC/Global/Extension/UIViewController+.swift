@@ -113,8 +113,6 @@ extension UIViewController{
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         let keyboardRectangle = keyboardFrame.cgRectValue
         let keyboardHeight = keyboardRectangle.height
-        print("🍎키보드가 올라갈때 높이 \(keyboardHeight)")
-        print("🍎뷰의 높이 \(view.frame.origin.y)")
         
         if let view = notification.object as? UIView{
             view.frame.origin.y -= keyboardHeight
@@ -128,12 +126,6 @@ extension UIViewController{
     @objc private func keyboardWillHide(_ notification: NSNotification){
         // 키보드의 높이만큼 화면을 내려준다.
         print("키보드 내려감")
-//        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-//        let keyboardRectangle = keyboardFrame.cgRectValue
-//        let keyboardHeight = keyboardRectangle.height
-        
-//        print("🍏키보드가 내려갈때 높이 \(keyboardHeight)")
-        print("🍏뷰의 높이 \(view.frame.origin.y)")
         
         if let view = notification.object as? UIView{
             view.frame.origin.y += Device.keyBoardHeight
@@ -142,8 +134,6 @@ extension UIViewController{
             guard view.frame.origin.y < 0 else { return }
             self.view.frame.origin.y += Device.keyBoardHeight
         }
-        
-        
     }
     
     @objc func dismissKeyboard() {

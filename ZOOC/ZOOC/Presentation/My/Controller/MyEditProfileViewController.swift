@@ -151,13 +151,12 @@ extension MyEditProfileViewController: MyTextFieldDelegate {
         self.viewModel.nameTextFieldDidChangeEvent(text)
 
         if viewModel.isTextCountExceeded(for: textFieldType) {
-            let fixedText = text.substring(from: 0, to:9)
+            let fixedText = text.substring(from: 0, to:textFieldType.limit-1)
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                 self.rootView.nameTextField.text = fixedText
             }
         }
-        rootView.numberOfNameCharactersLabel.text =  text.count < 10 ? "\(text.count)/10" : "10/10"
     }
 }
 

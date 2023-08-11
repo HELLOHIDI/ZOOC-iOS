@@ -14,7 +14,7 @@ final class HomeViewController : BaseViewController {
     
     //MARK: - Properties
     
-    private var id: Int?
+    var recordID: Int?
     private var limit: Int = 5
     private var isFetchingData = false
     private var petData: [HomePetResult] = [] {
@@ -22,12 +22,13 @@ final class HomeViewController : BaseViewController {
             rootView.petCollectionView.reloadData()
         }
     }
+    private var petID: Int?
     
     private var archiveData: [HomeArchiveResult] = [] {
         didSet {
             rootView.archiveListCollectionView.reloadData()
             rootView.archiveGridCollectionView.reloadData()
-            id  = archiveData.last?.record.id
+            recordID  = archiveData.last?.record.id
         }
     }
     
@@ -45,6 +46,7 @@ final class HomeViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        delegate()
         register()
         gesture()
         
@@ -67,7 +69,7 @@ final class HomeViewController : BaseViewController {
     
     //MARK: - Custom Method
     
-    private func register() {
+    private func delegate() {
         guideVC.delegate = self
         
         rootView.petCollectionView.delegate = self
@@ -77,7 +79,9 @@ final class HomeViewController : BaseViewController {
         rootView.archiveListCollectionView.dataSource = self
         rootView.archiveGridCollectionView.delegate = self
         rootView.archiveGridCollectionView.dataSource = self
-        
+    }
+    
+    private func register() {
         rootView.petCollectionView.register(HomePetCollectionViewCell.self,
                                             forCellWithReuseIdentifier:HomePetCollectionViewCell.cellIdentifier)
         
@@ -157,9 +161,7 @@ final class HomeViewController : BaseViewController {
         
         guard index < self.petData.count else {
             print("\(#function)의 가드문")
-            
             return
-            
         }
         
         self.rootView.petCollectionView.selectItem(at:IndexPath(item: index, section: 0),
@@ -195,12 +197,16 @@ final class HomeViewController : BaseViewController {
             
             self.petData = result
             guard let id = self.petData.first?.id else { return }
+            self.petID = id
             self.selectPetCollectionView(petID: id)
         }
     }
     
     private func requestTotalArchiveAPI(petID: Int, pagination: Bool) {
-        HomeAPI.shared.getTotalArchive(petID: String(petID), limit: String(limit), after: id) { result in
+        print("🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏")
+        print("레코드 아이디는 \(recordID)입니다, pagination은 \(pagination)입니다")
+        print("🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏")
+        HomeAPI.shared.getTotalArchive(petID: String(petID), limit: String(limit), after: recordID) { result in
             
             guard let result = self.validateResult(result) as? [HomeArchiveResult] else { return }
             
@@ -208,9 +214,7 @@ final class HomeViewController : BaseViewController {
                 for data in result {
                     self.archiveData.append(data)
                 }
-            } else {
-                self.archiveData = result
-            }
+            } else { self.archiveData = result }
             
             self.rootView.emptyView.isHidden = !self.archiveData.isEmpty
             if self.guideVC.isViewLoaded {
@@ -218,7 +222,7 @@ final class HomeViewController : BaseViewController {
             }
             self.view.layoutIfNeeded()
             self.configIndicatorBarWidth(self.rootView.archiveListCollectionView)
-            self.isFetchingData = false
+            self.isFetchingData = result.isEmpty ? true : false // 마지막 게시물 아이디 이후엔 서버통신 금지
         }
     }
     
@@ -336,7 +340,12 @@ extension HomeViewController {
         if collectionView == rootView.petCollectionView {
             collectionView.performBatchUpdates(nil)
             deselectAllOfListArchiveCollectionViewCell {
-                self.requestTotalArchiveAPI(petID: self.petData[indexPath.item].id, pagination: false)
+                print("petID: \(self.petID), 바뀐 아이디: \(self.petData[indexPath.item].id)")
+                if self.petID != self.petData[indexPath.item].id {
+                    self.petID = self.petData[indexPath.item].id
+                    self.recordID = nil
+                    self.requestTotalArchiveAPI(petID: self.petData[indexPath.item].id, pagination: false)
+                }
             }
         }
         
@@ -475,17 +484,15 @@ extension HomeViewController {
         
         let contentOffsetX = scrollView.contentOffset.x
         let collectionViewContentSizeX = rootView.archiveListCollectionView.contentSize.width
-        let paginationX = collectionViewContentSizeX * 0.1
+        let paginationX = collectionViewContentSizeX * 0.2
         
         guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
             fatalError("선택된 펫이 없습니다.")
         }
-        let petID = petData[index].id
         
-//        print("contentOffsetX: \(contentOffsetX), 비교길이: \(paginationX)")
+        let petID = petData[index].id
         if contentOffsetX > paginationX && !isFetchingData {
-            isFetchingData = true // Mark that a server request is in progress
-            print("🦖🦖🦖🦖🦖🦖🦖🦖🦖")
+            isFetchingData = true
             requestTotalArchiveAPI(petID: petID, pagination: true)
         }
     }

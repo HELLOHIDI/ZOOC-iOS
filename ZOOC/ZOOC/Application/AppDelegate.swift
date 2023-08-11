@@ -108,15 +108,18 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let userInfo = response.notification.request.content.userInfo
         
         guard let apsValue = userInfo["aps"] as? [String : AnyObject] else { return }
-        guard let alertValue = apsValue["data"] as? [String : Any] else { return }
+        guard let alertValue = apsValue["data"] as? [String : String] else { return }
         
-        guard let familyID = alertValue["familyId"] as? Int,
-              let recordID = alertValue["recordId"] as? Int,
-              let petID = alertValue["petId"] as? Int else {
+        guard let familyID = alertValue["familyId"],
+              let recordID = alertValue["recordId"],
+              let petID = alertValue["petId"] else {
             print("가드에막혔누")
             return }
         
-        UserDefaultsManager.familyID = String(familyID)
+        guard let recordID = Int(recordID) else { return }
+        guard let petID = Int(petID) else { return }
+        
+        UserDefaultsManager.familyID = familyID
         let archiveModel = ArchiveModel(recordID: recordID, petID: petID)
         let archiveVC = ArchiveViewController(archiveModel, scrollDown: true)
         archiveVC.modalPresentationStyle = .fullScreen

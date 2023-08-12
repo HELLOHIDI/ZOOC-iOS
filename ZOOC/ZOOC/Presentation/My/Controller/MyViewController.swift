@@ -49,7 +49,7 @@ final class MyViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        viewModel.requestMyPageAPI()
+        viewModel.viewWillAppearEvent()
     }
     
     //MARK: - Custom Method
@@ -109,7 +109,7 @@ final class MyViewController: BaseViewController {
     //MARK: - Action Method
     
     @objc private func updateUI() {
-        viewModel.requestMyPageAPI()
+        viewModel.viewWillAppearEvent() // 여긴 다시 봐야될듯 
     }
 
     @objc private func editProfileButtonDidTap() { // -> 개방 폐쇄의 원리
@@ -121,7 +121,7 @@ final class MyViewController: BaseViewController {
     }
     
     @objc func inviteButtonDidTap() {
-        viewModel.getInviteCode()
+        viewModel.inviteCodeButtonDidTapEvent()
     }
 }
 
@@ -247,7 +247,7 @@ extension MyViewController: SettingMenuTableViewCellDelegate {
         case 4: // 앱 정보
             pushToAppInformationView()
         case 5: // 로그아웃
-            viewModel.requestLogoutAPI()
+            viewModel.logoutButtonDidTapEvent()
         default:
             break
         }
@@ -363,7 +363,7 @@ extension MyViewController {
 
 extension MyViewController: ZoocAlertViewControllerDelegate {
     func exitButtonDidTap() {
-        viewModel.deleteAccount()
+        viewModel.deleteAccountButtonDidTapEvent()
     }
 }
 

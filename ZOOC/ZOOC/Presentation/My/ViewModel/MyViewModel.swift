@@ -8,7 +8,10 @@
 import Foundation
 
 protocol MyViewModelInput {
-//    func logoutButtonDidTapEvent()
+    func viewWillAppearEvent()
+    func logoutButtonDidTapEvent()
+    func deleteAccountButtonDidTapEvent()
+    func inviteCodeButtonDidTapEvent()
 }
 
 protocol MyViewModelOutput {
@@ -20,7 +23,10 @@ protocol MyViewModelOutput {
     var deleteAccoutOutput: Observable<Bool?> { get }
 }
 
-final class MyViewModel: MyViewModelInput, MyViewModelOutput {
+typealias MyViewModel = MyViewModelInput & MyViewModelOutput
+
+final class DefaultMyViewModel: MyViewModel {
+    
     var myFamilyMemberData: Observable<[UserResult]> = Observable([])
     var myPetMemberData: Observable<[PetResult]> = Observable([])
     var myProfileData: Observable<UserResult?> = Observable(nil)
@@ -33,9 +39,26 @@ final class MyViewModel: MyViewModelInput, MyViewModelOutput {
     init(repository: MyRepository) {
         self.repository = repository
     }
+    
+    func viewWillAppearEvent() {
+        requestMyPageAPI()
+    }
+    
+    func logoutButtonDidTapEvent() {
+        requestLogoutAPI()
+    }
+    
+    func deleteAccountButtonDidTapEvent() {
+        deleteAccount()
+    }
+    
+    func inviteCodeButtonDidTapEvent() {
+        getInviteCode()
+    }
+    
 }
 
-extension MyViewModel {
+extension DefaultMyViewModel {
     func getInviteCode() {
         repository.getInviteCode {  result in
             switch result {

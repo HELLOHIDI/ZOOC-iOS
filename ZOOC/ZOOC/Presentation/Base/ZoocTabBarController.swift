@@ -17,7 +17,7 @@ class ZoocTabBarController: UITabBarController {
     
     let homeViewController = HomeViewController()
     let myViewController = MyViewController(
-        viewModel: MyViewModel(
+        viewModel: DefaultMyViewModel(
             repository: MyRepositoryImpl()
         )
     )

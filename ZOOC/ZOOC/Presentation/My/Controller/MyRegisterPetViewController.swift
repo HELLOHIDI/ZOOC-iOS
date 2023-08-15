@@ -133,8 +133,8 @@ extension MyRegisterPetViewController: UITableViewDelegate {
                         photo: hasPhoto,
                         nickName: petData.name,
                         file: photo
-                        
-                    )
+                    ),
+                    repository: MyEditPetProfileRepositoryImpl()
                 )
             )
             navigationController?.pushViewController(editPetProfileVC, animated: true)

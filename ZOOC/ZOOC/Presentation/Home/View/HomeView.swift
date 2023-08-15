@@ -10,12 +10,14 @@ import UIKit
 import SnapKit
 import Then
 
-final class HomeView : UIView {
+final class HomeView : UIView{
     
     //MARK: - Properties
     
     //MARK: - UI Components
     
+    public let homeScrollView = UIScrollView()
+    public let homeContentView = UIView()
     public let emptyView = UIImageView()
     
     public let missionView = UIView()
@@ -47,13 +49,16 @@ final class HomeView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
-    
-    //MARK: - Custom Method
+
+//MARK: - Custom Method
 
 extension HomeView {
     
     private func style() {
-        
+        homeScrollView.do {
+            $0.alwaysBounceVertical = true
+            $0.showsVerticalScrollIndicator = false
+        }
         emptyView.do {
             $0.image = Image.graphics12
             $0.contentMode = .scaleAspectFit
@@ -118,24 +123,25 @@ extension HomeView {
         
         
     }
-   
+    
     
     private func hierarchy() {
+        self.addSubview(homeScrollView)
+        homeScrollView.addSubview(homeContentView)
+        homeContentView.addSubviews(missionView,
+                                    petCollectionView,
+                                    listButton,
+                                    gridButton,
+                                    archiveBottomView,
+                                    archiveListCollectionView,
+                                    archiveGridCollectionView,
+                                    emptyView)
         
-        self.addSubviews(missionView,
-                         petCollectionView,
-                         listButton,
-                         gridButton,
-                         archiveBottomView,
-                         archiveListCollectionView,
-                         archiveGridCollectionView,
-                         emptyView)
-                          
         
         missionView.addSubviews(missionWordLabel,
                                 missionLabel,
                                 noticeButton)
-                                
+        
         
         archiveBottomView.addSubview(archiveIndicatorView)
     }
@@ -143,6 +149,18 @@ extension HomeView {
     private func layout() {
         
         //MARK: rootView
+        
+        homeScrollView.snp.makeConstraints {
+            $0.top.equalTo(self.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(4)
+        }
+        
+        homeContentView.snp.makeConstraints {
+            $0.edges.equalTo(homeScrollView.contentLayoutGuide)
+            $0.width.equalTo(homeScrollView.frameLayoutGuide)
+            $0.height.equalTo(homeScrollView)
+        }
         
         missionView.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide)

@@ -39,10 +39,12 @@ public enum Image{
     static let plus = UIImage(named: "plus")!
     static let plusTabCircle = UIImage(named: "plus.tab.circle")!
     static let ring = UIImage(named: "ring")!
+    static let shop = UIImage(named: "shop")!
     static let smile = UIImage(named: "smile")!
     static let upload = UIImage(named: "upload")!
     static let xmark = UIImage(named: "xmark")!
     static let xmarkWhite = UIImage(named: "xmark.white")!
+    static let aiLogo = UIImage(named: "ai")!
     
     //MARK: - Default
     

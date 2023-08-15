@@ -460,6 +460,8 @@ final class ArchiveViewController : BaseViewController {
     
     @objc
     func backButtonDidTap() {
+        guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
+        tabVC.homeViewController.recordID = nil
         dismiss(animated: true)
     }
     

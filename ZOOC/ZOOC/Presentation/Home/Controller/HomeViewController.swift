@@ -14,8 +14,25 @@ final class HomeViewController : BaseViewController {
     
     //MARK: - Properties
     
+    private enum Color {
+        static var gradientColors = [
+            UIColor(r: 66, g: 200, b: 127),
+            UIColor(r: 205, g: 238, b: 220),
+            UIColor(r: 104, g: 221, b: 153)
+        ]
+    }
+    private enum Constants {
+        static let gradientLocation = [Int](0..<Color.gradientColors.count)
+            .map(Double.init)
+            .map { $0 / Double(Color.gradientColors.count) }
+            .map(NSNumber.init)
+        static let cornerRadius = 12.0
+        static let cornerWidth = 2.0
+        static let viewSize = CGSize(width: 233, height: 42)
+    }
+    
     var recordID: Int?
-    private var limit: Int = 5
+    private var limit: Int = 20
     private var isFetchingData = false
     private let refreshControl = UIRefreshControl()
     private var petData: [HomePetResult] = [] {
@@ -167,7 +184,7 @@ final class HomeViewController : BaseViewController {
     private func pushToGenAIViewController() {
         self.timer?.invalidate()
         self.timer = nil
-        let genAIVC = GenAIViewController()
+        let genAIVC = GenAIGuideViewController()
         genAIVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(genAIVC, animated: true)
     }
@@ -540,22 +557,7 @@ extension HomeViewController {
         }
     }
     
-    private enum Color {
-        static var gradientColors = [
-            UIColor(r: 66, g: 200, b: 127),
-            UIColor(r: 205, g: 238, b: 220),
-            UIColor(r: 104, g: 221, b: 153)
-        ]
-    }
-    private enum Constants {
-        static let gradientLocation = [Int](0..<Color.gradientColors.count)
-            .map(Double.init)
-            .map { $0 / Double(Color.gradientColors.count) }
-            .map(NSNumber.init)
-        static let cornerRadius = 12.0
-        static let cornerWidth = 2.0
-        static let viewSize = CGSize(width: 233, height: 42)
-    }
+    
     
     func animateBorderGradation() {
         // 1. 경계선에만 색상을 넣기 위해서 CAShapeLayer 인스턴스 생성

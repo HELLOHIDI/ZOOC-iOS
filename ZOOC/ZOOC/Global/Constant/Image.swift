@@ -83,4 +83,9 @@ public enum Image{
     static let mockSeokWoo = UIImage(named: "mock_seokwoo")!
     static let mockYunSun = UIImage(named: "mock_yunsun")!
     static let mockHidi = UIImage(named: "mock_hidi")!
+    
+    static let mockfeaturedImage = UIImage(named: "featuredImage")!
+    static let mockdeprecated1 = UIImage(named: "mock_deprecated1")!
+    static let mockdeprecated2 = UIImage(named: "mock_deprecated2")!
+    static let mockdeprecated3 = UIImage(named: "mock_deprecated3")!
 }

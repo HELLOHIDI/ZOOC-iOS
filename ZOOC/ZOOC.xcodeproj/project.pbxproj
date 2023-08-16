@@ -194,8 +194,8 @@
 		D2B735562A86681800F93C45 /* MyEditProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735552A86681800F93C45 /* MyEditProfileRepository.swift */; };
 		D2B735582A8669BA00F93C45 /* MyEditPetProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735572A8669BA00F93C45 /* MyEditPetProfileRepository.swift */; };
 		D2B7355A2A866D8E00F93C45 /* MyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735592A866D8E00F93C45 /* MyRepository.swift */; };
-		D2B735622A8BA1D700F93C45 /* GenAIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735612A8BA1D700F93C45 /* GenAIViewController.swift */; };
-		D2B735642A8BA2B500F93C45 /* GenAIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735632A8BA2B500F93C45 /* GenAIView.swift */; };
+		D2B735622A8BA1D700F93C45 /* GenAIGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735612A8BA1D700F93C45 /* GenAIGuideViewController.swift */; };
+		D2B735642A8BA2B500F93C45 /* GenAIGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735632A8BA2B500F93C45 /* GenAIGuideView.swift */; };
 		D2C028EA2A7F7563003F4727 /* MyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C028E92A7F7563003F4727 /* MyCoordinator.swift */; };
 		D2C028EE2A81EEF3003F4727 /* MyEditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C028ED2A81EEF3003F4727 /* MyEditProfileViewModel.swift */; };
 		D2C028F02A81F542003F4727 /* MyEditTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C028EF2A81F542003F4727 /* MyEditTextField.swift */; };
@@ -401,8 +401,8 @@
 		D2B735552A86681800F93C45 /* MyEditProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditProfileRepository.swift; sourceTree = "<group>"; };
 		D2B735572A8669BA00F93C45 /* MyEditPetProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditPetProfileRepository.swift; sourceTree = "<group>"; };
 		D2B735592A866D8E00F93C45 /* MyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRepository.swift; sourceTree = "<group>"; };
-		D2B735612A8BA1D700F93C45 /* GenAIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIViewController.swift; sourceTree = "<group>"; };
-		D2B735632A8BA2B500F93C45 /* GenAIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIView.swift; sourceTree = "<group>"; };
+		D2B735612A8BA1D700F93C45 /* GenAIGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideViewController.swift; sourceTree = "<group>"; };
+		D2B735632A8BA2B500F93C45 /* GenAIGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideView.swift; sourceTree = "<group>"; };
 		D2C028E92A7F7563003F4727 /* MyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCoordinator.swift; sourceTree = "<group>"; };
 		D2C028ED2A81EEF3003F4727 /* MyEditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditProfileViewModel.swift; sourceTree = "<group>"; };
 		D2C028EF2A81F542003F4727 /* MyEditTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditTextField.swift; sourceTree = "<group>"; };
@@ -1239,7 +1239,7 @@
 		D2B7355D2A8B94D700F93C45 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				D2B735632A8BA2B500F93C45 /* GenAIView.swift */,
+				D2B735632A8BA2B500F93C45 /* GenAIGuideView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1247,7 +1247,7 @@
 		D2B7355E2A8B94DF00F93C45 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				D2B735612A8BA1D700F93C45 /* GenAIViewController.swift */,
+				D2B735612A8BA1D700F93C45 /* GenAIGuideViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1491,7 +1491,7 @@
 				8771843D2A0541B700AB7DE4 /* AuthService.swift in Sources */,
 				87BCA64429BB524D00D8DB58 /* OnboardingMakeFamilyResult.swift in Sources */,
 				D27D9564296CA9720097CD03 /* OnboardingInviteCompletedFamilyView.swift in Sources */,
-				D2B735622A8BA1D700F93C45 /* GenAIViewController.swift in Sources */,
+				D2B735622A8BA1D700F93C45 /* GenAIGuideViewController.swift in Sources */,
 				877E57F22966D13E006D82FC /* ArchiveViewController.swift in Sources */,
 				4C6B1862296B69070059840D /* RecordRegisterViewController.swift in Sources */,
 				87B6624329521E7500B6FFA9 /* SceneDelegate.swift in Sources */,
@@ -1522,7 +1522,7 @@
 				87C6C4C92A537902003DA38A /* TextLiteral.swift in Sources */,
 				D26C861A296C0FC800AEAF9B /* OnboardingPetRegisterModel.swift in Sources */,
 				D21DADC1298BFF2700CCC089 /* MyPetRegisterViewModel.swift in Sources */,
-				D2B735642A8BA2B500F93C45 /* GenAIView.swift in Sources */,
+				D2B735642A8BA2B500F93C45 /* GenAIGuideView.swift in Sources */,
 				D2B735562A86681800F93C45 /* MyEditProfileRepository.swift in Sources */,
 				D27D9568296CB5930097CD03 /* OnboardingInviteFamilyView.swift in Sources */,
 				D27D9566296CA99B0097CD03 /* OnboardingInviteFamilyCompletedViewController.swift in Sources */,

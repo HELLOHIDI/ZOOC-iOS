@@ -10,11 +10,11 @@ import UIKit
 import SnapKit
 import Then
 
-final class GenAIViewController : UIViewController{
+final class GenAIGuideViewController : UIViewController{
     
     //MARK: - Properties
     
-    let rootView = GenAIView()
+    let rootView = GenAIGuideView()
     
     //MARK: - UI Components
     

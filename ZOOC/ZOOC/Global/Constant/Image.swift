@@ -75,6 +75,7 @@ public enum Image{
     static let graphics10 = UIImage(named: "graphics_10")!
     static let graphics11 = UIImage(named: "graphics_11")!
     static let graphics12 = UIImage(named: "graphics_12")!
+    static let graphics13 = UIImage(named: "graphics_13")!
     
     //MARK: - Mock
     

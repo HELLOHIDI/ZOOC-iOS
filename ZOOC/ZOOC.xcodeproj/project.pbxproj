@@ -182,6 +182,8 @@
 		D26C861A296C0FC800AEAF9B /* OnboardingPetRegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8619296C0FC800AEAF9B /* OnboardingPetRegisterModel.swift */; };
 		D26C861C296C1A8A00AEAF9B /* OnboardingRegisterPetTableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C861B296C1A8A00AEAF9B /* OnboardingRegisterPetTableFooterView.swift */; };
 		D2779742299F76FD008A237D /* OnboardingAppleSocialLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2779741299F76FD008A237D /* OnboardingAppleSocialLoginRequest.swift */; };
+		D27BDDC72A8C6FA2008E290D /* GenAICompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27BDDC62A8C6FA2008E290D /* GenAICompletedViewController.swift */; };
+		D27BDDC92A8C6FAC008E290D /* GenAICompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27BDDC82A8C6FAC008E290D /* GenAICompletedView.swift */; };
 		D27D9560296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D955F296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift */; };
 		D27D9562296CA4640097CD03 /* OnboardingInviteFamilyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9561296CA4640097CD03 /* OnboardingInviteFamilyViewController.swift */; };
 		D27D9564296CA9720097CD03 /* OnboardingInviteCompletedFamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9563296CA9720097CD03 /* OnboardingInviteCompletedFamilyView.swift */; };
@@ -389,6 +391,8 @@
 		D26C8619296C0FC800AEAF9B /* OnboardingPetRegisterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPetRegisterModel.swift; sourceTree = "<group>"; };
 		D26C861B296C1A8A00AEAF9B /* OnboardingRegisterPetTableFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRegisterPetTableFooterView.swift; sourceTree = "<group>"; };
 		D2779741299F76FD008A237D /* OnboardingAppleSocialLoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAppleSocialLoginRequest.swift; sourceTree = "<group>"; };
+		D27BDDC62A8C6FA2008E290D /* GenAICompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAICompletedViewController.swift; sourceTree = "<group>"; };
+		D27BDDC82A8C6FAC008E290D /* GenAICompletedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAICompletedView.swift; sourceTree = "<group>"; };
 		D27D955F296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingReInviteFamilyView.swift; sourceTree = "<group>"; };
 		D27D9561296CA4640097CD03 /* OnboardingInviteFamilyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInviteFamilyViewController.swift; sourceTree = "<group>"; };
 		D27D9563296CA9720097CD03 /* OnboardingInviteCompletedFamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInviteCompletedFamilyView.swift; sourceTree = "<group>"; };
@@ -1240,6 +1244,7 @@
 			isa = PBXGroup;
 			children = (
 				D2B735632A8BA2B500F93C45 /* GenAIGuideView.swift */,
+				D27BDDC82A8C6FAC008E290D /* GenAICompletedView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1248,6 +1253,7 @@
 			isa = PBXGroup;
 			children = (
 				D2B735612A8BA1D700F93C45 /* GenAIGuideViewController.swift */,
+				D27BDDC62A8C6FA2008E290D /* GenAICompletedViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1472,6 +1478,7 @@
 				8731C4B429A94A6900006743 /* ArchiveEmojiCommentReqeust.swift in Sources */,
 				8731C4B029A93EF500006743 /* EmojiModel.swift in Sources */,
 				D2DD45C7297D9612001722A1 /* BaseButton.swift in Sources */,
+				D27BDDC72A8C6FA2008E290D /* GenAICompletedViewController.swift in Sources */,
 				871EA351297042D800D0E8CC /* RecordResult.swift in Sources */,
 				D25323162A07330C00562D92 /* MyAppInformationHeaderView.swift in Sources */,
 				D23503052964743100F01101 /* MyAppInformationModel.swift in Sources */,
@@ -1521,6 +1528,7 @@
 				D2B735582A8669BA00F93C45 /* MyEditPetProfileRepository.swift in Sources */,
 				87C6C4C92A537902003DA38A /* TextLiteral.swift in Sources */,
 				D26C861A296C0FC800AEAF9B /* OnboardingPetRegisterModel.swift in Sources */,
+				D27BDDC92A8C6FAC008E290D /* GenAICompletedView.swift in Sources */,
 				D21DADC1298BFF2700CCC089 /* MyPetRegisterViewModel.swift in Sources */,
 				D2B735642A8BA2B500F93C45 /* GenAIGuideView.swift in Sources */,
 				D2B735562A86681800F93C45 /* MyEditProfileRepository.swift in Sources */,

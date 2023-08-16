@@ -34,6 +34,7 @@ final class GenAIGuideViewController : UIViewController{
     
     private func target() {
         rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        rootView.selectImageButton.addTarget(self, action: #selector(selectImageButtonDidTap), for: .touchUpInside)
     }
     
     //MARK: - Action Method
@@ -42,4 +43,8 @@ final class GenAIGuideViewController : UIViewController{
         self.navigationController?.popViewController(animated: true)
     }
     
+    @objc func selectImageButtonDidTap() {
+        let genAICompletedVC = GenAICompletedViewController()
+        self.navigationController?.pushViewController(genAICompletedVC, animated: true)
+    }
 }

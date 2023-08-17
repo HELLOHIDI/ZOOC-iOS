@@ -205,8 +205,8 @@ extension SplashViewController {
                         return
                     }
                     
-                    let remoteMinVersion = latestVersion.transform()
-                    let remoteLatestVersion = minVersion.transform()
+                    let remoteLatestVersion = latestVersion.transform()
+                    let remoteMinVersion = minVersion.transform()
                     
                     guard localVersion >= remoteMinVersion else {
                         self?.version = .mustUpdate
@@ -227,6 +227,17 @@ extension SplashViewController {
 }
 
 extension SplashViewController: VersionAlertViewControllerDelegate {
+    func updateButtonDidTap() {
+        switch version {
+        case .recommendUpdate:
+            checkUser()
+        case .mustUpdate:
+            checkVersion()
+        default:
+            checkUser()
+        }
+    }
+    
     
     func exitButtonDidTap() {
         switch version {
@@ -234,8 +245,7 @@ extension SplashViewController: VersionAlertViewControllerDelegate {
             checkUser()
         case .recommendUpdate:
             checkUser()
-        case .mustUpdate:
-            presentBottomAlert("필수 업데이트")
+        default:
             checkVersion()
         }
     }

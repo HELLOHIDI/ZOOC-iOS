@@ -12,7 +12,7 @@ import SnapKit
 import Then
 
 protocol VersionAlertViewControllerDelegate: AnyObject {
-    
+    func updateButtonDidTap()
     func exitButtonDidTap()
 }
 
@@ -33,6 +33,7 @@ final class VersionAlertViewController: UIViewController {
     private let alertView = UIView()
     private let dimmedView = UIView()
     private let titleLabel = UILabel()
+    private let descriptionLabel = UILabel()
     private lazy var exitButton = UIButton()
     private lazy var updateButton = UIButton()
     private lazy var hStackView = UIStackView()
@@ -84,10 +85,18 @@ final class VersionAlertViewController: UIViewController {
         }
         
         titleLabel.do {
+            $0.text = "새로운 버전이 출시됐어요☺️"
             $0.backgroundColor = .white
-            $0.font = .zoocHeadLine
-            $0.text = "새로운 버전이 나왔어요!"
+            $0.font = .zoocSubhead2
             $0.textColor = .zoocDarkGray1
+        }
+        
+        descriptionLabel.do {
+            $0.text = "지금 앱스토어에서 업데이트 해보세요!"
+            $0.font = .zoocBody1
+            $0.textColor = .zoocGray1
+            $0.textAlignment = .center
+            $0.numberOfLines = 0
         }
         
         exitButton.do {
@@ -115,7 +124,7 @@ final class VersionAlertViewController: UIViewController {
     
     private func hierarchy() {
         view.addSubviews(dimmedView,alertView)
-        alertView.addSubviews(titleLabel, hStackView)
+        alertView.addSubviews(titleLabel, descriptionLabel, hStackView)
         hStackView.addArrangedSubViews(exitButton, updateButton)
     }
     
@@ -136,14 +145,23 @@ final class VersionAlertViewController: UIViewController {
             $0.centerX.equalToSuperview()
         }
         
+        descriptionLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(10)
+            $0.centerX.equalToSuperview()
+        }
+        
         hStackView.snp.makeConstraints {
             $0.bottom.equalToSuperview()
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(54)
         }
         
-        updateButton.snp.makeConstraints {
-            $0.width.greaterThanOrEqualTo(180)
+//        updateButton.snp.makeConstraints {
+//            $0.width.greaterThanOrEqualTo(180)
+//        }
+        
+        exitButton.snp.makeConstraints {
+            $0.width.equalTo(120)
         }
     }
     
@@ -159,13 +177,14 @@ final class VersionAlertViewController: UIViewController {
     //MARK: - Action Method
     
     @objc func updateButtonDidTap() {
+        
         let appleID = "1669547675"
         guard let url = URL(string: "itms-apps://itunes.apple.com/app/\(appleID)") else { return }
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
-            
+            delegate?.updateButtonDidTap()
         }
-        //
+        
     }
     
     @objc func exitButtonDidTap() {

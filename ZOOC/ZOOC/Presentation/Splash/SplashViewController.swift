@@ -26,7 +26,7 @@ final class SplashViewController: UIViewController {
     //MARK: - UI Components
     
     private let noiseImageView = UIImageView(image: Image.noise)
-    private let imageView = UIImageView(image: Image.logoAppIcon)
+    private let imageView = UIImageView(image: Image.logoSymbol)
     
     //MARK: - Life Cycle
     

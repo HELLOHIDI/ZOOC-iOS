@@ -156,10 +156,6 @@ final class VersionAlertViewController: UIViewController {
             $0.height.equalTo(54)
         }
         
-//        updateButton.snp.makeConstraints {
-//            $0.width.greaterThanOrEqualTo(180)
-//        }
-        
         exitButton.snp.makeConstraints {
             $0.width.equalTo(120)
         }

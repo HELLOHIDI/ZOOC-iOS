@@ -16,8 +16,6 @@ final class SplashViewController: UIViewController {
     private var version: VersionState = .latestVersion {
         didSet{
             disposeVersion()
-            print("🙏🙏🙏🙏🙏\(version)🙏🙏🙏🙏🙏🙏🙏")
-            //presentBottomAlert("버전 업데이트 하세연")
         }
     }
     
@@ -226,11 +224,11 @@ extension SplashViewController {
     }
 }
 
+//MARK: - VersionAlertViewControllerDelegate
 extension SplashViewController: VersionAlertViewControllerDelegate {
+    
     func updateButtonDidTap() {
         switch version {
-        case .recommendUpdate:
-            checkUser()
         case .mustUpdate:
             checkVersion()
         default:
@@ -238,15 +236,7 @@ extension SplashViewController: VersionAlertViewControllerDelegate {
         }
     }
     
-    
     func exitButtonDidTap() {
-        switch version {
-        case .latestVersion:
-            checkUser()
-        case .recommendUpdate:
-            checkUser()
-        default:
-            checkVersion()
-        }
+        checkUser()
     }
 }

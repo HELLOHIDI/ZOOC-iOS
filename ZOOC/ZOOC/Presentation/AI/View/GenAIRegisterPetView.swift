@@ -15,7 +15,8 @@ final class GenAIRegisterPetView: UIView {
     //MARK: - UI Components
     
     public var backButton = UIButton()
-    private var titleLabel = UILabel()
+    private let titleLabel = UILabel()
+    private let subTitleLabel = UILabel()
     
     public var profileImageButton = UIButton()
     private var cameraIconImageView = UIImageView()
@@ -55,7 +56,13 @@ final class GenAIRegisterPetView: UIView {
 
         titleLabel.do {
             $0.font = .zoocHeadLine
-            $0.text = "프로필 수정"
+            $0.text = "반려동물을 추가해주세요"
+            $0.textColor = .zoocDarkGray2
+        }
+        
+        subTitleLabel.do {
+            $0.font = .zoocBody3
+            $0.text = "반려동물 등록"
             $0.textColor = .zoocDarkGray2
         }
         
@@ -95,6 +102,7 @@ final class GenAIRegisterPetView: UIView {
         self.addSubviews(
             backButton,
             titleLabel,
+            subTitleLabel,
             profileImageButton,
             cameraIconImageView,
             nameTextField,
@@ -111,7 +119,12 @@ final class GenAIRegisterPetView: UIView {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(19)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(72)
+            $0.centerX.equalToSuperview()
+        }
+        
+        subTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(9)
             $0.centerX.equalToSuperview()
         }
         

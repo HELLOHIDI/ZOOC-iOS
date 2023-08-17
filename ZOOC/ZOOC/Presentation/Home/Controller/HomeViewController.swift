@@ -194,7 +194,7 @@ final class HomeViewController : BaseViewController {
             navigationController?.pushViewController(genAIChoosePetVC, animated: true)
         } else {
             let genAIRegisterPetVC = GenAIRegisterPetViewController(
-                viewModel: GentAIRegisterViewModel(
+                viewModel: DefaultGentAIRegisterViewModel(
                     repository: MyEditPetProfileRepositoryImpl()
                 )
             )

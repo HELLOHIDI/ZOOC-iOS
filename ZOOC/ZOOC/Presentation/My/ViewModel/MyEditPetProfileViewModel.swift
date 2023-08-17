@@ -14,6 +14,7 @@ protocol MyEditPetProfileModelInput {
     func editCompleteButtonDidTap()
     func deleteButtonDidTap()
     func editPetProfileImageEvent(_ image: UIImage)
+    func isTextCountExceeded(for type: MyEditTextField.TextFieldType) -> Bool
 }
 
 protocol MyEditPetProfileModelOutput {
@@ -21,10 +22,14 @@ protocol MyEditPetProfileModelOutput {
     var textFieldState: Observable<BaseTextFieldState> { get }
     var editCompletedOutput: Observable<Bool?> { get }
     var editPetProfileDataOutput: Observable<EditPetProfileRequest> { get }
+    
 }
 
-final class MyEditPetProfileViewModel: MyEditPetProfileModelInput, MyEditPetProfileModelOutput {
-    var id: Int
+typealias MyEditPetProfileViewModel = MyEditPetProfileModelInput & MyEditPetProfileModelOutput
+
+final class DefaultMyEditPetProfileViewModel: MyEditPetProfileViewModel {
+    let id: Int
+    let editPetProfileRequest: EditPetProfileRequest
     let repository: MyEditPetProfileRepository
     
     var ableToEditPetProfile: Observable<Bool> = Observable(false)
@@ -32,15 +37,11 @@ final class MyEditPetProfileViewModel: MyEditPetProfileModelInput, MyEditPetProf
     var editCompletedOutput: Observable<Bool?> = Observable(nil)
     var editPetProfileDataOutput: Observable<EditPetProfileRequest> = Observable(EditPetProfileRequest())
     
-    
-    
-    init(
-        id: Int,
+    init(id: Int,
         editPetProfileRequest: EditPetProfileRequest,
-        repository: MyEditPetProfileRepository
-    ) {
+        repository: MyEditPetProfileRepository) {
         self.id = id
-        self.editPetProfileDataOutput.value = editPetProfileRequest
+        self.editPetProfileRequest = editPetProfileRequest
         self.repository = repository
     }
     
@@ -81,7 +82,7 @@ final class MyEditPetProfileViewModel: MyEditPetProfileModelInput, MyEditPetProf
     }
 }
 
-extension MyEditPetProfileViewModel {
+extension DefaultMyEditPetProfileViewModel {
     func patchPetProfile() {
         repository.patchPetProfile(request: editPetProfileDataOutput.value, id: id) { result in
             switch result {

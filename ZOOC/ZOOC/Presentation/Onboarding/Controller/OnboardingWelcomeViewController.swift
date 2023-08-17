@@ -62,11 +62,7 @@ extension OnboardingWelcomeViewController {
     }
     
     private func pushToChooseFamilyRoleView() {
-        let onboardingChooseFamilyRoleViewController = OnboardingChooseRoleViewController(
-            viewModel: OnboardingChooseRoleViewModel(
-                editProfileData: EditProfileRequest()
-            )
-        )
-        self.navigationController?.pushViewController(onboardingChooseFamilyRoleViewController, animated: true)
+        let onboardingCompleteProfileViewController = OnboardingCompleteProfileViewController()
+        self.navigationController?.pushViewController(onboardingCompleteProfileViewController, animated: true)
     }
 }

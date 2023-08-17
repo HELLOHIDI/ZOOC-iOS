@@ -14,6 +14,7 @@ protocol GentAIRegisterViewModelInput {
     func editCompleteButtonDidTap()
     func deleteButtonDidTap()
     func editPetProfileImageEvent(_ image: UIImage)
+    func isTextCountExceeded(for type: MyEditTextField.TextFieldType) -> Bool
 }
 
 protocol GentAIRegisterViewModelOutput {
@@ -23,7 +24,9 @@ protocol GentAIRegisterViewModelOutput {
     var editPetProfileDataOutput: Observable<EditPetProfileRequest> { get }
 }
 
-final class GentAIRegisterViewModel: MyEditPetProfileModelInput, MyEditPetProfileModelOutput {
+typealias GentAIRegisterViewModel = GentAIRegisterViewModelInput & GentAIRegisterViewModelOutput
+
+final class DefaultGentAIRegisterViewModel: GentAIRegisterViewModel {
     
     let repository: MyEditPetProfileRepository
     
@@ -73,20 +76,5 @@ final class GentAIRegisterViewModel: MyEditPetProfileModelInput, MyEditPetProfil
         self.editPetProfileDataOutput.value.file = image
         self.editPetProfileDataOutput.value.photo = true
     }
-}
-
-extension GentAIRegisterViewModel {
-//    func patchPetProfile() {
-//        repository.patchPetProfile(request: editPetProfileDataOutput.value, id: id) { result in
-//            switch result {
-//            case .success(_):
-//                self.editCompletedOutput.value = true
-//                NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
-//                NotificationCenter.default.post(name: .myPageUpdate, object: nil)
-//            default:
-//                self.editCompletedOutput.value = false
-//            }
-//        }
-//    }
 }
 

@@ -75,7 +75,7 @@ private extension OnboardingCompleteProfileViewController {
     }
     
     func pushToRegisterPetView() {
-        let onboardingParticipateViewController = OnboardingRegisterPetViewController(onboardingPetRegisterViewModel: OnboardingPetRegisterViewModel())
-        self.navigationController?.pushViewController(onboardingParticipateViewController, animated: true)
+        let onboardingInviteFamilyViewController = OnboardingInviteFamilyViewController()
+        self.navigationController?.pushViewController(onboardingInviteFamilyViewController, animated: true)
     }
 }

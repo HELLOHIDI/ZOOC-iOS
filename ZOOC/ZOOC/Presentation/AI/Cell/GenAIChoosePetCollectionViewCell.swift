@@ -1,15 +1,15 @@
 //
-//  RecordRegisterCollectionViewCell.swift
+//  GenAIChoosePetCollectionViewCell.swift
 //  ZOOC
 //
-//  Created by 정윤선 on 2023/01/09.
+//  Created by 류희재 on 2023/08/17.
 //
 
 import UIKit
 
 import SnapKit
 
-final class RecordRegisterCollectionViewCell: UICollectionViewCell {
+final class GenAIChoosePetCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Components
     
@@ -109,10 +109,8 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
         }
         petNameLabel.text = data.petName
         selectImageView.isHidden = data.isSelected ? false : true
-    }
-    
-    func updateUI(isSelected: Bool){
-        if isSelected {
+        
+        if data.isSelected {
             contentView.backgroundColor = .zoocWhite2
             profilePetImageView.layer.borderColor = UIColor.zoocMainGreen.cgColor
             profilePetImageView.layer.borderWidth = 2
@@ -129,3 +127,4 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
         }
     }
 }
+

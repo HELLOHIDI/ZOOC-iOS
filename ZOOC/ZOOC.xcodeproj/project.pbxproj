@@ -139,6 +139,15 @@
 		D235030729647B4200F01101 /* MyAppInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D235030629647B4200F01101 /* MyAppInformationViewController.swift */; };
 		D2350309296490A700F01101 /* MyEditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2350308296490A700F01101 /* MyEditProfileView.swift */; };
 		D235030B2964991700F01101 /* MyEditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D235030A2964991700F01101 /* MyEditProfileViewController.swift */; };
+		D24AFAB22A8DFB9F00823E9C /* GenAIChoosePetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB12A8DFB9F00823E9C /* GenAIChoosePetViewController.swift */; };
+		D24AFAB42A8DFBB300823E9C /* GenAIChoosePetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB32A8DFBB300823E9C /* GenAIChoosePetView.swift */; };
+		D24AFAB62A8DFC3000823E9C /* GenAIChoosePetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB52A8DFC3000823E9C /* GenAIChoosePetModel.swift */; };
+		D24AFAB82A8DFCE800823E9C /* GenAIRegisterPetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB72A8DFCE800823E9C /* GenAIRegisterPetView.swift */; };
+		D24AFABA2A8E011800823E9C /* GenAIRegisterPetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB92A8E011800823E9C /* GenAIRegisterPetViewController.swift */; };
+		D24AFABC2A8E03EF00823E9C /* GentAIRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFABB2A8E03EF00823E9C /* GentAIRegisterViewModel.swift */; };
+		D24AFABF2A8E11DA00823E9C /* GenAIChoosePetRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFABE2A8E11DA00823E9C /* GenAIChoosePetRepository.swift */; };
+		D24AFAC22A8E2BD100823E9C /* GenAIChoosePetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAC12A8E2BD100823E9C /* GenAIChoosePetCollectionViewCell.swift */; };
+		D24AFAC42A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAC32A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift */; };
 		D25323162A07330C00562D92 /* MyAppInformationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25323152A07330C00562D92 /* MyAppInformationHeaderView.swift */; };
 		D25543A22996B22E0072BF0D /* OnboardingRegisterPetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25543A12996B22E0072BF0D /* OnboardingRegisterPetResult.swift */; };
 		D25543A4299A239B0072BF0D /* OnboardingRegisterPetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25543A3299A239B0072BF0D /* OnboardingRegisterPetRequest.swift */; };
@@ -348,6 +357,15 @@
 		D235030629647B4200F01101 /* MyAppInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppInformationViewController.swift; sourceTree = "<group>"; };
 		D2350308296490A700F01101 /* MyEditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditProfileView.swift; sourceTree = "<group>"; };
 		D235030A2964991700F01101 /* MyEditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditProfileViewController.swift; sourceTree = "<group>"; };
+		D24AFAB12A8DFB9F00823E9C /* GenAIChoosePetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetViewController.swift; sourceTree = "<group>"; };
+		D24AFAB32A8DFBB300823E9C /* GenAIChoosePetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetView.swift; sourceTree = "<group>"; };
+		D24AFAB52A8DFC3000823E9C /* GenAIChoosePetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetModel.swift; sourceTree = "<group>"; };
+		D24AFAB72A8DFCE800823E9C /* GenAIRegisterPetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIRegisterPetView.swift; sourceTree = "<group>"; };
+		D24AFAB92A8E011800823E9C /* GenAIRegisterPetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIRegisterPetViewController.swift; sourceTree = "<group>"; };
+		D24AFABB2A8E03EF00823E9C /* GentAIRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GentAIRegisterViewModel.swift; sourceTree = "<group>"; };
+		D24AFABE2A8E11DA00823E9C /* GenAIChoosePetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetRepository.swift; sourceTree = "<group>"; };
+		D24AFAC12A8E2BD100823E9C /* GenAIChoosePetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetCollectionViewCell.swift; sourceTree = "<group>"; };
+		D24AFAC32A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChooseFourPetCollectionViewCell.swift; sourceTree = "<group>"; };
 		D25323152A07330C00562D92 /* MyAppInformationHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppInformationHeaderView.swift; sourceTree = "<group>"; };
 		D25543A12996B22E0072BF0D /* OnboardingRegisterPetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRegisterPetResult.swift; sourceTree = "<group>"; };
 		D25543A3299A239B0072BF0D /* OnboardingRegisterPetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRegisterPetRequest.swift; sourceTree = "<group>"; };
@@ -1191,6 +1209,23 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		D24AFABD2A8E11B800823E9C /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				D24AFABE2A8E11DA00823E9C /* GenAIChoosePetRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		D24AFAC02A8E2BBA00823E9C /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				D24AFAC12A8E2BD100823E9C /* GenAIChoosePetCollectionViewCell.swift */,
+				D24AFAC32A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		D26C68E4296DE5200088DC9A /* HeaderFooter */ = {
 			isa = PBXGroup;
 			children = (
@@ -1233,7 +1268,9 @@
 		D2B7355C2A8B94B900F93C45 /* AI */ = {
 			isa = PBXGroup;
 			children = (
-				D2B7355F2A8B951200F93C45 /* Cell */,
+				D24AFAC02A8E2BBA00823E9C /* Cell */,
+				D24AFABD2A8E11B800823E9C /* Repository */,
+				D2B7355F2A8B951200F93C45 /* ViewModel */,
 				D2B7355E2A8B94DF00F93C45 /* ViewController */,
 				D2B7355D2A8B94D700F93C45 /* View */,
 			);
@@ -1245,6 +1282,8 @@
 			children = (
 				D2B735632A8BA2B500F93C45 /* GenAIGuideView.swift */,
 				D27BDDC82A8C6FAC008E290D /* GenAICompletedView.swift */,
+				D24AFAB32A8DFBB300823E9C /* GenAIChoosePetView.swift */,
+				D24AFAB72A8DFCE800823E9C /* GenAIRegisterPetView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1253,16 +1292,20 @@
 			isa = PBXGroup;
 			children = (
 				D2B735612A8BA1D700F93C45 /* GenAIGuideViewController.swift */,
+				D24AFAB12A8DFB9F00823E9C /* GenAIChoosePetViewController.swift */,
 				D27BDDC62A8C6FA2008E290D /* GenAICompletedViewController.swift */,
+				D24AFAB92A8E011800823E9C /* GenAIRegisterPetViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		D2B7355F2A8B951200F93C45 /* Cell */ = {
+		D2B7355F2A8B951200F93C45 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				D24AFAB52A8DFC3000823E9C /* GenAIChoosePetModel.swift */,
+				D24AFABB2A8E03EF00823E9C /* GentAIRegisterViewModel.swift */,
 			);
-			path = Cell;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		D2C028E82A7F754C003F4727 /* Coordinator */ = {
@@ -1407,6 +1450,7 @@
 				871EA33E296F529C00D0E8CC /* UIImageView+.swift in Sources */,
 				D2F1936729713FCD00AD87D3 /* OnboardingJWTTokenResult.swift in Sources */,
 				D26C8600296B27B100AEAF9B /* OnboardingCompleteProfileView.swift in Sources */,
+				D24AFABA2A8E011800823E9C /* GenAIRegisterPetViewController.swift in Sources */,
 				D27D95D5296DDF4F0097CD03 /* MyFamilyCollectionViewCell.swift in Sources */,
 				8764832B295238EB00F74882 /* UITextField+.swift in Sources */,
 				D26C68E3296DE4F80088DC9A /* MyRegisterPetView.swift in Sources */,
@@ -1431,6 +1475,7 @@
 				87A76AC32960427C0096F669 /* APIConstants.swift in Sources */,
 				D2DC80D52A0DFDF600F48209 /* RecordRegisterView.swift in Sources */,
 				D26C860A296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift in Sources */,
+				D24AFAC42A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift in Sources */,
 				D26C85CF2968681900AEAF9B /* MyPetCollectionFooterView.swift in Sources */,
 				872F638929B89D9B002EC413 /* HomeGuideViewController.swift in Sources */,
 				8765549F295846F3006BBDA9 /* ZoocTabBarController.swift in Sources */,
@@ -1477,11 +1522,13 @@
 				D26C85F029693C8500AEAF9B /* OnboardingWelcomeView.swift in Sources */,
 				8731C4B429A94A6900006743 /* ArchiveEmojiCommentReqeust.swift in Sources */,
 				8731C4B029A93EF500006743 /* EmojiModel.swift in Sources */,
+				D24AFAB22A8DFB9F00823E9C /* GenAIChoosePetViewController.swift in Sources */,
 				D2DD45C7297D9612001722A1 /* BaseButton.swift in Sources */,
 				D27BDDC72A8C6FA2008E290D /* GenAICompletedViewController.swift in Sources */,
 				871EA351297042D800D0E8CC /* RecordResult.swift in Sources */,
 				D25323162A07330C00562D92 /* MyAppInformationHeaderView.swift in Sources */,
 				D23503052964743100F01101 /* MyAppInformationModel.swift in Sources */,
+				D24AFABF2A8E11DA00823E9C /* GenAIChoosePetRepository.swift in Sources */,
 				D2F3D6042A453E1000C90A5A /* EditPetProfileResult.swift in Sources */,
 				D26C85E12968C63F00AEAF9B /* OnboardingLoginViewController.swift in Sources */,
 				D26C85EA2968CF7E00AEAF9B /* OnboardingAgreementModel.swift in Sources */,
@@ -1517,6 +1564,7 @@
 				D26C85EC2968D2E100AEAF9B /* OnboardingAgreementTableHeaderView.swift in Sources */,
 				D26C85D7296888D000AEAF9B /* MyDeleteAccountSectionCollectionViewCell.swift in Sources */,
 				87DDDD94298E607C00CBEC79 /* Device.swift in Sources */,
+				D24AFAB62A8DFC3000823E9C /* GenAIChoosePetModel.swift in Sources */,
 				D22EF9032A7C9BB70050E325 /* Observable.swift in Sources */,
 				877DF3292A534DF2001CD452 /* NotificationName+.swift in Sources */,
 				87D5AF5A29606AC900CA7F12 /* NetworkResult.swift in Sources */,
@@ -1556,6 +1604,7 @@
 				877184382A052BF500AB7DE4 /* ZoocInterceptor.swift in Sources */,
 				D2F3D6022A441AC900C90A5A /* EditPetProfileRequest.swift in Sources */,
 				D26C85F229693CFA00AEAF9B /* OnboardingWelcomeViewController.swift in Sources */,
+				D24AFAC22A8E2BD100823E9C /* GenAIChoosePetCollectionViewCell.swift in Sources */,
 				871EA35329704CD200D0E8CC /* UIImage+.swift in Sources */,
 				D2C028F42A8246C1003F4727 /* MyEditPetProfileViewModel.swift in Sources */,
 				876483192952366A00F74882 /* Image.swift in Sources */,
@@ -1564,6 +1613,7 @@
 				D27D9560296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift in Sources */,
 				D26C68EC296DE7B60088DC9A /* MyPetRegisterModel.swift in Sources */,
 				D2EA37EF29BEAB57007EF4B7 /* OnboardingBaseView.swift in Sources */,
+				D24AFABC2A8E03EF00823E9C /* GentAIRegisterViewModel.swift in Sources */,
 				D21CEC6229ABC1F900854A36 /* MyRegisterPetResult.swift in Sources */,
 				87C109252971A5B40086466F /* ArchiveCommentReqeust.swift in Sources */,
 				D2F193652970E72500AD87D3 /* OnboardingJoinFamilyRequest.swift in Sources */,
@@ -1579,6 +1629,7 @@
 				D23502F129619D4700F01101 /* MyPetCollectionViewCell.swift in Sources */,
 				871EA34A2970403300D0E8CC /* ArchiveResult.swift in Sources */,
 				D2C028EE2A81EEF3003F4727 /* MyEditProfileViewModel.swift in Sources */,
+				D24AFAB42A8DFBB300823E9C /* GenAIChoosePetView.swift in Sources */,
 				D23502EC296197C700F01101 /* MyPetSectionCollectionViewCell.swift in Sources */,
 				8782C7EB296AC58B00C9324B /* HomeArchiveIndicatorView.swift in Sources */,
 				D25543A22996B22E0072BF0D /* OnboardingRegisterPetResult.swift in Sources */,
@@ -1586,6 +1637,7 @@
 				D26C8610296B761900AEAF9B /* OnboardingJoinFamilyCompletedViewController.swift in Sources */,
 				87A76AAD295F6EE70096F669 /* RecordAPI.swift in Sources */,
 				D26C68F42970AD930088DC9A /* HomeNoticeView.swift in Sources */,
+				D24AFAB82A8DFCE800823E9C /* GenAIRegisterPetView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

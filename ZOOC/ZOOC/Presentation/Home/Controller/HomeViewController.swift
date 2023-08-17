@@ -184,9 +184,23 @@ final class HomeViewController : BaseViewController {
     private func pushToGenAIViewController() {
         self.timer?.invalidate()
         self.timer = nil
-        let genAIVC = GenAIGuideViewController()
-        genAIVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(genAIVC, animated: true)
+        if self.petData.count > 0 {
+            let genAIChoosePetVC = GenAIChoosePetViewController(
+                viewModel: DefaultGenAIChoosePetModel(
+                    repository: GenAIChoosePetRepositoryImpl()
+                )
+            )
+            genAIChoosePetVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(genAIChoosePetVC, animated: true)
+        } else {
+            let genAIRegisterPetVC = GenAIRegisterPetViewController(
+                viewModel: GentAIRegisterViewModel(
+                    repository: MyEditPetProfileRepositoryImpl()
+                )
+            )
+            genAIRegisterPetVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(genAIRegisterPetVC, animated: true)
+        }
     }
     
     private func deselectAllOfListArchiveCollectionViewCell(completion: (() -> Void)?) {

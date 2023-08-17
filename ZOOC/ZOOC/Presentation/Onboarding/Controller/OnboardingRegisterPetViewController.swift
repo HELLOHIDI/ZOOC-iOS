@@ -63,7 +63,7 @@
 //        OnboardingAPI.shared.postMakeFamily(request: request) { result in
 //            guard let result = self.validateResult(result) as? OnboardingMakeFamilyResult else { return }
 //            UserDefaultsManager.familyID = String(result.familyId)
-//            
+//
 //            self.pushToInviteFamilyViewController()
 //        }
 //    }

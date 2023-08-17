@@ -71,9 +71,13 @@ final class HomeViewController : BaseViewController {
         setNotificationCenter()
         
         requestTotalPetAPI()
-        
-        
         rootView.homeScrollView.refreshControl = refreshControl
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        requestTotalPetAPI()
     }
     
     
@@ -187,7 +191,7 @@ final class HomeViewController : BaseViewController {
         if self.petData.count > 0 {
             let genAIChoosePetVC = GenAIChoosePetViewController(
                 viewModel: DefaultGenAIChoosePetModel(
-                    repository: GenAIChoosePetRepositoryImpl()
+                    repository: GenAIPetRepositoryImpl()
                 )
             )
             genAIChoosePetVC.hidesBottomBarWhenPushed = true
@@ -195,7 +199,7 @@ final class HomeViewController : BaseViewController {
         } else {
             let genAIRegisterPetVC = GenAIRegisterPetViewController(
                 viewModel: DefaultGentAIRegisterViewModel(
-                    repository: MyEditPetProfileRepositoryImpl()
+                    repository: GenAIPetRepositoryImpl()
                 )
             )
             genAIRegisterPetVC.hidesBottomBarWhenPushed = true

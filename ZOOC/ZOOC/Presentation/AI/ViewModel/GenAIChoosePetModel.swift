@@ -23,9 +23,9 @@ final class DefaultGenAIChoosePetModel: GenAIChoosePetModel {
     var petList: Observable<[RecordRegisterModel]> = Observable([])
     var ableToChoosePet: Observable<Bool> = Observable(false)
     
-    let repository: GenAIChoosePetRepository
+    let repository: GenAIPetRepository
     
-    init(repository: GenAIChoosePetRepository) {
+    init(repository: GenAIPetRepository) {
         self.repository = repository
     }
     

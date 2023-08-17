@@ -50,8 +50,8 @@ final class GenAIRegisterPetViewController: BaseViewController {
     //MARK: - Custom Method
     
     private func bind() {
-        viewModel.editPetProfileDataOutput.observe(on: self) { [weak self] editPetProfileData in
-            self?.updateUI(editPetProfileData)
+        viewModel.registerPetProfileDataOutput.observe(on: self) { [weak self] registerPetProfileData in
+            self?.updateUI(registerPetProfileData)
         }
         
         viewModel.ableToEditPetProfile.observe(on: self) { [weak self] isEnabled in
@@ -62,14 +62,12 @@ final class GenAIRegisterPetViewController: BaseViewController {
             self?.updateTextFieldUI(state)
         }
         
-        viewModel.editCompletedOutput.observe(on: self) { [weak self] isSuccess in
+        viewModel.registerCompletedOutput.observe(on: self) { [weak self] isSuccess in
             guard let isSuccess else { return }
             if isSuccess {
-                if let navigationController = self?.navigationController {
-                    navigationController.popViewController(animated: true)
-                } else {
-                    self?.dismiss(animated: true)
-                }
+                let genAIGuideVC = GenAIGuideViewController()
+                genAIGuideVC.hidesBottomBarWhenPushed = true
+                self?.navigationController?.pushViewController(genAIGuideVC, animated: true)
             } else {
                 self?.presentBottomAlert("다시 시도해주세요")
             }
@@ -85,7 +83,7 @@ final class GenAIRegisterPetViewController: BaseViewController {
     private func target() {
         rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
         
-        rootView.completeButton.addTarget(self, action: #selector(editCompleteButtonDidTap), for: .touchUpInside)
+        rootView.completeButton.addTarget(self, action: #selector(registerPetButtonDidTap), for: .touchUpInside)
         
         rootView.profileImageButton.addTarget(self, action: #selector(profileImageButtonDidTap) , for: .touchUpInside)
     }
@@ -103,15 +101,11 @@ final class GenAIRegisterPetViewController: BaseViewController {
     }
     
     @objc func backButtonDidTap() {
-        let zoocAlertVC = ZoocAlertViewController()
-        zoocAlertVC.delegate = self
-        zoocAlertVC.alertType = .leavePage
-        zoocAlertVC.modalPresentationStyle = .overFullScreen
-        present(zoocAlertVC, animated: false)
+        self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func editCompleteButtonDidTap(){
-       // viewModel.patchPetProfile()
+    @objc func registerPetButtonDidTap(){
+        viewModel.registerPetButtonDidTap()
     }
 }
 
@@ -136,7 +130,7 @@ extension GenAIRegisterPetViewController: UIImagePickerControllerDelegate {
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         rootView.profileImageButton.setImage(image, for: .normal)
-        viewModel.editPetProfileImageEvent(image)
+        viewModel.registerPetProfileImageEvent(image)
         dismiss(animated: true)
     }
 }
@@ -173,13 +167,13 @@ extension GenAIRegisterPetViewController {
         rootView.numberOfNameCharactersLabel.textColor = textFieldState.indexColor
     }
     
-    private func updateUI(_ editProfileData: EditPetProfileRequest) {
-        rootView.nameTextField.text = editProfileData.nickName
-        if editProfileData.file != nil {
-            rootView.profileImageButton.setImage(editProfileData.file, for: .normal)
+    private func updateUI(_ registerProfileData: MyRegisterPetRequest) {
+        rootView.nameTextField.text = registerProfileData.name
+        if registerProfileData.photo != nil {
+            rootView.profileImageButton.setImage(registerProfileData.photo, for: .normal)
         } else {
             rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
         }
-        rootView.numberOfNameCharactersLabel.text = "\(editProfileData.nickName.count)/4"
+        rootView.numberOfNameCharactersLabel.text = "\(registerProfileData.name.count)/4"
     }
 }

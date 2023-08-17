@@ -92,8 +92,8 @@ final class MyRegisterPetViewController: BaseViewController {
             isPhotos.append(isPhoto)
         }
         
-        MyAPI.shared.registerPet(
-            param: MyRegisterPetRequest(petNames: names, files: photos, isPetPhotos: isPhotos)
+        MyAPI.shared.registerPets(
+            request: MyRegisterPetsRequest(petNames: names, files: photos, isPetPhotos: isPhotos)
         ) { result in
             self.validateResult(result)
             NotificationCenter.default.post(name: .homeVCUpdate, object: nil)

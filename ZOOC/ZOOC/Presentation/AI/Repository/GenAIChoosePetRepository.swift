@@ -7,13 +7,16 @@
 
 import Foundation
 
-protocol GenAIChoosePetRepository {
+protocol GenAIPetRepository {
     func getTotalPet(completion: @escaping (NetworkResult<Any>) -> Void)
+    func registerPet(request: MyRegisterPetRequest, completion: @escaping (NetworkResult<Any>) -> Void)
 }
 
-class GenAIChoosePetRepositoryImpl: GenAIChoosePetRepository {
+class GenAIPetRepositoryImpl: GenAIPetRepository {
     func getTotalPet(completion: @escaping (NetworkResult<Any>) -> Void) {
         RecordAPI.shared.getTotalPet(completion: completion)
     }
+    func registerPet(request: MyRegisterPetRequest, completion: @escaping (NetworkResult<Any>) -> Void) {
+        MyAPI.shared.registerPet(request: request, completion: completion)
+    }
 }
-

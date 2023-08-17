@@ -11,38 +11,37 @@ import Kingfisher
 
 protocol GentAIRegisterViewModelInput {
     func nameTextFieldDidChangeEvent(_ text: String)
-    func editCompleteButtonDidTap()
+    func registerPetButtonDidTap()
     func deleteButtonDidTap()
-    func editPetProfileImageEvent(_ image: UIImage)
+    func registerPetProfileImageEvent(_ image: UIImage)
     func isTextCountExceeded(for type: MyEditTextField.TextFieldType) -> Bool
 }
 
 protocol GentAIRegisterViewModelOutput {
     var ableToEditPetProfile: Observable<Bool> { get }
     var textFieldState: Observable<BaseTextFieldState> { get }
-    var editCompletedOutput: Observable<Bool?> { get }
-    var editPetProfileDataOutput: Observable<EditPetProfileRequest> { get }
+    var registerCompletedOutput: Observable<Bool?> { get }
+    var registerPetProfileDataOutput: Observable<MyRegisterPetRequest> { get }
 }
 
 typealias GentAIRegisterViewModel = GentAIRegisterViewModelInput & GentAIRegisterViewModelOutput
 
 final class DefaultGentAIRegisterViewModel: GentAIRegisterViewModel {
     
-    let repository: MyEditPetProfileRepository
+    let repository: GenAIPetRepository
     
     var ableToEditPetProfile: Observable<Bool> = Observable(false)
     var textFieldState: Observable<BaseTextFieldState> = Observable(.isEmpty)
-    var editCompletedOutput: Observable<Bool?> = Observable(nil)
-    var editPetProfileDataOutput: Observable<EditPetProfileRequest> = Observable(EditPetProfileRequest())
+    var registerCompletedOutput: Observable<Bool?> = Observable(nil)
+    var registerPetProfileDataOutput: Observable<MyRegisterPetRequest> = Observable(MyRegisterPetRequest())
     
     
-    
-    init(repository: MyEditPetProfileRepository) {
+    init(repository: GenAIPetRepository) {
         self.repository = repository
     }
     
     func nameTextFieldDidChangeEvent(_ text: String) {
-        self.editPetProfileDataOutput.value.nickName = text
+        self.registerPetProfileDataOutput.value.name = text
         var textFieldState: BaseTextFieldState
         switch text.count {
         case 1...3:
@@ -60,21 +59,32 @@ final class DefaultGentAIRegisterViewModel: GentAIRegisterViewModel {
     
     func isTextCountExceeded(for type: MyEditTextField.TextFieldType) -> Bool {
         let limit = type.limit
-        return editPetProfileDataOutput.value.nickName.count >= limit
+        return registerPetProfileDataOutput.value.name.count >= limit
     }
     
-    func editCompleteButtonDidTap() {
-//        patchPetProfile()
+    func registerPetButtonDidTap() {
+        registerPet()
     }
     
     func deleteButtonDidTap() {
-        self.editPetProfileDataOutput.value.file = nil
-        self.editPetProfileDataOutput.value.photo = false
+        self.registerPetProfileDataOutput.value.photo = Image.defaultProfile
     }
     
-    func editPetProfileImageEvent(_ image: UIImage) {
-        self.editPetProfileDataOutput.value.file = image
-        self.editPetProfileDataOutput.value.photo = true
+    func registerPetProfileImageEvent(_ image: UIImage) {
+        self.registerPetProfileDataOutput.value.photo = image
     }
 }
 
+extension DefaultGentAIRegisterViewModel {
+    func registerPet() {
+        repository.registerPet(request: registerPetProfileDataOutput.value) { result in
+            switch result {
+            case .success(let data):
+                guard let result = data as? MyRegisterPetResult else { return }
+                self.registerCompletedOutput.value = true
+            default:
+                self.registerCompletedOutput.value = false
+            }
+        }
+    }
+}

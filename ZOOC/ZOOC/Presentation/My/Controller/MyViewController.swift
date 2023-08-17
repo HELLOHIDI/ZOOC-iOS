@@ -268,9 +268,8 @@ extension MyViewController: MyRegisterPetButtonTappedDelegate {
 
 extension MyViewController: MyDeleteAccountSectionCollectionViewCellDelegate {
     func deleteAccountButtonDidTapped() {
-        let zoocAlertVC = ZoocAlertViewController()
+        let zoocAlertVC = ZoocAlertViewController(.deleteAccount)
         zoocAlertVC.delegate = self
-        zoocAlertVC.alertType = .deleteAccount
         zoocAlertVC.modalPresentationStyle = .overFullScreen
         present(zoocAlertVC, animated: false)
     }

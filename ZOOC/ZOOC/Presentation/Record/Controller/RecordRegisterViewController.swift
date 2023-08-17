@@ -75,9 +75,8 @@ final class RecordRegisterViewController : BaseViewController{
     }
     
     private func presentAlertViewController() {
-        let zoocAlertVC = ZoocAlertViewController()
+        let zoocAlertVC = ZoocAlertViewController(.leavePage)
         zoocAlertVC.delegate = self
-        zoocAlertVC.alertType = .leavePage
         zoocAlertVC.modalPresentationStyle = .overFullScreen
         self.present(zoocAlertVC, animated: false, completion: nil)
     }

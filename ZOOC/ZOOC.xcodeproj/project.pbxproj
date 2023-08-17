@@ -75,6 +75,11 @@
 		877DF3292A534DF2001CD452 /* NotificationName+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877DF3282A534DF2001CD452 /* NotificationName+.swift */; };
 		877E57EE2966AAE6006D82FC /* HomeArchiveListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877E57ED2966AAE6006D82FC /* HomeArchiveListCollectionViewCell.swift */; };
 		877E57F22966D13E006D82FC /* ArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877E57F12966D13E006D82FC /* ArchiveViewController.swift */; };
+		87809C2A2A8CB6EE0060641F /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87809C292A8CB6EE0060641F /* SplashViewController.swift */; };
+		87809C2C2A8CC29B0060641F /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87809C2B2A8CC29B0060641F /* AppVersion.swift */; };
+		87809C2E2A8CC32F0060641F /* VersionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87809C2D2A8CC32F0060641F /* VersionState.swift */; };
+		87809C302A8CE3930060641F /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 87809C2F2A8CE3930060641F /* FirebaseRemoteConfig */; };
+		87809C332A8CFDA20060641F /* VersionAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87809C322A8CFDA20060641F /* VersionAlertViewController.swift */; };
 		8781DE4829B20F61005ABF23 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 8781DE4729B20F61005ABF23 /* FirebaseMessaging */; };
 		8781DE4E29B273FB005ABF23 /* OnboardingFamilyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8781DE4D29B273FB005ABF23 /* OnboardingFamilyResult.swift */; };
 		8782C7DA296857A600C9324B /* KakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = 8782C7D9296857A600C9324B /* KakaoSDKShare */; };
@@ -280,6 +285,10 @@
 		877E57EA2966332F006D82FC /* MemberModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberModel.swift; sourceTree = "<group>"; };
 		877E57ED2966AAE6006D82FC /* HomeArchiveListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeArchiveListCollectionViewCell.swift; sourceTree = "<group>"; };
 		877E57F12966D13E006D82FC /* ArchiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveViewController.swift; sourceTree = "<group>"; };
+		87809C292A8CB6EE0060641F /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		87809C2B2A8CC29B0060641F /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
+		87809C2D2A8CC32F0060641F /* VersionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionState.swift; sourceTree = "<group>"; };
+		87809C322A8CFDA20060641F /* VersionAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionAlertViewController.swift; sourceTree = "<group>"; };
 		8781DE4B29B25471005ABF23 /* Release-GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Release-GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8781DE4D29B273FB005ABF23 /* OnboardingFamilyResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFamilyResult.swift; sourceTree = "<group>"; };
 		8782C7E32968B03500C9324B /* HomePetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePetCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -430,6 +439,7 @@
 				8764833B29523C0100F74882 /* Kingfisher in Frameworks */,
 				8782C7DA296857A600C9324B /* KakaoSDKShare in Frameworks */,
 				8781DE4829B20F61005ABF23 /* FirebaseMessaging in Frameworks */,
+				87809C302A8CE3930060641F /* FirebaseRemoteConfig in Frameworks */,
 				871EA35629706F4300D0E8CC /* Lottie in Frameworks */,
 				8764833229523BBD00F74882 /* SnapKit in Frameworks */,
 				872367162A19062700DCBBFF /* Sentry in Frameworks */,
@@ -456,17 +466,11 @@
 		871EA34B2970413700D0E8CC /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				871EA34C2970413D00D0E8CC /* Model */,
 				871EA34D2970414100D0E8CC /* APIModel */,
+				87809C2B2A8CC29B0060641F /* AppVersion.swift */,
+				87809C2D2A8CC32F0060641F /* VersionState.swift */,
 			);
 			path = Common;
-			sourceTree = "<group>";
-		};
-		871EA34C2970413D00D0E8CC /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		871EA34D2970414100D0E8CC /* APIModel */ = {
@@ -660,6 +664,15 @@
 				D26C68F52970B0640088DC9A /* HomeNoticeTableViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		87809C312A8CFD790060641F /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				87809C292A8CB6EE0060641F /* SplashViewController.swift */,
+				87809C322A8CFDA20060641F /* VersionAlertViewController.swift */,
+			);
+			path = Splash;
 			sourceTree = "<group>";
 		};
 		8782C7D62967997100C9324B /* Recovered References */ = {
@@ -983,6 +996,7 @@
 		87B6625529521EB400B6FFA9 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				87809C312A8CFD790060641F /* Splash */,
 				8765549D295846E7006BBDA9 /* Base */,
 				877BAFBE295EA0D300C2AA1C /* Onboarding */,
 				876554A02958489F006BBDA9 /* Home */,
@@ -1258,6 +1272,7 @@
 				871EA35529706F4300D0E8CC /* Lottie */,
 				8781DE4729B20F61005ABF23 /* FirebaseMessaging */,
 				872367152A19062700DCBBFF /* Sentry */,
+				87809C2F2A8CE3930060641F /* FirebaseRemoteConfig */,
 			);
 			productName = ZOOC;
 			productReference = 87B6623D29521E7500B6FFA9 /* ZOOC-Dev.app */;
@@ -1399,6 +1414,7 @@
 				8781DE4E29B273FB005ABF23 /* OnboardingFamilyResult.swift in Sources */,
 				876554A3295848D6006BBDA9 /* BaseViewController.swift in Sources */,
 				4C6B1860296B40C00059840D /* RecordModel.swift in Sources */,
+				87809C2E2A8CC32F0060641F /* VersionState.swift in Sources */,
 				D23502F92961F34100F01101 /* MySettingSectionCollectionViewCell.swift in Sources */,
 				876483212952369500F74882 /* UICollectionViewCell+.swift in Sources */,
 				D26C85E82968CD8E00AEAF9B /* OnboardingAgreementViewController.swift in Sources */,
@@ -1462,6 +1478,7 @@
 				D26989A829A60EE7008A5ACC /* OnboardingAgreementViewModel.swift in Sources */,
 				D26C68EE296EB2040088DC9A /* MyRegisteredPetTableViewCell.swift in Sources */,
 				D235030B2964991700F01101 /* MyEditProfileViewController.swift in Sources */,
+				87809C2C2A8CC29B0060641F /* AppVersion.swift in Sources */,
 				87D5AF5629605C0100CA7F12 /* URLs.swift in Sources */,
 				D2C028EA2A7F7563003F4727 /* MyCoordinator.swift in Sources */,
 				D26C85E32968C88800AEAF9B /* OnboardingAgreementView.swift in Sources */,
@@ -1482,10 +1499,12 @@
 				D2B735582A8669BA00F93C45 /* MyEditPetProfileRepository.swift in Sources */,
 				87C6C4C92A537902003DA38A /* TextLiteral.swift in Sources */,
 				D26C861A296C0FC800AEAF9B /* OnboardingPetRegisterModel.swift in Sources */,
+				87809C332A8CFDA20060641F /* VersionAlertViewController.swift in Sources */,
 				D21DADC1298BFF2700CCC089 /* MyPetRegisterViewModel.swift in Sources */,
 				D2B735562A86681800F93C45 /* MyEditProfileRepository.swift in Sources */,
 				D27D9568296CB5930097CD03 /* OnboardingInviteFamilyView.swift in Sources */,
 				D27D9566296CA99B0097CD03 /* OnboardingInviteFamilyCompletedViewController.swift in Sources */,
+				87809C2A2A8CB6EE0060641F /* SplashViewController.swift in Sources */,
 				8718A06A29ADE6E8001C7460 /* BaseTextField.swift in Sources */,
 				D2B7355A2A866D8E00F93C45 /* MyRepository.swift in Sources */,
 				874AE9F829B49D5A007A637D /* VoidResult.swift in Sources */,
@@ -1685,7 +1704,7 @@
 				CODE_SIGN_ENTITLEMENTS = ZOOC/ZOOC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = T6DNHAHXG9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ZOOC/Application/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
@@ -1706,7 +1725,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 0.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID)";
 				PRODUCT_NAME = "$(APP_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1728,7 +1747,7 @@
 				CODE_SIGN_ENTITLEMENTS = ZOOC/ZOOC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = T6DNHAHXG9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ZOOC/Application/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
@@ -1749,7 +1768,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 0.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID)";
 				PRODUCT_NAME = "$(APP_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1881,6 +1900,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8764833929523C0100F74882 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		87809C2F2A8CE3930060641F /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8781DE4629B20F61005ABF23 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
 		};
 		8781DE4729B20F61005ABF23 /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;

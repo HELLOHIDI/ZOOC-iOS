@@ -75,8 +75,6 @@ final class NetworkAlertView: UIView {
             $0.setBackgroundColor(.zoocGradientGreen, for: .highlighted)
             $0.titleLabel?.textAlignment = .center
             $0.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
-            $0.layer.cornerRadius = 8
-            $0.layer.masksToBounds = true
         }
     }
     
@@ -108,9 +106,9 @@ final class NetworkAlertView: UIView {
         }
         
         updateButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(10)
-            $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.height.equalTo(40)
+            $0.bottom.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(54)
         }
         
     }

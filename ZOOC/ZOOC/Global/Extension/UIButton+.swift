@@ -9,30 +9,7 @@ import UIKit
 import Kingfisher
 
 extension UIButton {
-//    
-//    open override var backgroundColor: UIColor? {
-//        didSet{
-//            
-//            if backgroundColor == .zoocGradientGreen {
-//                print("didSet들어옴")
-//                let gradientLayer = CAGradientLayer()
-//                //66 200 127
-//                var colors:[CGColor] = [.init(red: CGFloat(0)/255, green: CGFloat(0)/255, blue: CGFloat(0)/255, alpha: 1),
-//                                        .init(red: CGFloat(59)/255, green: CGFloat(188)/255, blue: CGFloat(116)/255, alpha: 1)]
-//                
-//                gradientLayer.frame = self.bounds
-//                gradientLayer.colors = colors
-//                gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-//                gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-//                self.layer.addSublayer(gradientLayer)
-//                
-//                self.layoutIfNeeded()
-//            } else {
-//                //self.layer.removeFromSuperlayer()
-//            }
-//            
-//        }
-//    }
+
     func setUnderline() {
         guard let title = title(for: .normal) else { return }
         let attributedString = NSMutableAttributedString(string: title)
@@ -49,6 +26,18 @@ extension UIButton {
                         for: .normal, placeholder: nil,
                         options: [.transition(.fade(1.0))], progressBlock: nil)
         }
+    }
+    
+    func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
+        UIGraphicsBeginImageContext(CGSize(width: 1.0, height: 1.0))
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        context.setFillColor(color.cgColor)
+        context.fill(CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0))
+        
+        let backgroundImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+         
+        self.setBackgroundImage(backgroundImage, for: state)
     }
 }
 

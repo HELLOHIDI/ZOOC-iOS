@@ -32,7 +32,6 @@
 		871EA359297078C900D0E8CC /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 871EA358297078C900D0E8CC /* loading.json */; };
 		871EA35B2970BE8400D0E8CC /* RecordPetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871EA35A2970BE8400D0E8CC /* RecordPetResult.swift */; };
 		871EA35D2970CFA700D0E8CC /* SimpleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871EA35C2970CFA700D0E8CC /* SimpleResponse.swift */; };
-		871EA35F2971628D00D0E8CC /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871EA35E2971628D00D0E8CC /* Encodable+.swift */; };
 		872367112A12AC4E00DCBBFF /* ArchiveModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872367102A12AC4E00DCBBFF /* ArchiveModel.swift */; };
 		872367132A136C7300DCBBFF /* ArchiveGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872367122A136C7300DCBBFF /* ArchiveGuideViewController.swift */; };
 		872367162A19062700DCBBFF /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 872367152A19062700DCBBFF /* Sentry */; };
@@ -248,7 +247,6 @@
 		871EA358297078C900D0E8CC /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		871EA35A2970BE8400D0E8CC /* RecordPetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordPetResult.swift; sourceTree = "<group>"; };
 		871EA35C2970CFA700D0E8CC /* SimpleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleResponse.swift; sourceTree = "<group>"; };
-		871EA35E2971628D00D0E8CC /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
 		872367102A12AC4E00DCBBFF /* ArchiveModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveModel.swift; sourceTree = "<group>"; };
 		872367122A136C7300DCBBFF /* ArchiveGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveGuideViewController.swift; sourceTree = "<group>"; };
 		872367182A19080600DCBBFF /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
@@ -514,7 +512,6 @@
 		872BBD9329F959E2002E2C71 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				D22EF9012A7C9BA80050E325 /* DesignPattern */,
 				87DDDD93298E607C00CBEC79 /* Device.swift */,
 				872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */,
 				872BBD9629F95BE2002E2C71 /* UserDefaultsManager.swift */,
@@ -529,6 +526,7 @@
 				D2F98F9C2967154D00CC82DE /* ZoocAlertViewController.swift */,
 				8765549E295846F3006BBDA9 /* ZoocTabBarController.swift */,
 				871DC6C32A1DC691006BA780 /* ZoocImageController.swift */,
+				87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */,
 				87809C322A8CFDA20060641F /* VersionAlertViewController.swift */,
 				874369582A8FFB7F0035AFD6 /* NetworkAlertView.swift */,
 			);
@@ -555,7 +553,6 @@
 				D27D956B296CBA2D0097CD03 /* UIButton+.swift */,
 				871EA33D296F529C00D0E8CC /* UIImageView+.swift */,
 				871EA35229704CD200D0E8CC /* UIImage+.swift */,
-				871EA35E2971628D00D0E8CC /* Encodable+.swift */,
 				87E462F02A110E18006FC35D /* CGColor+.swift */,
 				87E462F22A113A37006FC35D /* CALayer+.swift */,
 				877DF3282A534DF2001CD452 /* NotificationName+.swift */,
@@ -568,7 +565,7 @@
 			isa = PBXGroup;
 			children = (
 				872367172A1907FC00DCBBFF /* Error */,
-				87E462EC2A110858006FC35D /* UIComponets */,
+				D22EF9012A7C9BA80050E325 /* DesignPattern */,
 				872BBD9329F959E2002E2C71 /* Utility */,
 				876483172952355A00F74882 /* Constant */,
 				87648315295234C100F74882 /* Extension */,
@@ -1009,8 +1006,8 @@
 		87B6625529521EB400B6FFA9 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				8743694E2A8E50E30035AFD6 /* Common */,
 				8765549D295846E7006BBDA9 /* Base */,
+				8743694E2A8E50E30035AFD6 /* Common */,
 				87809C312A8CFD790060641F /* Splash */,
 				877BAFBE295EA0D300C2AA1C /* Onboarding */,
 				876554A02958489F006BBDA9 /* Home */,
@@ -1088,14 +1085,6 @@
 				87DC47F12A7B4CBF007823CB /* Release.xcconfig */,
 			);
 			path = Configuration;
-			sourceTree = "<group>";
-		};
-		87E462EC2A110858006FC35D /* UIComponets */ = {
-			isa = PBXGroup;
-			children = (
-				87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */,
-			);
-			path = UIComponets;
 			sourceTree = "<group>";
 		};
 		87E462EF2A1109FC006FC35D /* ViewModel */ = {
@@ -1398,7 +1387,6 @@
 				D26C68E3296DE4F80088DC9A /* MyRegisterPetView.swift in Sources */,
 				D26996A42989AB7500025774 /* OnboardingPetRegisterViewModel.swift in Sources */,
 				D26C68F0296F693E0088DC9A /* MyResult.swift in Sources */,
-				871EA35F2971628D00D0E8CC /* Encodable+.swift in Sources */,
 				87DDDD92298E5BE500CBEC79 /* ArchiveCommentView.swift in Sources */,
 				D27D956C296CBA2D0097CD03 /* UIButton+.swift in Sources */,
 				D26C8608296B585600AEAF9B /* OnboardingJoinFamilyView.swift in Sources */,

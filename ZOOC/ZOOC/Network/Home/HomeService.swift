@@ -26,7 +26,7 @@ extension HomeService: BaseTargetType {
             return URLs.totalPet
                 .replacingOccurrences(of: "{familyId}", with: familyID)
             
-        case .getTotalArchive(familyID: let familyID, petID: let petID, limit: let limit, after: let after):
+        case .getTotalArchive(familyID: let familyID, petID: let petID, limit: _, after: _):
             return URLs.totalRecord
                 .replacingOccurrences(of: "{familyId}", with: familyID)
                 .replacingOccurrences(of: "{petId}", with: petID)

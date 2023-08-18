@@ -24,7 +24,10 @@ extension HomeAPI{
         }
     }
     
-    func getTotalArchive(petID: String, limit: String, after: Int?, completion: @escaping (NetworkResult<Any>) -> Void) {
+    func getTotalArchive(petID: String,
+                         limit: String,
+                         after: Int?,
+                         completion: @escaping (NetworkResult<Any>) -> Void) {
         homeProvider.request(.getTotalArchive(familyID: UserDefaultsManager.familyID, petID: petID, limit: limit, after: after)) { (result) in
             self.disposeNetwork(result,
                                 dataModel: [HomeArchiveResult].self,
@@ -48,13 +51,17 @@ extension HomeAPI{
         }
     }
     
-    func postComment(recordID: String, comment: String, completion: @escaping (NetworkResult<Any>) -> Void) {
+    func postComment(recordID: String,
+                     comment: String,
+                     completion: @escaping (NetworkResult<Any>) -> Void) {
         homeProvider.request(.postComment(recordID: recordID, comment: comment)) { (result) in
             self.disposeNetwork(result, dataModel: [CommentResult].self, completion: completion)
         }
     }
     
-    func postEmojiComment(recordID: String, emojiID: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+    func postEmojiComment(recordID: String,
+                          emojiID: Int,
+                          completion: @escaping (NetworkResult<Any>) -> Void) {
         homeProvider.request(.postEmojiComment(recordID: recordID, emojiID: emojiID)) { (result) in
             self.disposeNetwork(result, dataModel: [CommentResult].self, completion: completion)
         }

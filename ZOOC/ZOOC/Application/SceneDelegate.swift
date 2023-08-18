@@ -7,9 +7,13 @@
 import UIKit
 import KakaoSDKAuth
 
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
+    
+    private var errorWindow: UIWindow?
+    private var networkMonitor: NetworkMonitor = NetworkMonitor()
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         if let url = URLContexts.first?.url {
@@ -24,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: windowScene)
-        
+        startMonitoringNetwork(on: scene)
         let userInfo = connectionOptions.notificationResponse?.notification.request.content.userInfo
         
         let vc = SplashViewController(userInfo: userInfo)
@@ -64,7 +68,36 @@ func sceneDidEnterBackground(_ scene: UIScene) {
     // to restore the scene back to its current state.
 }
 
-extension SceneDelegate {
-   
+private extension SceneDelegate {
     
+    func startMonitoringNetwork(on scene: UIScene) {
+        networkMonitor.startMonitoring(statusUpdateHandler: { [weak self] connectionStatus in
+            switch connectionStatus {
+            case .satisfied: self?.removeNetworkErrorWindow()
+            case .unsatisfied: self?.loadNetworkErrorWindow(on: scene)
+            default: break
+            }
+        })
+    }
+    
+    func removeNetworkErrorWindow() {
+        DispatchQueue.main.async { [weak self] in
+            self?.errorWindow?.resignKey()
+            self?.errorWindow?.isHidden = true
+            self?.errorWindow = nil
+        }
+    }
+    
+    func loadNetworkErrorWindow(on scene: UIScene) {
+        if let windowScene = scene as? UIWindowScene {
+            DispatchQueue.main.async { [weak self] in
+                let window = UIWindow(windowScene: windowScene)
+                window.windowLevel = .statusBar
+                window.makeKeyAndVisible()
+                let alertView = NetworkAlertView(frame: window.bounds)
+                window.addSubview(alertView)
+                self?.errorWindow = window
+            }
+        }
+    }
 }

@@ -25,6 +25,19 @@ extension UIApplication {
             return
         }
         
+        // 네트워크 에러 Window라면 가드
+        guard firstWindow.windowLevel != .statusBar else {
+            let scenes = UIApplication.shared.connectedScenes
+            let windowScenes = scenes.first as? UIWindowScene
+            windowScenes?.windows.first?.rootViewController = viewController
+            windowScenes?.windows.first?.makeKeyAndVisible()
+            UIView.transition(with: firstWindow,
+                              duration: 0.5,
+                              options: .transitionCrossDissolve,
+                              animations: nil)
+            return
+        }
+        
         firstWindow.rootViewController = viewController
         firstWindow.makeKeyAndVisible()
         UIView.transition(with: firstWindow,

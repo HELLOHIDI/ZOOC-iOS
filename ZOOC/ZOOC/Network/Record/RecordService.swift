@@ -10,7 +10,7 @@ import Moya
 
 enum RecordService{
     case getTotalPet(familyID: String)
-    case postRecord(familyID: String, photo: UIImage, content: String, pets: [Int])
+    case postRecord(familyID: String, photo: UIImage, content: String?, pets: [Int])
 }
 
 extension RecordService: BaseTargetType{
@@ -52,16 +52,19 @@ extension RecordService: BaseTargetType{
                 multipartFormData.append(petData)
             }
             
+            if let content {
+                let contentData = MultipartFormData(provider: .data(content.data(using: String.Encoding.utf8)!),
+                                                    name: "content",
+                                                    mimeType: "application/json")
+                multipartFormData.append(contentData)
+            }
             
-            let contentData = MultipartFormData(provider: .data(content.data(using: String.Encoding.utf8)!),
-                                                name: "content",
-                                                mimeType: "application/json")
             let imageData = MultipartFormData(provider: .data(photo),
                                               name: "file",
                                               fileName: "image.jpeg",
                                               mimeType: "image/jpeg")
             
-            multipartFormData.append(contentData)
+            
             multipartFormData.append(imageData)
             
             return .uploadMultipart(multipartFormData)

@@ -16,5 +16,9 @@ extension String {
     func isMoreThan(_ length: Int) -> Bool {
         return self.count > length
     }
+    
+    func transform() -> AppVersion {
+        self.split(separator: ".").map { Int($0) ?? 0 }
+    }
 }
     

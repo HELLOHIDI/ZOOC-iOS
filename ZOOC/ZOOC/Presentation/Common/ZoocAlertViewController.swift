@@ -15,6 +15,8 @@ enum AlertType {
     case leavePage
     case deleteArchive
     case deleteAccount
+    case needUpdate
+    
     
     var title: String {
         switch self {
@@ -27,6 +29,8 @@ enum AlertType {
             return "게시글을 삭제하시겠어요?"
         case .deleteAccount:
             return "회원 탈퇴 하시겠습니까?"
+        case .needUpdate:
+            return "새로운 버전이 나왔어요!"
         }
     }
     
@@ -41,6 +45,8 @@ enum AlertType {
             return "삭제하면 글과 사진이 모두 삭제돼요"
         case .deleteAccount:
             return "회원 탈퇴 시 자동으로 가족에서 탈퇴되고\n   작성한 글과 댓글이 모두 삭제됩니다"
+        case .needUpdate:
+            return "업데이트 후 새로운 기능을 만나보세요"
         }
     }
     
@@ -55,6 +61,8 @@ enum AlertType {
             return "아니오"
         case .deleteAccount:
             return "계속 할래요"
+        case .needUpdate:
+            return "업데이트"
         }
     }
     
@@ -69,6 +77,8 @@ enum AlertType {
             return "삭제"
         case .deleteAccount:
             return "탈퇴"
+        case .needUpdate:
+            return "취소"
         }
     }
     
@@ -82,11 +92,12 @@ final class ZoocAlertViewController: UIViewController {
     
     //MARK: - Properties
     
-    public var alertType: AlertType? {
+    private var alertType: AlertType? {
         didSet{
             updateUI()
         }
     }
+    
     weak var delegate: ZoocAlertViewControllerDelegate?
     
     //MARK: - UI Components
@@ -100,6 +111,16 @@ final class ZoocAlertViewController: UIViewController {
     
     //MARK: - Life Cycle
     
+    init(_ alertType: AlertType) {
+        self.alertType = alertType
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -109,6 +130,7 @@ final class ZoocAlertViewController: UIViewController {
         hierarchy()
         layout()
         
+        updateUI()
     }
     
     override func viewDidLayoutSubviews() {
@@ -123,7 +145,9 @@ final class ZoocAlertViewController: UIViewController {
                 let attrString = NSMutableAttributedString(string: $0.text!)
                 let paragraphStyle = NSMutableParagraphStyle()
                 paragraphStyle.lineSpacing = 3
-                attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
+                attrString.addAttribute(NSAttributedString.Key.paragraphStyle,
+                                        value: paragraphStyle,
+                                        range: NSMakeRange(0, attrString.length))
                 $0.attributedText = attrString
             }
         }

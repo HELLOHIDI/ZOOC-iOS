@@ -103,9 +103,8 @@ final class MyEditPetProfileViewController: BaseViewController {
     }
     
     @objc func backButtonDidTap() {
-        let zoocAlertVC = ZoocAlertViewController()
+        let zoocAlertVC = ZoocAlertViewController(.leavePage)
         zoocAlertVC.delegate = self
-        zoocAlertVC.alertType = .leavePage
         zoocAlertVC.modalPresentationStyle = .overFullScreen
         present(zoocAlertVC, animated: false)
     }

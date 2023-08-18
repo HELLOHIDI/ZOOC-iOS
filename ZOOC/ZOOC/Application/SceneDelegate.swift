@@ -21,24 +21,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         print(#function)
+        
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        self.window = UIWindow(windowScene: windowScene)
         
-        let vc = UIViewController()
-        vc.view.backgroundColor = .zoocMainGreen
+        let userInfo = connectionOptions.notificationResponse?.notification.request.content.userInfo
         
-        window = UIWindow(windowScene: windowScene)
-        
-        window?.rootViewController = vc
-        
-        self.window?.backgroundColor = .white
-        window?.makeKeyAndVisible()
-        
-        guard let notificationResponse = connectionOptions.notificationResponse else {
-            autoLogin()
-            return
-        }
-        let userInfo = notificationResponse.notification.request.content.userInfo
-        self.configureInvitation(with: userInfo)
+        let vc = SplashViewController(userInfo: userInfo)
+        self.window?.rootViewController = vc
+        self.window?.makeKeyAndVisible()
     }
 }
 
@@ -74,80 +65,6 @@ func sceneDidEnterBackground(_ scene: UIScene) {
 }
 
 extension SceneDelegate {
-    
-    private func autoLogin() {
-        guard !UserDefaultsManager.zoocAccessToken.isEmpty else {
-            print("📌 DB에 AccessToken 값이 없습니다. 온보딩을 시작합니다.")
-            autoLoginFail()
-            return
-        }
-        requestFamilyAPI()
-    }
-    
-    
-    
-    private func requestFamilyAPI() {
-        OnboardingAPI.shared.getFamily { result in
-            switch result{
-                
-            case .success(let data):
-                guard let data = data as? [OnboardingFamilyResult] else { return }
-                if data.count != 0 {
-                    let familyID = String(data[0].id)
-                    UserDefaultsManager.familyID = familyID
-                    self.autoLoginSuccess()
-                } else {
-                    self.autoLoginFail()
-                }
-            default:
-                print("자동로그인 실패")
-                self.autoLoginFail()
-            }
-        }
-    }
-    
-    private func autoLoginSuccess() {
-        print(#function)
-        requestFCMTokenAPI()
-    }
-    
-    private func autoLoginFail () {
-        let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
-        onboardingNVC.setNavigationBarHidden(true, animated: true)
-        
-        UIApplication.shared.changeRootViewController(onboardingNVC)
-    }
-    
-    private func requestFCMTokenAPI() {
-        OnboardingAPI.shared.patchFCMToken(fcmToken: UserDefaultsManager.fcmToken) { result in
-            let mainVC = ZoocTabBarController()
-            UIApplication.shared.changeRootViewController(mainVC)
-        }
-    }
-    
-    func configureInvitation(with userInfo: [AnyHashable: Any]){
-        
-        guard let apsValue = userInfo["aps"] as? [String : AnyObject] else { return }
-        guard let alertValue = apsValue["data"] as? [String : Any] else { return }
-        
-        guard let familyID = alertValue["familyId"] as? Int,
-              let recordID = alertValue["recordId"] as? Int,
-              let petID = alertValue["petId"] as? Int else {
-            print("가드에막혔누")
-            return }
-        
-        UserDefaultsManager.familyID = String(familyID)
-        let archiveModel = ArchiveModel(recordID: recordID, petID: petID)
-        let archiveVC = ArchiveViewController(archiveModel, scrollDown: true)
-        archiveVC.modalPresentationStyle = .fullScreen
-        
-        let tabVC = ZoocTabBarController()
-        
-        
-        UIApplication.shared.changeRootViewController(tabVC)
-        
-        tabVC.present(archiveVC, animated: true)
-    }
-    
+   
     
 }

@@ -77,7 +77,7 @@ final class HomeViewController : BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        requestTotalPetAPI()
+//        requestTotalPetAPI()
     }
     
     
@@ -198,7 +198,7 @@ final class HomeViewController : BaseViewController {
             navigationController?.pushViewController(genAIChoosePetVC, animated: true)
         } else {
             let genAIRegisterPetVC = GenAIRegisterPetViewController(
-                viewModel: DefaultGentAIRegisterViewModel(
+                viewModel: DefaultGenAIRegisterViewModel(
                     repository: GenAIPetRepositoryImpl()
                 )
             )

@@ -140,7 +140,7 @@ final class GenAIGuideView: UIView {
         }
         
         selectImageButton.do {
-            $0.setTitle("사진 선택하기", for: .normal)
+            $0.setTitle("8장~15장의 사진 업로드", for: .normal)
             $0.setTitleColor(.zoocWhite1, for: .normal)
             $0.titleLabel?.font = .zoocSubhead1
             $0.titleLabel?.textAlignment = .center

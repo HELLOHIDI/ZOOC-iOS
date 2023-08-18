@@ -14,9 +14,9 @@ final class GenAIRegisterPetViewController: BaseViewController {
     
     //MARK: - Properties
     
-    private let viewModel: GentAIRegisterViewModel
+    private let viewModel: GenAIRegisterViewModel
     
-    init(viewModel: GentAIRegisterViewModel) {
+    init(viewModel: GenAIRegisterViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

@@ -9,7 +9,7 @@ import UIKit
 
 import Kingfisher
 
-protocol GentAIRegisterViewModelInput {
+protocol GenAIRegisterViewModelInput {
     func nameTextFieldDidChangeEvent(_ text: String)
     func registerPetButtonDidTap()
     func deleteButtonDidTap()
@@ -17,16 +17,16 @@ protocol GentAIRegisterViewModelInput {
     func isTextCountExceeded(for type: MyEditTextField.TextFieldType) -> Bool
 }
 
-protocol GentAIRegisterViewModelOutput {
+protocol GenAIRegisterViewModelOutput {
     var ableToEditPetProfile: Observable<Bool> { get }
     var textFieldState: Observable<BaseTextFieldState> { get }
     var registerCompletedOutput: Observable<Bool?> { get }
     var registerPetProfileDataOutput: Observable<MyRegisterPetRequest> { get }
 }
 
-typealias GentAIRegisterViewModel = GentAIRegisterViewModelInput & GentAIRegisterViewModelOutput
+typealias GenAIRegisterViewModel = GenAIRegisterViewModelInput & GenAIRegisterViewModelOutput
 
-final class DefaultGentAIRegisterViewModel: GentAIRegisterViewModel {
+final class DefaultGenAIRegisterViewModel: GenAIRegisterViewModel {
     
     let repository: GenAIPetRepository
     
@@ -75,12 +75,11 @@ final class DefaultGentAIRegisterViewModel: GentAIRegisterViewModel {
     }
 }
 
-extension DefaultGentAIRegisterViewModel {
+extension DefaultGenAIRegisterViewModel {
     func registerPet() {
         repository.registerPet(request: registerPetProfileDataOutput.value) { result in
             switch result {
-            case .success(let data):
-                guard let result = data as? MyRegisterPetResult else { return }
+            case .success(_):
                 self.registerCompletedOutput.value = true
             default:
                 self.registerCompletedOutput.value = false

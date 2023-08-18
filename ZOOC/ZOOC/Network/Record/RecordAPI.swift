@@ -24,12 +24,11 @@ extension RecordAPI{
         }
     }
     
-    func postRecord(photo: UIImage, content: String, pets: [Int], completion: @escaping (NetworkResult<Any>) -> Void){
+    func postRecord(photo: UIImage, content: String?, pets: [Int], completion: @escaping (NetworkResult<Any>) -> Void){
         recordProvider.request(.postRecord(familyID: UserDefaultsManager.familyID,
                                            photo: photo,
                                            content: content,
-                                           pets: pets))
-        { result in
+                                           pets: pets)) { result in
             self.disposeNetwork(result,
                                 dataModel: VoidResult.self,
                                 completion: completion)

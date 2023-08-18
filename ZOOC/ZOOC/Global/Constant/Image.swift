@@ -35,6 +35,7 @@ public enum Image{
     static let kakaoLogin = UIImage(named: "kakaoLogin")!
     static let listFill = UIImage(named: "list.fill")!
     static let list = UIImage(named: "list")!
+    static let noise = UIImage(named: "noise")!
     static let person = UIImage(named: "person")!
     static let plus = UIImage(named: "plus")!
     static let plusTabCircle = UIImage(named: "plus.tab.circle")!

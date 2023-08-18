@@ -392,11 +392,10 @@ final class ArchiveViewController : BaseViewController {
     }
     
     private func presentZoocAlertVC() {
-        let zoocAlertVC = ZoocAlertViewController()
-        zoocAlertVC.delegate = self
-        zoocAlertVC.alertType = .deleteArchive
-        zoocAlertVC.modalPresentationStyle = .overFullScreen
-        present(zoocAlertVC, animated: false)
+        let alertVC = ZoocAlertViewController(.deleteArchive)
+        alertVC.delegate = self
+        alertVC.modalPresentationStyle = .overFullScreen
+        present(alertVC, animated: false)
     }
     
     //MARK: - API Method

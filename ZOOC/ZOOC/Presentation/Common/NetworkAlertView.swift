@@ -55,14 +55,14 @@ final class NetworkAlertView: UIView {
         }
         
         titleLabel.do {
-            $0.text = "인터넷 연결이 불안정해요"
+            $0.text = "네트워크가 원활하지 않습니다."
             $0.backgroundColor = .white
             $0.font = .zoocSubhead2
             $0.textColor = .zoocDarkGray1
         }
         
         descriptionLabel.do {
-            $0.text = "네트워크 확인 후 다시 시도 해주세요."
+            $0.text = "인터넷 연결 상태를 확인해주세요."
             $0.font = .zoocBody1
             $0.textColor = .zoocGray1
             $0.textAlignment = .center

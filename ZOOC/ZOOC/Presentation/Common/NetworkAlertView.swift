@@ -116,32 +116,8 @@ final class NetworkAlertView: UIView {
     //MARK: - Action Method
     
     @objc func updateButtonDidTap() {
-        //startNetworkMonitoring()
-        
+          // 특정 API를 재시도할 수 있을까
     }
-    
-//    private func startNetworkMonitoring() {
-//        let monitor = NWPathMonitor()
-//        monitor.start(queue: DispatchQueue.main)
-//        monitor.pathUpdateHandler =  { path in
-//
-//            switch path.status {
-//
-//            case .satisfied:
-//                monitor.cancel()
-//                self.dismiss(animated: false)
-//            default:
-//                break
-//            }
-//        }
-//    }
-    
-    
-    @objc func exitButtonDidTap() {
-        
-        
-    }
-
 }
 
 

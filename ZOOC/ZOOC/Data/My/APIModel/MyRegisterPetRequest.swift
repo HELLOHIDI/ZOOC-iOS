@@ -1,19 +1,18 @@
 //
-//  MyRegisterPetRequestDto.swift
+//  MyRegisterPetRequest.swift
 //  ZOOC
 //
-//  Created by 류희재 on 2023/02/27.
+//  Created by 류희재 on 2023/08/17.
 //
 
-import Foundation
+import UIKit
 
-struct MyRegisterPetRequest: Codable {
-    let petNames: [String]
-    let files: [Data?]
-    let isPetPhotos: [Bool]
+struct MyRegisterPetRequest {
+    var name: String
+    var photo: UIImage?
     
-//    enum CodingKeys: String, CodingKey {
-//        case names = "petNames"
-//        case photos = "files"
-//    }
+    init(name: String = "", photo: UIImage? = nil) {
+        self.name = name
+        self.photo = photo
+    }
 }

@@ -40,10 +40,12 @@ public enum Image{
     static let plus = UIImage(named: "plus")!
     static let plusTabCircle = UIImage(named: "plus.tab.circle")!
     static let ring = UIImage(named: "ring")!
+    static let shop = UIImage(named: "shop")!
     static let smile = UIImage(named: "smile")!
     static let upload = UIImage(named: "upload")!
     static let xmark = UIImage(named: "xmark")!
     static let xmarkWhite = UIImage(named: "xmark.white")!
+    static let aiLogo = UIImage(named: "ai")!
     
     //MARK: - Default
     
@@ -74,6 +76,7 @@ public enum Image{
     static let graphics10 = UIImage(named: "graphics_10")!
     static let graphics11 = UIImage(named: "graphics_11")!
     static let graphics12 = UIImage(named: "graphics_12")!
+    static let graphics13 = UIImage(named: "graphics_13")!
     
     //MARK: - Mock
     
@@ -82,4 +85,9 @@ public enum Image{
     static let mockSeokWoo = UIImage(named: "mock_seokwoo")!
     static let mockYunSun = UIImage(named: "mock_yunsun")!
     static let mockHidi = UIImage(named: "mock_hidi")!
+    
+    static let mockfeaturedImage = UIImage(named: "featuredImage")!
+    static let mockdeprecated1 = UIImage(named: "mock_deprecated1")!
+    static let mockdeprecated2 = UIImage(named: "mock_deprecated2")!
+    static let mockdeprecated3 = UIImage(named: "mock_deprecated3")!
 }

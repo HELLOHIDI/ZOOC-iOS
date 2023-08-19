@@ -18,7 +18,7 @@ enum OnboardingService {
     case getFamily
     case getInviteCode(familyId: String)
     case postJoinFamily(_ request: OnboardingJoinFamilyRequest)
-    case makeFamily(_ request: OnboardingRegisterPetRequest)
+    case makeFamily
 }
 
 extension OnboardingService: BaseTargetType {
@@ -95,31 +95,8 @@ extension OnboardingService: BaseTargetType {
             return .requestJSONEncodable(param)
             
             
-        case .makeFamily(let param):
-            print(param)
-            var multipartFormDatas: [MultipartFormData] = []
-            
-            for name in param.petNames {
-                multipartFormDatas.append(MultipartFormData(
-                    provider: .data("\(name)".data(using: .utf8)!),
-                    name: "petNames[]"))
-            }
-
-            for photo in param.files {
-                guard let photo else { return .requestPlain}
-                    multipartFormDatas.append(MultipartFormData(
-                        provider: .data(photo),
-                        name: "files",
-                        fileName: "image.jpeg",
-                        mimeType: "image/jpeg"))
-            }
-            
-            for isPhoto in param.isPetPhotos {
-                multipartFormDatas.append(MultipartFormData(
-                    provider: .data("\(isPhoto)".data(using: .utf8)!),
-                    name: "isPetPhotos[]"))
-            }
-            return .uploadMultipart(multipartFormDatas)
+        case .makeFamily:
+            return .requestPlain
             
         case .getFamily:
             return .requestPlain

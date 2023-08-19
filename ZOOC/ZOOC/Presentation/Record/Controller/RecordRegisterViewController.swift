@@ -17,7 +17,6 @@ final class RecordRegisterViewController : BaseViewController{
     var recordData: RecordModel = RecordModel()
     var petList: [RecordRegisterModel] = []
     var selectedPetIDList: [Int] = []
-    var missionID: Int?
     
     //MARK: - UI Components
     
@@ -62,16 +61,11 @@ final class RecordRegisterViewController : BaseViewController{
     }
     
     private func style() {
-        if missionID != nil {
-            rootView.missionButton.setTitleColor(.zoocDarkGray1, for: .normal)
-        } else {
             rootView.dailyButton.setTitleColor(.zoocDarkGray1, for: .normal)
-        }
     }
     
-    func dataBind(data: RecordModel, missionID: Int?){
+    func dataBind(data: RecordModel){
         self.recordData = data
-        self.missionID = missionID
     }
     
     private func presentAlertViewController() {
@@ -123,7 +117,7 @@ extension RecordRegisterViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RecordRegisterCollectionViewCell.cellIdentifier, for: indexPath)
                     as? RecordRegisterCollectionViewCell else { return UICollectionViewCell() }
-            cell.dataBind(data: petList[indexPath.item], cellHeight: Int(collectionView.frame.height) / petList.count)
+            cell.dataBind(data: petList[indexPath.item])
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(

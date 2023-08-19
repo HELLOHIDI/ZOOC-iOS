@@ -320,7 +320,7 @@ extension MyViewController {
         let image = imageView.image
         let photo = hasPhoto ? image : nil
         let editPetProfileView = MyEditPetProfileViewController(
-            viewModel: MyEditPetProfileViewModel(
+            viewModel: DefaultMyEditPetProfileViewModel(
                 id: pet.id,
                 editPetProfileRequest: EditPetProfileRequest(
                     photo: hasPhoto,

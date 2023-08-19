@@ -92,8 +92,8 @@ final class MyRegisterPetViewController: BaseViewController {
             isPhotos.append(isPhoto)
         }
         
-        MyAPI.shared.registerPet(
-            param: MyRegisterPetRequest(petNames: names, files: photos, isPetPhotos: isPhotos)
+        MyAPI.shared.registerPets(
+            request: MyRegisterPetsRequest(petNames: names, files: photos, isPetPhotos: isPhotos)
         ) { result in
             self.validateResult(result)
             NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
@@ -127,13 +127,12 @@ extension MyRegisterPetViewController: UITableViewDelegate {
             let image = imageView.image
             let photo = hasPhoto ? image : nil
             let editPetProfileVC = MyEditPetProfileViewController(
-                viewModel: MyEditPetProfileViewModel(
+                viewModel: DefaultMyEditPetProfileViewModel(
                     id: petData.id,
                     editPetProfileRequest: EditPetProfileRequest(
                         photo: hasPhoto,
                         nickName: petData.name,
-                        file: photo
-                    ),
+                        file: photo),
                     repository: MyEditPetProfileRepositoryImpl()
                 )
             )

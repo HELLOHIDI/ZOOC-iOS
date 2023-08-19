@@ -110,7 +110,7 @@ final class MyEditPetProfileViewController: BaseViewController {
     }
     
     @objc func editCompleteButtonDidTap(){
-        viewModel.patchPetProfile()
+        viewModel.editCompleteButtonDidTap()
     }
 }
 

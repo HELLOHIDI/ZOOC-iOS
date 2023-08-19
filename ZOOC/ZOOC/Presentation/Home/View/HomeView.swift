@@ -20,10 +20,11 @@ final class HomeView : UIView{
     public let homeContentView = UIView()
     public let emptyView = UIImageView()
     
-    public let missionView = UIView()
-    public let missionWordLabel = UILabel()
-    public let missionLabel = UILabel()
+    public let aiView = UIView()
+    public let aiLogoImageView = UIImageView()
+    public let aiLabel = UILabel()
     public let noticeButton = UIButton()
+    public let shopButton = UIButton()
     
     public let petCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
     public let listButton = UIButton()
@@ -65,20 +66,29 @@ extension HomeView {
             $0.isHidden = true
         }
         
-        missionWordLabel.do {
-            $0.text = "미션"
-            $0.font = .zoocSubhead1
-            $0.textColor = .zoocMainGreen
+        aiView.do {
+            $0.backgroundColor = .clear
+            $0.makeCornerRound(radius: 12)
         }
         
-        missionLabel.do {
-            $0.text = "미션하기 기능이 종료되었어요 😭"
-            $0.font = .zoocBody3
+        aiLogoImageView.do {
+            $0.image = Image.aiLogo
+        }
+        
+        aiLabel.do {
+            $0.text = "우리집 강아지 AI 굿즈 만들기"
+            $0.font = .zoocBody1
             $0.textColor = .zoocGray3
+            $0.asColor(targetString: "AI", color: .zoocMainGreen)
         }
         
         noticeButton.do {
             $0.setImage(Image.ring, for: .normal)
+            $0.contentMode = .scaleAspectFit
+        }
+        
+        shopButton.do {
+            $0.setImage(Image.shop, for: .normal)
             $0.contentMode = .scaleAspectFit
         }
         
@@ -128,7 +138,9 @@ extension HomeView {
     private func hierarchy() {
         self.addSubview(homeScrollView)
         homeScrollView.addSubview(homeContentView)
-        homeContentView.addSubviews(missionView,
+        homeContentView.addSubviews(aiView,
+                                    noticeButton,
+                                    shopButton,
                                     petCollectionView,
                                     listButton,
                                     gridButton,
@@ -138,9 +150,8 @@ extension HomeView {
                                     emptyView)
         
         
-        missionView.addSubviews(missionWordLabel,
-                                missionLabel,
-                                noticeButton)
+        aiView.addSubviews(aiLogoImageView,
+                                aiLabel)
         
         
         archiveBottomView.addSubview(archiveIndicatorView)
@@ -162,10 +173,11 @@ extension HomeView {
             $0.height.equalTo(homeScrollView)
         }
         
-        missionView.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(50)
+        aiView.snp.makeConstraints {
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(18)
+            $0.leading.equalToSuperview().offset(30)
+            $0.trailing.equalToSuperview().inset(112)
+            $0.height.equalTo(42)
         }
         
         listButton.snp.makeConstraints {
@@ -181,7 +193,7 @@ extension HomeView {
         }
         
         petCollectionView.snp.makeConstraints {
-            $0.top.equalTo(missionView.snp.bottom).offset(20)
+            $0.top.equalTo(aiView.snp.bottom).offset(20)
             $0.leading.equalToSuperview().offset(30)
             $0.trailing.equalTo(listButton.snp.leading)
             $0.height.equalTo(40)
@@ -211,20 +223,26 @@ extension HomeView {
         
         //MARK: missionView
         
-        missionWordLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(30)
+        aiLogoImageView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(12)
             $0.centerY.equalToSuperview()
         }
         
-        missionLabel.snp.makeConstraints {
-            $0.leading.equalTo(missionWordLabel.snp.trailing).offset(10)
+        aiLabel.snp.makeConstraints {
+            $0.leading.equalTo(aiLogoImageView.snp.trailing).offset(10)
             $0.centerY.equalToSuperview()
         }
         
         noticeButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(20)
-            $0.centerY.equalToSuperview()
-            $0.height.width.equalTo(42)
+            $0.leading.equalTo(self.aiView.snp.trailing).offset(19)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(21)
+            $0.size.equalTo(36)
+        }
+        
+        shopButton.snp.makeConstraints {
+            $0.leading.equalTo(self.noticeButton.snp.trailing)
+            $0.top.equalTo(self.noticeButton)
+            $0.size.equalTo(36)
         }
         
         //MARK: archiveBottomView
@@ -235,5 +253,5 @@ extension HomeView {
             $0.height.equalTo(4)
         }
     }
-    
+
 }

@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class OnboardingCompleteProfileViewController: UIViewController{
+final class OnboardingCompleteProfileViewController: BaseViewController{
     
     //MARK: - Properties
     
@@ -49,7 +49,7 @@ final class OnboardingCompleteProfileViewController: UIViewController{
     }
     
     @objc private func notGetCodeButtonDidTap() {
-        pushToRegisterPetView()
+        requestMakeFamilyAPI()
     }
     
     @objc private func getCodeButtonDidTap() {
@@ -58,8 +58,16 @@ final class OnboardingCompleteProfileViewController: UIViewController{
 }
 
 private extension OnboardingCompleteProfileViewController {
+    private func requestMakeFamilyAPI() {
+        OnboardingAPI.shared.postMakeFamily() { result in
+            guard let result = self.validateResult(result) as? OnboardingMakeFamilyResult else { return }
+            UserDefaultsManager.familyID = String(result.familyId)
+            
+            self.pushToInviteFamilyView()
+        }
+    }
+    
     func updateCompleteProfileView() {
-        
         UIView.animate(withDuration: 1, delay: 1) {
             self.onboardingCompleteProfileView.completeProfileLabel.alpha = 0.4
             self.onboardingCompleteProfileView.completeProfileSubLabel.alpha = 1
@@ -74,8 +82,8 @@ private extension OnboardingCompleteProfileViewController {
         self.navigationController?.pushViewController(onboardingParticipateViewController, animated: true)
     }
     
-    func pushToRegisterPetView() {
-        let onboardingParticipateViewController = OnboardingRegisterPetViewController(onboardingPetRegisterViewModel: OnboardingPetRegisterViewModel())
-        self.navigationController?.pushViewController(onboardingParticipateViewController, animated: true)
+    func pushToInviteFamilyView() {
+        let onboardingInviteFamilyViewController = OnboardingInviteFamilyViewController()
+        self.navigationController?.pushViewController(onboardingInviteFamilyViewController, animated: true)
     }
 }

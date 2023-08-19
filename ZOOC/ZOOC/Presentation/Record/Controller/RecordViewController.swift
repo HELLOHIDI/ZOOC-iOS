@@ -148,9 +148,7 @@ extension RecordViewController {
             recordData.content = text
         } else { return }
         
-        recordRegisterViewController.dataBind(data: recordData, missionID: nil)
-        navigationController?.pushViewController(recordRegisterViewController, animated: true)
-        print(#function)
+        recordRegisterViewController.dataBind(data: recordData)
     }
     
     private func updateUI(){

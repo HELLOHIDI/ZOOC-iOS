@@ -142,13 +142,17 @@ extension RecordViewController {
     }
     
     func pushToRecordRegisterViewController() {
-        let recordRegisterViewController = RecordRegisterViewController()
+        let recordRegisterVC = RecordRegisterViewController()
         
         if let text = rootView.contentTextView.text{
             recordData.content = text
-        } else { return }
+        } else {
+            presentBottomAlert("내용을 입력해주세요.")
+            return
+        }
         
-        recordRegisterViewController.dataBind(data: recordData)
+        recordRegisterVC.dataBind(data: recordData)
+        navigationController?.pushViewController(recordRegisterVC, animated: true)
     }
     
     private func updateUI(){

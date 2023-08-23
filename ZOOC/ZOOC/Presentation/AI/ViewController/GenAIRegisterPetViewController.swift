@@ -75,17 +75,17 @@ final class GenAIRegisterPetViewController: BaseViewController {
     }
     
     private func delegate() {
-        rootView.nameTextField.editDelegate = self
+        rootView.petProfileNameTextField.editDelegate = self
         galleryAlertController.delegate = self
         imagePickerController.delegate = self
     }
     
     private func target() {
-        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        rootView.cancelButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
         
         rootView.completeButton.addTarget(self, action: #selector(registerPetButtonDidTap), for: .touchUpInside)
         
-        rootView.profileImageButton.addTarget(self, action: #selector(profileImageButtonDidTap) , for: .touchUpInside)
+        rootView.petProfileImageButton.addTarget(self, action: #selector(profileImageButtonDidTap) , for: .touchUpInside)
     }
     
     private func style() {
@@ -117,7 +117,7 @@ extension GenAIRegisterPetViewController: GalleryAlertControllerDelegate {
     }
     
     func deleteButtonDidTap() {
-        rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
+        rootView.petProfileImageButton.setImage(Image.defaultProfile, for: .normal)
         viewModel.deleteButtonDidTap()
     }
 }
@@ -129,7 +129,7 @@ extension GenAIRegisterPetViewController: UIImagePickerControllerDelegate {
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        rootView.profileImageButton.setImage(image, for: .normal)
+        rootView.petProfileImageButton.setImage(image, for: .normal)
         viewModel.registerPetProfileImageEvent(image)
         dismiss(animated: true)
     }
@@ -154,7 +154,7 @@ extension GenAIRegisterPetViewController: MyTextFieldDelegate {
             let fixedText = text.substring(from: 0, to:textFieldType.limit-1)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                self.rootView.nameTextField.text = fixedText
+                self.rootView.petProfileNameTextField.text = fixedText
             }
         }
     }
@@ -162,18 +162,15 @@ extension GenAIRegisterPetViewController: MyTextFieldDelegate {
 
 extension GenAIRegisterPetViewController {
     private func updateTextFieldUI(_ textFieldState: BaseTextFieldState) {
-        rootView.underLineView.backgroundColor = textFieldState.underLineColor
-        rootView.nameTextField.textColor = textFieldState.textColor
-        rootView.numberOfNameCharactersLabel.textColor = textFieldState.indexColor
+        rootView.petProfileNameTextField.textColor = textFieldState.textColor
     }
     
     private func updateUI(_ registerProfileData: MyRegisterPetRequest) {
-        rootView.nameTextField.text = registerProfileData.name
+        rootView.petProfileNameTextField.text = registerProfileData.name
         if registerProfileData.photo != nil {
-            rootView.profileImageButton.setImage(registerProfileData.photo, for: .normal)
+            rootView.petProfileImageButton.setImage(registerProfileData.photo, for: .normal)
         } else {
-            rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
+            rootView.petProfileImageButton.setImage(Image.defaultProfile, for: .normal)
         }
-        rootView.numberOfNameCharactersLabel.text = "\(registerProfileData.name.count)/4"
     }
 }

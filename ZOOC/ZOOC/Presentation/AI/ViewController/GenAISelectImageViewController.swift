@@ -39,10 +39,23 @@ final class GenAISelectImageViewController : BaseViewController{
         super.viewDidLoad()
         
         delegate()
+        bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.viewWillAppearEvent()
     }
     
     //MARK: - Custom Method
     
+    func bind() {
+        viewModel.petImageDatasets.observe(on: self) { [weak self] _ in
+            self?.rootView.petImageCollectionView.reloadData()
+            self?.updateUI()
+        }
+    }
     func delegate() {
         rootView.petImageCollectionView.delegate = self
         rootView.petImageCollectionView.dataSource = self
@@ -53,17 +66,55 @@ final class GenAISelectImageViewController : BaseViewController{
     
 }
 
-extension GenAISelectImageViewController: UICollectionViewDelegateFlowLayout {}
+extension GenAISelectImageViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let cellWidth = (collectionView.frame.width - 20) / 3
+        let cellHeight = cellWidth
+        return CGSize(width: cellWidth, height: cellHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        print(#function)
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        print(#function)
+        return 10
+    }
+}
 extension GenAISelectImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.petImageDatasets.value.count
+        print(#function)
+        return viewModel.selectedImageDatasets.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenAIPetImageCollectionViewCell.cellIdentifier, for: indexPath) as? GenAIPetImageCollectionViewCell else { return UICollectionViewCell() }
-        cell.petImageView.image = viewModel.petImageDatasets.value[indexPath.item]
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenAIPetImageCollectionViewCell.cellIdentifier, for: indexPath) as? GenAIPetImageCollectionViewCell else {
+            print("tlqkf")
+            return UICollectionViewCell()
+        }
+        if viewModel.petImageDatasets.value.count > 0 {
+            print(viewModel.petImageDatasets.value.count)
+            cell.petImageView.image = viewModel.petImageDatasets.value[indexPath.item]
+        }
+        
         return cell
     }
-    
-    
+}
+
+extension GenAISelectImageViewController {
+    func updateUI() {
+        let numberOfRows = CGFloat(viewModel.selectedImageDatasets.value.count / 3)
+        let totalHeight = numberOfRows * 99 + (numberOfRows - 1) * 10 // 10은 minimumLineSpacing
+        print("전체 높이 \(totalHeight)")
+        rootView.petImageCollectionView.snp.remakeConstraints {
+            $0.top.equalTo(rootView.subTitleLabel.snp.bottom).offset(84)
+            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.height.equalTo(totalHeight)
+        }
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
 }

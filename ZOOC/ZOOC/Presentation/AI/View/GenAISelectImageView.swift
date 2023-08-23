@@ -19,7 +19,7 @@ final class GenAISelectImageView: UIView {
     private let contentView = UIView()
     public lazy var petImageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
     private let titleLabel = UILabel()
-    private let subTitleLabel = UILabel()
+    public let subTitleLabel = UILabel()
     
     public lazy var generateAIModelButton = ZoocGradientButton()
     
@@ -52,6 +52,11 @@ final class GenAISelectImageView: UIView {
             $0.setImage(Image.back, for: .normal)
         }
         
+        scrollView.do {
+            $0.alwaysBounceVertical = true
+            $0.showsVerticalScrollIndicator = false
+        }
+        
         titleLabel.do {
             $0.text = "선택한 사진으로 확정하시나요?"
             $0.textColor = .zoocMainGreen
@@ -65,6 +70,16 @@ final class GenAISelectImageView: UIView {
             $0.textColor = .zoocGray2
             $0.font = .zoocBody2
             $0.textAlignment = .center
+        }
+        
+        petImageCollectionView.do {
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .vertical
+            
+            $0.collectionViewLayout = layout
+            $0.backgroundColor = .clear
+            $0.showsHorizontalScrollIndicator = false
+            $0.isScrollEnabled = false
         }
         
         generateAIModelButton.do {
@@ -81,6 +96,7 @@ final class GenAISelectImageView: UIView {
         contentView.addSubviews(
             titleLabel,
             subTitleLabel,
+            petImageCollectionView,
             generateAIModelButton
         )
     }
@@ -96,7 +112,7 @@ final class GenAISelectImageView: UIView {
         scrollView.snp.makeConstraints {
             $0.top.equalTo(self.backButton.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(4)
+            $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(4)
         }
         
         contentView.snp.makeConstraints {
@@ -118,11 +134,11 @@ final class GenAISelectImageView: UIView {
         petImageCollectionView.snp.makeConstraints {
             $0.top.equalTo(self.subTitleLabel.snp.bottom).offset(84)
             $0.leading.trailing.equalToSuperview().inset(30)
-            $0.height.equalTo(1000)
+            $0.height.equalTo(2000)
         }
         
         generateAIModelButton.snp.makeConstraints {
-            $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(16)
+            $0.top.equalTo(self.petImageCollectionView.snp.bottom)
             $0.centerX.equalToSuperview()
             $0.leading.equalToSuperview().offset(30)
             $0.height.equalTo(54)

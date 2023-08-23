@@ -40,6 +40,7 @@ final class GenAISelectImageViewController : BaseViewController{
         
         delegate()
         bind()
+        target()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,14 +62,27 @@ final class GenAISelectImageViewController : BaseViewController{
             }
         }
     }
+    
     func delegate() {
         rootView.petImageCollectionView.delegate = self
         rootView.petImageCollectionView.dataSource = self
     }
     
+    func target() {
+        rootView.xmarkButton.addTarget(self, action: #selector(xmarkButtonDidTap), for: .touchUpInside)
+        rootView.reSelectedImageButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+    }
+    
     
     //MARK: - Action Method
     
+    @objc func xmarkButtonDidTap() {
+        presentAlertViewController()
+    }
+    
+    @objc func backButtonDidTap() {
+        self.navigationController?.popViewController(animated: true)
+    }
 }
 
 extension GenAISelectImageViewController: UICollectionViewDelegateFlowLayout {
@@ -107,17 +121,17 @@ extension GenAISelectImageViewController: UICollectionViewDataSource {
 }
 
 extension GenAISelectImageViewController {
-    func updateUI() {
-        let numberOfRows = CGFloat(viewModel.selectedImageDatasets.value.count / 3)
-        let totalHeight = numberOfRows * 99 + (numberOfRows - 1) * 10 // 10은 minimumLineSpacing
-        print("전체 높이 \(totalHeight)")
-        rootView.petImageCollectionView.snp.remakeConstraints {
-            $0.top.equalTo(rootView.subTitleLabel.snp.bottom).offset(84)
-            $0.leading.trailing.equalToSuperview().inset(30)
-            $0.height.equalTo(totalHeight)
-        }
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
+    func presentAlertViewController() {
+        let zoocAlertVC = ZoocAlertViewController(.leaveAIPage)
+        zoocAlertVC.delegate = self
+        zoocAlertVC.modalPresentationStyle = .overFullScreen
+        self.present(zoocAlertVC, animated: false, completion: nil)
+    }
+}
+
+extension GenAISelectImageViewController: ZoocAlertViewControllerDelegate {
+    func exitButtonDidTap() {
+        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
 }

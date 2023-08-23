@@ -37,6 +37,7 @@ final class GenAIPetImageCollectionViewCell: UICollectionViewCell {
         
         petImageView.do {
             $0.backgroundColor = .zoocMainGreen
+            $0.makeCornerRound(radius: 15)
         }
     }
     

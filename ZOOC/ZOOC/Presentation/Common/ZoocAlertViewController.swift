@@ -16,6 +16,8 @@ enum AlertType {
     case deleteArchive
     case deleteAccount
     case needUpdate
+    case leaveAIPage
+    case shortOfPictures
     
     
     var title: String {
@@ -31,6 +33,10 @@ enum AlertType {
             return "회원 탈퇴 하시겠습니까?"
         case .needUpdate:
             return "새로운 버전이 나왔어요!"
+        case .leaveAIPage:
+            return "이제 마지막 단계에요!"
+        case .shortOfPictures:
+            return "생성에 필요한 사진이 부족해요"
         }
     }
     
@@ -47,6 +53,10 @@ enum AlertType {
             return "회원 탈퇴 시 자동으로 가족에서 탈퇴되고\n   작성한 글과 댓글이 모두 삭제됩니다"
         case .needUpdate:
             return "업데이트 후 새로운 기능을 만나보세요"
+        case .leaveAIPage:
+            return "지금 떠나면 내용이 저장되지 않아요"
+        case .shortOfPictures:
+            return "8장 - 15장의 사진을 업로드 해주세요"
         }
     }
     
@@ -63,6 +73,10 @@ enum AlertType {
             return "계속 할래요"
         case .needUpdate:
             return "업데이트"
+        case .leaveAIPage:
+            return  "이어 하기"
+        case .shortOfPictures:
+            return "다시 고르기"
         }
     }
     
@@ -79,6 +93,10 @@ enum AlertType {
             return "탈퇴"
         case .needUpdate:
             return "취소"
+        case .leaveAIPage:
+            return "나가기"
+        case .shortOfPictures:
+            return "나가기"
         }
     }
     
@@ -262,6 +280,6 @@ final class ZoocAlertViewController: UIViewController {
     }
     
     @objc func keepButtonDidTap() {
-        self.dismiss(animated: false)
+        dismiss(animated: false)
     }
 }

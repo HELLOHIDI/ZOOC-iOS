@@ -143,14 +143,16 @@ extension GenAIChoosePetViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension GenAIChoosePetViewController: ZoocAlertViewControllerDelegate {
+    func exitButtonDidTap() {
+        dismiss(animated: true)
+    }
+}
+
+extension GenAIChoosePetViewController {
     func pushToGenAIGuideVC() {
         let genAIGuideVC = GenAIGuideViewController()
         genAIGuideVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(genAIGuideVC, animated: true)
-    }
-    
-    func exitButtonDidTap() {
-        dismiss(animated: true)
     }
     
     func updateRegisterButtonUI(_ isSelected: Bool) {

@@ -175,7 +175,6 @@ extension RecordViewController {
 //MARK: - ZoocAlertViewControllerDelegate
 
 extension RecordViewController: ZoocAlertViewControllerDelegate {
-    
     func exitButtonDidTap() {
         dismiss(animated: true)
     }

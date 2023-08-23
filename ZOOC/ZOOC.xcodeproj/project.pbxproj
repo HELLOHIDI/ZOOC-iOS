@@ -1324,11 +1324,11 @@
 		D2B7355E2A8B94DF00F93C45 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				D2B735612A8BA1D700F93C45 /* GenAIGuideViewController.swift */,
-				D24AFAB12A8DFB9F00823E9C /* GenAIChoosePetViewController.swift */,
-				D27BDDC62A8C6FA2008E290D /* GenAICompletedViewController.swift */,
 				D24AFAB92A8E011800823E9C /* GenAIRegisterPetViewController.swift */,
+				D24AFAB12A8DFB9F00823E9C /* GenAIChoosePetViewController.swift */,
+				D2B735612A8BA1D700F93C45 /* GenAIGuideViewController.swift */,
 				D27D9EA72A8EFA1B00E02842 /* GenAISelectImageViewController.swift */,
+				D27BDDC62A8C6FA2008E290D /* GenAICompletedViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";

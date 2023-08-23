@@ -43,29 +43,32 @@ final class GenAIRegisterPetView: UIView {
         self.backgroundColor = .zoocBackgroundGreen
         
         cancelButton.do {
-            $0.setImage(Image.back, for: .normal)
+            $0.setImage(Image.xmark, for: .normal)
         }
-
+        
         titleLabel.do {
-            $0.font = .zoocHeadLine
+            $0.font = .zoocDisplay1
             $0.text = "AI 모델을 만들기 위해 \n먼저 반려동물을 등록해볼까요?"
             $0.textColor = .zoocDarkGray1
             $0.numberOfLines = 2
             $0.textAlignment = .left
+            $0.setLineSpacing(spacing: 6)
         }
         
         subTitleLabel.do {
             $0.font = .zoocBody3
-            $0.text = "반려동물 등록"
-            $0.textColor = .zoocDarkGray2
+            $0.text = "반려동물 추가등록은 마이페이지에서 가능해요"
+            $0.textColor = .zoocGray1
+            $0.textAlignment = .left
         }
         
         petProfileImageButton.do {
-            $0.makeCornerBorder(borderWidth: 5, borderColor: UIColor.zoocWhite1)
+            $0.setImage(Image.cameraCircle, for: .normal)
+            $0.makeCornerBorder(borderWidth: 1, borderColor: UIColor.zoocLightGreen)
             $0.makeCornerRound(radius: 35)
             $0.imageView?.contentMode = .scaleAspectFill
         }
-
+        
         petProfileNameTextField.do {
             $0.attributedPlaceholder = NSAttributedString(string: "ex) 사랑,토리 (4자 이내)", attributes: [NSAttributedString.Key.foregroundColor: UIColor.zoocGray1, NSAttributedString.Key.font: UIFont.zoocBody1])
             $0.addLeftPadding(inset: 10)
@@ -75,7 +78,7 @@ final class GenAIRegisterPetView: UIView {
             $0.returnKeyType = .done
             $0.makeCornerBorder(borderWidth: 1, borderColor: UIColor.zoocLightGray)
         }
-
+        
         completeButton.do {
             $0.setTitle("등록하기", for: .normal)
             $0.isEnabled = false
@@ -87,37 +90,39 @@ final class GenAIRegisterPetView: UIView {
             cancelButton,
             titleLabel,
             subTitleLabel,
-            petProfileImageButton,
-            petProfileNameTextField,
-            completeButton)
+            petProfileView,
+            completeButton
+        )
+        
+        petProfileView.addSubviews(petProfileImageButton,petProfileNameTextField)
     }
     
     private func layout() {
         cancelButton.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(10)
-            $0.trailing.equalToSuperview().offset(17)
+            $0.trailing.equalToSuperview().inset(17)
             $0.size.equalTo(42)
         }
         
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(103)
-            $0.centerX.equalToSuperview()
+            $0.leading.equalToSuperview().offset(30)
         }
         
         subTitleLabel.snp.makeConstraints {
             $0.top.equalTo(self.titleLabel.snp.bottom).offset(15)
-            $0.leading.equalToSuperview().offset(30)
+            $0.leading.equalTo(self.titleLabel)
         }
         
         petProfileView.snp.makeConstraints {
-            $0.top.equalTo(self.subTitleLabel.snp.bottom).offset(34)
+            $0.top.equalTo(self.subTitleLabel.snp.bottom).offset(24)
             $0.leading.equalToSuperview().offset(30)
+            $0.trailing.equalToSuperview()
             $0.height.equalTo(70)
         }
         
         petProfileImageButton.snp.makeConstraints {
             $0.top.leading.equalToSuperview()
-            $0.centerX.equalToSuperview()
             $0.size.equalTo(70)
         }
         

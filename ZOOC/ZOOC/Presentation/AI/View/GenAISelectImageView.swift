@@ -23,6 +23,8 @@ final class GenAISelectImageView: UIView {
     
     public lazy var generateAIModelButton = ZoocGradientButton()
     
+    public let activityIndicatorView = UIActivityIndicatorView(style: .large)
+    
     //MARK: - Life Cycles
     
     override init(frame: CGRect) {
@@ -97,7 +99,8 @@ final class GenAISelectImageView: UIView {
             titleLabel,
             subTitleLabel,
             petImageCollectionView,
-            generateAIModelButton
+            generateAIModelButton,
+            activityIndicatorView
         )
     }
         
@@ -142,6 +145,10 @@ final class GenAISelectImageView: UIView {
             $0.centerX.equalToSuperview()
             $0.leading.equalToSuperview().offset(30)
             $0.height.equalTo(54)
+        }
+        
+        activityIndicatorView.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
 }

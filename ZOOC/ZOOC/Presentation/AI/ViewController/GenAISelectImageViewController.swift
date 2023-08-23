@@ -46,14 +46,19 @@ final class GenAISelectImageViewController : BaseViewController{
         super.viewWillAppear(animated)
         
         viewModel.viewWillAppearEvent()
+        
     }
     
     //MARK: - Custom Method
     
     func bind() {
-        viewModel.petImageDatasets.observe(on: self) { [weak self] _ in
-            self?.rootView.petImageCollectionView.reloadData()
-            self?.updateUI()
+        viewModel.showEnabled.observe(on: self) { [weak self] canShow in
+            if canShow {
+                self?.rootView.activityIndicatorView.stopAnimating()
+                self?.rootView.petImageCollectionView.reloadData()
+            } else {
+                self?.rootView.activityIndicatorView.startAnimating()
+            }
         }
     }
     func delegate() {
@@ -86,7 +91,7 @@ extension GenAISelectImageViewController: UICollectionViewDelegateFlowLayout {
 extension GenAISelectImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print(#function)
-        return viewModel.selectedImageDatasets.value.count
+        return viewModel.petImageDatasets.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -95,10 +100,8 @@ extension GenAISelectImageViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         if viewModel.petImageDatasets.value.count > 0 {
-            print(viewModel.petImageDatasets.value.count)
             cell.petImageView.image = viewModel.petImageDatasets.value[indexPath.item]
         }
-        
         return cell
     }
 }

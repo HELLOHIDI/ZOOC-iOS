@@ -26,11 +26,11 @@ enum BaseTextFieldState {
     var textColor: UIColor {
         switch self {
         case .isFull:
-            return .black
+            return .zoocDarkGreen
         case .isEmpty:
-            return .black
+            return .zoocDarkGreen
         case .isWritten:
-            return .black
+            return .zoocDarkGreen
         }
     }
     

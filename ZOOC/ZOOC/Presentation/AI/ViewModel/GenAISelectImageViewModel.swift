@@ -6,15 +6,19 @@
 //
 
 import UIKit
+
 import PhotosUI
+import MobileCoreServices
 
 protocol GenAISelectImageViewModelInput {
     func viewWillAppearEvent()
+    func reloadDataEvent()
 }
 
 protocol GenAISelectImageViewModelOutput {
     var selectedImageDatasets : Observable<[PHPickerResult]> { get }
     var petImageDatasets : Observable<[UIImage]> { get }
+    var showEnabled: Observable<Bool> { get }
 }
 
 typealias GenAISelectImageViewModel = GenAISelectImageViewModelInput & GenAISelectImageViewModelOutput
@@ -23,30 +27,44 @@ final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
     
     var selectedImageDatasets: Observable<[PHPickerResult]> = Observable([])
     var petImageDatasets: Observable<[UIImage]> = Observable([])
+    var showEnabled: Observable<Bool> = Observable(false)
     
     init(selectedImageDatasets: [PHPickerResult]) {
         self.selectedImageDatasets.value = selectedImageDatasets
     }
     
     func viewWillAppearEvent() {
-        selectedImageDatasets.value.forEach { result in
-            let itemProvider = result.itemProvider
-            if itemProvider.canLoadObject(ofClass: UIImage.self) {
-                itemProvider.loadObject(ofClass: UIImage.self) { image, error in
-                    if let image = image as? UIImage {
+        let dispatchGroup = DispatchGroup()
+        
+        for index in 0..<selectedImageDatasets.value.count {
+            let itemProvider = selectedImageDatasets.value[index].itemProvider
+            
+            dispatchGroup.enter()
+            itemProvider.loadImage { image, error in
+                if let image = image {
+                    DispatchQueue.main.async {
                         self.petImageDatasets.value.append(image)
-                        // 이미지 처리는 여기서...
-                        /*
-                         만약 이 부분에서 UI 변경 관련 코드를 작성할 때는
-                         DispatchQueue를 사용해 main에서 실행해줘야한다
-                         */
+                        dispatchGroup.leave()
                     }
-                    if let error = error {
-                        print("삐용삐용 \(error)")
-                    }
+                }
+                if let error = error {
+                    print("Image Loading Error: \(error)")
+                    dispatchGroup.leave()
                 }
             }
         }
+        
+        // 모든 이미지 변환이 완료될 때까지 대기
+        dispatchGroup.notify(queue: DispatchQueue.main) {
+            self.reloadDataEvent() // 모든 변환이 끝나면 reloadDataEvent 호출
+        }
+    }
+    
+    func reloadDataEvent() {
+        if petImageDatasets.value.count > 0 && selectedImageDatasets.value.count == petImageDatasets.value.count {
+            showEnabled.value = true
+        } else {
+            showEnabled.value = false
+        }
     }
 }
-

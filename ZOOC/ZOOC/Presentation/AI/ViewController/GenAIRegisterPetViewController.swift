@@ -50,10 +50,6 @@ final class GenAIRegisterPetViewController: BaseViewController {
     //MARK: - Custom Method
     
     private func bind() {
-        viewModel.registerPetProfileDataOutput.observe(on: self) { [weak self] registerPetProfileData in
-            self?.updateUI(registerPetProfileData)
-        }
-        
         viewModel.ableToEditPetProfile.observe(on: self) { [weak self] isEnabled in
             self?.rootView.completeButton.isEnabled = isEnabled
         }
@@ -81,7 +77,7 @@ final class GenAIRegisterPetViewController: BaseViewController {
     }
     
     private func target() {
-        rootView.cancelButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        rootView.cancelButton.addTarget(self, action: #selector(cancelButtonDidTap), for: .touchUpInside)
         
         rootView.completeButton.addTarget(self, action: #selector(registerPetButtonDidTap), for: .touchUpInside)
         
@@ -100,8 +96,8 @@ final class GenAIRegisterPetViewController: BaseViewController {
         present(galleryAlertController,animated: true)
     }
     
-    @objc func backButtonDidTap() {
-        self.navigationController?.popViewController(animated: true)
+    @objc func cancelButtonDidTap() {
+        presentZoocAlertVC()
     }
     
     @objc func registerPetButtonDidTap(){
@@ -165,12 +161,10 @@ extension GenAIRegisterPetViewController {
         rootView.petProfileNameTextField.textColor = textFieldState.textColor
     }
     
-    private func updateUI(_ registerProfileData: MyRegisterPetRequest) {
-        rootView.petProfileNameTextField.text = registerProfileData.name
-        if registerProfileData.photo != nil {
-            rootView.petProfileImageButton.setImage(registerProfileData.photo, for: .normal)
-        } else {
-            rootView.petProfileImageButton.setImage(Image.defaultProfile, for: .normal)
-        }
+    private func presentZoocAlertVC() {
+        let alertVC = ZoocAlertViewController.init(.leavePage)
+        alertVC.delegate = self
+        alertVC.modalPresentationStyle = .overFullScreen
+        present(alertVC, animated: false)
     }
 }

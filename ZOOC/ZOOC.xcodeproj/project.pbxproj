@@ -213,6 +213,7 @@
 		D27D9EAA2A8EFA2F00E02842 /* GenAISelectImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9EA92A8EFA2F00E02842 /* GenAISelectImageView.swift */; };
 		D27D9EAC2A8F41B000E02842 /* GenAISelectImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9EAB2A8F41B000E02842 /* GenAISelectImageViewModel.swift */; };
 		D27D9EAE2A8F46EA00E02842 /* GenAIPetImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9EAD2A8F46EA00E02842 /* GenAIPetImageCollectionViewCell.swift */; };
+		D299957A2A95B8520004FB5D /* NSItemProvider+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29995792A95B8520004FB5D /* NSItemProvider+.swift */; };
 		D2B735562A86681800F93C45 /* MyEditProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735552A86681800F93C45 /* MyEditProfileRepository.swift */; };
 		D2B735582A8669BA00F93C45 /* MyEditPetProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735572A8669BA00F93C45 /* MyEditPetProfileRepository.swift */; };
 		D2B7355A2A866D8E00F93C45 /* MyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735592A866D8E00F93C45 /* MyRepository.swift */; };
@@ -441,6 +442,7 @@
 		D27D9EA92A8EFA2F00E02842 /* GenAISelectImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAISelectImageView.swift; sourceTree = "<group>"; };
 		D27D9EAB2A8F41B000E02842 /* GenAISelectImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAISelectImageViewModel.swift; sourceTree = "<group>"; };
 		D27D9EAD2A8F46EA00E02842 /* GenAIPetImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIPetImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		D29995792A95B8520004FB5D /* NSItemProvider+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSItemProvider+.swift"; sourceTree = "<group>"; };
 		D2B735552A86681800F93C45 /* MyEditProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditProfileRepository.swift; sourceTree = "<group>"; };
 		D2B735572A8669BA00F93C45 /* MyEditPetProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditPetProfileRepository.swift; sourceTree = "<group>"; };
 		D2B735592A866D8E00F93C45 /* MyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRepository.swift; sourceTree = "<group>"; };
@@ -593,6 +595,7 @@
 				87E462F22A113A37006FC35D /* CALayer+.swift */,
 				877DF3282A534DF2001CD452 /* NotificationName+.swift */,
 				D2C028F12A81F8B2003F4727 /* String+.swift */,
+				D29995792A95B8520004FB5D /* NSItemProvider+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1586,6 +1589,7 @@
 				877E57F22966D13E006D82FC /* ArchiveViewController.swift in Sources */,
 				4C6B1862296B69070059840D /* RecordRegisterViewController.swift in Sources */,
 				87B6624329521E7500B6FFA9 /* SceneDelegate.swift in Sources */,
+				D299957A2A95B8520004FB5D /* NSItemProvider+.swift in Sources */,
 				87A76ABF2960423C0096F669 /* GenericResponse.swift in Sources */,
 				8782C7E42968B03500C9324B /* HomePetCollectionViewCell.swift in Sources */,
 				872367192A19080600DCBBFF /* AuthError.swift in Sources */,

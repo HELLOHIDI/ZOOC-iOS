@@ -20,9 +20,7 @@ final class HomeView : UIView{
     public let homeContentView = UIView()
     public let emptyView = UIImageView()
     
-    public let aiView = UIView()
-    public let aiLogoImageView = UIImageView()
-    public let aiLabel = UILabel()
+    public let aiView = HomeAiButton()
     public let noticeButton = UIButton()
     public let shopButton = UIButton()
     
@@ -69,17 +67,6 @@ extension HomeView {
         aiView.do {
             $0.backgroundColor = .clear
             $0.makeCornerRound(radius: 12)
-        }
-        
-        aiLogoImageView.do {
-            $0.image = Image.aiLogo
-        }
-        
-        aiLabel.do {
-            $0.text = "우리집 강아지 AI 굿즈 만들기"
-            $0.font = .zoocBody1
-            $0.textColor = .zoocGray3
-            $0.asColor(targetString: "AI", color: .zoocMainGreen)
         }
         
         noticeButton.do {
@@ -149,11 +136,6 @@ extension HomeView {
                                     archiveGridCollectionView,
                                     emptyView)
         
-        
-        aiView.addSubviews(aiLogoImageView,
-                                aiLabel)
-        
-        
         archiveBottomView.addSubview(archiveIndicatorView)
     }
     
@@ -176,7 +158,7 @@ extension HomeView {
         aiView.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(18)
             $0.leading.equalToSuperview().offset(30)
-            $0.trailing.equalToSuperview().inset(112)
+            $0.trailing.equalTo(noticeButton.snp.leading).offset(-19)
             $0.height.equalTo(42)
         }
         
@@ -223,25 +205,15 @@ extension HomeView {
         
         //MARK: missionView
         
-        aiLogoImageView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(12)
-            $0.centerY.equalToSuperview()
-        }
-        
-        aiLabel.snp.makeConstraints {
-            $0.leading.equalTo(aiLogoImageView.snp.trailing).offset(10)
-            $0.centerY.equalToSuperview()
-        }
-        
-        noticeButton.snp.makeConstraints {
-            $0.leading.equalTo(self.aiView.snp.trailing).offset(19)
+        shopButton.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(21)
+            $0.trailing.equalToSuperview().inset(21)
             $0.size.equalTo(36)
         }
         
-        shopButton.snp.makeConstraints {
-            $0.leading.equalTo(self.noticeButton.snp.trailing)
-            $0.top.equalTo(self.noticeButton)
+        noticeButton.snp.makeConstraints {
+            $0.top.equalTo(shopButton)
+            $0.trailing.equalTo(shopButton.snp.leading)
             $0.size.equalTo(36)
         }
         

@@ -61,6 +61,7 @@ final class HomeViewController : BaseViewController {
         super.viewWillAppear(animated)
         
 //        requestTotalPetAPI()
+        rootView.aiView.startAnimation()
     }
     
     
@@ -71,14 +72,11 @@ final class HomeViewController : BaseViewController {
             present(guideVC, animated: false)
         }
         
-        rootView.aiView.startAnimation()
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         guideVC.dismiss(animated: false)
-    }
-    
-    deinit {
         rootView.aiView.endAnimation()
     }
     
@@ -465,7 +463,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         
         if collectionView == rootView.archiveGridCollectionView {
             
-            var width = collectionView.frame.width
+            var width = collectionView.frame.width - 60
             let spacing: CGFloat = 10
             width = width - (spacing * 2)
             width = width / 3
@@ -508,7 +506,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         }
         
         if collectionView == rootView.archiveGridCollectionView{
-            return .zero
+            return UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
         }
         
         return .zero

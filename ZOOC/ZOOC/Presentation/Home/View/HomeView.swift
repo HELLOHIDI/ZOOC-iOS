@@ -18,7 +18,6 @@ final class HomeView : UIView{
     
     public let homeScrollView = UIScrollView()
     public let homeContentView = UIView()
-    public let emptyView = UIImageView()
     
     public let aiView = HomeAiButton()
     public let noticeButton = UIButton()
@@ -30,6 +29,7 @@ final class HomeView : UIView{
     
     public let archiveListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
     public let archiveGridCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+    public let emptyView = UIImageView()
     
     public let archiveBottomView = UIView()
     public let archiveIndicatorView = HomeArchiveIndicatorView()
@@ -121,7 +121,6 @@ extension HomeView {
         
     }
     
-    
     private func hierarchy() {
         self.addSubview(homeScrollView)
         homeScrollView.addSubview(homeContentView)
@@ -189,7 +188,7 @@ extension HomeView {
         
         archiveGridCollectionView.snp.makeConstraints {
             $0.top.equalTo(archiveListCollectionView)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(self.safeAreaLayoutGuide)
         }
         

@@ -14,15 +14,25 @@ final class RecordRegisterViewController : BaseViewController{
     
     // MARK: - Properties
     
-    var recordData: RecordModel = RecordModel()
-    var petList: [RecordRegisterModel] = []
-    var selectedPetIDList: [Int] = []
+    private var recordData: RecordModel
+    private var petList: [RecordRegisterModel] = []
+    private var selectedPetIDList: [Int] = []
     
     //MARK: - UI Components
     
     private let rootView = RecordRegisterView()
     
     //MARK: - Life Cycle
+    
+    init(recordData: RecordModel) {
+        self.recordData = recordData
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         self.view = rootView
@@ -51,8 +61,6 @@ final class RecordRegisterViewController : BaseViewController{
     
     private func target() {
         rootView.xmarkButton.addTarget(self, action: #selector(xButtonDidTap), for: .touchUpInside)
-        //        rootView.dailyButton.addTarget(self, action: #selector(dailyButtonDidTap), for: .touchUpInside)
-        //        rootView.missionButton.addTarget(self, action: #selector(missionButtonDidTap), for: .touchUpInside)
         rootView.backButton.addTarget(self, action: #selector(backButtonDidTap),for: .touchUpInside)
         rootView.registerButton.addTarget(self, action: #selector(registerButtonDidTap), for: .touchUpInside)
         
@@ -61,11 +69,7 @@ final class RecordRegisterViewController : BaseViewController{
     }
     
     private func style() {
-            rootView.dailyButton.setTitleColor(.zoocDarkGray1, for: .normal)
-    }
-    
-    func dataBind(data: RecordModel){
-        self.recordData = data
+        
     }
     
     private func presentAlertViewController() {
@@ -99,8 +103,7 @@ final class RecordRegisterViewController : BaseViewController{
     }
     
     private func pushToRecordCompleteViewController() {
-        let recordCompleteVC = RecordCompleteViewController()
-        recordCompleteVC.dataBind(data: selectedPetIDList)
+        let recordCompleteVC = RecordCompleteViewController(selectedPetID: selectedPetIDList)
         self.navigationController?.pushViewController(recordCompleteVC, animated: true)
     }
 }

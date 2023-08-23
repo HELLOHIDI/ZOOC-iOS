@@ -21,9 +21,6 @@ final class RecordRegisterView : UIView{
     
     private let topBarView = UIView()
     public lazy var xmarkButton = UIButton()
-    private let buttonsContainerView = UIView()
-    public lazy var dailyButton = UIButton()
-    public lazy var missionButton = UIButton()
     private let cardView = UIView()
     private let headerView = UIView()
     public lazy var backButton = UIButton()
@@ -61,20 +58,6 @@ final class RecordRegisterView : UIView{
     private func style() {
         xmarkButton.do {
             $0.setImage(Image.xmark, for: .normal)
-        }
-        
-        dailyButton.do {
-            $0.setTitle("일상", for: .normal)
-            $0.titleLabel?.font = .zoocSubhead1
-            $0.setTitleColor(.zoocGray1, for: .normal)
-            $0.isEnabled = false
-        }
-        
-        missionButton.do {
-            $0.setTitle("미션", for: .normal)
-            $0.titleLabel?.font = .zoocSubhead1
-            $0.setTitleColor(.zoocGray1, for: .normal)
-            $0.isEnabled = false
         }
         
         cardView.do {
@@ -122,8 +105,7 @@ final class RecordRegisterView : UIView{
     private func hierarchy(){
         self.addSubviews(topBarView, cardView, registerButton)
         
-        topBarView.addSubviews(xmarkButton, buttonsContainerView)
-        buttonsContainerView.addSubviews(dailyButton, missionButton)
+        topBarView.addSubviews(xmarkButton)
         cardView.addSubviews(headerView, petCollectionView)
         headerView.addSubviews(backButton, titleLabel, subtitleLabel)
     }
@@ -139,27 +121,6 @@ final class RecordRegisterView : UIView{
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(22)
             $0.width.equalTo(42)
-            $0.height.equalTo(42)
-        }
-        
-        buttonsContainerView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(22)
-            $0.width.equalTo(112)
-            $0.height.equalTo(42)
-        }
-        
-        dailyButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalTo(self.missionButton.snp.leading)
-            $0.width.equalTo(56)
-            $0.height.equalTo(42)
-        }
-        
-        missionButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.width.equalTo(56)
             $0.height.equalTo(42)
         }
         

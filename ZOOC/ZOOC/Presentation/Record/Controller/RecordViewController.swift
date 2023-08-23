@@ -14,14 +14,12 @@ final class RecordViewController : BaseViewController{
     
     //MARK: - Properties
     
-    var petImage: UIImage?
     private var recordData = RecordModel()
     private let placeHoldText: String = """
                                         ex) 2023년 2월 30일
                                         가족에게 어떤 순간이었는지 남겨주세요
                                         """
-    var contentTextViewIsRegistered: Bool = false
-    private let galleryAlertController = GalleryAlertController()
+    private var contentTextViewIsRegistered: Bool = false
     private lazy var imagePickerController = UIImagePickerController()
     
     //MARK: - UI Components
@@ -142,17 +140,14 @@ extension RecordViewController {
     }
     
     func pushToRecordRegisterViewController() {
-        let recordRegisterVC = RecordRegisterViewController()
-        
         if let text = rootView.contentTextView.text{
             recordData.content = text
+            let recordRegisterVC = RecordRegisterViewController(recordData: recordData)
+            navigationController?.pushViewController(recordRegisterVC, animated: true)
         } else {
             presentBottomAlert("내용을 입력해주세요.")
             return
         }
-        
-        recordRegisterVC.dataBind(data: recordData)
-        navigationController?.pushViewController(recordRegisterVC, animated: true)
     }
     
     private func updateUI(){
@@ -163,17 +158,19 @@ extension RecordViewController {
         }
     }
     
-    private func ImageViewDidTap(tag: Int) {
-        checkAlbumPermission { hasPermission in
-            if hasPermission {
-                DispatchQueue.main.async {
-                    self.present(self.galleryAlertController,animated: true)
-                }
-            } else {
-                self.showAccessDenied()
-            }
-        }
-    }
+//    private func ImageViewDidTap(tag: Int) {
+//        checkAlbumPermission { hasPermission in
+//            if hasPermission {
+//                DispatchQueue.main.async {
+//                    let galleryAlertController = GalleryAlertController()
+//                    geallertAlertController.delegate = self
+//                    self.present(self.galleryAlertController,animated: true)
+//                }
+//            } else {
+//                self.showAccessDenied()
+//            }
+//        }
+//    }
 }
 
 //MARK: - ZoocAlertViewControllerDelegate

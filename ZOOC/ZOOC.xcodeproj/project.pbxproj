@@ -66,7 +66,6 @@
 		8764833B29523C0100F74882 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 8764833A29523C0100F74882 /* Kingfisher */; };
 		8765549F295846F3006BBDA9 /* ZoocTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8765549E295846F3006BBDA9 /* ZoocTabBarController.swift */; };
 		876554A3295848D6006BBDA9 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876554A2295848D5006BBDA9 /* BaseViewController.swift */; };
-		876554A529584912006BBDA9 /* HomeGuideVC_Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876554A429584912006BBDA9 /* HomeGuideVC_Deprecated.swift */; };
 		876554A72958494B006BBDA9 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876554A62958494B006BBDA9 /* MyViewController.swift */; };
 		877184382A052BF500AB7DE4 /* ZoocInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877184372A052BF500AB7DE4 /* ZoocInterceptor.swift */; };
 		8771843D2A0541B700AB7DE4 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8771843C2A0541B700AB7DE4 /* AuthService.swift */; };
@@ -294,7 +293,6 @@
 		8764832A295238EB00F74882 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		8765549E295846F3006BBDA9 /* ZoocTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocTabBarController.swift; sourceTree = "<group>"; };
 		876554A2295848D5006BBDA9 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		876554A429584912006BBDA9 /* HomeGuideVC_Deprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGuideVC_Deprecated.swift; sourceTree = "<group>"; };
 		876554A62958494B006BBDA9 /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		877184372A052BF500AB7DE4 /* ZoocInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocInterceptor.swift; sourceTree = "<group>"; };
 		8771843C2A0541B700AB7DE4 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -795,7 +793,6 @@
 			isa = PBXGroup;
 			children = (
 				872F638829B89D9B002EC413 /* HomeGuideViewController.swift */,
-				876554A429584912006BBDA9 /* HomeGuideVC_Deprecated.swift */,
 				87D5AF6329649DC100CA7F12 /* HomeViewController.swift */,
 				D26C68F12970AD810088DC9A /* HomeNoticeViewController.swift */,
 			);
@@ -1607,7 +1604,6 @@
 				877DF3292A534DF2001CD452 /* NotificationName+.swift in Sources */,
 				87D5AF5A29606AC900CA7F12 /* NetworkResult.swift in Sources */,
 				4C8A7C33297063F400783979 /* OnboardingInviteResult.swift in Sources */,
-				876554A529584912006BBDA9 /* HomeGuideVC_Deprecated.swift in Sources */,
 				8782C7EF296C41B200C9324B /* HomeArchiveGridCollectionViewCell.swift in Sources */,
 				D26C860E296B6E8600AEAF9B /* UILabel+.swift in Sources */,
 				D27D9EAA2A8EFA2F00E02842 /* GenAISelectImageView.swift in Sources */,

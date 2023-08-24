@@ -93,7 +93,8 @@ extension GenAIGuideViewController {
     private func pushToGenAISelectImageVC() {
         let genAISelectImageVC = GenAISelectImageViewController(
             viewModel: DefaultGenAISelectImageViewModel(
-                selectedImageDatasets: viewModel.selectedImageDatasets.value
+                selectedImageDatasets: viewModel.selectedImageDatasets.value,
+                repository: GenAIModelRepositoryImpl()
             )
         )
         self.navigationController?.pushViewController(genAISelectImageVC, animated: true)

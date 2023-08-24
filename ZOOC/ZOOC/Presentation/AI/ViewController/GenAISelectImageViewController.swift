@@ -61,6 +61,15 @@ final class GenAISelectImageViewController : BaseViewController {
                 self?.rootView.activityIndicatorView.startAnimating()
             }
         }
+        
+        viewModel.isCompleted.observe(on: self) { [weak self] isCompleted in
+            guard let isCompleted = isCompleted else { return }
+            if isCompleted {
+                self?.pushToGenAICompletedVC()
+            } else {
+                self?.presentBottomAlert("AI 모델 생성 중 문제가 발생했습니다")
+            }
+        }
     }
     
     func delegate() {
@@ -128,6 +137,11 @@ extension GenAISelectImageViewController {
         zoocAlertVC.exitButtonTapDelegate = self
         zoocAlertVC.modalPresentationStyle = .overFullScreen
         self.present(zoocAlertVC, animated: false, completion: nil)
+    }
+    
+    func pushToGenAICompletedVC() {
+        let genAICompletedVC = GenAICompletedViewController()
+        self.navigationController?.pushViewController(genAICompletedVC, animated: true)
     }
 }
 

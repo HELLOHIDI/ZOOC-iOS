@@ -13,26 +13,30 @@ import MobileCoreServices
 protocol GenAISelectImageViewModelInput {
     func viewWillAppearEvent()
     func reloadDataEvent()
+    func completeButtonDidTapEvent(petId: Int)
 }
 
 protocol GenAISelectImageViewModelOutput {
     var selectedImageDatasets : Observable<[PHPickerResult]> { get }
     var petImageDatasets : Observable<[UIImage]> { get }
     var showEnabled: Observable<Bool> { get }
+    var isCompleted: Observable<Bool?> { get }
 }
 
 typealias GenAISelectImageViewModel = GenAISelectImageViewModelInput & GenAISelectImageViewModelOutput
 
 final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
     
-    
+    let repository: GenAIModelRepository
     
     var selectedImageDatasets: Observable<[PHPickerResult]> = Observable([])
     var petImageDatasets: Observable<[UIImage]> = Observable([])
     var showEnabled: Observable<Bool> = Observable(false)
+    var isCompleted: Observable<Bool?> = Observable(nil)
     
-    init(selectedImageDatasets: [PHPickerResult]) {
+    init(selectedImageDatasets: [PHPickerResult], repository: GenAIModelRepository) {
         self.selectedImageDatasets.value = selectedImageDatasets
+        self.repository = repository
     }
     
     func viewWillAppearEvent() {
@@ -67,6 +71,31 @@ final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
             showEnabled.value = true
         } else {
             showEnabled.value = false
+        }
+    }
+    
+    func completeButtonDidTapEvent(petId: Int) {
+        repository.postMakeDataset(petId: petId) { [weak self] result in
+            switch result {
+            case .success(let data):
+                guard let result = data as? GenAIDatasetResult else { return }
+                guard let files = self?.petImageDatasets.value else { return }
+                self?.patchDatasetsImages(datasetId: result.datasetID, files: files)
+            default:
+                break
+            }
+            
+        }
+    }
+    
+    func patchDatasetsImages(datasetId: String, files: [UIImage]) {
+        repository.patchDatasetImages(datasetId: datasetId, files: files) { [weak self] result in
+            switch result {
+            case .success(_):
+                self?.isCompleted.value = true
+            default:
+                self?.isCompleted.value = false
+            }
         }
     }
 }

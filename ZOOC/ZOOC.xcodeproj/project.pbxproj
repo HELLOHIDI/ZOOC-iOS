@@ -129,6 +129,8 @@
 		D20C008D2A96E23500666963 /* GenAIGuideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */; };
 		D20C008F2A96F22600666963 /* GenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008E2A96F22600666963 /* GenAIService.swift */; };
 		D20C00912A96F23200666963 /* GenAIAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C00902A96F23200666963 /* GenAIAPI.swift */; };
+		D20C00952A96FE3200666963 /* GenAIPetDatasetsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C00942A96FE3200666963 /* GenAIPetDatasetsResult.swift */; };
+		D20C00972A9711C200666963 /* GenAIDatasetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C00962A9711C200666963 /* GenAIDatasetResult.swift */; };
 		D21CEC5C29AB9B3D00854A36 /* BaseTextFieldState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC5B29AB9B3D00854A36 /* BaseTextFieldState.swift */; };
 		D21CEC6029ABC01200854A36 /* MyRegisterPetsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC5F29ABC01200854A36 /* MyRegisterPetsRequest.swift */; };
 		D21CEC6229ABC1F900854A36 /* MyRegisterPetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC6129ABC1F900854A36 /* MyRegisterPetResult.swift */; };
@@ -361,6 +363,8 @@
 		D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideViewModel.swift; sourceTree = "<group>"; };
 		D20C008E2A96F22600666963 /* GenAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIService.swift; sourceTree = "<group>"; };
 		D20C00902A96F23200666963 /* GenAIAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIAPI.swift; sourceTree = "<group>"; };
+		D20C00942A96FE3200666963 /* GenAIPetDatasetsResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIPetDatasetsResult.swift; sourceTree = "<group>"; };
+		D20C00962A9711C200666963 /* GenAIDatasetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIDatasetResult.swift; sourceTree = "<group>"; };
 		D21CEC5B29AB9B3D00854A36 /* BaseTextFieldState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextFieldState.swift; sourceTree = "<group>"; };
 		D21CEC5F29ABC01200854A36 /* MyRegisterPetsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetsRequest.swift; sourceTree = "<group>"; };
 		D21CEC6129ABC1F900854A36 /* MyRegisterPetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetResult.swift; sourceTree = "<group>"; };
@@ -1078,6 +1082,7 @@
 		87B6625729521EC200B6FFA9 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				D20C00922A96FDF700666963 /* GenAI */,
 				871EA34B2970413700D0E8CC /* Common */,
 				87A76A96295F6DE50096F669 /* Onboarding */,
 				87A76A99295F6E0A0096F669 /* Home */,
@@ -1216,6 +1221,23 @@
 				D20C00902A96F23200666963 /* GenAIAPI.swift */,
 			);
 			path = GenAI;
+			sourceTree = "<group>";
+		};
+		D20C00922A96FDF700666963 /* GenAI */ = {
+			isa = PBXGroup;
+			children = (
+				D20C00932A96FE0100666963 /* APIModel */,
+			);
+			path = GenAI;
+			sourceTree = "<group>";
+		};
+		D20C00932A96FE0100666963 /* APIModel */ = {
+			isa = PBXGroup;
+			children = (
+				D20C00942A96FE3200666963 /* GenAIPetDatasetsResult.swift */,
+				D20C00962A9711C200666963 /* GenAIDatasetResult.swift */,
+			);
+			path = APIModel;
 			sourceTree = "<group>";
 		};
 		D22EF8FE2A7C9B5E0050E325 /* ViewModel */ = {
@@ -1541,6 +1563,7 @@
 				D26C8616296BEF9800AEAF9B /* OnboardingRegisterPetViewController.swift in Sources */,
 				8781DE4E29B273FB005ABF23 /* OnboardingFamilyResult.swift in Sources */,
 				876554A3295848D6006BBDA9 /* BaseViewController.swift in Sources */,
+				D20C00952A96FE3200666963 /* GenAIPetDatasetsResult.swift in Sources */,
 				4C6B1860296B40C00059840D /* RecordModel.swift in Sources */,
 				87809C2E2A8CC32F0060641F /* VersionState.swift in Sources */,
 				D23502F92961F34100F01101 /* MySettingSectionCollectionViewCell.swift in Sources */,
@@ -1674,6 +1697,7 @@
 				871EA35329704CD200D0E8CC /* UIImage+.swift in Sources */,
 				D20C008A2A96DDB000666963 /* GenAIModelRepository.swift in Sources */,
 				D2C028F42A8246C1003F4727 /* MyEditPetProfileViewModel.swift in Sources */,
+				D20C00972A9711C200666963 /* GenAIDatasetResult.swift in Sources */,
 				876483192952366A00F74882 /* Image.swift in Sources */,
 				4C6B1868296B930B0059840D /* RecordRegisterCollectionViewCell.swift in Sources */,
 				87648323295236B700F74882 /* UIColor+.swift in Sources */,

@@ -78,7 +78,7 @@ final class OnboardingRegisterPetTableViewCell: UITableViewCell {
         
         petProfileImageButton.do {
             
-            petProfileImageButton.makeCornerBorder(borderWidth: 5,
+            petProfileImageButton.setBorder(borderWidth: 5,
                                                    borderColor: .zoocWhite1)
             $0.imageView?.contentMode = .scaleAspectFill
         }
@@ -87,7 +87,7 @@ final class OnboardingRegisterPetTableViewCell: UITableViewCell {
             $0.textColor = .zoocDarkGreen
             $0.font = .zoocBody1
             $0.addLeftPadding(inset: 16)
-            petProfileNameTextField.makeCornerBorder(borderWidth: 1,
+            petProfileNameTextField.setBorder(borderWidth: 1,
                                                      borderColor: .zoocLightGray)
             $0.attributedPlaceholder = NSAttributedString(string: "ex) 사랑,토리 (4자 이내)",
                                                           attributes: [NSAttributedString.Key.foregroundColor: UIColor.zoocGray1, NSAttributedString.Key.font: UIFont.zoocBody1])

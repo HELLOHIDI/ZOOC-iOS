@@ -37,7 +37,7 @@ extension UIView {
         clipsToBounds = true
     }
     
-    func makeCornerBorder (borderWidth: CGFloat, borderColor: UIColor) {
+    func setBorder(borderWidth: CGFloat, borderColor: UIColor) {
         layer.borderWidth = borderWidth
         layer.borderColor = borderColor.cgColor
     }

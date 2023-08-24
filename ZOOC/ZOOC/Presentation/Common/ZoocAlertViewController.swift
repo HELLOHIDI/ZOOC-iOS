@@ -102,9 +102,14 @@ enum AlertType {
     
 }
 
-protocol ZoocAlertViewControllerDelegate: AnyObject {
+protocol ZoocAlertExitButtonTapGestureProtocol: AnyObject {
     func exitButtonDidTap()
 }
+
+protocol ZoocAlertKeepButtonTapGestureProtocol: AnyObject {
+    func keepButtonDidTap()
+}
+
 
 final class ZoocAlertViewController: UIViewController {
     
@@ -116,7 +121,8 @@ final class ZoocAlertViewController: UIViewController {
         }
     }
     
-    weak var delegate: ZoocAlertViewControllerDelegate?
+    weak var exitButtonTapDelegate: ZoocAlertExitButtonTapGestureProtocol?
+    weak var keepButtonTapDelegate: ZoocAlertKeepButtonTapGestureProtocol?
     
     //MARK: - UI Components
     
@@ -276,10 +282,11 @@ final class ZoocAlertViewController: UIViewController {
     
     @objc func popToMyViewButtonDidTap() {
         dismiss(animated: false)
-        delegate?.exitButtonDidTap()
+        exitButtonTapDelegate?.exitButtonDidTap()
     }
     
     @objc func keepButtonDidTap() {
         dismiss(animated: false)
+        keepButtonTapDelegate?.keepButtonDidTap()
     }
 }

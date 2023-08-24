@@ -134,7 +134,7 @@ extension RecordViewController: UIImagePickerControllerDelegate {
 extension RecordViewController {
     func presentAlertViewController() {
         let zoocAlertVC = ZoocAlertViewController(.leavePage)
-        zoocAlertVC.delegate = self
+        zoocAlertVC.exitButtonTapDelegate = self
         zoocAlertVC.modalPresentationStyle = .overFullScreen
         self.present(zoocAlertVC, animated: false, completion: nil)
     }
@@ -175,7 +175,7 @@ extension RecordViewController {
 
 //MARK: - ZoocAlertViewControllerDelegate
 
-extension RecordViewController: ZoocAlertViewControllerDelegate {
+extension RecordViewController: ZoocAlertExitButtonTapGestureProtocol {
     func exitButtonDidTap() {
         dismiss(animated: true)
     }

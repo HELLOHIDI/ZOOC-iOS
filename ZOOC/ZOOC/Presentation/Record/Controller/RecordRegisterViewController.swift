@@ -74,7 +74,7 @@ final class RecordRegisterViewController : BaseViewController{
     
     private func presentAlertViewController() {
         let zoocAlertVC = ZoocAlertViewController(.leavePage)
-        zoocAlertVC.delegate = self
+        zoocAlertVC.exitButtonTapDelegate = self
         zoocAlertVC.modalPresentationStyle = .overFullScreen
         self.present(zoocAlertVC, animated: false, completion: nil)
     }
@@ -210,7 +210,7 @@ extension RecordRegisterViewController {
     }
 }
 
-extension RecordRegisterViewController: ZoocAlertViewControllerDelegate {
+extension RecordRegisterViewController: ZoocAlertExitButtonTapGestureProtocol {
     func exitButtonDidTap() {
         dismiss(animated: true)
     }

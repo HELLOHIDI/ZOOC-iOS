@@ -87,25 +87,33 @@ extension GenAIGuideViewController {
     
     private func presentLeavePageAlertVC() {
         let alertVC = ZoocAlertViewController.init(.leavePage)
-        alertVC.delegate = self
+        alertVC.exitButtonTapDelegate = self
         alertVC.modalPresentationStyle = .overFullScreen
         present(alertVC, animated: false)
     }
     
     private func presentDenineGenerateAIViewController() {
         let zoocAlertVC = ZoocAlertViewController(.shortOfPictures)
-        zoocAlertVC.delegate = self
+        zoocAlertVC.exitButtonTapDelegate = self
+        zoocAlertVC.keepButtonTapDelegate = self
         zoocAlertVC.modalPresentationStyle = .overFullScreen
         self.present(zoocAlertVC, animated: false, completion: nil)
     }
 }
 
-extension GenAIGuideViewController: ZoocAlertViewControllerDelegate {
+extension GenAIGuideViewController: ZoocAlertExitButtonTapGestureProtocol, ZoocAlertKeepButtonTapGestureProtocol {
+    
     func exitButtonDidTap() {
         navigationController?.popViewController(animated: true)
         dismiss(animated: true)
     }
+    
+    func keepButtonDidTap() {
+        selectedImageDatasets = []
+        presentPHPickerViewController()
+    }
 }
+
 
 extension GenAIGuideViewController : PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {

@@ -142,7 +142,7 @@ extension GenAIChoosePetViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension GenAIChoosePetViewController: ZoocAlertViewControllerDelegate {
+extension GenAIChoosePetViewController: ZoocAlertExitButtonTapGestureProtocol {
     func exitButtonDidTap() {
         dismiss(animated: true)
     }

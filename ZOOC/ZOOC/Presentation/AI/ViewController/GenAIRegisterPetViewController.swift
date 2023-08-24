@@ -133,7 +133,7 @@ extension GenAIRegisterPetViewController: UIImagePickerControllerDelegate {
 
 //MARK: - ZoocAlertViewControllerDelegate
 
-extension GenAIRegisterPetViewController: ZoocAlertViewControllerDelegate {
+extension GenAIRegisterPetViewController: ZoocAlertExitButtonTapGestureProtocol {
     func exitButtonDidTap() {
         navigationController?.popViewController(animated: true)
         dismiss(animated: true)
@@ -163,7 +163,7 @@ extension GenAIRegisterPetViewController {
     
     private func presentZoocAlertVC() {
         let alertVC = ZoocAlertViewController.init(.leavePage)
-        alertVC.delegate = self
+        alertVC.exitButtonTapDelegate = self
         alertVC.modalPresentationStyle = .overFullScreen
         present(alertVC, animated: false)
     }

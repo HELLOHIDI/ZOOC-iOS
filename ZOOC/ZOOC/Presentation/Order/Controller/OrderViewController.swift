@@ -24,7 +24,7 @@ final class OrderViewController: BaseViewController {
     
     private let ordererView = OrdererView()
     private let addressView = AddressView()
-    private let productView = UIView()
+    private let productView = ProductView()
     private let paymentMethodView = UIView()
     private let amountView = UIView()
     
@@ -116,6 +116,12 @@ final class OrderViewController: BaseViewController {
         addressView.snp.makeConstraints {
             $0.top.equalTo(ordererView.snp.bottom).offset(10)
             $0.horizontalEdges.equalToSuperview()
+        }
+        
+        productView.snp.makeConstraints {
+            $0.top.equalTo(addressView.snp.bottom).offset(10)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
         
         

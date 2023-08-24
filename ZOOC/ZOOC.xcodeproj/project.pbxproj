@@ -100,6 +100,7 @@
 		87A3D88E2A975D78002C36DB /* PaymentMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D88D2A975D78002C36DB /* PaymentMethodView.swift */; };
 		87A3D8902A975D84002C36DB /* AmountOfPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D88F2A975D84002C36DB /* AmountOfPaymentView.swift */; };
 		87A3D8922A97756E002C36DB /* ZoocTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8912A97756E002C36DB /* ZoocTextField.swift */; };
+		87A3D8952A97C458002C36DB /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8942A97C458002C36DB /* Int+.swift */; };
 		87A76A92295F6DA50096F669 /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A76A91295F6DA50096F669 /* RecordViewController.swift */; };
 		87A76A9F295F6EA30096F669 /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A76A9E295F6EA30096F669 /* OnboardingService.swift */; };
 		87A76AA1295F6EA90096F669 /* OnboardingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A76AA0295F6EA90096F669 /* OnboardingAPI.swift */; };
@@ -339,6 +340,7 @@
 		87A3D88D2A975D78002C36DB /* PaymentMethodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodView.swift; sourceTree = "<group>"; };
 		87A3D88F2A975D84002C36DB /* AmountOfPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountOfPaymentView.swift; sourceTree = "<group>"; };
 		87A3D8912A97756E002C36DB /* ZoocTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocTextField.swift; sourceTree = "<group>"; };
+		87A3D8942A97C458002C36DB /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
 		87A76A91295F6DA50096F669 /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
 		87A76A9E295F6EA30096F669 /* OnboardingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingService.swift; sourceTree = "<group>"; };
 		87A76AA0295F6EA90096F669 /* OnboardingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAPI.swift; sourceTree = "<group>"; };
@@ -618,6 +620,7 @@
 				87E462F22A113A37006FC35D /* CALayer+.swift */,
 				877DF3282A534DF2001CD452 /* NotificationName+.swift */,
 				D2C028F12A81F8B2003F4727 /* String+.swift */,
+				87A3D8942A97C458002C36DB /* Int+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1756,6 +1759,7 @@
 				87C109252971A5B40086466F /* ArchiveCommentReqeust.swift in Sources */,
 				D2F193652970E72500AD87D3 /* OnboardingJoinFamilyRequest.swift in Sources */,
 				871EA344296F768100D0E8CC /* HomeArchiveResult.swift in Sources */,
+				87A3D8952A97C458002C36DB /* Int+.swift in Sources */,
 				87D5AF622960CFE500CA7F12 /* HomeGuideCollectionViewCell.swift in Sources */,
 				4C6B186A296C82850059840D /* RecordRegisterFourCollectionViewCell.swift in Sources */,
 				D26C68F62970B0640088DC9A /* HomeNoticeTableViewCell.swift in Sources */,

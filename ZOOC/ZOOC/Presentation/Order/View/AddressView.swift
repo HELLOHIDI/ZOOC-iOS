@@ -102,7 +102,7 @@ final class AddressView: UIView {
         let label = UILabel()
         label.backgroundColor = .zoocLightGray
         label.setBorder(borderWidth: 1, borderColor: .zoocLightGray)
-        label.makeCornerRound(ratio: 7)
+        label.makeCornerRound(radius: 7)
         return label
     }()
     
@@ -110,7 +110,7 @@ final class AddressView: UIView {
         let label = UILabel()
         label.backgroundColor = .zoocLightGray
         label.setBorder(borderWidth: 1, borderColor: .zoocLightGray)
-        label.makeCornerRound(ratio: 7)
+        label.makeCornerRound(radius: 7)
         label.numberOfLines = 0
         return label
     }()

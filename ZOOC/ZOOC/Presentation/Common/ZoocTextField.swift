@@ -26,7 +26,7 @@ final class ZoocTextField : UITextField {
     
     //MARK: - Life Cycle
     
-    init(_ keyboardType: UIKeyboardType) {
+    init(_ keyboardType: UIKeyboardType = .default) {
         super.init(frame: .zero)
         
         self.keyboardType = keyboardType

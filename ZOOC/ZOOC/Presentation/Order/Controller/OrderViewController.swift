@@ -44,7 +44,7 @@ final class OrderViewController: BaseViewController {
     
     
     private func style() {
-        
+        view.backgroundColor = .zoocBackgroundGreen
         
         backButton.do {
             $0.setImage(Image.back, for: .normal)
@@ -116,7 +116,6 @@ final class OrderViewController: BaseViewController {
         addressView.snp.makeConstraints {
             $0.top.equalTo(ordererView.snp.bottom).offset(10)
             $0.horizontalEdges.equalToSuperview()
-            $0.bottom.equalToSuperview()
         }
         
         

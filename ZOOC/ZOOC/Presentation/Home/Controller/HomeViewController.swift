@@ -524,12 +524,6 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 extension HomeViewController {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == rootView.homeScrollView {
-            let contentOffsetY = scrollView.contentOffset.y
-            let collectionViewContentSizeY = rootView.archiveListCollectionView.contentSize.height
-            
-            
-        }
         
         if scrollView == rootView.archiveListCollectionView {
             

@@ -13,7 +13,8 @@ import MobileCoreServices
 protocol GenAISelectImageViewModelInput {
     func viewWillAppearEvent()
     func reloadDataEvent()
-    func completeButtonDidTapEvent(petId: Int)
+    func generateAIModelButtonDidTapEvent()
+    func observePetIdEvent(notification: NSNotification)
 }
 
 protocol GenAISelectImageViewModelOutput {
@@ -21,6 +22,7 @@ protocol GenAISelectImageViewModelOutput {
     var petImageDatasets : Observable<[UIImage]> { get }
     var showEnabled: Observable<Bool> { get }
     var isCompleted: Observable<Bool?> { get }
+    var petId: Observable<Int?> { get }
 }
 
 typealias GenAISelectImageViewModel = GenAISelectImageViewModelInput & GenAISelectImageViewModelOutput
@@ -33,6 +35,7 @@ final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
     var petImageDatasets: Observable<[UIImage]> = Observable([])
     var showEnabled: Observable<Bool> = Observable(false)
     var isCompleted: Observable<Bool?> = Observable(nil)
+    var petId: Observable<Int?> = Observable(nil)
     
     init(selectedImageDatasets: [PHPickerResult], repository: GenAIModelRepository) {
         self.selectedImageDatasets.value = selectedImageDatasets
@@ -66,6 +69,11 @@ final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
         }
     }
     
+    func observePetIdEvent(notification: NSNotification) {
+        guard let petId = notification.object as? Int else { return }
+        self.petId.value = petId
+    }
+    
     func reloadDataEvent() {
         if petImageDatasets.value.count > 0 && selectedImageDatasets.value.count == petImageDatasets.value.count {
             showEnabled.value = true
@@ -74,7 +82,8 @@ final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
         }
     }
     
-    func completeButtonDidTapEvent(petId: Int) {
+    func generateAIModelButtonDidTapEvent() {
+        guard let petId = petId.value else { return }
         repository.postMakeDataset(petId: petId) { [weak self] result in
             switch result {
             case .success(let data):

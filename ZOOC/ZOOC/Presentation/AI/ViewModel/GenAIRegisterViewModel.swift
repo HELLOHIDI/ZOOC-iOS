@@ -79,8 +79,13 @@ extension DefaultGenAIRegisterViewModel {
     func registerPet() {
         repository.registerPet(request: registerPetProfileDataOutput.value) { result in
             switch result {
-            case .success(_):
+            case .success(let data):
                 self.registerCompletedOutput.value = true
+                guard let result = data as? MyRegisterPetResult else { return }
+                NotificationCenter.default.post(
+                    name: NSNotification.Name("petId"),
+                    object: result.id
+                )
             default:
                 self.registerCompletedOutput.value = false
             }

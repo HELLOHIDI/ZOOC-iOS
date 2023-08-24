@@ -78,6 +78,7 @@ final class GenAIChoosePetViewController: BaseViewController{
     }
     
     @objc private func registerButtonDidTap(){
+        viewModel.registerButtonDidTapEvent()
         pushToGenAIGuideVC()
     }
 }
@@ -111,7 +112,7 @@ extension GenAIChoosePetViewController: UICollectionViewDataSource {
 
 extension GenAIChoosePetViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.petSelectedEvent(at: indexPath.item)
+        viewModel.petButtonDidTapEvent(at: indexPath.item)
     }
 }
 

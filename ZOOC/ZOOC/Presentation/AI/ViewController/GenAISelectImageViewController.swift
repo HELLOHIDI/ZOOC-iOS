@@ -41,6 +41,8 @@ final class GenAISelectImageViewController : BaseViewController {
         delegate()
         bind()
         target()
+        
+        setNotification()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,8 +82,16 @@ final class GenAISelectImageViewController : BaseViewController {
     func target() {
         rootView.xmarkButton.addTarget(self, action: #selector(xmarkButtonDidTap), for: .touchUpInside)
         rootView.reSelectedImageButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        rootView.generateAIModelButton.addTarget(self, action: #selector(generateAIModelButtonDidTap), for: .touchUpInside)
     }
     
+    func setNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(petIdReceived),
+            name: NSNotification.Name("petId"),
+            object: nil)
+    }
     
     //MARK: - Action Method
     
@@ -94,6 +104,14 @@ final class GenAISelectImageViewController : BaseViewController {
         previousVC.viewModel.isPopped.value = true
         self.navigationController?.popViewController(animated: false)
         
+    }
+    
+    @objc func generateAIModelButtonDidTap() {
+        viewModel.generateAIModelButtonDidTapEvent()
+    }
+    
+    @objc func petIdReceived(notification: NSNotification) {
+        viewModel.observePetIdEvent(notification: notification)
     }
 }
 

@@ -1,0 +1,135 @@
+//
+//  PaymenyMethodCollectionViewCell.swift
+//  ZOOC
+//
+//  Created by 장석우 on 2023/08/25.
+//
+
+import UIKit
+
+final class PaymentMethodCollectionViewCell: UICollectionViewCell {
+    
+    //MARK: - Properties
+    
+    
+    enum PaymentType {
+        case withoutBankBook
+        case kakaoPay
+        case toss
+        case mobile
+        
+        var image: UIImage? {
+            
+            switch self {
+            case .withoutBankBook:
+                return UIImage(systemName: "dollarsign.circle")
+            default:
+                return UIImage(systemName: "dollarsign.circle")
+            }
+        }
+        
+        var text: String {
+            switch self {
+            case .withoutBankBook:
+                return "무통장 입금"
+            default:
+                return "아직 개발 전"
+            }
+        }
+    }
+    
+    private var type: PaymentType = .withoutBankBook  {
+        didSet {
+            updateUI()
+        }
+    }
+    
+    //MARK: - UI Components
+    
+    private let checkButton: UIButton = {
+        let button = UIButton()
+        button.setBackgroundColor(.white, for: .normal)
+        button.setBackgroundColor(.zoocMainGreen, for: .selected)
+        button.setBorder(borderWidth: 1, borderColor: .zoocLightGray)
+        button.isSelected = true
+        return button
+    }()
+    
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .zoocDarkGray1
+        return imageView
+    }()
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .zoocBody2
+        label.textColor = .zoocDarkGray1
+        return label
+    }()
+    
+    
+    //MARK: - Life Cycle
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        style()
+        hierarchy()
+        layout()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        checkButton.makeCornerRound(ratio: 2)
+    }
+    
+    //MARK: - Custom Method
+    
+    private func style() {
+        
+    }
+    
+    private func hierarchy() {
+        contentView.addSubviews(checkButton, imageView, titleLabel)
+    }
+    
+    private func layout() {
+        
+        checkButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(20)
+            $0.size.equalTo(25)
+            $0.centerY.equalToSuperview()
+        }
+        
+        imageView.snp.makeConstraints {
+            $0.leading.equalTo(checkButton.snp.trailing)
+            $0.centerY.equalToSuperview()
+            $0.height.equalTo(35)
+            $0.width.equalTo(60)
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.leading.equalTo(imageView.snp.trailing)
+            $0.centerY.equalToSuperview()
+        }
+        
+    }
+    
+    func dataBind(_ type: PaymentType) {
+        self.type = type
+    }
+    
+    private func updateUI() {
+        imageView.image = type.image
+        titleLabel.text = type.text
+    }
+    
+    
+}
+

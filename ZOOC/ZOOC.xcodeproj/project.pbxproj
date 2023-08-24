@@ -101,6 +101,7 @@
 		87A3D8902A975D84002C36DB /* AmountOfPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D88F2A975D84002C36DB /* AmountOfPaymentView.swift */; };
 		87A3D8922A97756E002C36DB /* ZoocTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8912A97756E002C36DB /* ZoocTextField.swift */; };
 		87A3D8952A97C458002C36DB /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8942A97C458002C36DB /* Int+.swift */; };
+		87A3D8972A97C736002C36DB /* PaymentMethodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8962A97C736002C36DB /* PaymentMethodCollectionViewCell.swift */; };
 		87A76A92295F6DA50096F669 /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A76A91295F6DA50096F669 /* RecordViewController.swift */; };
 		87A76A9F295F6EA30096F669 /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A76A9E295F6EA30096F669 /* OnboardingService.swift */; };
 		87A76AA1295F6EA90096F669 /* OnboardingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A76AA0295F6EA90096F669 /* OnboardingAPI.swift */; };
@@ -341,6 +342,7 @@
 		87A3D88F2A975D84002C36DB /* AmountOfPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountOfPaymentView.swift; sourceTree = "<group>"; };
 		87A3D8912A97756E002C36DB /* ZoocTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocTextField.swift; sourceTree = "<group>"; };
 		87A3D8942A97C458002C36DB /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
+		87A3D8962A97C736002C36DB /* PaymentMethodCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodCollectionViewCell.swift; sourceTree = "<group>"; };
 		87A76A91295F6DA50096F669 /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
 		87A76A9E295F6EA30096F669 /* OnboardingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingService.swift; sourceTree = "<group>"; };
 		87A76AA0295F6EA90096F669 /* OnboardingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAPI.swift; sourceTree = "<group>"; };
@@ -812,6 +814,7 @@
 				87A3D88B2A975D5F002C36DB /* ProductView.swift */,
 				87A3D88D2A975D78002C36DB /* PaymentMethodView.swift */,
 				87A3D88F2A975D84002C36DB /* AmountOfPaymentView.swift */,
+				87A3D8962A97C736002C36DB /* PaymentMethodCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1729,6 +1732,7 @@
 				8718A06829ADB423001C7460 /* GalleryAlertController.swift in Sources */,
 				D26C85FA296B109500AEAF9B /* OnboardingChooseRoleViewController.swift in Sources */,
 				D2C028F02A81F542003F4727 /* MyEditTextField.swift in Sources */,
+				87A3D8972A97C736002C36DB /* PaymentMethodCollectionViewCell.swift in Sources */,
 				D27D9EAC2A8F41B000E02842 /* GenAISelectImageViewModel.swift in Sources */,
 				87A3D8882A975D48002C36DB /* OredererView.swift in Sources */,
 				874AE9FA29B4A12F007A637D /* OnboardingJoinUserResult.swift in Sources */,

@@ -48,4 +48,11 @@ public enum URLs{
     static let postEmojiComment = "/comment/emoji/{recordId}"
     static let deleteComment = "/comment/{commentId}"
     
+    //MARK: - AI
+    
+    static let postDataset = "/ai/dataset"
+    static let getPetDataset = "/ai/dataset/{petId}"
+    static let patchDatasetImage = "/ai/image/{datasetId}"
+    static let patchDatasetImages = "/ai/images/{datasetId}"
+    
 }

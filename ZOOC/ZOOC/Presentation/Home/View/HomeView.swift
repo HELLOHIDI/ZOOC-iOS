@@ -118,16 +118,12 @@ extension HomeView {
             $0.showsHorizontalScrollIndicator = false
         }
         
-        
     }
     
     private func hierarchy() {
-        self.addSubview(homeScrollView)
+        addSubviews(aiView, noticeButton, shopButton, homeScrollView)
         homeScrollView.addSubview(homeContentView)
-        homeContentView.addSubviews(aiView,
-                                    noticeButton,
-                                    shopButton,
-                                    petCollectionView,
+        homeContentView.addSubviews(petCollectionView,
                                     listButton,
                                     gridButton,
                                     archiveBottomView,
@@ -140,10 +136,29 @@ extension HomeView {
     
     private func layout() {
         
+        aiView.snp.makeConstraints {
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(18)
+            $0.leading.equalToSuperview().offset(30)
+            $0.trailing.equalTo(noticeButton.snp.leading).offset(-19)
+            $0.height.equalTo(42)
+        }
+        
+        shopButton.snp.makeConstraints {
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(21)
+            $0.trailing.equalToSuperview().inset(21)
+            $0.size.equalTo(36)
+        }
+        
+        noticeButton.snp.makeConstraints {
+            $0.top.equalTo(shopButton)
+            $0.trailing.equalTo(shopButton.snp.leading)
+            $0.size.equalTo(36)
+        }
+        
         //MARK: rootView
         
         homeScrollView.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide)
+            $0.top.equalTo(aiView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(4)
         }
@@ -151,14 +166,7 @@ extension HomeView {
         homeContentView.snp.makeConstraints {
             $0.edges.equalTo(homeScrollView.contentLayoutGuide)
             $0.width.equalTo(homeScrollView.frameLayoutGuide)
-            $0.height.equalTo(homeScrollView)
-        }
-        
-        aiView.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(18)
-            $0.leading.equalToSuperview().offset(30)
-            $0.trailing.equalTo(noticeButton.snp.leading).offset(-19)
-            $0.height.equalTo(42)
+            $0.height.greaterThanOrEqualTo(homeScrollView)
         }
         
         listButton.snp.makeConstraints {
@@ -174,7 +182,7 @@ extension HomeView {
         }
         
         petCollectionView.snp.makeConstraints {
-            $0.top.equalTo(aiView.snp.bottom).offset(20)
+            $0.top.equalToSuperview().offset(12)
             $0.leading.equalToSuperview().offset(30)
             $0.trailing.equalTo(listButton.snp.leading)
             $0.height.equalTo(40)
@@ -189,7 +197,7 @@ extension HomeView {
         archiveGridCollectionView.snp.makeConstraints {
             $0.top.equalTo(archiveListCollectionView)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(self.safeAreaLayoutGuide)
+            $0.bottom.equalToSuperview()
         }
         
         emptyView.snp.makeConstraints {
@@ -197,23 +205,9 @@ extension HomeView {
         }
         
         archiveBottomView.snp.makeConstraints {
-            $0.bottom.equalTo(self.safeAreaLayoutGuide)
+            $0.bottom.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(80)
-        }
-        
-        //MARK: missionView
-        
-        shopButton.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(21)
-            $0.trailing.equalToSuperview().inset(21)
-            $0.size.equalTo(36)
-        }
-        
-        noticeButton.snp.makeConstraints {
-            $0.top.equalTo(shopButton)
-            $0.trailing.equalTo(shopButton.snp.leading)
-            $0.size.equalTo(36)
         }
         
         //MARK: archiveBottomView

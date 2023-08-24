@@ -238,7 +238,12 @@ final class HomeViewController : BaseViewController {
             guard let result = self.validateResult(result) as? [HomePetResult] else { return }
             
             self.petData = result
-            guard let id = self.petData.first?.id else { return }
+            guard let id = self.petData.first?.id else {
+                self.rootView.emptyView.isHidden = false
+                if self.guideVC.isViewLoaded {
+                    self.rootView.emptyView.isHidden = true
+                }
+                return }
             self.petID = id
             self.selectPetCollectionView(petID: id)
         }
@@ -506,7 +511,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         }
         
         if collectionView == rootView.archiveGridCollectionView{
-            return UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
+            return UIEdgeInsets(top: 0, left: 30, bottom: 30, right: 30)
         }
         
         return .zero
@@ -519,7 +524,14 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 extension HomeViewController {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == rootView.archiveListCollectionView{
+        if scrollView == rootView.homeScrollView {
+            let contentOffsetY = scrollView.contentOffset.y
+            let collectionViewContentSizeY = rootView.archiveListCollectionView.contentSize.height
+            
+            
+        }
+        
+        if scrollView == rootView.archiveListCollectionView {
             
             let scroll = scrollView.contentOffset.x + scrollView.contentInset.left
             let width = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right

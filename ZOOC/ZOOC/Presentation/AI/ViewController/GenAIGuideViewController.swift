@@ -15,13 +15,22 @@ final class GenAIGuideViewController : BaseViewController {
     
     //MARK: - Properties
     
-    private var selectedImageDatasets: [PHPickerResult] = []
+    let viewModel: GenAIGuideViewModel
     
     //MARK: - UI Components
     
     let rootView = GenAIGuideView()
     
     //MARK: - Life Cycle
+    
+    init(viewModel: GenAIGuideViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         self.view = rootView
@@ -31,15 +40,33 @@ final class GenAIGuideViewController : BaseViewController {
         super.viewDidLoad()
         
         target()
+        bind()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
-        selectedImageDatasets = []
+        viewModel.viewWillDisappearEvent()
     }
     
     //MARK: - Custom Method
+    
+    private func bind() {
+        viewModel.enablePhotoUpload.observe(on: self) { [weak self] canUpload in
+            guard let canUpload = canUpload else { return }
+            if canUpload {
+                self?.pushToGenAISelectImageVC()
+            } else {
+                self?.presentDenineGenerateAIViewController()
+            }
+        }
+        
+        viewModel.isPopped.observe(on: self) { [weak self] isPopped in
+            if isPopped {
+                self?.presentPHPickerViewController()
+            }
+        }
+    }
     
     private func target() {
         rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
@@ -66,7 +93,7 @@ extension GenAIGuideViewController {
     private func pushToGenAISelectImageVC() {
         let genAISelectImageVC = GenAISelectImageViewController(
             viewModel: DefaultGenAISelectImageViewModel(
-                selectedImageDatasets: selectedImageDatasets
+                selectedImageDatasets: viewModel.selectedImageDatasets.value
             )
         )
         self.navigationController?.pushViewController(genAISelectImageVC, animated: true)
@@ -104,12 +131,11 @@ extension GenAIGuideViewController {
 extension GenAIGuideViewController: ZoocAlertExitButtonTapGestureProtocol, ZoocAlertKeepButtonTapGestureProtocol {
     
     func exitButtonDidTap() {
-        navigationController?.popViewController(animated: true)
         dismiss(animated: true)
     }
     
     func keepButtonDidTap() {
-        selectedImageDatasets = []
+        viewModel.keepButtonTapEvent()
         presentPHPickerViewController()
     }
 }
@@ -119,14 +145,6 @@ extension GenAIGuideViewController : PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
         
-        for result in results {
-            selectedImageDatasets.append(result)
-        }
-        
-        if 8 <= self.selectedImageDatasets.count && self.selectedImageDatasets.count <= 15 {
-            self.pushToGenAISelectImageVC()
-        } else {
-            self.presentDenineGenerateAIViewController()
-        }
+        viewModel.didFinishChoosingPhotosEvent(results: results)
     }
 }

@@ -17,6 +17,7 @@ final class GenAISelectImageView: UIView {
     public lazy var xmarkButton = UIButton()
     public lazy var reSelectedImageButton = UIButton()
     public lazy var petImageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+    private let gradientImageView = UIImageView()
     private let titleLabel = UILabel()
     public let subTitleLabel = UILabel()
     
@@ -77,6 +78,10 @@ final class GenAISelectImageView: UIView {
             $0.isScrollEnabled = true
         }
         
+        gradientImageView.do {
+            $0.image = Image.gradient
+        }
+        
         reSelectedImageButton.do {
             $0.setTitle("사진을 다시 고를래요", for: .normal)
             $0.setTitleColor(.zoocGray1, for: .normal)
@@ -99,6 +104,7 @@ final class GenAISelectImageView: UIView {
             titleLabel,
             subTitleLabel,
             petImageCollectionView,
+            gradientImageView,
             reSelectedImageButton,
             generateAIModelButton,
             activityIndicatorView
@@ -127,6 +133,12 @@ final class GenAISelectImageView: UIView {
             $0.top.equalTo(self.subTitleLabel.snp.bottom).offset(36)
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.height.equalTo(392)
+        }
+        
+        gradientImageView.snp.makeConstraints {
+            $0.top.equalTo(self.petImageCollectionView).offset(347)
+            $0.width.equalTo(self.petImageCollectionView)
+            $0.height.equalTo(45)
         }
         
         reSelectedImageButton.snp.makeConstraints {

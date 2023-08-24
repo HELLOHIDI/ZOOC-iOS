@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class GenAISelectImageViewController : BaseViewController{
+final class GenAISelectImageViewController : BaseViewController {
     
     //MARK: - Properties
     
@@ -81,7 +81,10 @@ final class GenAISelectImageViewController : BaseViewController{
     }
     
     @objc func backButtonDidTap() {
-        self.navigationController?.popViewController(animated: true)
+        guard let previousVC = self.navigationController?.previousViewController as? GenAIGuideViewController else { return }
+        previousVC.viewModel.isPopped.value = true
+        self.navigationController?.popViewController(animated: false)
+        
     }
 }
 
@@ -110,7 +113,6 @@ extension GenAISelectImageViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenAIPetImageCollectionViewCell.cellIdentifier, for: indexPath) as? GenAIPetImageCollectionViewCell else {
-            print("tlqkf")
             return UICollectionViewCell()
         }
         if viewModel.petImageDatasets.value.count > 0 {

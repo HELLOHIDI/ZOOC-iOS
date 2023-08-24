@@ -150,7 +150,9 @@ extension GenAIChoosePetViewController: ZoocAlertExitButtonTapGestureProtocol {
 
 extension GenAIChoosePetViewController {
     func pushToGenAIGuideVC() {
-        let genAIGuideVC = GenAIGuideViewController()
+        let genAIGuideVC = GenAIGuideViewController(
+            viewModel: DefaultGenAIGuideViewModel()
+        )
         genAIGuideVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(genAIGuideVC, animated: true)
     }

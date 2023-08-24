@@ -25,6 +25,8 @@ typealias GenAISelectImageViewModel = GenAISelectImageViewModelInput & GenAISele
 
 final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
     
+    
+    
     var selectedImageDatasets: Observable<[PHPickerResult]> = Observable([])
     var petImageDatasets: Observable<[UIImage]> = Observable([])
     var showEnabled: Observable<Bool> = Observable(false)

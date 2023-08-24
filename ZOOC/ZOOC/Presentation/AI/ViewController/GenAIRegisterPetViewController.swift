@@ -61,7 +61,9 @@ final class GenAIRegisterPetViewController: BaseViewController {
         viewModel.registerCompletedOutput.observe(on: self) { [weak self] isSuccess in
             guard let isSuccess else { return }
             if isSuccess {
-                let genAIGuideVC = GenAIGuideViewController()
+                let genAIGuideVC = GenAIGuideViewController(
+                    viewModel: DefaultGenAIGuideViewModel()
+                )
                 genAIGuideVC.hidesBottomBarWhenPushed = true
                 self?.navigationController?.pushViewController(genAIGuideVC, animated: true)
             } else {

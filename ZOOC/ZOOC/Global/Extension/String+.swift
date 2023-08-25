@@ -20,5 +20,7 @@ extension String {
     func transform() -> AppVersion {
         self.split(separator: ".").map { Int($0) ?? 0 }
     }
+    
+    
 }
     

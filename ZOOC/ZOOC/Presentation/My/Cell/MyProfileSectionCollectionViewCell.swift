@@ -46,7 +46,7 @@ final class MyProfileSectionCollectionViewCell: UICollectionViewCell  {
     private func style() {
         profileImageView.do {
             $0.makeCornerRound(radius: 36)
-            $0.makeCornerBorder(borderWidth: 2, borderColor: .zoocGray1)
+            $0.setBorder(borderWidth: 2, borderColor: .zoocGray1)
             $0.contentMode = .scaleAspectFill
         }
         
@@ -61,7 +61,7 @@ final class MyProfileSectionCollectionViewCell: UICollectionViewCell  {
             $0.setTitleColor(.zoocGray2, for: .normal)
             $0.backgroundColor = .zoocWhite1
             $0.makeCornerRound(radius: 12)
-            $0.makeCornerBorder(borderWidth: 1, borderColor: .zoocLightGreen)
+            $0.setBorder(borderWidth: 1, borderColor: .zoocLightGreen)
         }
     }
     

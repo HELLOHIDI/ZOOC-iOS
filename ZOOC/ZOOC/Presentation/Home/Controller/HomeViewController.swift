@@ -109,6 +109,11 @@ final class HomeViewController : BaseViewController {
         rootView.noticeButton.addTarget(self,
                                         action: #selector(noticeButtonDidTap),
                                         for: .touchUpInside)
+        
+        rootView.shopButton.addTarget(self,
+                                      action: #selector(shopButtonDidTap),
+                                      for: .touchUpInside)
+        
         rootView.listButton.addTarget(self,
                                       action: #selector(listButtonDidTap),
                                       for: .touchUpInside)
@@ -162,6 +167,12 @@ final class HomeViewController : BaseViewController {
         let noticeVC = HomeNoticeViewController()
         noticeVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(noticeVC, animated: true)
+    }
+    
+    private func pushToShopViewController() {
+        let shopVC = OrderViewController() //TODO: - 일단은 주문서뷰로 이동
+        shopVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(shopVC, animated: true)
     }
     
     private func pushToGenAIViewController() {
@@ -276,6 +287,11 @@ final class HomeViewController : BaseViewController {
     @objc
     private func noticeButtonDidTap() {
         pushToHomeAlarmViewController()
+    }
+    
+    @objc
+    private func shopButtonDidTap() {
+        pushToShopViewController()
     }
     
     @objc

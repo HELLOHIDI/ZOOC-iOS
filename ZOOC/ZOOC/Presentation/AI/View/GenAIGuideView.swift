@@ -79,7 +79,7 @@ final class GenAIGuideView: UIView {
         
         featuredView.do {
             $0.backgroundColor = .zoocWhite2
-            $0.makeCornerBorder(borderWidth: 1, borderColor: .zoocLightGreen)
+            $0.setBorder(borderWidth: 1, borderColor: .zoocLightGreen)
             $0.makeCornerRound(radius: 20)
         }
         
@@ -104,7 +104,7 @@ final class GenAIGuideView: UIView {
         
         deprecatedView.do {
             $0.backgroundColor = .zoocWhite2
-            $0.makeCornerBorder(borderWidth: 1, borderColor: .zoocLightGreen)
+            $0.setBorder(borderWidth: 1, borderColor: .zoocLightGreen)
             $0.makeCornerRound(radius: 20)
         }
         

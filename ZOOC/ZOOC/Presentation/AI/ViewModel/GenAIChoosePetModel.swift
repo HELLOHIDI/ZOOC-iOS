@@ -55,8 +55,9 @@ final class DefaultGenAIChoosePetModel: GenAIChoosePetModel {
     }
     
     func registerButtonDidTapEvent() {
+        print(#function)
         NotificationCenter.default.post(
-            name: NSNotification.Name("petId"),
+            name: .petSelected,
             object: petId.value
         )
     }

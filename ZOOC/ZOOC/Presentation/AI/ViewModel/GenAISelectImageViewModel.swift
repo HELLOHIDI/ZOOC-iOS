@@ -14,7 +14,7 @@ protocol GenAISelectImageViewModelInput {
     func viewWillAppearEvent()
     func reloadDataEvent()
     func generateAIModelButtonDidTapEvent()
-    func observePetIdEvent(notification: NSNotification)
+    func observePetIdEvent(notification: Notification)
 }
 
 protocol GenAISelectImageViewModelOutput {
@@ -22,22 +22,23 @@ protocol GenAISelectImageViewModelOutput {
     var petImageDatasets : Observable<[UIImage]> { get }
     var showEnabled: Observable<Bool> { get }
     var isCompleted: Observable<Bool?> { get }
-    var petId: Observable<Int?> { get }
 }
 
 typealias GenAISelectImageViewModel = GenAISelectImageViewModelInput & GenAISelectImageViewModelOutput
 
 final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
     
+    private var petId: Int?
     let repository: GenAIModelRepository
     
     var selectedImageDatasets: Observable<[PHPickerResult]> = Observable([])
     var petImageDatasets: Observable<[UIImage]> = Observable([])
     var showEnabled: Observable<Bool> = Observable(false)
     var isCompleted: Observable<Bool?> = Observable(nil)
-    var petId: Observable<Int?> = Observable(nil)
     
-    init(selectedImageDatasets: [PHPickerResult], repository: GenAIModelRepository) {
+    
+    init(petId: Int? = nil, selectedImageDatasets: [PHPickerResult], repository: GenAIModelRepository) {
+        self.petId = petId
         self.selectedImageDatasets.value = selectedImageDatasets
         self.repository = repository
     }
@@ -69,9 +70,9 @@ final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
         }
     }
     
-    func observePetIdEvent(notification: NSNotification) {
+    func observePetIdEvent(notification: Notification) {
         guard let petId = notification.object as? Int else { return }
-        self.petId.value = petId
+        self.petId = petId
     }
     
     func reloadDataEvent() {
@@ -83,7 +84,9 @@ final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
     }
     
     func generateAIModelButtonDidTapEvent() {
-        guard let petId = petId.value else { return }
+        print(#function)
+        guard let petId = petId else { return }
+        print("펫 아이디: \(petId)")
         repository.postMakeDataset(petId: petId) { [weak self] result in
             switch result {
             case .success(let data):

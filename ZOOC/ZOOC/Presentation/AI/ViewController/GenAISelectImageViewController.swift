@@ -42,7 +42,7 @@ final class GenAISelectImageViewController : BaseViewController {
         bind()
         target()
         
-        setNotification()
+        setNotificationCenter()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,12 +85,13 @@ final class GenAISelectImageViewController : BaseViewController {
         rootView.generateAIModelButton.addTarget(self, action: #selector(generateAIModelButtonDidTap), for: .touchUpInside)
     }
     
-    func setNotification() {
+    func setNotificationCenter() {
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(petIdReceived),
-            name: NSNotification.Name("petId"),
-            object: nil)
+            selector: #selector(petIdReceived(_:)),
+            name: .petSelected,
+            object: nil
+        )
     }
     
     //MARK: - Action Method
@@ -110,7 +111,7 @@ final class GenAISelectImageViewController : BaseViewController {
         viewModel.generateAIModelButtonDidTapEvent()
     }
     
-    @objc func petIdReceived(notification: NSNotification) {
+    @objc func petIdReceived(_ notification: Notification) {
         viewModel.observePetIdEvent(notification: notification)
     }
 }
@@ -123,18 +124,15 @@ extension GenAISelectImageViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        print(#function)
         return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        print(#function)
         return 10
     }
 }
 extension GenAISelectImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(#function)
         return viewModel.petImageDatasets.value.count
     }
     

@@ -586,10 +586,10 @@
 			children = (
 				872BBD9129F9576E002E2C71 /* UIApplication+.swift */,
 				8764831C2952368100F74882 /* UIView+.swift */,
+				876483262952370F00F74882 /* UIStackView+.swift */,
 				8764831A2952367400F74882 /* UIViewController+.swift */,
 				8764831E2952368800F74882 /* UITableViewCell+.swift */,
 				876483202952369500F74882 /* UICollectionViewCell+.swift */,
-				876483262952370F00F74882 /* UIStackView+.swift */,
 				8764832A295238EB00F74882 /* UITextField+.swift */,
 				87648328295237B500F74882 /* Adjusted+.swift */,
 				87648324295236BE00F74882 /* UIFont+.swift */,

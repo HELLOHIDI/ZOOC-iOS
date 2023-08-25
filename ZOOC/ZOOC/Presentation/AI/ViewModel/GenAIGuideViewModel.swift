@@ -31,7 +31,6 @@ final class DefaultGenAIGuideViewModel: GenAIGuideViewModel {
     
     func viewWillDisappearEvent() {
         selectedImageDatasets.value = []
-//        isPopped.value = true
     }
     
     func keepButtonTapEvent() {

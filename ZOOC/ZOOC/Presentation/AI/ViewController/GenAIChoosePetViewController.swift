@@ -13,7 +13,7 @@ import Then
 final class GenAIChoosePetViewController: BaseViewController{
     
     // MARK: - Properties
-    
+
     let viewModel: GenAIChoosePetModel
     
     //MARK: - UI Components
@@ -155,6 +155,7 @@ extension GenAIChoosePetViewController {
             viewModel: DefaultGenAIGuideViewModel()
         )
         genAIGuideVC.hidesBottomBarWhenPushed = true
+        genAIGuideVC.petId = viewModel.petId.value
         navigationController?.pushViewController(genAIGuideVC, animated: true)
     }
     

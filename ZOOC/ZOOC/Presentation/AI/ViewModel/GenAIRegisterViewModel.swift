@@ -83,7 +83,7 @@ extension DefaultGenAIRegisterViewModel {
                 self.registerCompletedOutput.value = true
                 guard let result = data as? MyRegisterPetResult else { return }
                 NotificationCenter.default.post(
-                    name: NSNotification.Name("petId"),
+                    name: .petSelected,
                     object: result.id
                 )
             default:

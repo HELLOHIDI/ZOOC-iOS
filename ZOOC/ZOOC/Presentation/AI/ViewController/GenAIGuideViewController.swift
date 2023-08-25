@@ -15,6 +15,8 @@ final class GenAIGuideViewController : BaseViewController {
     
     //MARK: - Properties
     
+    var petId: Int?
+    
     let viewModel: GenAIGuideViewModel
     
     //MARK: - UI Components
@@ -93,6 +95,7 @@ extension GenAIGuideViewController {
     private func pushToGenAISelectImageVC() {
         let genAISelectImageVC = GenAISelectImageViewController(
             viewModel: DefaultGenAISelectImageViewModel(
+                petId: self.petId,
                 selectedImageDatasets: viewModel.selectedImageDatasets.value,
                 repository: GenAIModelRepositoryImpl()
             )

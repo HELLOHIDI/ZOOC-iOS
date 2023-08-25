@@ -8,5 +8,5 @@
 import Foundation
 
 struct GenAIDatasetResult: Codable {
-    let datasetID: String
+    let datasetId: String
 }

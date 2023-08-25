@@ -14,6 +14,7 @@ enum GenAIService {
     case getPetDataset(petId: String)
     case patchDatasetImage(datasetId: String, file: UIImage)
     case patchDatasetImages(datasetId: String, files: [UIImage])
+    case postRecordDatasetImages(familyId: String, content: String?, files: [UIImage], pet: Int)
 }
 
 extension GenAIService: BaseTargetType {
@@ -26,7 +27,9 @@ extension GenAIService: BaseTargetType {
         case .patchDatasetImage(let datasetId, file: _):
             return URLs.patchDatasetImage.replacingOccurrences(of: "{datasetId}", with: datasetId)
         case .patchDatasetImages(let datasetId, files: _):
-            return URLs.patchDatasetImage.replacingOccurrences(of: "{datasetId}", with: datasetId)
+            return URLs.patchDatasetImages.replacingOccurrences(of: "{datasetId}", with: datasetId)
+        case .postRecordDatasetImages(let familyId, content: _, files: _, pet: _):
+            return URLs.postRecordDatasetImages.replacingOccurrences(of: "{familyId}", with: familyId)
         }
     }
     
@@ -40,6 +43,8 @@ extension GenAIService: BaseTargetType {
             return .patch
         case .patchDatasetImages:
             return .patch
+        case .postRecordDatasetImages:
+            return .post
         }
     }
     
@@ -76,21 +81,52 @@ extension GenAIService: BaseTargetType {
             }
             
             return .uploadMultipart(multipartFormDatas)
+        case .postRecordDatasetImages(familyId: _, let content, let files, let pet):
+            var multipartFormDatas: [MultipartFormData] = []
+            
+            for file in files {
+                let photo = file.jpegData(compressionQuality: 1.0) ?? Data()
+                multipartFormDatas.append(MultipartFormData(
+                    provider: .data(photo),
+                    name: "files",
+                    fileName: "image.jpeg",
+                    mimeType: "image/jpeg"))
+                
+                let contentData = MultipartFormData(provider: .data(content?.data(using: String.Encoding.utf8) ?? Data()),
+                                                    name: "content",
+                                                    mimeType: "application/json")
+                multipartFormDatas.append(contentData)
+            }
+            
+            
+            if let petData = "\(pet)".data(using: .utf8) {
+                multipartFormDatas.append(MultipartFormData(
+                    provider: .data(petData),
+                    name: "pet",
+                    mimeType: "application/json"
+                ))
+            }
+            
+            return .uploadMultipart(multipartFormDatas)
         }
-    }
-    
-    var headers: [String : String]? {
-        switch self {
-        case .postDataset:
-            return APIConstants.hasTokenHeader
-        case .getPetDataset:
-            return APIConstants.hasTokenHeader
-        case .patchDatasetImage:
-            return APIConstants.multipartHeader
-        case .patchDatasetImages:
-            return APIConstants.multipartHeader
+        
+        
+        var headers: [String : String]? {
+            switch self {
+            case .postDataset:
+                return APIConstants.hasTokenHeader
+            case .getPetDataset:
+                return APIConstants.hasTokenHeader
+            case .patchDatasetImage:
+                return APIConstants.multipartHeader
+            case .patchDatasetImages:
+                return APIConstants.multipartHeader
+            case .postRecordDatasetImages:
+                return APIConstants.multipartHeader
+            }
         }
     }
 }
+
 
 

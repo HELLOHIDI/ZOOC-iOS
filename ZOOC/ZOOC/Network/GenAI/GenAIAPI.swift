@@ -26,7 +26,16 @@ extension GenAIAPI {
     
     public func patchDatasetImages(datasetId: String, files: [UIImage], completion: @escaping ((NetworkResult<Any>) -> Void)) {
         aiProvider.request(.patchDatasetImages(datasetId: datasetId, files: files)) { result in
-            self.disposeNetwork(result, dataModel: SimpleResponse.self, completion: completion)
+            self.disposeNetwork(result, dataModel: VoidResult.self, completion: completion)
+        }
+    }
+    
+    public func postRecordDatasetImages(familyId: String, content: String?, files: [UIImage], pet: Int, completion: @escaping ((NetworkResult<Any>) -> Void)) {
+        aiProvider.request(.postRecordDatasetImages(familyId: UserDefaultsManager.familyID, content: content, files: files, pet: pet)) { result in
+            self.disposeNetwork(
+                result,
+                dataModel: VoidResult.self,
+                completion: completion)
         }
     }
 }

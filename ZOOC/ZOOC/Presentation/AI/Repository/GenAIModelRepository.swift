@@ -10,6 +10,7 @@ import UIKit
 protocol GenAIModelRepository {
     func postMakeDataset(petId: Int, completion: @escaping (NetworkResult<Any>) -> Void)
     func patchDatasetImages(datasetId: String, files: [UIImage], completion: @escaping ((NetworkResult<Any>) -> Void))
+    func postRecordDatasetImages(familyId: String, content: String?, files: [UIImage], pet: Int, completion: @escaping ((NetworkResult<Any>) -> Void))
 }
 
 class GenAIModelRepositoryImpl: GenAIModelRepository {
@@ -19,6 +20,10 @@ class GenAIModelRepositoryImpl: GenAIModelRepository {
     
     func patchDatasetImages(datasetId: String, files: [UIImage], completion: @escaping ((NetworkResult<Any>) -> Void)) {
         GenAIAPI.shared.patchDatasetImages(datasetId: datasetId, files: files, completion: completion)
+    }
+    
+    func postRecordDatasetImages(familyId: String, content: String?, files: [UIImage], pet: Int,  completion: @escaping ((NetworkResult<Any>) -> Void)) {
+        GenAIAPI.shared.postRecordDatasetImages(familyId: familyId, content: content, files: files, pet: pet, completion: completion)
     }
 }
 

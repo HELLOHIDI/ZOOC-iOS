@@ -28,7 +28,7 @@ typealias GenAISelectImageViewModel = GenAISelectImageViewModelInput & GenAISele
 
 final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
     
-    private var petId: Int?
+    private var petId: Int
     let repository: GenAIModelRepository
     
     var selectedImageDatasets: Observable<[PHPickerResult]> = Observable([])
@@ -37,7 +37,7 @@ final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
     var isCompleted: Observable<Bool?> = Observable(nil)
     
     
-    init(petId: Int? = nil, selectedImageDatasets: [PHPickerResult], repository: GenAIModelRepository) {
+    init(petId: Int, selectedImageDatasets: [PHPickerResult], repository: GenAIModelRepository) {
         self.petId = petId
         self.selectedImageDatasets.value = selectedImageDatasets
         self.repository = repository
@@ -85,14 +85,13 @@ final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
     
     func generateAIModelButtonDidTapEvent() {
         print(#function)
-        guard let petId = petId else { return }
         print("펫 아이디: \(petId)")
         repository.postMakeDataset(petId: petId) { [weak self] result in
             switch result {
             case .success(let data):
                 guard let result = data as? GenAIDatasetResult else { return }
                 guard let files = self?.petImageDatasets.value else { return }
-                self?.patchDatasetsImages(datasetId: result.datasetID, files: files)
+                self?.patchDatasetsImages(datasetId: result.datasetId, files: files)
             default:
                 break
             }
@@ -102,6 +101,18 @@ final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
     
     func patchDatasetsImages(datasetId: String, files: [UIImage]) {
         repository.patchDatasetImages(datasetId: datasetId, files: files) { [weak self] result in
+            switch result {
+            case .success(_):
+                guard let pet = self?.petId else { return }
+                self?.postRecordDatasetImages(familyId: UserDefaultsManager.familyID, content: nil, files: files, pet: pet)
+            default:
+                self?.isCompleted.value = false
+            }
+        }
+    }
+    
+    func postRecordDatasetImages(familyId: String, content: String?, files: [UIImage], pet: Int) {
+        repository.postRecordDatasetImages(familyId: familyId, content: content, files: files, pet: pet) { [weak self] result in
             switch result {
             case .success(_):
                 self?.isCompleted.value = true

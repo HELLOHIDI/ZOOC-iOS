@@ -41,6 +41,7 @@ public enum URLs{
     static let detailPetRecord = "/record/detail/{familyId}/{petId}/{recordId}"
     static let totalRecord = "/record/{familyId}/{petId}"
     static let deleteRecord = "/record/{recordId}"
+    static let postRecordDatasetImages = "/record/many/{familyId}"
     
     //MARK: - Comment
     
@@ -54,5 +55,6 @@ public enum URLs{
     static let getPetDataset = "/ai/dataset/{petId}"
     static let patchDatasetImage = "/ai/image/{datasetId}"
     static let patchDatasetImages = "/ai/images/{datasetId}"
+    
     
 }

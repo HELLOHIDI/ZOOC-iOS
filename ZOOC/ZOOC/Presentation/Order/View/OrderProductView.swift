@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class ProductView: UIView {
+final class OrderProductView: UIView {
     
     //MARK: - Properties
     

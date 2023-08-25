@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PaymentMethodCollectionViewCell: UICollectionViewCell {
+final class OrderPaymentMethodCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Properties
     

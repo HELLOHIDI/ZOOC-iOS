@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class PaymentMethodView: UIView {
+final class OrderPaymentMethodView: UIView {
     
     //MARK: - Properties
     
@@ -115,8 +115,8 @@ final class PaymentMethodView: UIView {
         paymentCollectionView.delegate = self
         paymentCollectionView.dataSource = self
         
-        paymentCollectionView.register(PaymentMethodCollectionViewCell.self,
-                                       forCellWithReuseIdentifier: PaymentMethodCollectionViewCell.cellIdentifier)
+        paymentCollectionView.register(OrderPaymentMethodCollectionViewCell.self,
+                                       forCellWithReuseIdentifier: OrderPaymentMethodCollectionViewCell.cellIdentifier)
     }
     
     //MARK: - Action Method
@@ -125,7 +125,7 @@ final class PaymentMethodView: UIView {
     
 }
 
-extension PaymentMethodView: UICollectionViewDelegateFlowLayout {
+extension OrderPaymentMethodView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let width = collectionView.frame.width
@@ -135,13 +135,13 @@ extension PaymentMethodView: UICollectionViewDelegateFlowLayout {
     
 }
 
-extension PaymentMethodView: UICollectionViewDataSource {
+extension OrderPaymentMethodView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PaymentMethodCollectionViewCell.cellIdentifier, for: indexPath) as! PaymentMethodCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OrderPaymentMethodCollectionViewCell.cellIdentifier, for: indexPath) as! OrderPaymentMethodCollectionViewCell
         
         cell.dataBind(.withoutBankBook)
         return cell

@@ -9,11 +9,11 @@ import UIKit
 
 import SnapKit
 
-protocol AddressViewDelegate {
+protocol OrderAddressViewDelegate {
     
 }
 
-final class AddressView: UIView {
+final class OrderAddressView: UIView {
     
     enum ValidState {
         case satisfied

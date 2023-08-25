@@ -64,7 +64,7 @@ final class GenAIRegisterPetView: UIView {
         
         petProfileImageButton.do {
             $0.setImage(Image.cameraCircle, for: .normal)
-            $0.makeCornerBorder(borderWidth: 1, borderColor: UIColor.zoocLightGreen)
+            $0.setBorder(borderWidth: 1, borderColor: UIColor.zoocLightGreen)
             $0.makeCornerRound(radius: 35)
             $0.imageView?.contentMode = .scaleAspectFill
         }
@@ -76,7 +76,7 @@ final class GenAIRegisterPetView: UIView {
             $0.font = .zoocBody1
             $0.makeCornerRound(radius: 20)
             $0.returnKeyType = .done
-            $0.makeCornerBorder(borderWidth: 1, borderColor: UIColor.zoocLightGray)
+            $0.setBorder(borderWidth: 1, borderColor: UIColor.zoocLightGray)
         }
         
         completeButton.do {

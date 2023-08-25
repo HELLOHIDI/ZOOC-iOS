@@ -32,7 +32,7 @@ final class MyPetCollectionViewCell: UICollectionViewCell {
         super.draw(rect)
         
         makeCornerRound(ratio: 2)
-        makeCornerBorder(borderWidth: 1, borderColor: .zoocLightGray)
+        setBorder(borderWidth: 1, borderColor: .zoocLightGray)
     }
     
     //MARK: - Custom Method

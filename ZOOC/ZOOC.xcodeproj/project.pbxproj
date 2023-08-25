@@ -88,6 +88,21 @@
 		8782C7EB296AC58B00C9324B /* HomeArchiveIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782C7EA296AC58B00C9324B /* HomeArchiveIndicatorView.swift */; };
 		8782C7EF296C41B200C9324B /* HomeArchiveGridCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782C7EE296C41B200C9324B /* HomeArchiveGridCollectionViewCell.swift */; };
 		8782C7F3296CC13A00C9324B /* ArchiveCommentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782C7F2296CC13A00C9324B /* ArchiveCommentCollectionViewCell.swift */; };
+		87A3D8782A975385002C36DB /* ShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8772A975385002C36DB /* ShopViewController.swift */; };
+		87A3D87A2A97538D002C36DB /* ShopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8792A97538D002C36DB /* ShopViewModel.swift */; };
+		87A3D87C2A9753C3002C36DB /* DetailShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D87B2A9753C3002C36DB /* DetailShopViewController.swift */; };
+		87A3D87E2A9753CB002C36DB /* DetailShopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D87D2A9753CB002C36DB /* DetailShopViewModel.swift */; };
+		87A3D8802A97546D002C36DB /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D87F2A97546D002C36DB /* OrderViewController.swift */; };
+		87A3D8822A975476002C36DB /* OrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8812A975476002C36DB /* OrderViewModel.swift */; };
+		87A3D8882A975D48002C36DB /* OredererView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8872A975D48002C36DB /* OredererView.swift */; };
+		87A3D88A2A975D4F002C36DB /* OrderAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8892A975D4F002C36DB /* OrderAddressView.swift */; };
+		87A3D88C2A975D5F002C36DB /* OrderProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D88B2A975D5F002C36DB /* OrderProductView.swift */; };
+		87A3D88E2A975D78002C36DB /* OrderPaymentMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D88D2A975D78002C36DB /* OrderPaymentMethodView.swift */; };
+		87A3D8902A975D84002C36DB /* OrderAmountOfPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D88F2A975D84002C36DB /* OrderAmountOfPaymentView.swift */; };
+		87A3D8922A97756E002C36DB /* ZoocTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8912A97756E002C36DB /* ZoocTextField.swift */; };
+		87A3D8952A97C458002C36DB /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8942A97C458002C36DB /* Int+.swift */; };
+		87A3D8972A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8962A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift */; };
+		87A3D8992A987D55002C36DB /* OrderAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8982A987D55002C36DB /* OrderAgreementView.swift */; };
 		87A76A92295F6DA50096F669 /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A76A91295F6DA50096F669 /* RecordViewController.swift */; };
 		87A76A9F295F6EA30096F669 /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A76A9E295F6EA30096F669 /* OnboardingService.swift */; };
 		87A76AA1295F6EA90096F669 /* OnboardingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A76AA0295F6EA90096F669 /* OnboardingAPI.swift */; };
@@ -315,6 +330,21 @@
 		8782C7EA296AC58B00C9324B /* HomeArchiveIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeArchiveIndicatorView.swift; sourceTree = "<group>"; };
 		8782C7EE296C41B200C9324B /* HomeArchiveGridCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeArchiveGridCollectionViewCell.swift; sourceTree = "<group>"; };
 		8782C7F2296CC13A00C9324B /* ArchiveCommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveCommentCollectionViewCell.swift; sourceTree = "<group>"; };
+		87A3D8772A975385002C36DB /* ShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewController.swift; sourceTree = "<group>"; };
+		87A3D8792A97538D002C36DB /* ShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewModel.swift; sourceTree = "<group>"; };
+		87A3D87B2A9753C3002C36DB /* DetailShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailShopViewController.swift; sourceTree = "<group>"; };
+		87A3D87D2A9753CB002C36DB /* DetailShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailShopViewModel.swift; sourceTree = "<group>"; };
+		87A3D87F2A97546D002C36DB /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
+		87A3D8812A975476002C36DB /* OrderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewModel.swift; sourceTree = "<group>"; };
+		87A3D8872A975D48002C36DB /* OredererView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OredererView.swift; sourceTree = "<group>"; };
+		87A3D8892A975D4F002C36DB /* OrderAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAddressView.swift; sourceTree = "<group>"; };
+		87A3D88B2A975D5F002C36DB /* OrderProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderProductView.swift; sourceTree = "<group>"; };
+		87A3D88D2A975D78002C36DB /* OrderPaymentMethodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPaymentMethodView.swift; sourceTree = "<group>"; };
+		87A3D88F2A975D84002C36DB /* OrderAmountOfPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAmountOfPaymentView.swift; sourceTree = "<group>"; };
+		87A3D8912A97756E002C36DB /* ZoocTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocTextField.swift; sourceTree = "<group>"; };
+		87A3D8942A97C458002C36DB /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
+		87A3D8962A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPaymentMethodCollectionViewCell.swift; sourceTree = "<group>"; };
+		87A3D8982A987D55002C36DB /* OrderAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAgreementView.swift; sourceTree = "<group>"; };
 		87A76A91295F6DA50096F669 /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
 		87A76A9E295F6EA30096F669 /* OnboardingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingService.swift; sourceTree = "<group>"; };
 		87A76AA0295F6EA90096F669 /* OnboardingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAPI.swift; sourceTree = "<group>"; };
@@ -565,6 +595,7 @@
 				87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */,
 				87809C322A8CFDA20060641F /* VersionAlertViewController.swift */,
 				874369582A8FFB7F0035AFD6 /* NetworkAlertView.swift */,
+				87A3D8912A97756E002C36DB /* ZoocTextField.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -593,6 +624,7 @@
 				87E462F22A113A37006FC35D /* CALayer+.swift */,
 				877DF3282A534DF2001CD452 /* NotificationName+.swift */,
 				D2C028F12A81F8B2003F4727 /* String+.swift */,
+				87A3D8942A97C458002C36DB /* Int+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -753,6 +785,64 @@
 				8743695E2A90C4FB0035AFD6 /* HomeAiButton.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		87A3D8762A975374002C36DB /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				87A3D8772A975385002C36DB /* ShopViewController.swift */,
+				87A3D8792A97538D002C36DB /* ShopViewModel.swift */,
+				87A3D87B2A9753C3002C36DB /* DetailShopViewController.swift */,
+				87A3D87D2A9753CB002C36DB /* DetailShopViewModel.swift */,
+			);
+			path = Shop;
+			sourceTree = "<group>";
+		};
+		87A3D8832A975CD2002C36DB /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				87A3D8862A975D35002C36DB /* Controller */,
+				87A3D8852A975CF2002C36DB /* ViewModel */,
+				87A3D8842A975CEA002C36DB /* View */,
+			);
+			path = Order;
+			sourceTree = "<group>";
+		};
+		87A3D8842A975CEA002C36DB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				87A3D8872A975D48002C36DB /* OredererView.swift */,
+				87A3D8892A975D4F002C36DB /* OrderAddressView.swift */,
+				87A3D88B2A975D5F002C36DB /* OrderProductView.swift */,
+				87A3D88D2A975D78002C36DB /* OrderPaymentMethodView.swift */,
+				87A3D88F2A975D84002C36DB /* OrderAmountOfPaymentView.swift */,
+				87A3D8982A987D55002C36DB /* OrderAgreementView.swift */,
+				87A3D8962A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		87A3D8852A975CF2002C36DB /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				87A3D8812A975476002C36DB /* OrderViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		87A3D8862A975D35002C36DB /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				87A3D87F2A97546D002C36DB /* OrderViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		87A3D8932A977960002C36DB /* Order */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Order;
 			sourceTree = "<group>";
 		};
 		87A76A8B295F6D780096F669 /* Controller */ = {
@@ -1043,6 +1133,8 @@
 		87B6625529521EB400B6FFA9 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				87A3D8832A975CD2002C36DB /* Order */,
+				87A3D8762A975374002C36DB /* Shop */,
 				8765549D295846E7006BBDA9 /* Base */,
 				8743694E2A8E50E30035AFD6 /* Common */,
 				D2B7355C2A8B94B900F93C45 /* AI */,
@@ -1070,6 +1162,7 @@
 		87B6625729521EC200B6FFA9 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				87A3D8932A977960002C36DB /* Order */,
 				871EA34B2970413700D0E8CC /* Common */,
 				87A76A96295F6DE50096F669 /* Onboarding */,
 				87A76A99295F6E0A0096F669 /* Home */,
@@ -1483,9 +1576,11 @@
 				8723671E2A19277300DCBBFF /* ArchiveAPI.swift in Sources */,
 				8764831D2952368100F74882 /* UIView+.swift in Sources */,
 				871EA33E296F529C00D0E8CC /* UIImageView+.swift in Sources */,
+				87A3D88E2A975D78002C36DB /* OrderPaymentMethodView.swift in Sources */,
 				D2F1936729713FCD00AD87D3 /* OnboardingJWTTokenResult.swift in Sources */,
 				D26C8600296B27B100AEAF9B /* OnboardingCompleteProfileView.swift in Sources */,
 				D24AFABA2A8E011800823E9C /* GenAIRegisterPetViewController.swift in Sources */,
+				87A3D8902A975D84002C36DB /* OrderAmountOfPaymentView.swift in Sources */,
 				D27D95D5296DDF4F0097CD03 /* MyFamilyCollectionViewCell.swift in Sources */,
 				8764832B295238EB00F74882 /* UITextField+.swift in Sources */,
 				D26C68E3296DE4F80088DC9A /* MyRegisterPetView.swift in Sources */,
@@ -1493,6 +1588,7 @@
 				D26C68F0296F693E0088DC9A /* MyResult.swift in Sources */,
 				87DDDD92298E5BE500CBEC79 /* ArchiveCommentView.swift in Sources */,
 				D27D956C296CBA2D0097CD03 /* UIButton+.swift in Sources */,
+				87A3D88C2A975D5F002C36DB /* OrderProductView.swift in Sources */,
 				D26C8608296B585600AEAF9B /* OnboardingJoinFamilyView.swift in Sources */,
 				871EA35D2970CFA700D0E8CC /* SimpleResponse.swift in Sources */,
 				87A76A92295F6DA50096F669 /* RecordViewController.swift in Sources */,
@@ -1510,6 +1606,7 @@
 				D2DC80D52A0DFDF600F48209 /* RecordRegisterView.swift in Sources */,
 				D26C860A296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift in Sources */,
 				D24AFAC42A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift in Sources */,
+				87A3D8822A975476002C36DB /* OrderViewModel.swift in Sources */,
 				D26C85CF2968681900AEAF9B /* MyPetCollectionFooterView.swift in Sources */,
 				872F638929B89D9B002EC413 /* HomeGuideViewController.swift in Sources */,
 				8765549F295846F3006BBDA9 /* ZoocTabBarController.swift in Sources */,
@@ -1517,6 +1614,7 @@
 				D26C68E6296DE61F0088DC9A /* MyRegisterPetTableViewCell.swift in Sources */,
 				872367112A12AC4E00DCBBFF /* ArchiveModel.swift in Sources */,
 				D2C028F22A81F8B2003F4727 /* String+.swift in Sources */,
+				87A3D8802A97546D002C36DB /* OrderViewController.swift in Sources */,
 				874369592A8FFB7F0035AFD6 /* NetworkAlertView.swift in Sources */,
 				D23502F52961A69E00F01101 /* MyView.swift in Sources */,
 				D26C8616296BEF9800AEAF9B /* OnboardingRegisterPetViewController.swift in Sources */,
@@ -1527,6 +1625,7 @@
 				D23502F92961F34100F01101 /* MySettingSectionCollectionViewCell.swift in Sources */,
 				876483212952369500F74882 /* UICollectionViewCell+.swift in Sources */,
 				D26C85E82968CD8E00AEAF9B /* OnboardingAgreementViewController.swift in Sources */,
+				87A3D87A2A97538D002C36DB /* ShopViewModel.swift in Sources */,
 				87A76AAB295F6EDE0096F669 /* RecordService.swift in Sources */,
 				D26C68EA296DE6F70088DC9A /* MyRegisterPetTableFooterView.swift in Sources */,
 				D27D9EAE2A8F46EA00E02842 /* GenAIPetImageCollectionViewCell.swift in Sources */,
@@ -1571,6 +1670,8 @@
 				D26C85EA2968CF7E00AEAF9B /* OnboardingAgreementModel.swift in Sources */,
 				87648329295237B500F74882 /* Adjusted+.swift in Sources */,
 				D27D95D7296DE0E30097CD03 /* MyFamilySectionCollectionViewCell.swift in Sources */,
+				87A3D8922A97756E002C36DB /* ZoocTextField.swift in Sources */,
+				87A3D8992A987D55002C36DB /* OrderAgreementView.swift in Sources */,
 				87A76AA9295F6ED70096F669 /* MyAPI.swift in Sources */,
 				D26C85D1296869DD00AEAF9B /* UICollectionReusableView+.swift in Sources */,
 				D2779742299F76FD008A237D /* OnboardingAppleSocialLoginRequest.swift in Sources */,
@@ -1615,6 +1716,7 @@
 				D2B735582A8669BA00F93C45 /* MyEditPetProfileRepository.swift in Sources */,
 				87C6C4C92A537902003DA38A /* TextLiteral.swift in Sources */,
 				D26C861A296C0FC800AEAF9B /* OnboardingPetRegisterModel.swift in Sources */,
+				87A3D8782A975385002C36DB /* ShopViewController.swift in Sources */,
 				D27BDDC92A8C6FAC008E290D /* GenAICompletedView.swift in Sources */,
 				87809C332A8CFDA20060641F /* VersionAlertViewController.swift in Sources */,
 				D21DADC1298BFF2700CCC089 /* MyPetRegisterViewModel.swift in Sources */,
@@ -1634,7 +1736,9 @@
 				8718A06829ADB423001C7460 /* GalleryAlertController.swift in Sources */,
 				D26C85FA296B109500AEAF9B /* OnboardingChooseRoleViewController.swift in Sources */,
 				D2C028F02A81F542003F4727 /* MyEditTextField.swift in Sources */,
+				87A3D8972A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift in Sources */,
 				D27D9EAC2A8F41B000E02842 /* GenAISelectImageViewModel.swift in Sources */,
+				87A3D8882A975D48002C36DB /* OredererView.swift in Sources */,
 				874AE9FA29B4A12F007A637D /* OnboardingJoinUserResult.swift in Sources */,
 				872BBD9529F959FC002E2C71 /* UserDefaultWrapper.swift in Sources */,
 				87A76AA5295F6EC40096F669 /* HomeAPI.swift in Sources */,
@@ -1644,6 +1748,7 @@
 				8764831F2952368800F74882 /* UITableViewCell+.swift in Sources */,
 				876483272952370F00F74882 /* UIStackView+.swift in Sources */,
 				D23502FD2961F85100F01101 /* MySettingModel.swift in Sources */,
+				87A3D87E2A9753CB002C36DB /* DetailShopViewModel.swift in Sources */,
 				877184382A052BF500AB7DE4 /* ZoocInterceptor.swift in Sources */,
 				D2F3D6022A441AC900C90A5A /* EditPetProfileRequest.swift in Sources */,
 				D26C85F229693CFA00AEAF9B /* OnboardingWelcomeViewController.swift in Sources */,
@@ -1652,6 +1757,7 @@
 				D2C028F42A8246C1003F4727 /* MyEditPetProfileViewModel.swift in Sources */,
 				876483192952366A00F74882 /* Image.swift in Sources */,
 				4C6B1868296B930B0059840D /* RecordRegisterCollectionViewCell.swift in Sources */,
+				87A3D88A2A975D4F002C36DB /* OrderAddressView.swift in Sources */,
 				87648323295236B700F74882 /* UIColor+.swift in Sources */,
 				D27D9560296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift in Sources */,
 				D26C68EC296DE7B60088DC9A /* MyPetRegisterModel.swift in Sources */,
@@ -1661,6 +1767,7 @@
 				87C109252971A5B40086466F /* ArchiveCommentReqeust.swift in Sources */,
 				D2F193652970E72500AD87D3 /* OnboardingJoinFamilyRequest.swift in Sources */,
 				871EA344296F768100D0E8CC /* HomeArchiveResult.swift in Sources */,
+				87A3D8952A97C458002C36DB /* Int+.swift in Sources */,
 				87D5AF622960CFE500CA7F12 /* HomeGuideCollectionViewCell.swift in Sources */,
 				4C6B186A296C82850059840D /* RecordRegisterFourCollectionViewCell.swift in Sources */,
 				D26C68F62970B0640088DC9A /* HomeNoticeTableViewCell.swift in Sources */,
@@ -1668,6 +1775,7 @@
 				872BBD9229F9576E002E2C71 /* UIApplication+.swift in Sources */,
 				D23502E22961898C00F01101 /* MyProfileSectionCollectionViewCell.swift in Sources */,
 				D27D956A296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift in Sources */,
+				87A3D87C2A9753C3002C36DB /* DetailShopViewController.swift in Sources */,
 				D26C8612296B7CA500AEAF9B /* OnboardingRegisterPetView.swift in Sources */,
 				D23502F129619D4700F01101 /* MyPetCollectionViewCell.swift in Sources */,
 				871EA34A2970403300D0E8CC /* ArchiveResult.swift in Sources */,

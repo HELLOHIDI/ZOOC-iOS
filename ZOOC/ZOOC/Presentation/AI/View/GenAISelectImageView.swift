@@ -14,14 +14,16 @@ final class GenAISelectImageView: UIView {
     
     //MARK: - UI Components
     
-    public lazy var backButton = UIButton()
-    private let scrollView = UIScrollView()
-    private let contentView = UIView()
+    public lazy var xmarkButton = UIButton()
+    public lazy var reSelectedImageButton = UIButton()
     public lazy var petImageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+    private let gradientImageView = UIImageView()
     private let titleLabel = UILabel()
-    private let subTitleLabel = UILabel()
+    public let subTitleLabel = UILabel()
     
     public lazy var generateAIModelButton = ZoocGradientButton()
+    
+    public let activityIndicatorView = UIActivityIndicatorView(style: .large)
     
     //MARK: - Life Cycles
     
@@ -48,16 +50,15 @@ final class GenAISelectImageView: UIView {
     private func style() {
         self.backgroundColor = .zoocBackgroundGreen
         
-        backButton.do {
-            $0.setImage(Image.back, for: .normal)
+        xmarkButton.do {
+            $0.setImage(Image.xmark, for: .normal)
         }
         
         titleLabel.do {
-            $0.text = "선택한 사진으로 확정하시나요?"
-            $0.textColor = .zoocMainGreen
+            $0.text = "아래 사진으로 확정하시나요?"
+            $0.textColor = .zoocDarkGray1
             $0.font = .zoocDisplay1
             $0.textAlignment = .left
-            $0.asColor(targetString: "선택한 사진", color: .zoocMainGreen)
         }
         
         subTitleLabel.do {
@@ -65,6 +66,28 @@ final class GenAISelectImageView: UIView {
             $0.textColor = .zoocGray2
             $0.font = .zoocBody2
             $0.textAlignment = .center
+        }
+        
+        petImageCollectionView.do {
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .vertical
+            
+            $0.collectionViewLayout = layout
+            $0.backgroundColor = .clear
+            $0.showsHorizontalScrollIndicator = false
+            $0.isScrollEnabled = true
+        }
+        
+        gradientImageView.do {
+            $0.image = Image.gradient
+        }
+        
+        reSelectedImageButton.do {
+            $0.setTitle("사진을 다시 고를래요", for: .normal)
+            $0.setTitleColor(.zoocGray1, for: .normal)
+            $0.titleLabel?.font = .zoocBody2
+            $0.titleLabel?.textAlignment = .center
+            $0.setUnderline()
         }
         
         generateAIModelButton.do {
@@ -76,58 +99,66 @@ final class GenAISelectImageView: UIView {
     }
     
     private func hierarchy() {
-        self.addSubviews(backButton, scrollView)
-        scrollView.addSubview(contentView)
-        contentView.addSubviews(
+        self.addSubviews(
+            xmarkButton,
             titleLabel,
             subTitleLabel,
-            generateAIModelButton
+            petImageCollectionView,
+            gradientImageView,
+            reSelectedImageButton,
+            generateAIModelButton,
+            activityIndicatorView
         )
     }
-        
+    
     
     private func layout() {
-        backButton.snp.makeConstraints {
+        xmarkButton.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(11)
-            $0.leading.equalToSuperview().offset(17)
+            $0.trailing.equalToSuperview().inset(17)
             $0.size.equalTo(42)
         }
         
-        scrollView.snp.makeConstraints {
-            $0.top.equalTo(self.backButton.snp.bottom)
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(4)
-        }
-        
-        contentView.snp.makeConstraints {
-            $0.edges.equalTo(scrollView.contentLayoutGuide)
-            $0.width.equalTo(scrollView.frameLayoutGuide)
-            $0.height.equalTo(scrollView)
-        }
-        
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(31)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(97)
             $0.centerX.equalToSuperview()
         }
         
         subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.titleLabel.snp.bottom).offset(2)
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(6)
             $0.centerX.equalToSuperview()
         }
         
         petImageCollectionView.snp.makeConstraints {
-            $0.top.equalTo(self.subTitleLabel.snp.bottom).offset(84)
+            $0.top.equalTo(self.subTitleLabel.snp.bottom).offset(36)
             $0.leading.trailing.equalToSuperview().inset(30)
-            $0.height.equalTo(1000)
+            $0.height.equalTo(392)
+        }
+        
+        gradientImageView.snp.makeConstraints {
+            $0.top.equalTo(self.petImageCollectionView).offset(347)
+            $0.width.equalTo(self.petImageCollectionView)
+            $0.height.equalTo(45)
+        }
+        
+        reSelectedImageButton.snp.makeConstraints {
+            $0.top.equalTo(self.petImageCollectionView.snp.bottom).offset(40)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(140)
+            $0.height.equalTo(23)
         }
         
         generateAIModelButton.snp.makeConstraints {
-            $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(16)
+            $0.top.equalTo(self.reSelectedImageButton.snp.bottom).offset(14)
             $0.centerX.equalToSuperview()
             $0.leading.equalToSuperview().offset(30)
             $0.height.equalTo(54)
         }
+        
+        activityIndicatorView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
     }
 }
-    
-    
+
+

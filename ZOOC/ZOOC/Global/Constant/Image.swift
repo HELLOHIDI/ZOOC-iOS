@@ -47,6 +47,8 @@ public enum Image{
     static let xmarkWhite = UIImage(named: "xmark.white")!
     static let aiLogo = UIImage(named: "ai")!
     
+    static let gradient = UIImage(named: "gradient")
+    
     //MARK: - Default
     
     static let defaultProfile = UIImage(named: "default_profile")!

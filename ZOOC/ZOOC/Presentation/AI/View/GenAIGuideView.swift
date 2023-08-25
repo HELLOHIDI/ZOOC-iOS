@@ -15,6 +15,8 @@ final class GenAIGuideView: UIView {
     //MARK: - UI Components
     
     public lazy var backButton = UIButton()
+    public lazy var xmarkButton = UIButton()
+    
     private let titleLabel = UILabel()
     private let subTitleLabel = UILabel()
     
@@ -53,20 +55,24 @@ final class GenAIGuideView: UIView {
     private func style() {
         self.backgroundColor = .zoocBackgroundGreen
         
+        xmarkButton.do {
+            $0.setImage(Image.xmark, for: .normal)
+        }
+        
         backButton.do {
             $0.setImage(Image.back, for: .normal)
         }
         
         titleLabel.do {
             $0.text = "사진을 선택해주세요"
-            $0.textColor = .zoocMainGreen
+            $0.textColor = .zoocDarkGray1
             $0.font = .zoocDisplay1
             $0.textAlignment = .left
         }
         
         subTitleLabel.do {
             $0.text = "최적의 학습을 위해 아래 기준을 추천드려요"
-            $0.textColor = .zoocGray2
+            $0.textColor = .zoocGray1
             $0.font = .zoocBody2
             $0.textAlignment = .center
         }
@@ -149,6 +155,7 @@ final class GenAIGuideView: UIView {
     
     private func hierarchy() {
         self.addSubviews(
+            xmarkButton,
             backButton,
             titleLabel,
             subTitleLabel,
@@ -176,6 +183,12 @@ final class GenAIGuideView: UIView {
         
     
     private func layout() {
+        xmarkButton.snp.makeConstraints {
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(11)
+            $0.trailing.equalToSuperview().inset(17)
+            $0.size.equalTo(42)
+        }
+        
         backButton.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(11)
             $0.leading.equalToSuperview().offset(17)
@@ -183,27 +196,27 @@ final class GenAIGuideView: UIView {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(84)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(97)
             $0.centerX.equalToSuperview()
         }
         
         subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.titleLabel.snp.bottom).offset(2)
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(6)
             $0.centerX.equalToSuperview()
         }
         
         featuredView.snp.makeConstraints {
-            $0.top.equalTo(self.subTitleLabel.snp.bottom).offset(24)
+            $0.top.equalTo(self.subTitleLabel.snp.bottom).offset(44)
             $0.centerX.equalToSuperview()
             $0.leading.equalToSuperview().offset(30)
-            $0.height.equalTo(194)
+            $0.height.equalTo(180)
         }
         
         deprecatedView.snp.makeConstraints {
-            $0.top.equalTo(self.featuredView.snp.bottom).offset(29)
+            $0.top.equalTo(self.featuredView.snp.bottom).offset(12)
             $0.centerX.equalToSuperview()
             $0.leading.equalToSuperview().offset(30)
-            $0.height.equalTo(194)
+            $0.height.equalTo(182)
         }
         
         selectImageButton.snp.makeConstraints {
@@ -216,19 +229,18 @@ final class GenAIGuideView: UIView {
         //Featured View
         
         featuredImageView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(13)
+            $0.top.leading.equalToSuperview().offset(14)
             $0.centerX.equalToSuperview()
-            $0.leading.equalToSuperview().offset(11)
             $0.height.equalTo(89)
         }
         
         featuredDescribeLabel.snp.makeConstraints {
-            $0.top.equalTo(self.featuredImageView.snp.bottom).offset(20)
+            $0.top.equalTo(self.featuredImageView.snp.bottom).offset(16)
             $0.centerX.equalToSuperview()
         }
         
         featuredSubDescribeLabel.snp.makeConstraints {
-            $0.top.equalTo(self.featuredDescribeLabel.snp.bottom).offset(8)
+            $0.top.equalTo(self.featuredDescribeLabel.snp.bottom).offset(4)
             $0.centerX.equalToSuperview()
         }
         

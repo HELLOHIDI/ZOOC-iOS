@@ -13,7 +13,7 @@ import Then
 final class GenAIChoosePetViewController: BaseViewController{
     
     // MARK: - Properties
-    
+
     let viewModel: GenAIChoosePetModel
     
     //MARK: - UI Components
@@ -78,6 +78,7 @@ final class GenAIChoosePetViewController: BaseViewController{
     }
     
     @objc private func registerButtonDidTap(){
+        viewModel.registerButtonDidTapEvent()
         pushToGenAIGuideVC()
     }
 }
@@ -111,7 +112,7 @@ extension GenAIChoosePetViewController: UICollectionViewDataSource {
 
 extension GenAIChoosePetViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.petSelectedEvent(at: indexPath.item)
+        viewModel.petButtonDidTapEvent(at: indexPath.item)
     }
 }
 
@@ -142,15 +143,20 @@ extension GenAIChoosePetViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension GenAIChoosePetViewController: ZoocAlertViewControllerDelegate {
-    func pushToGenAIGuideVC() {
-        let genAIGuideVC = GenAIGuideViewController()
-        genAIGuideVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(genAIGuideVC, animated: true)
-    }
-    
+extension GenAIChoosePetViewController: ZoocAlertExitButtonTapGestureProtocol {
     func exitButtonDidTap() {
         dismiss(animated: true)
+    }
+}
+
+extension GenAIChoosePetViewController {
+    func pushToGenAIGuideVC() {
+        let genAIGuideVC = GenAIGuideViewController(
+            viewModel: DefaultGenAIGuideViewModel()
+        )
+        genAIGuideVC.hidesBottomBarWhenPushed = true
+        genAIGuideVC.petId = viewModel.petId.value
+        navigationController?.pushViewController(genAIGuideVC, animated: true)
     }
     
     func updateRegisterButtonUI(_ isSelected: Bool) {

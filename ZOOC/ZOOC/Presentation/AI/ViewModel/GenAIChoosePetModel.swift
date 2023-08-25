@@ -9,19 +9,23 @@ import UIKit
 
 protocol GenAIChoosePetModelInput {
     func viewWillAppearEvent()
-    func petSelectedEvent(at index: Int)
+    func petButtonDidTapEvent(at index: Int)
+    func registerButtonDidTapEvent()
 }
 
 protocol GenAIChoosePetModelOutput {
     var petList: Observable<[RecordRegisterModel]> { get }
     var ableToChoosePet: Observable<Bool> { get }
+    var petId: Observable<Int?> { get }
 }
 
 typealias GenAIChoosePetModel = GenAIChoosePetModelInput & GenAIChoosePetModelOutput
 
 final class DefaultGenAIChoosePetModel: GenAIChoosePetModel {
+
     var petList: Observable<[RecordRegisterModel]> = Observable([])
     var ableToChoosePet: Observable<Bool> = Observable(false)
+    var petId: Observable<Int?> = Observable(nil)
     
     let repository: GenAIPetRepository
     
@@ -42,10 +46,19 @@ final class DefaultGenAIChoosePetModel: GenAIChoosePetModel {
         }
     }
     
-    func petSelectedEvent(at index: Int) {
+    func petButtonDidTapEvent(at index: Int) {
         for i in 0..<petList.value.count {
             petList.value[i].isSelected = (i == index)
         }
         ableToChoosePet.value = true
+        petId.value = petList.value[index].petID
+    }
+    
+    func registerButtonDidTapEvent() {
+        print(#function)
+        NotificationCenter.default.post(
+            name: .petSelected,
+            object: petId.value
+        )
     }
 }

@@ -104,7 +104,7 @@ final class MyEditPetProfileViewController: BaseViewController {
     
     @objc func backButtonDidTap() {
         let zoocAlertVC = ZoocAlertViewController(.leavePage)
-        zoocAlertVC.delegate = self
+        zoocAlertVC.exitButtonTapDelegate = self
         zoocAlertVC.modalPresentationStyle = .overFullScreen
         present(zoocAlertVC, animated: false)
     }
@@ -142,7 +142,7 @@ extension MyEditPetProfileViewController: UIImagePickerControllerDelegate {
 
 //MARK: - ZoocAlertViewControllerDelegate
 
-extension MyEditPetProfileViewController: ZoocAlertViewControllerDelegate {
+extension MyEditPetProfileViewController: ZoocAlertExitButtonTapGestureProtocol {
     func exitButtonDidTap() {
         navigationController?.popViewController(animated: true)
         dismiss(animated: true)

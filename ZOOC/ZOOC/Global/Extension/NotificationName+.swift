@@ -10,5 +10,6 @@ import Foundation
 extension Notification.Name {
     static let homeVCUpdate = Notification.Name("homeVCUpdate")
     static let myPageUpdate = Notification.Name("myPageUpdate")
+    static let petSelected = Notification.Name("petSelected")
 }
 

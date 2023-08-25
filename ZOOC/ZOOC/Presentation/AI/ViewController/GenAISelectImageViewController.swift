@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class GenAISelectImageViewController : BaseViewController{
+final class GenAISelectImageViewController : BaseViewController {
     
     //MARK: - Properties
     
@@ -39,31 +39,131 @@ final class GenAISelectImageViewController : BaseViewController{
         super.viewDidLoad()
         
         delegate()
+        bind()
+        target()
+        
+        setNotificationCenter()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.viewWillAppearEvent()
+        
     }
     
     //MARK: - Custom Method
+    
+    func bind() {
+        viewModel.showEnabled.observe(on: self) { [weak self] canShow in
+            if canShow {
+                self?.rootView.activityIndicatorView.stopAnimating()
+                self?.rootView.petImageCollectionView.reloadData()
+            } else {
+                self?.rootView.activityIndicatorView.startAnimating()
+            }
+        }
+        
+        viewModel.isCompleted.observe(on: self) { [weak self] isCompleted in
+            guard let isCompleted = isCompleted else { return }
+            if isCompleted {
+                self?.pushToGenAICompletedVC()
+            } else {
+                self?.presentBottomAlert("AI 모델 생성 중 문제가 발생했습니다")
+            }
+        }
+    }
     
     func delegate() {
         rootView.petImageCollectionView.delegate = self
         rootView.petImageCollectionView.dataSource = self
     }
     
+    func target() {
+        rootView.xmarkButton.addTarget(self, action: #selector(xmarkButtonDidTap), for: .touchUpInside)
+        rootView.reSelectedImageButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        rootView.generateAIModelButton.addTarget(self, action: #selector(generateAIModelButtonDidTap), for: .touchUpInside)
+    }
+    
+    func setNotificationCenter() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(petIdReceived(_:)),
+            name: .petSelected,
+            object: nil
+        )
+    }
     
     //MARK: - Action Method
     
+    @objc func xmarkButtonDidTap() {
+        presentAlertViewController()
+    }
+    
+    @objc func backButtonDidTap() {
+        guard let previousVC = self.navigationController?.previousViewController as? GenAIGuideViewController else { return }
+        previousVC.viewModel.isPopped.value = true
+        self.navigationController?.popViewController(animated: false)
+        
+    }
+    
+    @objc func generateAIModelButtonDidTap() {
+        viewModel.generateAIModelButtonDidTapEvent()
+    }
+    
+    @objc func petIdReceived(_ notification: Notification) {
+        viewModel.observePetIdEvent(notification: notification)
+    }
 }
 
-extension GenAISelectImageViewController: UICollectionViewDelegateFlowLayout {}
+extension GenAISelectImageViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let cellWidth = (collectionView.frame.width - 20) / 3
+        let cellHeight = cellWidth
+        return CGSize(width: cellWidth, height: cellHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+}
 extension GenAISelectImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.petImageDatasets.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenAIPetImageCollectionViewCell.cellIdentifier, for: indexPath) as? GenAIPetImageCollectionViewCell else { return UICollectionViewCell() }
-        cell.petImageView.image = viewModel.petImageDatasets.value[indexPath.item]
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenAIPetImageCollectionViewCell.cellIdentifier, for: indexPath) as? GenAIPetImageCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        if viewModel.petImageDatasets.value.count > 0 {
+            cell.petImageView.image = viewModel.petImageDatasets.value[indexPath.item]
+        }
         return cell
     }
+}
+
+extension GenAISelectImageViewController {
+    func presentAlertViewController() {
+        let zoocAlertVC = ZoocAlertViewController(.leaveAIPage)
+        zoocAlertVC.exitButtonTapDelegate = self
+        zoocAlertVC.modalPresentationStyle = .overFullScreen
+        self.present(zoocAlertVC, animated: false, completion: nil)
+    }
     
-    
+    func pushToGenAICompletedVC() {
+        let genAICompletedVC = GenAICompletedViewController()
+        self.navigationController?.pushViewController(genAICompletedVC, animated: true)
+    }
+}
+
+extension GenAISelectImageViewController: ZoocAlertExitButtonTapGestureProtocol {
+    func exitButtonDidTap() {
+        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
+    }
 }

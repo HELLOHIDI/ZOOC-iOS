@@ -1,5 +1,5 @@
 //
-//  AIViewController.swift
+//  GenAIGuideViewController.swift
 //  ZOOC
 //
 //  Created by 류희재 on 2023/08/15.
@@ -15,13 +15,24 @@ final class GenAIGuideViewController : BaseViewController {
     
     //MARK: - Properties
     
-    private var petImageDatasets: [UIImage] = []
+    var petId: Int?
+    
+    let viewModel: GenAIGuideViewModel
     
     //MARK: - UI Components
     
     let rootView = GenAIGuideView()
     
     //MARK: - Life Cycle
+    
+    init(viewModel: GenAIGuideViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         self.view = rootView
@@ -31,12 +42,37 @@ final class GenAIGuideViewController : BaseViewController {
         super.viewDidLoad()
         
         target()
+        bind()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        
+        viewModel.viewWillDisappearEvent()
     }
     
     //MARK: - Custom Method
     
+    private func bind() {
+        viewModel.enablePhotoUpload.observe(on: self) { [weak self] canUpload in
+            guard let canUpload = canUpload else { return }
+            if canUpload {
+                self?.pushToGenAISelectImageVC()
+            } else {
+                self?.presentDenineGenerateAIViewController()
+            }
+        }
+        
+        viewModel.isPopped.observe(on: self) { [weak self] isPopped in
+            if isPopped {
+                self?.presentPHPickerViewController()
+            }
+        }
+    }
+    
     private func target() {
         rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        rootView.xmarkButton.addTarget(self, action: #selector(xmarkButtonDidTap), for: .touchUpInside)
         rootView.selectImageButton.addTarget(self, action: #selector(selectImageButtonDidTap), for: .touchUpInside)
     }
     
@@ -46,18 +82,33 @@ final class GenAIGuideViewController : BaseViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    @objc func xmarkButtonDidTap() {
+        presentLeavePageAlertVC()
+    }
+    
     @objc func selectImageButtonDidTap() {
-        presentPicker()
+        presentPHPickerViewController()
     }
 }
 
 extension GenAIGuideViewController {
-    private func presentPicker() {
-        // PHPickerConfiguration 생성 및 정의
+    private func pushToGenAISelectImageVC() {
+        guard let petId = self.petId else { return }
+        let genAISelectImageVC = GenAISelectImageViewController(
+            viewModel: DefaultGenAISelectImageViewModel(
+                petId: petId,
+                selectedImageDatasets: viewModel.selectedImageDatasets.value,
+                repository: GenAIModelRepositoryImpl()
+            )
+        )
+        self.navigationController?.pushViewController(genAISelectImageVC, animated: true)
+    }
+}
+
+extension GenAIGuideViewController {
+    private func presentPHPickerViewController() {
         var config = PHPickerConfiguration()
-        // 라이브러리에서 보여줄 Assets을 필터를 한다. (기본값: 이미지, 비디오, 라이브포토)
         config.filter = .images
-        // 다중 선택 갯수 설정 (0 = 무제한)
         config.selectionLimit = 15
         
         let imagePicker = PHPickerViewController(configuration: config)
@@ -66,67 +117,39 @@ extension GenAIGuideViewController {
         self.present(imagePicker, animated: true)
     }
     
-    private func pushToGenAISelectImageVC() {
-        let genAISelectImageVC = GenAISelectImageViewController(
-            viewModel: DefaultGenAISelectImageViewModel(
-                petImageDatasets: petImageDatasets
-            )
-        )
-        self.navigationController?.pushViewController(genAISelectImageVC, animated: true)
+    private func presentLeavePageAlertVC() {
+        let alertVC = ZoocAlertViewController.init(.leavePage)
+        alertVC.exitButtonTapDelegate = self
+        alertVC.modalPresentationStyle = .overFullScreen
+        present(alertVC, animated: false)
     }
     
-    func showDenied() {
-        let alert = UIAlertController(title: "사진이 부족합니다!", message: "사진 개수를 맞춰서 설정해주세요!", preferredStyle: .alert)
-        
-        let openSettingsAction = UIAlertAction(
-            title: "사진 다시 고르기",
-            style: .default) { action in
-                self.presentPicker()
-            }
-        
-        let goBackAction = UIAlertAction(
-            title: "나가기",
-            style: .destructive
-        )
-        
-        alert.addAction(openSettingsAction)
-        alert.addAction(goBackAction)
-        
-        present(alert, animated: false, completion: nil)
+    private func presentDenineGenerateAIViewController() {
+        let zoocAlertVC = ZoocAlertViewController(.shortOfPictures)
+        zoocAlertVC.exitButtonTapDelegate = self
+        zoocAlertVC.keepButtonTapDelegate = self
+        zoocAlertVC.modalPresentationStyle = .overFullScreen
+        self.present(zoocAlertVC, animated: false, completion: nil)
     }
 }
+
+extension GenAIGuideViewController: ZoocAlertExitButtonTapGestureProtocol, ZoocAlertKeepButtonTapGestureProtocol {
+    
+    func exitButtonDidTap() {
+        dismiss(animated: true)
+    }
+    
+    func keepButtonDidTap() {
+        viewModel.keepButtonTapEvent()
+        presentPHPickerViewController()
+    }
+}
+
+
 extension GenAIGuideViewController : PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
         
-        var selectedImages: [UIImage] = []
-        
-        // results 배열의 각 NSItemProvider에서 이미지를 로드하고 UIImage 객체로 변환하여 배열에 저장
-        let group = DispatchGroup()
-        
-        for result in results {
-            group.enter()
-            let itemProvider = result.itemProvider
-            
-            if itemProvider.canLoadObject(ofClass: UIImage.self) {
-                itemProvider.loadObject(ofClass: UIImage.self) { object, error in
-                    if let image = object as? UIImage {
-                        selectedImages.append(image)
-                    }
-                    group.leave()
-                }
-            } else {
-                group.leave()
-            }
-        }
-        
-        group.notify(queue: .main) {
-            if 8 <= selectedImages.count && selectedImages.count <= 15 {
-                self.pushToGenAISelectImageVC()
-            } else {
-                self.showDenied()
-            }
-        }
+        viewModel.didFinishChoosingPhotosEvent(results: results)
     }
 }
-    

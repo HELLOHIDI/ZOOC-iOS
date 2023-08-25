@@ -34,6 +34,11 @@ final class GenAIPetImageCollectionViewCell: UICollectionViewCell {
     private func style() {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
+        
+        petImageView.do {
+            $0.backgroundColor = .zoocMainGreen
+            $0.makeCornerRound(radius: 15)
+        }
     }
     
     private func hierarchy() {
@@ -46,5 +51,3 @@ final class GenAIPetImageCollectionViewCell: UICollectionViewCell {
         }
     }
 }
-
-

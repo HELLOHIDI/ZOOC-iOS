@@ -40,7 +40,7 @@ final class GenAICompletedViewController : UIViewController{
     //MARK: - Action Method
     
     @objc func backButtonDidTap() {
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
 }
 

@@ -27,6 +27,7 @@ final class OrderViewController: BaseViewController {
     private let productView = OrderProductView()
     private let paymentMethodView = OrderPaymentMethodView()
     private let amountView = OrderAmountOfPaymentView()
+    private let agreementView = OrderAgreementView()
     
     private let orderButton = ZoocGradientButton()
     
@@ -75,7 +76,8 @@ final class OrderViewController: BaseViewController {
                                 addressView,
                                 productView,
                                 paymentMethodView,
-                                amountView)
+                                amountView,
+                                agreementView)
     }
     
     private func layout() {
@@ -131,7 +133,13 @@ final class OrderViewController: BaseViewController {
         amountView.snp.makeConstraints {
             $0.top.equalTo(paymentMethodView.snp.bottom).offset(10)
             $0.horizontalEdges.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            
+        }
+        
+        agreementView.snp.makeConstraints {
+            $0.top.equalTo(amountView.snp.bottom).offset(10)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(40)
         }
         
         

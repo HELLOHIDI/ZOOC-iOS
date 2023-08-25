@@ -61,12 +61,7 @@ final class GenAIRegisterPetViewController: BaseViewController {
         viewModel.registerCompletedOutput.observe(on: self) { [weak self] isSuccess in
             guard let isSuccess else { return }
             if isSuccess {
-                let genAIGuideVC = GenAIGuideViewController(
-                    viewModel: DefaultGenAIGuideViewModel()
-                )
-                genAIGuideVC.petId = self?.viewModel.petId.value
-                genAIGuideVC.hidesBottomBarWhenPushed = true
-                self?.navigationController?.pushViewController(genAIGuideVC, animated: true)
+                self?.pushToGenAIGuideVC()
             } else {
                 self?.presentBottomAlert("다시 시도해주세요")
             }
@@ -169,5 +164,14 @@ extension GenAIRegisterPetViewController {
         alertVC.exitButtonTapDelegate = self
         alertVC.modalPresentationStyle = .overFullScreen
         present(alertVC, animated: false)
+    }
+    
+    private func pushToGenAIGuideVC() {
+        let genAIGuideVC = GenAIGuideViewController(
+            viewModel: DefaultGenAIGuideViewModel()
+        )
+        genAIGuideVC.hidesBottomBarWhenPushed = true
+        genAIGuideVC.petId = viewModel.petId.value
+        navigationController?.pushViewController(genAIGuideVC, animated: true)
     }
 }

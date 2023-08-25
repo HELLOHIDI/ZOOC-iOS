@@ -143,10 +143,12 @@ final class SplashViewController: UIViewController {
     }
     
     private func autoLoginFail () {
-        let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
-        onboardingNVC.setNavigationBarHidden(true, animated: true)
-        
-        UIApplication.shared.changeRootViewController(onboardingNVC)
+        DispatchQueue.main.async {
+            let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
+            onboardingNVC.setNavigationBarHidden(true, animated: true)
+            
+            UIApplication.shared.changeRootViewController(onboardingNVC)
+        }
     }
     
     private func requestFCMTokenAPI() {

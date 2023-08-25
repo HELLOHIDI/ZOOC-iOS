@@ -36,7 +36,6 @@ extension MyService: BaseTargetType {
             return URLs.logout
         case .patchPetProfile(_, let id):
             return URLs.patchPet.replacingOccurrences(of: "{petId}", with: "\(id)")
-            
         }
     }
     
@@ -126,7 +125,7 @@ extension MyService: BaseTargetType {
                 print("포토있음")
                 let photo = photo.jpegData(compressionQuality: 1.0) ?? Data()
                 let imageData = MultipartFormData(provider: .data(photo),
-                                                  name: "photo",
+                                                  name: "file",
                                                   fileName: "image.jpeg",
                                                   mimeType: "image/jpeg")
                 multipartFormData.append(imageData)

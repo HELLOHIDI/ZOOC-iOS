@@ -82,9 +82,9 @@ extension DefaultGenAIRegisterViewModel {
         repository.registerPet(request: registerPetProfileDataOutput.value) { [weak self] result in
             switch result {
             case .success(let data):
-                self?.registerCompletedOutput.value = true
                 guard let result = data as? MyRegisterPetResult else { return }
                 self?.petId.value = result.id
+                self?.registerCompletedOutput.value = true
             default:
                 self?.registerCompletedOutput.value = false
             }

@@ -32,10 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let userInfo = connectionOptions.notificationResponse?.notification.request.content.userInfo
         
         let vc = SplashViewController(userInfo: userInfo)
-        
-        let testVC = OrderViewController()
-        let testNVC = UINavigationController(rootViewController: testVC)
-        self.window?.rootViewController = testVC
+        self.window?.rootViewController = vc
         self.window?.makeKeyAndVisible()
     }
 }

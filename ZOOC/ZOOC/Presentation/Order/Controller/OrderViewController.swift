@@ -49,6 +49,9 @@ final class OrderViewController: BaseViewController {
         
         backButton.do {
             $0.setImage(Image.back, for: .normal)
+            $0.addTarget(self,
+                         action: #selector(backButtonDidTap),
+                         for: .touchUpInside)
         }
         
         scrollView.do {
@@ -148,5 +151,10 @@ final class OrderViewController: BaseViewController {
     }
     
     //MARK: - Action Method
+    
+    @objc
+    private func backButtonDidTap() {
+        navigationController?.popViewController(animated: true)
+    }
     
 }

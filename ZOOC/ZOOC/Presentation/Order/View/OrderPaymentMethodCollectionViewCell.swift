@@ -55,6 +55,12 @@ final class OrderPaymentMethodCollectionViewCell: UICollectionViewCell {
         return button
     }()
     
+    private let smallCircleView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -64,7 +70,7 @@ final class OrderPaymentMethodCollectionViewCell: UICollectionViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .zoocBody2
+        label.font = .zoocBody3
         label.textColor = .zoocDarkGray1
         return label
     }()
@@ -87,16 +93,18 @@ final class OrderPaymentMethodCollectionViewCell: UICollectionViewCell {
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         checkButton.makeCornerRound(ratio: 2)
+        smallCircleView.makeCornerRound(ratio: 2)
     }
     
     //MARK: - Custom Method
     
     private func style() {
-        
+ 
     }
     
     private func hierarchy() {
         contentView.addSubviews(checkButton, imageView, titleLabel)
+        checkButton.addSubview(smallCircleView)
     }
     
     private func layout() {
@@ -105,6 +113,10 @@ final class OrderPaymentMethodCollectionViewCell: UICollectionViewCell {
             $0.leading.equalToSuperview().inset(20)
             $0.size.equalTo(25)
             $0.centerY.equalToSuperview()
+        }
+        
+        smallCircleView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(7)
         }
         
         imageView.snp.makeConstraints {

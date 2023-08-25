@@ -139,7 +139,7 @@ final class OrderViewController: BaseViewController {
         agreementView.snp.makeConstraints {
             $0.top.equalTo(amountView.snp.bottom).offset(10)
             $0.horizontalEdges.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(40)
+            $0.bottom.equalToSuperview()
         }
         
         

@@ -91,13 +91,12 @@ extension GenAIService: BaseTargetType {
                     name: "files",
                     fileName: "image.jpeg",
                     mimeType: "image/jpeg"))
-                
-                let contentData = MultipartFormData(provider: .data(content?.data(using: String.Encoding.utf8) ?? Data()),
-                                                    name: "content",
-                                                    mimeType: "application/json")
-                multipartFormDatas.append(contentData)
             }
             
+            let contentData = MultipartFormData(provider: .data(content?.data(using: String.Encoding.utf8) ?? Data()),
+                                                name: "content",
+                                                mimeType: "application/json")
+            multipartFormDatas.append(contentData)
             
             if let petData = "\(pet)".data(using: .utf8) {
                 multipartFormDatas.append(MultipartFormData(

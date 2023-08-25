@@ -64,6 +64,7 @@ final class GenAIRegisterPetViewController: BaseViewController {
                 let genAIGuideVC = GenAIGuideViewController(
                     viewModel: DefaultGenAIGuideViewModel()
                 )
+                genAIGuideVC.petId = self?.viewModel.petId.value
                 genAIGuideVC.hidesBottomBarWhenPushed = true
                 self?.navigationController?.pushViewController(genAIGuideVC, animated: true)
             } else {

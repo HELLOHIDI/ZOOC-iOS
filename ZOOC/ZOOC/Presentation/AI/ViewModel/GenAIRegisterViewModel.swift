@@ -22,6 +22,7 @@ protocol GenAIRegisterViewModelOutput {
     var textFieldState: Observable<BaseTextFieldState> { get }
     var registerCompletedOutput: Observable<Bool?> { get }
     var registerPetProfileDataOutput: Observable<MyRegisterPetRequest> { get }
+    var petId: Observable<Int?> { get }
 }
 
 typealias GenAIRegisterViewModel = GenAIRegisterViewModelInput & GenAIRegisterViewModelOutput
@@ -34,6 +35,7 @@ final class DefaultGenAIRegisterViewModel: GenAIRegisterViewModel {
     var textFieldState: Observable<BaseTextFieldState> = Observable(.isEmpty)
     var registerCompletedOutput: Observable<Bool?> = Observable(nil)
     var registerPetProfileDataOutput: Observable<MyRegisterPetRequest> = Observable(MyRegisterPetRequest())
+    var petId: Observable<Int?> = Observable(nil)
     
     
     init(repository: GenAIPetRepository) {
@@ -77,17 +79,14 @@ final class DefaultGenAIRegisterViewModel: GenAIRegisterViewModel {
 
 extension DefaultGenAIRegisterViewModel {
     func registerPet() {
-        repository.registerPet(request: registerPetProfileDataOutput.value) { result in
+        repository.registerPet(request: registerPetProfileDataOutput.value) { [weak self] result in
             switch result {
             case .success(let data):
-                self.registerCompletedOutput.value = true
+                self?.registerCompletedOutput.value = true
                 guard let result = data as? MyRegisterPetResult else { return }
-                NotificationCenter.default.post(
-                    name: .petSelected,
-                    object: result.id
-                )
+                self?.petId.value = result.id
             default:
-                self.registerCompletedOutput.value = false
+                self?.registerCompletedOutput.value = false
             }
         }
     }

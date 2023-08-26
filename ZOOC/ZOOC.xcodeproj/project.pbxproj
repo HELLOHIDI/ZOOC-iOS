@@ -137,10 +137,13 @@
 		87DC47F52A7B7D55007823CB /* Debug-GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87DC47F32A7B7A74007823CB /* Debug-GoogleService-Info.plist */; };
 		87DDDD92298E5BE500CBEC79 /* ArchiveCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DDDD91298E5BE500CBEC79 /* ArchiveCommentView.swift */; };
 		87DDDD94298E607C00CBEC79 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DDDD93298E607C00CBEC79 /* Device.swift */; };
-		87E462E62A10FA60006FC35D /* EnternalURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462E52A10FA60006FC35D /* EnternalURL.swift */; };
+		87E462E62A10FA60006FC35D /* ExternalURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462E52A10FA60006FC35D /* ExternalURL.swift */; };
 		87E462EE2A110867006FC35D /* ZoocGradinetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */; };
 		87E462F12A110E18006FC35D /* CGColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462F02A110E18006FC35D /* CGColor+.swift */; };
 		87E462F32A113A37006FC35D /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462F22A113A37006FC35D /* CALayer+.swift */; };
+		87F287D52A9A4EC100A53218 /* KakaoPostCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287D42A9A4EC100A53218 /* KakaoPostCodeViewController.swift */; };
+		87F287D72A9A63CC00A53218 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287D62A9A63CC00A53218 /* Address.swift */; };
+		87F287D92A9A667500A53218 /* BasePaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287D82A9A667500A53218 /* BasePaddingLabel.swift */; };
 		D20C008A2A96DDB000666963 /* GenAIModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C00892A96DDB000666963 /* GenAIModelRepository.swift */; };
 		D20C008D2A96E23500666963 /* GenAIGuideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */; };
 		D20C008F2A96F22600666963 /* GenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008E2A96F22600666963 /* GenAIService.swift */; };
@@ -387,10 +390,13 @@
 		87DC47F32A7B7A74007823CB /* Debug-GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Debug-GoogleService-Info.plist"; sourceTree = "<group>"; };
 		87DDDD91298E5BE500CBEC79 /* ArchiveCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveCommentView.swift; sourceTree = "<group>"; };
 		87DDDD93298E607C00CBEC79 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
-		87E462E52A10FA60006FC35D /* EnternalURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnternalURL.swift; sourceTree = "<group>"; };
+		87E462E52A10FA60006FC35D /* ExternalURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalURL.swift; sourceTree = "<group>"; };
 		87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocGradinetButton.swift; sourceTree = "<group>"; };
 		87E462F02A110E18006FC35D /* CGColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGColor+.swift"; sourceTree = "<group>"; };
 		87E462F22A113A37006FC35D /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
+		87F287D42A9A4EC100A53218 /* KakaoPostCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoPostCodeViewController.swift; sourceTree = "<group>"; };
+		87F287D62A9A63CC00A53218 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		87F287D82A9A667500A53218 /* BasePaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePaddingLabel.swift; sourceTree = "<group>"; };
 		D20C00892A96DDB000666963 /* GenAIModelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIModelRepository.swift; sourceTree = "<group>"; };
 		D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideViewModel.swift; sourceTree = "<group>"; };
 		D20C008E2A96F22600666963 /* GenAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIService.swift; sourceTree = "<group>"; };
@@ -661,7 +667,7 @@
 			children = (
 				876483182952366A00F74882 /* Image.swift */,
 				87D5AF5529605C0100CA7F12 /* URLs.swift */,
-				87E462E52A10FA60006FC35D /* EnternalURL.swift */,
+				87E462E52A10FA60006FC35D /* ExternalURL.swift */,
 				87C6C4C82A537902003DA38A /* TextLiteral.swift */,
 			);
 			path = Constant;
@@ -674,6 +680,7 @@
 				D2DD45C6297D9612001722A1 /* BaseButton.swift */,
 				D21CEC5B29AB9B3D00854A36 /* BaseTextFieldState.swift */,
 				8718A06929ADE6E8001C7460 /* BaseTextField.swift */,
+				87F287D82A9A667500A53218 /* BasePaddingLabel.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -849,6 +856,7 @@
 			isa = PBXGroup;
 			children = (
 				87A3D87F2A97546D002C36DB /* OrderViewController.swift */,
+				87F287D42A9A4EC100A53218 /* KakaoPostCodeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -856,6 +864,7 @@
 		87A3D8932A977960002C36DB /* Order */ = {
 			isa = PBXGroup;
 			children = (
+				87F287D62A9A63CC00A53218 /* Address.swift */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -1624,6 +1633,7 @@
 				87A3D88E2A975D78002C36DB /* OrderPaymentMethodView.swift in Sources */,
 				D2F1936729713FCD00AD87D3 /* OnboardingJWTTokenResult.swift in Sources */,
 				D26C8600296B27B100AEAF9B /* OnboardingCompleteProfileView.swift in Sources */,
+				87F287D92A9A667500A53218 /* BasePaddingLabel.swift in Sources */,
 				D24AFABA2A8E011800823E9C /* GenAIRegisterPetViewController.swift in Sources */,
 				87A3D8902A975D84002C36DB /* OrderAmountOfPaymentView.swift in Sources */,
 				D27D95D5296DDF4F0097CD03 /* MyFamilyCollectionViewCell.swift in Sources */,
@@ -1663,6 +1673,7 @@
 				874369592A8FFB7F0035AFD6 /* NetworkAlertView.swift in Sources */,
 				D23502F52961A69E00F01101 /* MyView.swift in Sources */,
 				D26C8616296BEF9800AEAF9B /* OnboardingRegisterPetViewController.swift in Sources */,
+				87F287D72A9A63CC00A53218 /* Address.swift in Sources */,
 				8781DE4E29B273FB005ABF23 /* OnboardingFamilyResult.swift in Sources */,
 				876554A3295848D6006BBDA9 /* BaseViewController.swift in Sources */,
 				D20C00952A96FE3200666963 /* GenAIPetDatasetsResult.swift in Sources */,
@@ -1737,6 +1748,7 @@
 				877E57F22966D13E006D82FC /* ArchiveViewController.swift in Sources */,
 				4C6B1862296B69070059840D /* RecordRegisterViewController.swift in Sources */,
 				87B6624329521E7500B6FFA9 /* SceneDelegate.swift in Sources */,
+				87F287D52A9A4EC100A53218 /* KakaoPostCodeViewController.swift in Sources */,
 				D299957A2A95B8520004FB5D /* NSItemProvider+.swift in Sources */,
 				87A76ABF2960423C0096F669 /* GenericResponse.swift in Sources */,
 				8782C7E42968B03500C9324B /* HomePetCollectionViewCell.swift in Sources */,
@@ -1780,7 +1792,7 @@
 				D2B7355A2A866D8E00F93C45 /* MyRepository.swift in Sources */,
 				874AE9F829B49D5A007A637D /* VoidResult.swift in Sources */,
 				87E462F32A113A37006FC35D /* CALayer+.swift in Sources */,
-				87E462E62A10FA60006FC35D /* EnternalURL.swift in Sources */,
+				87E462E62A10FA60006FC35D /* ExternalURL.swift in Sources */,
 				871DC6C42A1DC691006BA780 /* ZoocImageController.swift in Sources */,
 				8747389E299E84B400C4CC52 /* EmojiBottomSheetViewController.swift in Sources */,
 				8718A06829ADB423001C7460 /* GalleryAlertController.swift in Sources */,

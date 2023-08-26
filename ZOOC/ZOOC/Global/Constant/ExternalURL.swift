@@ -18,4 +18,6 @@ struct ExternalURL {
     static let hidiGithub = "https://github.com/HELLOHIDI"
     
     static let reportURL = "https://www.police.go.kr/www/security/report/report01.jsp"
+    
+    static let postCodeURL = "https://teamzooc.github.io/Kakao-Postcode/"
 }

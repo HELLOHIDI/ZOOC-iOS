@@ -39,6 +39,7 @@ final class OrderViewController: BaseViewController {
         style()
         hierarchy()
         layout()
+        setDelegate()
     }
     
     //MARK: - Custom Method
@@ -144,10 +145,11 @@ final class OrderViewController: BaseViewController {
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
-        
-        
-        
-        
+    }
+    
+    
+    private func setDelegate(){
+        addressView.delegate = self
     }
     
     //MARK: - Action Method
@@ -156,5 +158,23 @@ final class OrderViewController: BaseViewController {
     private func backButtonDidTap() {
         navigationController?.popViewController(animated: true)
     }
+    
+}
+
+extension OrderViewController: OrderAddressViewDelegate {
+    func findAddressButtonDidTap() {
+        let kakaoPostCodeVC = KakaoPostCodeViewController()
+        kakaoPostCodeVC.delegate = self
+        present(kakaoPostCodeVC, animated: true)
+    }
+    
+    
+}
+
+extension OrderViewController: KakaoPostCodeViewControllerDelegate {
+    func fetchPostCode(roadAddress: String, zoneCode: String) {
+        addressView.dataBind(address: roadAddress, postCode: zoneCode)
+    }
+    
     
 }

@@ -170,7 +170,13 @@ final class HomeViewController : BaseViewController {
     }
     
     private func pushToShopViewController() {
-        let shopVC = OrderViewController() //TODO: - 일단은 주문서뷰로 이동
+        //TODO: - 일단은 주문서뷰로 이동
+        let shopVC = OrderViewController(productData: OrderProduct(imageURL: "https://zooc-bucket.s3.ap-northeast-2.amazonaws.com/images%2F1691081953053_image.jpeg",
+                                                                   name: "생성 AI 폰케이스",
+                                                                   price: 29000),
+                                         priceData: OrderPrice(productPrice: 29000,
+                                                               deleiveryFee: 3000))
+        
         shopVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(shopVC, animated: true)
     }

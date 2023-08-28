@@ -14,6 +14,12 @@ final class OrderViewController: BaseViewController {
     
     //MARK: - Properties
     
+    private var ordererData = OrderOrderer()
+    private var addressData = OrderAddress()
+    private let productData: OrderProduct
+    private let priceData: OrderPrice
+    private var agreementData = OrderAgreement()
+    
     //MARK: - UI Components
     
     private let backButton = UIButton()
@@ -26,12 +32,18 @@ final class OrderViewController: BaseViewController {
     private let addressView = OrderAddressView()
     private let productView = OrderProductView()
     private let paymentMethodView = OrderPaymentMethodView()
-    private let amountView = OrderAmountOfPaymentView()
+    private let priceView = OrderPriceView()
     private let agreementView = OrderAgreementView()
     
     private let orderButton = ZoocGradientButton()
     
     //MARK: - Life Cycle
+    
+    init(productData: OrderProduct, priceData: OrderPrice) {
+        self.productData = productData
+        self.priceData = priceData
+        super.init(nibName: nil, bundle: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +52,12 @@ final class OrderViewController: BaseViewController {
         hierarchy()
         layout()
         setDelegate()
+        updateUI()
+        dismissKeyboardWhenTappedAround()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: - Custom Method
@@ -80,7 +98,7 @@ final class OrderViewController: BaseViewController {
                                 addressView,
                                 productView,
                                 paymentMethodView,
-                                amountView,
+                                priceView,
                                 agreementView)
     }
     
@@ -130,18 +148,18 @@ final class OrderViewController: BaseViewController {
         }
         
         paymentMethodView.snp.makeConstraints {
-            $0.top.equalTo(addressView.snp.bottom).offset(10)
+            $0.top.equalTo(productView.snp.bottom).offset(10)
             $0.horizontalEdges.equalToSuperview()
         }
         
-        amountView.snp.makeConstraints {
+        priceView.snp.makeConstraints {
             $0.top.equalTo(paymentMethodView.snp.bottom).offset(10)
             $0.horizontalEdges.equalToSuperview()
             
         }
         
         agreementView.snp.makeConstraints {
-            $0.top.equalTo(amountView.snp.bottom).offset(10)
+            $0.top.equalTo(priceView.snp.bottom).offset(10)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
@@ -149,7 +167,17 @@ final class OrderViewController: BaseViewController {
     
     
     private func setDelegate(){
+        ordererView.delegate = self
         addressView.delegate = self
+        paymentMethodView.delegate = self
+        agreementView.delegate = self
+    }
+    
+    private func updateUI() {
+        ordererView.updateUI(ordererData)
+        addressView.updateUI(addressData)
+        productView.updateUI(productData)
+        priceView.updateUI(priceData)
     }
     
     //MARK: - Action Method
@@ -161,19 +189,77 @@ final class OrderViewController: BaseViewController {
     
 }
 
+
+
+//MARK: - OrdererViewDelegate
+
+extension OrderViewController: OrdererViewDelegate {
+    func textFieldDidEndEditing(name: String?, phoneNumber: String?) {
+        ordererData.name = name ?? ""
+        ordererData.phoneNumber = phoneNumber ?? ""
+    }
+    
+}
+
+//MARK: - OrderAddressViewDelegate
 extension OrderViewController: OrderAddressViewDelegate {
+    
+    func copyButtonDidTap() {
+        ordererView.endEditing(true)
+        addressData.receiverName = ordererData.name
+        addressData.receiverPhoneNumber = ordererData.phoneNumber
+        
+        addressView.updateUI(addressData)
+    }
+    
     func findAddressButtonDidTap() {
         let kakaoPostCodeVC = KakaoPostCodeViewController()
         kakaoPostCodeVC.delegate = self
         present(kakaoPostCodeVC, animated: true)
     }
     
+    func textFieldDidEndEditing(addressName: String?,
+                                receiverName: String?,
+                                receiverPhoneNumber: String?,
+                                detailAddress: String?,
+                                request: String?) {
+        
+        addressData.addressName = addressName ?? ""
+        addressData.receiverName = receiverName ?? ""
+        addressData.receiverPhoneNumber = receiverPhoneNumber ?? ""
+        addressData.detailAddress = detailAddress
+        addressData.request = request
+    }
+    
     
 }
 
+//MARK: - OrderPaymentMethodViewDelegate
+
+extension OrderViewController: OrderPaymentMethodViewDelegate {
+    
+}
+
+//MARK: - OrderAgreementViewDelegate
+
+extension OrderViewController: OrderAgreementViewDelegate {
+    
+    func checkButtonDidChange(onwardTransfer: Bool, termOfUse: Bool) {
+        agreementData.agreeWithOnwardTransfer = onwardTransfer
+        agreementData.agreeWithTermOfUse = termOfUse
+    }
+    
+}
+
+
+//MARK: - KakaoPostCodeViewControllerDelegate
 extension OrderViewController: KakaoPostCodeViewControllerDelegate {
+    
     func fetchPostCode(roadAddress: String, zoneCode: String) {
-        addressView.dataBind(address: roadAddress, postCode: zoneCode)
+        addressData.address = roadAddress
+        addressData.postCode = zoneCode
+        
+        addressView.updateUI(addressData)
     }
     
     

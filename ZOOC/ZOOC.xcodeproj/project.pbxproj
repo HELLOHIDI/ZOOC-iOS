@@ -94,11 +94,11 @@
 		87A3D87E2A9753CB002C36DB /* DetailShopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D87D2A9753CB002C36DB /* DetailShopViewModel.swift */; };
 		87A3D8802A97546D002C36DB /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D87F2A97546D002C36DB /* OrderViewController.swift */; };
 		87A3D8822A975476002C36DB /* OrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8812A975476002C36DB /* OrderViewModel.swift */; };
-		87A3D8882A975D48002C36DB /* OredererView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8872A975D48002C36DB /* OredererView.swift */; };
+		87A3D8882A975D48002C36DB /* OrdererView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8872A975D48002C36DB /* OrdererView.swift */; };
 		87A3D88A2A975D4F002C36DB /* OrderAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8892A975D4F002C36DB /* OrderAddressView.swift */; };
 		87A3D88C2A975D5F002C36DB /* OrderProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D88B2A975D5F002C36DB /* OrderProductView.swift */; };
 		87A3D88E2A975D78002C36DB /* OrderPaymentMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D88D2A975D78002C36DB /* OrderPaymentMethodView.swift */; };
-		87A3D8902A975D84002C36DB /* OrderAmountOfPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D88F2A975D84002C36DB /* OrderAmountOfPaymentView.swift */; };
+		87A3D8902A975D84002C36DB /* OrderPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D88F2A975D84002C36DB /* OrderPriceView.swift */; };
 		87A3D8922A97756E002C36DB /* ZoocTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8912A97756E002C36DB /* ZoocTextField.swift */; };
 		87A3D8952A97C458002C36DB /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8942A97C458002C36DB /* Int+.swift */; };
 		87A3D8972A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8962A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift */; };
@@ -142,8 +142,12 @@
 		87E462F12A110E18006FC35D /* CGColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462F02A110E18006FC35D /* CGColor+.swift */; };
 		87E462F32A113A37006FC35D /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462F22A113A37006FC35D /* CALayer+.swift */; };
 		87F287D52A9A4EC100A53218 /* KakaoPostCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287D42A9A4EC100A53218 /* KakaoPostCodeViewController.swift */; };
-		87F287D72A9A63CC00A53218 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287D62A9A63CC00A53218 /* Address.swift */; };
+		87F287D72A9A63CC00A53218 /* OrderAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287D62A9A63CC00A53218 /* OrderAddress.swift */; };
 		87F287D92A9A667500A53218 /* BasePaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287D82A9A667500A53218 /* BasePaddingLabel.swift */; };
+		87F287DB2A9C6E6F00A53218 /* OrderOrderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287DA2A9C6E6F00A53218 /* OrderOrderer.swift */; };
+		87F287DD2A9C6F1200A53218 /* OrderProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287DC2A9C6F1200A53218 /* OrderProduct.swift */; };
+		87F287DF2A9C6F6C00A53218 /* OrderPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287DE2A9C6F6C00A53218 /* OrderPrice.swift */; };
+		87F287E12A9D113E00A53218 /* OrderAgreement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287E02A9D113E00A53218 /* OrderAgreement.swift */; };
 		D20C008A2A96DDB000666963 /* GenAIModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C00892A96DDB000666963 /* GenAIModelRepository.swift */; };
 		D20C008D2A96E23500666963 /* GenAIGuideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */; };
 		D20C008F2A96F22600666963 /* GenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008E2A96F22600666963 /* GenAIService.swift */; };
@@ -346,11 +350,11 @@
 		87A3D87D2A9753CB002C36DB /* DetailShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailShopViewModel.swift; sourceTree = "<group>"; };
 		87A3D87F2A97546D002C36DB /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
 		87A3D8812A975476002C36DB /* OrderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewModel.swift; sourceTree = "<group>"; };
-		87A3D8872A975D48002C36DB /* OredererView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OredererView.swift; sourceTree = "<group>"; };
+		87A3D8872A975D48002C36DB /* OrdererView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdererView.swift; sourceTree = "<group>"; };
 		87A3D8892A975D4F002C36DB /* OrderAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAddressView.swift; sourceTree = "<group>"; };
 		87A3D88B2A975D5F002C36DB /* OrderProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderProductView.swift; sourceTree = "<group>"; };
 		87A3D88D2A975D78002C36DB /* OrderPaymentMethodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPaymentMethodView.swift; sourceTree = "<group>"; };
-		87A3D88F2A975D84002C36DB /* OrderAmountOfPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAmountOfPaymentView.swift; sourceTree = "<group>"; };
+		87A3D88F2A975D84002C36DB /* OrderPriceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPriceView.swift; sourceTree = "<group>"; };
 		87A3D8912A97756E002C36DB /* ZoocTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocTextField.swift; sourceTree = "<group>"; };
 		87A3D8942A97C458002C36DB /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
 		87A3D8962A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPaymentMethodCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -395,8 +399,12 @@
 		87E462F02A110E18006FC35D /* CGColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGColor+.swift"; sourceTree = "<group>"; };
 		87E462F22A113A37006FC35D /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
 		87F287D42A9A4EC100A53218 /* KakaoPostCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoPostCodeViewController.swift; sourceTree = "<group>"; };
-		87F287D62A9A63CC00A53218 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		87F287D62A9A63CC00A53218 /* OrderAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAddress.swift; sourceTree = "<group>"; };
 		87F287D82A9A667500A53218 /* BasePaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePaddingLabel.swift; sourceTree = "<group>"; };
+		87F287DA2A9C6E6F00A53218 /* OrderOrderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderOrderer.swift; sourceTree = "<group>"; };
+		87F287DC2A9C6F1200A53218 /* OrderProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderProduct.swift; sourceTree = "<group>"; };
+		87F287DE2A9C6F6C00A53218 /* OrderPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPrice.swift; sourceTree = "<group>"; };
+		87F287E02A9D113E00A53218 /* OrderAgreement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAgreement.swift; sourceTree = "<group>"; };
 		D20C00892A96DDB000666963 /* GenAIModelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIModelRepository.swift; sourceTree = "<group>"; };
 		D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideViewModel.swift; sourceTree = "<group>"; };
 		D20C008E2A96F22600666963 /* GenAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIService.swift; sourceTree = "<group>"; };
@@ -833,11 +841,11 @@
 		87A3D8842A975CEA002C36DB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				87A3D8872A975D48002C36DB /* OredererView.swift */,
+				87A3D8872A975D48002C36DB /* OrdererView.swift */,
 				87A3D8892A975D4F002C36DB /* OrderAddressView.swift */,
 				87A3D88B2A975D5F002C36DB /* OrderProductView.swift */,
 				87A3D88D2A975D78002C36DB /* OrderPaymentMethodView.swift */,
-				87A3D88F2A975D84002C36DB /* OrderAmountOfPaymentView.swift */,
+				87A3D88F2A975D84002C36DB /* OrderPriceView.swift */,
 				87A3D8982A987D55002C36DB /* OrderAgreementView.swift */,
 				87A3D8962A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift */,
 			);
@@ -864,7 +872,11 @@
 		87A3D8932A977960002C36DB /* Order */ = {
 			isa = PBXGroup;
 			children = (
-				87F287D62A9A63CC00A53218 /* Address.swift */,
+				87F287DA2A9C6E6F00A53218 /* OrderOrderer.swift */,
+				87F287D62A9A63CC00A53218 /* OrderAddress.swift */,
+				87F287DC2A9C6F1200A53218 /* OrderProduct.swift */,
+				87F287DE2A9C6F6C00A53218 /* OrderPrice.swift */,
+				87F287E02A9D113E00A53218 /* OrderAgreement.swift */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -1157,10 +1169,10 @@
 		87B6625529521EB400B6FFA9 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				8743694E2A8E50E30035AFD6 /* Common */,
+				8765549D295846E7006BBDA9 /* Base */,
 				87A3D8832A975CD2002C36DB /* Order */,
 				87A3D8762A975374002C36DB /* Shop */,
-				8765549D295846E7006BBDA9 /* Base */,
-				8743694E2A8E50E30035AFD6 /* Common */,
 				D2B7355C2A8B94B900F93C45 /* AI */,
 				87809C312A8CFD790060641F /* Splash */,
 				877BAFBE295EA0D300C2AA1C /* Onboarding */,
@@ -1635,7 +1647,7 @@
 				D26C8600296B27B100AEAF9B /* OnboardingCompleteProfileView.swift in Sources */,
 				87F287D92A9A667500A53218 /* BasePaddingLabel.swift in Sources */,
 				D24AFABA2A8E011800823E9C /* GenAIRegisterPetViewController.swift in Sources */,
-				87A3D8902A975D84002C36DB /* OrderAmountOfPaymentView.swift in Sources */,
+				87A3D8902A975D84002C36DB /* OrderPriceView.swift in Sources */,
 				D27D95D5296DDF4F0097CD03 /* MyFamilyCollectionViewCell.swift in Sources */,
 				8764832B295238EB00F74882 /* UITextField+.swift in Sources */,
 				D26C68E3296DE4F80088DC9A /* MyRegisterPetView.swift in Sources */,
@@ -1673,7 +1685,7 @@
 				874369592A8FFB7F0035AFD6 /* NetworkAlertView.swift in Sources */,
 				D23502F52961A69E00F01101 /* MyView.swift in Sources */,
 				D26C8616296BEF9800AEAF9B /* OnboardingRegisterPetViewController.swift in Sources */,
-				87F287D72A9A63CC00A53218 /* Address.swift in Sources */,
+				87F287D72A9A63CC00A53218 /* OrderAddress.swift in Sources */,
 				8781DE4E29B273FB005ABF23 /* OnboardingFamilyResult.swift in Sources */,
 				876554A3295848D6006BBDA9 /* BaseViewController.swift in Sources */,
 				D20C00952A96FE3200666963 /* GenAIPetDatasetsResult.swift in Sources */,
@@ -1736,6 +1748,7 @@
 				8764831B2952367400F74882 /* UIViewController+.swift in Sources */,
 				D20C008F2A96F22600666963 /* GenAIService.swift in Sources */,
 				87A76AC82960430A0096F669 /* MoyaLoggerPlugin.swift in Sources */,
+				87F287DF2A9C6F6C00A53218 /* OrderPrice.swift in Sources */,
 				D27D9EA82A8EFA1B00E02842 /* GenAISelectImageViewController.swift in Sources */,
 				D26C85EE2968D51F00AEAF9B /* UITableViewHeaderFooterView+.swift in Sources */,
 				D26C85F8296B0B4E00AEAF9B /* OnboardingChooseRoleView.swift in Sources */,
@@ -1766,6 +1779,7 @@
 				D26C85EC2968D2E100AEAF9B /* OnboardingAgreementTableHeaderView.swift in Sources */,
 				D26C85D7296888D000AEAF9B /* MyDeleteAccountSectionCollectionViewCell.swift in Sources */,
 				87DDDD94298E607C00CBEC79 /* Device.swift in Sources */,
+				87F287DB2A9C6E6F00A53218 /* OrderOrderer.swift in Sources */,
 				D24AFAB62A8DFC3000823E9C /* GenAIChoosePetModel.swift in Sources */,
 				D22EF9032A7C9BB70050E325 /* Observable.swift in Sources */,
 				877DF3292A534DF2001CD452 /* NotificationName+.swift in Sources */,
@@ -1785,6 +1799,7 @@
 				D24AFAC62A8E3F7A00823E9C /* MyRegisterPetRequest.swift in Sources */,
 				D2B735642A8BA2B500F93C45 /* GenAIGuideView.swift in Sources */,
 				D2B735562A86681800F93C45 /* MyEditProfileRepository.swift in Sources */,
+				87F287DD2A9C6F1200A53218 /* OrderProduct.swift in Sources */,
 				D27D9568296CB5930097CD03 /* OnboardingInviteFamilyView.swift in Sources */,
 				D27D9566296CA99B0097CD03 /* OnboardingInviteFamilyCompletedViewController.swift in Sources */,
 				87809C2A2A8CB6EE0060641F /* SplashViewController.swift in Sources */,
@@ -1800,7 +1815,7 @@
 				D2C028F02A81F542003F4727 /* MyEditTextField.swift in Sources */,
 				87A3D8972A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift in Sources */,
 				D27D9EAC2A8F41B000E02842 /* GenAISelectImageViewModel.swift in Sources */,
-				87A3D8882A975D48002C36DB /* OredererView.swift in Sources */,
+				87A3D8882A975D48002C36DB /* OrdererView.swift in Sources */,
 				874AE9FA29B4A12F007A637D /* OnboardingJoinUserResult.swift in Sources */,
 				872BBD9529F959FC002E2C71 /* UserDefaultWrapper.swift in Sources */,
 				87A76AA5295F6EC40096F669 /* HomeAPI.swift in Sources */,
@@ -1843,6 +1858,7 @@
 				D26C8612296B7CA500AEAF9B /* OnboardingRegisterPetView.swift in Sources */,
 				D23502F129619D4700F01101 /* MyPetCollectionViewCell.swift in Sources */,
 				871EA34A2970403300D0E8CC /* ArchiveResult.swift in Sources */,
+				87F287E12A9D113E00A53218 /* OrderAgreement.swift in Sources */,
 				D2C028EE2A81EEF3003F4727 /* MyEditProfileViewModel.swift in Sources */,
 				D24AFAB42A8DFBB300823E9C /* GenAIChoosePetView.swift in Sources */,
 				D23502EC296197C700F01101 /* MyPetSectionCollectionViewCell.swift in Sources */,

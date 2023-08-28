@@ -11,6 +11,12 @@ import SnapKit
 
 protocol OrderAddressViewDelegate: AnyObject {
     func findAddressButtonDidTap()
+    func copyButtonDidTap()
+    func textFieldDidEndEditing(addressName: String?,
+                                receiverName: String?,
+                                receiverPhoneNumber: String?,
+                                detailAddress: String?,
+                                request: String?)
 }
 
 final class OrderAddressView: UIView {
@@ -25,12 +31,6 @@ final class OrderAddressView: UIView {
     private var validState: ValidState = .unsatisfied
     
     weak var delegate: OrderAddressViewDelegate?
-    
-    private var addressData: Address? {
-        didSet {
-            updateUI()
-        }
-    }
     
     //MARK: - UI Components
     
@@ -84,7 +84,7 @@ final class OrderAddressView: UIView {
         return label
     }()
     
-    private let phoneNumberTextField = ZoocTextField(.numberPad)
+    private let receiverPhoneNumberTextField = ZoocTextField(.numberPad)
     
     private let addressLabel: UILabel = {
         let label = UILabel()
@@ -127,6 +127,16 @@ final class OrderAddressView: UIView {
     
     private let detailAddressTextField = ZoocTextField()
     
+    private let requestLabel: UILabel = {
+        let label = UILabel()
+        label.text = "요청사항"
+        label.font = .zoocBody2
+        label.textColor = .zoocGray2
+        return label
+    }()
+    
+    private let requestTextField = ZoocTextField()
+    
     //MARK: - Life Cycle
     
     override init(frame: CGRect) {
@@ -135,6 +145,7 @@ final class OrderAddressView: UIView {
         style()
         hierarchy()
         layout()
+        setDelegate()
     }
     
     required init?(coder: NSCoder) {
@@ -149,6 +160,7 @@ final class OrderAddressView: UIView {
         backgroundColor = .zoocBackgroundGreen
         
         detailAddressTextField.placeholder = "상세 주소"
+        requestTextField.placeholder = "부재시 경비실에 맡겨주세요."
     }
     
     private func hierarchy() {
@@ -161,12 +173,14 @@ final class OrderAddressView: UIView {
                              receiverLabel,
                              receiverTextField,
                              phoneNumberLabel,
-                             phoneNumberTextField,
+                             receiverPhoneNumberTextField,
                              addressLabel,
                              findAddressButton,
                              postCodeLabelBox,
                              addressLabelBox,
-                             detailAddressTextField)
+                             detailAddressTextField,
+                             requestLabel,
+                             requestTextField)
         
     }
     
@@ -217,19 +231,19 @@ final class OrderAddressView: UIView {
             $0.leading.equalToSuperview().inset(20)
         }
         
-        phoneNumberTextField.snp.makeConstraints {
+        receiverPhoneNumberTextField.snp.makeConstraints {
             $0.top.equalTo(receiverTextField.snp.bottom).offset(10)
             $0.leading.trailing.height.equalTo(addressNameTextField)
         }
         
         phoneNumberLabel.snp.makeConstraints {
-            $0.centerY.equalTo(phoneNumberTextField)
+            $0.centerY.equalTo(receiverPhoneNumberTextField)
             $0.leading.equalToSuperview().inset(20)
         }
         
         findAddressButton.snp.makeConstraints {
-            $0.top.equalTo(phoneNumberTextField.snp.bottom).offset(10)
-            $0.leading.equalTo(phoneNumberTextField)
+            $0.top.equalTo(receiverPhoneNumberTextField.snp.bottom).offset(10)
+            $0.leading.equalTo(receiverPhoneNumberTextField)
             $0.height.equalTo(40)
             $0.width.equalTo(80)
         }
@@ -256,25 +270,51 @@ final class OrderAddressView: UIView {
         detailAddressTextField.snp.makeConstraints {
             $0.top.equalTo(addressLabelBox.snp.bottom).offset(7)
             $0.leading.trailing.height.equalTo(addressLabelBox)
+        }
+        
+        requestLabel.snp.makeConstraints {
+            $0.centerY.equalTo(requestTextField)
+            $0.leading.equalToSuperview().inset(20)
+        }
+        
+        requestTextField.snp.makeConstraints {
+            $0.top.equalTo(detailAddressTextField.snp.bottom).offset(7)
+            $0.leading.trailing.height.equalTo(addressLabelBox)
             $0.bottom.equalToSuperview().inset(20)
         }
         
     }
     
-    func dataBind(address: String, postCode: String) {
-        self.addressData = Address(address: address, postCode: postCode)
+    private func setTag() {
+        addressNameTextField.tag = 0
+        receiverTextField.tag = 1
+        receiverPhoneNumberTextField.tag = 2
+        detailAddressTextField.tag = 3
+        requestTextField.tag = 4
     }
     
-    private func updateUI() {
-        addressLabelBox.text = addressData?.address
-        postCodeLabelBox.text = addressData?.postCode
+    private func setDelegate() {
+        addressNameTextField.zoocDelegate = self
+        receiverTextField.zoocDelegate = self
+        receiverPhoneNumberTextField.zoocDelegate = self
+        detailAddressTextField.zoocDelegate = self
+        requestTextField.zoocDelegate = self
+    }
+    
+    func updateUI(_ data: OrderAddress) {
+        addressNameTextField.text = data.addressName
+        receiverTextField.text = data.receiverName
+        receiverPhoneNumberTextField.text = data.receiverPhoneNumber
+        postCodeLabelBox.text = data.postCode
+        addressLabelBox.text = data.address
+        detailAddressTextField.text = data.detailAddress
     }
     
     //MARK: - Action Method
     
     @objc
     private func copyButtonDidTap() {
-        
+        delegate?.copyButtonDidTap()
     }
     
     @objc
@@ -282,7 +322,32 @@ final class OrderAddressView: UIView {
         delegate?.findAddressButtonDidTap()
     }
     
-   }
+    
+}
 
-
+extension OrderAddressView: ZoocTextFieldDelegate {
+    
+    func zoocTextFieldDidReturn(_ textField: ZoocTextField) {
+        switch textField.tag {
+        case 0:
+            receiverTextField.becomeFirstResponder()
+        case 1:
+            receiverPhoneNumberTextField.becomeFirstResponder()
+        case 2:
+            detailAddressTextField.becomeFirstResponder()
+        case 3:
+            requestTextField.becomeFirstResponder()
+        default:
+            return
+        }
+    }
+    
+    func zoocTextFieldDidEndEditing(_ textField: ZoocTextField) {
+        delegate?.textFieldDidEndEditing(addressName: addressNameTextField.text,
+                                         receiverName: receiverTextField.text,
+                                         receiverPhoneNumber: receiverPhoneNumberTextField.text,
+                                         detailAddress: detailAddressTextField.text,
+                                         request: requestTextField.text)
+    }
+}
 

@@ -9,10 +9,15 @@ import UIKit
 
 import SnapKit
 
+protocol OrderAgreementViewDelegate: AnyObject {
+    func checkButtonDidChange(onwardTransfer: Bool, termOfUse: Bool)
+}
+
 final class OrderAgreementView: UIView {
     
     //MARK: - Properties
     
+    weak var delegate: OrderAgreementViewDelegate?
     
     //MARK: - UI Components
     
@@ -153,6 +158,8 @@ final class OrderAgreementView: UIView {
     @objc
     private func checkButtonDidTap(_ sender: UIButton) {
         sender.isSelected.toggle()
+        delegate?.checkButtonDidChange(onwardTransfer: onwardTransferCheckButton.isSelected,
+                                       termOfUse: termOfUseCheckButton.isSelected)
     }
     
 }

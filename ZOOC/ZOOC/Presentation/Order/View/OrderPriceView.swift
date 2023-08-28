@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class OrderAmountOfPaymentView: UIView {
+final class OrderPriceView: UIView {
     
     //MARK: - Properties
     
@@ -178,6 +178,12 @@ final class OrderAmountOfPaymentView: UIView {
     }
     
     private func register() {
+    }
+    
+    func updateUI(_ data: OrderPrice) {
+        priceValueLabel.text = data.productPrice.priceText
+        deliveryFeeValueLabel.text = data.deliveryFee.priceText
+        totalPriceValueLabel.text = data.totalPrice.priceText
     }
     
     //MARK: - Action Method

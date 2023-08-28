@@ -140,6 +140,12 @@ final class OrderProductView: UIView {
         
     }
     
+    func updateUI(_ data: OrderProduct) {
+        productImageView.kfSetImage(url: data.imageURL)
+        productNameLabel.text = data.name
+        priceLabel.text = data.price.priceText
+    }
+    
     //MARK: - Action Method
     
     @objc

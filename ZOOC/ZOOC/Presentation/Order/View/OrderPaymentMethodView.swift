@@ -9,10 +9,15 @@ import UIKit
 
 import SnapKit
 
+protocol OrderPaymentMethodViewDelegate: AnyObject {
+    
+}
+
 final class OrderPaymentMethodView: UIView {
     
     //MARK: - Properties
     
+    weak var delegate: OrderPaymentMethodViewDelegate?
     
     //MARK: - UI Components
     

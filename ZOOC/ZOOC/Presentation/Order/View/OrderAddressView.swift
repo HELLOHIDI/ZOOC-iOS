@@ -23,13 +23,6 @@ final class OrderAddressView: UIView {
     
     //MARK: - Properties
     
-    enum ValidState {
-        case satisfied
-        case unsatisfied
-    }
-   
-    private var validState: ValidState = .unsatisfied
-    
     weak var delegate: OrderAddressViewDelegate?
     
     //MARK: - UI Components
@@ -301,6 +294,8 @@ final class OrderAddressView: UIView {
         requestTextField.zoocDelegate = self
     }
     
+    //MARK: - Public Methods
+    
     func updateUI(_ data: OrderAddress) {
         addressNameTextField.text = data.addressName
         receiverTextField.text = data.receiverName
@@ -308,6 +303,26 @@ final class OrderAddressView: UIView {
         postCodeLabelBox.text = data.postCode
         addressLabelBox.text = data.address
         detailAddressTextField.text = data.detailAddress
+        
+        addressLabel.textColor = .zoocGray2
+    }
+    
+    func checkValidity() throws {
+        addressNameTextField.updateInvalidUI()
+        receiverTextField.updateInvalidUI()
+        receiverPhoneNumberTextField.updateInvalidUI()
+        
+        if !(postCodeLabelBox.text?.hasText ?? false) {
+            addressLabel.textColor = .red
+        } else {
+            addressLabel.textColor = .zoocGray2
+        }
+        
+        guard addressNameTextField.hasText,
+              receiverTextField.hasText,
+              receiverPhoneNumberTextField.hasText else {
+            throw OrderInvalidError.addressInvlid
+        }
     }
     
     //MARK: - Action Method

@@ -166,6 +166,17 @@ final class OrdererView: UIView {
         phoneNumberTextField.text = data.phoneNumber
     }
     
+    func checkValidity() throws {
+        
+        nameTextField.updateInvalidUI()
+        phoneNumberTextField.updateInvalidUI()
+        
+        guard nameTextField.hasText,
+              phoneNumberTextField.hasText else {
+            throw OrderInvalidError.ordererInvalid
+        }
+    }
+    
     //MARK: - Action Method
     
     @objc

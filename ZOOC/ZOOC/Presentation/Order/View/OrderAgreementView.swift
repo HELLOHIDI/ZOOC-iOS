@@ -25,6 +25,7 @@ final class OrderAgreementView: UIView {
         let button = UIButton()
         button.setImage(Image.checkBox, for: .normal)
         button.setImage(Image.checkBoxFill, for: .selected)
+        button.setImage(Image.checkBoxRed, for: .highlighted)
         button.addTarget(self,
                          action: #selector(checkButtonDidTap),
                          for: .touchUpInside)
@@ -52,6 +53,7 @@ final class OrderAgreementView: UIView {
         let button = UIButton()
         button.setImage(Image.checkBox, for: .normal)
         button.setImage(Image.checkBoxFill, for: .selected)
+        button.setImage(Image.checkBoxRed, for: .highlighted)
         button.addTarget(self,
                          action: #selector(checkButtonDidTap),
                          for: .touchUpInside)
@@ -84,7 +86,6 @@ final class OrderAgreementView: UIView {
         style()
         hierarchy()
         layout()
-        register()
     }
     
     required init?(coder: NSCoder) {
@@ -150,7 +151,16 @@ final class OrderAgreementView: UIView {
         
     }
     
-    private func register() {
+    //MARK: - Public Methods
+    
+    func checkValidity() throws {
+        onwardTransferCheckButton.isHighlighted = !onwardTransferCheckButton.isSelected
+        termOfUseCheckButton.isHighlighted = !termOfUseCheckButton.isSelected
+        
+        guard onwardTransferCheckButton.isSelected,
+              termOfUseCheckButton.isSelected else {
+            throw OrderInvalidError.agreementInvalid
+        }
     }
     
     //MARK: - Action Method

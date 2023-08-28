@@ -42,14 +42,12 @@ final class OrderProductView: UIView {
     private let productImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.image = Image.mockPet1
         imageView.makeCornerRound(radius: 7)
         return imageView
     }()
     
     private let productNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "AI 폰케이스"
         label.textColor = .zoocDarkGray1
         label.font = .zoocBody2
         return label
@@ -57,7 +55,6 @@ final class OrderProductView: UIView {
     
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.text = 24500.priceText
         label.textColor = .zoocDarkGray1
         label.font = .zoocSubhead1
         return label

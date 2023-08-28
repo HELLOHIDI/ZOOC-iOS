@@ -157,8 +157,8 @@ final class OrdererView: UIView {
     }
     
     private func setDelegate() {
-        nameTextField.delegate = self
-        phoneNumberTextField.delegate = self
+        nameTextField.zoocDelegate = self
+        phoneNumberTextField.zoocDelegate = self
     }
     
     func updateUI(_ data: OrderOrderer) {
@@ -175,9 +175,9 @@ final class OrdererView: UIView {
     
 }
 
-extension OrdererView: UITextFieldDelegate {
+extension OrdererView: ZoocTextFieldDelegate {
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
+    func zoocTextFieldDidEndEditing(_ textField: ZoocTextField) {
         delegate?.textFieldDidEndEditing(name: nameTextField.text,
                                          phoneNumber: phoneNumberTextField.text)
     }

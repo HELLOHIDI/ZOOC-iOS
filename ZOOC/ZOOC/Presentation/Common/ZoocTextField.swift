@@ -10,17 +10,21 @@ import UIKit
 import SnapKit
 import Then
 
-protocol ZoocTextFieldDelegate: AnyObject {
-    func authTextFieldTextDidChange(_ textField: ZoocTextField, text: String)
-    func authTextFieldDidReturn(_ textField: ZoocTextField)
+@objc protocol ZoocTextFieldDelegate: UITextFieldDelegate {
+    @objc optional func zoocTextFieldTextDidChange(_ textField: ZoocTextField, text: String)
+    @objc optional func zoocTextFieldDidReturn(_ textField: ZoocTextField)
+    @objc optional func zoocTextFieldDidEndEditing(_ textField: ZoocTextField)
 }
 
-final class ZoocTextField : UITextField {
+extension ZoocTextFieldDelegate {
+    
+}
+
+final class ZoocTextField: UITextField {
     
     //MARK: - Properties
     
     weak var zoocDelegate: ZoocTextFieldDelegate?
-    
     
     //MARK: - UI Components
     
@@ -35,6 +39,8 @@ final class ZoocTextField : UITextField {
         style()
         updateEditingUI()
     }
+    
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -73,17 +79,18 @@ extension ZoocTextField: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        zoocDelegate?.authTextFieldDidReturn(self)
+        zoocDelegate?.zoocTextFieldDidReturn?(self)
         return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         updateEditingUI()
+        zoocDelegate?.zoocTextFieldDidEndEditing?(self)
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        guard let text = textField.text else { return}
-        zoocDelegate?.authTextFieldTextDidChange(self, text: text)
+        guard let text = textField.text else { return }
+        zoocDelegate?.zoocTextFieldTextDidChange?(self, text: text)
     }
 
 }

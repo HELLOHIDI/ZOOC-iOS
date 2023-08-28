@@ -272,9 +272,9 @@ final class OrderAddressView: UIView {
 //    }
     
     private func setDelegate() {
-        addressNameTextField.delegate = self
-        receiverTextField.delegate = self
-        receiverPhoneNumberTextField.delegate = self
+        addressNameTextField.zoocDelegate = self
+        receiverTextField.zoocDelegate = self
+        receiverPhoneNumberTextField.zoocDelegate = self
     }
     
     func updateUI(_ data: OrderAddress) {
@@ -301,9 +301,9 @@ final class OrderAddressView: UIView {
     
 }
 
-extension OrderAddressView: UITextFieldDelegate {
+extension OrderAddressView: ZoocTextFieldDelegate {
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
+    func zoocTextFieldDidEndEditing(_ textField: ZoocTextField) {
         delegate?.textFieldDidEndEditing(addressName: addressNameTextField.text,
                                          receiverName: receiverTextField.text,
                                          receiverPhoneNumber: receiverPhoneNumberTextField.text,

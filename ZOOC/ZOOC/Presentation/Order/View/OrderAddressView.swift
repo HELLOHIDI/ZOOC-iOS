@@ -9,11 +9,13 @@ import UIKit
 
 import SnapKit
 
-protocol OrderAddressViewDelegate {
-    
+protocol OrderAddressViewDelegate: AnyObject {
+    func findAddressButtonDidTap()
 }
 
 final class OrderAddressView: UIView {
+    
+    //MARK: - Properties
     
     enum ValidState {
         case satisfied
@@ -21,6 +23,14 @@ final class OrderAddressView: UIView {
     }
    
     private var validState: ValidState = .unsatisfied
+    
+    weak var delegate: OrderAddressViewDelegate?
+    
+    private var addressData: Address? {
+        didSet {
+            updateUI()
+        }
+    }
     
     //MARK: - UI Components
     
@@ -98,16 +108,16 @@ final class OrderAddressView: UIView {
         return button
     }()
     
-    private let zipCodeLabelBox: UILabel = {
-        let label = UILabel()
+    private let postCodeLabelBox: BasePaddingLabel = {
+        let label = BasePaddingLabel(leftPadding: 10)
         label.backgroundColor = .zoocLightGray
         label.setBorder(borderWidth: 1, borderColor: .zoocLightGray)
         label.makeCornerRound(radius: 7)
         return label
     }()
     
-    private let addressLabelBox: UILabel = {
-        let label = UILabel()
+    private let addressLabelBox: BasePaddingLabel = {
+        let label = BasePaddingLabel(leftPadding: 10)
         label.backgroundColor = .zoocLightGray
         label.setBorder(borderWidth: 1, borderColor: .zoocLightGray)
         label.makeCornerRound(radius: 7)
@@ -137,6 +147,8 @@ final class OrderAddressView: UIView {
     
     private func style() {
         backgroundColor = .zoocBackgroundGreen
+        
+        detailAddressTextField.placeholder = "상세 주소"
     }
     
     private func hierarchy() {
@@ -152,7 +164,7 @@ final class OrderAddressView: UIView {
                              phoneNumberTextField,
                              addressLabel,
                              findAddressButton,
-                             zipCodeLabelBox,
+                             postCodeLabelBox,
                              addressLabelBox,
                              detailAddressTextField)
         
@@ -227,7 +239,7 @@ final class OrderAddressView: UIView {
             $0.leading.equalToSuperview().inset(20)
         }
         
-        zipCodeLabelBox.snp.makeConstraints {
+        postCodeLabelBox.snp.makeConstraints {
             $0.top.equalTo(findAddressButton)
             $0.leading.equalTo(findAddressButton.snp.trailing).offset(7)
             $0.trailing.equalToSuperview().inset(40)
@@ -249,6 +261,15 @@ final class OrderAddressView: UIView {
         
     }
     
+    func dataBind(address: String, postCode: String) {
+        self.addressData = Address(address: address, postCode: postCode)
+    }
+    
+    private func updateUI() {
+        addressLabelBox.text = addressData?.address
+        postCodeLabelBox.text = addressData?.postCode
+    }
+    
     //MARK: - Action Method
     
     @objc
@@ -258,7 +279,7 @@ final class OrderAddressView: UIView {
     
     @objc
     private func findAddressButtonDidTap() {
-        
+        delegate?.findAddressButtonDidTap()
     }
     
    }

@@ -130,7 +130,7 @@ final class OrderViewController: BaseViewController {
         }
         
         paymentMethodView.snp.makeConstraints {
-            $0.top.equalTo(addressView.snp.bottom).offset(10)
+            $0.top.equalTo(productView.snp.bottom).offset(10)
             $0.horizontalEdges.equalToSuperview()
         }
         

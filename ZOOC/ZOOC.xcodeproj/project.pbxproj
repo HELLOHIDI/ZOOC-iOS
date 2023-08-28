@@ -94,7 +94,7 @@
 		87A3D87E2A9753CB002C36DB /* DetailShopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D87D2A9753CB002C36DB /* DetailShopViewModel.swift */; };
 		87A3D8802A97546D002C36DB /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D87F2A97546D002C36DB /* OrderViewController.swift */; };
 		87A3D8822A975476002C36DB /* OrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8812A975476002C36DB /* OrderViewModel.swift */; };
-		87A3D8882A975D48002C36DB /* OredererView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8872A975D48002C36DB /* OredererView.swift */; };
+		87A3D8882A975D48002C36DB /* OrdererView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8872A975D48002C36DB /* OrdererView.swift */; };
 		87A3D88A2A975D4F002C36DB /* OrderAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D8892A975D4F002C36DB /* OrderAddressView.swift */; };
 		87A3D88C2A975D5F002C36DB /* OrderProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D88B2A975D5F002C36DB /* OrderProductView.swift */; };
 		87A3D88E2A975D78002C36DB /* OrderPaymentMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A3D88D2A975D78002C36DB /* OrderPaymentMethodView.swift */; };
@@ -349,7 +349,7 @@
 		87A3D87D2A9753CB002C36DB /* DetailShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailShopViewModel.swift; sourceTree = "<group>"; };
 		87A3D87F2A97546D002C36DB /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
 		87A3D8812A975476002C36DB /* OrderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewModel.swift; sourceTree = "<group>"; };
-		87A3D8872A975D48002C36DB /* OredererView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OredererView.swift; sourceTree = "<group>"; };
+		87A3D8872A975D48002C36DB /* OrdererView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdererView.swift; sourceTree = "<group>"; };
 		87A3D8892A975D4F002C36DB /* OrderAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAddressView.swift; sourceTree = "<group>"; };
 		87A3D88B2A975D5F002C36DB /* OrderProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderProductView.swift; sourceTree = "<group>"; };
 		87A3D88D2A975D78002C36DB /* OrderPaymentMethodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPaymentMethodView.swift; sourceTree = "<group>"; };
@@ -839,7 +839,7 @@
 		87A3D8842A975CEA002C36DB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				87A3D8872A975D48002C36DB /* OredererView.swift */,
+				87A3D8872A975D48002C36DB /* OrdererView.swift */,
 				87A3D8892A975D4F002C36DB /* OrderAddressView.swift */,
 				87A3D88B2A975D5F002C36DB /* OrderProductView.swift */,
 				87A3D88D2A975D78002C36DB /* OrderPaymentMethodView.swift */,
@@ -1812,7 +1812,7 @@
 				D2C028F02A81F542003F4727 /* MyEditTextField.swift in Sources */,
 				87A3D8972A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift in Sources */,
 				D27D9EAC2A8F41B000E02842 /* GenAISelectImageViewModel.swift in Sources */,
-				87A3D8882A975D48002C36DB /* OredererView.swift in Sources */,
+				87A3D8882A975D48002C36DB /* OrdererView.swift in Sources */,
 				874AE9FA29B4A12F007A637D /* OnboardingJoinUserResult.swift in Sources */,
 				872BBD9529F959FC002E2C71 /* UserDefaultWrapper.swift in Sources */,
 				87A76AA5295F6EC40096F669 /* HomeAPI.swift in Sources */,

@@ -177,6 +177,12 @@ final class OrdererView: UIView {
 
 extension OrdererView: ZoocTextFieldDelegate {
     
+    func zoocTextFieldDidReturn(_ textField: ZoocTextField) {
+        if textField == nameTextField {
+            phoneNumberTextField.becomeFirstResponder()
+        }
+    }
+    
     func zoocTextFieldDidEndEditing(_ textField: ZoocTextField) {
         delegate?.textFieldDidEndEditing(name: nameTextField.text,
                                          phoneNumber: phoneNumberTextField.text)

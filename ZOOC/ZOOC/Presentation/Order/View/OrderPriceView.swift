@@ -37,7 +37,6 @@ final class OrderPriceView: UIView {
     
     private let priceValueLabel: UILabel = {
         let label = UILabel()
-        label.text = 59000.priceText
         label.font = .zoocBody2
         label.textColor = .zoocDarkGray2
         return label
@@ -53,7 +52,6 @@ final class OrderPriceView: UIView {
     
     private let deliveryFeeValueLabel: UILabel = {
         let label = UILabel()
-        label.text = 36000.priceText
         label.font = .zoocBody2
         label.textColor = .zoocDarkGray1
         return label
@@ -75,7 +73,6 @@ final class OrderPriceView: UIView {
     
     private let totalPriceValueLabel: UILabel = {
         let label = UILabel()
-        label.text = 95900.priceText
         label.font = .zoocHeadLine
         label.textColor = .zoocDarkGray1
         return label
@@ -89,7 +86,6 @@ final class OrderPriceView: UIView {
         style()
         hierarchy()
         layout()
-        register()
     }
     
     required init?(coder: NSCoder) {
@@ -175,9 +171,6 @@ final class OrderPriceView: UIView {
         }
         
         
-    }
-    
-    private func register() {
     }
     
     func updateUI(_ data: OrderPrice) {

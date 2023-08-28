@@ -85,6 +85,9 @@ final class OrderViewController: BaseViewController {
         
         orderButton.do {
             $0.setTitle("주문하기", for: .normal)
+            $0.addTarget(self,
+                         action: #selector(orderButtonDidTap),
+                         for: .touchUpInside)
         }
         
         
@@ -187,6 +190,38 @@ final class OrderViewController: BaseViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    @objc
+    private func orderButtonDidTap() {
+        do {
+            try ordererView.checkValidity()
+            try addressView.checkValidity()
+            try agreementView.checkValidity()
+            
+        } catch OrderInvalidError.ordererInvalid {
+            presentBottomAlert("구매자 정보를 입력해주세요.")
+            let y = ordererView.frame.minY
+            scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: true)
+            
+        } catch OrderInvalidError.addressInvlid {
+            presentBottomAlert("배송지 정보를 입력해주세요.")
+            let y = addressView.frame.minY
+            scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: true)
+            
+        } catch OrderInvalidError.paymentMethodInvalid {
+            presentBottomAlert("결제수단 정보를 확인해주세요.")
+            let y = paymentMethodView.frame.minY
+            scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: true)
+            
+        } catch OrderInvalidError.agreementInvalid {
+            presentBottomAlert("결제 진행 필수사항을 동의해주세요.")
+            scrollView.setContentOffset(CGPoint(x: 0,
+                                                y: self.scrollView.contentSize.height - self.scrollView.bounds.height),
+                                             animated: true)
+        } catch {
+            presentBottomAlert("알수없는 오류가 발생했습니다. \n 다시 시도해주세요.")
+        }
+    }
+    
 }
 
 
@@ -202,6 +237,7 @@ extension OrderViewController: OrdererViewDelegate {
 }
 
 //MARK: - OrderAddressViewDelegate
+
 extension OrderViewController: OrderAddressViewDelegate {
     
     func copyButtonDidTap() {
@@ -253,6 +289,7 @@ extension OrderViewController: OrderAgreementViewDelegate {
 
 
 //MARK: - KakaoPostCodeViewControllerDelegate
+
 extension OrderViewController: KakaoPostCodeViewControllerDelegate {
     
     func fetchPostCode(roadAddress: String, zoneCode: String) {
@@ -261,6 +298,5 @@ extension OrderViewController: KakaoPostCodeViewControllerDelegate {
         
         addressView.updateUI(addressData)
     }
-    
     
 }

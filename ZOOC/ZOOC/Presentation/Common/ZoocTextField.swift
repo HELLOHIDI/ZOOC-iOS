@@ -46,7 +46,7 @@ final class ZoocTextField: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - Custom Method
+    //MARK: - Private Method
     
     private func delegate() {
         delegate = self
@@ -67,6 +67,12 @@ final class ZoocTextField: UITextField {
     }
     
     //MARK: - Public Method
+    
+    func updateInvalidUI() {
+        guard let text else { return }
+        let color: UIColor = text.hasText ? .zoocLightGray : .red
+        setBorder(borderWidth: 1, borderColor: color)
+    }
     
     
     //MARK: - Action Method

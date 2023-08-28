@@ -148,6 +148,7 @@
 		87F287DD2A9C6F1200A53218 /* OrderProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287DC2A9C6F1200A53218 /* OrderProduct.swift */; };
 		87F287DF2A9C6F6C00A53218 /* OrderPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287DE2A9C6F6C00A53218 /* OrderPrice.swift */; };
 		87F287E12A9D113E00A53218 /* OrderAgreement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287E02A9D113E00A53218 /* OrderAgreement.swift */; };
+		87F287E32A9D182800A53218 /* OrderInvalidError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287E22A9D182800A53218 /* OrderInvalidError.swift */; };
 		D20C008A2A96DDB000666963 /* GenAIModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C00892A96DDB000666963 /* GenAIModelRepository.swift */; };
 		D20C008D2A96E23500666963 /* GenAIGuideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */; };
 		D20C008F2A96F22600666963 /* GenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008E2A96F22600666963 /* GenAIService.swift */; };
@@ -405,6 +406,7 @@
 		87F287DC2A9C6F1200A53218 /* OrderProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderProduct.swift; sourceTree = "<group>"; };
 		87F287DE2A9C6F6C00A53218 /* OrderPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPrice.swift; sourceTree = "<group>"; };
 		87F287E02A9D113E00A53218 /* OrderAgreement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAgreement.swift; sourceTree = "<group>"; };
+		87F287E22A9D182800A53218 /* OrderInvalidError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderInvalidError.swift; sourceTree = "<group>"; };
 		D20C00892A96DDB000666963 /* GenAIModelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIModelRepository.swift; sourceTree = "<group>"; };
 		D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideViewModel.swift; sourceTree = "<group>"; };
 		D20C008E2A96F22600666963 /* GenAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIService.swift; sourceTree = "<group>"; };
@@ -590,6 +592,7 @@
 			isa = PBXGroup;
 			children = (
 				872367182A19080600DCBBFF /* AuthError.swift */,
+				87F287E22A9D182800A53218 /* OrderInvalidError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -1806,6 +1809,7 @@
 				8718A06A29ADE6E8001C7460 /* BaseTextField.swift in Sources */,
 				D2B7355A2A866D8E00F93C45 /* MyRepository.swift in Sources */,
 				874AE9F829B49D5A007A637D /* VoidResult.swift in Sources */,
+				87F287E32A9D182800A53218 /* OrderInvalidError.swift in Sources */,
 				87E462F32A113A37006FC35D /* CALayer+.swift in Sources */,
 				87E462E62A10FA60006FC35D /* ExternalURL.swift in Sources */,
 				871DC6C42A1DC691006BA780 /* ZoocImageController.swift in Sources */,

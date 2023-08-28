@@ -7,7 +7,10 @@
 
 import Foundation
 
-struct Address {
+struct OrderAddress {
+    var addressName: String
+    var receiverName: String
+    var receiverPhoneNumber: String
     var address: String
     var postCode: String
     var detailAddress: String?

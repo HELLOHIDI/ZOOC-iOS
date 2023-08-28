@@ -26,7 +26,7 @@ final class OrderAddressView: UIView {
     
     weak var delegate: OrderAddressViewDelegate?
     
-    private var addressData: Address? {
+    private var addressData: OrderAddress? {
         didSet {
             updateUI()
         }
@@ -84,7 +84,7 @@ final class OrderAddressView: UIView {
         return label
     }()
     
-    private let phoneNumberTextField = ZoocTextField(.numberPad)
+    private let receiverPhoneNumberTextField = ZoocTextField(.numberPad)
     
     private let addressLabel: UILabel = {
         let label = UILabel()
@@ -135,6 +135,9 @@ final class OrderAddressView: UIView {
         style()
         hierarchy()
         layout()
+        setTag()
+        setDelegate()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -161,7 +164,7 @@ final class OrderAddressView: UIView {
                              receiverLabel,
                              receiverTextField,
                              phoneNumberLabel,
-                             phoneNumberTextField,
+                             receiverPhoneNumberTextField,
                              addressLabel,
                              findAddressButton,
                              postCodeLabelBox,
@@ -217,19 +220,19 @@ final class OrderAddressView: UIView {
             $0.leading.equalToSuperview().inset(20)
         }
         
-        phoneNumberTextField.snp.makeConstraints {
+        receiverPhoneNumberTextField.snp.makeConstraints {
             $0.top.equalTo(receiverTextField.snp.bottom).offset(10)
             $0.leading.trailing.height.equalTo(addressNameTextField)
         }
         
         phoneNumberLabel.snp.makeConstraints {
-            $0.centerY.equalTo(phoneNumberTextField)
+            $0.centerY.equalTo(receiverPhoneNumberTextField)
             $0.leading.equalToSuperview().inset(20)
         }
         
         findAddressButton.snp.makeConstraints {
-            $0.top.equalTo(phoneNumberTextField.snp.bottom).offset(10)
-            $0.leading.equalTo(phoneNumberTextField)
+            $0.top.equalTo(receiverPhoneNumberTextField.snp.bottom).offset(10)
+            $0.leading.equalTo(receiverPhoneNumberTextField)
             $0.height.equalTo(40)
             $0.width.equalTo(80)
         }
@@ -261,13 +264,30 @@ final class OrderAddressView: UIView {
         
     }
     
+    private func setTag() {
+        addressNameTextField.tag = 0
+        receiverTextField.tag = 1
+        receiverPhoneNumberTextField.tag = 2
+    }
+    private func setDelegate() {
+        addressNameTextField.delegate = self
+        receiverTextField.delegate = self
+        receiverPhoneNumberTextField.delegate = self
+    }
+    
     func dataBind(address: String, postCode: String) {
-        self.addressData = Address(address: address, postCode: postCode)
+        addressData?.address = address
+        addressData?.postCode = postCode
+        updateUI()
     }
     
     private func updateUI() {
-        addressLabelBox.text = addressData?.address
+        addressNameTextField.text = addressData?.addressName
+        receiverTextField.text = addressData?.receiverName
+        receiverPhoneNumberTextField.text = addressData?.receiverPhoneNumber
         postCodeLabelBox.text = addressData?.postCode
+        addressLabelBox.text = addressData?.address
+        detailAddressTextField.text = addressData?.detailAddress
     }
     
     //MARK: - Action Method
@@ -282,7 +302,21 @@ final class OrderAddressView: UIView {
         delegate?.findAddressButtonDidTap()
     }
     
-   }
+}
+
+extension OrderAddressView: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        switch textField.tag {
+        case 0: addressData?.addressName = textField.text ?? ""
+        case 1: addressData?.receiverName = textField.text ?? ""
+        case 2: addressData?.receiverPhoneNumber = textField.text ?? ""
+        default: return false
+        }
+        return true
+    }
+}
 
 
 

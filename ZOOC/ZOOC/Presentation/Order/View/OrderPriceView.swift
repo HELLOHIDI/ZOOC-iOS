@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class OrderAmountOfPaymentView: UIView {
+final class OrderPriceView: UIView {
     
     //MARK: - Properties
     

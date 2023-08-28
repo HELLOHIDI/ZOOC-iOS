@@ -15,7 +15,8 @@ protocol OrderAddressViewDelegate: AnyObject {
     func textFieldDidEndEditing(addressName: String?,
                                 receiverName: String?,
                                 receiverPhoneNumber: String?,
-                                detailAddress: String?)
+                                detailAddress: String?,
+                                request: String?)
 }
 
 final class OrderAddressView: UIView {
@@ -126,6 +127,15 @@ final class OrderAddressView: UIView {
     
     private let detailAddressTextField = ZoocTextField()
     
+    private let requestLabel: UILabel = {
+        let label = UILabel()
+        label.text = "요청사항"
+        label.font = .zoocBody2
+        label.textColor = .zoocGray2
+        return label
+    }()
+    
+    private let requestTextField = ZoocTextField()
     
     //MARK: - Life Cycle
     
@@ -136,9 +146,6 @@ final class OrderAddressView: UIView {
         hierarchy()
         layout()
         setDelegate()
-//        setTag()
-        
-        
     }
     
     required init?(coder: NSCoder) {
@@ -153,6 +160,7 @@ final class OrderAddressView: UIView {
         backgroundColor = .zoocBackgroundGreen
         
         detailAddressTextField.placeholder = "상세 주소"
+        requestTextField.placeholder = "부재시 경비실에 맡겨주세요."
     }
     
     private func hierarchy() {
@@ -170,7 +178,9 @@ final class OrderAddressView: UIView {
                              findAddressButton,
                              postCodeLabelBox,
                              addressLabelBox,
-                             detailAddressTextField)
+                             detailAddressTextField,
+                             requestLabel,
+                             requestTextField)
         
     }
     
@@ -260,6 +270,16 @@ final class OrderAddressView: UIView {
         detailAddressTextField.snp.makeConstraints {
             $0.top.equalTo(addressLabelBox.snp.bottom).offset(7)
             $0.leading.trailing.height.equalTo(addressLabelBox)
+        }
+        
+        requestLabel.snp.makeConstraints {
+            $0.centerY.equalTo(requestTextField)
+            $0.leading.equalToSuperview().inset(20)
+        }
+        
+        requestTextField.snp.makeConstraints {
+            $0.top.equalTo(detailAddressTextField.snp.bottom).offset(7)
+            $0.leading.trailing.height.equalTo(addressLabelBox)
             $0.bottom.equalToSuperview().inset(20)
         }
         
@@ -307,7 +327,8 @@ extension OrderAddressView: ZoocTextFieldDelegate {
         delegate?.textFieldDidEndEditing(addressName: addressNameTextField.text,
                                          receiverName: receiverTextField.text,
                                          receiverPhoneNumber: receiverPhoneNumberTextField.text,
-                                         detailAddress: detailAddressTextField.text)
+                                         detailAddress: detailAddressTextField.text,
+                                         request: requestTextField.text)
     }
 }
 

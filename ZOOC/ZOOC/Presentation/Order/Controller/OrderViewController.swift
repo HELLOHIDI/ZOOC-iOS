@@ -52,6 +52,7 @@ final class OrderViewController: BaseViewController {
         layout()
         setDelegate()
         updateUI()
+        dismissKeyboardWhenTappedAround()
     }
     
     required init?(coder: NSCoder) {
@@ -214,12 +215,15 @@ extension OrderViewController: OrderAddressViewDelegate {
     func textFieldDidEndEditing(addressName: String?,
                                 receiverName: String?,
                                 receiverPhoneNumber: String?,
-                                detailAddress: String?) {
+                                detailAddress: String?,
+                                request: String?) {
         
         addressData.addressName = addressName ?? ""
         addressData.receiverName = receiverName ?? ""
         addressData.receiverPhoneNumber = receiverPhoneNumber ?? ""
-        addressData.detailAddress = detailAddress   
+        addressData.detailAddress = detailAddress
+        addressData.request = request
+        
     }
     
     

@@ -80,6 +80,7 @@ extension ZoocTextField: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         zoocDelegate?.zoocTextFieldDidReturn?(self)
+        endEditing(true)
         return true
     }
     

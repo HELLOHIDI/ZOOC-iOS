@@ -147,6 +147,7 @@
 		87F287DB2A9C6E6F00A53218 /* OrderOrderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287DA2A9C6E6F00A53218 /* OrderOrderer.swift */; };
 		87F287DD2A9C6F1200A53218 /* OrderProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287DC2A9C6F1200A53218 /* OrderProduct.swift */; };
 		87F287DF2A9C6F6C00A53218 /* OrderPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287DE2A9C6F6C00A53218 /* OrderPrice.swift */; };
+		87F287E12A9D113E00A53218 /* OrderAgreement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287E02A9D113E00A53218 /* OrderAgreement.swift */; };
 		D20C008A2A96DDB000666963 /* GenAIModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C00892A96DDB000666963 /* GenAIModelRepository.swift */; };
 		D20C008D2A96E23500666963 /* GenAIGuideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */; };
 		D20C008F2A96F22600666963 /* GenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008E2A96F22600666963 /* GenAIService.swift */; };
@@ -403,6 +404,7 @@
 		87F287DA2A9C6E6F00A53218 /* OrderOrderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderOrderer.swift; sourceTree = "<group>"; };
 		87F287DC2A9C6F1200A53218 /* OrderProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderProduct.swift; sourceTree = "<group>"; };
 		87F287DE2A9C6F6C00A53218 /* OrderPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPrice.swift; sourceTree = "<group>"; };
+		87F287E02A9D113E00A53218 /* OrderAgreement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAgreement.swift; sourceTree = "<group>"; };
 		D20C00892A96DDB000666963 /* GenAIModelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIModelRepository.swift; sourceTree = "<group>"; };
 		D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideViewModel.swift; sourceTree = "<group>"; };
 		D20C008E2A96F22600666963 /* GenAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIService.swift; sourceTree = "<group>"; };
@@ -874,6 +876,7 @@
 				87F287D62A9A63CC00A53218 /* OrderAddress.swift */,
 				87F287DC2A9C6F1200A53218 /* OrderProduct.swift */,
 				87F287DE2A9C6F6C00A53218 /* OrderPrice.swift */,
+				87F287E02A9D113E00A53218 /* OrderAgreement.swift */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -1855,6 +1858,7 @@
 				D26C8612296B7CA500AEAF9B /* OnboardingRegisterPetView.swift in Sources */,
 				D23502F129619D4700F01101 /* MyPetCollectionViewCell.swift in Sources */,
 				871EA34A2970403300D0E8CC /* ArchiveResult.swift in Sources */,
+				87F287E12A9D113E00A53218 /* OrderAgreement.swift in Sources */,
 				D2C028EE2A81EEF3003F4727 /* MyEditProfileViewModel.swift in Sources */,
 				D24AFAB42A8DFBB300823E9C /* GenAIChoosePetView.swift in Sources */,
 				D23502EC296197C700F01101 /* MyPetSectionCollectionViewCell.swift in Sources */,

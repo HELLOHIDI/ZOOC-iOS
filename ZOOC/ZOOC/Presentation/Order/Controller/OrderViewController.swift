@@ -18,6 +18,7 @@ final class OrderViewController: BaseViewController {
     private var addressData = OrderAddress()
     private let productData: OrderProduct
     private let priceData: OrderPrice
+    private var agreementData = OrderAgreement()
     
     //MARK: - UI Components
     
@@ -168,6 +169,8 @@ final class OrderViewController: BaseViewController {
     private func setDelegate(){
         ordererView.delegate = self
         addressView.delegate = self
+        paymentMethodView.delegate = self
+        agreementView.delegate = self
     }
     
     private func updateUI() {
@@ -188,6 +191,8 @@ final class OrderViewController: BaseViewController {
 
 
 
+//MARK: - OrdererViewDelegate
+
 extension OrderViewController: OrdererViewDelegate {
     func textFieldDidEndEditing(name: String?, phoneNumber: String?) {
         ordererData.name = name ?? ""
@@ -196,6 +201,7 @@ extension OrderViewController: OrdererViewDelegate {
     
 }
 
+//MARK: - OrderAddressViewDelegate
 extension OrderViewController: OrderAddressViewDelegate {
     
     func copyButtonDidTap() {
@@ -223,14 +229,30 @@ extension OrderViewController: OrderAddressViewDelegate {
         addressData.receiverPhoneNumber = receiverPhoneNumber ?? ""
         addressData.detailAddress = detailAddress
         addressData.request = request
-        
     }
     
     
 }
 
+//MARK: - OrderPaymentMethodViewDelegate
+
+extension OrderViewController: OrderPaymentMethodViewDelegate {
+    
+}
+
+//MARK: - OrderAgreementViewDelegate
+
+extension OrderViewController: OrderAgreementViewDelegate {
+    
+    func checkButtonDidChange(onwardTransfer: Bool, termOfUse: Bool) {
+        agreementData.agreeWithOnwardTransfer = onwardTransfer
+        agreementData.agreeWithTermOfUse = termOfUse
+    }
+    
+}
 
 
+//MARK: - KakaoPostCodeViewControllerDelegate
 extension OrderViewController: KakaoPostCodeViewControllerDelegate {
     
     func fetchPostCode(roadAddress: String, zoneCode: String) {

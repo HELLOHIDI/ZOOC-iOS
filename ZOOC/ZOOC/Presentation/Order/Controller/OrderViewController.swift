@@ -14,6 +14,11 @@ final class OrderViewController: BaseViewController {
     
     //MARK: - Properties
     
+    private var ordererData = OrderOrderer()
+    private var addressData = OrderAddress()
+    private let productData: OrderProduct
+    private let priceData: OrderPrice
+    
     //MARK: - UI Components
     
     private let backButton = UIButton()
@@ -33,6 +38,12 @@ final class OrderViewController: BaseViewController {
     
     //MARK: - Life Cycle
     
+    init(productData: OrderProduct, priceData: OrderPrice) {
+        self.productData = productData
+        self.priceData = priceData
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,6 +51,11 @@ final class OrderViewController: BaseViewController {
         hierarchy()
         layout()
         setDelegate()
+        updateUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: - Custom Method
@@ -152,6 +168,13 @@ final class OrderViewController: BaseViewController {
         addressView.delegate = self
     }
     
+    private func updateUI() {
+        ordererView.updateUI(ordererData)
+        addressView.updateUI(addressData)
+        productView.updateUI(productData)
+        priceView.updateUI(priceData)
+    }
+    
     //MARK: - Action Method
     
     @objc
@@ -162,6 +185,11 @@ final class OrderViewController: BaseViewController {
 }
 
 extension OrderViewController: OrderAddressViewDelegate {
+    
+    func copyButtonDidTap() {
+        
+    }
+    
     func findAddressButtonDidTap() {
         let kakaoPostCodeVC = KakaoPostCodeViewController()
         kakaoPostCodeVC.delegate = self
@@ -173,7 +201,10 @@ extension OrderViewController: OrderAddressViewDelegate {
 
 extension OrderViewController: KakaoPostCodeViewControllerDelegate {
     func fetchPostCode(roadAddress: String, zoneCode: String) {
-        addressView.dataBind(address: roadAddress, postCode: zoneCode)
+        addressData.address = roadAddress
+        addressData.postCode = zoneCode
+        
+        addressView.updateUI(addressData)
     }
     
     

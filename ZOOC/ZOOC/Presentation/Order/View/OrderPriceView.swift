@@ -180,6 +180,12 @@ final class OrderPriceView: UIView {
     private func register() {
     }
     
+    func updateUI(_ data: OrderPrice) {
+        priceValueLabel.text = data.productPrice.priceText
+        deliveryFeeValueLabel.text = data.deliveryFee.priceText
+        totalPriceValueLabel.text = data.totalPrice.priceText
+    }
+    
     //MARK: - Action Method
     
     

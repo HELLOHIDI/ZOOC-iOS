@@ -16,5 +16,15 @@ struct OrderPrice {
             productPrice + deliveryFee
         }
     }
+    
+    init() {
+        self.productPrice = 0
+        self.deliveryFee = 0
+    }
+    
+    init(productPrice: Int, deleiveryFee: Int) {
+        self.productPrice = productPrice
+        self.deliveryFee = deleiveryFee
+    }
 }
 

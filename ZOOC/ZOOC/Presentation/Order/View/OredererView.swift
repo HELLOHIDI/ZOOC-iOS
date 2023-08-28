@@ -153,6 +153,15 @@ final class OrdererView: UIView {
         
     }
     
+    func updateUI(_ data: OrderOrderer) {
+        nameTextField.text = data.name
+        if let number = data.phoneNumber {
+            phoneNumberTextField.text = String(describing: number)
+        } else {
+            phoneNumberTextField.text = ""
+        }
+    }
+    
     //MARK: - Action Method
     
     @objc
@@ -160,7 +169,6 @@ final class OrdererView: UIView {
         foldButton.isSelected.toggle()
         
     }
-    
     
 }
 

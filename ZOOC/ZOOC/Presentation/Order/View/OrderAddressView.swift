@@ -11,6 +11,7 @@ import SnapKit
 
 protocol OrderAddressViewDelegate: AnyObject {
     func findAddressButtonDidTap()
+    func copyButtonDidTap()
 }
 
 final class OrderAddressView: UIView {
@@ -26,11 +27,11 @@ final class OrderAddressView: UIView {
     
     weak var delegate: OrderAddressViewDelegate?
     
-    private var addressData: OrderAddress? {
-        didSet {
-            updateUI()
-        }
-    }
+//    private var addressData: OrderAddress? {
+//        didSet {
+//            updateUI()
+//        }
+//    }
     
     //MARK: - UI Components
     
@@ -135,8 +136,8 @@ final class OrderAddressView: UIView {
         style()
         hierarchy()
         layout()
-        setTag()
-        setDelegate()
+//        setTag()
+//        setDelegate()
         
     }
     
@@ -264,30 +265,30 @@ final class OrderAddressView: UIView {
         
     }
     
-    private func setTag() {
-        addressNameTextField.tag = 0
-        receiverTextField.tag = 1
-        receiverPhoneNumberTextField.tag = 2
-    }
-    private func setDelegate() {
-        addressNameTextField.delegate = self
-        receiverTextField.delegate = self
-        receiverPhoneNumberTextField.delegate = self
-    }
+//    private func setTag() {
+//        addressNameTextField.tag = 0
+//        receiverTextField.tag = 1
+//        receiverPhoneNumberTextField.tag = 2
+//    }
+//    private func setDelegate() {
+//        addressNameTextField.delegate = self
+//        receiverTextField.delegate = self
+//        receiverPhoneNumberTextField.delegate = self
+//    }
     
-    func dataBind(address: String, postCode: String) {
-        addressData?.address = address
-        addressData?.postCode = postCode
-        updateUI()
-    }
-    
-    private func updateUI() {
-        addressNameTextField.text = addressData?.addressName
-        receiverTextField.text = addressData?.receiverName
-        receiverPhoneNumberTextField.text = addressData?.receiverPhoneNumber
-        postCodeLabelBox.text = addressData?.postCode
-        addressLabelBox.text = addressData?.address
-        detailAddressTextField.text = addressData?.detailAddress
+    func updateUI(_ data: OrderAddress) {
+        addressNameTextField.text = data.addressName
+        receiverTextField.text = data.receiverName
+        
+        if let number = data.receiverPhoneNumber {
+            receiverPhoneNumberTextField.text = String(describing: number)
+        } else {
+            receiverPhoneNumberTextField.text = ""
+        }
+         
+        postCodeLabelBox.text = data.postCode
+        addressLabelBox.text = data.address
+        detailAddressTextField.text = data.detailAddress
     }
     
     //MARK: - Action Method
@@ -303,20 +304,4 @@ final class OrderAddressView: UIView {
     }
     
 }
-
-extension OrderAddressView: UITextFieldDelegate {
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        switch textField.tag {
-        case 0: addressData?.addressName = textField.text ?? ""
-        case 1: addressData?.receiverName = textField.text ?? ""
-        case 2: addressData?.receiverPhoneNumber = textField.text ?? ""
-        default: return false
-        }
-        return true
-    }
-}
-
-
 

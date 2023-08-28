@@ -49,13 +49,13 @@ final class OrderProductView: UIView {
     private let productNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .zoocDarkGray1
-        label.font = .zoocBody2
+        label.font = .zoocSubhead1
         return label
     }()
     
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .zoocDarkGray1
+        label.textColor = .zoocGray2
         label.font = .zoocSubhead1
         return label
     }()
@@ -119,8 +119,9 @@ final class OrderProductView: UIView {
         
         productImageView.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().inset(40)
-            $0.size.equalTo(60)
+            $0.leading.equalToSuperview().inset(30)
+            $0.size.equalTo(80)
+            $0.bottom.equalToSuperview().inset(20)
         }
         
         productNameLabel.snp.makeConstraints {
@@ -132,7 +133,6 @@ final class OrderProductView: UIView {
         priceLabel.snp.makeConstraints {
             $0.top.equalTo(productNameLabel.snp.bottom).offset(7)
             $0.leading.equalTo(productNameLabel)
-            $0.bottom.equalToSuperview().inset(40)
         }
         
     }

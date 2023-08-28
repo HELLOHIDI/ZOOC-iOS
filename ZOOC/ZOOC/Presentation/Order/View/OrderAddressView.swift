@@ -12,6 +12,10 @@ import SnapKit
 protocol OrderAddressViewDelegate: AnyObject {
     func findAddressButtonDidTap()
     func copyButtonDidTap()
+    func textFieldDidEndEditing(addressName: String?,
+                                receiverName: String?,
+                                receiverPhoneNumber: String?,
+                                detailAddress: String?)
 }
 
 final class OrderAddressView: UIView {
@@ -26,12 +30,6 @@ final class OrderAddressView: UIView {
     private var validState: ValidState = .unsatisfied
     
     weak var delegate: OrderAddressViewDelegate?
-    
-//    private var addressData: OrderAddress? {
-//        didSet {
-//            updateUI()
-//        }
-//    }
     
     //MARK: - UI Components
     
@@ -128,6 +126,7 @@ final class OrderAddressView: UIView {
     
     private let detailAddressTextField = ZoocTextField()
     
+    
     //MARK: - Life Cycle
     
     override init(frame: CGRect) {
@@ -136,8 +135,9 @@ final class OrderAddressView: UIView {
         style()
         hierarchy()
         layout()
+        setDelegate()
 //        setTag()
-//        setDelegate()
+        
         
     }
     
@@ -270,22 +270,17 @@ final class OrderAddressView: UIView {
 //        receiverTextField.tag = 1
 //        receiverPhoneNumberTextField.tag = 2
 //    }
-//    private func setDelegate() {
-//        addressNameTextField.delegate = self
-//        receiverTextField.delegate = self
-//        receiverPhoneNumberTextField.delegate = self
-//    }
+    
+    private func setDelegate() {
+        addressNameTextField.delegate = self
+        receiverTextField.delegate = self
+        receiverPhoneNumberTextField.delegate = self
+    }
     
     func updateUI(_ data: OrderAddress) {
         addressNameTextField.text = data.addressName
         receiverTextField.text = data.receiverName
-        
-        if let number = data.receiverPhoneNumber {
-            receiverPhoneNumberTextField.text = String(describing: number)
-        } else {
-            receiverPhoneNumberTextField.text = ""
-        }
-         
+        receiverPhoneNumberTextField.text = data.receiverPhoneNumber
         postCodeLabelBox.text = data.postCode
         addressLabelBox.text = data.address
         detailAddressTextField.text = data.detailAddress
@@ -295,7 +290,7 @@ final class OrderAddressView: UIView {
     
     @objc
     private func copyButtonDidTap() {
-        
+        delegate?.copyButtonDidTap()
     }
     
     @objc
@@ -303,5 +298,16 @@ final class OrderAddressView: UIView {
         delegate?.findAddressButtonDidTap()
     }
     
+    
+}
+
+extension OrderAddressView: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        delegate?.textFieldDidEndEditing(addressName: addressNameTextField.text,
+                                         receiverName: receiverTextField.text,
+                                         receiverPhoneNumber: receiverPhoneNumberTextField.text,
+                                         detailAddress: detailAddressTextField.text)
+    }
 }
 

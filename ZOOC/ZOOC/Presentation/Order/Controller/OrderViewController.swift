@@ -165,6 +165,7 @@ final class OrderViewController: BaseViewController {
     
     
     private func setDelegate(){
+        ordererView.delegate = self
         addressView.delegate = self
     }
     
@@ -184,10 +185,24 @@ final class OrderViewController: BaseViewController {
     
 }
 
+
+
+extension OrderViewController: OrdererViewDelegate {
+    func textFieldDidEndEditing(name: String?, phoneNumber: String?) {
+        ordererData.name = name ?? ""
+        ordererData.phoneNumber = phoneNumber ?? ""
+    }
+    
+}
+
 extension OrderViewController: OrderAddressViewDelegate {
     
     func copyButtonDidTap() {
+        ordererView.endEditing(true)
+        addressData.receiverName = ordererData.name
+        addressData.receiverPhoneNumber = ordererData.phoneNumber
         
+        addressView.updateUI(addressData)
     }
     
     func findAddressButtonDidTap() {
@@ -196,10 +211,24 @@ extension OrderViewController: OrderAddressViewDelegate {
         present(kakaoPostCodeVC, animated: true)
     }
     
+    func textFieldDidEndEditing(addressName: String?,
+                                receiverName: String?,
+                                receiverPhoneNumber: String?,
+                                detailAddress: String?) {
+        
+        addressData.addressName = addressName ?? ""
+        addressData.receiverName = receiverName ?? ""
+        addressData.receiverPhoneNumber = receiverPhoneNumber ?? ""
+        addressData.detailAddress = detailAddress   
+    }
+    
     
 }
 
+
+
 extension OrderViewController: KakaoPostCodeViewControllerDelegate {
+    
     func fetchPostCode(roadAddress: String, zoneCode: String) {
         addressData.address = roadAddress
         addressData.postCode = zoneCode

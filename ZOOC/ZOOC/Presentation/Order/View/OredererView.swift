@@ -9,8 +9,8 @@ import UIKit
 
 import SnapKit
 
-protocol OrdererViewDelegate {
-    
+protocol OrdererViewDelegate: AnyObject {
+    func textFieldDidEndEditing(name: String?, phoneNumber: String?)
 }
 
 final class OrdererView: UIView {
@@ -23,6 +23,8 @@ final class OrdererView: UIView {
     }
    
     private var validState: ValidState = .unsatisfied
+    
+    weak var delegate: OrdererViewDelegate?
     
     //MARK: - UI Components
     
@@ -78,6 +80,7 @@ final class OrdererView: UIView {
         style()
         hierarchy()
         layout()
+        setDelegate()
     }
     
     required init?(coder: NSCoder) {
@@ -153,13 +156,14 @@ final class OrdererView: UIView {
         
     }
     
+    private func setDelegate() {
+        nameTextField.delegate = self
+        phoneNumberTextField.delegate = self
+    }
+    
     func updateUI(_ data: OrderOrderer) {
         nameTextField.text = data.name
-        if let number = data.phoneNumber {
-            phoneNumberTextField.text = String(describing: number)
-        } else {
-            phoneNumberTextField.text = ""
-        }
+        phoneNumberTextField.text = data.phoneNumber
     }
     
     //MARK: - Action Method
@@ -167,9 +171,16 @@ final class OrdererView: UIView {
     @objc
     private func foldButtonDidTap() {
         foldButton.isSelected.toggle()
-        
     }
     
+}
+
+extension OrdererView: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        delegate?.textFieldDidEndEditing(name: nameTextField.text,
+                                         phoneNumber: phoneNumberTextField.text)
+    }
 }
 
 

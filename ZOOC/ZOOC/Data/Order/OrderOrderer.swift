@@ -9,10 +9,10 @@ import Foundation
 
 struct OrderOrderer {
     var name: String
-    var phoneNumber: Int?
+    var phoneNumber: String
     
     init() {
         self.name = ""
+        self.phoneNumber = ""
     }
-    
 }

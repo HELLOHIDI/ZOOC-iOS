@@ -60,7 +60,7 @@ final class GenAIChoosePetCollectionViewCell: UICollectionViewCell {
         }
 
         selectImageView.do {
-            $0.image = Image.check
+            $0.image = Image.checkTint
             $0.contentMode = .scaleAspectFill
             $0.isHidden = true
         }

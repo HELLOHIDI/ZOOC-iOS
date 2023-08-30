@@ -36,7 +36,7 @@ final class RecordRegisterFourCollectionViewCell: UICollectionViewCell {
     
     private let selectImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = Image.check
+        imageView.image = Image.checkTint
         imageView.contentMode = .scaleAspectFill
         imageView.isHidden = true
         return imageView
@@ -90,7 +90,7 @@ final class RecordRegisterFourCollectionViewCell: UICollectionViewCell {
         }
         
         selectImageView.do {
-            $0.image = Image.check
+            $0.image = Image.checkTint
             $0.contentMode = .scaleAspectFill
             $0.isHidden = true
         }

@@ -15,7 +15,7 @@ struct BankAccount {
     
     var fullAccount: String {
         get {
-            accountNumber + bank
+            accountNumber + " " + bank
         }
     }
 }

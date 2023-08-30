@@ -9,6 +9,8 @@ import UIKit
 
 import SnapKit
 
+typealias OrderAssistantCollectionViewCellDelegate = OrderCopyStepViewDelegate
+
 final class OrderAssistantCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Properties
@@ -130,9 +132,12 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
         self.step = step
     }
     
+    func setDelegate(_ delegate: OrderAssistantCollectionViewCellDelegate) {
+        copyStepView.delegate = delegate
+    }
+    
     
     //MARK: - Action Method
 
-    
     
 }

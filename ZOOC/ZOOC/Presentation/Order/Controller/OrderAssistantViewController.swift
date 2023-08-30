@@ -14,7 +14,11 @@ final class OrderAssistantViewController : BaseViewController {
     
     //MARK: - Properties
     
-    private var currentStep: WithoutBankBookStep = .copy
+    private var currentStep: WithoutBankBookStep = .copy {
+        didSet {
+            collectionView.performBatchUpdates(nil)
+        }
+    }
     
     //MARK: - UI Components
     
@@ -117,6 +121,7 @@ extension OrderAssistantViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OrderAssistantCollectionViewCell.cellIdentifier,
                                                       for: indexPath) as! OrderAssistantCollectionViewCell
         cell.dataBind(WithoutBankBookStep.allCases[indexPath.row])
+        cell.setDelegate(self)
         return cell
     }
     
@@ -142,4 +147,15 @@ extension OrderAssistantViewController: UICollectionViewDelegateFlowLayout {
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 25
     }
+}
+
+
+extension OrderAssistantViewController: OrderCopyStepViewDelegate {
+    func copyButtonDidTap(_ fullAccount: String) {
+        UIPasteboard.general.string = fullAccount
+        presentBottomAlert("계좌번호가 클립보드에 복사되었습니다")
+        currentStep = .deposit
+    }
+    
+    
 }

@@ -11,7 +11,7 @@ import SnapKit
 import FirebaseRemoteConfig
 
 protocol OrderCopyStepViewDelegate: AnyObject {
-    func copyButtonDidTap()
+    func copyButtonDidTap(_ fullAccount: String)
 }
 
 final class OrderCopyStepView: UIView {
@@ -151,7 +151,7 @@ final class OrderCopyStepView: UIView {
 
     @objc
     private func copyButtonDidTap() {
-        delegate?.copyButtonDidTap()
+        delegate?.copyButtonDidTap(accountData.fullAccount)
     }
     
     

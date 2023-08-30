@@ -17,7 +17,7 @@ final class OrderPayViewController : BaseViewController {
     
     
     //MARK: - UI Components
-
+    
     
     
     //MARK: - Life Cycle
@@ -31,7 +31,6 @@ final class OrderPayViewController : BaseViewController {
     }
     
     //MARK: - Custom Method
-    
     
     private func style() {
         

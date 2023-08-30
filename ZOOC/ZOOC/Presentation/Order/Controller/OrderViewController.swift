@@ -192,6 +192,7 @@ final class OrderViewController: BaseViewController {
     
     @objc
     private func orderButtonDidTap() {
+        view.endEditing(true)
         do {
             try ordererView.checkValidity()
             try addressView.checkValidity()

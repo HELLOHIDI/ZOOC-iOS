@@ -12,6 +12,7 @@ import FirebaseRemoteConfig
 
 protocol OrderAssistantDepositViewDelegate: AnyObject {
     func bankButtonDidTap(_ bank: Bank)
+    func depositCompleteButtonDidTap()
 }
 
 final class OrderAssistantDepositView: UIView {
@@ -42,6 +43,16 @@ final class OrderAssistantDepositView: UIView {
         return collectionView
     }()
     
+    private lazy var completeButton: ZoocGradientButton = {
+        let button = ZoocGradientButton(.medium)
+        button.setTitle("결제 완료했습니다", for: .normal)
+        button.addTarget(self,
+                         action: #selector(completeButtonDidTap),
+                         for: .touchUpInside)
+        button.alpha = 0
+        return button
+    }()
+    
     
     //MARK: - Life Cycle
     
@@ -59,11 +70,6 @@ final class OrderAssistantDepositView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        makeCornerRound(radius: 10)
-    }
-    
     //MARK: - UI & Layout
     
     private func style() {
@@ -72,7 +78,8 @@ final class OrderAssistantDepositView: UIView {
     
     private func hierarchy() {
         addSubviews(titleLabel,
-                    collectionView)
+                    collectionView,
+                    completeButton)
     }
     
     private func layout() {
@@ -86,6 +93,12 @@ final class OrderAssistantDepositView: UIView {
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview().inset(20)
         }
+        
+        completeButton.snp.makeConstraints {
+            $0.height.equalTo(47)
+            $0.horizontalEdges.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(16)
+        }
     }
     
     private func register() {
@@ -98,18 +111,26 @@ final class OrderAssistantDepositView: UIView {
         collectionView.dataSource = self
     }
     
+    private func showCompleteButton() {
+        UIView.animate(withDuration: 1) {
+            self.completeButton.alpha = 1
+        }
+    }
+    
+    //MARK: - Public Methods
+    
     func updateUI(totalPrice: Int) {
         titleLabel.text = "원하시는 금융앱에서\n\(totalPrice.priceText)을 입금해주세요"
         titleLabel.asColor(targetString: totalPrice.priceText,
                            color: .zoocMainGreen)
     }
     
-    //MARK: - Public Methods
-    
-    
     //MARK: - Action Method
 
     
+    @objc private func completeButtonDidTap() {
+        delegate?.depositCompleteButtonDidTap()
+    }
     
 }
 
@@ -139,6 +160,10 @@ extension OrderAssistantDepositView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
         delegate?.bankButtonDidTap(Bank.allCases[indexPath.row])
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.showCompleteButton()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView,

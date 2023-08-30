@@ -148,7 +148,7 @@ extension OrderAssistantViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
         let width: CGFloat = collectionView.frame.width
-        var height: CGFloat = 60
+        let height: CGFloat = 60
         return CGSize(width: width, height: height)
     }
     
@@ -182,12 +182,24 @@ extension OrderAssistantViewController: OrderAssistantCopyViewDelegate {
 }
 
 extension OrderAssistantViewController: OrderAssistantDepositViewDelegate {
+    func depositCompleteButtonDidTap() {
+        currentStep = .complete
+    }
+    
     func bankButtonDidTap(_ bank: Bank) {
         guard let url = URL(string: bank.urlSchema) else { return }
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
-            currentStep = .complete
+            
         }
+    }
+    
+    
+}
+
+extension OrderAssistantViewController: OrderAssistantCompleteViewDelegate {
+    func completeButtonDidTap() {
+        dismiss(animated: true)
     }
     
     

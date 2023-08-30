@@ -11,6 +11,24 @@ final class ZoocGradientButton: UIButton {
     
     //MARK: - Properties
     
+    enum CornerStyle {
+        case capsule
+        case medium
+        
+        var ratio: CGFloat {
+            switch self {
+            case .capsule:
+                return 2
+            case .medium:
+                return 6
+                
+            }
+        }
+    }
+    
+    private var cornerStyle: CornerStyle = .capsule
+    
+    
     override var isEnabled: Bool {
         didSet {
             if isEnabled {
@@ -35,12 +53,20 @@ final class ZoocGradientButton: UIButton {
     private var gradientLayer: CAGradientLayer?
     private var shadowLayer: CALayer?
     
+    
     //MARK: - Life Cycle
 
     override init(frame: CGRect) {
         self.gradientColors = [activeColorTop, activeColorBottom]
         
         super.init(frame: frame)
+        style()
+    }
+    
+    init(_ cornerStyle: CornerStyle = .capsule) {
+        self.gradientColors = [activeColorTop, activeColorBottom]
+        self.cornerStyle = cornerStyle
+        super.init(frame: .zero)
         style()
     }
     
@@ -80,7 +106,7 @@ final class ZoocGradientButton: UIButton {
             layer.masksToBounds = true
             layer.startPoint = CGPoint(x: 0.5, y: 0.0)
             layer.endPoint = CGPoint(x: 0.5, y: 1.0)
-            layer.cornerRadius = rect.height / 2
+            layer.cornerRadius = rect.height / cornerStyle.ratio
             layer.colors = gradientColors
             
             self.layer.insertSublayer(layer, at: 1)

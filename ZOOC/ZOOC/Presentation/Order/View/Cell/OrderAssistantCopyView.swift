@@ -74,7 +74,6 @@ final class OrderAssistantCopyView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        makeCornerRound(radius: 10)
         imageView.makeCornerRound(ratio: 4)
         copyButton.makeCornerRound(radius: 10)
     }

@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-typealias OrderAssistantCollectionViewCellDelegate = OrderAssistantCopyViewDelegate & OrderAssistantDepositViewDelegate
+typealias OrderAssistantCollectionViewCellDelegate = OrderAssistantCopyViewDelegate & OrderAssistantDepositViewDelegate & OrderAssistantCompleteViewDelegate
 
 final class OrderAssistantCollectionViewCell: UICollectionViewCell {
     
@@ -51,6 +51,7 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
     
     private let copyView = OrderAssistantCopyView()
     private let depositView = OrderAssistantDepositView()
+    private let completView = OrderAssistantCompleteView()
     
     //MARK: - Life Cycle
     
@@ -77,12 +78,15 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
     
     private func style() {
         contentView.backgroundColor = .zoocWhite1
+        
+        headerView.backgroundColor = .zoocWhite1
     }
     
     private func hierarchy() {
-        contentView.addSubviews(headerView,
-                                copyView,
-                                depositView)
+        contentView.addSubviews(copyView,
+                                depositView,
+                                completView,
+                                headerView)
         
         headerView.addSubviews(stepNumberLabel,
                                 stepLabel,
@@ -126,6 +130,12 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
             $0.bottom.equalToSuperview()
         }
         
+        completView.snp.makeConstraints {
+            $0.top.equalTo(headerView.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+        
         contentView.layoutIfNeeded()
         
     }
@@ -133,11 +143,10 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
     private func updateUI() {
         stepNumberLabel.text = String(step.rawValue)
         stepLabel.text = step.title
-        
-        UIView.animate(withDuration: 1) {
-            self.copyView.isHidden = self.step != .copy
-            self.depositView.isHidden = self.step != .deposit
-        }
+    
+        self.copyView.isHidden = self.step != .copy
+        self.depositView.isHidden = self.step != .deposit
+        self.completView.isHidden = self.step != .complete
     }
     
     //MARK: - Piblic Methods
@@ -151,10 +160,7 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
     func setDelegate(_ delegate: OrderAssistantCollectionViewCellDelegate) {
         copyView.delegate = delegate
         depositView.delegate = delegate
+        completView.delegate = delegate
     }
-    
-    
-    //MARK: - Action Method
-
     
 }

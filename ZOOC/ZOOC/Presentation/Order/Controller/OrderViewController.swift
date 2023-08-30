@@ -279,10 +279,23 @@ extension OrderViewController: OrderPaymentMethodViewDelegate {
 //MARK: - OrderAgreementViewDelegate
 
 extension OrderViewController: OrderAgreementViewDelegate {
-    
+
     func checkButtonDidChange(onwardTransfer: Bool, termOfUse: Bool) {
         agreementData.agreeWithOnwardTransfer = onwardTransfer
         agreementData.agreeWithTermOfUse = termOfUse
+    }
+    
+    func watchButtonDidTap(_ type: OrderAgreementView.Policy) {
+        var url = ExternalURL.zoocDefaultURL
+        
+        switch type {
+        case .onwardTransfer:
+            url = ExternalURL.onwardTransfer
+        case .privacyPolicy:
+            url = ExternalURL.privacyPolicy
+        }
+        
+        presentSafariViewController(url)
     }
     
 }

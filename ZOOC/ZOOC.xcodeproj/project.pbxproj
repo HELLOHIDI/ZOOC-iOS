@@ -149,6 +149,11 @@
 		87F287DF2A9C6F6C00A53218 /* OrderPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287DE2A9C6F6C00A53218 /* OrderPrice.swift */; };
 		87F287E12A9D113E00A53218 /* OrderAgreement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287E02A9D113E00A53218 /* OrderAgreement.swift */; };
 		87F287E32A9D182800A53218 /* OrderInvalidError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287E22A9D182800A53218 /* OrderInvalidError.swift */; };
+		87F287EF2A9F36CE00A53218 /* ShopService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287EE2A9F36CE00A53218 /* ShopService.swift */; };
+		87F287F12A9F36D400A53218 /* ShopAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287F02A9F36D400A53218 /* ShopAPI.swift */; };
+		87F287F42A9F372400A53218 /* OrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287F32A9F372400A53218 /* OrderRequest.swift */; };
+		87F287F72A9F3F1500A53218 /* ProductResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287F62A9F3F1500A53218 /* ProductResult.swift */; };
+		87F287FA2A9F446400A53218 /* OrderPayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287F92A9F446400A53218 /* OrderPayViewController.swift */; };
 		D20C008A2A96DDB000666963 /* GenAIModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C00892A96DDB000666963 /* GenAIModelRepository.swift */; };
 		D20C008D2A96E23500666963 /* GenAIGuideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */; };
 		D20C008F2A96F22600666963 /* GenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008E2A96F22600666963 /* GenAIService.swift */; };
@@ -407,6 +412,11 @@
 		87F287DE2A9C6F6C00A53218 /* OrderPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPrice.swift; sourceTree = "<group>"; };
 		87F287E02A9D113E00A53218 /* OrderAgreement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAgreement.swift; sourceTree = "<group>"; };
 		87F287E22A9D182800A53218 /* OrderInvalidError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderInvalidError.swift; sourceTree = "<group>"; };
+		87F287EE2A9F36CE00A53218 /* ShopService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopService.swift; sourceTree = "<group>"; };
+		87F287F02A9F36D400A53218 /* ShopAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopAPI.swift; sourceTree = "<group>"; };
+		87F287F32A9F372400A53218 /* OrderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequest.swift; sourceTree = "<group>"; };
+		87F287F62A9F3F1500A53218 /* ProductResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductResult.swift; sourceTree = "<group>"; };
+		87F287F92A9F446400A53218 /* OrderPayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPayViewController.swift; sourceTree = "<group>"; };
 		D20C00892A96DDB000666963 /* GenAIModelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIModelRepository.swift; sourceTree = "<group>"; };
 		D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideViewModel.swift; sourceTree = "<group>"; };
 		D20C008E2A96F22600666963 /* GenAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIService.swift; sourceTree = "<group>"; };
@@ -868,6 +878,7 @@
 			children = (
 				87A3D87F2A97546D002C36DB /* OrderViewController.swift */,
 				87F287D42A9A4EC100A53218 /* KakaoPostCodeViewController.swift */,
+				87F287F92A9F446400A53218 /* OrderPayViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -875,6 +886,7 @@
 		87A3D8932A977960002C36DB /* Order */ = {
 			isa = PBXGroup;
 			children = (
+				87F287F22A9F371A00A53218 /* APIModel */,
 				87F287DA2A9C6E6F00A53218 /* OrderOrderer.swift */,
 				87F287D62A9A63CC00A53218 /* OrderAddress.swift */,
 				87F287DC2A9C6F1200A53218 /* OrderProduct.swift */,
@@ -1174,15 +1186,15 @@
 			children = (
 				8743694E2A8E50E30035AFD6 /* Common */,
 				8765549D295846E7006BBDA9 /* Base */,
-				87A3D8832A975CD2002C36DB /* Order */,
-				87A3D8762A975374002C36DB /* Shop */,
-				D2B7355C2A8B94B900F93C45 /* AI */,
 				87809C312A8CFD790060641F /* Splash */,
 				877BAFBE295EA0D300C2AA1C /* Onboarding */,
 				876554A02958489F006BBDA9 /* Home */,
 				87E462F82A129B94006FC35D /* Archive */,
 				876554A1295848A9006BBDA9 /* My */,
 				877BAFBD295EA09C00C2AA1C /* Record */,
+				D2B7355C2A8B94B900F93C45 /* AI */,
+				87A3D8762A975374002C36DB /* Shop */,
+				87A3D8832A975CD2002C36DB /* Order */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -1201,14 +1213,15 @@
 		87B6625729521EC200B6FFA9 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				D20C00922A96FDF700666963 /* GenAI */,
-				87A3D8932A977960002C36DB /* Order */,
 				871EA34B2970413700D0E8CC /* Common */,
 				87A76A96295F6DE50096F669 /* Onboarding */,
 				87A76A99295F6E0A0096F669 /* Home */,
 				87E462FC2A129DA9006FC35D /* Archive */,
 				87A76A97295F6DFF0096F669 /* Record */,
 				87A76A98295F6E050096F669 /* My */,
+				D20C00922A96FDF700666963 /* GenAI */,
+				87F287F52A9F3EED00A53218 /* Shop */,
+				87A3D8932A977960002C36DB /* Order */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -1216,6 +1229,7 @@
 		87B6625829521EC900B6FFA9 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				87F287ED2A9F36B800A53218 /* Shop */,
 				D20C008B2A96DDD900666963 /* GenAI */,
 				877C69762953A8BB00D9D7AF /* Foundation */,
 				8771843B2A0541AA00AB7DE4 /* Auth */,
@@ -1330,6 +1344,39 @@
 				87C109242971A5B40086466F /* ArchiveCommentReqeust.swift */,
 				8731C4B329A94A6900006743 /* ArchiveEmojiCommentReqeust.swift */,
 				871EA3492970403300D0E8CC /* ArchiveResult.swift */,
+			);
+			path = APIModel;
+			sourceTree = "<group>";
+		};
+		87F287ED2A9F36B800A53218 /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				87F287EE2A9F36CE00A53218 /* ShopService.swift */,
+				87F287F02A9F36D400A53218 /* ShopAPI.swift */,
+			);
+			path = Shop;
+			sourceTree = "<group>";
+		};
+		87F287F22A9F371A00A53218 /* APIModel */ = {
+			isa = PBXGroup;
+			children = (
+				87F287F32A9F372400A53218 /* OrderRequest.swift */,
+			);
+			path = APIModel;
+			sourceTree = "<group>";
+		};
+		87F287F52A9F3EED00A53218 /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				87F287F82A9F3F7000A53218 /* APIModel */,
+			);
+			path = Shop;
+			sourceTree = "<group>";
+		};
+		87F287F82A9F3F7000A53218 /* APIModel */ = {
+			isa = PBXGroup;
+			children = (
+				87F287F62A9F3F1500A53218 /* ProductResult.swift */,
 			);
 			path = APIModel;
 			sourceTree = "<group>";
@@ -1680,6 +1727,7 @@
 				D26C85CF2968681900AEAF9B /* MyPetCollectionFooterView.swift in Sources */,
 				872F638929B89D9B002EC413 /* HomeGuideViewController.swift in Sources */,
 				8765549F295846F3006BBDA9 /* ZoocTabBarController.swift in Sources */,
+				87F287EF2A9F36CE00A53218 /* ShopService.swift in Sources */,
 				D26C8602296B285700AEAF9B /* OnboardingCompleteProfileViewController.swift in Sources */,
 				D26C68E6296DE61F0088DC9A /* MyRegisterPetTableViewCell.swift in Sources */,
 				872367112A12AC4E00DCBBFF /* ArchiveModel.swift in Sources */,
@@ -1720,6 +1768,7 @@
 				D2F98F9F29676E3300CC82DE /* UINavigationController+.swift in Sources */,
 				D21CEC6029ABC01200854A36 /* MyRegisterPetsRequest.swift in Sources */,
 				D2F98F9D2967154D00CC82DE /* ZoocAlertViewController.swift in Sources */,
+				87F287FA2A9F446400A53218 /* OrderPayViewController.swift in Sources */,
 				D26C85DF2968C26500AEAF9B /* OnboardingLoginView.swift in Sources */,
 				D2DC80D72A0E158000F48209 /* RecordView.swift in Sources */,
 				4C6B186C296CB8730059840D /* RecordCompleteViewController.swift in Sources */,
@@ -1744,6 +1793,7 @@
 				87648329295237B500F74882 /* Adjusted+.swift in Sources */,
 				D27D95D7296DE0E30097CD03 /* MyFamilySectionCollectionViewCell.swift in Sources */,
 				87A3D8922A97756E002C36DB /* ZoocTextField.swift in Sources */,
+				87F287F12A9F36D400A53218 /* ShopAPI.swift in Sources */,
 				87A3D8992A987D55002C36DB /* OrderAgreementView.swift in Sources */,
 				87A76AA9295F6ED70096F669 /* MyAPI.swift in Sources */,
 				D26C85D1296869DD00AEAF9B /* UICollectionReusableView+.swift in Sources */,
@@ -1864,8 +1914,10 @@
 				871EA34A2970403300D0E8CC /* ArchiveResult.swift in Sources */,
 				87F287E12A9D113E00A53218 /* OrderAgreement.swift in Sources */,
 				D2C028EE2A81EEF3003F4727 /* MyEditProfileViewModel.swift in Sources */,
+				87F287F72A9F3F1500A53218 /* ProductResult.swift in Sources */,
 				D24AFAB42A8DFBB300823E9C /* GenAIChoosePetView.swift in Sources */,
 				D23502EC296197C700F01101 /* MyPetSectionCollectionViewCell.swift in Sources */,
+				87F287F42A9F372400A53218 /* OrderRequest.swift in Sources */,
 				8782C7EB296AC58B00C9324B /* HomeArchiveIndicatorView.swift in Sources */,
 				D25543A22996B22E0072BF0D /* OnboardingRegisterPetResult.swift in Sources */,
 				877E57EE2966AAE6006D82FC /* HomeArchiveListCollectionViewCell.swift in Sources */,

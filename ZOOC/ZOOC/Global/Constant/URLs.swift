@@ -56,5 +56,10 @@ public enum URLs{
     static let patchDatasetImage = "/ai/image/{datasetId}"
     static let patchDatasetImages = "/ai/images/{datasetId}"
     
+    //MARK: - Shop
+    
+    static let getProduct = "/shop/product"
+    static let postOrder = "/shop/order"
+    
     
 }

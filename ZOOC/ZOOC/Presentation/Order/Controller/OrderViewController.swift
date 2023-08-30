@@ -192,10 +192,16 @@ final class OrderViewController: BaseViewController {
     
     @objc
     private func orderButtonDidTap() {
+        view.endEditing(true)
         do {
             try ordererView.checkValidity()
             try addressView.checkValidity()
             try agreementView.checkValidity()
+            
+            requestOrderAPI(ordererData,
+                            addressData,
+                            productData,
+                            priceData)
             
         } catch OrderInvalidError.ordererInvalid {
             presentBottomAlert("구매자 정보를 입력해주세요.")
@@ -222,9 +228,25 @@ final class OrderViewController: BaseViewController {
         }
     }
     
+    private func requestOrderAPI(_ orderer: OrderOrderer,
+                                 _ address: OrderAddress,
+                                 _ product: OrderProduct,
+                                 _ price: OrderPrice) {
+        
+        let request = OrderRequest(orderer: orderer,
+                                   address: address,
+                                   product: product,
+                                   price: price)
+        
+        ShopAPI.shared.postOrder(request: request) { result in
+            
+            guard let result = self.validateResult(result) else { return }
+            let orderPayVC = OrderPayViewController()
+            self.navigationController?.pushViewController(orderPayVC, animated: true)
+        }
+    }
+    
 }
-
-
 
 //MARK: - OrdererViewDelegate
 

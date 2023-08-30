@@ -8,6 +8,7 @@
 import Foundation
 
 struct OrderProduct {
+    let id: Int
     let imageURL: String
     let name: String
     let price: Int

@@ -190,7 +190,8 @@ extension SplashViewController {
         
         let remoteConfig = RemoteConfig.remoteConfig()
         let settings =  RemoteConfigSettings()
-        
+        settings.minimumFetchInterval = 0
+        remoteConfig.configSettings = settings
         
         let localVersion: AppVersion = Device.getCurrentVersion().transform()
         

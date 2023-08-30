@@ -22,11 +22,13 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
     
     //MARK: - UI Components
     
+    private let headerView = UIView()
+    
     private let stepNumberLabel: UILabel = {
         let label = UILabel()
         label.font = .zoocSubhead1
         label.textColor = .zoocDarkGray1
-        label.backgroundColor = .zoocLightGray
+        label.backgroundColor = .zoocWhite3
         label.textAlignment = .center
         return label
     }()
@@ -43,6 +45,8 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
         button.setImage(Image.check, for: .normal)
         return button
     }()
+    
+    private let copyStepView = OrderCopyStepView()
     
     //MARK: - Life Cycle
     
@@ -72,12 +76,23 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
     }
     
     private func hierarchy() {
-        contentView.addSubviews(stepNumberLabel,
+        contentView.addSubviews(headerView,
+                                copyStepView)
+        
+        headerView.addSubviews(stepNumberLabel,
                                 stepLabel,
                                 checkButton)
+        
     }
     
     private func layout() {
+        
+        headerView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(60)
+        }
+        
         stepNumberLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
@@ -94,7 +109,14 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
             $0.trailing.equalToSuperview().inset(15)
         }
         
+        copyStepView.snp.makeConstraints {
+            $0.top.equalTo(headerView.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+        
         contentView.layoutIfNeeded()
+        
     }
     
     private func updateUI() {

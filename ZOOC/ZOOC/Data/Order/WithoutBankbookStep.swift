@@ -17,13 +17,21 @@ enum WithoutBankBookStep: Int, CaseIterable {
         switch self {
         case .copy:
             return "계좌 번호"
-            
         case .deposit:
             return "입금"
-            
         case .complete:
             return "완료하기"
-            
+        }
+    }
+    
+    var cellHeight: CGFloat {
+        switch self {
+        case .copy:
+            return 200
+        case .deposit:
+            return 500
+        case .complete:
+            return 200
         }
     }
 }

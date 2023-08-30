@@ -14,7 +14,7 @@ final class OrderAssistantViewController : BaseViewController {
     
     //MARK: - Properties
     
-    private let currentStep: WithoutBankBookStep = .copy
+    private var currentStep: WithoutBankBookStep = .copy
     
     //MARK: - UI Components
     
@@ -78,7 +78,7 @@ final class OrderAssistantViewController : BaseViewController {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(86)
+            $0.top.equalToSuperview().inset(100)
             $0.centerX.equalToSuperview()
         }
         
@@ -129,8 +129,11 @@ extension OrderAssistantViewController: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let width: CGFloat = collectionView.frame.width - 60
-        let height: CGFloat = 60
+        var height: CGFloat = 60
         
+        if currentStep.rawValue == indexPath.row + 1 {
+            height = currentStep.cellHeight
+        }
         return CGSize(width: width, height: height)
     }
     

@@ -180,7 +180,8 @@ final class HomeViewController : BaseViewController {
         
         let payVC = OrderAssistantViewController()
         payVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(payVC, animated: true)
+        present(payVC, animated: true)
+        //navigationController?.pushViewController(payVC, animated: true)
     }
     
     private func pushToGenAIViewController() {

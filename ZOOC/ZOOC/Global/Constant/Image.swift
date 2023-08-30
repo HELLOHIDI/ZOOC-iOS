@@ -14,6 +14,7 @@ public enum Image{
     static let logoAppIcon = UIImage(named: "logo_app_icon")!
     static let logoCombination = UIImage(named: "logo_combination")!
     static let logoSymbol = UIImage(named: "logo_symbol")!
+    static let logoKakaoBank = UIImage(named: "logo_kakaobank")
     
     //MARK: - Icon
     

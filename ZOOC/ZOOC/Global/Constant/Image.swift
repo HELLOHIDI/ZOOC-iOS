@@ -24,6 +24,7 @@ public enum Image{
     static let cameraCircleGreen = UIImage(named: "camera.circle.green")!
     static let cameraCircle = UIImage(named: "camera.circle")!
     static let check = UIImage(named: "check")!
+    static let checkTint = UIImage(named: "check.tint")!
     static let checkBoxRed = UIImage(named: "checkbox.red")!
     static let checkBoxFill = UIImage(named: "checkbox.fill")!
     static let checkBox = UIImage(named: "checkbox")!
@@ -93,4 +94,32 @@ public enum Image{
     static let mockdeprecated1 = UIImage(named: "mock_deprecated1")!
     static let mockdeprecated2 = UIImage(named: "mock_deprecated2")!
     static let mockdeprecated3 = UIImage(named: "mock_deprecated3")!
+    
+    //MARK: - Bank
+    
+    static let bankToss = UIImage(named: "toss")!
+    static let bankKakaoPay = UIImage(named: "kakaopay")!
+    static let bankKaKaoBank = UIImage(named: "kakaobank")!
+    static let bankKBStarBanking = UIImage(named: "kbstarbanking")!
+    static let bankBankSalad = UIImage(named: "banksalad")!
+    
+    static func load(_ bank: Bank) -> UIImage {
+        switch bank {
+            
+        case .toss:
+            return Image.bankToss
+        case .kakaoBank:
+            return Image.bankKaKaoBank
+        case .kakaoPay:
+            return Image.bankKakaoPay
+        case .kbStarBanking:
+            return Image.bankKBStarBanking
+        case .bankSalad:
+            return Image.bankBankSalad
+        }
+    }
+}
+
+extension Image {
+    
 }

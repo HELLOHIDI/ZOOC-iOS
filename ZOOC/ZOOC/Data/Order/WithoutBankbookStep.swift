@@ -16,11 +16,11 @@ enum WithoutBankBookStep: Int, CaseIterable {
     var title: String {
         switch self {
         case .copy:
-            return "계좌 번호"
+            return "계좌번호 복사"
         case .deposit:
             return "입금"
         case .complete:
-            return "완료하기"
+            return "결제 완료"
         }
     }
     

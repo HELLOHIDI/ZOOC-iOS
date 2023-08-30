@@ -161,6 +161,7 @@
 		87F288052A9FA69200A53218 /* OrderAssistantCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F288042A9FA69200A53218 /* OrderAssistantCompleteView.swift */; };
 		87F288072A9FA86600A53218 /* BankAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F288062A9FA86600A53218 /* BankAccount.swift */; };
 		87F288092A9FC41F00A53218 /* Bank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F288082A9FC41F00A53218 /* Bank.swift */; };
+		87F2880B2A9FDE2500A53218 /* OrderAssistantHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F2880A2A9FDE2500A53218 /* OrderAssistantHeaderView.swift */; };
 		D20C008A2A96DDB000666963 /* GenAIModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C00892A96DDB000666963 /* GenAIModelRepository.swift */; };
 		D20C008D2A96E23500666963 /* GenAIGuideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */; };
 		D20C008F2A96F22600666963 /* GenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008E2A96F22600666963 /* GenAIService.swift */; };
@@ -431,6 +432,7 @@
 		87F288042A9FA69200A53218 /* OrderAssistantCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAssistantCompleteView.swift; sourceTree = "<group>"; };
 		87F288062A9FA86600A53218 /* BankAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankAccount.swift; sourceTree = "<group>"; };
 		87F288082A9FC41F00A53218 /* Bank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bank.swift; sourceTree = "<group>"; };
+		87F2880A2A9FDE2500A53218 /* OrderAssistantHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAssistantHeaderView.swift; sourceTree = "<group>"; };
 		D20C00892A96DDB000666963 /* GenAIModelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIModelRepository.swift; sourceTree = "<group>"; };
 		D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideViewModel.swift; sourceTree = "<group>"; };
 		D20C008E2A96F22600666963 /* GenAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIService.swift; sourceTree = "<group>"; };
@@ -1403,6 +1405,7 @@
 			children = (
 				87A3D8962A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift */,
 				87F287FC2A9F7D3000A53218 /* OrderAssistantCollectionViewCell.swift */,
+				87F2880A2A9FDE2500A53218 /* OrderAssistantHeaderView.swift */,
 				87F288002A9FA67E00A53218 /* OrderAssistantCopyView.swift */,
 				87F288022A9FA68A00A53218 /* OrderAssistantDepositView.swift */,
 				87F288042A9FA69200A53218 /* OrderAssistantCompleteView.swift */,
@@ -1873,6 +1876,7 @@
 				87D5AF5A29606AC900CA7F12 /* NetworkResult.swift in Sources */,
 				4C8A7C33297063F400783979 /* OnboardingInviteResult.swift in Sources */,
 				8782C7EF296C41B200C9324B /* HomeArchiveGridCollectionViewCell.swift in Sources */,
+				87F2880B2A9FDE2500A53218 /* OrderAssistantHeaderView.swift in Sources */,
 				D26C860E296B6E8600AEAF9B /* UILabel+.swift in Sources */,
 				D27D9EAA2A8EFA2F00E02842 /* GenAISelectImageView.swift in Sources */,
 				872BBD9729F95BE2002E2C71 /* UserDefaultsManager.swift in Sources */,

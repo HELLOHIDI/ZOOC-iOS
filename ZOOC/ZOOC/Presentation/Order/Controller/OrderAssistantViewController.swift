@@ -33,15 +33,6 @@ final class OrderAssistantViewController : BaseViewController {
         return button
     }()
     
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "무통장 입금을 도와드릴게요"
-        label.textColor = .zoocDarkGray1
-        label.textAlignment = .center
-        label.font = .zoocHeadLine
-        return label
-    }()
-    
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -81,7 +72,6 @@ final class OrderAssistantViewController : BaseViewController {
     
     private func hierarchy() {
         view.addSubviews(dismissButton,
-                         titleLabel,
                          collectionView)
     }
     
@@ -92,13 +82,8 @@ final class OrderAssistantViewController : BaseViewController {
             $0.height.width.equalTo(42)
         }
         
-        titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(100)
-            $0.centerX.equalToSuperview()
-        }
-        
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(25)
+            $0.top.equalToSuperview().inset(100)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
@@ -112,6 +97,9 @@ final class OrderAssistantViewController : BaseViewController {
     private func register() {
         collectionView.register(OrderAssistantCollectionViewCell.self,
                                 forCellWithReuseIdentifier: OrderAssistantCollectionViewCell.cellIdentifier)
+        
+        collectionView.register(OrderAssistantHeaderView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: OrderAssistantHeaderView.reuseCellIdentifier)
     }
     
     //MARK: - Action Method
@@ -137,10 +125,33 @@ extension OrderAssistantViewController: UICollectionViewDataSource {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+            case UICollectionView.elementKindSectionHeader:
+              let view = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: OrderAssistantHeaderView.reuseCellIdentifier,
+                for: indexPath) as! OrderAssistantHeaderView
+
+              return view
+            default:
+              return UICollectionReusableView()
+            }
+    }
+    
     
 }
 
 extension OrderAssistantViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let width: CGFloat = collectionView.frame.width
+        var height: CGFloat = 60
+        return CGSize(width: width, height: height)
+    }
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {

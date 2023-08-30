@@ -22,6 +22,7 @@ protocol GenAISelectImageViewModelOutput {
     var petImageDatasets : Observable<[UIImage]> { get }
     var showEnabled: Observable<Bool> { get }
     var isCompleted: Observable<Bool?> { get }
+    var uploadRequestCompleted: Observable<Bool?> { get }
 }
 
 typealias GenAISelectImageViewModel = GenAISelectImageViewModelInput & GenAISelectImageViewModelOutput
@@ -35,6 +36,7 @@ final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
     var petImageDatasets: Observable<[UIImage]> = Observable([])
     var showEnabled: Observable<Bool> = Observable(false)
     var isCompleted: Observable<Bool?> = Observable(nil)
+    var uploadRequestCompleted: Observable<Bool?> = Observable(nil)
     
     
     init(petId: Int, selectedImageDatasets: [PHPickerResult], repository: GenAIModelRepository) {
@@ -84,16 +86,17 @@ final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
     }
     
     func generateAIModelButtonDidTapEvent() {
-        print(#function)
-        print("펫 아이디: \(petId)")
         repository.postMakeDataset(petId: petId) { [weak self] result in
             switch result {
             case .success(let data):
+                self?.uploadRequestCompleted.value = true
                 guard let result = data as? GenAIDatasetResult else { return }
                 guard let files = self?.petImageDatasets.value else { return }
+                guard let pet = self?.petId else { return }
                 self?.patchDatasetsImages(datasetId: result.datasetId, files: files)
+                self?.postRecordDatasetImages(familyId: UserDefaultsManager.familyID, content: nil, files: files, pet: pet)
             default:
-                break
+                self?.uploadRequestCompleted.value = false
             }
             
         }
@@ -103,8 +106,7 @@ final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
         repository.patchDatasetImages(datasetId: datasetId, files: files) { [weak self] result in
             switch result {
             case .success(_):
-                guard let pet = self?.petId else { return }
-                self?.postRecordDatasetImages(familyId: UserDefaultsManager.familyID, content: nil, files: files, pet: pet)
+                self?.isCompleted.value = true
             default:
                 self?.isCompleted.value = false
             }
@@ -112,12 +114,12 @@ final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
     }
     
     func postRecordDatasetImages(familyId: String, content: String?, files: [UIImage], pet: Int) {
-        repository.postRecordDatasetImages(familyId: familyId, content: content, files: files, pet: pet) { [weak self] result in
+        repository.postRecordDatasetImages(familyId: familyId, content: content, files: files, pet: pet) {  result in
             switch result {
             case .success(_):
-                self?.isCompleted.value = true
+                print("🆗 AI 모델 생성을 위한 데이터셋 이미지가 잘 기록되었습니다")
             default:
-                self?.isCompleted.value = false
+                print("❌ AI 모델 생성을 위한 데이터셋 이미지가 기록되지 않았습니다")
             }
         }
     }

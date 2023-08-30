@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-typealias OrderAssistantCollectionViewCellDelegate = OrderCopyStepViewDelegate
+typealias OrderAssistantCollectionViewCellDelegate = OrderAssistantCopyViewDelegate & OrderAssistantDepositViewDelegate
 
 final class OrderAssistantCollectionViewCell: UICollectionViewCell {
     
@@ -21,6 +21,7 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    private var totalPrice: Int = 0
     
     //MARK: - UI Components
     
@@ -48,7 +49,8 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
         return button
     }()
     
-    private let copyStepView = OrderCopyStepView()
+    private let copyView = OrderAssistantCopyView()
+    private let depositView = OrderAssistantDepositView()
     
     //MARK: - Life Cycle
     
@@ -79,7 +81,8 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
     
     private func hierarchy() {
         contentView.addSubviews(headerView,
-                                copyStepView)
+                                copyView,
+                                depositView)
         
         headerView.addSubviews(stepNumberLabel,
                                 stepLabel,
@@ -111,7 +114,13 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
             $0.trailing.equalToSuperview().inset(15)
         }
         
-        copyStepView.snp.makeConstraints {
+        copyView.snp.makeConstraints {
+            $0.top.equalTo(headerView.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+        
+        depositView.snp.makeConstraints {
             $0.top.equalTo(headerView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
@@ -124,16 +133,24 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
     private func updateUI() {
         stepNumberLabel.text = String(step.rawValue)
         stepLabel.text = step.title
+        
+        UIView.animate(withDuration: 1) {
+            self.copyView.isHidden = self.step != .copy
+            self.depositView.isHidden = self.step != .deposit
+        }
     }
     
     //MARK: - Piblic Methods
     
-    func dataBind(_ step: WithoutBankBookStep) {
+    func dataBind(_ step: WithoutBankBookStep, totalPrice: Int) {
         self.step = step
+        
+        depositView.updateUI(totalPrice: totalPrice)
     }
     
     func setDelegate(_ delegate: OrderAssistantCollectionViewCellDelegate) {
-        copyStepView.delegate = delegate
+        copyView.delegate = delegate
+        depositView.delegate = delegate
     }
     
     

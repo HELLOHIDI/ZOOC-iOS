@@ -241,7 +241,7 @@ final class OrderViewController: BaseViewController {
         ShopAPI.shared.postOrder(request: request) { result in
             
             guard let result = self.validateResult(result) else { return }
-            let orderPayVC = OrderAssistantViewController()
+            let orderPayVC = OrderAssistantViewController(totalPrice: self.priceData.totalPrice)
             self.navigationController?.pushViewController(orderPayVC, animated: true)
         }
     }

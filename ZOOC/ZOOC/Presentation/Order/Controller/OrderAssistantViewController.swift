@@ -14,6 +14,8 @@ final class OrderAssistantViewController : BaseViewController {
     
     //MARK: - Properties
     
+    private var totalPrice: Int
+    
     private var currentStep: WithoutBankBookStep = .copy {
         didSet {
             collectionView.performBatchUpdates(nil)
@@ -46,11 +48,20 @@ final class OrderAssistantViewController : BaseViewController {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
     
     //MARK: - Life Cycle
+    
+    init(totalPrice: Int) {
+        self.totalPrice = totalPrice
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,7 +131,8 @@ extension OrderAssistantViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OrderAssistantCollectionViewCell.cellIdentifier,
                                                       for: indexPath) as! OrderAssistantCollectionViewCell
-        cell.dataBind(WithoutBankBookStep.allCases[indexPath.row])
+        cell.dataBind(WithoutBankBookStep.allCases[indexPath.row],
+                      totalPrice: totalPrice)
         cell.setDelegate(self)
         return cell
     }
@@ -150,11 +162,21 @@ extension OrderAssistantViewController: UICollectionViewDelegateFlowLayout {
 }
 
 
-extension OrderAssistantViewController: OrderCopyStepViewDelegate {
+extension OrderAssistantViewController: OrderAssistantCopyViewDelegate {
     func copyButtonDidTap(_ fullAccount: String) {
-        UIPasteboard.general.string = fullAccount
+        UIPasteboard.general.string = fullAccount + "\(totalPrice)원"
         presentBottomAlert("계좌번호가 클립보드에 복사되었습니다")
         currentStep = .deposit
+    }
+}
+
+extension OrderAssistantViewController: OrderAssistantDepositViewDelegate {
+    func bankButtonDidTap(_ bank: Bank) {
+        guard let url = URL(string: bank.urlSchema) else { return }
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+            currentStep = .complete
+        }
     }
     
     

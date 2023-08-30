@@ -156,10 +156,11 @@
 		87F287FA2A9F446400A53218 /* OrderAssistantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287F92A9F446400A53218 /* OrderAssistantViewController.swift */; };
 		87F287FD2A9F7D3000A53218 /* OrderAssistantCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287FC2A9F7D3000A53218 /* OrderAssistantCollectionViewCell.swift */; };
 		87F287FF2A9F83DC00A53218 /* WithoutBankbookStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287FE2A9F83DC00A53218 /* WithoutBankbookStep.swift */; };
-		87F288012A9FA67E00A53218 /* OrderCopyStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F288002A9FA67E00A53218 /* OrderCopyStepView.swift */; };
-		87F288032A9FA68A00A53218 /* OrderDepositStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F288022A9FA68A00A53218 /* OrderDepositStepView.swift */; };
-		87F288052A9FA69200A53218 /* OrderCompleteStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F288042A9FA69200A53218 /* OrderCompleteStepView.swift */; };
+		87F288012A9FA67E00A53218 /* OrderAssistantCopyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F288002A9FA67E00A53218 /* OrderAssistantCopyView.swift */; };
+		87F288032A9FA68A00A53218 /* OrderAssistantDepositView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F288022A9FA68A00A53218 /* OrderAssistantDepositView.swift */; };
+		87F288052A9FA69200A53218 /* OrderAssistantCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F288042A9FA69200A53218 /* OrderAssistantCompleteView.swift */; };
 		87F288072A9FA86600A53218 /* BankAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F288062A9FA86600A53218 /* BankAccount.swift */; };
+		87F288092A9FC41F00A53218 /* Bank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F288082A9FC41F00A53218 /* Bank.swift */; };
 		D20C008A2A96DDB000666963 /* GenAIModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C00892A96DDB000666963 /* GenAIModelRepository.swift */; };
 		D20C008D2A96E23500666963 /* GenAIGuideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */; };
 		D20C008F2A96F22600666963 /* GenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008E2A96F22600666963 /* GenAIService.swift */; };
@@ -425,10 +426,11 @@
 		87F287F92A9F446400A53218 /* OrderAssistantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAssistantViewController.swift; sourceTree = "<group>"; };
 		87F287FC2A9F7D3000A53218 /* OrderAssistantCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAssistantCollectionViewCell.swift; sourceTree = "<group>"; };
 		87F287FE2A9F83DC00A53218 /* WithoutBankbookStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithoutBankbookStep.swift; sourceTree = "<group>"; };
-		87F288002A9FA67E00A53218 /* OrderCopyStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCopyStepView.swift; sourceTree = "<group>"; };
-		87F288022A9FA68A00A53218 /* OrderDepositStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDepositStepView.swift; sourceTree = "<group>"; };
-		87F288042A9FA69200A53218 /* OrderCompleteStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCompleteStepView.swift; sourceTree = "<group>"; };
+		87F288002A9FA67E00A53218 /* OrderAssistantCopyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAssistantCopyView.swift; sourceTree = "<group>"; };
+		87F288022A9FA68A00A53218 /* OrderAssistantDepositView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAssistantDepositView.swift; sourceTree = "<group>"; };
+		87F288042A9FA69200A53218 /* OrderAssistantCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAssistantCompleteView.swift; sourceTree = "<group>"; };
 		87F288062A9FA86600A53218 /* BankAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankAccount.swift; sourceTree = "<group>"; };
+		87F288082A9FC41F00A53218 /* Bank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bank.swift; sourceTree = "<group>"; };
 		D20C00892A96DDB000666963 /* GenAIModelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIModelRepository.swift; sourceTree = "<group>"; };
 		D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideViewModel.swift; sourceTree = "<group>"; };
 		D20C008E2A96F22600666963 /* GenAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIService.swift; sourceTree = "<group>"; };
@@ -906,6 +908,7 @@
 				87F287E02A9D113E00A53218 /* OrderAgreement.swift */,
 				87F287FE2A9F83DC00A53218 /* WithoutBankbookStep.swift */,
 				87F288062A9FA86600A53218 /* BankAccount.swift */,
+				87F288082A9FC41F00A53218 /* Bank.swift */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -1400,9 +1403,9 @@
 			children = (
 				87A3D8962A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift */,
 				87F287FC2A9F7D3000A53218 /* OrderAssistantCollectionViewCell.swift */,
-				87F288002A9FA67E00A53218 /* OrderCopyStepView.swift */,
-				87F288022A9FA68A00A53218 /* OrderDepositStepView.swift */,
-				87F288042A9FA69200A53218 /* OrderCompleteStepView.swift */,
+				87F288002A9FA67E00A53218 /* OrderAssistantCopyView.swift */,
+				87F288022A9FA68A00A53218 /* OrderAssistantDepositView.swift */,
+				87F288042A9FA69200A53218 /* OrderAssistantCompleteView.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1775,6 +1778,7 @@
 				D26C85E82968CD8E00AEAF9B /* OnboardingAgreementViewController.swift in Sources */,
 				87A3D87A2A97538D002C36DB /* ShopViewModel.swift in Sources */,
 				87A76AAB295F6EDE0096F669 /* RecordService.swift in Sources */,
+				87F288092A9FC41F00A53218 /* Bank.swift in Sources */,
 				D26C68EA296DE6F70088DC9A /* MyRegisterPetTableFooterView.swift in Sources */,
 				D27D9EAE2A8F46EA00E02842 /* GenAIPetImageCollectionViewCell.swift in Sources */,
 				D26C85E52968CB2F00AEAF9B /* OnboardingAgreementTableViewCell.swift in Sources */,
@@ -1801,7 +1805,7 @@
 				D2DC80D72A0E158000F48209 /* RecordView.swift in Sources */,
 				4C6B186C296CB8730059840D /* RecordCompleteViewController.swift in Sources */,
 				D22EF9002A7C9B720050E325 /* MyViewModel.swift in Sources */,
-				87F288032A9FA68A00A53218 /* OrderDepositStepView.swift in Sources */,
+				87F288032A9FA68A00A53218 /* OrderAssistantDepositView.swift in Sources */,
 				4C6B1864296B6C600059840D /* RecordRegisterModel.swift in Sources */,
 				87A76AA1295F6EA90096F669 /* OnboardingAPI.swift in Sources */,
 				D25543A4299A239B0072BF0D /* OnboardingRegisterPetRequest.swift in Sources */,
@@ -1820,7 +1824,7 @@
 				D26C85EA2968CF7E00AEAF9B /* OnboardingAgreementModel.swift in Sources */,
 				D20C00912A96F23200666963 /* GenAIAPI.swift in Sources */,
 				87648329295237B500F74882 /* Adjusted+.swift in Sources */,
-				87F288012A9FA67E00A53218 /* OrderCopyStepView.swift in Sources */,
+				87F288012A9FA67E00A53218 /* OrderAssistantCopyView.swift in Sources */,
 				D27D95D7296DE0E30097CD03 /* MyFamilySectionCollectionViewCell.swift in Sources */,
 				87A3D8922A97756E002C36DB /* ZoocTextField.swift in Sources */,
 				87F287F12A9F36D400A53218 /* ShopAPI.swift in Sources */,
@@ -1921,7 +1925,7 @@
 				D20C00972A9711C200666963 /* GenAIDatasetResult.swift in Sources */,
 				876483192952366A00F74882 /* Image.swift in Sources */,
 				4C6B1868296B930B0059840D /* RecordRegisterCollectionViewCell.swift in Sources */,
-				87F288052A9FA69200A53218 /* OrderCompleteStepView.swift in Sources */,
+				87F288052A9FA69200A53218 /* OrderAssistantCompleteView.swift in Sources */,
 				87A3D88A2A975D4F002C36DB /* OrderAddressView.swift in Sources */,
 				87648323295236B700F74882 /* UIColor+.swift in Sources */,
 				D27D9560296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift in Sources */,

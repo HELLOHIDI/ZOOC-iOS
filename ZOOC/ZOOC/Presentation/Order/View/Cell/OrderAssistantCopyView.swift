@@ -10,11 +10,11 @@ import UIKit
 import SnapKit
 import FirebaseRemoteConfig
 
-protocol OrderCopyStepViewDelegate: AnyObject {
+protocol OrderAssistantCopyViewDelegate: AnyObject {
     func copyButtonDidTap(_ fullAccount: String)
 }
 
-final class OrderCopyStepView: UIView {
+final class OrderAssistantCopyView: UIView {
     
     //MARK: - Properties
     
@@ -24,13 +24,13 @@ final class OrderCopyStepView: UIView {
         }
     }
     
-    weak var delegate: OrderCopyStepViewDelegate?
+    weak var delegate: OrderAssistantCopyViewDelegate?
     
     //MARK: - UI Components
     
     
     private let imageView: UIImageView = {
-        let imageView = UIImageView(image: Image.logoKakaoBank)
+        let imageView = UIImageView(image: Image.bankKaKaoBank)
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -75,6 +75,8 @@ final class OrderCopyStepView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         makeCornerRound(radius: 10)
+        imageView.makeCornerRound(ratio: 4)
+        copyButton.makeCornerRound(radius: 10)
     }
     
     //MARK: - UI & Layout

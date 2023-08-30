@@ -31,6 +31,11 @@
 	<string>$(KAKAO_APPKEY)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>kbbank</string>
+		<string>banksalad</string>
+		<string>kakaopay</string>
+		<string>kakaobank</string>
+		<string>supertoss</string>
 		<string>kakaokompassauth</string>
 		<string>kakaolink</string>
 		<string>itms-apps</string>

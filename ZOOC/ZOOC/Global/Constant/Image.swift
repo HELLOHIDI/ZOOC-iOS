@@ -14,7 +14,6 @@ public enum Image{
     static let logoAppIcon = UIImage(named: "logo_app_icon")!
     static let logoCombination = UIImage(named: "logo_combination")!
     static let logoSymbol = UIImage(named: "logo_symbol")!
-    static let logoKakaoBank = UIImage(named: "logo_kakaobank")
     
     //MARK: - Icon
     
@@ -94,4 +93,32 @@ public enum Image{
     static let mockdeprecated1 = UIImage(named: "mock_deprecated1")!
     static let mockdeprecated2 = UIImage(named: "mock_deprecated2")!
     static let mockdeprecated3 = UIImage(named: "mock_deprecated3")!
+    
+    //MARK: - Bank
+    
+    static let bankToss = UIImage(named: "toss")!
+    static let bankKakaoPay = UIImage(named: "kakaopay")!
+    static let bankKaKaoBank = UIImage(named: "kakaobank")!
+    static let bankKBStarBanking = UIImage(named: "kbstarbanking")!
+    static let bankBankSalad = UIImage(named: "banksalad")!
+    
+    static func load(_ bank: Bank) -> UIImage {
+        switch bank {
+            
+        case .toss:
+            return Image.bankToss
+        case .kakaoBank:
+            return Image.bankKaKaoBank
+        case .kakaoPay:
+            return Image.bankKakaoPay
+        case .kbStarBanking:
+            return Image.bankKBStarBanking
+        case .bankSalad:
+            return Image.bankBankSalad
+        }
+    }
+}
+
+extension Image {
+    
 }

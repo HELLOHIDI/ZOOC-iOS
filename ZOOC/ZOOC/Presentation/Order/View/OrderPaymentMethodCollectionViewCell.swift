@@ -120,10 +120,10 @@ final class OrderPaymentMethodCollectionViewCell: UICollectionViewCell {
         }
         
         imageView.snp.makeConstraints {
-            $0.leading.equalTo(checkButton.snp.trailing)
+            $0.leading.equalTo(checkButton.snp.trailing).offset(5)
             $0.centerY.equalToSuperview()
-            $0.height.equalTo(35)
-            $0.width.equalTo(60)
+            $0.height.equalTo(25)
+            $0.width.equalTo(40)
         }
         
         titleLabel.snp.makeConstraints {

@@ -43,10 +43,14 @@ final class OrderPaymentMethodView: UIView {
         return collectionView
     }()
     
-    private let descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.text = "현재 무통장만 됩니당"
+    private let descriptionLabel: BasePaddingLabel = {
+        let label = BasePaddingLabel(padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+        label.text = "현재 결제수단은 무통장 입금만 가능합니다. \n 추후 다른 결제 수단도 추가될 예정입니다."
         label.backgroundColor = .zoocLightGray
+        label.numberOfLines = 0
+        label.textColor = .zoocGray2
+        label.font = .zoocCaption
+        label.textAlignment = .center
         label.makeCornerRound(radius: 7)
         return label
     }()
@@ -64,7 +68,6 @@ final class OrderPaymentMethodView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-        
     }
     
     //MARK: - Custom Method
@@ -111,7 +114,7 @@ final class OrderPaymentMethodView: UIView {
         descriptionLabel.snp.makeConstraints {
             $0.top.equalTo(paymentCollectionView.snp.bottom)
             $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.bottom.equalToSuperview().inset(40)
+            $0.bottom.equalToSuperview().inset(20)
         }
         
     }

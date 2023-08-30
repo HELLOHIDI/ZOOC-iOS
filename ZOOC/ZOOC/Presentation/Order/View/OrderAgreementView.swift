@@ -11,6 +11,7 @@ import SnapKit
 
 protocol OrderAgreementViewDelegate: AnyObject {
     func checkButtonDidChange(onwardTransfer: Bool, termOfUse: Bool)
+    func watchButtonDidTap(_ type: OrderAgreementView.Policy)
 }
 
 final class OrderAgreementView: UIView {
@@ -18,6 +19,11 @@ final class OrderAgreementView: UIView {
     //MARK: - Properties
     
     weak var delegate: OrderAgreementViewDelegate?
+    
+    enum Policy {
+        case onwardTransfer
+        case privacyPolicy
+    }
     
     //MARK: - UI Components
     
@@ -40,16 +46,19 @@ final class OrderAgreementView: UIView {
         return label
     }()
     
-    private let watchOnwardTransferButton: UIButton = {
+    private lazy var watchOnwardTransferButton: UIButton = {
         let button = UIButton()
         button.setTitle("약관 보기", for: .normal)
         button.titleLabel?.asUnderLine("약관 보기")
         button.setTitleColor(.zoocGray1, for: .normal)
         button.titleLabel?.font = .zoocBody1
+        button.addTarget(self,
+                         action: #selector(watchButtonDidTap),
+                         for: .touchUpInside)
         return button
     }()
     
-    private lazy var termOfUseCheckButton: UIButton = {
+    private lazy var privacyPolicyCheckButton: UIButton = {
         let button = UIButton()
         button.setImage(Image.checkBox, for: .normal)
         button.setImage(Image.checkBoxFill, for: .selected)
@@ -60,7 +69,7 @@ final class OrderAgreementView: UIView {
         return button
     }()
     
-    private let termOfUseLabel: UILabel = {
+    private let privacyPolicyLabel: UILabel = {
         let label = UILabel()
         label.text = "개인정보 수집 및 이용 (필수)"
         label.font = .zoocBody2
@@ -68,12 +77,15 @@ final class OrderAgreementView: UIView {
         return label
     }()
     
-    private let watchTermOfUseButton: UIButton = {
+    private lazy var watchPrivacyPolicyButton: UIButton = {
         let button = UIButton()
         button.setTitle("약관 보기", for: .normal)
         button.titleLabel?.asUnderLine("약관 보기")
         button.setTitleColor(.zoocGray1, for: .normal)
         button.titleLabel?.font = .zoocBody1
+        button.addTarget(self,
+                         action: #selector(watchButtonDidTap),
+                         for: .touchUpInside)
         return button
     }()
     
@@ -104,9 +116,9 @@ final class OrderAgreementView: UIView {
         addSubviews(onwardTransferCheckButton,
                     onwardTransferLabel,
                     watchOnwardTransferButton,
-                    termOfUseCheckButton,
-                    termOfUseLabel,
-                    watchTermOfUseButton)
+                    privacyPolicyCheckButton,
+                    privacyPolicyLabel,
+                    watchPrivacyPolicyButton)
     }
     
     private func layout() {
@@ -128,20 +140,20 @@ final class OrderAgreementView: UIView {
             $0.height.equalTo(30)
         }
         
-        termOfUseCheckButton.snp.makeConstraints {
+        privacyPolicyCheckButton.snp.makeConstraints {
             $0.top.equalTo(onwardTransferCheckButton.snp.bottom)
             $0.leading.equalToSuperview().inset(20)
             $0.size.equalTo(42)
             $0.bottom.equalToSuperview().inset(20)
         }
         
-        termOfUseLabel.snp.makeConstraints {
-            $0.centerY.equalTo(termOfUseCheckButton)
-            $0.leading.equalTo(termOfUseCheckButton.snp.trailing)
+        privacyPolicyLabel.snp.makeConstraints {
+            $0.centerY.equalTo(privacyPolicyCheckButton)
+            $0.leading.equalTo(privacyPolicyCheckButton.snp.trailing)
         }
         
-        watchTermOfUseButton.snp.makeConstraints {
-            $0.centerY.equalTo(termOfUseCheckButton)
+        watchPrivacyPolicyButton.snp.makeConstraints {
+            $0.centerY.equalTo(privacyPolicyCheckButton)
             $0.trailing.equalToSuperview().inset(30)
             $0.height.equalTo(30)
         }
@@ -155,10 +167,10 @@ final class OrderAgreementView: UIView {
     
     func checkValidity() throws {
         onwardTransferCheckButton.isHighlighted = !onwardTransferCheckButton.isSelected
-        termOfUseCheckButton.isHighlighted = !termOfUseCheckButton.isSelected
+        privacyPolicyCheckButton.isHighlighted = !privacyPolicyCheckButton.isSelected
         
         guard onwardTransferCheckButton.isSelected,
-              termOfUseCheckButton.isSelected else {
+              privacyPolicyCheckButton.isSelected else {
             throw OrderInvalidError.agreementInvalid
         }
     }
@@ -169,7 +181,24 @@ final class OrderAgreementView: UIView {
     private func checkButtonDidTap(_ sender: UIButton) {
         sender.isSelected.toggle()
         delegate?.checkButtonDidChange(onwardTransfer: onwardTransferCheckButton.isSelected,
-                                       termOfUse: termOfUseCheckButton.isSelected)
+                                       termOfUse: privacyPolicyCheckButton.isSelected)
+    }
+    
+    @objc
+    private func watchButtonDidTap(_ sender: UIButton) {
+        
+        var type: Policy
+        
+        switch sender {
+        case watchOnwardTransferButton:
+            type = .onwardTransfer
+        case watchPrivacyPolicyButton:
+            type = .privacyPolicy
+        default:
+            return
+        }
+        
+        delegate?.watchButtonDidTap(type)
     }
     
 }

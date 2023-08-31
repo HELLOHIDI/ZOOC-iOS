@@ -267,7 +267,7 @@ extension OrderViewController: OrderOrdererViewDelegate {
 extension OrderViewController: OrderAddressViewDelegate {
     
     func copyButtonDidTap() {
-        ordererView.endEditing(true)
+        view.endEditing(true)
         addressData.receiverName = ordererData.name
         addressData.receiverPhoneNumber = ordererData.phoneNumber
         

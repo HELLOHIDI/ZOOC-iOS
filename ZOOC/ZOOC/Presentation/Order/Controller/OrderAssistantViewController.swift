@@ -121,7 +121,7 @@ extension OrderAssistantViewController: UICollectionViewDataSource {
                                                       for: indexPath) as! OrderAssistantCollectionViewCell
         cell.dataBind(WithoutBankBookStep.allCases[indexPath.row],
                       totalPrice: totalPrice)
-        cell.setDelegate(self)
+        cell.delegate = self
         return cell
     }
     
@@ -173,15 +173,16 @@ extension OrderAssistantViewController: UICollectionViewDelegateFlowLayout {
 }
 
 
-extension OrderAssistantViewController: OrderAssistantCopyViewDelegate {
+extension OrderAssistantViewController: OrderAssistantCollectionViewCellDelegate {
+    
+    //MARK: - Copy
     func copyButtonDidTap(_ fullAccount: String) {
         UIPasteboard.general.string = fullAccount + "\(totalPrice)원"
         presentBottomAlert("계좌번호가 클립보드에 복사되었습니다")
         currentStep = .deposit
     }
-}
 
-extension OrderAssistantViewController: OrderAssistantDepositViewDelegate {
+    //MARK: - Deposit
     func depositCompleteButtonDidTap() {
         currentStep = .complete
     }
@@ -194,13 +195,12 @@ extension OrderAssistantViewController: OrderAssistantDepositViewDelegate {
         }
     }
     
+    //MARK: - Complete
     
-}
-
-extension OrderAssistantViewController: OrderAssistantCompleteViewDelegate {
     func completeButtonDidTap() {
         dismiss(animated: true)
     }
     
-    
 }
+
+

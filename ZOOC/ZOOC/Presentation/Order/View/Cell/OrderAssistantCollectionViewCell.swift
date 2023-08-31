@@ -21,6 +21,8 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    weak var delegate: OrderAssistantCollectionViewCellDelegate?
+    
     private var totalPrice: Int = 0
     
     //MARK: - UI Components
@@ -29,8 +31,8 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
     
     private let stepNumberLabel: UILabel = {
         let label = UILabel()
-        label.font = .zoocSubhead1
-        label.textColor = .zoocDarkGray1
+        label.font = .zoocBody3
+        label.textColor = .zoocGray3
         label.backgroundColor = .zoocWhite3
         label.textAlignment = .center
         return label
@@ -46,6 +48,8 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
     private let checkButton: UIButton = {
         let button = UIButton()
         button.setImage(Image.check, for: .normal)
+        button.setImage(Image.checkTint, for: .selected)
+        button.isUserInteractionEnabled = false
         return button
     }()
     
@@ -61,6 +65,7 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
         style()
         hierarchy()
         layout()
+        setDelegate()
     }
     
     override func layoutSubviews() {
@@ -149,7 +154,13 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
         self.completView.isHidden = self.step != .complete
     }
     
-    //MARK: - Piblic Methods
+    private func setDelegate() {
+        copyView.delegate = self
+        depositView.delegate = self
+        completView.delegate = self
+    }
+    
+    //MARK: - Public Methods
     
     func dataBind(_ step: WithoutBankBookStep, totalPrice: Int) {
         self.step = step
@@ -157,10 +168,33 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
         depositView.updateUI(totalPrice: totalPrice)
     }
     
-    func setDelegate(_ delegate: OrderAssistantCollectionViewCellDelegate) {
-        copyView.delegate = delegate
-        depositView.delegate = delegate
-        completView.delegate = delegate
+}
+
+
+extension OrderAssistantCollectionViewCell: OrderAssistantCopyViewDelegate {
+    func copyButtonDidTap(_ fullAccount: String) {
+        checkButton.isSelected = true
+        delegate?.copyButtonDidTap(fullAccount)
     }
+}
+
+extension OrderAssistantCollectionViewCell: OrderAssistantDepositViewDelegate {
+    func depositCompleteButtonDidTap() {
+        checkButton.isSelected = true
+        delegate?.depositCompleteButtonDidTap()
+    }
+    
+    func bankButtonDidTap(_ bank: Bank) {
+        delegate?.bankButtonDidTap(bank)
+    }
+    
+    
+}
+
+extension OrderAssistantCollectionViewCell: OrderAssistantCompleteViewDelegate {
+    func completeButtonDidTap() {
+        delegate?.completeButtonDidTap()
+    }
+    
     
 }

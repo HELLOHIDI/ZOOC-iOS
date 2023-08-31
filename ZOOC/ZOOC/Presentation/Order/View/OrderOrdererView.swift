@@ -9,22 +9,15 @@ import UIKit
 
 import SnapKit
 
-protocol OrdererViewDelegate: AnyObject {
+protocol OrderOrdererViewDelegate: AnyObject {
     func textFieldDidEndEditing(name: String?, phoneNumber: String?)
 }
 
-final class OrdererView: UIView {
+final class OrderOrdererView: UIView {
     
     //MARK: - Properties
     
-    enum ValidState {
-        case satisfied
-        case unsatisfied
-    }
-   
-    private var validState: ValidState = .unsatisfied
-    
-    weak var delegate: OrdererViewDelegate?
+    weak var delegate: OrderOrdererViewDelegate?
     
     //MARK: - UI Components
     
@@ -186,7 +179,7 @@ final class OrdererView: UIView {
     
 }
 
-extension OrdererView: ZoocTextFieldDelegate {
+extension OrderOrdererView: ZoocTextFieldDelegate {
     
     func zoocTextFieldDidReturn(_ textField: ZoocTextField) {
         if textField == nameTextField {

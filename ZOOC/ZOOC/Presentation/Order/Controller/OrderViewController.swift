@@ -28,7 +28,7 @@ final class OrderViewController: BaseViewController {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
-    private let ordererView = OrdererView()
+    private let ordererView = OrderOrdererView()
     private let addressView = OrderAddressView()
     private let productView = OrderProductView()
     private let paymentMethodView = OrderPaymentMethodView()
@@ -254,7 +254,7 @@ final class OrderViewController: BaseViewController {
 
 //MARK: - OrdererViewDelegate
 
-extension OrderViewController: OrdererViewDelegate {
+extension OrderViewController: OrderOrdererViewDelegate {
     func textFieldDidEndEditing(name: String?, phoneNumber: String?) {
         ordererData.name = name ?? ""
         ordererData.phoneNumber = phoneNumber ?? ""

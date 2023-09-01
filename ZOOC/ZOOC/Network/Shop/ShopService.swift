@@ -43,6 +43,3 @@ extension ShopService: BaseTargetType {
         }
     }
 }
-
-
-

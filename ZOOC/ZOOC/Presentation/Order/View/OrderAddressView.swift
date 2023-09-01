@@ -12,9 +12,9 @@ import SnapKit
 protocol OrderAddressViewDelegate: AnyObject {
     func findAddressButtonDidTap()
     func copyButtonDidTap()
-    func textFieldDidEndEditing(addressName: String?,
-                                receiverName: String?,
-                                receiverPhoneNumber: String?,
+    func textFieldDidEndEditing(addressName: String,
+                                receiverName: String,
+                                receiverPhoneNumber: String,
                                 detailAddress: String?,
                                 request: String?)
 }
@@ -139,6 +139,7 @@ final class OrderAddressView: UIView {
         hierarchy()
         layout()
         setDelegate()
+        setTag()
     }
     
     required init?(coder: NSCoder) {
@@ -296,7 +297,7 @@ final class OrderAddressView: UIView {
     
     //MARK: - Public Methods
     
-    func updateUI(_ data: OrderAddress) {
+    func updateUI(_ data: OrderAddress, isPostData: Bool = false) {
         addressNameTextField.text = data.addressName
         receiverTextField.text = data.receiverName
         receiverPhoneNumberTextField.text = data.receiverPhoneNumber
@@ -304,7 +305,11 @@ final class OrderAddressView: UIView {
         addressLabelBox.text = data.address
         detailAddressTextField.text = data.detailAddress
         
-        addressLabel.textColor = .zoocGray2
+        if isPostData {
+            addressLabel.textColor = .zoocGray2
+            detailAddressTextField.becomeFirstResponder()
+        }
+        
     }
     
     func checkValidity() throws {
@@ -330,10 +335,12 @@ final class OrderAddressView: UIView {
     @objc
     private func copyButtonDidTap() {
         delegate?.copyButtonDidTap()
+        addressNameTextField.becomeFirstResponder()
     }
     
     @objc
     private func findAddressButtonDidTap() {
+        endEditing(true)
         delegate?.findAddressButtonDidTap()
     }
     
@@ -343,6 +350,7 @@ final class OrderAddressView: UIView {
 extension OrderAddressView: ZoocTextFieldDelegate {
     
     func zoocTextFieldDidReturn(_ textField: ZoocTextField) {
+        resignFirstResponder()
         switch textField.tag {
         case 0:
             receiverTextField.becomeFirstResponder()
@@ -358,11 +366,11 @@ extension OrderAddressView: ZoocTextFieldDelegate {
     }
     
     func zoocTextFieldDidEndEditing(_ textField: ZoocTextField) {
-        delegate?.textFieldDidEndEditing(addressName: addressNameTextField.text,
-                                         receiverName: receiverTextField.text,
-                                         receiverPhoneNumber: receiverPhoneNumberTextField.text,
-                                         detailAddress: detailAddressTextField.text,
-                                         request: requestTextField.text)
+        delegate?.textFieldDidEndEditing(addressName: addressNameTextField.text ?? "",
+                                         receiverName: receiverTextField.text ?? "",
+                                         receiverPhoneNumber: receiverPhoneNumberTextField.text ?? "",
+                                         detailAddress: detailAddressTextField.hasText ? detailAddressTextField.text : nil,
+                                         request: detailAddressTextField.hasText ? requestTextField.text : nil)
     }
 }
 

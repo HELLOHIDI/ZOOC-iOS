@@ -113,8 +113,11 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
     //MARK: - Custom Method
     
     private func register() {
-        collectionView.register(UICollectionViewCell.self,
-                                forCellWithReuseIdentifier: "cell")
+        collectionView.register(ProductOptionCollectionViewCell.self,
+                                forCellWithReuseIdentifier: ProductOptionCollectionViewCell.cellIdentifier)
+        
+        collectionView.register(ProductSelectedOptionCollectionViewCell.self,
+                                forCellWithReuseIdentifier: ProductSelectedOptionCollectionViewCell.cellIdentifier)
     }
     private func setDelegate() {
         collectionView.delegate = self
@@ -123,7 +126,7 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
     }
     
     private func style() {
-        
+    
     }
     
     private func hierarchy() {
@@ -181,34 +184,77 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
 
 
 //MARK: - UICollectionViewDataSource
+
 extension ProductBottomSheet: UICollectionViewDataSource {
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        2
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        20
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return 0
+        default:
+            return 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = .systemPink
-        return cell
+        switch indexPath.section {
+        case 0:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductOptionCollectionViewCell.cellIdentifier,
+                                                          for: indexPath) as! ProductOptionCollectionViewCell
+            return cell
+        case 1:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductSelectedOptionCollectionViewCell.cellIdentifier,
+                                                          for: indexPath) as! ProductSelectedOptionCollectionViewCell
+            return cell
+        default:
+            return UICollectionViewCell()
+        }
     }
 }
 
 //MARK: - UICollectionViewDelegateFlowLayout
 
 extension ProductBottomSheet: UICollectionViewDelegateFlowLayout {
+    
+   
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: collectionView.frame.width, height: 40)
+        
+        let width = collectionView.frame.width
+        
+        switch indexPath.section {
+        case 0:
+            return CGSize(width: width - 40, height: 40)
+        case 1:
+            return CGSize(width: width - 40, height: 100)
+        default:
+            return .zero
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        10
+        switch section {
+        case 0:
+            return 10
+        case 1:
+            return 10
+        default:
+            return .zero
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     }
 }
 

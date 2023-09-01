@@ -179,10 +179,12 @@ final class HomeViewController : BaseViewController {
                                                                deleiveryFee: 3000))
         
         //let payVC = OrderAssistantViewController(totalPrice: 29500)
+        
+        let productVC = ShopProductViewController()
         //present(petVC, animated: true)
         
-        shopVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(shopVC, animated: true)
+        productVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(productVC, animated: true)
     }
     
     private func pushToGenAIViewController() {

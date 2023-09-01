@@ -9,17 +9,11 @@ import UIKit
 
 import SnapKit
 import Then
+import FloatingPanel
 
 final class ShopProductViewController: BaseViewController {
     
     //MARK: - Properties
-    
-    enum PageDirection: Int{
-        case left
-        case right
-    }
-    
-    private var scrollDown = false
     
     //private var productModel: ProductModel
     
@@ -31,8 +25,6 @@ final class ShopProductViewController: BaseViewController {
     
     
     //MARK: - UI Components
-    
-    //private let optionBottomSheetViewController = EmojiBottomSheetViewController()
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -130,6 +122,9 @@ final class ShopProductViewController: BaseViewController {
         
         buyButton.do {
             $0.setTitle("구매하기", for: .normal)
+            $0.addTarget(self,
+                         action: #selector(buyButtonDidTap),
+                         for: .touchUpInside)
         }
         
     }
@@ -169,7 +164,6 @@ final class ShopProductViewController: BaseViewController {
         }
         
         buyView.snp.makeConstraints {
-            //$0.top.equalTo(scrollView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().inset(19)
             $0.height.equalTo(77)
@@ -181,7 +175,6 @@ final class ShopProductViewController: BaseViewController {
             $0.edges.equalTo(scrollView.contentLayoutGuide)
             $0.width.equalTo(scrollView.frameLayoutGuide)
             $0.height.equalTo(scrollView.frameLayoutGuide).priority(.low)
-            //$0.height.equalTo(1000)
         }
         
         //MARK: contentView Layout
@@ -235,7 +228,6 @@ final class ShopProductViewController: BaseViewController {
         nameLabel.text = "폰케"
         descriptionLabel.text = "와 싸다!"
     }
-
     
     //MARK: - API Method
     
@@ -243,14 +235,14 @@ final class ShopProductViewController: BaseViewController {
     //MARK: - Action Method
     
     @objc
-    func backButtonDidTap() {
+    private func buyButtonDidTap() {
+        let bottomSheet = BottomSheetViewController(isTouchPassable: false,
+                                                    contentViewController: ProductBottomSheet())
+        present(bottomSheet, animated: true)
+    }
+    
+    @objc
+    private func backButtonDidTap() {
         navigationController?.popViewController(animated: true)
     }
-  
 }
-
-
-
-
-//MARK: - EmojiBottomSheetDelegate
-

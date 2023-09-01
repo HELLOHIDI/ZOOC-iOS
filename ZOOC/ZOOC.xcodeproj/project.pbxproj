@@ -14,8 +14,15 @@
 		4C6B186A296C82850059840D /* RecordRegisterFourCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B1869296C82850059840D /* RecordRegisterFourCollectionViewCell.swift */; };
 		4C6B186C296CB8730059840D /* RecordCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B186B296CB8730059840D /* RecordCompleteViewController.swift */; };
 		4C8A7C33297063F400783979 /* OnboardingInviteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A7C32297063F400783979 /* OnboardingInviteResult.swift */; };
-		870A4BF52AA106AF00D7CFD8 /* NullEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A4BF42AA106AF00D7CFD8 /* NullEncodable.swift */; };
 		870A4BF92AA252CB00D7CFD8 /* ShopProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A4BF82AA252CB00D7CFD8 /* ShopProductViewController.swift */; };
+		870A4BFC2AA268E900D7CFD8 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 870A4BFB2AA268E900D7CFD8 /* FloatingPanel */; };
+		870A4BFF2AA26E9100D7CFD8 /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A4BFE2AA26E9100D7CFD8 /* BottomSheetViewController.swift */; };
+		870A4C022AA26F6900D7CFD8 /* TouchBlockIntrinsicPanelLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A4C012AA26F6900D7CFD8 /* TouchBlockIntrinsicPanelLayout.swift */; };
+		870A4C042AA26F8000D7CFD8 /* TouchPassIntrinsicPanelLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A4C032AA26F8000D7CFD8 /* TouchPassIntrinsicPanelLayout.swift */; };
+		870A4C062AA2704800D7CFD8 /* ProductBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A4C052AA2704800D7CFD8 /* ProductBottomSheet.swift */; };
+		870A4C082AA2708700D7CFD8 /* SelfSizingCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A4C072AA2708700D7CFD8 /* SelfSizingCollectionView.swift */; };
+		870A4C0A2AA2820D00D7CFD8 /* ProductOptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A4C092AA2820D00D7CFD8 /* ProductOptionCollectionViewCell.swift */; };
+		870A4C0C2AA2823900D7CFD8 /* ProductOptionSelectedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A4C0B2AA2823900D7CFD8 /* ProductOptionSelectedCollectionViewCell.swift */; };
 		870D062A297BEB7900ADAD04 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870D0629297BEB7900ADAD04 /* HomeView.swift */; };
 		8718A06429AD3445001C7460 /* EditProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8718A06329AD3445001C7460 /* EditProfileRequest.swift */; };
 		8718A06829ADB423001C7460 /* GalleryAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8718A06729ADB423001C7460 /* GalleryAlertController.swift */; };
@@ -290,8 +297,14 @@
 		4C6B1869296C82850059840D /* RecordRegisterFourCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRegisterFourCollectionViewCell.swift; sourceTree = "<group>"; };
 		4C6B186B296CB8730059840D /* RecordCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCompleteViewController.swift; sourceTree = "<group>"; };
 		4C8A7C32297063F400783979 /* OnboardingInviteResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInviteResult.swift; sourceTree = "<group>"; };
-		870A4BF42AA106AF00D7CFD8 /* NullEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NullEncodable.swift; sourceTree = "<group>"; };
 		870A4BF82AA252CB00D7CFD8 /* ShopProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopProductViewController.swift; sourceTree = "<group>"; };
+		870A4BFE2AA26E9100D7CFD8 /* BottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
+		870A4C012AA26F6900D7CFD8 /* TouchBlockIntrinsicPanelLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchBlockIntrinsicPanelLayout.swift; sourceTree = "<group>"; };
+		870A4C032AA26F8000D7CFD8 /* TouchPassIntrinsicPanelLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPassIntrinsicPanelLayout.swift; sourceTree = "<group>"; };
+		870A4C052AA2704800D7CFD8 /* ProductBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductBottomSheet.swift; sourceTree = "<group>"; };
+		870A4C072AA2708700D7CFD8 /* SelfSizingCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizingCollectionView.swift; sourceTree = "<group>"; };
+		870A4C092AA2820D00D7CFD8 /* ProductOptionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductOptionCollectionViewCell.swift; sourceTree = "<group>"; };
+		870A4C0B2AA2823900D7CFD8 /* ProductOptionSelectedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductOptionSelectedCollectionViewCell.swift; sourceTree = "<group>"; };
 		870D0629297BEB7900ADAD04 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		8718A06329AD3445001C7460 /* EditProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileRequest.swift; sourceTree = "<group>"; };
 		8718A06729ADB423001C7460 /* GalleryAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryAlertController.swift; sourceTree = "<group>"; };
@@ -564,6 +577,7 @@
 				87809C302A8CE3930060641F /* FirebaseRemoteConfig in Frameworks */,
 				871EA35629706F4300D0E8CC /* Lottie in Frameworks */,
 				8764833229523BBD00F74882 /* SnapKit in Frameworks */,
+				870A4BFC2AA268E900D7CFD8 /* FloatingPanel in Frameworks */,
 				872367162A19062700DCBBFF /* Sentry in Frameworks */,
 				8764833529523BCA00F74882 /* Then in Frameworks */,
 				87A76ABA295F760C0096F669 /* KakaoSDKUser in Frameworks */,
@@ -583,6 +597,27 @@
 				4C6B1867296B930B0059840D /* RecordRegisterCollectionViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		870A4BFD2AA26E7500D7CFD8 /* BottomSheet */ = {
+			isa = PBXGroup;
+			children = (
+				870A4C052AA2704800D7CFD8 /* ProductBottomSheet.swift */,
+				870A4C092AA2820D00D7CFD8 /* ProductOptionCollectionViewCell.swift */,
+				870A4C0B2AA2823900D7CFD8 /* ProductOptionSelectedCollectionViewCell.swift */,
+			);
+			path = BottomSheet;
+			sourceTree = "<group>";
+		};
+		870A4C002AA26F5700D7CFD8 /* FloatingPanel */ = {
+			isa = PBXGroup;
+			children = (
+				870A4BFE2AA26E9100D7CFD8 /* BottomSheetViewController.swift */,
+				870A4C012AA26F6900D7CFD8 /* TouchBlockIntrinsicPanelLayout.swift */,
+				870A4C032AA26F8000D7CFD8 /* TouchPassIntrinsicPanelLayout.swift */,
+				870A4C072AA2708700D7CFD8 /* SelfSizingCollectionView.swift */,
+			);
+			path = FloatingPanel;
 			sourceTree = "<group>";
 		};
 		871EA34B2970413700D0E8CC /* Common */ = {
@@ -633,11 +668,11 @@
 		872BBD9329F959E2002E2C71 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				870A4C002AA26F5700D7CFD8 /* FloatingPanel */,
 				87DDDD93298E607C00CBEC79 /* Device.swift */,
 				872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */,
 				872BBD9629F95BE2002E2C71 /* UserDefaultsManager.swift */,
 				874369562A8FFB250035AFD6 /* NetworkMonitor.swift */,
-				870A4BF42AA106AF00D7CFD8 /* NullEncodable.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -848,6 +883,7 @@
 		87A3D8762A975374002C36DB /* Shop */ = {
 			isa = PBXGroup;
 			children = (
+				870A4BFD2AA26E7500D7CFD8 /* BottomSheet */,
 				87A3D8772A975385002C36DB /* ShopViewController.swift */,
 				87A3D8792A97538D002C36DB /* ShopViewModel.swift */,
 				870A4BF82AA252CB00D7CFD8 /* ShopProductViewController.swift */,
@@ -1616,6 +1652,7 @@
 				8781DE4729B20F61005ABF23 /* FirebaseMessaging */,
 				872367152A19062700DCBBFF /* Sentry */,
 				87809C2F2A8CE3930060641F /* FirebaseRemoteConfig */,
+				870A4BFB2AA268E900D7CFD8 /* FloatingPanel */,
 			);
 			productName = ZOOC;
 			productReference = 87B6623D29521E7500B6FFA9 /* ZOOC-Dev.app */;
@@ -1654,6 +1691,7 @@
 				871EA35429706F4300D0E8CC /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				8781DE4629B20F61005ABF23 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				872367142A19062700DCBBFF /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+				870A4BFA2AA268E900D7CFD8 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 			);
 			productRefGroup = 87B6623E29521E7500B6FFA9 /* Products */;
 			projectDirPath = "";
@@ -1724,6 +1762,7 @@
 				87F287FF2A9F83DC00A53218 /* WithoutBankbookStep.swift in Sources */,
 				87A3D88E2A975D78002C36DB /* OrderPaymentMethodView.swift in Sources */,
 				D2F1936729713FCD00AD87D3 /* OnboardingJWTTokenResult.swift in Sources */,
+				870A4C062AA2704800D7CFD8 /* ProductBottomSheet.swift in Sources */,
 				D26C8600296B27B100AEAF9B /* OnboardingCompleteProfileView.swift in Sources */,
 				87F287D92A9A667500A53218 /* BasePaddingLabel.swift in Sources */,
 				D24AFABA2A8E011800823E9C /* GenAIRegisterPetViewController.swift in Sources */,
@@ -1845,6 +1884,7 @@
 				D27D9564296CA9720097CD03 /* OnboardingInviteCompletedFamilyView.swift in Sources */,
 				D2B735622A8BA1D700F93C45 /* GenAIGuideViewController.swift in Sources */,
 				877E57F22966D13E006D82FC /* ArchiveViewController.swift in Sources */,
+				870A4BFF2AA26E9100D7CFD8 /* BottomSheetViewController.swift in Sources */,
 				4C6B1862296B69070059840D /* RecordRegisterViewController.swift in Sources */,
 				87B6624329521E7500B6FFA9 /* SceneDelegate.swift in Sources */,
 				87F287D52A9A4EC100A53218 /* KakaoPostCodeViewController.swift in Sources */,
@@ -1855,15 +1895,16 @@
 				D26989A829A60EE7008A5ACC /* OnboardingAgreementViewModel.swift in Sources */,
 				D26C68EE296EB2040088DC9A /* MyRegisteredPetTableViewCell.swift in Sources */,
 				D235030B2964991700F01101 /* MyEditProfileViewController.swift in Sources */,
+				870A4C0A2AA2820D00D7CFD8 /* ProductOptionCollectionViewCell.swift in Sources */,
 				87809C2C2A8CC29B0060641F /* AppVersion.swift in Sources */,
 				87D5AF5629605C0100CA7F12 /* URLs.swift in Sources */,
 				D2C028EA2A7F7563003F4727 /* MyCoordinator.swift in Sources */,
 				D26C85E32968C88800AEAF9B /* OnboardingAgreementView.swift in Sources */,
 				87E462EE2A110867006FC35D /* ZoocGradinetButton.swift in Sources */,
 				871EA3462970109E00D0E8CC /* HomeArchiveListWriterCollectionViewCell.swift in Sources */,
-				870A4BF52AA106AF00D7CFD8 /* NullEncodable.swift in Sources */,
 				871EA340296F6E5000D0E8CC /* BaseAPI.swift in Sources */,
 				D26C85EC2968D2E100AEAF9B /* OnboardingAgreementTableHeaderView.swift in Sources */,
+				870A4C042AA26F8000D7CFD8 /* TouchPassIntrinsicPanelLayout.swift in Sources */,
 				D26C85D7296888D000AEAF9B /* MyDeleteAccountSectionCollectionViewCell.swift in Sources */,
 				87DDDD94298E607C00CBEC79 /* Device.swift in Sources */,
 				87F287DB2A9C6E6F00A53218 /* OrderOrderer.swift in Sources */,
@@ -1924,6 +1965,7 @@
 				D20C008A2A96DDB000666963 /* GenAIModelRepository.swift in Sources */,
 				D2C028F42A8246C1003F4727 /* MyEditPetProfileViewModel.swift in Sources */,
 				D20C00972A9711C200666963 /* GenAIDatasetResult.swift in Sources */,
+				870A4C022AA26F6900D7CFD8 /* TouchBlockIntrinsicPanelLayout.swift in Sources */,
 				876483192952366A00F74882 /* Image.swift in Sources */,
 				4C6B1868296B930B0059840D /* RecordRegisterCollectionViewCell.swift in Sources */,
 				87F288052A9FA69200A53218 /* OrderAssistantCompleteView.swift in Sources */,
@@ -1943,6 +1985,7 @@
 				D26C68F62970B0640088DC9A /* HomeNoticeTableViewCell.swift in Sources */,
 				872367132A136C7300DCBBFF /* ArchiveGuideViewController.swift in Sources */,
 				872BBD9229F9576E002E2C71 /* UIApplication+.swift in Sources */,
+				870A4C0C2AA2823900D7CFD8 /* ProductOptionSelectedCollectionViewCell.swift in Sources */,
 				D23502E22961898C00F01101 /* MyProfileSectionCollectionViewCell.swift in Sources */,
 				D27D956A296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift in Sources */,
 				D26C8612296B7CA500AEAF9B /* OnboardingRegisterPetView.swift in Sources */,
@@ -1951,6 +1994,7 @@
 				87F287E12A9D113E00A53218 /* OrderAgreement.swift in Sources */,
 				D2C028EE2A81EEF3003F4727 /* MyEditProfileViewModel.swift in Sources */,
 				87F287F72A9F3F1500A53218 /* ProductResult.swift in Sources */,
+				870A4C082AA2708700D7CFD8 /* SelfSizingCollectionView.swift in Sources */,
 				D24AFAB42A8DFBB300823E9C /* GenAIChoosePetView.swift in Sources */,
 				D23502EC296197C700F01101 /* MyPetSectionCollectionViewCell.swift in Sources */,
 				87F287F42A9F372400A53218 /* OrderRequest.swift in Sources */,
@@ -2208,6 +2252,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		870A4BFA2AA268E900D7CFD8 /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scenee/FloatingPanel.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		871EA35429706F4300D0E8CC /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -2275,6 +2327,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		870A4BFB2AA268E900D7CFD8 /* FloatingPanel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 870A4BFA2AA268E900D7CFD8 /* XCRemoteSwiftPackageReference "FloatingPanel" */;
+			productName = FloatingPanel;
+		};
 		871EA35529706F4300D0E8CC /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 871EA35429706F4300D0E8CC /* XCRemoteSwiftPackageReference "lottie-ios" */;

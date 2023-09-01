@@ -280,20 +280,18 @@ extension OrderViewController: OrderAddressViewDelegate {
         present(kakaoPostCodeVC, animated: true)
     }
     
-    func textFieldDidEndEditing(addressName: String?,
-                                receiverName: String?,
-                                receiverPhoneNumber: String?,
+    func textFieldDidEndEditing(addressName: String,
+                                receiverName: String,
+                                receiverPhoneNumber: String,
                                 detailAddress: String?,
                                 request: String?) {
         
-        addressData.addressName = addressName ?? ""
-        addressData.receiverName = receiverName ?? ""
-        addressData.receiverPhoneNumber = receiverPhoneNumber ?? ""
+        addressData.addressName = addressName
+        addressData.receiverName = receiverName
+        addressData.receiverPhoneNumber = receiverPhoneNumber
         addressData.detailAddress = detailAddress
         addressData.request = request
     }
-    
-    
 }
 
 //MARK: - OrderPaymentMethodViewDelegate
@@ -335,7 +333,7 @@ extension OrderViewController: KakaoPostCodeViewControllerDelegate {
         addressData.address = roadAddress
         addressData.postCode = zoneCode
         
-        addressView.updateUI(addressData)
+        addressView.updateUI(addressData, isPostData: true)
     }
     
 }

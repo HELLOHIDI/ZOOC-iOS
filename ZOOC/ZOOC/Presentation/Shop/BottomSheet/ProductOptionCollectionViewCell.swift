@@ -10,6 +10,10 @@ import UIKit
 import SnapKit
 import Then
 
+protocol ProductOptionCollectionViewCellDelegate: AnyObject {
+    func optionDidSelected(option: String)
+}
+
 final class ProductOptionCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Properties
@@ -21,7 +25,13 @@ final class ProductOptionCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    weak var delegate: ProductOptionCollectionViewCellDelegate?
+    
     //MARK: - UI Components
+    
+    lazy var menuItems: [UIAction] = []
+    
+    lazy var menu: UIMenu = UIMenu()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -33,11 +43,19 @@ final class ProductOptionCollectionViewCell: UICollectionViewCell {
     
     private let dropDownImageView = UIImageView(image: Image.arrowDropDown)
     
+    private lazy var cellButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.menu = menu
+        button.showsMenuAsPrimaryAction = true
+        
+        return button
+    }()
+    
     //MARK: - Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         
         style()
         hierarchy()
@@ -51,15 +69,14 @@ final class ProductOptionCollectionViewCell: UICollectionViewCell {
     //MARK: - Custom Method
     
     private func style() {
-        
-        
         contentView.makeCornerRound(radius: 4)
         contentView.setBorder(borderWidth: 1, borderColor: .zoocLightGray)
     }
     
     private func hierarchy() {
         contentView.addSubviews(titleLabel,
-                                dropDownImageView)
+                                dropDownImageView,
+                                cellButton)
     }
     
     private func layout() {
@@ -75,8 +92,30 @@ final class ProductOptionCollectionViewCell: UICollectionViewCell {
             $0.size.equalTo(20)
         }
         
+        cellButton.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
     }
     
-    //MARK: - Action Method
-    
+    func dataBind(optionType: String,
+                  options: [String]) {
+        
+        titleLabel.text = optionType
+        menuItems = []
+        options.forEach { option in
+            let action = UIAction(title: option,
+                                  handler: { action in
+                self.delegate?.optionDidSelected(option: action.title)
+            })
+            
+            menuItems.append(action)
+        }
+        
+        let menu = UIMenu(title: "",
+                      options: [],
+                      children: menuItems)
+        cellButton.menu = menu
+        
+    }
 }

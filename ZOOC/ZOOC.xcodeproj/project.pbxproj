@@ -668,7 +668,6 @@
 		872BBD9329F959E2002E2C71 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				870A4C002AA26F5700D7CFD8 /* FloatingPanel */,
 				87DDDD93298E607C00CBEC79 /* Device.swift */,
 				872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */,
 				872BBD9629F95BE2002E2C71 /* UserDefaultsManager.swift */,
@@ -680,6 +679,7 @@
 		8743694E2A8E50E30035AFD6 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				870A4C002AA26F5700D7CFD8 /* FloatingPanel */,
 				D2F98F9C2967154D00CC82DE /* ZoocAlertViewController.swift */,
 				8765549E295846F3006BBDA9 /* ZoocTabBarController.swift */,
 				871DC6C32A1DC691006BA780 /* ZoocImageController.swift */,

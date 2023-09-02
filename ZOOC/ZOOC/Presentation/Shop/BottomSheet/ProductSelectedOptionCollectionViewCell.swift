@@ -17,7 +17,7 @@ final class ProductSelectedOptionCollectionViewCell: UICollectionViewCell {
     
     //MARK: - UI Components
     
-    private let optionLabel: UILabel = {
+    let optionLabel: UILabel = {
         let label = UILabel()
         label.text = "아이폰 13 플러스"
         label.font = .zoocBody3

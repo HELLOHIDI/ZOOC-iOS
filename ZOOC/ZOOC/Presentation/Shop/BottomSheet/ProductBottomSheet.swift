@@ -11,7 +11,13 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
     
     //MARK: - Properties
 
-    
+    private var option: [String] = ["색상"]
+
+    private var selectedOption: [String] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     //MARK: - UI Components
     
@@ -194,9 +200,9 @@ extension ProductBottomSheet: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 1
+            return option.count
         case 1:
-            return 0
+            return selectedOption.count
         default:
             return 0
         }
@@ -208,10 +214,19 @@ extension ProductBottomSheet: UICollectionViewDataSource {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductOptionCollectionViewCell.cellIdentifier,
                                                           for: indexPath) as! ProductOptionCollectionViewCell
+            cell.dataBind(optionType: "색상", options: ["빨강",
+                                                      "빨가앙",
+                                                      "파랑",
+                                                      "파아랑",
+                                                      "노랑",
+                                                      "노오랑",
+                                                      "달콤한 솜사탕!"])
+            cell.delegate = self
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductSelectedOptionCollectionViewCell.cellIdentifier,
                                                           for: indexPath) as! ProductSelectedOptionCollectionViewCell
+            cell.optionLabel.text = selectedOption[indexPath.row]
             return cell
         default:
             return UICollectionViewCell()
@@ -219,10 +234,12 @@ extension ProductBottomSheet: UICollectionViewDataSource {
     }
 }
 
+//MARK: - UICollectionViewDelegate
+
+
 //MARK: - UICollectionViewDelegateFlowLayout
 
 extension ProductBottomSheet: UICollectionViewDelegateFlowLayout {
-    
    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -258,3 +275,10 @@ extension ProductBottomSheet: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension ProductBottomSheet: ProductOptionCollectionViewCellDelegate {
+    func optionDidSelected(option: String) {
+        selectedOption.append(option)
+    }
+    
+    
+}

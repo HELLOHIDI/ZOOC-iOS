@@ -34,7 +34,7 @@ final class BottomSheetViewController: FloatingPanelController {
         // Contents
         set(contentViewController: contentViewController)
         track(scrollView: contentViewController.scrollView)
-        
+        contentMode = .fitToBounds
         // Appearance
         let appearance = SurfaceAppearance().then {
             $0.cornerRadius = 16.0
@@ -70,6 +70,8 @@ extension BottomSheetViewController: FloatingPanelControllerDelegate {
         let maxY = fpc.surfaceLocation(for: .tip).y
         let y = isTouchPassable ? max(min(loc.y, minY), maxY) : min(max(loc.y, minY), maxY)
         fpc.surfaceLocation = CGPoint(x: loc.x, y: y)
+        
+        
     }
     
     // 특정 속도로 아래로 당겼을때 dismiss 되도록 처리

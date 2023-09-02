@@ -26,6 +26,10 @@ final class ShopProductViewController: BaseViewController {
     
     //MARK: - UI Components
     
+    private let productBottomSheet = ProductBottomSheet()
+    private lazy var productBottomSheetVC = BottomSheetViewController(isTouchPassable: false,
+                                                               contentViewController: productBottomSheet)
+    
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
@@ -55,7 +59,7 @@ final class ShopProductViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        register()
+        setDelegate()
         gesture()
         
         style()
@@ -73,7 +77,8 @@ final class ShopProductViewController: BaseViewController {
     //MARK: - Custom Method
 
     
-    private func register() {
+    private func setDelegate() {
+        productBottomSheet.delegate = self
     }
     
     private func gesture() {
@@ -236,13 +241,35 @@ final class ShopProductViewController: BaseViewController {
     
     @objc
     private func buyButtonDidTap() {
-        let bottomSheet = BottomSheetViewController(isTouchPassable: false,
-                                                    contentViewController: ProductBottomSheet())
-        present(bottomSheet, animated: true)
+        present(productBottomSheetVC, animated: true)
     }
     
     @objc
     private func backButtonDidTap() {
         navigationController?.popViewController(animated: true)
     }
+}
+
+extension ShopProductViewController: ProductBottomSheetDelegate {
+    func cartButtonDidTap(selectedOptions: [ProductSelectedOption]) {
+        presentBottomAlert("장바구니 기능 구현해야함!!!")
+    }
+    
+    func orderButtonDidTap(selectedOptions: [ProductSelectedOption]) {
+        
+        //TODO: - Data 부분 뜯어고쳐야함!!!!!
+        let productData = OrderProduct(id: selectedOptions[0].id,
+                                       imageURL: "https://zooc-bucket.s3.ap-northeast-2.amazonaws.com/images%2F1691081953053_image.jpeg",
+                                       name: selectedOptions[0].option,
+                                       price: selectedOptions[0].totalPrice)
+        
+        let priceData = OrderPrice(productPrice: selectedOptions[0].totalPrice,
+                                   deleiveryFee: 4000)
+        
+        let orderVC = OrderViewController(productData: productData,
+                                          priceData: priceData)
+        navigationController?.pushViewController(orderVC, animated: true)
+    }
+    
+    
 }

@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol ProductBottomSheetDelegate: AnyObject {
+    func cartButtonDidTap(selectedOptions: [ProductSelectedOption])
+    func orderButtonDidTap(selectedOptions: [ProductSelectedOption])
+}
+
 final class ProductBottomSheet: UIViewController, ScrollableViewController {
     
     //MARK: - Properties
@@ -24,6 +29,8 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
             
         }
     }
+    
+    weak var delegate: ProductBottomSheetDelegate?
     
     //MARK: - UI Components
     
@@ -78,7 +85,7 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
         return button
     }()
     
-    private lazy var buyButton: UIButton = {
+    private lazy var orderButton: UIButton = {
         let button = UIButton()
         button.setTitle("구매하기", for: .normal)
         button.setTitleColor(.zoocWhite1, for: .normal)
@@ -87,7 +94,7 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
         button.backgroundColor = .zoocMainGreen
         button.makeCornerRound(radius: 6)
         button.addTarget(self,
-                         action: #selector(buyButtonDidTap),
+                         action: #selector(orderButtonDidTap),
                          for: .touchUpInside)
         return button
     }()
@@ -149,7 +156,7 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
                          hStackView)
         
         hStackView.addArrangedSubViews(cartButton,
-                                       buyButton)
+                                       orderButton)
     }
     
     private func layout() {
@@ -185,12 +192,14 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
     
     @objc
     private func cartButtonDidTap() {
-        print(#function)
+        dismiss(animated: false)
+        delegate?.cartButtonDidTap(selectedOptions: selectedOptionsData)
     }
     
     @objc
-    private func buyButtonDidTap() {
-        print(#function)
+    private func orderButtonDidTap() {
+        dismiss(animated: false)
+        delegate?.orderButtonDidTap(selectedOptions: selectedOptionsData)
     }
 }
 

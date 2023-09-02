@@ -17,6 +17,7 @@ public enum Image{
     
     //MARK: - Icon
     
+    static let arrowDropDown = UIImage(named: "arrow.dropdown")
     static let arrowDown = UIImage(named: "arrow.down")
     static let backCircle = UIImage(named: "back.circle")!
     static let back = UIImage(named: "back")!
@@ -37,8 +38,10 @@ public enum Image{
     static let kakaoLogin = UIImage(named: "kakaoLogin")!
     static let listFill = UIImage(named: "list.fill")!
     static let list = UIImage(named: "list")!
+    static let minusCircle = UIImage(named: "minus.circle")!
     static let noise = UIImage(named: "noise")!
     static let person = UIImage(named: "person")!
+    static let plusCircle = UIImage(named: "plus.circle")!
     static let plus = UIImage(named: "plus")!
     static let plusTabCircle = UIImage(named: "plus.tab.circle")!
     static let ring = UIImage(named: "ring")!

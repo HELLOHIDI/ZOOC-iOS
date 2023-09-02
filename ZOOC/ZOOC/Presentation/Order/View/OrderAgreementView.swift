@@ -40,9 +40,10 @@ final class OrderAgreementView: UIView {
     
     private let onwardTransferLabel: UILabel = {
         let label = UILabel()
-        label.text = "개인정보 제 3자 제공 동의 (필수)"
+        label.text = "(필수) 개인정보 이용약관 동의"
         label.font = .zoocBody2
-        label.textColor = .zoocDarkGray1
+        label.textColor = .zoocGray3
+        label.asColor(targetString: "(필수)", color: .zoocGray1)
         return label
     }()
     
@@ -71,9 +72,10 @@ final class OrderAgreementView: UIView {
     
     private let privacyPolicyLabel: UILabel = {
         let label = UILabel()
-        label.text = "개인정보 수집 및 이용 (필수)"
+        label.text = "(선택) 마케팅 정보 수신 동의"
         label.font = .zoocBody2
-        label.textColor = .zoocDarkGray1
+        label.textColor = .zoocGray3
+        label.asColor(targetString: "(선택)", color: .zoocGray1)
         return label
     }()
     

@@ -224,6 +224,7 @@ extension ProductBottomSheet: UICollectionViewDataSource {
                                                           for: indexPath) as! ProductSelectedOptionCollectionViewCell
             cell.dataBind(indexPath: indexPath,
                           selectedOption: selectedOptionsData[indexPath.row])
+            cell.delegate = self
             return cell
         default:
             return UICollectionViewCell()
@@ -276,6 +277,30 @@ extension ProductBottomSheet: ProductOptionCollectionViewCellDelegate {
     func optionDidSelected(option: ProductOption) {
         let selectedOption = option.transform()
         selectedOptionsData.append(selectedOption)
+    }
+    
+    
+}
+
+extension ProductBottomSheet: ProductSelectedOptionCollectionViewCellDelegate {
+    func adjustAmountButtonDidTap(row: Int, isPlus: Bool) {
+        do {
+            if isPlus {
+                try selectedOptionsData[row].increase()
+            } else {
+                try selectedOptionsData[row].decrease()
+            }
+            
+            collectionView.reloadData()
+        } catch  {
+            guard let error =  error as? AmountError else { return }
+            presentBottomAlert(error.message)
+        }
+    }
+    
+    func xButtonDidTap(row: Int) {
+        selectedOptionsData.remove(at: row)
+        collectionView.reloadData()
     }
     
     

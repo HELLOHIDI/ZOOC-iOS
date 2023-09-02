@@ -34,3 +34,16 @@ struct ProductSelectedOption {
         self.price = price
     }
 }
+
+extension ProductSelectedOption {
+    mutating func increase() throws {
+        guard amount < 1000 else { throw AmountError.increase }
+        amount += 1
+    }
+    
+    mutating func decrease() throws {
+        guard amount > 1 else { throw AmountError.decrease }
+        amount -= 1
+        
+    }
+}

@@ -10,8 +10,8 @@ import UIKit
 import SnapKit
 
 protocol ProductSelectedOptionCollectionViewCellDelegate: AnyObject {
-    func adjustAmountButtonDidTap(isPlus: Bool)
-    func xButtonDidTap()
+    func adjustAmountButtonDidTap(row: Int, isPlus: Bool)
+    func xButtonDidTap(row: Int)
 }
 
 final class ProductSelectedOptionCollectionViewCell: UICollectionViewCell {
@@ -152,6 +152,7 @@ final class ProductSelectedOptionCollectionViewCell: UICollectionViewCell {
     
     func dataBind(indexPath: IndexPath,
                   selectedOption: ProductSelectedOption) {
+        self.indexPath = indexPath
         
         optionLabel.text = selectedOption.option
         amountLabel.text = String(selectedOption.amount)
@@ -162,17 +163,20 @@ final class ProductSelectedOptionCollectionViewCell: UICollectionViewCell {
     
     @objc
     private func minusButtonDidTap() {
-        delegate?.adjustAmountButtonDidTap(isPlus: false)
+        guard let indexPath else { return }
+        delegate?.adjustAmountButtonDidTap(row: indexPath.row, isPlus: false)
     }
     
     @objc
     private func plusButtonDidTap() {
-        delegate?.adjustAmountButtonDidTap(isPlus: true)
+        guard let indexPath else { return }
+        delegate?.adjustAmountButtonDidTap(row: indexPath.row, isPlus: true)
     }
     
     @objc
     private func xButtonDidTap() {
-        delegate?.xButtonDidTap()
+        guard let indexPath else { return }
+        delegate?.xButtonDidTap(row: indexPath.row)
     }
 }
 

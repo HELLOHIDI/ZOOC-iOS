@@ -16,6 +16,12 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
     private var selectedOptionsData: [ProductSelectedOption] = [] {
         didSet {
             collectionView.reloadData()
+            var totalPrice = 0
+            selectedOptionsData.forEach { selectedOption in
+                totalPrice += selectedOption.totalPrice
+            }
+            priceValueLabel.text = totalPrice.priceText
+            
         }
     }
     
@@ -52,7 +58,7 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
     
     private let priceValueLabel: UILabel = {
         let label = UILabel()
-        label.text = 999.priceText
+        label.text = 0.priceText
         label.font = .zoocHeadLine
         label.textColor = .zoocDarkGray2
         return label
@@ -275,8 +281,23 @@ extension ProductBottomSheet: UICollectionViewDelegateFlowLayout {
 
 extension ProductBottomSheet: ProductOptionCollectionViewCellDelegate {
     func optionDidSelected(option: ProductOption) {
-        let selectedOption = option.transform()
-        selectedOptionsData.append(selectedOption)
+        let willSelectedOption = option.transform()
+        var canAppend = true
+        selectedOptionsData.forEach { selectedOption in
+            guard selectedOption.id != willSelectedOption.id else
+            {
+                canAppend = false
+                return
+                
+            }
+        }
+        
+        if canAppend {
+            selectedOptionsData.append(willSelectedOption)
+        } else {
+            presentBottomAlert("이미 추가된 옵션입니다.")
+        }
+        
     }
     
     

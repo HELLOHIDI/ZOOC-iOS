@@ -23,6 +23,8 @@
 		870A4C082AA2708700D7CFD8 /* SelfSizingCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A4C072AA2708700D7CFD8 /* SelfSizingCollectionView.swift */; };
 		870A4C0A2AA2820D00D7CFD8 /* ProductOptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A4C092AA2820D00D7CFD8 /* ProductOptionCollectionViewCell.swift */; };
 		870A4C0C2AA2823900D7CFD8 /* ProductSelectedOptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A4C0B2AA2823900D7CFD8 /* ProductSelectedOptionCollectionViewCell.swift */; };
+		870A4C102AA3749800D7CFD8 /* ProductOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A4C0F2AA3749800D7CFD8 /* ProductOption.swift */; };
+		870A4C122AA374D000D7CFD8 /* ProductSelectedOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A4C112AA374D000D7CFD8 /* ProductSelectedOption.swift */; };
 		870D062A297BEB7900ADAD04 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870D0629297BEB7900ADAD04 /* HomeView.swift */; };
 		8718A06429AD3445001C7460 /* EditProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8718A06329AD3445001C7460 /* EditProfileRequest.swift */; };
 		8718A06829ADB423001C7460 /* GalleryAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8718A06729ADB423001C7460 /* GalleryAlertController.swift */; };
@@ -305,6 +307,8 @@
 		870A4C072AA2708700D7CFD8 /* SelfSizingCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizingCollectionView.swift; sourceTree = "<group>"; };
 		870A4C092AA2820D00D7CFD8 /* ProductOptionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductOptionCollectionViewCell.swift; sourceTree = "<group>"; };
 		870A4C0B2AA2823900D7CFD8 /* ProductSelectedOptionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSelectedOptionCollectionViewCell.swift; sourceTree = "<group>"; };
+		870A4C0F2AA3749800D7CFD8 /* ProductOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductOption.swift; sourceTree = "<group>"; };
+		870A4C112AA374D000D7CFD8 /* ProductSelectedOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSelectedOption.swift; sourceTree = "<group>"; };
 		870D0629297BEB7900ADAD04 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		8718A06329AD3445001C7460 /* EditProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileRequest.swift; sourceTree = "<group>"; };
 		8718A06729ADB423001C7460 /* GalleryAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryAlertController.swift; sourceTree = "<group>"; };
@@ -1414,6 +1418,8 @@
 			isa = PBXGroup;
 			children = (
 				87F287F82A9F3F7000A53218 /* APIModel */,
+				870A4C0F2AA3749800D7CFD8 /* ProductOption.swift */,
+				870A4C112AA374D000D7CFD8 /* ProductSelectedOption.swift */,
 			);
 			path = Shop;
 			sourceTree = "<group>";
@@ -1888,6 +1894,7 @@
 				4C6B1862296B69070059840D /* RecordRegisterViewController.swift in Sources */,
 				87B6624329521E7500B6FFA9 /* SceneDelegate.swift in Sources */,
 				87F287D52A9A4EC100A53218 /* KakaoPostCodeViewController.swift in Sources */,
+				870A4C122AA374D000D7CFD8 /* ProductSelectedOption.swift in Sources */,
 				D299957A2A95B8520004FB5D /* NSItemProvider+.swift in Sources */,
 				87A76ABF2960423C0096F669 /* GenericResponse.swift in Sources */,
 				8782C7E42968B03500C9324B /* HomePetCollectionViewCell.swift in Sources */,
@@ -1898,6 +1905,7 @@
 				870A4C0A2AA2820D00D7CFD8 /* ProductOptionCollectionViewCell.swift in Sources */,
 				87809C2C2A8CC29B0060641F /* AppVersion.swift in Sources */,
 				87D5AF5629605C0100CA7F12 /* URLs.swift in Sources */,
+				870A4C102AA3749800D7CFD8 /* ProductOption.swift in Sources */,
 				D2C028EA2A7F7563003F4727 /* MyCoordinator.swift in Sources */,
 				D26C85E32968C88800AEAF9B /* OnboardingAgreementView.swift in Sources */,
 				87E462EE2A110867006FC35D /* ZoocGradinetButton.swift in Sources */,

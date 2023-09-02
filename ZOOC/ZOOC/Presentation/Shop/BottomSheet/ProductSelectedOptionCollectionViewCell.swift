@@ -9,11 +9,18 @@ import UIKit
 
 import SnapKit
 
+protocol ProductSelectedOptionCollectionViewCellDelegate: AnyObject {
+    func adjustAmountButtonDidTap(isPlus: Bool)
+    func xButtonDidTap()
+}
+
 final class ProductSelectedOptionCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Properties
     
+    weak var delegate: ProductSelectedOptionCollectionViewCellDelegate?
     
+    private var indexPath: IndexPath?
     
     //MARK: - UI Components
     
@@ -34,9 +41,12 @@ final class ProductSelectedOptionCollectionViewCell: UICollectionViewCell {
         return button
     }()
     
-    private let minusButton: BaseButton = {
+    private lazy var minusButton: BaseButton = {
         let button = BaseButton()
         button.setImage(Image.minusCircle, for: .normal)
+        button.addTarget(self,
+                         action: #selector(minusButtonDidTap),
+                         for: .touchUpInside)
         return button
     }()
     
@@ -49,9 +59,12 @@ final class ProductSelectedOptionCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let plusButton: BaseButton = {
+    private lazy var plusButton: BaseButton = {
         let button = BaseButton()
         button.setImage(Image.plusCircle, for: .normal)
+        button.addTarget(self,
+                         action: #selector(plusButtonDidTap),
+                         for: .touchUpInside)
         return button
     }()
     
@@ -137,11 +150,29 @@ final class ProductSelectedOptionCollectionViewCell: UICollectionViewCell {
         
     }
     
+    func dataBind(indexPath: IndexPath,
+                  selectedOption: ProductSelectedOption) {
+        
+        optionLabel.text = selectedOption.option
+        amountLabel.text = String(selectedOption.amount)
+        priceLabel.text = selectedOption.totalPrice.priceText
+    }
+    
     //MARK: - Action Method
     
     @objc
+    private func minusButtonDidTap() {
+        delegate?.adjustAmountButtonDidTap(isPlus: false)
+    }
+    
+    @objc
+    private func plusButtonDidTap() {
+        delegate?.adjustAmountButtonDidTap(isPlus: true)
+    }
+    
+    @objc
     private func xButtonDidTap() {
-        print(#function)
+        delegate?.xButtonDidTap()
     }
 }
 

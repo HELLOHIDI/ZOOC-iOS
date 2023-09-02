@@ -13,7 +13,7 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
 
     private var option: [String] = ["색상"]
 
-    private var selectedOption: [String] = [] {
+    private var selectedOptionsData: [ProductSelectedOption] = [] {
         didSet {
             collectionView.reloadData()
         }
@@ -202,7 +202,7 @@ extension ProductBottomSheet: UICollectionViewDataSource {
         case 0:
             return option.count
         case 1:
-            return selectedOption.count
+            return selectedOptionsData.count
         default:
             return 0
         }
@@ -214,19 +214,16 @@ extension ProductBottomSheet: UICollectionViewDataSource {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductOptionCollectionViewCell.cellIdentifier,
                                                           for: indexPath) as! ProductOptionCollectionViewCell
-            cell.dataBind(optionType: "색상", options: ["빨강",
-                                                      "빨가앙",
-                                                      "파랑",
-                                                      "파아랑",
-                                                      "노랑",
-                                                      "노오랑",
-                                                      "달콤한 솜사탕!"])
+            cell.dataBind(optionType: "색상", options: [ProductOption(id: 1, option: "빨강", price: 10000),
+                                                      ProductOption(id: 2, option: "파랑", price: 10000),
+                                                      ProductOption(id: 3, option: "노랑", price: 10000)])
             cell.delegate = self
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductSelectedOptionCollectionViewCell.cellIdentifier,
                                                           for: indexPath) as! ProductSelectedOptionCollectionViewCell
-            cell.optionLabel.text = selectedOption[indexPath.row]
+            cell.dataBind(indexPath: indexPath,
+                          selectedOption: selectedOptionsData[indexPath.row])
             return cell
         default:
             return UICollectionViewCell()
@@ -276,8 +273,9 @@ extension ProductBottomSheet: UICollectionViewDelegateFlowLayout {
 }
 
 extension ProductBottomSheet: ProductOptionCollectionViewCellDelegate {
-    func optionDidSelected(option: String) {
-        selectedOption.append(option)
+    func optionDidSelected(option: ProductOption) {
+        let selectedOption = option.transform()
+        selectedOptionsData.append(selectedOption)
     }
     
     

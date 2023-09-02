@@ -28,11 +28,11 @@ final class OrderViewController: BaseViewController {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
-    private let ordererView = OrderOrdererView()
-    private let addressView = OrderAddressView()
     private let productView = OrderProductView()
+//    private let ordererView = OrderOrdererView()
+    private let addressView = OrderAddressView()
     private let paymentMethodView = OrderPaymentMethodView()
-    private let priceView = OrderPriceView()
+//    private let priceView = OrderPriceView()
     private let agreementView = OrderAgreementView()
     
     private let orderButton = ZoocGradientButton()
@@ -73,6 +73,13 @@ final class OrderViewController: BaseViewController {
                          for: .touchUpInside)
         }
         
+        titleLabel.do {
+            $0.text = "주문하기"
+            $0.font = .zoocHeadLine
+            $0.textColor = .zoocDarkGray2
+            $0.textAlignment = .left
+        }
+        
         scrollView.do {
             $0.backgroundColor = .zoocBackgroundGreen
             $0.alwaysBounceVertical = true
@@ -84,7 +91,7 @@ final class OrderViewController: BaseViewController {
         }
         
         orderButton.do {
-            $0.setTitle("주문하기", for: .normal)
+            $0.setTitle("결제하기", for: .normal)
             $0.addTarget(self,
                          action: #selector(orderButtonDidTap),
                          for: .touchUpInside)
@@ -97,11 +104,10 @@ final class OrderViewController: BaseViewController {
         view.addSubviews(backButton, titleLabel, scrollView, orderButton)
         scrollView.addSubview(contentView)
         
-        contentView.addSubviews(ordererView,
-                                addressView,
+        contentView.addSubviews(addressView,
                                 productView,
                                 paymentMethodView,
-                                priceView,
+//                                priceView,
                                 agreementView)
     }
     
@@ -135,34 +141,33 @@ final class OrderViewController: BaseViewController {
             $0.height.equalTo(scrollView.frameLayoutGuide).priority(.low)
         }
         
-        ordererView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(10)
+        productView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(1)
             $0.horizontalEdges.equalToSuperview()
         }
+        
+//        ordererView.snp.makeConstraints {
+//            $0.top.equalTo(productView.snp.bottom).offset(1)
+//            $0.horizontalEdges.equalToSuperview()
+//        }
         
         addressView.snp.makeConstraints {
-            $0.top.equalTo(ordererView.snp.bottom).offset(10)
-            $0.horizontalEdges.equalToSuperview()
-        }
-        
-        productView.snp.makeConstraints {
-            $0.top.equalTo(addressView.snp.bottom).offset(10)
+            $0.top.equalTo(productView.snp.bottom).offset(1)
             $0.horizontalEdges.equalToSuperview()
         }
         
         paymentMethodView.snp.makeConstraints {
-            $0.top.equalTo(productView.snp.bottom).offset(10)
+            $0.top.equalTo(addressView.snp.bottom).offset(1)
             $0.horizontalEdges.equalToSuperview()
         }
         
-        priceView.snp.makeConstraints {
-            $0.top.equalTo(paymentMethodView.snp.bottom).offset(10)
-            $0.horizontalEdges.equalToSuperview()
-            
-        }
+//        priceView.snp.makeConstraints {
+//            $0.top.equalTo(paymentMethodView.snp.bottom).offset(1)
+//            $0.horizontalEdges.equalToSuperview()
+//        }
         
         agreementView.snp.makeConstraints {
-            $0.top.equalTo(priceView.snp.bottom).offset(10)
+            $0.top.equalTo(paymentMethodView.snp.bottom).offset(1)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
@@ -170,17 +175,17 @@ final class OrderViewController: BaseViewController {
     
     
     private func setDelegate(){
-        ordererView.delegate = self
+        //ordererView.delegate = self
         addressView.delegate = self
         paymentMethodView.delegate = self
         agreementView.delegate = self
     }
     
     private func updateUI() {
-        ordererView.updateUI(ordererData)
+        //ordererView.updateUI(ordererData)
         addressView.updateUI(addressData)
         productView.updateUI(productData)
-        priceView.updateUI(priceData)
+//        priceView.updateUI(priceData)
     }
     
     //MARK: - Action Method
@@ -194,7 +199,7 @@ final class OrderViewController: BaseViewController {
     private func orderButtonDidTap() {
         view.endEditing(true)
         do {
-            try ordererView.checkValidity()
+            //try ordererView.checkValidity()
             try addressView.checkValidity()
             try agreementView.checkValidity()
             
@@ -205,8 +210,8 @@ final class OrderViewController: BaseViewController {
             
         } catch OrderInvalidError.ordererInvalid {
             presentBottomAlert("구매자 정보를 입력해주세요.")
-            let y = ordererView.frame.minY
-            scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: true)
+            //let y = ordererView.frame.minY
+            //scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: true)
             
         } catch OrderInvalidError.addressInvlid {
             presentBottomAlert("배송지 정보를 입력해주세요.")

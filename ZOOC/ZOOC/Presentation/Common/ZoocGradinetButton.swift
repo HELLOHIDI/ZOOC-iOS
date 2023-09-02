@@ -14,6 +14,7 @@ final class ZoocGradientButton: UIButton {
     enum CornerStyle {
         case capsule
         case medium
+        case order
         
         var ratio: CGFloat {
             switch self {
@@ -21,7 +22,8 @@ final class ZoocGradientButton: UIButton {
                 return 2
             case .medium:
                 return 6
-                
+            case .order:
+                return 8
             }
         }
     }

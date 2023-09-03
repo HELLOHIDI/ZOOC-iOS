@@ -31,6 +31,21 @@ final class ShopViewController : BaseViewController {
         return button
     }()
     
+    private let logoImageView: UIImageView = {
+        let imageView = UIImageView(image: Image.logoCombination)
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    private lazy var cartButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Image.cart, for: .normal)
+        button.addTarget(self,
+                         action: #selector(cartButtonDidTap),
+                         for: .touchUpInside)
+        return button
+    }()
+    
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -71,6 +86,8 @@ final class ShopViewController : BaseViewController {
     
     private func hierarchy() {
         view.addSubviews(backButton,
+                         logoImageView,
+                         cartButton,
                          collectionView)
     }
     
@@ -78,18 +95,28 @@ final class ShopViewController : BaseViewController {
         
         backButton.snp.makeConstraints {
             $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(11)
-            $0.leading.equalToSuperview().offset(17)
+            $0.leading.equalToSuperview().inset(17)
             $0.size.equalTo(42)
         }
+        
+        logoImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalTo(backButton)
+            $0.height.equalTo(30)
+        }
+        
+        cartButton.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(11)
+            $0.trailing.equalToSuperview().inset(17)
+            $0.size.equalTo(42)
+        }
+        
         
         collectionView.snp.makeConstraints {
             $0.top.equalTo(backButton.snp.bottom).offset(69)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
-        
-        
-    
         
     }
     
@@ -106,6 +133,12 @@ final class ShopViewController : BaseViewController {
     @objc
     private func backButtonDidTap() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc
+    private func cartButtonDidTap() {
+        let cartVC = UIViewController()
+        navigationController?.pushViewController(cartVC, animated: true)
     }
     
 }
@@ -157,7 +190,7 @@ extension ShopViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        return 30
     }
     
     func collectionView(_ collectionView: UICollectionView,

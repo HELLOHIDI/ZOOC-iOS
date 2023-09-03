@@ -72,11 +72,14 @@ final class ShopProductCollectionViewCell: UICollectionViewCell {
     }
     
     private func layout() {
+        var cellWidth = UIScreen.main.bounds.width
+        cellWidth -= 69
+        cellWidth /= 2
+      
         imageView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(200)
-            //$0.height.equalTo(contentView.snp.width).dividedBy(153).multipliedBy(200)
+            $0.height.equalTo(cellWidth * 200/153)
         }
         
         nameLabel.snp.makeConstraints {

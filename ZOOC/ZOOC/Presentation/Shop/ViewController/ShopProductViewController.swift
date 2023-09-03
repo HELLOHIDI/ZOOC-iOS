@@ -26,7 +26,7 @@ final class ShopProductViewController: BaseViewController {
     
     private let productBottomSheet = ProductBottomSheet()
     private lazy var productBottomSheetVC = BottomSheetViewController(isTouchPassable: false,
-                                                               contentViewController: productBottomSheet)
+                                                                      contentViewController: productBottomSheet)
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -34,7 +34,28 @@ final class ShopProductViewController: BaseViewController {
     private let backButton = UIButton()
     private let cartButton = UIButton()
     
-    private let productImageView = UIImageView()
+    private let imageCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: Device.width, height: Device.width / 375 * 219)
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.bounces = false
+        collectionView.clipsToBounds = true
+        collectionView.backgroundColor = .clear
+        collectionView.isScrollEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isPagingEnabled = false
+        collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.decelerationRate = .fast
+        collectionView.register(ProductImageCollectionViewCell.self,
+                                forCellWithReuseIdentifier: ProductImageCollectionViewCell.reuseCellIdentifier)
+        return collectionView
+    }()
+    
+    private lazy var pageControl = UIPageControl()
     
     private let nameLabel = UILabel()
     private let priceLabel = UILabel()
@@ -77,6 +98,8 @@ final class ShopProductViewController: BaseViewController {
     
     private func setDelegate() {
         productBottomSheet.delegate = self
+        imageCollectionView.delegate = self
+        imageCollectionView.dataSource = self
     }
     
     private func gesture() {
@@ -106,10 +129,12 @@ final class ShopProductViewController: BaseViewController {
             $0.setImage(Image.cart, for: .normal)
         }
         
-        productImageView.do {
-            $0.contentMode = .scaleAspectFill
-            $0.clipsToBounds = true
-            $0.isUserInteractionEnabled = true
+        pageControl.do {
+            $0.currentPageIndicatorTintColor = .zoocMainGreen
+            $0.pageIndicatorTintColor = .zoocGray1
+            $0.currentPage = 0
+            $0.backgroundStyle = .minimal
+            $0.allowsContinuousInteraction = false
         }
         
         nameLabel.do {
@@ -119,7 +144,7 @@ final class ShopProductViewController: BaseViewController {
         
         priceLabel.do {
             $0.font = .zoocFont(font: .semiBold, size: 20)
-            $0.textColor = .zoocGray2
+            $0.textColor = .zoocDarkGray2
         }
         
         descriptionLabel.do {
@@ -151,7 +176,8 @@ final class ShopProductViewController: BaseViewController {
         scrollView.addSubview(contentView)
         
         
-        contentView.addSubviews(productImageView,
+        contentView.addSubviews(imageCollectionView,
+                                pageControl,
                                 nameLabel,
                                 priceLabel,
                                 descriptionLabel,
@@ -197,22 +223,27 @@ final class ShopProductViewController: BaseViewController {
         }
         
         //MARK: contentView Layout
-        let width = UIScreen.main.bounds.width
         
-        productImageView.snp.makeConstraints {
+        imageCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview()
-            $0.height.equalTo(width / 375 * 219)
+            $0.height.equalTo(Device.width / 375 * 219)
+        }
+        
+        pageControl.snp.makeConstraints {
+            $0.bottom.equalTo(imageCollectionView)
+            $0.horizontalEdges.equalTo(imageCollectionView)
+            $0.height.equalTo(40)
         }
         
         nameLabel.snp.makeConstraints {
-            $0.top.equalTo(productImageView.snp.bottom).offset(30)
+            $0.top.equalTo(imageCollectionView.snp.bottom).offset(30)
             $0.leading.equalToSuperview().offset(30)
         }
         
         priceLabel.snp.makeConstraints {
-            $0.top.equalTo(productImageView.snp.bottom).offset(30)
+            $0.top.equalTo(imageCollectionView.snp.bottom).offset(30)
             $0.trailing.equalToSuperview().inset(30)
         }
         
@@ -236,7 +267,9 @@ final class ShopProductViewController: BaseViewController {
     }
     
     private func updateUI() {
-        productImageView.kfSetImage(url: productData?.images.first)
+        imageCollectionView.reloadData()
+        pageControl.numberOfPages = productData?.images.count ?? 0
+        
         priceLabel.text = productData?.price.priceText
         nameLabel.text = productData?.name
         descriptionLabel.text = productData?.type
@@ -295,4 +328,33 @@ extension ShopProductViewController: ProductBottomSheetDelegate {
     }
     
     
+}
+
+extension ShopProductViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        self.productData?.images.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductImageCollectionViewCell.reuseCellIdentifier,
+                                                      for: indexPath) as! ProductImageCollectionViewCell
+        cell.dataBind(image: productData?.images[indexPath.row])
+        return cell
+    }
+}
+
+extension ShopProductViewController: UICollectionViewDelegateFlowLayout {
+    func scrollViewWillEndDragging(
+        _ scrollView: UIScrollView,
+        withVelocity velocity: CGPoint,
+        targetContentOffset: UnsafeMutablePointer<CGPoint>
+    ) {
+        let scrolledOffsetX = targetContentOffset.pointee.x + scrollView.contentInset.left
+        let cellWidth = Device.width
+        let index = round(scrolledOffsetX / cellWidth)
+        pageControl.currentPage = Int(index)
+        targetContentOffset.pointee = CGPoint(x: index * cellWidth - scrollView.contentInset.left,
+                                              y: scrollView.contentInset.top)
+    }
 }

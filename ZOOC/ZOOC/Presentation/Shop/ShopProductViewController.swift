@@ -15,8 +15,6 @@ final class ShopProductViewController: BaseViewController {
     
     //MARK: - Properties
     
-    //private var productModel: ProductModel
-    
     private var productData: ProductDetailResult? {
         didSet{
             updateUI()
@@ -34,6 +32,7 @@ final class ShopProductViewController: BaseViewController {
     private let contentView = UIView()
     
     private let backButton = UIButton()
+    private let cartButton = UIButton()
     
     private let productImageView = UIImageView()
     
@@ -85,6 +84,10 @@ final class ShopProductViewController: BaseViewController {
                              action: #selector(backButtonDidTap),
                              for: .touchUpInside)
         
+        cartButton.addTarget(self,
+                             action: #selector(naviCartButtonDidTap),
+                             for: .touchUpInside)
+        
     }
     
     private func style() {
@@ -99,6 +102,10 @@ final class ShopProductViewController: BaseViewController {
             $0.tintColor = .zoocDarkGray1
         }
         
+        cartButton.do {
+            $0.setImage(Image.cart, for: .normal)
+        }
+        
         productImageView.do {
             $0.contentMode = .scaleAspectFill
             $0.clipsToBounds = true
@@ -106,18 +113,19 @@ final class ShopProductViewController: BaseViewController {
         }
         
         nameLabel.do {
-            $0.font = .zoocBody1
-            $0.textColor = .zoocGray2
+            $0.font = .zoocFont(font: .medium, size: 20)
+            $0.textColor = .zoocDarkGray2
         }
         
         priceLabel.do {
-            $0.font = .zoocBody1
+            $0.font = .zoocFont(font: .semiBold, size: 20)
             $0.textColor = .zoocGray2
         }
         
         descriptionLabel.do {
             $0.font = .zoocBody3
-            $0.textColor = .zoocDarkGray2
+            $0.textColor = .zoocGray2
+            $0.numberOfLines = 0
         }
         
         lineView.do {
@@ -136,6 +144,7 @@ final class ShopProductViewController: BaseViewController {
     private func hierarchy() {
         
         view.addSubviews(backButton,
+                         cartButton,
                          scrollView,
                          buyView)
         
@@ -157,12 +166,18 @@ final class ShopProductViewController: BaseViewController {
         
         backButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(11)
-            $0.leading.equalToSuperview().offset(17)
+            $0.leading.equalToSuperview().inset(17)
+            $0.size.equalTo(42)
+        }
+        
+        cartButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(11)
+            $0.trailing.equalToSuperview().inset(17)
             $0.size.equalTo(42)
         }
         
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(backButton.snp.bottom).offset(5)
+            $0.top.equalTo(backButton.snp.bottom).offset(11)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
@@ -182,33 +197,27 @@ final class ShopProductViewController: BaseViewController {
         }
         
         //MARK: contentView Layout
-        
-        backButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(53)
-            $0.leading.equalToSuperview().offset(16)
-            $0.height.width.equalTo(42)
-        }
+        let width = UIScreen.main.bounds.width
         
         productImageView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview()
-            //$0.height.equalTo(productImageView.snp.width).multipliedBy(212).dividedBy(375)
-            $0.height.equalTo(212)
+            $0.height.equalTo(width / 375 * 219)
         }
         
         nameLabel.snp.makeConstraints {
-            $0.top.equalTo(productImageView.snp.bottom).offset(22)
+            $0.top.equalTo(productImageView.snp.bottom).offset(30)
             $0.leading.equalToSuperview().offset(30)
         }
         
         priceLabel.snp.makeConstraints {
-            $0.top.equalTo(productImageView.snp.bottom).offset(10)
-            $0.trailing.equalToSuperview().offset(-30)
+            $0.top.equalTo(productImageView.snp.bottom).offset(30)
+            $0.trailing.equalToSuperview().inset(30)
         }
         
         descriptionLabel.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(20)
+            $0.top.equalTo(nameLabel.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(30)
         }
         
@@ -245,14 +254,22 @@ final class ShopProductViewController: BaseViewController {
     
     //MARK: - Action Method
     
-    @objc
-    private func buyButtonDidTap() {
-        present(productBottomSheetVC, animated: true)
-    }
+    
     
     @objc
     private func backButtonDidTap() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc
+    private func naviCartButtonDidTap() {
+        let cartVC = UIViewController()
+        navigationController?.pushViewController(cartVC, animated: true)
+    }
+    
+    @objc
+    private func buyButtonDidTap() {
+        present(productBottomSheetVC, animated: true)
     }
 }
 

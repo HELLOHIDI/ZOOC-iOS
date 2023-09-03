@@ -72,9 +72,7 @@ final class ShopProductCollectionViewCell: UICollectionViewCell {
     }
     
     private func layout() {
-        var cellWidth = UIScreen.main.bounds.width
-        cellWidth -= 69
-        cellWidth /= 2
+        var cellWidth = (Device.width - 69) / 2
       
         imageView.snp.makeConstraints {
             $0.top.equalToSuperview()
@@ -97,7 +95,7 @@ final class ShopProductCollectionViewCell: UICollectionViewCell {
     }
     
     func dataBind(data: ProductResult) {
-        imageView.kfSetImage(url: data.image)
+        imageView.kfSetImage(url: data.thumbnail)
         nameLabel.text = data.name
         priceLabel.text = data.price.priceText
     }

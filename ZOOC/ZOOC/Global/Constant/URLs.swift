@@ -58,8 +58,7 @@ public enum URLs{
     
     //MARK: - Shop
     
-    static let getProduct = "/shop/product"
+    static let getTotalProducts = "/shop/product"
+    static let getProduct = "/shop/product/{productId}"
     static let postOrder = "/shop/order"
-    
-    
 }

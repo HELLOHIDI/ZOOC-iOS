@@ -38,8 +38,6 @@ final class ShopProductViewController: BaseViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: Device.width, height: Device.width / 375 * 219)
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.bounces = false
@@ -86,11 +84,6 @@ final class ShopProductViewController: BaseViewController {
         style()
         hierarchy()
         layout()
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        buyView.layoutIfNeeded()
     }
 
     //MARK: - Custom Method
@@ -286,8 +279,6 @@ final class ShopProductViewController: BaseViewController {
     
     
     //MARK: - Action Method
-    
-    
     
     @objc
     private func backButtonDidTap() {

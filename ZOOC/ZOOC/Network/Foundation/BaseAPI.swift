@@ -15,7 +15,7 @@ class BaseAPI{
         guard let decodedData = try? decoder.decode(GenericResponse<T>.self, from: data)
         else {
             print("⛔️ \(self)애서 디코딩 오류가 발생했습니다 ⛔️")
-            return .pathErr
+            return .decodedErr
         }
         
         switch statusCode {

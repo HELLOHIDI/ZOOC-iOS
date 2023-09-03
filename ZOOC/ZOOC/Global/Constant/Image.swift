@@ -17,12 +17,14 @@ public enum Image{
     
     //MARK: - Icon
     
+    static let arrowDropDown = UIImage(named: "arrow.dropdown")
     static let arrowDown = UIImage(named: "arrow.down")
     static let backCircle = UIImage(named: "back.circle")!
     static let back = UIImage(named: "back")!
     static let backWhite = UIImage(named: "back.white")!
     static let cameraCircleGreen = UIImage(named: "camera.circle.green")!
     static let cameraCircle = UIImage(named: "camera.circle")!
+    static let cart = UIImage(named: "cart")!
     static let check = UIImage(named: "check")!
     static let checkTint = UIImage(named: "check.tint")!
     static let checkBoxRed = UIImage(named: "checkbox.red")!
@@ -37,8 +39,10 @@ public enum Image{
     static let kakaoLogin = UIImage(named: "kakaoLogin")!
     static let listFill = UIImage(named: "list.fill")!
     static let list = UIImage(named: "list")!
+    static let minusCircle = UIImage(named: "minus.circle")!
     static let noise = UIImage(named: "noise")!
     static let person = UIImage(named: "person")!
+    static let plusCircle = UIImage(named: "plus.circle")!
     static let plus = UIImage(named: "plus")!
     static let plusTabCircle = UIImage(named: "plus.tab.circle")!
     static let ring = UIImage(named: "ring")!
@@ -81,6 +85,7 @@ public enum Image{
     static let graphics11 = UIImage(named: "graphics_11")!
     static let graphics12 = UIImage(named: "graphics_12")!
     static let graphics13 = UIImage(named: "graphics_13")!
+    static let graphics14 = UIImage(named: "graphics_14")!
     
     //MARK: - Mock
     

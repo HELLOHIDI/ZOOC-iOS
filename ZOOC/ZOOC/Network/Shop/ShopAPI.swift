@@ -13,13 +13,23 @@ final class ShopAPI: BaseAPI {
     static let shared = ShopAPI()
     private var shopProvider = MoyaProvider<ShopService>(session: Session(interceptor: ZoocInterceptor()),
                                                 plugins: [MoyaLoggingPlugin()])
+    
+    private override init() {}
 }
 
 extension ShopAPI {
-    public func getProducts(completion: @escaping (NetworkResult<Any>) -> Void) {
-        shopProvider.request(.getProducts) {(result) in
+    public func getTotalProducts(completion: @escaping (NetworkResult<Any>) -> Void) {
+        shopProvider.request(.getTotalProducts) {(result) in
             self.disposeNetwork(result,
-                                dataModel: ProductResult.self,
+                                dataModel: [ProductResult].self,
+                                completion: completion)
+        }
+    }
+    
+    public func getProduct(productID: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+        shopProvider.request(.getProduct(productID: productID)) {(result) in
+            self.disposeNetwork(result,
+                                dataModel: ProductDetailResult.self,
                                 completion: completion)
         }
     }

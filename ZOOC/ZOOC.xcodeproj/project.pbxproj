@@ -1326,8 +1326,8 @@
 		87BCAD302AA4EF5900A03DA3 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				870A4BF82AA252CB00D7CFD8 /* ShopProductViewController.swift */,
 				87A3D8772A975385002C36DB /* ShopViewController.swift */,
+				870A4BF82AA252CB00D7CFD8 /* ShopProductViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";

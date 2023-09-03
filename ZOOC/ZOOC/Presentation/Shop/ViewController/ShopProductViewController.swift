@@ -38,6 +38,8 @@ final class ShopProductViewController: BaseViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: Device.width, height: Device.width / 375 * 219)
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.bounces = false
@@ -58,7 +60,6 @@ final class ShopProductViewController: BaseViewController {
     private let nameLabel = UILabel()
     private let priceLabel = UILabel()
     private let descriptionLabel = UILabel()
-    private let lineView = UIView()
     
     private let buyView = UIView()
     private let buyButton = ZoocGradientButton(.medium)
@@ -146,10 +147,6 @@ final class ShopProductViewController: BaseViewController {
             $0.numberOfLines = 0
         }
         
-        lineView.do {
-            $0.backgroundColor = .zoocLightGray
-        }
-        
         buyButton.do {
             $0.setTitle("구매하기", for: .normal)
             $0.addTarget(self,
@@ -173,8 +170,7 @@ final class ShopProductViewController: BaseViewController {
                                 pageControl,
                                 nameLabel,
                                 priceLabel,
-                                descriptionLabel,
-                                lineView)
+                                descriptionLabel)
         
         buyView.addSubviews(buyButton)
     }
@@ -243,13 +239,7 @@ final class ShopProductViewController: BaseViewController {
         descriptionLabel.snp.makeConstraints {
             $0.top.equalTo(nameLabel.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(30)
-        }
-        
-        lineView.snp.makeConstraints {
-            $0.top.equalTo(descriptionLabel.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(1)
-            $0.bottom.equalToSuperview().inset(500)
+            $0.bottom.equalToSuperview().inset(40)
         }
         
         buyButton.snp.makeConstraints {

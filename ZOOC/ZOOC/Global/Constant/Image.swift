@@ -48,6 +48,7 @@ public enum Image{
     static let xmark = UIImage(named: "xmark")!
     static let xmarkWhite = UIImage(named: "xmark.white")!
     static let aiLogo = UIImage(named: "ai")!
+    static let next = UIImage(named: "next")!
     
     static let gradient = UIImage(named: "gradient")
     

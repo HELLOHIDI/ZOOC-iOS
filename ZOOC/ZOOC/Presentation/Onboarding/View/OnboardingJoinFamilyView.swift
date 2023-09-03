@@ -46,7 +46,11 @@ final class OnboardingJoinFamilyView: OnboardingBaseView {
             $0.textAlignment = .left
             $0.font = .zoocDisplay1
             $0.numberOfLines = 2
-            $0.setAttributeLabel(targetString: ["가족코드"], color: .zoocMainGreen, spacing: 6)
+            $0.setAttributeLabel(
+                targetString: ["가족코드"],
+                color: .zoocMainGreen,
+                font: .zoocDisplay1,
+                spacing: 6)
         }
         
         familyCodeTextField.do {

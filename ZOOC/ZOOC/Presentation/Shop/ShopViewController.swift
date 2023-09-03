@@ -14,16 +14,33 @@ final class ShopViewController : BaseViewController {
     
     //MARK: - Properties
     
+    private var productsData: [ProductResult] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
     //MARK: - UI Components
     
-    private lazy var myButton: UIButton = {
+    private lazy var backButton: UIButton = {
         let button = UIButton()
-        button.setTitle("버튼", for: .normal)
-        button.backgroundColor = .systemBlue
+        button.setImage(Image.back, for: .normal)
         button.addTarget(self,
-                         action: #selector(myButtonDidTap),
+                         action: #selector(backButtonDidTap),
                          for: .touchUpInside)
         return button
+    }()
+    
+    private let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.register(ShopProductCollectionViewCell.self,
+                                forCellWithReuseIdentifier: ShopProductCollectionViewCell.reuseCellIdentifier)
+        return collectionView
     }()
     
     //MARK: - Life Cycle
@@ -31,12 +48,21 @@ final class ShopViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        setDelegate()
         style()
         hierarchy()
         layout()
+        
+        requestProductsAPI()
     }
     
     //MARK: - Custom Method
+    
+    private func setDelegate() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+    }
     
     
     private func style() {
@@ -44,27 +70,105 @@ final class ShopViewController : BaseViewController {
     }
     
     private func hierarchy() {
-        view.addSubview(myButton)
+        view.addSubviews(backButton,
+                         collectionView)
     }
     
     private func layout() {
         
-        myButton.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.size.equalTo(60)
+        backButton.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(11)
+            $0.leading.equalToSuperview().offset(17)
+            $0.size.equalTo(42)
         }
         
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(backButton.snp.bottom).offset(69)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+        
+        
+    
+        
     }
+    
+    private func requestProductsAPI() {
+        ShopAPI.shared.getProducts { result in
+            guard let result = self.validateResult(result) as? [ProductResult] else { return }
+            self.productsData = result
+        }
+    }
+    
     
     //MARK: - Action Method
     
     @objc
-    private func myButtonDidTap() {
-        ShopAPI.shared.getProducts { result in
-            guard let result = self.validateResult(result) as? [ProductResult] else {return}
-            
-            dump(result)
-        }
+    private func backButtonDidTap() {
+        navigationController?.popViewController(animated: true)
     }
     
+}
+
+//MARK: - UICollectionViewDataSource
+
+extension ShopViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        productsData.count + 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopProductCollectionViewCell.reuseCellIdentifier,
+                                                      for: indexPath) as! ShopProductCollectionViewCell
+        
+        if indexPath.row + 1 <= productsData.count {
+            cell.dataBind(data: productsData[indexPath.row])
+        } else {
+            cell.setCommingSoon()
+        }
+        return cell
+    }
+}
+
+//MARK: - UICollectionViewDelegate
+
+extension ShopViewController {
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
+        let productVC = ShopProductViewController()
+        navigationController?.pushViewController(productVC, animated: true)
+    }
+}
+
+//MARK: - UICollectionViewDelegateFlowLayout
+
+extension ShopViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        var width = collectionView.frame.width - 60 - 9
+        width /= 2
+        let height = (width * 200 / 153) + 50
+        return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 9
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        UIEdgeInsets(top: 0, left: 30, bottom: 30, right: 30)
+    }
 }

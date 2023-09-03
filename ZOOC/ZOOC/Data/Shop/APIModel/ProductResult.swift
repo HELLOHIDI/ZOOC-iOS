@@ -10,7 +10,18 @@ import Foundation
 struct ProductResult: Codable {
     let id: Int
     let name: String
-    let price: String
+    let price: Int
     let image: String
     let type: String
+    let optionCategories: [OptionCategoriesResult]
+}
+
+struct OptionCategoriesResult: Codable {
+    let name: String
+    let options: [OptionResult]
+}
+
+struct OptionResult: Codable {
+    let id: Int
+    let name: String
 }

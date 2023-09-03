@@ -19,7 +19,7 @@ extension ShopAPI {
     public func getProducts(completion: @escaping (NetworkResult<Any>) -> Void) {
         shopProvider.request(.getProducts) {(result) in
             self.disposeNetwork(result,
-                                dataModel: ProductResult.self,
+                                dataModel: [ProductResult].self,
                                 completion: completion)
         }
     }

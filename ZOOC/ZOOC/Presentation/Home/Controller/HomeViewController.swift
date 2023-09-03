@@ -171,7 +171,7 @@ final class HomeViewController : BaseViewController {
     
     private func pushToShopViewController() {
         //TODO: - 일단은 주문서뷰로 이동
-        let shopVC = OrderViewController(productData: OrderProduct(id: 1,
+        let orderVC = OrderViewController(productData: OrderProduct(id: 1,
                                                                    imageURL: "https://zooc-bucket.s3.ap-northeast-2.amazonaws.com/images%2F1691081953053_image.jpeg",
                                                                    name: "생성 AI 폰케이스",
                                                                    price: 29000),
@@ -179,12 +179,12 @@ final class HomeViewController : BaseViewController {
                                                                deleiveryFee: 3000))
         
         //let payVC = OrderAssistantViewController(totalPrice: 29500)
-        
+        let shopVC = ShopViewController()
         let productVC = ShopProductViewController()
         //present(petVC, animated: true)
         
-        productVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(productVC, animated: true)
+        shopVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(shopVC, animated: true)
     }
     
     private func pushToGenAIViewController() {

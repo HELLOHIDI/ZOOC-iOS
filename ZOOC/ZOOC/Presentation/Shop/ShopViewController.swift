@@ -170,8 +170,14 @@ extension ShopViewController: UICollectionViewDataSource {
 extension ShopViewController {
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
-        let productVC = ShopProductViewController()
-        navigationController?.pushViewController(productVC, animated: true)
+        
+        if indexPath.row + 1 <= productsData.count {
+            let productVC = ShopProductViewController(productID: productsData[indexPath.row].id)
+            navigationController?.pushViewController(productVC, animated: true)
+        } else {
+            presentBottomAlert("오픈 예정 제품이에요")
+        }
+  
     }
 }
 

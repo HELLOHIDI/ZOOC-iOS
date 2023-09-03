@@ -19,7 +19,7 @@ final class ShopProductViewController: BaseViewController {
     
     private var productData: ProductDetailResult? {
         didSet{
-            updateProductUI()
+            updateUI()
         }
     }
     
@@ -47,14 +47,15 @@ final class ShopProductViewController: BaseViewController {
     
     //MARK: - Life Cycle
     
-//    init(_ productModel: ProductModel) {
-//        self.productModel = productModel
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    init(productID: Int){
+        super.init(nibName: nil, bundle: nil)
+        
+        requestDetailProductAPI(id: productID)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,8 +66,6 @@ final class ShopProductViewController: BaseViewController {
         style()
         hierarchy()
         layout()
-        
-        updateProductUI()
     }
 
     override func viewDidLayoutSubviews() {
@@ -227,11 +226,18 @@ final class ShopProductViewController: BaseViewController {
         }
     }
     
-    private func updateProductUI() {
-        productImageView.image = Image.gallery
-        priceLabel.text = 9999.priceText
-        nameLabel.text = "폰케"
-        descriptionLabel.text = "와 싸다!"
+    private func updateUI() {
+        productImageView.kfSetImage(url: productData?.images.first)
+        priceLabel.text = productData?.price.priceText
+        nameLabel.text = productData?.name
+        descriptionLabel.text = productData?.type
+    }
+    
+    private func requestDetailProductAPI(id: Int) {
+        ShopAPI.shared.getProduct(productID: id) { result in
+            guard let result = self.validateResult(result) as? ProductDetailResult else { return }
+            self.productData = result
+        }
     }
     
     //MARK: - API Method

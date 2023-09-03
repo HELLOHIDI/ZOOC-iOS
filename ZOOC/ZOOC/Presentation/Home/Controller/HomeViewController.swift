@@ -178,10 +178,7 @@ final class HomeViewController : BaseViewController {
                                          priceData: OrderPrice(productPrice: 29000,
                                                                deleiveryFee: 3000))
         
-        //let payVC = OrderAssistantViewController(totalPrice: 29500)
         let shopVC = ShopViewController()
-        let productVC = ShopProductViewController()
-        //present(petVC, animated: true)
         
         shopVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(shopVC, animated: true)

@@ -121,7 +121,7 @@ final class ShopViewController : BaseViewController {
     }
     
     private func requestProductsAPI() {
-        ShopAPI.shared.getProducts { result in
+        ShopAPI.shared.getTotalProducts { result in
             guard let result = self.validateResult(result) as? [ProductResult] else { return }
             self.productsData = result
         }

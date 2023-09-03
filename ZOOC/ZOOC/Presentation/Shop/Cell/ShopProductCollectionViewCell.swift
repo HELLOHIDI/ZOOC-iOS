@@ -97,7 +97,7 @@ final class ShopProductCollectionViewCell: UICollectionViewCell {
     }
     
     func dataBind(data: ProductResult) {
-        imageView.kfSetImage(url: data.image)
+        imageView.kfSetImage(url: data.thumbnail)
         nameLabel.text = data.name
         priceLabel.text = data.price.priceText
     }

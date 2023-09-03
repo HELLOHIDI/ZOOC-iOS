@@ -17,7 +17,7 @@ final class ShopProductViewController: BaseViewController {
     
     //private var productModel: ProductModel
     
-    private var productData: ProductResult? {
+    private var productData: ProductDetailResult? {
         didSet{
             updateProductUI()
         }

@@ -22,7 +22,8 @@ final class OrderPriceView: UIView {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "결제 금액"
-        label.font = .zoocHeadLine
+        label.font = .zoocSubhead2
+        label.textAlignment = .left
         label.textColor = .zoocDarkGray1
         return label
     }()
@@ -30,51 +31,51 @@ final class OrderPriceView: UIView {
     private let priceLabel: UILabel = {
         let label = UILabel()
         label.text = "상품 금액"
-        label.font = .zoocBody2
+        label.font = .zoocBody3
         label.textColor = .zoocGray2
         return label
     }()
     
     private let priceValueLabel: UILabel = {
         let label = UILabel()
-        label.font = .zoocBody2
-        label.textColor = .zoocDarkGray2
+        label.font = .zoocBody3
+        label.textColor = .zoocGray2
         return label
     }()
     
     private let deliveryFeeLabel: UILabel = {
         let label = UILabel()
         label.text = "배송비"
-        label.font = .zoocBody2
+        label.font = .zoocBody3
         label.textColor = .zoocGray2
         return label
     }()
     
     private let deliveryFeeValueLabel: UILabel = {
         let label = UILabel()
-        label.font = .zoocBody2
-        label.textColor = .zoocDarkGray1
+        label.font = .zoocBody3
+        label.textColor = .zoocGray2
         return label
-    }()
-    
-    private let lineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .zoocGray1
-        return view
     }()
     
     private let totalPriceLabel: UILabel = {
         let label = UILabel()
-        label.text = "최종 결제 금액"
-        label.font = .zoocHeadLine
-        label.textColor = .zoocDarkGray1
+        label.text = "총 결제금액"
+        label.font = .zoocSubhead1
+        label.textColor = .zoocGray3
         return label
     }()
     
     private let totalPriceValueLabel: UILabel = {
         let label = UILabel()
         label.font = .zoocHeadLine
-        label.textColor = .zoocDarkGray1
+        label.textColor = .zoocMainGreen
+        label.setAttributeLabel(
+            targetString: ["원"],
+            color: .zoocGray3,
+            font: .zoocBody3,
+            spacing: 0
+        )
         return label
     }()
     
@@ -109,7 +110,6 @@ final class OrderPriceView: UIView {
                              priceValueLabel,
                              deliveryFeeLabel,
                              deliveryFeeValueLabel,
-                             lineView,
                              totalPriceLabel,
                              totalPriceValueLabel)
     }
@@ -119,54 +119,48 @@ final class OrderPriceView: UIView {
         headerView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(60)
+            $0.height.equalTo(75)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
+            $0.leading.equalToSuperview().offset(30)
             $0.centerY.equalToSuperview()
         }
         
         mainView.snp.makeConstraints {
-            $0.top.equalTo(headerView.snp.bottom).offset(5)
+            $0.top.equalTo(headerView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
         
         priceLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(30)
         }
         
         priceValueLabel.snp.makeConstraints {
             $0.centerY.equalTo(priceLabel)
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(30)
         }
         
         deliveryFeeLabel.snp.makeConstraints {
-            $0.top.equalTo(priceLabel.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().inset(20)
+            $0.top.equalTo(priceLabel.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().inset(30)
         }
         
         deliveryFeeValueLabel.snp.makeConstraints {
             $0.centerY.equalTo(deliveryFeeLabel)
-            $0.trailing.equalToSuperview().inset(20)
-        }
-        
-        lineView.snp.makeConstraints {
-            $0.top.equalTo(deliveryFeeLabel.snp.bottom).offset(20)
-            $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.height.equalTo(1)
+            $0.trailing.equalToSuperview().inset(30)
         }
         
         totalPriceLabel.snp.makeConstraints {
-            $0.top.equalTo(lineView.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().inset(20)
+            $0.top.equalTo(deliveryFeeValueLabel.snp.bottom).offset(20)
+            $0.leading.equalToSuperview().inset(30)
         }
         
         totalPriceValueLabel.snp.makeConstraints {
             $0.centerY.equalTo(totalPriceLabel)
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(30)
             $0.bottom.equalToSuperview().inset(30)
         }
         
@@ -177,6 +171,13 @@ final class OrderPriceView: UIView {
         priceValueLabel.text = data.productPrice.priceText
         deliveryFeeValueLabel.text = data.deliveryFee.priceText
         totalPriceValueLabel.text = data.totalPrice.priceText
+        
+        totalPriceValueLabel.setAttributeLabel(
+            targetString: ["원"],
+            color: .zoocGray3,
+            font: .zoocBody3,
+            spacing: 0
+        )
     }
     
     //MARK: - Action Method

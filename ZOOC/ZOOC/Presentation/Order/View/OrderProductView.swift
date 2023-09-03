@@ -21,9 +21,10 @@ final class OrderProductView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "주문 상품"
-        label.font = .zoocHeadLine
+        label.text = "상품 정보"
+        label.font = .zoocSubhead2
         label.textColor = .zoocDarkGray1
+        label.textAlignment = .left
         return label
     }()
     
@@ -48,15 +49,33 @@ final class OrderProductView: UIView {
     
     private let productNameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .zoocDarkGray1
+        label.textColor = .zoocGray3
         label.font = .zoocSubhead1
         return label
     }()
     
     private let priceLabel: UILabel = {
         let label = UILabel()
+        label.textColor = UIColor(r: 64, g: 64, b: 64)
+        label.font = .zoocHeadLine
+        return label
+    }()
+    
+    private let productCntLabel: UILabel = {
+        let label = UILabel()
+        label.text = "1개 | "
         label.textColor = .zoocGray2
-        label.font = .zoocSubhead1
+        label.font = .zoocBody1
+        label.textAlignment = .right
+        return label
+    }()
+    
+    private let phoneModelLabel: UILabel = {
+        let label = UILabel()
+        label.text = "갤럭시 노트 10"
+        label.textColor = .zoocGray2
+        label.font = .zoocBody1
+        label.textAlignment = .right
         return label
     }()
     
@@ -89,7 +108,9 @@ final class OrderProductView: UIView {
         
         mainView.addSubviews(productImageView,
                              productNameLabel,
-                             priceLabel)
+                             priceLabel,
+                             productCntLabel,
+                             phoneModelLabel)
         
     }
     
@@ -102,7 +123,7 @@ final class OrderProductView: UIView {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
+            $0.leading.equalToSuperview().offset(30)
             $0.centerY.equalToSuperview()
         }
         
@@ -120,14 +141,13 @@ final class OrderProductView: UIView {
         productImageView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview().inset(30)
-            $0.size.equalTo(80)
+            $0.size.equalTo(90)
             $0.bottom.equalToSuperview().inset(20)
         }
         
         productNameLabel.snp.makeConstraints {
             $0.top.equalTo(productImageView)
-            $0.leading.equalTo(productImageView.snp.trailing).offset(10)
-            
+            $0.leading.equalTo(productImageView.snp.trailing).offset(16)
         }
         
         priceLabel.snp.makeConstraints {
@@ -135,6 +155,15 @@ final class OrderProductView: UIView {
             $0.leading.equalTo(productNameLabel)
         }
         
+        productCntLabel.snp.makeConstraints {
+            $0.top.equalTo(self.priceLabel.snp.bottom).offset(18)
+            $0.leading.equalTo(self.productImageView.snp.trailing).offset(16)
+        }
+        
+        phoneModelLabel.snp.makeConstraints {
+            $0.top.equalTo(self.productCntLabel)
+            $0.leading.equalTo(self.productCntLabel.snp.trailing)
+        }
     }
     
     func updateUI(_ data: OrderProduct) {

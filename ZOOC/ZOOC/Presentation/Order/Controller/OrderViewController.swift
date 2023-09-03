@@ -28,9 +28,9 @@ final class OrderViewController: BaseViewController {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
+    private let productView = OrderProductView()
     private let ordererView = OrderOrdererView()
     private let addressView = OrderAddressView()
-    private let productView = OrderProductView()
     private let paymentMethodView = OrderPaymentMethodView()
     private let priceView = OrderPriceView()
     private let agreementView = OrderAgreementView()
@@ -73,6 +73,13 @@ final class OrderViewController: BaseViewController {
                          for: .touchUpInside)
         }
         
+        titleLabel.do {
+            $0.text = "주문하기"
+            $0.font = .zoocHeadLine
+            $0.textColor = .zoocDarkGray2
+            $0.textAlignment = .left
+        }
+        
         scrollView.do {
             $0.backgroundColor = .zoocBackgroundGreen
             $0.alwaysBounceVertical = true
@@ -84,7 +91,7 @@ final class OrderViewController: BaseViewController {
         }
         
         orderButton.do {
-            $0.setTitle("주문하기", for: .normal)
+            $0.setTitle("결제하기", for: .normal)
             $0.addTarget(self,
                          action: #selector(orderButtonDidTap),
                          for: .touchUpInside)
@@ -97,9 +104,9 @@ final class OrderViewController: BaseViewController {
         view.addSubviews(backButton, titleLabel, scrollView, orderButton)
         scrollView.addSubview(contentView)
         
-        contentView.addSubviews(ordererView,
-                                addressView,
+        contentView.addSubviews(addressView,
                                 productView,
+                                ordererView,
                                 paymentMethodView,
                                 priceView,
                                 agreementView)
@@ -135,34 +142,33 @@ final class OrderViewController: BaseViewController {
             $0.height.equalTo(scrollView.frameLayoutGuide).priority(.low)
         }
         
+        productView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(1)
+            $0.horizontalEdges.equalToSuperview()
+        }
+        
         ordererView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(10)
+            $0.top.equalTo(productView.snp.bottom).offset(1)
             $0.horizontalEdges.equalToSuperview()
         }
         
         addressView.snp.makeConstraints {
-            $0.top.equalTo(ordererView.snp.bottom).offset(10)
-            $0.horizontalEdges.equalToSuperview()
-        }
-        
-        productView.snp.makeConstraints {
-            $0.top.equalTo(addressView.snp.bottom).offset(10)
+            $0.top.equalTo(ordererView.snp.bottom).offset(1)
             $0.horizontalEdges.equalToSuperview()
         }
         
         paymentMethodView.snp.makeConstraints {
-            $0.top.equalTo(productView.snp.bottom).offset(10)
+            $0.top.equalTo(addressView.snp.bottom).offset(1)
             $0.horizontalEdges.equalToSuperview()
         }
         
         priceView.snp.makeConstraints {
-            $0.top.equalTo(paymentMethodView.snp.bottom).offset(10)
+            $0.top.equalTo(paymentMethodView.snp.bottom).offset(1)
             $0.horizontalEdges.equalToSuperview()
-            
         }
         
         agreementView.snp.makeConstraints {
-            $0.top.equalTo(priceView.snp.bottom).offset(10)
+            $0.top.equalTo(priceView.snp.bottom).offset(1)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }

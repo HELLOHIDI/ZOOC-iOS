@@ -27,7 +27,7 @@ final class OrderPaymentMethodView: UIView {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "결제 수단"
-        label.font = .zoocHeadLine
+        label.font = .zoocSubhead2
         label.textColor = .zoocDarkGray1
         return label
     }()
@@ -35,7 +35,7 @@ final class OrderPaymentMethodView: UIView {
     private let paymentCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        
+
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
@@ -43,15 +43,14 @@ final class OrderPaymentMethodView: UIView {
         return collectionView
     }()
     
-    private let descriptionLabel: BasePaddingLabel = {
-        let label = BasePaddingLabel(padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
-        label.text = "현재 결제수단은 무통장 입금만 가능합니다. \n 추후 다른 결제 수단도 추가될 예정입니다."
-        label.backgroundColor = .zoocLightGray
-        label.numberOfLines = 0
-        label.textColor = .zoocGray2
-        label.font = .zoocCaption
-        label.textAlignment = .center
-        label.makeCornerRound(radius: 7)
+    private let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "현재 결제 수단은 무통장 입금만 가능합니다. \n추후 업데이트에 다른 결제 수단이 추가될 예정입니다."
+        label.numberOfLines = 2
+        label.textColor = .zoocGray1
+        label.font = .zoocBody2
+        label.textAlignment = .left
+        label.setLineSpacing(spacing: 8)
         return label
     }()
     
@@ -95,26 +94,26 @@ final class OrderPaymentMethodView: UIView {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
-            $0.centerY.equalToSuperview()
+            $0.top.equalToSuperview().offset(30)
+            $0.leading.equalToSuperview().offset(30)
         }
         
         mainView.snp.makeConstraints {
-            $0.top.equalTo(headerView.snp.bottom).offset(5)
+            $0.top.equalTo(headerView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
         
         paymentCollectionView.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalToSuperview().offset(20)
             $0.leading.trailing.equalToSuperview()
-            $0.height.greaterThanOrEqualTo(80)
+            $0.height.greaterThanOrEqualTo(41)
         }
         
         descriptionLabel.snp.makeConstraints {
-            $0.top.equalTo(paymentCollectionView.snp.bottom)
-            $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.bottom.equalToSuperview().inset(20)
+            $0.top.equalTo(paymentCollectionView.snp.bottom).offset(20)
+            $0.horizontalEdges.equalToSuperview().inset(30)
+            $0.bottom.equalToSuperview().inset(28)
         }
         
     }
@@ -136,9 +135,9 @@ final class OrderPaymentMethodView: UIView {
 extension OrderPaymentMethodView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let width = collectionView.frame.width
+//        let width = collectionView.frame.width
         
-        return CGSize(width: width, height: 60)
+        return CGSize(width: 122, height: 41)
     }
     
 }
@@ -154,7 +153,4 @@ extension OrderPaymentMethodView: UICollectionViewDataSource {
         cell.dataBind(.withoutBankBook)
         return cell
     }
-    
-    
-    
 }

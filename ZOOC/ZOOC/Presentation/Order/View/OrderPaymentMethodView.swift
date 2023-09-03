@@ -94,7 +94,7 @@ final class OrderPaymentMethodView: UIView {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(28)
+            $0.top.equalToSuperview().offset(30)
             $0.leading.equalToSuperview().offset(30)
         }
         
@@ -153,7 +153,4 @@ extension OrderPaymentMethodView: UICollectionViewDataSource {
         cell.dataBind(.withoutBankBook)
         return cell
     }
-    
-    
-    
 }

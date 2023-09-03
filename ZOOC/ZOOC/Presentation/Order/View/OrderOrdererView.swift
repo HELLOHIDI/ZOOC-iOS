@@ -26,8 +26,8 @@ final class OrderOrdererView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "주문자"
-        label.font = .zoocHeadLine
+        label.text = "구매자 정보"
+        label.font = .zoocSubhead2
         label.textColor = .zoocDarkGray1
         return label
     }()
@@ -46,24 +46,43 @@ final class OrderOrdererView: UIView {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "이름"
-        label.font = .zoocBody2
+        label.text = "구매자"
+        label.font = .zoocBody1
+        label.textAlignment = .left
         label.textColor = .zoocGray2
         return label
     }()
     
-    private let nameTextField = ZoocTextField(.default)
+    private let nameTextField: ZoocTextField = {
+        let textField = ZoocTextField(.default)
+        textField.font = .zoocBody1
+        textField.textAlignment = .left
+        textField.textColor = .zoocGray3
+        textField.placeholder = "실명"
+        textField.addLeftPadding(inset: 18)
+        textField.setPlaceholderColor(color: .zoocGray1)
+        return textField
+    }()
     
     private let phoneNumberLabel: UILabel = {
         let label = UILabel()
-        label.text = "휴대전화"
-        label.font = .zoocBody2
+        label.text = "연락처"
+        label.font = .zoocBody1
+        label.textAlignment = .left
         label.textColor = .zoocGray2
         return label
     }()
     
-    private let phoneNumberTextField = ZoocTextField(.numberPad)
-    
+    private let phoneNumberTextField: ZoocTextField = {
+        let textField = ZoocTextField(.numberPad)
+        textField.font = .zoocBody1
+        textField.textAlignment = .left
+        textField.textColor = .zoocGray3
+        textField.placeholder = "010 - 1234 -5678"
+        textField.addLeftPadding(inset: 18)
+        textField.setPlaceholderColor(color: .zoocGray1)
+        return textField
+    }()
     
     //MARK: - Life Cycle
     
@@ -105,11 +124,11 @@ final class OrderOrdererView: UIView {
         headerView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(60)
+            $0.height.equalTo(75)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
+            $0.leading.equalToSuperview().offset(30)
             $0.centerY.equalToSuperview()
         }
         
@@ -127,24 +146,24 @@ final class OrderOrdererView: UIView {
         nameTextField.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview().inset(100)
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(30)
             $0.height.equalTo(40)
         }
         
         nameLabel.snp.makeConstraints {
             $0.centerY.equalTo(nameTextField)
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(30)
         }
         
         phoneNumberTextField.snp.makeConstraints {
             $0.top.equalTo(nameTextField.snp.bottom).offset(10)
             $0.leading.trailing.height.equalTo(nameTextField)
-            $0.bottom.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(30)
         }
         
         phoneNumberLabel.snp.makeConstraints {
             $0.centerY.equalTo(phoneNumberTextField)
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(30)
         }
         
     }

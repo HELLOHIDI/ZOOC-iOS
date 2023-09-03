@@ -41,7 +41,7 @@ final class OrderAddressView: UIView {
     
     private lazy var copyButton: UIButton = {
         let button = UIButton()
-        button.setTitle("이전 배송지 불러오기", for: .normal)
+        button.setTitle("구매자와 동일해요", for: .normal)
         button.setUnderline()
         button.setTitleColor(.zoocGray1, for: .normal)
         button.titleLabel?.font = .zoocBody2
@@ -61,8 +61,9 @@ final class OrderAddressView: UIView {
     
     private let receiverTextField: ZoocTextField = {
         let textField = ZoocTextField()
-        textField.attributedPlaceholder = NSAttributedString(string: "실명",
-                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.zoocGray1, NSAttributedString.Key.font: UIFont.zoocBody1])
+        textField.placeholder = "실명"
+        textField.font = .zoocBody1
+        textField.setPlaceholderColor(color: .zoocGray1)
         return textField
     }()
     
@@ -76,8 +77,9 @@ final class OrderAddressView: UIView {
     
     private let receiverPhoneNumberTextField: ZoocTextField = {
         let textField = ZoocTextField(.numberPad)
-        textField.attributedPlaceholder = NSAttributedString(string: "010 - 1234 - 5678",
-                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.zoocGray1, NSAttributedString.Key.font: UIFont.zoocBody1])
+        textField.placeholder = "010 - 1234 - 5678"
+        textField.font = .zoocBody1
+        textField.setPlaceholderColor(color: .zoocGray1)
         return textField
     }()
 
@@ -91,53 +93,36 @@ final class OrderAddressView: UIView {
     }()
     
     private let addressNameTextField: ZoocTextField = {
-        let textField = ZoocTextField()
-        textField.attributedPlaceholder = NSAttributedString(string: "우편번호",
-                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.zoocGray1, NSAttributedString.Key.font: UIFont.zoocBody1])
+        let textField = ZoocTextField(.numberPad)
+        textField.placeholder = "우편번호"
+        textField.font = .zoocBody1
+        textField.setPlaceholderColor(color: .zoocGray1)
         return textField
     }()
-    
-//    private lazy var findAddressButton: UIButton = {
-//        let button = UIButton()
-//        button.setTitle("주소 검색", for: .normal)
-//        button.makeCornerRound(radius: 8)
-//        button.setTitleColor(.zoocWhite2, for: .normal)
-//        button.titleLabel?.font = .zoocBody1
-//        button.backgroundColor = .zoocGradientGreen
-//        button.addTarget(self,
-//                         action: #selector(findAddressButtonDidTap),
-//                         for: .touchUpInside)
-//        return button
-//    }()
     
     private lazy var findAddressButton: ZoocGradientButton = {
         let button = ZoocGradientButton.init(.order)
         button.setTitle("주소 검색", for: .normal)
         button.titleLabel?.font = UIFont(name: "Pretendard-SemiBold", size: 14)!
+        button.addTarget(self,
+                         action: #selector(findAddressButtonDidTap),
+                         for: .touchUpInside)
         return button
     }()
     
-    private let postCodeLabelBox: BasePaddingLabel = {
-        let label = BasePaddingLabel(leftPadding: 10)
-        label.backgroundColor = .zoocLightGray
-        label.setBorder(borderWidth: 1, borderColor: .zoocLightGray)
-        label.makeCornerRound(radius: 7)
-        return label
-    }()
-    
-    private let addressLabelBox: BasePaddingLabel = {
-        let label = BasePaddingLabel(leftPadding: 10)
-        label.backgroundColor = .zoocLightGray
-        label.setBorder(borderWidth: 1, borderColor: .zoocLightGray)
-        label.makeCornerRound(radius: 7)
-        label.numberOfLines = 0
-        return label
+    private let addressTextField: ZoocTextField = {
+        let textField = ZoocTextField(.default)
+        textField.placeholder = "주소"
+        textField.font = .zoocBody1
+        textField.setPlaceholderColor(color: .zoocGray1)
+        return textField
     }()
     
     private let detailAddressTextField: ZoocTextField = {
-        let textField = ZoocTextField()
-        textField.attributedPlaceholder = NSAttributedString(string: "상세주소",
-                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.zoocGray1, NSAttributedString.Key.font: UIFont.zoocBody1])
+        let textField = ZoocTextField(.default)
+        textField.placeholder = "상세주소"
+        textField.font = .zoocBody1
+        textField.setPlaceholderColor(color: .zoocGray1)
         return textField
     }()
     
@@ -151,10 +136,31 @@ final class OrderAddressView: UIView {
     }()
     
     private let requestTextField: ZoocTextField = {
-        let textField = ZoocTextField()
-        textField.attributedPlaceholder = NSAttributedString(string: "부재 시 경비실에 맡겨주세요",
-                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.zoocGray1, NSAttributedString.Key.font: UIFont.zoocBody1])
+        let textField = ZoocTextField(.numberPad)
+        textField.placeholder = "부재 시 경비실에 맡겨주세요"
+        textField.font = .zoocBody1
+        textField.setPlaceholderColor(color: .zoocGray1)
         return textField
+    }()
+    
+    private lazy var registerBasicAddressCheckButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Image.checkBoxFill, for: .normal)
+        button.setImage(Image.checkBox, for: .selected)
+        button.setImage(Image.checkBoxRed, for: .highlighted)
+        button.addTarget(self,
+                         action: #selector(checkButtonDidTap),
+                         for: .touchUpInside)
+        return button
+    }()
+    
+    private let registerBasicAddressLabel: UILabel = {
+        let label = UILabel()
+        label.text = "기존 배송지로 등록"
+        label.font = .zoocBody1
+        label.textAlignment = .left
+        label.textColor = .zoocGray2
+        return label
     }()
     
     
@@ -197,11 +203,13 @@ final class OrderAddressView: UIView {
                              receiverPhoneNumberTextField,
                              addressLabel,
                              findAddressButton,
-                             postCodeLabelBox,
-                             addressLabelBox,
+                             addressTextField,
                              detailAddressTextField,
+                             registerBasicAddressCheckButton,
+                             registerBasicAddressLabel,
                              requestLabel,
-                             requestTextField)
+                             requestTextField
+        )
         
     }
     
@@ -210,7 +218,7 @@ final class OrderAddressView: UIView {
         headerView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(60)
+            $0.height.equalTo(75)
         }
         
         titleLabel.snp.makeConstraints {
@@ -269,22 +277,27 @@ final class OrderAddressView: UIView {
             $0.trailing.equalToSuperview().inset(30)
         }
         
-        postCodeLabelBox.snp.makeConstraints {
-            $0.top.equalTo(addressNameTextField.snp.bottom).offset(12)
-            $0.leading.height.equalTo(addressNameTextField)
-            $0.trailing.equalToSuperview().inset(30)
-        }
-        
-        addressLabelBox.snp.makeConstraints {
-            $0.top.equalTo(postCodeLabelBox.snp.bottom).offset(12)
+        addressTextField.snp.makeConstraints {
+            $0.top.equalTo(findAddressButton.snp.bottom).offset(12)
             $0.leading.height.equalTo(addressNameTextField)
             $0.trailing.equalToSuperview().inset(30)
         }
         
         detailAddressTextField.snp.makeConstraints {
-            $0.top.equalTo(addressLabelBox.snp.bottom).offset(12)
+            $0.top.equalTo(addressTextField.snp.bottom).offset(12)
             $0.leading.height.equalTo(addressNameTextField)
             $0.trailing.equalToSuperview().inset(30)
+        }
+        
+        registerBasicAddressCheckButton.snp.makeConstraints {
+            $0.top.equalTo(detailAddressTextField.snp.bottom).offset(13)
+            $0.leading.equalToSuperview().offset(97)
+            $0.size.equalTo(20)
+        }
+        
+        registerBasicAddressLabel.snp.makeConstraints {
+            $0.centerY.equalTo(registerBasicAddressCheckButton)
+            $0.leading.equalTo(registerBasicAddressCheckButton.snp.trailing).offset(10)
         }
         
         requestLabel.snp.makeConstraints {
@@ -293,11 +306,10 @@ final class OrderAddressView: UIView {
         }
         
         requestTextField.snp.makeConstraints {
-            $0.top.equalTo(detailAddressTextField.snp.bottom).offset(7)
-            $0.leading.trailing.height.equalTo(addressLabelBox)
+            $0.top.equalTo(registerBasicAddressCheckButton.snp.bottom).offset(12)
+            $0.leading.trailing.height.equalTo(addressTextField)
             $0.bottom.equalToSuperview().inset(20)
         }
-        
     }
     
     private func setTag() {
@@ -322,8 +334,8 @@ final class OrderAddressView: UIView {
         addressNameTextField.text = data.addressName
         receiverTextField.text = data.receiverName
         receiverPhoneNumberTextField.text = data.receiverPhoneNumber
-        postCodeLabelBox.text = data.postCode
-        addressLabelBox.text = data.address
+        addressNameTextField.text = data.postCode
+        addressTextField.text = data.address
         detailAddressTextField.text = data.detailAddress
         
         if isPostData {
@@ -337,8 +349,7 @@ final class OrderAddressView: UIView {
         addressNameTextField.updateInvalidUI()
         receiverTextField.updateInvalidUI()
         receiverPhoneNumberTextField.updateInvalidUI()
-        
-        if !(postCodeLabelBox.text?.hasText ?? false) {
+        if !(addressNameTextField.text?.hasText ?? false) {
             addressLabel.textColor = .red
         } else {
             addressLabel.textColor = .zoocGray2
@@ -365,7 +376,10 @@ final class OrderAddressView: UIView {
         delegate?.findAddressButtonDidTap()
     }
     
-    
+    @objc
+    private func checkButtonDidTap() {
+        print("기본배송지로 설정되었습니다!")
+    }
 }
 
 extension OrderAddressView: ZoocTextFieldDelegate {

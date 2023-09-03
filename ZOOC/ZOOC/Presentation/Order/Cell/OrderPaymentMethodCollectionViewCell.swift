@@ -46,9 +46,13 @@ final class OrderPaymentMethodCollectionViewCell: UICollectionViewCell {
     
     //MARK: - UI Components
     
-    private let paymentTypeButton: ZoocGradientButton = {
-        let button = ZoocGradientButton.init(.order)
+    private let paymentTypeButton: UIButton = {
+        let button = UIButton()
         button.titleLabel?.font = UIFont(name: "Pretendard-SemiBold", size: 14)!
+        button.titleLabel?.textAlignment = .left
+        button.setTitleColor(.zoocGray2, for: .normal)
+        button.setBorder(borderWidth: 1, borderColor: .zoocGray2)
+        button.makeCornerRound(radius: 8)
         return button
     }()
     
@@ -99,7 +103,6 @@ final class OrderPaymentMethodCollectionViewCell: UICollectionViewCell {
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         
-        paymentTypeButton.makeCornerRound(ratio: 8)
 //        checkButton.makeCornerRound(ratio: 2)
 //        smallCircleView.makeCornerRound(ratio: 2)
     }

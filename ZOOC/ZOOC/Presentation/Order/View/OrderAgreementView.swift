@@ -27,6 +27,25 @@ final class OrderAgreementView: UIView {
     
     //MARK: - UI Components
     
+    private lazy var allPoliciesAgreemCheckButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Image.checkBox, for: .normal)
+        button.setImage(Image.checkBoxFill, for: .selected)
+        button.setImage(Image.checkBoxRed, for: .highlighted)
+        button.addTarget(self,
+                         action: #selector(checkButtonDidTap),
+                         for: .touchUpInside)
+        return button
+    }()
+    
+    private let allPoliciesAgreemLabel: UILabel = {
+        let label = UILabel()
+        label.text = "주문 내용을 확인했으며, 모두 동의합니다."
+        label.font = .zoocBody2
+        label.textColor = .zoocGray3
+        return label
+    }()
+    
     private lazy var onwardTransferCheckButton: UIButton = {
         let button = UIButton()
         button.setImage(Image.checkBox, for: .normal)
@@ -42,17 +61,13 @@ final class OrderAgreementView: UIView {
         let label = UILabel()
         label.text = "(필수) 개인정보 이용약관 동의"
         label.font = .zoocBody2
-        label.textColor = .zoocGray3
-        label.asColor(targetString: "(필수)", color: .zoocGray1)
+        label.textColor = .zoocGray1
         return label
     }()
     
     private lazy var watchOnwardTransferButton: UIButton = {
         let button = UIButton()
-        button.setTitle("약관 보기", for: .normal)
-        button.titleLabel?.asUnderLine("약관 보기")
-        button.setTitleColor(.zoocGray1, for: .normal)
-        button.titleLabel?.font = .zoocBody1
+        button.setImage(Image.next, for: .normal)
         button.addTarget(self,
                          action: #selector(watchButtonDidTap),
                          for: .touchUpInside)
@@ -74,17 +89,13 @@ final class OrderAgreementView: UIView {
         let label = UILabel()
         label.text = "(선택) 마케팅 정보 수신 동의"
         label.font = .zoocBody2
-        label.textColor = .zoocGray3
-        label.asColor(targetString: "(선택)", color: .zoocGray1)
+        label.textColor = .zoocGray1
         return label
     }()
     
     private lazy var watchPrivacyPolicyButton: UIButton = {
         let button = UIButton()
-        button.setTitle("약관 보기", for: .normal)
-        button.titleLabel?.asUnderLine("약관 보기")
-        button.setTitleColor(.zoocGray1, for: .normal)
-        button.titleLabel?.font = .zoocBody1
+        button.setImage(Image.next, for: .normal)
         button.addTarget(self,
                          action: #selector(watchButtonDidTap),
                          for: .touchUpInside)
@@ -115,7 +126,9 @@ final class OrderAgreementView: UIView {
     }
     
     private func hierarchy() {
-        addSubviews(onwardTransferCheckButton,
+        addSubviews(allPoliciesAgreemCheckButton,
+                    allPoliciesAgreemLabel,
+                    onwardTransferCheckButton,
                     onwardTransferLabel,
                     watchOnwardTransferButton,
                     privacyPolicyCheckButton,
@@ -124,9 +137,19 @@ final class OrderAgreementView: UIView {
     }
     
     private func layout() {
+        allPoliciesAgreemCheckButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().inset(20)
+            $0.size.equalTo(42)
+        }
+        
+        allPoliciesAgreemLabel.snp.makeConstraints {
+            $0.centerY.equalTo(allPoliciesAgreemCheckButton)
+            $0.leading.equalTo(allPoliciesAgreemCheckButton.snp.trailing)
+        }
         
         onwardTransferCheckButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(10)
+            $0.top.equalTo(allPoliciesAgreemCheckButton.snp.bottom)
             $0.leading.equalToSuperview().inset(20)
             $0.size.equalTo(42)
         }

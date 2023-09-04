@@ -57,7 +57,7 @@ final class OrderNewAddressView: UIView {
         textField.setPlaceholderColor(color: .zoocGray1)
         return textField
     }()
-
+    
     
     private let addressLabel: UILabel = {
         let label = UILabel()
@@ -67,7 +67,7 @@ final class OrderNewAddressView: UIView {
         return label
     }()
     
-    private let addressNameTextField: ZoocTextField = {
+    private let postNumberTextField: ZoocTextField = {
         let textField = ZoocTextField(.numberPad)
         textField.placeholder = "우편번호"
         textField.font = .zoocBody1
@@ -118,7 +118,7 @@ final class OrderNewAddressView: UIView {
         return textField
     }()
     
-    private lazy var registerBasicAddressCheckButton: UIButton = {
+    lazy var registerBasicAddressCheckButton: UIButton = {
         let button = UIButton()
         button.setImage(Image.checkBoxFill, for: .normal)
         button.setImage(Image.checkBox, for: .selected)
@@ -164,19 +164,19 @@ final class OrderNewAddressView: UIView {
     
     private func hierarchy() {
         
-        self.addSubviews(addressNameTextField,
-                                   receiverLabel,
-                                   receiverTextField,
-                                   phoneNumberLabel,
-                                   receiverPhoneNumberTextField,
-                                   addressLabel,
-                                   findAddressButton,
-                                   addressTextField,
-                                   detailAddressTextField,
-                                   registerBasicAddressCheckButton,
-                                   registerBasicAddressLabel,
-                                   requestLabel,
-                                   requestTextField)
+        self.addSubviews(postNumberTextField,
+                         receiverLabel,
+                         receiverTextField,
+                         phoneNumberLabel,
+                         receiverPhoneNumberTextField,
+                         addressLabel,
+                         findAddressButton,
+                         addressTextField,
+                         detailAddressTextField,
+                         registerBasicAddressCheckButton,
+                         registerBasicAddressLabel,
+                         requestLabel,
+                         requestTextField)
         
     }
     
@@ -203,7 +203,7 @@ final class OrderNewAddressView: UIView {
             $0.leading.equalToSuperview().inset(30)
         }
         
-        addressNameTextField.snp.makeConstraints {
+        postNumberTextField.snp.makeConstraints {
             $0.top.equalTo(receiverPhoneNumberTextField.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(97)
             $0.trailing.equalToSuperview().inset(134)
@@ -211,25 +211,25 @@ final class OrderNewAddressView: UIView {
         }
         
         addressLabel.snp.makeConstraints {
-            $0.centerY.equalTo(addressNameTextField)
+            $0.centerY.equalTo(postNumberTextField)
             $0.leading.equalToSuperview().inset(30)
         }
         
         findAddressButton.snp.makeConstraints {
-            $0.top.height.equalTo(addressNameTextField)
-            $0.leading.equalTo(addressNameTextField.snp.trailing).offset(12)
+            $0.top.height.equalTo(postNumberTextField)
+            $0.leading.equalTo(postNumberTextField.snp.trailing).offset(12)
             $0.trailing.equalToSuperview().inset(30)
         }
         
         addressTextField.snp.makeConstraints {
             $0.top.equalTo(findAddressButton.snp.bottom).offset(12)
-            $0.leading.height.equalTo(addressNameTextField)
+            $0.leading.height.equalTo(postNumberTextField)
             $0.trailing.equalToSuperview().inset(30)
         }
         
         detailAddressTextField.snp.makeConstraints {
             $0.top.equalTo(addressTextField.snp.bottom).offset(12)
-            $0.leading.height.equalTo(addressNameTextField)
+            $0.leading.height.equalTo(postNumberTextField)
             $0.trailing.equalToSuperview().inset(30)
         }
         
@@ -257,7 +257,7 @@ final class OrderNewAddressView: UIView {
     }
     
     private func setTag() {
-        addressNameTextField.tag = 0
+        postNumberTextField.tag = 0
         receiverTextField.tag = 1
         receiverPhoneNumberTextField.tag = 2
         detailAddressTextField.tag = 3
@@ -265,7 +265,7 @@ final class OrderNewAddressView: UIView {
     }
     
     private func setDelegate() {
-        addressNameTextField.zoocDelegate = self
+        postNumberTextField.zoocDelegate = self
         receiverTextField.zoocDelegate = self
         receiverPhoneNumberTextField.zoocDelegate = self
         detailAddressTextField.zoocDelegate = self
@@ -273,10 +273,10 @@ final class OrderNewAddressView: UIView {
     }
     
     func updateUI(_ data: OrderAddress, isPostData: Bool = false) {
-        addressNameTextField.text = data.addressName
+        postNumberTextField.text = data.addressName
         receiverTextField.text = data.receiverName
         receiverPhoneNumberTextField.text = data.receiverPhoneNumber
-        addressNameTextField.text = data.postCode
+        postNumberTextField.text = data.postCode
         addressTextField.text = data.address
         detailAddressTextField.text = data.detailAddress
         
@@ -288,16 +288,16 @@ final class OrderNewAddressView: UIView {
     }
     
     func checkValidity() throws {
-        addressNameTextField.updateInvalidUI()
+        postNumberTextField.updateInvalidUI()
         receiverTextField.updateInvalidUI()
         receiverPhoneNumberTextField.updateInvalidUI()
-        if !(addressNameTextField.text?.hasText ?? false) {
+        if !(postNumberTextField.text?.hasText ?? false) {
             addressLabel.textColor = .red
         } else {
             addressLabel.textColor = .zoocGray2
         }
         
-        guard addressNameTextField.hasText,
+        guard postNumberTextField.hasText,
               receiverTextField.hasText,
               receiverPhoneNumberTextField.hasText else {
             throw OrderInvalidError.addressInvlid
@@ -305,8 +305,8 @@ final class OrderNewAddressView: UIView {
     }
     
     @objc
-    private func checkButtonDidTap() {
-        print("기본배송지로 설정되었습니다!")
+    private func checkButtonDidTap(_ sender: UIButton) {
+        sender.isSelected.toggle()
     }
     
     @objc
@@ -335,7 +335,7 @@ extension OrderNewAddressView: ZoocTextFieldDelegate {
     }
     
     func zoocTextFieldDidEndEditing(_ textField: ZoocTextField) {
-        delegate?.textFieldDidEndEditing(addressName: addressNameTextField.text ?? "",
+        delegate?.textFieldDidEndEditing(addressName: postNumberTextField.text ?? "",
                                          receiverName: receiverTextField.text ?? "",
                                          receiverPhoneNumber: receiverPhoneNumberTextField.text ?? "",
                                          detailAddress: detailAddressTextField.hasText ? detailAddressTextField.text : nil,

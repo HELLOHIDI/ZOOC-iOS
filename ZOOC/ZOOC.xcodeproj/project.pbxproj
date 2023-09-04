@@ -281,6 +281,9 @@
 		D2D440142AA5C08200329F35 /* OrderNewAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D440132AA5C08200329F35 /* OrderNewAddressView.swift */; };
 		D2D440162AA5C88D00329F35 /* OrderBasicAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D440152AA5C88D00329F35 /* OrderBasicAddressView.swift */; };
 		D2D440182AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D440172AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift */; };
+		D2D4401A2AA5D02800329F35 /* OrderBasicAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D440192AA5D02800329F35 /* OrderBasicAddress.swift */; };
+		D2D4401D2AA5D08D00329F35 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = D2D4401C2AA5D08D00329F35 /* Realm */; };
+		D2D4401F2AA5D08D00329F35 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D2D4401E2AA5D08D00329F35 /* RealmSwift */; };
 		D2DC80D52A0DFDF600F48209 /* RecordRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC80D42A0DFDF600F48209 /* RecordRegisterView.swift */; };
 		D2DC80D72A0E158000F48209 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC80D62A0E158000F48209 /* RecordView.swift */; };
 		D2DD45C7297D9612001722A1 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DD45C6297D9612001722A1 /* BaseButton.swift */; };
@@ -565,6 +568,7 @@
 		D2D440132AA5C08200329F35 /* OrderNewAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderNewAddressView.swift; sourceTree = "<group>"; };
 		D2D440152AA5C88D00329F35 /* OrderBasicAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBasicAddressView.swift; sourceTree = "<group>"; };
 		D2D440172AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBasicAddressCollectionViewCell.swift; sourceTree = "<group>"; };
+		D2D440192AA5D02800329F35 /* OrderBasicAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBasicAddress.swift; sourceTree = "<group>"; };
 		D2D686BA299B59F400C290A8 /* ZOOC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZOOC.entitlements; sourceTree = "<group>"; };
 		D2DC80D42A0DFDF600F48209 /* RecordRegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRegisterView.swift; sourceTree = "<group>"; };
 		D2DC80D62A0E158000F48209 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
@@ -587,8 +591,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2D4401D2AA5D08D00329F35 /* Realm in Frameworks */,
 				8764833B29523C0100F74882 /* Kingfisher in Frameworks */,
 				8782C7DA296857A600C9324B /* KakaoSDKShare in Frameworks */,
+				D2D4401F2AA5D08D00329F35 /* RealmSwift in Frameworks */,
 				8781DE4829B20F61005ABF23 /* FirebaseMessaging in Frameworks */,
 				87809C302A8CE3930060641F /* FirebaseRemoteConfig in Frameworks */,
 				871EA35629706F4300D0E8CC /* Lottie in Frameworks */,
@@ -953,6 +959,7 @@
 				87F287FE2A9F83DC00A53218 /* WithoutBankbookStep.swift */,
 				87F288062A9FA86600A53218 /* BankAccount.swift */,
 				87F288082A9FC41F00A53218 /* Bank.swift */,
+				D2D440192AA5D02800329F35 /* OrderBasicAddress.swift */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -1701,6 +1708,8 @@
 				872367152A19062700DCBBFF /* Sentry */,
 				87809C2F2A8CE3930060641F /* FirebaseRemoteConfig */,
 				870A4BFB2AA268E900D7CFD8 /* FloatingPanel */,
+				D2D4401C2AA5D08D00329F35 /* Realm */,
+				D2D4401E2AA5D08D00329F35 /* RealmSwift */,
 			);
 			productName = ZOOC;
 			productReference = 87B6623D29521E7500B6FFA9 /* ZOOC-Dev.app */;
@@ -1740,6 +1749,7 @@
 				8781DE4629B20F61005ABF23 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				872367142A19062700DCBBFF /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				870A4BFA2AA268E900D7CFD8 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
+				D2D4401B2AA5D08D00329F35 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 87B6623E29521E7500B6FFA9 /* Products */;
 			projectDirPath = "";
@@ -1954,6 +1964,7 @@
 				87D5AF5629605C0100CA7F12 /* URLs.swift in Sources */,
 				870A4C102AA3749800D7CFD8 /* ProductOption.swift in Sources */,
 				D2C028EA2A7F7563003F4727 /* MyCoordinator.swift in Sources */,
+				D2D4401A2AA5D02800329F35 /* OrderBasicAddress.swift in Sources */,
 				D26C85E32968C88800AEAF9B /* OnboardingAgreementView.swift in Sources */,
 				87E462EE2A110867006FC35D /* ZoocGradinetButton.swift in Sources */,
 				871EA3462970109E00D0E8CC /* HomeArchiveListWriterCollectionViewCell.swift in Sources */,
@@ -2380,6 +2391,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		D2D4401B2AA5D08D00329F35 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2447,6 +2466,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 87A76AB4295F760C0096F669 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKUser;
+		};
+		D2D4401C2AA5D08D00329F35 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D2D4401B2AA5D08D00329F35 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		D2D4401E2AA5D08D00329F35 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D2D4401B2AA5D08D00329F35 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -7,6 +7,7 @@
 
 import UIKit
 
+import RealmSwift
 import SnapKit
 import Then
 
@@ -19,6 +20,8 @@ final class OrderViewController: BaseViewController {
     private let productData: OrderProduct
     private let priceData: OrderPrice
     private var agreementData = OrderAgreement()
+    
+    let basicAddressRealm = try! Realm()
     
     //MARK: - UI Components
     
@@ -190,6 +193,22 @@ final class OrderViewController: BaseViewController {
         priceView.updateUI(priceData)
     }
     
+    private func registerBasicAddress(_ data: OrderAddress) {
+        if addressView.newAddressView.registerBasicAddressCheckButton.isSelected == true {
+            let fullAddress = "(\(data.postCode)) \(data.addressName) + \(data.detailAddress ?? "")"
+            let basicAddress = OrderBasicAddress.init(
+                postCode: data.postCode,
+                name: data.receiverName,
+                address: fullAddress,
+                phoneNumber: data.receiverPhoneNumber
+            )
+            
+            try! basicAddressRealm.write {
+                basicAddressRealm.add(basicAddress)
+            }
+        }
+    }
+    
     //MARK: - Action Method
     
     @objc
@@ -209,6 +228,8 @@ final class OrderViewController: BaseViewController {
                             addressData,
                             productData,
                             priceData)
+            
+            registerBasicAddress(addressData)
             
         } catch OrderInvalidError.ordererInvalid {
             presentBottomAlert("구매자 정보를 입력해주세요.")
@@ -272,7 +293,6 @@ extension OrderViewController: OrderOrdererViewDelegate {
 //MARK: - OrderAddressViewDelegate
 
 extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDelegate {
-    
     func copyButtonDidTap() {
         view.endEditing(true)
         addressData.receiverName = ordererData.name

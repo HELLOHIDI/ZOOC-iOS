@@ -309,7 +309,12 @@ extension OrderViewController: OrderPaymentMethodViewDelegate {
 //MARK: - OrderAgreementViewDelegate
 
 extension OrderViewController: OrderAgreementViewDelegate {
-
+    func allPoliciesAgreemCheckButtonDidChange(allPoliciesAgree: Bool) {
+        agreementData.agreeWithOnwardTransfer = allPoliciesAgree
+        agreementData.agreeWithTermOfUse = allPoliciesAgree
+        agreementView.updateUI(agreementData)
+    }
+    
     func checkButtonDidChange(onwardTransfer: Bool, termOfUse: Bool) {
         agreementData.agreeWithOnwardTransfer = onwardTransfer
         agreementData.agreeWithTermOfUse = termOfUse

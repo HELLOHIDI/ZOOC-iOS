@@ -178,10 +178,12 @@ final class HomeViewController : BaseViewController {
                                          priceData: OrderPrice(productPrice: 29000,
                                                                deleiveryFee: 3000))
         
+        
         let shopVC = ShopViewController()
         
         shopVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(shopVC, animated: true)
+        orderVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(orderVC, animated: true)
     }
     
     private func pushToGenAIViewController() {

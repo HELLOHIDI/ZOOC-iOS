@@ -24,7 +24,7 @@ final class OrderAddressView: UIView {
     private let headerView = UIView()
     private let mainView = UIView()
     private let buttonView = UIView()
-    private let basicAddressView = UIView()
+    private let basicAddressView = OrderBasicAddressView()
     let newAddressView = OrderNewAddressView()
     
     private let titleLabel: UILabel = {

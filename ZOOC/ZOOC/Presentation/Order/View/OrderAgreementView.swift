@@ -188,6 +188,7 @@ final class OrderAgreementView: UIView {
     func updateUI(_ data: OrderAgreement) {
         onwardTransferCheckButton.isSelected = data.agreeWithOnwardTransfer
         privacyPolicyCheckButton.isSelected = data.agreeWithTermOfUse
+        allPoliciesAgreemCheckButton.isSelected = data.agreeWithOnwardTransfer && data.agreeWithTermOfUse
     }
     
     //MARK: - Public Methods

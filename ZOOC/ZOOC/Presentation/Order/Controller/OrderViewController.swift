@@ -318,6 +318,7 @@ extension OrderViewController: OrderAgreementViewDelegate {
     func checkButtonDidChange(onwardTransfer: Bool, termOfUse: Bool) {
         agreementData.agreeWithOnwardTransfer = onwardTransfer
         agreementData.agreeWithTermOfUse = termOfUse
+        agreementView.updateUI(agreementData)
     }
     
     func watchButtonDidTap(_ type: OrderAgreementView.Policy) {

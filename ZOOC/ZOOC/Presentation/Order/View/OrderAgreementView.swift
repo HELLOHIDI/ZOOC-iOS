@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 protocol OrderAgreementViewDelegate: AnyObject {
+    func allPoliciesAgreemCheckButtonDidChange(allPoliciesAgree: Bool)
     func checkButtonDidChange(onwardTransfer: Bool, termOfUse: Bool)
     func watchButtonDidTap(_ type: OrderAgreementView.Policy)
 }
@@ -33,7 +34,7 @@ final class OrderAgreementView: UIView {
         button.setImage(Image.checkBoxFill, for: .selected)
         button.setImage(Image.checkBoxRed, for: .highlighted)
         button.addTarget(self,
-                         action: #selector(checkButtonDidTap),
+                         action: #selector(allPoliciesAgreemCheckButtonDidTap),
                          for: .touchUpInside)
         return button
     }()
@@ -182,10 +183,12 @@ final class OrderAgreementView: UIView {
             $0.trailing.equalToSuperview().inset(30)
             $0.height.equalTo(30)
         }
-        
-        
-        
-        
+    }
+    
+    func updateUI(_ data: OrderAgreement) {
+        onwardTransferCheckButton.isSelected = data.agreeWithOnwardTransfer
+        privacyPolicyCheckButton.isSelected = data.agreeWithTermOfUse
+        allPoliciesAgreemCheckButton.isSelected = data.agreeWithOnwardTransfer && data.agreeWithTermOfUse
     }
     
     //MARK: - Public Methods
@@ -203,10 +206,19 @@ final class OrderAgreementView: UIView {
     //MARK: - Action Method
     
     @objc
+    private func allPoliciesAgreemCheckButtonDidTap(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        delegate?.allPoliciesAgreemCheckButtonDidChange(allPoliciesAgree: allPoliciesAgreemCheckButton.isSelected)
+    }
+    
+    
+    @objc
     private func checkButtonDidTap(_ sender: UIButton) {
         sender.isSelected.toggle()
-        delegate?.checkButtonDidChange(onwardTransfer: onwardTransferCheckButton.isSelected,
-                                       termOfUse: privacyPolicyCheckButton.isSelected)
+        delegate?.checkButtonDidChange(
+            onwardTransfer: onwardTransferCheckButton.isSelected,
+            termOfUse: privacyPolicyCheckButton.isSelected
+        )
     }
     
     @objc

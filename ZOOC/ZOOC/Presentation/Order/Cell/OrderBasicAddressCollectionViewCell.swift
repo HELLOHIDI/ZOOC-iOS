@@ -138,7 +138,9 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Public Methods
     
-    func dataBind() {
-        
+    func dataBind(_ data: OrderBasicAddress) {
+        nameLabel.text = data.name
+        basicAddressLabel.text = data.address
+        phoneNumLabel.text = data.phoneNumber
     }
 }

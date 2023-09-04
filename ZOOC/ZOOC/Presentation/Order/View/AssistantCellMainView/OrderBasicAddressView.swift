@@ -8,8 +8,19 @@
 import UIKit
 
 import SnapKit
+import RealmSwift
 
 final class OrderBasicAddressView: UIView {
+    
+    //MARK: - Properties
+    
+    private var basicAddressDatas: Results<OrderBasicAddress>?  {
+        didSet {
+            basicAddressCollectionView.reloadData()
+        }
+    }
+    
+    //MARK: - UI Components
     
     private let basicAddressCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -59,6 +70,10 @@ final class OrderBasicAddressView: UIView {
         basicAddressCollectionView.register(OrderBasicAddressCollectionViewCell.self,
                                        forCellWithReuseIdentifier: OrderBasicAddressCollectionViewCell.cellIdentifier)
     }
+    
+    func updateUI(_ data: Results<OrderBasicAddress>? = nil, isPostData: Bool = false) {
+        basicAddressDatas = data
+    }
 }
 
 extension OrderBasicAddressView: UICollectionViewDelegateFlowLayout {
@@ -73,13 +88,15 @@ extension OrderBasicAddressView: UICollectionViewDelegateFlowLayout {
 
 extension OrderBasicAddressView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
+        guard let basicAddressDatas = basicAddressDatas else { return 0}
+        return basicAddressDatas.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OrderBasicAddressCollectionViewCell.cellIdentifier, for: indexPath) as! OrderBasicAddressCollectionViewCell
         
-        //cell.dataBind(.withoutBankBook)
+        guard let basicAddressDatas = basicAddressDatas else { return UICollectionViewCell()}
+        cell.dataBind(basicAddressDatas[indexPath.item])
         return cell
     }
 }

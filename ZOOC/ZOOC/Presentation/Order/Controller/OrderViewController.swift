@@ -22,7 +22,8 @@ final class OrderViewController: BaseViewController {
     private var agreementData = OrderAgreement()
     
     let basicAddressRealm = try! Realm()
-    
+    var basicAddressResult: Results<OrderBasicAddress>!
+
     //MARK: - UI Components
     
     private let backButton = UIButton()
@@ -187,15 +188,17 @@ final class OrderViewController: BaseViewController {
     }
     
     private func updateUI() {
+        basicAddressResult = basicAddressRealm.objects(OrderBasicAddress.self)
+        
         ordererView.updateUI(ordererData)
-        addressView.updateUI(addressData)
+        addressView.updateUI(newAddressData: addressData, basicAddressDatas: basicAddressResult)
         productView.updateUI(productData)
         priceView.updateUI(priceData)
     }
     
     private func registerBasicAddress(_ data: OrderAddress) {
         if addressView.newAddressView.registerBasicAddressCheckButton.isSelected == true {
-            let fullAddress = "(\(data.postCode)) \(data.addressName) + \(data.detailAddress ?? "")"
+            let fullAddress = "(\(data.postCode)) \(data.address) \(data.detailAddress ?? "")"
             let basicAddress = OrderBasicAddress.init(
                 postCode: data.postCode,
                 name: data.receiverName,
@@ -205,7 +208,10 @@ final class OrderViewController: BaseViewController {
             
             try! basicAddressRealm.write {
                 basicAddressRealm.add(basicAddress)
+                print(basicAddress)
             }
+        } else {
+            print("로컬DB에 등록이 불가능합니다!")
         }
     }
     
@@ -224,10 +230,10 @@ final class OrderViewController: BaseViewController {
             try addressView.checkValidity()
             try agreementView.checkValidity()
             
-            requestOrderAPI(ordererData,
-                            addressData,
-                            productData,
-                            priceData)
+//            requestOrderAPI(ordererData,
+//                            addressData,
+//                            productData,
+//                            priceData)
             
             registerBasicAddress(addressData)
             
@@ -298,7 +304,7 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
         addressData.receiverName = ordererData.name
         addressData.receiverPhoneNumber = ordererData.phoneNumber
         
-        addressView.updateUI(addressData)
+        addressView.updateUI(newAddressData: addressData)
     }
     
     func findAddressButtonDidTap() {
@@ -366,7 +372,7 @@ extension OrderViewController: KakaoPostCodeViewControllerDelegate {
         addressData.address = roadAddress
         addressData.postCode = zoneCode
         
-        addressView.updateUI(addressData, isPostData: true)
+        addressView.updateUI(newAddressData: addressData, isPostData: true)
     }
     
 }

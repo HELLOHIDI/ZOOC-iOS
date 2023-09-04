@@ -8,6 +8,7 @@
 import UIKit
 
 import SnapKit
+import RealmSwift
 
 protocol OrderAddressViewDelegate: AnyObject {
     func copyButtonDidTap()
@@ -62,119 +63,6 @@ final class OrderAddressView: UIView {
         return button
     }()
     
-//    private let receiverLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "수령인"
-//        label.font = .zoocBody2
-//        label.textColor = .zoocGray2
-//        return label
-//    }()
-//
-//    private let receiverTextField: ZoocTextField = {
-//        let textField = ZoocTextField()
-//        textField.placeholder = "실명"
-//        textField.font = .zoocBody1
-//        textField.setPlaceholderColor(color: .zoocGray1)
-//        return textField
-//    }()
-//
-//    private let phoneNumberLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "연락처"
-//        label.font = .zoocBody2
-//        label.textColor = .zoocGray2
-//        return label
-//    }()
-//
-//    private let receiverPhoneNumberTextField: ZoocTextField = {
-//        let textField = ZoocTextField(.numberPad)
-//        textField.placeholder = "010 - 1234 - 5678"
-//        textField.font = .zoocBody1
-//        textField.setPlaceholderColor(color: .zoocGray1)
-//        return textField
-//    }()
-//
-//
-//    private let addressLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "배송지"
-//        label.font = .zoocBody2
-//        label.textColor = .zoocGray2
-//        return label
-//    }()
-//
-//    private let addressNameTextField: ZoocTextField = {
-//        let textField = ZoocTextField(.numberPad)
-//        textField.placeholder = "우편번호"
-//        textField.font = .zoocBody1
-//        textField.setPlaceholderColor(color: .zoocGray1)
-//        return textField
-//    }()
-//
-//    private lazy var findAddressButton: ZoocGradientButton = {
-//        let button = ZoocGradientButton.init(.order)
-//        button.setTitle("주소 검색", for: .normal)
-//        button.titleLabel?.font = UIFont(name: "Pretendard-SemiBold", size: 14)!
-//        button.addTarget(self,
-//                         action: #selector(findAddressButtonDidTap),
-//                         for: .touchUpInside)
-//        return button
-//    }()
-//
-//    private let addressTextField: ZoocTextField = {
-//        let textField = ZoocTextField(.default)
-//        textField.placeholder = "주소"
-//        textField.font = .zoocBody1
-//        textField.setPlaceholderColor(color: .zoocGray1)
-//        return textField
-//    }()
-//
-//    private let detailAddressTextField: ZoocTextField = {
-//        let textField = ZoocTextField(.default)
-//        textField.placeholder = "상세주소"
-//        textField.font = .zoocBody1
-//        textField.setPlaceholderColor(color: .zoocGray1)
-//        return textField
-//    }()
-//
-//
-//    private let requestLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "요청사항"
-//        label.font = .zoocBody2
-//        label.textColor = .zoocGray2
-//        return label
-//    }()
-//
-//    private let requestTextField: ZoocTextField = {
-//        let textField = ZoocTextField(.numberPad)
-//        textField.placeholder = "부재 시 경비실에 맡겨주세요"
-//        textField.font = .zoocBody1
-//        textField.setPlaceholderColor(color: .zoocGray1)
-//        return textField
-//    }()
-//
-//    private lazy var registerBasicAddressCheckButton: UIButton = {
-//        let button = UIButton()
-//        button.setImage(Image.checkBoxFill, for: .normal)
-//        button.setImage(Image.checkBox, for: .selected)
-//        button.setImage(Image.checkBoxRed, for: .highlighted)
-//        button.addTarget(self,
-//                         action: #selector(checkButtonDidTap),
-//                         for: .touchUpInside)
-//        return button
-//    }()
-//
-//    private let registerBasicAddressLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "기존 배송지로 등록"
-//        label.font = .zoocBody1
-//        label.textAlignment = .left
-//        label.textColor = .zoocGray2
-//        return label
-//    }()
-    
-    
     //MARK: - Life Cycle
     
     override init(frame: CGRect) {
@@ -183,8 +71,6 @@ final class OrderAddressView: UIView {
         style()
         hierarchy()
         layout()
-//        setDelegate()
-//        setTag()
     }
     
     required init?(coder: NSCoder) {
@@ -265,87 +151,15 @@ final class OrderAddressView: UIView {
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
-        
-//        receiverTextField.snp.makeConstraints {
-//            $0.top.equalToSuperview()
-//            $0.leading.equalToSuperview().inset(97)
-//            $0.trailing.equalToSuperview().inset(30)
-//            $0.height.equalTo(40)
-//        }
-//
-//        receiverLabel.snp.makeConstraints {
-//            $0.centerY.equalTo(receiverTextField)
-//            $0.leading.equalToSuperview().inset(30)
-//        }
-//
-//        receiverPhoneNumberTextField.snp.makeConstraints {
-//            $0.top.equalTo(receiverTextField.snp.bottom).offset(12)
-//            $0.leading.trailing.height.equalTo(receiverTextField)
-//        }
-//
-//        phoneNumberLabel.snp.makeConstraints {
-//            $0.centerY.equalTo(receiverPhoneNumberTextField)
-//            $0.leading.equalToSuperview().inset(30)
-//        }
-//
-//        addressNameTextField.snp.makeConstraints {
-//            $0.top.equalTo(receiverPhoneNumberTextField.snp.bottom).offset(10)
-//            $0.leading.equalToSuperview().offset(97)
-//            $0.trailing.equalToSuperview().inset(134)
-//            $0.height.equalTo(41)
-//        }
-//
-//        addressLabel.snp.makeConstraints {
-//            $0.centerY.equalTo(addressNameTextField)
-//            $0.leading.equalToSuperview().inset(30)
-//        }
-//
-//        findAddressButton.snp.makeConstraints {
-//            $0.top.height.equalTo(addressNameTextField)
-//            $0.leading.equalTo(addressNameTextField.snp.trailing).offset(12)
-//            $0.trailing.equalToSuperview().inset(30)
-//        }
-//
-//        addressTextField.snp.makeConstraints {
-//            $0.top.equalTo(findAddressButton.snp.bottom).offset(12)
-//            $0.leading.height.equalTo(addressNameTextField)
-//            $0.trailing.equalToSuperview().inset(30)
-//        }
-//
-//        detailAddressTextField.snp.makeConstraints {
-//            $0.top.equalTo(addressTextField.snp.bottom).offset(12)
-//            $0.leading.height.equalTo(addressNameTextField)
-//            $0.trailing.equalToSuperview().inset(30)
-//        }
-//
-//        registerBasicAddressCheckButton.snp.makeConstraints {
-//            $0.top.equalTo(detailAddressTextField.snp.bottom).offset(13)
-//            $0.leading.equalToSuperview().offset(97)
-//            $0.size.equalTo(20)
-//        }
-//
-//        registerBasicAddressLabel.snp.makeConstraints {
-//            $0.centerY.equalTo(registerBasicAddressCheckButton)
-//            $0.leading.equalTo(registerBasicAddressCheckButton.snp.trailing).offset(10)
-//        }
-//
-//        requestLabel.snp.makeConstraints {
-//            $0.centerY.equalTo(requestTextField)
-//            $0.leading.equalToSuperview().inset(30)
-//        }
-//
-//        requestTextField.snp.makeConstraints {
-//            $0.top.equalTo(registerBasicAddressCheckButton.snp.bottom).offset(12)
-//            $0.leading.trailing.height.equalTo(addressTextField)
-//            $0.bottom.equalToSuperview().inset(20)
-//        }
     }
     
     //MARK: - Public Methods
     
-    func updateUI(_ data: OrderAddress, isPostData: Bool = false) {
-        newAddressView.updateUI(data)
-        
+    func updateUI(newAddressData: OrderAddress,
+                  basicAddressDatas: Results<OrderBasicAddress>? = nil,
+                  isPostData: Bool = false) {
+        basicAddressView.updateUI(basicAddressDatas)
+        newAddressView.updateUI(newAddressData)
     }
     
     func checkValidity() throws {
@@ -357,7 +171,6 @@ final class OrderAddressView: UIView {
     @objc
     private func copyButtonDidTap() {
         delegate?.copyButtonDidTap()
-//        newAddressView.addressNameTextField.becomeFirstResponder()
     }
     
     @objc

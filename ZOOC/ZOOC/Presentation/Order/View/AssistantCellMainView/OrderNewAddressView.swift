@@ -120,8 +120,9 @@ final class OrderNewAddressView: UIView {
     
     lazy var registerBasicAddressCheckButton: UIButton = {
         let button = UIButton()
-        button.setImage(Image.checkBoxFill, for: .normal)
-        button.setImage(Image.checkBox, for: .selected)
+        button.isSelected = true
+        button.setImage(Image.checkBox, for: .normal)
+        button.setImage(Image.checkBoxFill, for: .selected)
         button.setImage(Image.checkBoxRed, for: .highlighted)
         button.addTarget(self,
                          action: #selector(checkButtonDidTap),
@@ -148,6 +149,7 @@ final class OrderNewAddressView: UIView {
         hierarchy()
         layout()
         setTag()
+        setDelegate()
     }
     
     required init?(coder: NSCoder) {
@@ -268,6 +270,7 @@ final class OrderNewAddressView: UIView {
         postNumberTextField.zoocDelegate = self
         receiverTextField.zoocDelegate = self
         receiverPhoneNumberTextField.zoocDelegate = self
+        addressTextField.zoocDelegate = self
         detailAddressTextField.zoocDelegate = self
         requestTextField.zoocDelegate = self
     }

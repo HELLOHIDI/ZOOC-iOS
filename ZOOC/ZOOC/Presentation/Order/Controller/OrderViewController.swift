@@ -178,6 +178,7 @@ final class OrderViewController: BaseViewController {
     private func setDelegate(){
         ordererView.delegate = self
         addressView.delegate = self
+        addressView.newAddressView.delegate = self
         paymentMethodView.delegate = self
         agreementView.delegate = self
     }
@@ -270,7 +271,7 @@ extension OrderViewController: OrderOrdererViewDelegate {
 
 //MARK: - OrderAddressViewDelegate
 
-extension OrderViewController: OrderAddressViewDelegate {
+extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDelegate {
     
     func copyButtonDidTap() {
         view.endEditing(true)

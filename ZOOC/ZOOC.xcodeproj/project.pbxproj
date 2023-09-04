@@ -278,6 +278,7 @@
 		D2C028F22A81F8B2003F4727 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C028F12A81F8B2003F4727 /* String+.swift */; };
 		D2C028F42A8246C1003F4727 /* MyEditPetProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C028F32A8246C1003F4727 /* MyEditPetProfileViewModel.swift */; };
 		D2C028F62A82BEAD003F4727 /* OnboardingChooseRoleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C028F52A82BEAD003F4727 /* OnboardingChooseRoleViewModel.swift */; };
+		D2D440142AA5C08200329F35 /* OrderNewAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D440132AA5C08200329F35 /* OrderNewAddressView.swift */; };
 		D2DC80D52A0DFDF600F48209 /* RecordRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC80D42A0DFDF600F48209 /* RecordRegisterView.swift */; };
 		D2DC80D72A0E158000F48209 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC80D62A0E158000F48209 /* RecordView.swift */; };
 		D2DD45C7297D9612001722A1 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DD45C6297D9612001722A1 /* BaseButton.swift */; };
@@ -559,6 +560,7 @@
 		D2C028F12A81F8B2003F4727 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		D2C028F32A8246C1003F4727 /* MyEditPetProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditPetProfileViewModel.swift; sourceTree = "<group>"; };
 		D2C028F52A82BEAD003F4727 /* OnboardingChooseRoleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingChooseRoleViewModel.swift; sourceTree = "<group>"; };
+		D2D440132AA5C08200329F35 /* OrderNewAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderNewAddressView.swift; sourceTree = "<group>"; };
 		D2D686BA299B59F400C290A8 /* ZOOC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZOOC.entitlements; sourceTree = "<group>"; };
 		D2DC80D42A0DFDF600F48209 /* RecordRegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRegisterView.swift; sourceTree = "<group>"; };
 		D2DC80D62A0E158000F48209 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
@@ -1481,6 +1483,7 @@
 				87F288002A9FA67E00A53218 /* OrderAssistantCopyView.swift */,
 				87F288022A9FA68A00A53218 /* OrderAssistantDepositView.swift */,
 				87F288042A9FA69200A53218 /* OrderAssistantCompleteView.swift */,
+				D2D440132AA5C08200329F35 /* OrderNewAddressView.swift */,
 			);
 			path = AssistantCellMainView;
 			sourceTree = "<group>";
@@ -1893,6 +1896,7 @@
 				8731C4B029A93EF500006743 /* EmojiModel.swift in Sources */,
 				D24AFAB22A8DFB9F00823E9C /* GenAIChoosePetViewController.swift in Sources */,
 				D2DD45C7297D9612001722A1 /* BaseButton.swift in Sources */,
+				D2D440142AA5C08200329F35 /* OrderNewAddressView.swift in Sources */,
 				D27BDDC72A8C6FA2008E290D /* GenAICompletedViewController.swift in Sources */,
 				871EA351297042D800D0E8CC /* RecordResult.swift in Sources */,
 				D25323162A07330C00562D92 /* MyAppInformationHeaderView.swift in Sources */,

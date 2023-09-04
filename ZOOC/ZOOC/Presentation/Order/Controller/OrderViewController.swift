@@ -18,7 +18,7 @@ final class OrderViewController: BaseViewController {
     private var ordererData = OrderOrderer()
     private var addressData = OrderAddress()
     
-    private var deliveryFee = 0 {
+    private var deliveryFee = 4000 {
         didSet {
             priceView.updateUI(selectedProductData, deliveryFee: deliveryFee)
         }
@@ -376,7 +376,6 @@ extension OrderViewController {
                     DispatchQueue.main.async {
                         self?.deliveryFee = Int(truncating: remoteConfig["deliveryFee"].numberValue)
                     }
-                    
                 }
             } else {
                 return

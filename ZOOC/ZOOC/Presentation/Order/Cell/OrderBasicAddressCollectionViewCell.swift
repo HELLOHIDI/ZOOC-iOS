@@ -22,7 +22,7 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Pretendard-Medium", size: 22)!
+        label.font = UIFont(name: "Pretendard-Medium", size: 18)!
         label.textColor = .zoocGray3
         return label
     }()
@@ -31,6 +31,7 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .zoocGray3
         label.setLineSpacing(spacing: 6)
+        label.font = UIFont(name: "Pretendard-Regular", size: 16)!
         label.numberOfLines = 2
         return label
     }()
@@ -38,6 +39,7 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
     private let phoneNumLabel: UILabel = {
         let label = UILabel()
         label.textColor = .zoocGray3
+        label.font = UIFont(name: "Pretendard-Regular", size: 16)!
         return label
     }()
     
@@ -97,7 +99,7 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         
         nameLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalTo(basicAddressLabel.snp.trailing).offset(12)
+            $0.leading.equalTo(basicAddressCheckButton.snp.trailing).offset(12)
         }
         
         basicAddressLabel.snp.makeConstraints {
@@ -140,7 +142,7 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
     
     func dataBind(_ data: OrderBasicAddress) {
         nameLabel.text = data.name
-        basicAddressLabel.text = data.address
+        basicAddressLabel.text = "\(data.address) \n\(data.detailAddress ?? "")"
         phoneNumLabel.text = data.phoneNumber
     }
 }

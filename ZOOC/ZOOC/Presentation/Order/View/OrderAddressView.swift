@@ -158,8 +158,17 @@ final class OrderAddressView: UIView {
     func updateUI(newAddressData: OrderAddress,
                   basicAddressDatas: Results<OrderBasicAddress>? = nil,
                   isPostData: Bool = false) {
+        
+        if basicAddressDatas != nil { updateButtonState(true) }
+        else { updateButtonState(false) }
+        
         basicAddressView.updateUI(basicAddressDatas)
         newAddressView.updateUI(newAddressData)
+    }
+    
+    func updateButtonState(_ hasBasicAddress: Bool) {
+        basicAddressButton.isSelected = hasBasicAddress
+        newAddressButton.isSelected = !hasBasicAddress
     }
     
     func checkValidity() throws {
@@ -178,6 +187,8 @@ final class OrderAddressView: UIView {
         copyButton.isHidden = true
         basicAddressView.isHidden = false
         newAddressView.isHidden = true
+        basicAddressButton.updateUI(isTapped: true)
+        newAddressButton.updateUI(isTapped: false)
     }
     
     @objc
@@ -185,6 +196,8 @@ final class OrderAddressView: UIView {
         copyButton.isHidden = false
         basicAddressView.isHidden = true
         newAddressView.isHidden = false
+        basicAddressButton.updateUI(isTapped: false)
+        newAddressButton.updateUI(isTapped: true)
     }
 }
 

@@ -100,8 +100,6 @@ final class OrderViewController: BaseViewController {
                          action: #selector(orderButtonDidTap),
                          for: .touchUpInside)
         }
-        
-        
     }
     
     private func hierarchy() {
@@ -198,11 +196,12 @@ final class OrderViewController: BaseViewController {
     
     private func registerBasicAddress(_ data: OrderAddress) {
         if addressView.newAddressView.registerBasicAddressCheckButton.isSelected == true {
-            let fullAddress = "(\(data.postCode)) \(data.address) \(data.detailAddress ?? "")"
+            let fullAddress = "(\(data.postCode)) \(data.address)"
             let basicAddress = OrderBasicAddress.init(
                 postCode: data.postCode,
                 name: data.receiverName,
                 address: fullAddress,
+                detailAddress: data.detailAddress,
                 phoneNumber: data.receiverPhoneNumber
             )
             

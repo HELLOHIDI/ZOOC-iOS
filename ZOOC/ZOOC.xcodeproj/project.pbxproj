@@ -284,6 +284,7 @@
 		D2D4401A2AA5D02800329F35 /* OrderBasicAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D440192AA5D02800329F35 /* OrderBasicAddress.swift */; };
 		D2D4401D2AA5D08D00329F35 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = D2D4401C2AA5D08D00329F35 /* Realm */; };
 		D2D4401F2AA5D08D00329F35 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D2D4401E2AA5D08D00329F35 /* RealmSwift */; };
+		D2D440212AA5F2C300329F35 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D2D440202AA5F2C200329F35 /* Pretendard-Regular.otf */; };
 		D2DC80D52A0DFDF600F48209 /* RecordRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC80D42A0DFDF600F48209 /* RecordRegisterView.swift */; };
 		D2DC80D72A0E158000F48209 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC80D62A0E158000F48209 /* RecordView.swift */; };
 		D2DD45C7297D9612001722A1 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DD45C6297D9612001722A1 /* BaseButton.swift */; };
@@ -569,6 +570,7 @@
 		D2D440152AA5C88D00329F35 /* OrderBasicAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBasicAddressView.swift; sourceTree = "<group>"; };
 		D2D440172AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBasicAddressCollectionViewCell.swift; sourceTree = "<group>"; };
 		D2D440192AA5D02800329F35 /* OrderBasicAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBasicAddress.swift; sourceTree = "<group>"; };
+		D2D440202AA5F2C200329F35 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		D2D686BA299B59F400C290A8 /* ZOOC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZOOC.entitlements; sourceTree = "<group>"; };
 		D2DC80D42A0DFDF600F48209 /* RecordRegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRegisterView.swift; sourceTree = "<group>"; };
 		D2DC80D62A0E158000F48209 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
@@ -1315,6 +1317,7 @@
 			children = (
 				877BAFC1295EEA6900C2AA1C /* Pretendard-SemiBold.otf */,
 				877BAFC3295EEA7700C2AA1C /* Pretendard-Medium.otf */,
+				D2D440202AA5F2C200329F35 /* Pretendard-Regular.otf */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -1772,6 +1775,7 @@
 				877BAFC4295EEA7700C2AA1C /* Pretendard-Medium.otf in Resources */,
 				871EA359297078C900D0E8CC /* loading.json in Resources */,
 				87DC47F52A7B7D55007823CB /* Debug-GoogleService-Info.plist in Resources */,
+				D2D440212AA5F2C300329F35 /* Pretendard-Regular.otf in Resources */,
 				87DC47F42A7B7D53007823CB /* Release-GoogleService-Info.plist in Resources */,
 				87DC47822A545A1C007823CB /* noise.png in Resources */,
 			);

@@ -33,14 +33,12 @@ final class ZoocGradientButton: UIButton {
     
     override var isEnabled: Bool {
         didSet {
-            if isEnabled {
-                gradientColors = [activeColorTop, activeColorBottom]
-            } else {
-                gradientColors = [inActiveColor, inActiveColor]
-            }
+            if isEnabled { gradientColors = [activeColorTop, activeColorBottom] }
+            else { gradientColors = [inActiveColor, inActiveColor] }
         }
     }
     
+    var unSelectedColor: CGColor = .zoocBackgroundGreen
     var inActiveColor: CGColor = .zoocGray1
     var activeColorTop: CGColor = .zoocGradientGreenFirst
     var activeColorBottom: CGColor = .zoocGradientGreenLast
@@ -57,7 +55,7 @@ final class ZoocGradientButton: UIButton {
     
     
     //MARK: - Life Cycle
-
+    
     override init(frame: CGRect) {
         self.gradientColors = [activeColorTop, activeColorBottom]
         
@@ -84,23 +82,27 @@ final class ZoocGradientButton: UIButton {
     //MARK: - Custom Method
     
     private func style() {
-        setTitleColor(.zoocWhite1, for: .normal)
         titleLabel?.font = .zoocSubhead1
         titleLabel?.textAlignment = .center
+        titleLabel?.textColor = .zoocWhite1
+        
+        
     }
     
+    
+    
     private func configureLayers(_ rect: CGRect) {
-          if shadowLayer == nil {
-              let shadowLayer = CALayer()
-              shadowLayer.applySketchShadow(color: .init(r: 23, g: 143, b: 66),
-                                            alpha: 0.2,
-                                            x: 5,
-                                            y: 5,
-                                            blur: 18,
-                                            spread: 0)
-              layer.insertSublayer(shadowLayer, at: 0)
-              self.shadowLayer = shadowLayer
-          }
+        if shadowLayer == nil {
+            let shadowLayer = CALayer()
+            shadowLayer.applySketchShadow(color: .init(r: 23, g: 143, b: 66),
+                                          alpha: 0.2,
+                                          x: 5,
+                                          y: 5,
+                                          blur: 18,
+                                          spread: 0)
+            layer.insertSublayer(shadowLayer, at: 0)
+            self.shadowLayer = shadowLayer
+        }
         
         if gradientLayer == nil {
             let layer = CAGradientLayer()
@@ -114,5 +116,20 @@ final class ZoocGradientButton: UIButton {
             self.layer.insertSublayer(layer, at: 1)
             self.gradientLayer = layer
         }
-      }
+    }
+    
+    func updateUI(isTapped: Bool) {
+        if isTapped {
+            gradientColors = [activeColorTop, activeColorBottom]
+            titleLabel?.font = .zoocSubhead1
+            titleLabel?.textAlignment = .center
+            titleLabel?.textColor = .zoocWhite1
+            setBorder(borderWidth: 0, borderColor: .zoocMainGreen)
+        } else {
+            gradientColors = [unSelectedColor, unSelectedColor]
+            titleLabel?.textColor = .zoocMainGreen
+            makeCornerRound(radius: 8)
+            setBorder(borderWidth: 1, borderColor: .zoocMainGreen)
+        }
+    }
 }

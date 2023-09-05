@@ -29,7 +29,7 @@ final class OrderBasicAddressView: UIView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.isScrollEnabled = false
+        collectionView.isScrollEnabled = true
         return collectionView
     }()
     
@@ -97,6 +97,7 @@ extension OrderBasicAddressView: UICollectionViewDataSource {
         
         guard let basicAddressDatas = basicAddressDatas else { return UICollectionViewCell()}
         cell.dataBind(basicAddressDatas[indexPath.item])
+        
         return cell
     }
 }

@@ -151,12 +151,12 @@ final class ProductSelectedOptionCollectionViewCell: UICollectionViewCell {
     }
     
     func dataBind(indexPath: IndexPath,
-                  selectedOption: ProductSelectedOption) {
+                  selectedOption: SelectedProductOption) {
         self.indexPath = indexPath
         
-        optionLabel.text = selectedOption.option
+        optionLabel.text = selectedOption.name
         amountLabel.text = String(selectedOption.amount)
-        priceLabel.text = selectedOption.totalPrice.priceText
+        priceLabel.text = selectedOption.productsPrice.priceText
     }
     
     //MARK: - Action Method

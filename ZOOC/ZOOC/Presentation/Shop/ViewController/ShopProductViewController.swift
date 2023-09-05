@@ -18,6 +18,7 @@ final class ShopProductViewController: BaseViewController {
     private var productData: ProductDetailResult? {
         didSet{
             updateUI()
+            productBottomSheet.dataBind(productData)
         }
     }
     
@@ -288,23 +289,12 @@ final class ShopProductViewController: BaseViewController {
 }
 
 extension ShopProductViewController: ProductBottomSheetDelegate {
-    func cartButtonDidTap(selectedOptions: [ProductSelectedOption]) {
+    func cartButtonDidTap(selectedOptions: [SelectedProductOption]) {
         presentBottomAlert("장바구니 기능 구현해야함!!!")
     }
     
-    func orderButtonDidTap(selectedOptions: [ProductSelectedOption]) {
-        
-        //TODO: - Data 부분 뜯어고쳐야함!!!!!
-        let productData = OrderProduct(id: selectedOptions[0].id,
-                                       imageURL: "https://zooc-bucket.s3.ap-northeast-2.amazonaws.com/images%2F1691081953053_image.jpeg",
-                                       name: selectedOptions[0].option,
-                                       price: selectedOptions[0].totalPrice)
-        
-        let priceData = OrderPrice(productPrice: selectedOptions[0].totalPrice,
-                                   deleiveryFee: 4000)
-        
-        let orderVC = OrderViewController(productData: productData,
-                                          priceData: priceData)
+    func orderButtonDidTap(selectedOptions: [SelectedProductOption]) {
+        let orderVC = OrderViewController(selectedProduct: selectedOptions)
         navigationController?.pushViewController(orderVC, animated: true)
     }
     

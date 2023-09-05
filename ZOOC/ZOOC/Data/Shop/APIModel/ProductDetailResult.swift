@@ -16,12 +16,3 @@ struct ProductDetailResult: Codable {
     let optionCategories: [OptionCategoriesResult]
 }
 
-struct OptionCategoriesResult: Codable {
-    let name: String
-    let options: [OptionResult]
-}
-
-struct OptionResult: Codable {
-    let id: Int
-    let name: String
-}

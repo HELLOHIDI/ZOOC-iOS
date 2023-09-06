@@ -1,34 +1,58 @@
 //
-//  ProductOptionSelectedCollectionViewCell.swift
+//  ShopCartCollectionViewCell.swift
 //  ZOOC
 //
-//  Created by 장석우 on 2023/09/02.
+//  Created by 장석우 on 2023/09/07.
 //
 
 import UIKit
 
 import SnapKit
+import Then
 
-protocol ProductSelectedOptionCollectionViewCellDelegate: AnyObject {
+
+protocol ShopCartCollectionViewCellDelegate: AnyObject {
     func adjustAmountButtonDidTap(row: Int, isPlus: Bool)
     func xButtonDidTap(row: Int)
 }
 
-final class ProductSelectedOptionCollectionViewCell: UICollectionViewCell {
+final class ShopCartCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Properties
     
-    weak var delegate: ProductSelectedOptionCollectionViewCellDelegate?
+    weak var delegate: ShopCartCollectionViewCellDelegate?
     
     private var indexPath: IndexPath?
     
     //MARK: - UI Components
     
-    let optionLabel: UILabel = {
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.setBorder(borderWidth: 1, borderColor: .lightGray)
+        imageView.makeCornerRound(radius: 6)
+        return imageView
+    }()
+    
+    private let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "아이폰 13 플러스"
-        label.font = .zoocBody3
-        label.textColor = .zoocDarkGray1
+        label.font = .zoocFont(font: .semiBold, size: 16)
+        label.textColor = .zoocGray3
+        return label
+    }()
+    
+    private let priceLabel: UILabel = {
+        let label = UILabel()
+        label.text = 0.priceText
+        label.font = .zoocFont(font: .semiBold, size: 20)
+        label.textColor = .zoocDarkGray2
+        return label
+    }()
+    
+    private let optionLabel: UILabel = {
+        let label = UILabel()
+        label.font = .zoocFont(font: .medium, size: 14)
+        label.textColor = .zoocGray2
         return label
     }()
     
@@ -52,8 +76,7 @@ final class ProductSelectedOptionCollectionViewCell: UICollectionViewCell {
     
     private let amountLabel: UILabel = {
         let label = UILabel()
-        label.text = "1"
-        label.font = .zoocBody3
+        label.font = .zoocFont(font: .medium, size: 20)
         label.textColor = .zoocDarkGray2
         label.textAlignment = .center
         return label
@@ -73,17 +96,10 @@ final class ProductSelectedOptionCollectionViewCell: UICollectionViewCell {
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         stackView.alignment = .fill
-        stackView.spacing = 5
+        stackView.spacing = 8
         return stackView
     }()
-    
-    private let priceLabel: UILabel = {
-        let label = UILabel()
-        label.text = 999.priceText
-        label.font = .zoocBody3
-        label.textColor = .zoocDarkGray2
-        return label
-    }()
+ 
     
     //MARK: - Life Cycle
     
@@ -103,15 +119,16 @@ final class ProductSelectedOptionCollectionViewCell: UICollectionViewCell {
     //MARK: - Custom Method
     
     private func style() {
-        contentView.makeCornerRound(radius: 4)
         contentView.backgroundColor = .zoocBackgroundGreen
     }
     
     private func hierarchy() {
-        contentView.addSubviews(optionLabel,
+        contentView.addSubviews(imageView,
+                                nameLabel,
+                                priceLabel,
+                                optionLabel,
                                 xButton,
-                                hStackView,
-                                priceLabel)
+                                hStackView)
         
         hStackView.addArrangedSubViews(minusButton,
                                        amountLabel,
@@ -119,33 +136,46 @@ final class ProductSelectedOptionCollectionViewCell: UICollectionViewCell {
     }
     
     private func layout() {
+        
+        imageView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.size.equalTo(90)
+        }
+        
+        nameLabel.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalTo(imageView.snp.trailing).offset(16)
+            
+        }
+        
+        priceLabel.snp.makeConstraints {
+            $0.top.equalTo(nameLabel.snp.bottom).offset(6)
+            $0.leading.equalTo(nameLabel)
+        }
+        
         optionLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(15)
-            $0.leading.equalToSuperview().inset(10)
+            $0.bottom.equalToSuperview()
+            $0.leading.equalTo(nameLabel)
         }
         
         xButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(10)
-            $0.trailing.equalToSuperview().inset(10)
+            $0.top.equalToSuperview()
+            $0.trailing.equalToSuperview()
             $0.size.equalTo(27)
         }
         
         hStackView.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(10)
-            $0.leading.equalToSuperview().inset(10)
-        }
-        
-        priceLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(10)
-            $0.trailing.equalToSuperview().inset(10)
+            $0.bottom.equalToSuperview()
+            $0.trailing.equalToSuperview()
         }
         
         minusButton.snp.makeConstraints {
-            $0.size.equalTo(20)
+            $0.size.equalTo(24)
         }
         
         plusButton.snp.makeConstraints {
-            $0.size.equalTo(20)
+            $0.size.equalTo(24)
         }
         
     }
@@ -154,6 +184,8 @@ final class ProductSelectedOptionCollectionViewCell: UICollectionViewCell {
                   selectedOption: SelectedProductOption) {
         self.indexPath = indexPath
         
+        imageView.kfSetImage(url: selectedOption.image)
+        nameLabel.text = selectedOption.name
         optionLabel.text = selectedOption.option
         amountLabel.text = String(selectedOption.amount)
         priceLabel.text = selectedOption.productsPrice.priceText

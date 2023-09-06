@@ -171,7 +171,7 @@ final class OrderProductView: UIView {
         //TODO: - data 배열을 사용하여 CollectionView 만들어야함!!
         
         productImageView.kfSetImage(url: data[0].image)
-        productNameLabel.text = data[0].name
+        productNameLabel.text = data[0].option
         priceLabel.text = data[0].price.priceText
     }
     

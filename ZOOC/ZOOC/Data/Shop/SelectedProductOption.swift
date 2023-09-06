@@ -10,6 +10,7 @@ import Foundation
 struct SelectedProductOption {
     let id: Int
     let name: String
+    let option: String
     let image: String
     let price: Int
     
@@ -26,12 +27,14 @@ struct SelectedProductOption {
     
     init(id: Int,
          name: String,
+         option: String,
          image: String,
          price: Int,
          amount: Int = 1) {
         
         self.id = id
         self.name = name
+        self.option = option
         self.image = image
         self.price = price
         self.amount = amount

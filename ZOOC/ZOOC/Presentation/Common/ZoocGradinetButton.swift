@@ -84,9 +84,7 @@ final class ZoocGradientButton: UIButton {
     private func style() {
         titleLabel?.font = .zoocSubhead1
         titleLabel?.textAlignment = .center
-        titleLabel?.textColor = .zoocWhite1
-        
-        
+        titleLabel?.textColor = .zoocMainGreen
     }
     
     
@@ -118,18 +116,17 @@ final class ZoocGradientButton: UIButton {
         }
     }
     
-    func updateUI(isTapped: Bool) {
+    func updateButtonUI(_ isTapped: Bool) {
         if isTapped {
-            gradientColors = [activeColorTop, activeColorBottom]
-            titleLabel?.font = .zoocSubhead1
-            titleLabel?.textAlignment = .center
-            titleLabel?.textColor = .zoocWhite1
             setBorder(borderWidth: 0, borderColor: .zoocMainGreen)
-        } else {
-            gradientColors = [unSelectedColor, unSelectedColor]
-            titleLabel?.textColor = .zoocMainGreen
             makeCornerRound(radius: 8)
+            gradientColors = [activeColorTop, activeColorBottom]
+            setTitleColor(.zoocWhite1, for: .normal)
+        } else {
             setBorder(borderWidth: 1, borderColor: .zoocMainGreen)
+            makeCornerRound(radius: 8)
+            gradientColors = [unSelectedColor, unSelectedColor]
+            setTitleColor(.zoocMainGreen, for: .normal)
         }
     }
 }

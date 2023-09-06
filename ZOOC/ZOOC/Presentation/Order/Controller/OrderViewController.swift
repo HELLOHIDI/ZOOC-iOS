@@ -202,7 +202,8 @@ final class OrderViewController: BaseViewController {
                 name: data.receiverName,
                 address: fullAddress,
                 detailAddress: data.detailAddress,
-                phoneNumber: data.receiverPhoneNumber
+                phoneNumber: data.receiverPhoneNumber,
+                isSelected: false
             )
             
             try! basicAddressRealm.write {

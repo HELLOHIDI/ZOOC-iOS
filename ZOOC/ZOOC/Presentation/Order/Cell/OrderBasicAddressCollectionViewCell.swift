@@ -9,7 +9,17 @@ import UIKit
 
 import SnapKit
 
+protocol OrderBasicAddressCollectionViewCellDelegate: AnyObject {
+    func basicAddressCheckButtonDidTap(tag: Int)
+}
+
 final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
+    
+    //MARK: - Properties
+    
+    weak var delegate: OrderBasicAddressCollectionViewCellDelegate?
+    
+    //MARK: - UI Components
     
     private lazy var basicAddressCheckButton: UIButton = {
         let button = UIButton()
@@ -49,6 +59,7 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         label.font = .zoocBody1
         label.textAlignment = .left
         label.textColor = .zoocGray2
+        label.isHidden = true
         return label
     }()
     
@@ -58,6 +69,7 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         textField.font = .zoocBody1
         textField.textColor = .zoocGray3
         textField.setPlaceholderColor(color: .zoocGray1)
+        textField.isHidden = true
         return textField
     }()
     
@@ -67,7 +79,6 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         style()
         hierarchy()
         layout()
-        setDelegate()
     }
     
     required init?(coder: NSCoder) {
@@ -125,24 +136,19 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    private func updateUI() {
-        
-    }
-    
-    private func setDelegate() {
-
-    }
-    
     @objc
     private func checkButtonDidTap(_ sender: UIButton) {
         sender.isSelected.toggle()
+        delegate?.basicAddressCheckButtonDidTap(tag: sender.tag)
     }
     
     //MARK: - Public Methods
     
-    func dataBind(_ data: OrderBasicAddress) {
+    func dataBind(tag: Int, _ data: OrderBasicAddress) {
         nameLabel.text = data.name
         basicAddressLabel.text = "\(data.address) \n\(data.detailAddress ?? "")"
         phoneNumLabel.text = data.phoneNumber
+        basicAddressCheckButton.tag = tag
+        basicAddressCheckButton.isSelected = data.isSelected
     }
 }

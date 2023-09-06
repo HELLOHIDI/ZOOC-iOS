@@ -98,7 +98,6 @@ final class OrderAddressView: UIView {
     }
     
     private func layout() {
-        
         headerView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.horizontalEdges.equalToSuperview()
@@ -159,16 +158,23 @@ final class OrderAddressView: UIView {
                   basicAddressDatas: Results<OrderBasicAddress>? = nil,
                   isPostData: Bool = false) {
         
-        if basicAddressDatas != nil { updateButtonState(true) }
-        else { updateButtonState(false) }
+        if basicAddressDatas != nil {
+            updateViewAppear(true)
+            basicAddressButton.updateButtonUI(true)
+            newAddressButton.updateButtonUI(false)
+        } else {
+            updateViewAppear(false)
+            basicAddressButton.updateButtonUI(false)
+            newAddressButton.updateButtonUI(true)
+        }
         
         basicAddressView.updateUI(basicAddressDatas)
         newAddressView.updateUI(newAddressData)
     }
     
-    func updateButtonState(_ hasBasicAddress: Bool) {
-        basicAddressButton.isSelected = hasBasicAddress
-        newAddressButton.isSelected = !hasBasicAddress
+    func updateViewAppear(_ hasBasicAddress: Bool) {
+        basicAddressView.isHidden = !hasBasicAddress
+        newAddressView.isHidden = hasBasicAddress
     }
     
     func checkValidity() throws {
@@ -187,8 +193,8 @@ final class OrderAddressView: UIView {
         copyButton.isHidden = true
         basicAddressView.isHidden = false
         newAddressView.isHidden = true
-        basicAddressButton.updateUI(isTapped: true)
-        newAddressButton.updateUI(isTapped: false)
+        basicAddressButton.updateButtonUI(true)
+        newAddressButton.updateButtonUI(false)
     }
     
     @objc
@@ -196,8 +202,7 @@ final class OrderAddressView: UIView {
         copyButton.isHidden = false
         basicAddressView.isHidden = true
         newAddressView.isHidden = false
-        basicAddressButton.updateUI(isTapped: false)
-        newAddressButton.updateUI(isTapped: true)
+        basicAddressButton.updateButtonUI(false)
+        newAddressButton.updateButtonUI(true)
     }
 }
-

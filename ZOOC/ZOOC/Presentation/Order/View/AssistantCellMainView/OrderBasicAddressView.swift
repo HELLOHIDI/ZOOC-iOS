@@ -96,9 +96,21 @@ extension OrderBasicAddressView: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OrderBasicAddressCollectionViewCell.cellIdentifier, for: indexPath) as! OrderBasicAddressCollectionViewCell
         
         guard let basicAddressDatas = basicAddressDatas else { return UICollectionViewCell()}
-        cell.dataBind(basicAddressDatas[indexPath.item])
-        
+        cell.dataBind(tag: indexPath.item, basicAddressDatas[indexPath.item])
+        cell.delegate = self
         return cell
     }
 }
+
+extension OrderBasicAddressView: OrderBasicAddressCollectionViewCellDelegate {
+    func basicAddressCheckButtonDidTap(tag: Int) {
+        print(tag)
+        guard let basicAddressDatas = basicAddressDatas else { return }
+        for i in 0..<basicAddressDatas.count {
+            basicAddressDatas[i].isSelected = (i == tag)
+            print(i, basicAddressDatas[i].isSelected)
+        }
+    }
+}
+
 

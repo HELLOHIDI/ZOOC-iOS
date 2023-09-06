@@ -138,7 +138,6 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
     
     @objc
     private func checkButtonDidTap(_ sender: UIButton) {
-        sender.isSelected.toggle()
         delegate?.basicAddressCheckButtonDidTap(tag: sender.tag)
     }
     
@@ -150,5 +149,7 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         phoneNumLabel.text = data.phoneNumber
         basicAddressCheckButton.tag = tag
         basicAddressCheckButton.isSelected = data.isSelected
+        requestLabel.isHidden = !data.isSelected
+        requestTextField.isHidden = !data.isSelected
     }
 }

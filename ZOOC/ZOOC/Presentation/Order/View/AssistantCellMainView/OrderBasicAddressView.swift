@@ -10,9 +10,15 @@ import UIKit
 import SnapKit
 import RealmSwift
 
+protocol OrderBasicAddressViewDelegate: AnyObject {
+    func basicAddressCheckButtonDidTap(tag: Int)
+}
+
 final class OrderBasicAddressView: UIView {
     
     //MARK: - Properties
+    
+    weak var delegate: OrderBasicAddressViewDelegate?
     
     private var basicAddressDatas: Results<OrderBasicAddress>?  {
         didSet {
@@ -25,7 +31,7 @@ final class OrderBasicAddressView: UIView {
     private let basicAddressCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
@@ -68,7 +74,7 @@ final class OrderBasicAddressView: UIView {
         basicAddressCollectionView.dataSource = self
         
         basicAddressCollectionView.register(OrderBasicAddressCollectionViewCell.self,
-                                       forCellWithReuseIdentifier: OrderBasicAddressCollectionViewCell.cellIdentifier)
+                                            forCellWithReuseIdentifier: OrderBasicAddressCollectionViewCell.cellIdentifier)
     }
     
     func updateUI(_ data: Results<OrderBasicAddress>? = nil, isPostData: Bool = false) {
@@ -104,13 +110,6 @@ extension OrderBasicAddressView: UICollectionViewDataSource {
 
 extension OrderBasicAddressView: OrderBasicAddressCollectionViewCellDelegate {
     func basicAddressCheckButtonDidTap(tag: Int) {
-        print(tag)
-        guard let basicAddressDatas = basicAddressDatas else { return }
-        for i in 0..<basicAddressDatas.count {
-            basicAddressDatas[i].isSelected = (i == tag)
-            print(i, basicAddressDatas[i].isSelected)
-        }
+        delegate?.basicAddressCheckButtonDidTap(tag: tag)
     }
 }
-
-

@@ -181,6 +181,7 @@ final class OrderViewController: BaseViewController {
         ordererView.delegate = self
         addressView.delegate = self
         addressView.newAddressView.delegate = self
+        addressView.basicAddressView.delegate = self
         paymentMethodView.delegate = self
         agreementView.delegate = self
     }
@@ -374,5 +375,18 @@ extension OrderViewController: KakaoPostCodeViewControllerDelegate {
         
         addressView.updateUI(newAddressData: addressData, isPostData: true)
     }
-    
+}
+
+//MARK: - OrderBasicAddressViewDelegate
+
+extension OrderViewController: OrderBasicAddressViewDelegate {
+    func basicAddressCheckButtonDidTap(tag: Int) {
+        try! basicAddressRealm.write {
+            for i in 0..<basicAddressResult.count {
+                basicAddressResult[i].isSelected = (i == tag)
+                print(basicAddressResult[tag].isSelected)
+            }
+            addressView.updateUI(newAddressData: addressData, basicAddressDatas: basicAddressResult)
+        }
+    }
 }

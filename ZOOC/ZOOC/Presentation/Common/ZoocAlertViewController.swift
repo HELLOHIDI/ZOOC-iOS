@@ -18,6 +18,7 @@ enum AlertType {
     case needUpdate
     case leaveAIPage
     case shortOfPictures
+    case deleteProduct
     
     
     var title: String {
@@ -37,6 +38,8 @@ enum AlertType {
             return "이제 마지막 단계에요!"
         case .shortOfPictures:
             return "생성에 필요한 사진이 부족해요"
+        case .deleteProduct:
+            return "선택한 상품을 삭제하시나요?"
         }
     }
     
@@ -57,6 +60,8 @@ enum AlertType {
             return "지금 떠나면 내용이 저장되지 않아요"
         case .shortOfPictures:
             return "8장 - 15장의 사진을 업로드 해주세요"
+        case.deleteProduct:
+            return "장바구니에서 상품이 제외돼요"
         }
     }
     
@@ -77,6 +82,8 @@ enum AlertType {
             return  "이어 하기"
         case .shortOfPictures:
             return "다시 고르기"
+        case .deleteProduct:
+            return "삭제하기"
         }
     }
     
@@ -97,19 +104,19 @@ enum AlertType {
             return "나가기"
         case .shortOfPictures:
             return "나가기"
+        case .deleteProduct:
+            return "취소"
         }
     }
     
 }
 
-protocol ZoocAlertExitButtonTapGestureProtocol: AnyObject {
-    func exitButtonDidTap()
+@objc
+protocol ZoocAlertViewControllerDelegate: AnyObject {
+    @objc optional func keepButtonDidTap()
+    @objc optional func keepButtonDidTap(_ data: Any?)
+    @objc optional func exitButtonDidTap()
 }
-
-protocol ZoocAlertKeepButtonTapGestureProtocol: AnyObject {
-    func keepButtonDidTap()
-}
-
 
 final class ZoocAlertViewController: UIViewController {
     
@@ -121,8 +128,9 @@ final class ZoocAlertViewController: UIViewController {
         }
     }
     
-    weak var exitButtonTapDelegate: ZoocAlertExitButtonTapGestureProtocol?
-    weak var keepButtonTapDelegate: ZoocAlertKeepButtonTapGestureProtocol?
+    weak var delegate: ZoocAlertViewControllerDelegate?
+    
+    private var data: Any?
     
     //MARK: - UI Components
     
@@ -139,6 +147,7 @@ final class ZoocAlertViewController: UIViewController {
         self.alertType = alertType
         
         super.init(nibName: nil, bundle: nil)
+        modalPresentationStyle = .overFullScreen
     }
     
     required init?(coder: NSCoder) {
@@ -186,6 +195,7 @@ final class ZoocAlertViewController: UIViewController {
     
     private func style() {
         view.backgroundColor = .clear
+        
         
         alertView.do {
             $0.backgroundColor = .white
@@ -278,15 +288,20 @@ final class ZoocAlertViewController: UIViewController {
         view.layoutIfNeeded()
     }
     
+    func dataBind(_ data: Any) {
+        self.data = data
+    }
+    
     //MARK: - Action Method
     
     @objc func popToMyViewButtonDidTap() {
         dismiss(animated: false)
-        exitButtonTapDelegate?.exitButtonDidTap()
+        delegate?.exitButtonDidTap?()
     }
     
     @objc func keepButtonDidTap() {
         dismiss(animated: false)
-        keepButtonTapDelegate?.keepButtonDidTap()
+        delegate?.keepButtonDidTap?()
+        delegate?.keepButtonDidTap?(data)
     }
 }

@@ -135,7 +135,6 @@ final class ShopCartViewController: BaseViewController {
     init(selectedProduct: [SelectedProductOption]) {
         self.selectedProductData = selectedProduct
         super.init(nibName: nil, bundle: nil)
-        
     }
     
     override func viewDidLoad() {
@@ -266,12 +265,15 @@ final class ShopCartViewController: BaseViewController {
         let productsTotalPrice = selectedProductData.reduce(0) { $0 + $1.productsPrice }
         let totalPrice = deliveryFee + productsTotalPrice
         
+        productsPriceValueLabel.text = productsTotalPrice.priceText
+        
         if selectedProductData.isEmpty {
             deliveryFeeValueLabel.text = 0.priceText
             totalPriceValueLabel.text = 0.priceText
             payButton.isEnabled = false
             payButton.setTitle("주문 상품을 추가해주세요.", for: .normal)
         } else {
+            
             totalPriceValueLabel.text = totalPrice.priceText
             payButton.isEnabled = true
             payButton.setTitle("\(totalPrice.priceText) 결제하기", for: .normal)
@@ -351,9 +353,21 @@ extension ShopCartViewController: ShopCartCollectionViewCellDelegate {
     }
     
     func xButtonDidTap(row: Int) {
-        selectedProductData.remove(at: row)
+        let zoocAlertVC = ZoocAlertViewController(.deleteProduct)
+        zoocAlertVC.delegate = self
+        zoocAlertVC.dataBind(row)
+        present(zoocAlertVC, animated: false)
+        
     }
     
+}
+
+extension ShopCartViewController: ZoocAlertViewControllerDelegate {
+    
+    internal func keepButtonDidTap(_ data: Any?) {
+        guard let row = data as? Int else { return}
+        selectedProductData.remove(at: row)
+    }
 }
 
 

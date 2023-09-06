@@ -269,8 +269,7 @@ extension MyViewController: MyRegisterPetButtonTappedDelegate {
 extension MyViewController: MyDeleteAccountSectionCollectionViewCellDelegate {
     func deleteAccountButtonDidTapped() {
         let zoocAlertVC = ZoocAlertViewController(.deleteAccount)
-        zoocAlertVC.exitButtonTapDelegate = self
-        zoocAlertVC.modalPresentationStyle = .overFullScreen
+        zoocAlertVC.delegate = self
         present(zoocAlertVC, animated: false)
     }
 }
@@ -360,7 +359,7 @@ extension MyViewController {
 }
 
 
-extension MyViewController: ZoocAlertExitButtonTapGestureProtocol {
+extension MyViewController: ZoocAlertViewControllerDelegate {
     func exitButtonDidTap() {
         viewModel.deleteAccountButtonDidTapEvent()
     }

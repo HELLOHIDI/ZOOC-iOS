@@ -290,7 +290,8 @@ final class ShopProductViewController: BaseViewController {
 
 extension ShopProductViewController: ProductBottomSheetDelegate {
     func cartButtonDidTap(selectedOptions: [SelectedProductOption]) {
-        presentBottomAlert("장바구니 기능 구현해야함!!!")
+        let cartVC = ShopCartViewController(selectedProduct: selectedOptions)
+        navigationController?.pushViewController(cartVC, animated: true)
     }
     
     func orderButtonDidTap(selectedOptions: [SelectedProductOption]) {

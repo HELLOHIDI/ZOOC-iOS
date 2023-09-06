@@ -304,7 +304,8 @@ extension ProductBottomSheet: UICollectionViewDelegateFlowLayout {
 extension ProductBottomSheet: ProductOptionCollectionViewCellDelegate {
     func optionDidSelected(option: OptionResult) {
         
-        let willSelectedOption = option.transform(withImage: productData?.images.first ?? "")
+        let willSelectedOption = option.transform(withImage: productData?.images.first ?? "",
+                                                  withName: productData?.name ?? "")
         var canAppend = true
         selectedOptionsData.forEach { selectedOption in
             guard selectedOption.id != willSelectedOption.id else
@@ -334,8 +335,6 @@ extension ProductBottomSheet: ProductSelectedOptionCollectionViewCellDelegate {
             } else {
                 try selectedOptionsData[row].decrease()
             }
-            
-            collectionView.reloadData()
         } catch  {
             guard let error =  error as? AmountError else { return }
             presentBottomAlert(error.message)
@@ -344,7 +343,6 @@ extension ProductBottomSheet: ProductSelectedOptionCollectionViewCellDelegate {
     
     func xButtonDidTap(row: Int) {
         selectedOptionsData.remove(at: row)
-        collectionView.reloadData()
     }
     
     

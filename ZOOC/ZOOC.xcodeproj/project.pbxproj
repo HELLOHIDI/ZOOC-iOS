@@ -282,6 +282,13 @@
 		D2C028F22A81F8B2003F4727 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C028F12A81F8B2003F4727 /* String+.swift */; };
 		D2C028F42A8246C1003F4727 /* MyEditPetProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C028F32A8246C1003F4727 /* MyEditPetProfileViewModel.swift */; };
 		D2C028F62A82BEAD003F4727 /* OnboardingChooseRoleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C028F52A82BEAD003F4727 /* OnboardingChooseRoleViewModel.swift */; };
+		D2D440142AA5C08200329F35 /* OrderNewAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D440132AA5C08200329F35 /* OrderNewAddressView.swift */; };
+		D2D440162AA5C88D00329F35 /* OrderBasicAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D440152AA5C88D00329F35 /* OrderBasicAddressView.swift */; };
+		D2D440182AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D440172AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift */; };
+		D2D4401A2AA5D02800329F35 /* OrderBasicAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D440192AA5D02800329F35 /* OrderBasicAddress.swift */; };
+		D2D4401D2AA5D08D00329F35 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = D2D4401C2AA5D08D00329F35 /* Realm */; };
+		D2D4401F2AA5D08D00329F35 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D2D4401E2AA5D08D00329F35 /* RealmSwift */; };
+		D2D440212AA5F2C300329F35 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D2D440202AA5F2C200329F35 /* Pretendard-Regular.otf */; };
 		D2DC80D52A0DFDF600F48209 /* RecordRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC80D42A0DFDF600F48209 /* RecordRegisterView.swift */; };
 		D2DC80D72A0E158000F48209 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC80D62A0E158000F48209 /* RecordView.swift */; };
 		D2DD45C7297D9612001722A1 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DD45C6297D9612001722A1 /* BaseButton.swift */; };
@@ -567,6 +574,11 @@
 		D2C028F12A81F8B2003F4727 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		D2C028F32A8246C1003F4727 /* MyEditPetProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditPetProfileViewModel.swift; sourceTree = "<group>"; };
 		D2C028F52A82BEAD003F4727 /* OnboardingChooseRoleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingChooseRoleViewModel.swift; sourceTree = "<group>"; };
+		D2D440132AA5C08200329F35 /* OrderNewAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderNewAddressView.swift; sourceTree = "<group>"; };
+		D2D440152AA5C88D00329F35 /* OrderBasicAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBasicAddressView.swift; sourceTree = "<group>"; };
+		D2D440172AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBasicAddressCollectionViewCell.swift; sourceTree = "<group>"; };
+		D2D440192AA5D02800329F35 /* OrderBasicAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBasicAddress.swift; sourceTree = "<group>"; };
+		D2D440202AA5F2C200329F35 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		D2D686BA299B59F400C290A8 /* ZOOC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZOOC.entitlements; sourceTree = "<group>"; };
 		D2DC80D42A0DFDF600F48209 /* RecordRegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRegisterView.swift; sourceTree = "<group>"; };
 		D2DC80D62A0E158000F48209 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
@@ -589,8 +601,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2D4401D2AA5D08D00329F35 /* Realm in Frameworks */,
 				8764833B29523C0100F74882 /* Kingfisher in Frameworks */,
 				8782C7DA296857A600C9324B /* KakaoSDKShare in Frameworks */,
+				D2D4401F2AA5D08D00329F35 /* RealmSwift in Frameworks */,
 				8781DE4829B20F61005ABF23 /* FirebaseMessaging in Frameworks */,
 				87809C302A8CE3930060641F /* FirebaseRemoteConfig in Frameworks */,
 				871EA35629706F4300D0E8CC /* Lottie in Frameworks */,
@@ -956,6 +970,7 @@
 				87F287FE2A9F83DC00A53218 /* WithoutBankbookStep.swift */,
 				87F288062A9FA86600A53218 /* BankAccount.swift */,
 				87F288082A9FC41F00A53218 /* Bank.swift */,
+				D2D440192AA5D02800329F35 /* OrderBasicAddress.swift */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -1311,6 +1326,7 @@
 			children = (
 				877BAFC1295EEA6900C2AA1C /* Pretendard-SemiBold.otf */,
 				877BAFC3295EEA7700C2AA1C /* Pretendard-Medium.otf */,
+				D2D440202AA5F2C200329F35 /* Pretendard-Regular.otf */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -1483,6 +1499,7 @@
 				87A3D8962A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift */,
 				87F2880A2A9FDE2500A53218 /* OrderAssistantHeaderView.swift */,
 				87F287FC2A9F7D3000A53218 /* OrderAssistantCollectionViewCell.swift */,
+				D2D440172AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1493,6 +1510,8 @@
 				87F288002A9FA67E00A53218 /* OrderAssistantCopyView.swift */,
 				87F288022A9FA68A00A53218 /* OrderAssistantDepositView.swift */,
 				87F288042A9FA69200A53218 /* OrderAssistantCompleteView.swift */,
+				D2D440132AA5C08200329F35 /* OrderNewAddressView.swift */,
+				D2D440152AA5C88D00329F35 /* OrderBasicAddressView.swift */,
 			);
 			path = AssistantCellMainView;
 			sourceTree = "<group>";
@@ -1704,6 +1723,8 @@
 				872367152A19062700DCBBFF /* Sentry */,
 				87809C2F2A8CE3930060641F /* FirebaseRemoteConfig */,
 				870A4BFB2AA268E900D7CFD8 /* FloatingPanel */,
+				D2D4401C2AA5D08D00329F35 /* Realm */,
+				D2D4401E2AA5D08D00329F35 /* RealmSwift */,
 			);
 			productName = ZOOC;
 			productReference = 87B6623D29521E7500B6FFA9 /* ZOOC-Dev.app */;
@@ -1743,6 +1764,7 @@
 				8781DE4629B20F61005ABF23 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				872367142A19062700DCBBFF /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				870A4BFA2AA268E900D7CFD8 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
+				D2D4401B2AA5D08D00329F35 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 87B6623E29521E7500B6FFA9 /* Products */;
 			projectDirPath = "";
@@ -1765,6 +1787,7 @@
 				877BAFC4295EEA7700C2AA1C /* Pretendard-Medium.otf in Resources */,
 				871EA359297078C900D0E8CC /* loading.json in Resources */,
 				87DC47F52A7B7D55007823CB /* Debug-GoogleService-Info.plist in Resources */,
+				D2D440212AA5F2C300329F35 /* Pretendard-Regular.otf in Resources */,
 				87DC47F42A7B7D53007823CB /* Release-GoogleService-Info.plist in Resources */,
 				87DC47822A545A1C007823CB /* noise.png in Resources */,
 			);
@@ -1877,6 +1900,7 @@
 				D23503032964728700F01101 /* MyAppInformationTableViewCell.swift in Sources */,
 				D26C68F22970AD820088DC9A /* HomeNoticeViewController.swift in Sources */,
 				8718A06429AD3445001C7460 /* EditProfileRequest.swift in Sources */,
+				D2D440182AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift in Sources */,
 				8771843F2A0541C500AB7DE4 /* AuthAPI.swift in Sources */,
 				8782C7F3296CC13A00C9324B /* ArchiveCommentCollectionViewCell.swift in Sources */,
 				D23502FB2961F44700F01101 /* MySettingTableViewCell.swift in Sources */,
@@ -1908,6 +1932,7 @@
 				8731C4B029A93EF500006743 /* EmojiModel.swift in Sources */,
 				D24AFAB22A8DFB9F00823E9C /* GenAIChoosePetViewController.swift in Sources */,
 				D2DD45C7297D9612001722A1 /* BaseButton.swift in Sources */,
+				D2D440142AA5C08200329F35 /* OrderNewAddressView.swift in Sources */,
 				D27BDDC72A8C6FA2008E290D /* GenAICompletedViewController.swift in Sources */,
 				871EA351297042D800D0E8CC /* RecordResult.swift in Sources */,
 				D25323162A07330C00562D92 /* MyAppInformationHeaderView.swift in Sources */,
@@ -1959,6 +1984,7 @@
 				87809C2C2A8CC29B0060641F /* AppVersion.swift in Sources */,
 				87D5AF5629605C0100CA7F12 /* URLs.swift in Sources */,
 				D2C028EA2A7F7563003F4727 /* MyCoordinator.swift in Sources */,
+				D2D4401A2AA5D02800329F35 /* OrderBasicAddress.swift in Sources */,
 				D26C85E32968C88800AEAF9B /* OnboardingAgreementView.swift in Sources */,
 				87E462EE2A110867006FC35D /* ZoocGradinetButton.swift in Sources */,
 				871EA3462970109E00D0E8CC /* HomeArchiveListWriterCollectionViewCell.swift in Sources */,
@@ -1973,6 +1999,7 @@
 				877DF3292A534DF2001CD452 /* NotificationName+.swift in Sources */,
 				87D5AF5A29606AC900CA7F12 /* NetworkResult.swift in Sources */,
 				4C8A7C33297063F400783979 /* OnboardingInviteResult.swift in Sources */,
+				D2D440162AA5C88D00329F35 /* OrderBasicAddressView.swift in Sources */,
 				8782C7EF296C41B200C9324B /* HomeArchiveGridCollectionViewCell.swift in Sources */,
 				87F2880B2A9FDE2500A53218 /* OrderAssistantHeaderView.swift in Sources */,
 				D26C860E296B6E8600AEAF9B /* UILabel+.swift in Sources */,
@@ -2384,6 +2411,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		D2D4401B2AA5D08D00329F35 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2451,6 +2486,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 87A76AB4295F760C0096F669 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKUser;
+		};
+		D2D4401C2AA5D08D00329F35 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D2D4401B2AA5D08D00329F35 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		D2D4401E2AA5D08D00329F35 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D2D4401B2AA5D08D00329F35 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

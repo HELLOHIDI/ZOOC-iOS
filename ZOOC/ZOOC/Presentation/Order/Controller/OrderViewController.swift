@@ -198,7 +198,7 @@ final class OrderViewController: BaseViewController {
     private func registerBasicAddress(_ data: OrderAddress) {
         if addressView.newAddressView.registerBasicAddressCheckButton.isSelected == true {
             let fullAddress = "(\(data.postCode)) \(data.address)"
-            let basicAddress = OrderBasicAddress.init(
+            let newAddress = OrderBasicAddress.init(
                 postCode: data.postCode,
                 name: data.receiverName,
                 address: fullAddress,
@@ -207,9 +207,16 @@ final class OrderViewController: BaseViewController {
                 isSelected: false
             )
             
-            try! basicAddressRealm.write {
-                basicAddressRealm.add(basicAddress)
-                print(basicAddress)
+            let filter = basicAddressResult.filter("fullAddress=='\(newAddress.fullAddress)'")
+            print("filter: \(filter)")
+            
+            if filter.isEmpty {
+                try! basicAddressRealm.write {
+                    basicAddressRealm.add(newAddress)
+                    print(newAddress)
+                }
+            } else {
+                presentBottomAlert("이미 등록된 주소입니다!")
             }
         } else {
             print("로컬DB에 등록이 불가능합니다!")

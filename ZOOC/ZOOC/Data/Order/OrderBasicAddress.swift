@@ -11,7 +11,8 @@ import RealmSwift
 
 class OrderBasicAddress: Object {
     
-    @Persisted(primaryKey: true) var postCode: String = ""
+    @Persisted(primaryKey: true) var fullAddress: String = ""
+    @Persisted var postCode: String = ""
     @Persisted var name: String = ""
     @Persisted var address: String = ""
     @Persisted var detailAddress: String?
@@ -26,5 +27,6 @@ class OrderBasicAddress: Object {
         self.detailAddress = detailAddress
         self.phoneNumber = phoneNumber
         self.isSelected = isSelected
+        self.fullAddress = "(\(postCode)) \(address) \(detailAddress ?? "")"
     }
 }

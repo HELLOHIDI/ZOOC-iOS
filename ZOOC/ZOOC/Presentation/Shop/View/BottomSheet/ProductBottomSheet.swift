@@ -197,17 +197,33 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
         self.productData = data
     }
     
+    private func checkOptionSelected() -> Bool {
+        return !selectedOptionsData.isEmpty
+    }
+    
     //MARK: - Action Method
 
     
     @objc
     private func cartButtonDidTap() {
+        guard !selectedOptionsData.isEmpty else {
+            showToast("상품 옵션을 선택해주세요",
+                      type: .normal,
+                      bottomInset: 86)
+            return
+        }
         dismiss(animated: false)
         delegate?.cartButtonDidTap(selectedOptions: selectedOptionsData)
     }
     
     @objc
     private func orderButtonDidTap() {
+        guard !selectedOptionsData.isEmpty else {
+            showToast("상품 옵션을 선택해주세요",
+                      type: .bad,
+                      bottomInset: 86)
+            return
+        }
         dismiss(animated: false)
         delegate?.orderButtonDidTap(selectedOptions: selectedOptionsData)
     }
@@ -224,11 +240,11 @@ extension ProductBottomSheet: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        guard let productData else { return 0 }
         
+        guard let productData else { return 0 }
         switch section {
         case 0:
-            return productData.optionCategories.count
+            return productData.optionCategory != nil ? 1 : 0 // 상품 하나당 옵션 하나!
         case 1:
             return selectedOptionsData.count
         default:
@@ -239,13 +255,13 @@ extension ProductBottomSheet: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let productData else { return UICollectionViewCell() }
-        
         switch indexPath.section {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductOptionCollectionViewCell.cellIdentifier,
                                                           for: indexPath) as! ProductOptionCollectionViewCell
-            cell.dataBind(productData.optionCategories[indexPath.row])
+            cell.dataBind(productData.optionCategory)
             cell.delegate = self
+            
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductSelectedOptionCollectionViewCell.cellIdentifier,
@@ -270,7 +286,6 @@ extension ProductBottomSheet: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         let width = collectionView.frame.width
         
         switch indexPath.section {
@@ -319,7 +334,9 @@ extension ProductBottomSheet: ProductOptionCollectionViewCellDelegate {
         if canAppend {
             selectedOptionsData.append(willSelectedOption)
         } else {
-            presentBottomAlert("이미 추가된 옵션입니다.")
+            showToast("이미 추가된 옵션입니다.",
+                      type: .bad,
+                      bottomInset: 122)
         }
         
     }
@@ -337,7 +354,9 @@ extension ProductBottomSheet: ProductSelectedOptionCollectionViewCellDelegate {
             }
         } catch  {
             guard let error =  error as? AmountError else { return }
-            presentBottomAlert(error.message)
+            showToast(error.message,
+                      type: .bad,
+                      bottomInset: 122)
         }
     }
     

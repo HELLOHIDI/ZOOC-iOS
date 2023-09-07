@@ -27,6 +27,8 @@ public enum Image{
     static let cart = UIImage(named: "cart")!
     static let check = UIImage(named: "check")!
     static let checkTint = UIImage(named: "check.tint")!
+    static let checkToast = UIImage(named: "check.toast")!
+    static let checkWhite = UIImage(named: "check.white")!
     static let checkBoxRed = UIImage(named: "checkbox.red")!
     static let checkBoxFill = UIImage(named: "checkbox.fill")!
     static let checkBox = UIImage(named: "checkbox")!
@@ -49,6 +51,7 @@ public enum Image{
     static let shop = UIImage(named: "shop")!
     static let smile = UIImage(named: "smile")!
     static let upload = UIImage(named: "upload")!
+    static let xToast = UIImage(named: "x.toast")!
     static let xmark = UIImage(named: "xmark")!
     static let xmarkWhite = UIImage(named: "xmark.white")!
     static let aiLogo = UIImage(named: "ai")!

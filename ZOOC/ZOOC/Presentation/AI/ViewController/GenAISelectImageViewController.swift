@@ -69,7 +69,7 @@ final class GenAISelectImageViewController : BaseViewController {
             if uploadCompleted {
                 self?.pushToGenAICompletedVC()
             } else {
-                self?.presentBottomAlert("AI 모델 생성 중 문제가 발생했습니다")
+                self?.showToast("AI 모델 생성 중 문제가 발생했습니다", type: .bad)
             }
         }
         
@@ -77,9 +77,9 @@ final class GenAISelectImageViewController : BaseViewController {
             // 푸시알림을 통해서 분기처리하면 좋을 거 같습니다!
             guard let isCompleted = isCompleted else { return }
             if isCompleted {
-                self?.presentBottomAlert("AI 모델 생성이 완료되었습니다")
+                self?.showToast("AI 모델 생성이 완료되었습니다", type: .good)
             } else {
-                self?.presentBottomAlert("AI 모델 생성 중 문제가 발생했습니다")
+                self?.showToast("AI 모델 생성 중 문제가 발생했습니다", type: .bad)
             }
         }
     }

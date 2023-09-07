@@ -63,7 +63,7 @@ extension OnboardingJoinFamilyViewController {
                 UserDefaultsManager.familyID = String(result.familyID)
                 self.requestFCMTokenAPI()
             case .requestErr(let msg):
-                self.presentBottomAlert(msg)
+                self.showToast(msg, type: .bad)
             default:
                 self.validateResult(result)
             }

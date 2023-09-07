@@ -71,7 +71,7 @@ final class MyEditPetProfileViewController: BaseViewController {
                     self?.dismiss(animated: true)
                 }
             } else {
-                self?.presentBottomAlert("다시 시도해주세요")
+                self?.showToast("다시 시도해주세요", type: .bad)
             }
         }
     }

@@ -63,7 +63,7 @@ final class GenAIRegisterPetViewController: BaseViewController {
             if isSuccess {
                 self?.pushToGenAIGuideVC()
             } else {
-                self?.presentBottomAlert("다시 시도해주세요")
+                self?.showToast("다시 시도해주세요.", type: .bad)
             }
         }
     }

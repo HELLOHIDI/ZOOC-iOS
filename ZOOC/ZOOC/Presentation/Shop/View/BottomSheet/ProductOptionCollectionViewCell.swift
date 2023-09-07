@@ -98,7 +98,7 @@ final class ProductOptionCollectionViewCell: UICollectionViewCell {
         
     }
     
-    func dataBind(_ data: OptionCategoriesResult) {
+    func dataBind(_ data: OptionCategoryResult) {
         titleLabel.text = data.name
         menuItems = []
         data.options.forEach { option in

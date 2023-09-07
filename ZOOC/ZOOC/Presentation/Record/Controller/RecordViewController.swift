@@ -144,7 +144,7 @@ extension RecordViewController {
             let recordRegisterVC = RecordRegisterViewController(recordData: recordData)
             navigationController?.pushViewController(recordRegisterVC, animated: true)
         } else {
-            presentBottomAlert("내용을 입력해주세요.")
+            showToast("내용을 입력해주세요.", type: .bad)
             return
         }
     }

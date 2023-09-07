@@ -125,7 +125,8 @@ final class ZoocImageViewController : BaseViewController {
             if let error = error {
                 print("Oops\(error)")
             } else {
-                presentBottomAlert("사진이 저장되었습니다.")
+                showToast("사진이 저장되었습니다.", type: .good)
+                
             }
         }
 }

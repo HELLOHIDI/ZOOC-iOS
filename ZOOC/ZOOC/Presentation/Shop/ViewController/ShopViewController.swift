@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class ShopViewController : BaseViewController {
+final class ShopViewController: BaseViewController {
     
     //MARK: - Properties
     
@@ -175,7 +175,7 @@ extension ShopViewController {
             let productVC = ShopProductViewController(productID: productsData[indexPath.row].id)
             navigationController?.pushViewController(productVC, animated: true)
         } else {
-            presentBottomAlert("오픈 예정 제품이에요")
+            self.showToast("오픈 예정 제품이에요", type: .normal)
         }
   
     }

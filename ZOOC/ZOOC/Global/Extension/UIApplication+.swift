@@ -10,9 +10,14 @@ import UIKit
 extension UIApplication {
     
     var firstWindow: UIWindow? {
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScenes = scenes.first as? UIWindowScene
-        return windowScenes?.windows.filter { $0.isKeyWindow }.first
+        if #available(iOS 13, *) {
+            return (UIApplication.shared.connectedScenes
+                .compactMap { $0 as? UIWindowScene }
+                .flatMap { $0.windows }
+                .first { $0.isKeyWindow })
+        } else {
+            return UIApplication.shared.keyWindow
+        }
     }
     
     var rootViewController: UIViewController? {

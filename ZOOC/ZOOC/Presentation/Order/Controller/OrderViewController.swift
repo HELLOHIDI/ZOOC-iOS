@@ -219,27 +219,38 @@ final class OrderViewController: BaseViewController {
                             deliveryFee)
             
         } catch OrderInvalidError.ordererInvalid {
-            presentBottomAlert("구매자 정보를 입력해주세요.")
+            showToast("구매자 정보를 모두 입력해주세요.",
+                      type: .bad,
+                      bottomInset: 86)
             let y = ordererView.frame.minY
             scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: true)
             
         } catch OrderInvalidError.addressInvlid {
-            presentBottomAlert("배송지 정보를 입력해주세요.")
+            showToast("필수 배송 정보를 모두 입력해주세요",
+                      type: .bad,
+                      bottomInset: 86)
+            
             let y = addressView.frame.minY
             scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: true)
             
         } catch OrderInvalidError.paymentMethodInvalid {
-            presentBottomAlert("결제수단 정보를 확인해주세요.")
+            showToast("결제수단 정보를 확인해주세요.",
+                      type: .bad,
+                      bottomInset: 86)
+            
             let y = paymentMethodView.frame.minY
             scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: true)
             
         } catch OrderInvalidError.agreementInvalid {
-            presentBottomAlert("결제 진행 필수사항을 동의해주세요.")
+            showToast("필수 동의 항목을 확인해주세요",
+                      type: .bad,
+                      bottomInset: 86)
+            
             scrollView.setContentOffset(CGPoint(x: 0,
                                                 y: self.scrollView.contentSize.height - self.scrollView.bounds.height),
                                              animated: true)
         } catch {
-            presentBottomAlert("알수없는 오류가 발생했습니다. \n 다시 시도해주세요.")
+            showToast("알수없는 오류가 발생했습니다.\n다시 시도해주세요.", type: .bad)
         }
     }
     

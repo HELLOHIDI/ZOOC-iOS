@@ -178,7 +178,7 @@ extension OrderAssistantViewController: OrderAssistantCollectionViewCellDelegate
     //MARK: - Copy
     func copyButtonDidTap(_ fullAccount: String) {
         UIPasteboard.general.string = fullAccount + "\(totalPrice)원"
-        presentBottomAlert("계좌번호가 클립보드에 복사되었습니다")
+        showToast("계좌번호가 복사 완료 되었어요", type: .good)
         currentStep = .deposit
     }
 

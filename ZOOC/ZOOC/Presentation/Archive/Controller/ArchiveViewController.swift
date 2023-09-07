@@ -340,12 +340,15 @@ final class ArchiveViewController : BaseViewController {
         }
         
         guard let id else {
-            presentBottomAlert(message)
+            showToast(message, type: .normal, bottomInset: 86)
             return
         }
         
         archiveModel.recordID = id
-        
+        scrollDown = false
+        self.scrollView.setContentOffset(CGPoint(x: 0,
+                                                 y: 0),
+                                         animated: true)
         requestDetailArchiveAPI(request: archiveModel)
     }
     
@@ -378,7 +381,7 @@ final class ArchiveViewController : BaseViewController {
                                                          y: self.scrollView.contentSize.height - self.scrollView.bounds.height),
                                                  animated: true)
             }
-        } else{
+        } else {
             scrollDown = true
         }
         
@@ -704,13 +707,13 @@ extension ArchiveViewController: MFMailComposeViewControllerDelegate {
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         switch result {
         case .cancelled:
-            presentBottomAlert("신고가 취소되었습니다.")
+            showToast("신고가 취소되었습니다.", type: .good)
         case .sent:
-            presentBottomAlert("신고가 접수되었습니다.")
+            showToast("신고가 접수되었습니다.", type: .good)
         case .saved:
-            presentBottomAlert("신고내용이 저장되었습니다.")
+            showToast("신고내용이 저장되었습니다.", type: .good)
         case .failed:
-            presentBottomAlert("신고하기 실패")
+            showToast("신고하기에 오류가 발생했습니다.", type: .bad)
         default:
             break
         }

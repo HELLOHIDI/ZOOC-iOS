@@ -21,9 +21,9 @@ final class Toast: UIView {
             case .good:
                 return .zoocMainGreen.withAlphaComponent(0.8)
             case .normal:
-                return .darkGray.withAlphaComponent(0.8)
+                return .zoocDarkGray1.withAlphaComponent(0.8)
             case .bad:
-                return .zoocRed.withAlphaComponent(0.85)
+                return .zoocRed.withAlphaComponent(0.8)
             }
         }
         
@@ -32,7 +32,7 @@ final class Toast: UIView {
             case .good:
                 return .zoocMainGreen
             case .normal:
-                return .darkGray
+                return .zoocDarkGray1
             case .bad:
                 return .zoocRed
             }
@@ -59,6 +59,8 @@ final class Toast: UIView {
         let toastImageView = UIImageView(image: type.image)
         let toastLabel = UILabel()
         
+        
+        
         self.backgroundColor = type.backgroundColor
         self.alpha = 1
         self.setBorder(borderWidth: 1, borderColor: type.borderColor)
@@ -74,9 +76,17 @@ final class Toast: UIView {
         toastLabel.numberOfLines = 0
         toastLabel.sizeToFit()
         
+        let hStackView = UIStackView(arrangedSubviews: [toastImageView,toastLabel])
+        hStackView.axis = .horizontal
+        hStackView.spacing = 10
+        hStackView.alignment = .center
+        hStackView.distribution = .fill
+        
+        toastImageView.isHidden = type == .normal
+    
         
         view.addSubview(self)
-        self.addSubviews(toastImageView, toastLabel)
+        self.addSubviews(hStackView)
         
         
         self.snp.makeConstraints {
@@ -84,18 +94,16 @@ final class Toast: UIView {
             $0.bottom.equalToSuperview().inset(safeAreaBottomInset + bottomInset)
         }
         
+        hStackView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.verticalEdges.equalToSuperview().inset(8)
+        }
+        
         toastImageView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().inset(20)
             $0.size.equalTo(14)
             
         }
         
-        toastLabel.snp.makeConstraints {
-            $0.verticalEdges.equalToSuperview().inset(8)
-            $0.leading.equalTo(toastImageView.snp.trailing).offset(10)
-            $0.trailing.equalToSuperview().inset(20)
-        }
         
         UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: {
             self.alpha = 1.0

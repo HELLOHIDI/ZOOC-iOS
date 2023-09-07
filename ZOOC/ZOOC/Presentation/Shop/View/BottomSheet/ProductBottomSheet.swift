@@ -197,17 +197,29 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
         self.productData = data
     }
     
+    private func checkOptionSelected() -> Bool {
+        return !selectedOptionsData.isEmpty
+    }
+    
     //MARK: - Action Method
 
     
     @objc
     private func cartButtonDidTap() {
+        guard !selectedOptionsData.isEmpty else {
+            showToast("상품 옵션을 선택해주세요", type: .normal)
+            return
+        }
         dismiss(animated: false)
         delegate?.cartButtonDidTap(selectedOptions: selectedOptionsData)
     }
     
     @objc
     private func orderButtonDidTap() {
+        guard !selectedOptionsData.isEmpty else {
+            showToast("상품 옵션을 선택해주세요", type: .bad)
+            return
+        }
         dismiss(animated: false)
         delegate?.orderButtonDidTap(selectedOptions: selectedOptionsData)
     }

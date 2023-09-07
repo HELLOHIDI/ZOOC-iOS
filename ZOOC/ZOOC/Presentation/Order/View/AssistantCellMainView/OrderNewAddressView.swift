@@ -66,13 +66,14 @@ final class OrderNewAddressView: UIView {
         label.textColor = .zoocGray2
         return label
     }()
-    
-    private let postNumberTextField: ZoocTextField = {
-        let textField = ZoocTextField(.numberPad)
-        textField.placeholder = "우편번호"
-        textField.font = .zoocBody1
-        textField.setPlaceholderColor(color: .zoocGray1)
-        return textField
+    private let postCodeLabelBox: BasePaddingLabel = {
+        let label = BasePaddingLabel()
+        label.backgroundColor = .zoocWhite2
+        label.textColor = .zoocGray1
+        label.font = .zoocBody1
+        label.setBorder(borderWidth: 1, borderColor: .zoocLightGray)
+        label.makeCornerRound(radius: 7)
+        return label
     }()
     
     private lazy var findAddressButton: ZoocGradientButton = {
@@ -85,12 +86,15 @@ final class OrderNewAddressView: UIView {
         return button
     }()
     
-    private let addressTextField: ZoocTextField = {
-        let textField = ZoocTextField(.default)
-        textField.placeholder = "주소"
-        textField.font = .zoocBody1
-        textField.setPlaceholderColor(color: .zoocGray1)
-        return textField
+    private let addressLabelBox: BasePaddingLabel = {
+        let label = BasePaddingLabel()
+        label.textColor = .zoocGray1
+        label.backgroundColor = .zoocWhite2
+        label.font = .zoocBody1
+        label.setBorder(borderWidth: 1, borderColor: .zoocLightGray)
+        label.makeCornerRound(radius: 7)
+        label.numberOfLines = 0
+        return label
     }()
     
     private let detailAddressTextField: ZoocTextField = {
@@ -111,7 +115,7 @@ final class OrderNewAddressView: UIView {
     }()
     
     private let requestTextField: ZoocTextField = {
-        let textField = ZoocTextField(.numberPad)
+        let textField = ZoocTextField(.default)
         textField.placeholder = "부재 시 경비실에 맡겨주세요"
         textField.font = .zoocBody1
         textField.setPlaceholderColor(color: .zoocGray1)
@@ -166,14 +170,14 @@ final class OrderNewAddressView: UIView {
     
     private func hierarchy() {
         
-        self.addSubviews(postNumberTextField,
+        self.addSubviews(postCodeLabelBox,
                          receiverLabel,
                          receiverTextField,
                          phoneNumberLabel,
                          receiverPhoneNumberTextField,
                          addressLabel,
                          findAddressButton,
-                         addressTextField,
+                         addressLabelBox,
                          detailAddressTextField,
                          registerBasicAddressCheckButton,
                          registerBasicAddressLabel,
@@ -205,7 +209,7 @@ final class OrderNewAddressView: UIView {
             $0.leading.equalToSuperview().inset(30)
         }
         
-        postNumberTextField.snp.makeConstraints {
+        postCodeLabelBox.snp.makeConstraints {
             $0.top.equalTo(receiverPhoneNumberTextField.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(97)
             $0.trailing.equalToSuperview().inset(134)
@@ -213,25 +217,25 @@ final class OrderNewAddressView: UIView {
         }
         
         addressLabel.snp.makeConstraints {
-            $0.centerY.equalTo(postNumberTextField)
+            $0.centerY.equalTo(postCodeLabelBox)
             $0.leading.equalToSuperview().inset(30)
         }
         
         findAddressButton.snp.makeConstraints {
-            $0.top.height.equalTo(postNumberTextField)
-            $0.leading.equalTo(postNumberTextField.snp.trailing).offset(12)
+            $0.top.height.equalTo(postCodeLabelBox)
+            $0.leading.equalTo(postCodeLabelBox.snp.trailing).offset(12)
             $0.trailing.equalToSuperview().inset(30)
         }
         
-        addressTextField.snp.makeConstraints {
+        addressLabelBox.snp.makeConstraints {
             $0.top.equalTo(findAddressButton.snp.bottom).offset(12)
-            $0.leading.height.equalTo(postNumberTextField)
+            $0.leading.height.equalTo(postCodeLabelBox)
             $0.trailing.equalToSuperview().inset(30)
         }
         
         detailAddressTextField.snp.makeConstraints {
-            $0.top.equalTo(addressTextField.snp.bottom).offset(12)
-            $0.leading.height.equalTo(postNumberTextField)
+            $0.top.equalTo(addressLabelBox.snp.bottom).offset(12)
+            $0.leading.height.equalTo(postCodeLabelBox)
             $0.trailing.equalToSuperview().inset(30)
         }
         
@@ -253,13 +257,12 @@ final class OrderNewAddressView: UIView {
         
         requestTextField.snp.makeConstraints {
             $0.top.equalTo(registerBasicAddressCheckButton.snp.bottom).offset(12)
-            $0.leading.trailing.height.equalTo(addressTextField)
+            $0.leading.trailing.height.equalTo(addressLabelBox)
             $0.bottom.equalToSuperview().inset(20)
         }
     }
     
     private func setTag() {
-        postNumberTextField.tag = 0
         receiverTextField.tag = 1
         receiverPhoneNumberTextField.tag = 2
         detailAddressTextField.tag = 3
@@ -267,42 +270,44 @@ final class OrderNewAddressView: UIView {
     }
     
     private func setDelegate() {
-        postNumberTextField.zoocDelegate = self
         receiverTextField.zoocDelegate = self
         receiverPhoneNumberTextField.zoocDelegate = self
-        addressTextField.zoocDelegate = self
         detailAddressTextField.zoocDelegate = self
         requestTextField.zoocDelegate = self
     }
     
     func updateUI(_ data: OrderAddress, isPostData: Bool = false) {
-        postNumberTextField.text = data.addressName
         receiverTextField.text = data.receiverName
         receiverPhoneNumberTextField.text = data.receiverPhoneNumber
-        postNumberTextField.text = data.postCode
-        addressTextField.text = data.address
+        postCodeLabelBox.text = data.postCode
+        addressLabelBox.text = data.address
         detailAddressTextField.text = data.detailAddress
         
         if isPostData {
-            addressLabel.textColor = .zoocGray2
+            postCodeLabelBox.textColor = .zoocGray3
+            addressLabelBox.textColor = .zoocGray3
             detailAddressTextField.becomeFirstResponder()
+        } else {
+            postCodeLabelBox.text = "우편번호"
+            addressLabelBox.text = "주소"
         }
         
     }
     
     func checkValidity() throws {
-        postNumberTextField.updateInvalidUI()
         receiverTextField.updateInvalidUI()
         receiverPhoneNumberTextField.updateInvalidUI()
-        if !(postNumberTextField.text?.hasText ?? false) {
-            addressLabel.textColor = .red
-        } else {
-            addressLabel.textColor = .zoocGray2
-        }
+        if postCodeLabelBox.text == "우편번호" { addressLabel.textColor = .red}
+        else { addressLabel.textColor = .zoocGray2 }
         
-        guard postNumberTextField.hasText,
-              receiverTextField.hasText,
-              receiverPhoneNumberTextField.hasText else {
+        if addressLabelBox.text == "주소" { addressLabel.textColor = .red}
+        else { addressLabel.textColor = .zoocGray2 }
+        
+        guard receiverTextField.hasText,
+              receiverPhoneNumberTextField.hasText,
+              postCodeLabelBox.text != "우편번호",
+              addressLabelBox.text != "주소" else {
+            print("🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏")
             throw OrderInvalidError.addressInvlid
         }
     }
@@ -338,7 +343,7 @@ extension OrderNewAddressView: ZoocTextFieldDelegate {
     }
     
     func zoocTextFieldDidEndEditing(_ textField: ZoocTextField) {
-        delegate?.textFieldDidEndEditing(addressName: postNumberTextField.text ?? "",
+        delegate?.textFieldDidEndEditing(addressName: addressLabelBox.text ?? "",
                                          receiverName: receiverTextField.text ?? "",
                                          receiverPhoneNumber: receiverPhoneNumberTextField.text ?? "",
                                          detailAddress: detailAddressTextField.hasText ? detailAddressTextField.text : nil,

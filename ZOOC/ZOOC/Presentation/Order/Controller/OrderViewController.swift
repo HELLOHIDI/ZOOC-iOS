@@ -429,7 +429,6 @@ extension OrderViewController: KakaoPostCodeViewControllerDelegate {
     func fetchPostCode(roadAddress: String, zoneCode: String) {
         newAddressData.address = roadAddress
         newAddressData.postCode = zoneCode
-        
         addressView.updateUI(newAddressData: newAddressData, isPostData: true)
     }
 }

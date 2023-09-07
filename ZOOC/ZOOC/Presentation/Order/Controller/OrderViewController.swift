@@ -17,6 +17,8 @@ final class OrderViewController: BaseViewController {
     
     private var ordererData = OrderOrderer()
     private var addressData = OrderAddress()
+    private var newAddressData = OrderAddress()
+    private var basicAddressData = OrderAddress()
     private let productData: OrderProduct
     private let priceData: OrderPrice
     private var agreementData = OrderAgreement()
@@ -190,7 +192,7 @@ final class OrderViewController: BaseViewController {
         basicAddressResult = basicAddressRealm.objects(OrderBasicAddress.self)
         
         ordererView.updateUI(ordererData)
-        addressView.updateUI(newAddressData: addressData, basicAddressDatas: basicAddressResult)
+        addressView.updateUI(newAddressData: newAddressData, basicAddressDatas: basicAddressResult)
         productView.updateUI(productData)
         priceView.updateUI(priceData)
     }
@@ -239,13 +241,13 @@ final class OrderViewController: BaseViewController {
             try addressView.checkValidity()
             try agreementView.checkValidity()
             
-//            requestOrderAPI(ordererData,
-//                            addressData,
-//                            productData,
-//                            priceData)
+            requestOrderAPI(ordererData,
+                            addressData,
+                            productData,
+                            priceData)
+            print(addressData)
             
-            registerBasicAddress(addressData)
-            print("짜잔~ \(addressData.request)")
+            registerBasicAddress(newAddressData)
             
         } catch OrderInvalidError.ordererInvalid {
             presentBottomAlert("구매자 정보를 입력해주세요.")
@@ -313,10 +315,10 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
     func copyButtonDidTap() {
         print(#function)
         view.endEditing(true)
-        addressData.receiverName = ordererData.name
-        addressData.receiverPhoneNumber = ordererData.phoneNumber
+        newAddressData.receiverName = ordererData.name
+        newAddressData.receiverPhoneNumber = ordererData.phoneNumber
         
-        addressView.updateUI(newAddressData: addressData)
+        addressView.updateUI(newAddressData: newAddressData)
     }
     
     func findAddressButtonDidTap() {
@@ -331,11 +333,12 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
                                 detailAddress: String?,
                                 request: String?) {
         
-        addressData.addressName = addressName
-        addressData.receiverName = receiverName
-        addressData.receiverPhoneNumber = receiverPhoneNumber
-        addressData.detailAddress = detailAddress
-        addressData.request = request
+        newAddressData.addressName = addressName
+        newAddressData.receiverName = receiverName
+        newAddressData.receiverPhoneNumber = receiverPhoneNumber
+        newAddressData.detailAddress = detailAddress
+        newAddressData.request = request
+        addressData = newAddressData
     }
     
     func basicAddressCheckButtonDidTap(tag: Int) {
@@ -344,11 +347,12 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
                 basicAddressResult[i].isSelected = (i == tag)
                 print(basicAddressResult[tag].isSelected)
             }
-            addressData.addressName = basicAddressResult[tag].address
-            addressData.receiverName = basicAddressResult[tag].name
-            addressData.receiverPhoneNumber = basicAddressResult[tag].phoneNumber
-            addressData.detailAddress = basicAddressResult[tag].detailAddress
-            addressView.updateUI(newAddressData: addressData, basicAddressDatas: basicAddressResult)
+            basicAddressData.addressName = basicAddressResult[tag].address
+            basicAddressData.receiverName = basicAddressResult[tag].name
+            basicAddressData.receiverPhoneNumber = basicAddressResult[tag].phoneNumber
+            basicAddressData.detailAddress = basicAddressResult[tag].detailAddress
+            addressData = basicAddressData
+            addressView.updateUI(newAddressData: newAddressData, basicAddressDatas: basicAddressResult)
         }
     }
     
@@ -356,7 +360,7 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
         try! basicAddressRealm.write {
             basicAddressResult[tag].request = request
         }
-        addressData.request = basicAddressResult[tag].request
+        basicAddressData.request = basicAddressResult[tag].request
     }
 }
 
@@ -402,9 +406,9 @@ extension OrderViewController: OrderAgreementViewDelegate {
 extension OrderViewController: KakaoPostCodeViewControllerDelegate {
     
     func fetchPostCode(roadAddress: String, zoneCode: String) {
-        addressData.address = roadAddress
-        addressData.postCode = zoneCode
+        newAddressData.address = roadAddress
+        newAddressData.postCode = zoneCode
         
-        addressView.updateUI(newAddressData: addressData, isPostData: true)
+        addressView.updateUI(newAddressData: newAddressData, isPostData: true)
     }
 }

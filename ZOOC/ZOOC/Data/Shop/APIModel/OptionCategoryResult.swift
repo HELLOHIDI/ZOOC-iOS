@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct OptionCategoriesResult: Codable {
+struct OptionCategoryResult: Codable {
     let name: String
     let options: [OptionResult]
 }

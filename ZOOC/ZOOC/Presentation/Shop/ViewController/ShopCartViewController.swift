@@ -348,7 +348,7 @@ extension ShopCartViewController: ShopCartCollectionViewCellDelegate {
             }
         } catch  {
             guard let error =  error as? AmountError else { return }
-            presentBottomAlert(error.message)
+            showToast(error.message, type: .normal)
         }
     }
     

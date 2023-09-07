@@ -256,7 +256,7 @@ final class ShopProductViewController: BaseViewController {
         
         priceLabel.text = productData?.price.priceText
         nameLabel.text = productData?.name
-        descriptionLabel.text = productData?.type
+        descriptionLabel.text = productData?.description
     }
     
     private func requestDetailProductAPI(id: Int) {

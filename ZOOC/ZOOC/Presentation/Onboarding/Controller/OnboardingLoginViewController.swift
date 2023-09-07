@@ -150,7 +150,7 @@ private extension OnboardingLoginViewController {
             case .success:
                 UIApplication.shared.changeRootViewController(ZoocTabBarController())
             default:
-                self.presentBottomAlert("FCM토큰을 재발급 받으세요")
+                self.showToast("FCM토큰을 재발급이 필요합니다.", type: .bad)
                 
                 UIApplication.shared.changeRootViewController(ZoocTabBarController())
             }

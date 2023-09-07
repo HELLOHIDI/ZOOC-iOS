@@ -83,7 +83,10 @@ final class MyViewController: BaseViewController {
                 let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
                 onboardingNVC.setNavigationBarHidden(true, animated: true)
                 UIApplication.shared.changeRootViewController(onboardingNVC)}
-            else { self?.presentBottomAlert("로그아웃에 실패하였습니다!")}
+            else {
+                self?.showToast("로그아웃에 실패했습니다.", type: .bad)
+                
+            }
         }
         
         viewModel.deleteAccoutOutput.observe(on: self) { [weak self] isDeleted in
@@ -92,7 +95,7 @@ final class MyViewController: BaseViewController {
                 let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
                 onboardingNVC.setNavigationBarHidden(true, animated: true)
                 UIApplication.shared.changeRootViewController(onboardingNVC)
-            } else { self?.presentBottomAlert("회원탈퇴에 실패하셨습니다!")}
+            } else { self?.showToast("회원 탈퇴에 실패했습니다.", type: .bad)}
             
         }
     }
@@ -397,13 +400,13 @@ extension MyViewController: MFMailComposeViewControllerDelegate {
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         switch result {
         case .cancelled:
-            presentBottomAlert("메일 보내기가 취소되었습니다.")
+            showToast("메일 보내기가 취소되었습니다.", type: .normal)
         case .sent:
-            presentBottomAlert("메일이 성공적으로 보내졌습니다.")
+            showToast("메일이 성공적으로 보내졌습니다.", type: .good)
         case .saved:
-            presentBottomAlert("메일이 저장되었습니다.")
+            showToast("메일이 저장되었습니다.", type: .normal)
         case .failed:
-            presentBottomAlert("메일 보내기 실패")
+            showToast("메일 보내기에 오류가 발생했습니다.", type: .normal)
         default:
             break
         }

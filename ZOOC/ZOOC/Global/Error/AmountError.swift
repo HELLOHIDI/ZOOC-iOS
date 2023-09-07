@@ -14,7 +14,7 @@ enum AmountError: Error {
     var message: String {
         switch self {
         case .decrease:
-            return "더 이상 줄일 수 없습니다."
+            return "상품 1개 미만 선택이 불가합니다."
         case .increase:
             return "최대 999개까지 주문 가능합니다."
         }

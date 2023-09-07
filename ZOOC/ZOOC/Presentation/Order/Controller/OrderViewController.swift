@@ -196,7 +196,7 @@ final class OrderViewController: BaseViewController {
     }
     
     private func registerBasicAddress(_ data: OrderAddress) {
-        if addressView.newAddressView.registerBasicAddressCheckButton.isSelected == true && addressView.newAddressButton.isSelected == true {
+        if addressView.newAddressView.registerBasicAddressCheckButton.isSelected == true && addressView.newAddressView.isHidden == false {
             let fullAddress = "(\(data.postCode)) \(data.address)"
             let newAddress = OrderBasicAddress.init(
                 postCode: data.postCode,

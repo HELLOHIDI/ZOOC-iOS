@@ -29,7 +29,7 @@ final class OrderBasicAddressView: UIView {
     
     //MARK: - UI Components
     
-    private let basicAddressCollectionView: UICollectionView = {
+    let basicAddressCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
@@ -65,7 +65,7 @@ final class OrderBasicAddressView: UIView {
     }
     
     private func layout() {
-        basicAddressCollectionView.snp.makeConstraints {
+        basicAddressCollectionView.snp.remakeConstraints {
             $0.edges.equalToSuperview()
         }
     }
@@ -87,10 +87,20 @@ extension OrderBasicAddressView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let width = collectionView.frame.width
+        var size = CGSize(width: width, height: 0) // 기본 높이 설정
         
-        return CGSize(width: width, height: 189)
+        guard let basicAddressDatas = basicAddressDatas else { return size }
+        
+        let address = basicAddressDatas[indexPath.item]
+        
+        if address.isSelected {
+            size.height = 189 // 선택된 주소의 높이
+        } else {
+            size.height = 108 // 선택되지 않은 주소의 높이
+        }
+        
+        return size
     }
-    
 }
 
 extension OrderBasicAddressView: UICollectionViewDataSource {

@@ -198,6 +198,7 @@ final class OrderAddressView: UIView {
         newAddressView.isHidden = true
         basicAddressButton.updateButtonUI(true)
         newAddressButton.updateButtonUI(false)
+        basicAddressView.basicAddressCollectionView.reloadData()
     }
     
     @objc

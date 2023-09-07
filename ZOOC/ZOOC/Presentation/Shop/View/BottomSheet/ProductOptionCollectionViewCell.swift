@@ -11,7 +11,7 @@ import SnapKit
 import Then
 
 protocol ProductOptionCollectionViewCellDelegate: AnyObject {
-    func optionDidSelected(option: ProductOption)
+    func optionDidSelected(option: OptionResult)
 }
 
 final class ProductOptionCollectionViewCell: UICollectionViewCell {
@@ -98,13 +98,11 @@ final class ProductOptionCollectionViewCell: UICollectionViewCell {
         
     }
     
-    func dataBind(optionType: String,
-                  options: [ProductOption]) {
-        
-        titleLabel.text = optionType
+    func dataBind(_ data: OptionCategoriesResult) {
+        titleLabel.text = data.name
         menuItems = []
-        options.forEach { option in
-            let action = UIAction(title: option.option,
+        data.options.forEach { option in
+            let action = UIAction(title: option.name,
                                   handler: { action in
                 self.delegate?.optionDidSelected(option: option)
             })
@@ -116,6 +114,5 @@ final class ProductOptionCollectionViewCell: UICollectionViewCell {
                       options: [],
                       children: menuItems)
         cellButton.menu = menu
-        
     }
 }

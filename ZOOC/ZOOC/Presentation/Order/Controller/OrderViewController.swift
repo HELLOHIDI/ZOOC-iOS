@@ -7,6 +7,7 @@
 
 import UIKit
 
+import FirebaseRemoteConfig
 import RealmSwift
 import SnapKit
 import Then
@@ -19,8 +20,14 @@ final class OrderViewController: BaseViewController {
     private var addressData = OrderAddress()
     private var newAddressData = OrderAddress()
     private var basicAddressData = OrderAddress()
-    private let productData: OrderProduct
-    private let priceData: OrderPrice
+    
+    private var deliveryFee = 4000 {
+        didSet {
+            priceView.updateUI(selectedProductData, deliveryFee: deliveryFee)
+        }
+    }
+    private let selectedProductData: [SelectedProductOption]
+    
     private var agreementData = OrderAgreement()
     
     let basicAddressRealm = try! Realm()
@@ -45,10 +52,10 @@ final class OrderViewController: BaseViewController {
     
     //MARK: - Life Cycle
     
-    init(productData: OrderProduct, priceData: OrderPrice) {
-        self.productData = productData
-        self.priceData = priceData
+    init(selectedProduct: [SelectedProductOption]) {
+        self.selectedProductData = selectedProduct
         super.init(nibName: nil, bundle: nil)
+        
     }
     
     override func viewDidLoad() {
@@ -58,7 +65,9 @@ final class OrderViewController: BaseViewController {
         hierarchy()
         layout()
         setDelegate()
+        requestDeliveryFee()
         updateUI()
+        
         dismissKeyboardWhenTappedAround()
     }
     
@@ -192,7 +201,7 @@ final class OrderViewController: BaseViewController {
         basicAddressResult = basicAddressRealm.objects(OrderBasicAddress.self)
         
         ordererView.updateUI(ordererData)
-        addressView.updateUI(newAddressData: newAddressData, basicAddressDatas: basicAddressResult)
+        addressView.updateUI(addressData)
         productView.updateUI(productData)
         priceView.updateUI(priceData)
     }
@@ -243,9 +252,8 @@ final class OrderViewController: BaseViewController {
             
             requestOrderAPI(ordererData,
                             addressData,
-                            productData,
-                            priceData)
-            print(addressData)
+                            selectedProductData,
+                            deliveryFee)
             
             registerBasicAddress(newAddressData)
             
@@ -276,18 +284,20 @@ final class OrderViewController: BaseViewController {
     
     private func requestOrderAPI(_ orderer: OrderOrderer,
                                  _ address: OrderAddress,
-                                 _ product: OrderProduct,
-                                 _ price: OrderPrice) {
+                                 _ products: [SelectedProductOption],
+                                 _ deliveryFee: Int) {
         
         let request = OrderRequest(orderer: orderer,
                                    address: address,
-                                   product: product,
-                                   price: price)
+                                   products: products,
+                                   deliveryFee: deliveryFee)
         
         ShopAPI.shared.postOrder(request: request) { result in
             
             self.validateResult(result)
-            let payVC = OrderAssistantViewController(totalPrice: self.priceData.totalPrice)
+            
+            let totalPrice = products.reduce(0) { $0 + $1.productsPrice} + deliveryFee
+            let payVC = OrderAssistantViewController(totalPrice: totalPrice)
             payVC.modalPresentationStyle = .fullScreen
             self.present(payVC, animated: true) {
                 self.navigationController?.popToRootViewController(animated: false)
@@ -411,4 +421,28 @@ extension OrderViewController: KakaoPostCodeViewControllerDelegate {
         
         addressView.updateUI(newAddressData: newAddressData, isPostData: true)
     }
+}
+
+extension OrderViewController {
+    private func requestDeliveryFee() {
+        
+        let remoteConfig = RemoteConfig.remoteConfig()
+        let settings =  RemoteConfigSettings()
+        settings.minimumFetchInterval = 0
+        remoteConfig.configSettings = settings
+        
+        remoteConfig.fetch() { [weak self] status, error in
+            
+            if status == .success {
+                remoteConfig.activate() { [weak self] changed, error in
+                    DispatchQueue.main.async {
+                        self?.deliveryFee = Int(truncating: remoteConfig["deliveryFee"].numberValue)
+                    }
+                }
+            } else {
+                return
+            }
+        }
+    }
+
 }

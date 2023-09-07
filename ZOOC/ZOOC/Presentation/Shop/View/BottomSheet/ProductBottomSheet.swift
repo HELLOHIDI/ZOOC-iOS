@@ -8,24 +8,26 @@
 import UIKit
 
 protocol ProductBottomSheetDelegate: AnyObject {
-    func cartButtonDidTap(selectedOptions: [ProductSelectedOption])
-    func orderButtonDidTap(selectedOptions: [ProductSelectedOption])
+    func cartButtonDidTap(selectedOptions: [SelectedProductOption])
+    func orderButtonDidTap(selectedOptions: [SelectedProductOption])
 }
 
 final class ProductBottomSheet: UIViewController, ScrollableViewController {
     
     //MARK: - Properties
 
-    private var option: [String] = ["색상"]
-
-    private var selectedOptionsData: [ProductSelectedOption] = [] {
+    private var productData: ProductDetailResult? {
         didSet {
             collectionView.reloadData()
-            var totalPrice = 0
-            selectedOptionsData.forEach { selectedOption in
-                totalPrice += selectedOption.totalPrice
-            }
-            priceValueLabel.text = totalPrice.priceText
+        }
+    }
+    
+    private var selectedOptionsData: [SelectedProductOption] = [] {
+        didSet {
+            collectionView.reloadData()
+            
+            let productsTotalPrice = selectedOptionsData.reduce(0) { $0 + $1.productsPrice }
+            priceValueLabel.text = productsTotalPrice.priceText
             
         }
     }
@@ -190,6 +192,14 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
         }
     }
     
+
+    func dataBind(_ data: ProductDetailResult?) {
+        self.productData = data
+    }
+    
+    //MARK: - Action Method
+
+    
     @objc
     private func cartButtonDidTap() {
         dismiss(animated: false)
@@ -212,10 +222,13 @@ extension ProductBottomSheet: UICollectionViewDataSource {
         2
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        guard let productData else { return 0 }
+        
         switch section {
         case 0:
-            return option.count
+            return productData.optionCategories.count
         case 1:
             return selectedOptionsData.count
         default:
@@ -225,13 +238,13 @@ extension ProductBottomSheet: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let productData else { return UICollectionViewCell() }
+        
         switch indexPath.section {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductOptionCollectionViewCell.cellIdentifier,
                                                           for: indexPath) as! ProductOptionCollectionViewCell
-            cell.dataBind(optionType: "색상", options: [ProductOption(id: 1, option: "빨강", price: 10000),
-                                                      ProductOption(id: 2, option: "파랑", price: 10000),
-                                                      ProductOption(id: 3, option: "노랑", price: 10000)])
+            cell.dataBind(productData.optionCategories[indexPath.row])
             cell.delegate = self
             return cell
         case 1:
@@ -289,8 +302,10 @@ extension ProductBottomSheet: UICollectionViewDelegateFlowLayout {
 }
 
 extension ProductBottomSheet: ProductOptionCollectionViewCellDelegate {
-    func optionDidSelected(option: ProductOption) {
-        let willSelectedOption = option.transform()
+    func optionDidSelected(option: OptionResult) {
+        
+        let willSelectedOption = option.transform(withImage: productData?.images.first ?? "",
+                                                  withName: productData?.name ?? "")
         var canAppend = true
         selectedOptionsData.forEach { selectedOption in
             guard selectedOption.id != willSelectedOption.id else
@@ -320,8 +335,6 @@ extension ProductBottomSheet: ProductSelectedOptionCollectionViewCellDelegate {
             } else {
                 try selectedOptionsData[row].decrease()
             }
-            
-            collectionView.reloadData()
         } catch  {
             guard let error =  error as? AmountError else { return }
             presentBottomAlert(error.message)
@@ -330,7 +343,6 @@ extension ProductBottomSheet: ProductSelectedOptionCollectionViewCellDelegate {
     
     func xButtonDidTap(row: Int) {
         selectedOptionsData.remove(at: row)
-        collectionView.reloadData()
     }
     
     

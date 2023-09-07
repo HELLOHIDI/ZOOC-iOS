@@ -166,10 +166,13 @@ final class OrderProductView: UIView {
         }
     }
     
-    func updateUI(_ data: OrderProduct) {
-        productImageView.kfSetImage(url: data.imageURL)
-        productNameLabel.text = data.name
-        priceLabel.text = data.price.priceText
+    func updateUI(_ data: [SelectedProductOption]) {
+        
+        //TODO: - data 배열을 사용하여 CollectionView 만들어야함!!
+        
+        productImageView.kfSetImage(url: data[0].image)
+        productNameLabel.text = data[0].option
+        priceLabel.text = data[0].price.priceText
     }
     
     //MARK: - Action Method

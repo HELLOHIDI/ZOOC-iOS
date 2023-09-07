@@ -393,8 +393,7 @@ final class ArchiveViewController : BaseViewController {
     
     private func presentZoocAlertVC() {
         let alertVC = ZoocAlertViewController(.deleteArchive)
-        alertVC.exitButtonTapDelegate = self
-        alertVC.modalPresentationStyle = .overFullScreen
+        alertVC.delegate = self
         present(alertVC, animated: false)
     }
     
@@ -667,7 +666,7 @@ extension ArchiveViewController: EmojiBottomSheetDelegate{
 
 //MARK: - 구역
 
-extension ArchiveViewController: ZoocAlertExitButtonTapGestureProtocol {
+extension ArchiveViewController: ZoocAlertViewControllerDelegate {
     func exitButtonDidTap() {
         deleteArchive()
     }

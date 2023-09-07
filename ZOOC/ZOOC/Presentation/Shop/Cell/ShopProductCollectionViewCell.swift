@@ -72,7 +72,7 @@ final class ShopProductCollectionViewCell: UICollectionViewCell {
     }
     
     private func layout() {
-        var cellWidth = (Device.width - 69) / 2
+        let cellWidth = (Device.width - 69) / 2
       
         imageView.snp.makeConstraints {
             $0.top.equalToSuperview()

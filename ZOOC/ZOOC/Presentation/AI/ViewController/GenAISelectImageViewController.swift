@@ -160,8 +160,7 @@ extension GenAISelectImageViewController: UICollectionViewDataSource {
 extension GenAISelectImageViewController {
     func presentAlertViewController() {
         let zoocAlertVC = ZoocAlertViewController(.leaveAIPage)
-        zoocAlertVC.exitButtonTapDelegate = self
-        zoocAlertVC.modalPresentationStyle = .overFullScreen
+        zoocAlertVC.delegate = self
         self.present(zoocAlertVC, animated: false, completion: nil)
     }
     
@@ -171,7 +170,7 @@ extension GenAISelectImageViewController {
     }
 }
 
-extension GenAISelectImageViewController: ZoocAlertExitButtonTapGestureProtocol {
+extension GenAISelectImageViewController: ZoocAlertViewControllerDelegate {
     func exitButtonDidTap() {
         navigationController?.popViewController(animated: true)
         dismiss(animated: true)

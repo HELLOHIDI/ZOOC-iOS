@@ -201,9 +201,9 @@ final class OrderViewController: BaseViewController {
         basicAddressResult = basicAddressRealm.objects(OrderBasicAddress.self)
         
         ordererView.updateUI(ordererData)
-        addressView.updateUI(addressData)
-        productView.updateUI(productData)
-        priceView.updateUI(priceData)
+        addressView.updateUI(newAddressData: newAddressData, basicAddressDatas: basicAddressResult)
+        productView.updateUI(selectedProductData)
+        priceView.updateUI(selectedProductData, deliveryFee: deliveryFee)
     }
     
     private func registerBasicAddress(_ data: OrderAddress) {

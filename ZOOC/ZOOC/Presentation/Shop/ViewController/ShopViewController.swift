@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class ShopViewController : BaseViewController {
+final class ShopViewController: BaseViewController {
     
     //MARK: - Properties
     

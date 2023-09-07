@@ -137,6 +137,7 @@
 		87BCAD382AA5C71800A03DA3 /* OptionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BCAD372AA5C71800A03DA3 /* OptionResult.swift */; };
 		87BCAD3A2AA718D800A03DA3 /* ShopCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BCAD392AA718D800A03DA3 /* ShopCartViewController.swift */; };
 		87BCAD3C2AA8DF3600A03DA3 /* ShopCartCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BCAD3B2AA8DF3600A03DA3 /* ShopCartCollectionViewCell.swift */; };
+		87BCAD3E2AA9BA2900A03DA3 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BCAD3D2AA9BA2900A03DA3 /* Toast.swift */; };
 		87C109252971A5B40086466F /* ArchiveCommentReqeust.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C109242971A5B40086466F /* ArchiveCommentReqeust.swift */; };
 		87C6C4C92A537902003DA38A /* TextLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C6C4C82A537902003DA38A /* TextLiteral.swift */; };
 		87D5AF5629605C0100CA7F12 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D5AF5529605C0100CA7F12 /* URLs.swift */; };
@@ -419,6 +420,7 @@
 		87BCAD372AA5C71800A03DA3 /* OptionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionResult.swift; sourceTree = "<group>"; };
 		87BCAD392AA718D800A03DA3 /* ShopCartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCartViewController.swift; sourceTree = "<group>"; };
 		87BCAD3B2AA8DF3600A03DA3 /* ShopCartCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCartCollectionViewCell.swift; sourceTree = "<group>"; };
+		87BCAD3D2AA9BA2900A03DA3 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		87C109242971A5B40086466F /* ArchiveCommentReqeust.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveCommentReqeust.swift; sourceTree = "<group>"; };
 		87C6C4C82A537902003DA38A /* TextLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLiteral.swift; sourceTree = "<group>"; };
 		87D5AF5529605C0100CA7F12 /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
@@ -689,6 +691,7 @@
 				872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */,
 				872BBD9629F95BE2002E2C71 /* UserDefaultsManager.swift */,
 				874369562A8FFB250035AFD6 /* NetworkMonitor.swift */,
+				87BCAD3D2AA9BA2900A03DA3 /* Toast.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1943,6 +1946,7 @@
 				4C6B1862296B69070059840D /* RecordRegisterViewController.swift in Sources */,
 				87B6624329521E7500B6FFA9 /* SceneDelegate.swift in Sources */,
 				87F287D52A9A4EC100A53218 /* KakaoPostCodeViewController.swift in Sources */,
+				87BCAD3E2AA9BA2900A03DA3 /* Toast.swift in Sources */,
 				870A4C122AA374D000D7CFD8 /* SelectedProductOption.swift in Sources */,
 				D299957A2A95B8520004FB5D /* NSItemProvider+.swift in Sources */,
 				87A76ABF2960423C0096F669 /* GenericResponse.swift in Sources */,

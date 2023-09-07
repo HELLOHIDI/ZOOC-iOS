@@ -219,22 +219,22 @@ final class OrderViewController: BaseViewController {
                             deliveryFee)
             
         } catch OrderInvalidError.ordererInvalid {
-            presentBottomAlert("구매자 정보를 입력해주세요.")
+            showToast("구매자 정보를 입력해주세요.", type: .bad)
             let y = ordererView.frame.minY
             scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: true)
             
         } catch OrderInvalidError.addressInvlid {
-            presentBottomAlert("배송지 정보를 입력해주세요.")
+            showToast("배송지 정보를 입력해주세요.", type: .bad)
             let y = addressView.frame.minY
             scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: true)
             
         } catch OrderInvalidError.paymentMethodInvalid {
-            presentBottomAlert("결제수단 정보를 확인해주세요.")
+            showToast("결제수단 정보를 확인해주세요.", type: .bad)
             let y = paymentMethodView.frame.minY
             scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: true)
             
         } catch OrderInvalidError.agreementInvalid {
-            presentBottomAlert("결제 진행 필수사항을 동의해주세요.")
+            showToast("결제 진행 필수사항을 동의해주세요.", type: .bad)
             scrollView.setContentOffset(CGPoint(x: 0,
                                                 y: self.scrollView.contentSize.height - self.scrollView.bounds.height),
                                              animated: true)

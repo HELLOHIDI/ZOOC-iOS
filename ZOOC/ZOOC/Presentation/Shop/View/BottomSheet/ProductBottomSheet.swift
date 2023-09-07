@@ -270,7 +270,6 @@ extension ProductBottomSheet: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         let width = collectionView.frame.width
         
         switch indexPath.section {

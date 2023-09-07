@@ -11,7 +11,7 @@ extension UIViewController{
     
     func presentBottomAlert(_ message: String) {
       
-        let alertSuperview : UIView = {
+        let alertSuperview: UIView = {
             let view = UIView()
             view.backgroundColor = .darkGray.withAlphaComponent(0.85)
             view.layer.cornerRadius = 10
@@ -20,7 +20,7 @@ extension UIViewController{
         }()
     
         
-        let alertLabel : UILabel = {
+        let alertLabel: UILabel = {
             let label = UILabel()
             label.font = .systemFont(ofSize: 15)
             label.textColor = .white
@@ -55,6 +55,17 @@ extension UIViewController{
                 alertSuperview.removeFromSuperview()
             }
         )
+    }
+    
+    // MARK: 2023.09.07 생성. 커스텀 가능한 bottomAlert를 만들기 위해 추가 구현.
+    // TODO: presentBottom -> ShowToast로 모두 변경하기
+    func showToast(_ message: String,
+                   type: Toast.ToastType,
+                   bottomInset: CGFloat = 86) {
+        Toast().show(message: message,
+                     type: type,
+                     view: self.view,
+                     bottomInset: bottomInset)
     }
     
     

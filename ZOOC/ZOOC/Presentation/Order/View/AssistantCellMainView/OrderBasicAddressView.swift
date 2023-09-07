@@ -12,6 +12,7 @@ import RealmSwift
 
 protocol OrderBasicAddressViewDelegate: AnyObject {
     func basicAddressCheckButtonDidTap(tag: Int)
+    func basicAddressTextFieldDidChange(tag: Int, request: String?)
 }
 
 final class OrderBasicAddressView: UIView {
@@ -109,7 +110,13 @@ extension OrderBasicAddressView: UICollectionViewDataSource {
 }
 
 extension OrderBasicAddressView: OrderBasicAddressCollectionViewCellDelegate {
+    func basicAddressTextFieldDidChange(tag: Int, request: String?) {
+        delegate?.basicAddressTextFieldDidChange(tag: tag, request: request)
+    }
+    
+    
     func basicAddressCheckButtonDidTap(tag: Int) {
         delegate?.basicAddressCheckButtonDidTap(tag: tag)
     }
 }
+

@@ -11,6 +11,7 @@ import SnapKit
 
 protocol OrderBasicAddressCollectionViewCellDelegate: AnyObject {
     func basicAddressCheckButtonDidTap(tag: Int)
+    func basicAddressTextFieldDidChange(tag: Int, request: String?)
 }
 
 final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
@@ -63,13 +64,14 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let requestTextField: ZoocTextField = {
+    lazy var requestTextField: ZoocTextField = {
         let textField = ZoocTextField(.numberPad)
         textField.placeholder = "부재 시 경비실에 맡겨주세요"
         textField.font = .zoocBody1
         textField.textColor = .zoocGray3
         textField.setPlaceholderColor(color: .zoocGray1)
         textField.isHidden = true
+        textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingDidEnd)
         return textField
     }()
     
@@ -141,6 +143,11 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         delegate?.basicAddressCheckButtonDidTap(tag: sender.tag)
     }
     
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        print(#function)
+        delegate?.basicAddressTextFieldDidChange(tag: tag, request: textField.text)
+    }
+    
     //MARK: - Public Methods
     
     func dataBind(tag: Int, _ data: OrderBasicAddress) {
@@ -148,6 +155,7 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         basicAddressLabel.text = "\(data.address) \n\(data.detailAddress ?? "")"
         phoneNumLabel.text = data.phoneNumber
         basicAddressCheckButton.tag = tag
+        requestTextField.tag = tag
         basicAddressCheckButton.isSelected = data.isSelected
         requestLabel.isHidden = !data.isSelected
         requestTextField.isHidden = !data.isSelected

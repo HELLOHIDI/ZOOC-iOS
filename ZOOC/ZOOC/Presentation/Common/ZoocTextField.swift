@@ -101,6 +101,5 @@ extension ZoocTextField: UITextFieldDelegate {
         guard let text = textField.text else { return }
         zoocDelegate?.zoocTextFieldTextDidChange?(self, text: text)
     }
-
 }
 

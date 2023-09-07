@@ -56,7 +56,7 @@ final class OrderAddressView: UIView {
         return button
     }()
     
-    private lazy var newAddressButton: ZoocGradientButton = {
+    lazy var newAddressButton: ZoocGradientButton = {
         let button = ZoocGradientButton.init(.order)
         button.setTitle("신규 입력", for: .normal)
         button.addTarget(self, action: #selector(newAddressButtonDidTap), for: .touchUpInside)
@@ -157,8 +157,11 @@ final class OrderAddressView: UIView {
     func updateUI(newAddressData: OrderAddress,
                   basicAddressDatas: Results<OrderBasicAddress>? = nil,
                   isPostData: Bool = false) {
+        basicAddressView.updateUI(basicAddressDatas)
+        newAddressView.updateUI(newAddressData)
         
-        if basicAddressDatas != nil {
+        guard let basicAddressDatas = basicAddressDatas else { return }
+        if !basicAddressDatas.isEmpty {
             updateViewAppear(true)
             basicAddressButton.updateButtonUI(true)
             newAddressButton.updateButtonUI(false)
@@ -167,18 +170,18 @@ final class OrderAddressView: UIView {
             basicAddressButton.updateButtonUI(false)
             newAddressButton.updateButtonUI(true)
         }
-        
-        basicAddressView.updateUI(basicAddressDatas)
-        newAddressView.updateUI(newAddressData)
     }
     
     func updateViewAppear(_ hasBasicAddress: Bool) {
         basicAddressView.isHidden = !hasBasicAddress
         newAddressView.isHidden = hasBasicAddress
+        copyButton.isHidden = hasBasicAddress
     }
     
     func checkValidity() throws {
-        try newAddressView.checkValidity()
+        if newAddressButton.isSelected {
+            try newAddressView.checkValidity()
+        }
     }
     
     //MARK: - Action Method

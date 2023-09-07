@@ -196,7 +196,7 @@ final class OrderViewController: BaseViewController {
     }
     
     private func registerBasicAddress(_ data: OrderAddress) {
-        if addressView.newAddressView.registerBasicAddressCheckButton.isSelected == true {
+        if addressView.newAddressView.registerBasicAddressCheckButton.isSelected == true && addressView.newAddressButton.isSelected == true {
             let fullAddress = "(\(data.postCode)) \(data.address)"
             let newAddress = OrderBasicAddress.init(
                 postCode: data.postCode,
@@ -204,6 +204,7 @@ final class OrderViewController: BaseViewController {
                 address: fullAddress,
                 detailAddress: data.detailAddress,
                 phoneNumber: data.receiverPhoneNumber,
+                request: nil,
                 isSelected: false
             )
             
@@ -244,6 +245,7 @@ final class OrderViewController: BaseViewController {
 //                            priceData)
             
             registerBasicAddress(addressData)
+            print("짜잔~ \(addressData.request)")
             
         } catch OrderInvalidError.ordererInvalid {
             presentBottomAlert("구매자 정보를 입력해주세요.")
@@ -306,8 +308,10 @@ extension OrderViewController: OrderOrdererViewDelegate {
 
 //MARK: - OrderAddressViewDelegate
 
-extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDelegate {
+extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDelegate & OrderBasicAddressViewDelegate {
+
     func copyButtonDidTap() {
+        print(#function)
         view.endEditing(true)
         addressData.receiverName = ordererData.name
         addressData.receiverPhoneNumber = ordererData.phoneNumber
@@ -332,6 +336,27 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
         addressData.receiverPhoneNumber = receiverPhoneNumber
         addressData.detailAddress = detailAddress
         addressData.request = request
+    }
+    
+    func basicAddressCheckButtonDidTap(tag: Int) {
+        try! basicAddressRealm.write {
+            for i in 0..<basicAddressResult.count {
+                basicAddressResult[i].isSelected = (i == tag)
+                print(basicAddressResult[tag].isSelected)
+            }
+            addressData.addressName = basicAddressResult[tag].address
+            addressData.receiverName = basicAddressResult[tag].name
+            addressData.receiverPhoneNumber = basicAddressResult[tag].phoneNumber
+            addressData.detailAddress = basicAddressResult[tag].detailAddress
+            addressView.updateUI(newAddressData: addressData, basicAddressDatas: basicAddressResult)
+        }
+    }
+    
+    func basicAddressTextFieldDidChange(tag: Int, request: String?) {
+        try! basicAddressRealm.write {
+            basicAddressResult[tag].request = request
+        }
+        addressData.request = basicAddressResult[tag].request
     }
 }
 
@@ -381,19 +406,5 @@ extension OrderViewController: KakaoPostCodeViewControllerDelegate {
         addressData.postCode = zoneCode
         
         addressView.updateUI(newAddressData: addressData, isPostData: true)
-    }
-}
-
-//MARK: - OrderBasicAddressViewDelegate
-
-extension OrderViewController: OrderBasicAddressViewDelegate {
-    func basicAddressCheckButtonDidTap(tag: Int) {
-        try! basicAddressRealm.write {
-            for i in 0..<basicAddressResult.count {
-                basicAddressResult[i].isSelected = (i == tag)
-                print(basicAddressResult[tag].isSelected)
-            }
-            addressView.updateUI(newAddressData: addressData, basicAddressDatas: basicAddressResult)
-        }
     }
 }

@@ -17,15 +17,17 @@ class OrderBasicAddress: Object {
     @Persisted var address: String = ""
     @Persisted var detailAddress: String?
     @Persisted var phoneNumber: String = ""
+    @Persisted var request: String?
     @Persisted var isSelected: Bool = false
     
-    convenience init(postCode: String, name: String, address: String, detailAddress: String? = nil, phoneNumber: String, isSelected: Bool) {
+    convenience init(postCode: String, name: String, address: String, detailAddress: String? = nil, phoneNumber: String, request: String? = nil, isSelected: Bool) {
         self.init()
         self.postCode = postCode
         self.name = name
         self.address = address
         self.detailAddress = detailAddress
         self.phoneNumber = phoneNumber
+        self.request = request
         self.isSelected = isSelected
         self.fullAddress = "(\(postCode)) \(address) \(detailAddress ?? "")"
     }

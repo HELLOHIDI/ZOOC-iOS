@@ -228,7 +228,7 @@ final class OrderViewController: BaseViewController {
                     print(newAddress)
                 }
             } else {
-                presentBottomAlert("이미 등록된 주소입니다!")
+                showToast("이미 등록된 주소입니다!", type: .bad)
             }
         } else {
             print("로컬DB에 등록이 불가능합니다!")

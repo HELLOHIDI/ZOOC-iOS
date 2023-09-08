@@ -23,9 +23,18 @@ final class OrderViewController: BaseViewController {
     
     private var deliveryFee = 4000 {
         didSet {
-            priceView.updateUI(selectedProductData, deliveryFee: deliveryFee)
+            let productsTotalPrice = selectedProductData.reduce(0) { $0 + $1.productsPrice }
+            totalPrice = productsTotalPrice + deliveryFee
         }
     }
+    
+    private var totalPrice = 0 {
+        didSet {
+            priceView.updateUI(totalPrice, deliveryFee: deliveryFee)
+            orderButton.setTitle("\(totalPrice.priceText) 결제하기", for: .normal)
+        }
+    }
+    
     private let selectedProductData: [SelectedProductOption]
     
     private var agreementData = OrderAgreement()
@@ -205,7 +214,7 @@ final class OrderViewController: BaseViewController {
         ordererView.updateUI(ordererData)
         addressView.updateUI(newAddressData: newAddressData, basicAddressDatas: basicAddressResult)
         productView.updateUI(selectedProductData)
-        priceView.updateUI(selectedProductData, deliveryFee: deliveryFee)
+        priceView.updateUI(totalPrice, deliveryFee: deliveryFee)
     }
     
     private func registerBasicAddress(_ data: OrderAddress) {

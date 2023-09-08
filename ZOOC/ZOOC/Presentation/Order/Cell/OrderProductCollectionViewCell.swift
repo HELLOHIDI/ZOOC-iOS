@@ -113,7 +113,7 @@ final class OrderProductCollectionViewCell: UICollectionViewCell {
     func dataBind(_ data: SelectedProductOption) {
         productImageView.kfSetImage(url: data.image)
         productNameLabel.text = data.name
-        priceLabel.text = "\(data.price)원"
+        priceLabel.text = data.price.priceText
         productCntLabel.text = "\(data.amount)개"
         phoneModelLabel.text = " | \(data.option)"
     }

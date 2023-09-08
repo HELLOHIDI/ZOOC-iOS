@@ -156,8 +156,10 @@ final class OrderViewController: BaseViewController {
         }
         
         productView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(1)
+            let totalHeight = 60 + selectedProductData.count * 90 + (selectedProductData.count - 1) * 24 + 30
+            $0.top.equalToSuperview()
             $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(totalHeight)
         }
         
         ordererView.snp.makeConstraints {

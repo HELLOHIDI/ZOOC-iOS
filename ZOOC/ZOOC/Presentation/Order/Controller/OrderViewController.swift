@@ -246,10 +246,20 @@ final class OrderViewController: BaseViewController {
         }
     }
     
+    private func resetBasicAddressIsSelected() {
+        try! basicAddressRealm.write {
+            basicAddressResult.forEach {
+                $0.isSelected = false
+            }
+            basicAddressResult.first?.isSelected = true
+        }
+    }
+    
     //MARK: - Action Method
     
     @objc
     private func backButtonDidTap() {
+        resetBasicAddressIsSelected()
         navigationController?.popViewController(animated: true)
     }
     
@@ -267,6 +277,7 @@ final class OrderViewController: BaseViewController {
                             deliveryFee)
             
             registerBasicAddress(newAddressData)
+            resetBasicAddressIsSelected()
             
         } catch OrderInvalidError.ordererInvalid {
             showToast("구매자 정보를 모두 입력해주세요.",

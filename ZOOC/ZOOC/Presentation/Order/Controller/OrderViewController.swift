@@ -25,7 +25,6 @@ final class OrderViewController: BaseViewController {
         didSet {
             let productsTotalPrice = selectedProductData.reduce(0) { $0 + $1.productsPrice }
             totalPrice = productsTotalPrice + deliveryFee
-            print("totalPrice: \(totalPrice)")
         }
     }
     
@@ -344,9 +343,15 @@ extension OrderViewController: OrderOrdererViewDelegate {
 //MARK: - OrderAddressViewDelegate
 
 extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDelegate & OrderBasicAddressViewDelegate {
+    func basicAddressButtonDidTap() {
+        if basicAddressResult.isEmpty {
+            showToast("먼저 신규입력으로 배송지를 등록해주세요", type: .bad)
+            addressView.updateUI(newAddressData: addressData, hasBasicAddress: false)
+        }
+    }
+    
 
     func copyButtonDidTap() {
-        print(#function)
         view.endEditing(true)
         newAddressData.receiverName = ordererData.name
         newAddressData.receiverPhoneNumber = ordererData.phoneNumber

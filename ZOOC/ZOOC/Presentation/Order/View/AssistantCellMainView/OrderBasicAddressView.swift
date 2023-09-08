@@ -78,8 +78,11 @@ final class OrderBasicAddressView: UIView {
                                             forCellWithReuseIdentifier: OrderBasicAddressCollectionViewCell.cellIdentifier)
     }
     
-    func updateUI(_ data: Results<OrderBasicAddress>? = nil, isPostData: Bool = false) {
+    func updateUI(_ data: Results<OrderBasicAddress>? = nil, hasBasicAddressData: Bool = true) {
         basicAddressDatas = data
+        if !hasBasicAddressData {
+            self.isHidden = true
+        }
     }
 }
 

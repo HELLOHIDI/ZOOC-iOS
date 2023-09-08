@@ -17,11 +17,18 @@ final class ShopCartViewController: BaseViewController {
     
     private var deliveryFee: Int = 4000 {
         didSet {
-            deliveryFeeValueLabel.text = deliveryFee.priceText
+            updateUI()
         }
     }
     
-    private var selectedProductData: [SelectedProductOption] {
+//    private var selectedProductData: [SelectedProductOption] {
+//        didSet {
+//            collectionView.reloadData()
+//            updateUI()
+//        }
+//    }
+    
+    private var cartedProducts: [CartedProduct] = [] {
         didSet {
             collectionView.reloadData()
             updateUI()
@@ -132,10 +139,12 @@ final class ShopCartViewController: BaseViewController {
     
     //MARK: - Life Cycle
     
-    init(selectedProduct: [SelectedProductOption]) {
-        self.selectedProductData = selectedProduct
-        super.init(nibName: nil, bundle: nil)
-    }
+//    init(selectedProduct: [SelectedProductOption]) {
+//        self.selectedProductData = selectedProduct
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//
+//    init
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -146,13 +155,13 @@ final class ShopCartViewController: BaseViewController {
         setDelegate()
         updateUI()
         requestDeliveryFee()
-        
+        requestCartedProducts()
         dismissKeyboardWhenTappedAround()
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     //MARK: - Custom Method
     
@@ -262,18 +271,18 @@ final class ShopCartViewController: BaseViewController {
     }
     
     private func updateUI() {
-        let productsTotalPrice = selectedProductData.reduce(0) { $0 + $1.productsPrice }
+        let productsTotalPrice = cartedProducts.reduce(0) { $0 + $1.productsPrice }
         let totalPrice = deliveryFee + productsTotalPrice
         
         productsPriceValueLabel.text = productsTotalPrice.priceText
         
-        if selectedProductData.isEmpty {
+        if cartedProducts.isEmpty {
             deliveryFeeValueLabel.text = 0.priceText
             totalPriceValueLabel.text = 0.priceText
             payButton.isEnabled = false
             payButton.setTitle("주문 상품을 추가해주세요.", for: .normal)
         } else {
-            
+            deliveryFeeValueLabel.text = deliveryFee.priceText
             totalPriceValueLabel.text = totalPrice.priceText
             payButton.isEnabled = true
             payButton.setTitle("\(totalPrice.priceText) 결제하기", for: .normal)
@@ -287,6 +296,10 @@ final class ShopCartViewController: BaseViewController {
         )
     }
     
+    private func requestCartedProducts() {
+        cartedProducts = RealmService().getCartedProducts()
+    }
+    
     //MARK: - Action Method
     
     @objc
@@ -296,8 +309,8 @@ final class ShopCartViewController: BaseViewController {
     
     @objc
     private func orderButtonDidTap() {
-        let orderVC = OrderViewController(selectedProduct: selectedProductData)
-        navigationController?.pushViewController(orderVC, animated: true)
+//        let orderVC = OrderViewController()
+//        navigationController?.pushViewController(orderVC, animated: true)
     }
     
 }
@@ -306,13 +319,13 @@ final class ShopCartViewController: BaseViewController {
 
 extension ShopCartViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        selectedProductData.count
+        cartedProducts.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopCartCollectionViewCell.reuseCellIdentifier,
                                                       for: indexPath) as! ShopCartCollectionViewCell
-        cell.dataBind(indexPath: indexPath, selectedOption: selectedProductData[indexPath.row])
+        cell.dataBind(indexPath: indexPath, selectedOption: cartedProducts[indexPath.row])
         cell.delegate = self
         return cell
     }
@@ -340,16 +353,15 @@ extension ShopCartViewController: UICollectionViewDelegateFlowLayout {
 
 extension ShopCartViewController: ShopCartCollectionViewCellDelegate {
     func adjustAmountButtonDidTap(row: Int, isPlus: Bool) {
+        let optionID = cartedProducts[row].optionID
         do {
-            if isPlus {
-                try selectedProductData[row].increase()
-            } else {
-                try selectedProductData[row].decrease()
-            }
+            try RealmService().updateCartedProductPieces(optionID: optionID, isPlus: isPlus)
         } catch  {
             guard let error =  error as? AmountError else { return }
-            showToast(error.message, type: .normal)
+            showToast(error.message, type: .bad)
         }
+        
+        cartedProducts = RealmService().getCartedProducts()
     }
     
     func xButtonDidTap(row: Int) {
@@ -365,8 +377,10 @@ extension ShopCartViewController: ShopCartCollectionViewCellDelegate {
 extension ShopCartViewController: ZoocAlertViewControllerDelegate {
     
     internal func keepButtonDidTap(_ data: Any?) {
-        guard let row = data as? Int else { return}
-        selectedProductData.remove(at: row)
+        guard let row = data as? Int else { return }
+        let product = cartedProducts[row]
+        RealmService().deleteCartedProduct(product)
+        cartedProducts.remove(at: row)
     }
 }
 

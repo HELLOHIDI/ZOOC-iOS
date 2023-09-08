@@ -137,7 +137,7 @@ final class ShopViewController: BaseViewController {
     
     @objc
     private func cartButtonDidTap() {
-        let cartVC = UIViewController()
+        let cartVC = ShopCartViewController()
         navigationController?.pushViewController(cartVC, animated: true)
     }
     

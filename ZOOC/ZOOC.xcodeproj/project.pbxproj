@@ -156,6 +156,9 @@
 		87E462EE2A110867006FC35D /* ZoocGradinetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */; };
 		87E462F12A110E18006FC35D /* CGColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462F02A110E18006FC35D /* CGColor+.swift */; };
 		87E462F32A113A37006FC35D /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462F22A113A37006FC35D /* CALayer+.swift */; };
+		87E4A1C92AAAF8AC005C012E /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E4A1C82AAAF8AC005C012E /* RealmService.swift */; };
+		87E4A1CC2AAAFCA5005C012E /* CartedProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E4A1CB2AAAFCA5005C012E /* CartedProduct.swift */; };
+		87E4A1CE2AAB3075005C012E /* Results+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E4A1CD2AAB3075005C012E /* Results+.swift */; };
 		87F287D52A9A4EC100A53218 /* KakaoPostCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287D42A9A4EC100A53218 /* KakaoPostCodeViewController.swift */; };
 		87F287D72A9A63CC00A53218 /* OrderAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287D62A9A63CC00A53218 /* OrderAddress.swift */; };
 		87F287D92A9A667500A53218 /* BasePaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287D82A9A667500A53218 /* BasePaddingLabel.swift */; };
@@ -448,6 +451,9 @@
 		87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocGradinetButton.swift; sourceTree = "<group>"; };
 		87E462F02A110E18006FC35D /* CGColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGColor+.swift"; sourceTree = "<group>"; };
 		87E462F22A113A37006FC35D /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
+		87E4A1C82AAAF8AC005C012E /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
+		87E4A1CB2AAAFCA5005C012E /* CartedProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartedProduct.swift; sourceTree = "<group>"; };
+		87E4A1CD2AAB3075005C012E /* Results+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Results+.swift"; sourceTree = "<group>"; };
 		87F287D42A9A4EC100A53218 /* KakaoPostCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoPostCodeViewController.swift; sourceTree = "<group>"; };
 		87F287D62A9A63CC00A53218 /* OrderAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAddress.swift; sourceTree = "<group>"; };
 		87F287D82A9A667500A53218 /* BasePaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePaddingLabel.swift; sourceTree = "<group>"; };
@@ -751,6 +757,7 @@
 				D2C028F12A81F8B2003F4727 /* String+.swift */,
 				D29995792A95B8520004FB5D /* NSItemProvider+.swift */,
 				87A3D8942A97C458002C36DB /* Int+.swift */,
+				87E4A1CD2AAB3075005C012E /* Results+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1241,6 +1248,7 @@
 				87DC47EF2A7ADF66007823CB /* Configuration */,
 				87B6625429521EAC00B6FFA9 /* Application */,
 				876483162952351500F74882 /* Global */,
+				87E4A1C72AAAF8A0005C012E /* Realm */,
 				87B6625629521EBC00B6FFA9 /* Resource */,
 				87B6625729521EC200B6FFA9 /* Data */,
 				87B6625829521EC900B6FFA9 /* Network */,
@@ -1456,6 +1464,22 @@
 			path = APIModel;
 			sourceTree = "<group>";
 		};
+		87E4A1C72AAAF8A0005C012E /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				87E4A1C82AAAF8AC005C012E /* RealmService.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
+		87E4A1CA2AAAFC79005C012E /* RealmModel */ = {
+			isa = PBXGroup;
+			children = (
+				87E4A1CB2AAAFCA5005C012E /* CartedProduct.swift */,
+			);
+			path = RealmModel;
+			sourceTree = "<group>";
+		};
 		87F287ED2A9F36B800A53218 /* Shop */ = {
 			isa = PBXGroup;
 			children = (
@@ -1476,6 +1500,7 @@
 		87F287F52A9F3EED00A53218 /* Shop */ = {
 			isa = PBXGroup;
 			children = (
+				87E4A1CA2AAAFC79005C012E /* RealmModel */,
 				87F287F82A9F3F7000A53218 /* APIModel */,
 				870A4C112AA374D000D7CFD8 /* SelectedProductOption.swift */,
 			);
@@ -2053,13 +2078,16 @@
 				D2C028F42A8246C1003F4727 /* MyEditPetProfileViewModel.swift in Sources */,
 				D20C00972A9711C200666963 /* GenAIDatasetResult.swift in Sources */,
 				870A4C022AA26F6900D7CFD8 /* TouchBlockIntrinsicPanelLayout.swift in Sources */,
+				87E4A1CE2AAB3075005C012E /* Results+.swift in Sources */,
 				876483192952366A00F74882 /* Image.swift in Sources */,
 				4C6B1868296B930B0059840D /* RecordRegisterCollectionViewCell.swift in Sources */,
 				87F288052A9FA69200A53218 /* OrderAssistantCompleteView.swift in Sources */,
 				87A3D88A2A975D4F002C36DB /* OrderAddressView.swift in Sources */,
 				87648323295236B700F74882 /* UIColor+.swift in Sources */,
 				D27D9560296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift in Sources */,
+				87E4A1CC2AAAFCA5005C012E /* CartedProduct.swift in Sources */,
 				D26C68EC296DE7B60088DC9A /* MyPetRegisterModel.swift in Sources */,
+				87E4A1C92AAAF8AC005C012E /* RealmService.swift in Sources */,
 				D2EA37EF29BEAB57007EF4B7 /* OnboardingBaseView.swift in Sources */,
 				D24AFABC2A8E03EF00823E9C /* GenAIRegisterViewModel.swift in Sources */,
 				D21CEC6229ABC1F900854A36 /* MyRegisterPetResult.swift in Sources */,

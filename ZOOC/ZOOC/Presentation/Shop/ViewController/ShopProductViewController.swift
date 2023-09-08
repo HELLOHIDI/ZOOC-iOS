@@ -278,7 +278,7 @@ final class ShopProductViewController: BaseViewController {
     
     @objc
     private func naviCartButtonDidTap() {
-        let cartVC = UIViewController()
+        let cartVC = ShopCartViewController()
         navigationController?.pushViewController(cartVC, animated: true)
     }
     
@@ -290,7 +290,12 @@ final class ShopProductViewController: BaseViewController {
 
 extension ShopProductViewController: ProductBottomSheetDelegate {
     func cartButtonDidTap(selectedOptions: [SelectedProductOption]) {
-        let cartVC = ShopCartViewController(selectedProduct: selectedOptions)
+        guard let productData else { return }
+        let cartVC = ShopCartViewController()
+        
+        let cartedProduct = CartedProduct(product: productData,
+                                           selectedProductOption: selectedOptions[0])
+        RealmService().setCartedProduct(cartedProducts: cartedProduct)
         navigationController?.pushViewController(cartVC, animated: true)
     }
     

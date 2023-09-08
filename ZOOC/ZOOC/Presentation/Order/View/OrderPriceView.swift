@@ -167,13 +167,11 @@ final class OrderPriceView: UIView {
         
     }
     
-    func updateUI(_ data: [SelectedProductOption], deliveryFee: Int) {
+    func updateUI(_ productsTotalPrice: Int, deliveryFee: Int) {
         
-        let productsTotalPrice = data.reduce(0) { $0 + $1.productsPrice }
-        
-        priceValueLabel.text = productsTotalPrice.priceText
-        deliveryFeeValueLabel.text = deliveryFee.priceText
-        totalPriceValueLabel.text = (productsTotalPrice + deliveryFee).priceText
+        priceValueLabel.text = (productsTotalPrice - deliveryFee).priceTextWithSpacing
+        deliveryFeeValueLabel.text = deliveryFee.priceTextWithSpacing
+        totalPriceValueLabel.text = productsTotalPrice.priceTextWithSpacing
         
         totalPriceValueLabel.setAttributeLabel(
             targetString: ["원"],

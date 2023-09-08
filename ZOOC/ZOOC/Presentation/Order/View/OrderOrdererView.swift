@@ -44,14 +44,7 @@ final class OrderOrdererView: UIView {
         return button
     }()
     
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "구매자"
-        label.font = .zoocBody1
-        label.textAlignment = .left
-        label.textColor = .zoocGray2
-        return label
-    }()
+    private let nameLabel = ZoocRequiredInputLabel.init(text: "구매자")
     
     private let nameTextField: ZoocTextField = {
         let textField = ZoocTextField(.default)
@@ -64,14 +57,7 @@ final class OrderOrdererView: UIView {
         return textField
     }()
     
-    private let phoneNumberLabel: UILabel = {
-        let label = UILabel()
-        label.text = "연락처"
-        label.font = .zoocBody1
-        label.textAlignment = .left
-        label.textColor = .zoocGray2
-        return label
-    }()
+    private let phoneNumberLabel = ZoocRequiredInputLabel.init(text: "연락처")
     
     private let phoneNumberTextField: ZoocTextField = {
         let textField = ZoocTextField(.numberPad)

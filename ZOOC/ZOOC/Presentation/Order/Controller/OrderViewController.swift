@@ -25,6 +25,7 @@ final class OrderViewController: BaseViewController {
         didSet {
             let productsTotalPrice = selectedProductData.reduce(0) { $0 + $1.productsPrice }
             totalPrice = productsTotalPrice + deliveryFee
+            print("totalPrice: \(totalPrice)")
         }
     }
     

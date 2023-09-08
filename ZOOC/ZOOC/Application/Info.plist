@@ -52,6 +52,7 @@
 		<string>Pretendard-SemiBold.otf</string>
 		<string>Pretendard-Medium.otf</string>
 		<string>Pretendard-Regular.otf</string>
+		<string>Pretendard-Bold.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

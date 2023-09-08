@@ -158,7 +158,7 @@ final class OrderAddressView: UIView {
                   basicAddressDatas: Results<OrderBasicAddress>? = nil,
                   isPostData: Bool = false) {
         basicAddressView.updateUI(basicAddressDatas)
-        newAddressView.updateUI(newAddressData)
+        newAddressView.updateUI(newAddressData,isPostData: isPostData)
         
         guard let basicAddressDatas = basicAddressDatas else { return }
         if !basicAddressDatas.isEmpty {
@@ -179,7 +179,7 @@ final class OrderAddressView: UIView {
     }
     
     func checkValidity() throws {
-        if newAddressButton.isSelected {
+        if !newAddressView.isHidden {
             try newAddressView.checkValidity()
         }
     }

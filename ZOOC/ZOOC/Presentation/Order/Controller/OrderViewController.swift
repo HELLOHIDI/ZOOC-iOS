@@ -201,9 +201,9 @@ final class OrderViewController: BaseViewController {
         basicAddressResult = basicAddressRealm.objects(OrderBasicAddress.self)
         
         ordererView.updateUI(ordererData)
-        addressView.updateUI(addressData)
-        productView.updateUI(productData)
-        priceView.updateUI(priceData)
+        addressView.updateUI(newAddressData: newAddressData, basicAddressDatas: basicAddressResult)
+        productView.updateUI(selectedProductData)
+        priceView.updateUI(selectedProductData, deliveryFee: deliveryFee)
     }
     
     private func registerBasicAddress(_ data: OrderAddress) {
@@ -228,7 +228,7 @@ final class OrderViewController: BaseViewController {
                     print(newAddress)
                 }
             } else {
-                presentBottomAlert("이미 등록된 주소입니다!")
+                showToast("이미 등록된 주소입니다!", type: .bad)
             }
         } else {
             print("로컬DB에 등록이 불가능합니다!")
@@ -429,7 +429,6 @@ extension OrderViewController: KakaoPostCodeViewControllerDelegate {
     func fetchPostCode(roadAddress: String, zoneCode: String) {
         newAddressData.address = roadAddress
         newAddressData.postCode = zoneCode
-        
         addressView.updateUI(newAddressData: newAddressData, isPostData: true)
     }
 }

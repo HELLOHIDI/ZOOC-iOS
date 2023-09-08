@@ -173,9 +173,10 @@ final class HomeViewController : BaseViewController {
         
         
         let shopVC = ShopViewController()
+        let orderVC = OrderViewController(selectedProduct: [SelectedProductOption(id: 1, name: "!@", option: "!@3", image: "!@3", price: 1, amount: 1)])
         
-        shopVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(shopVC, animated: true)
+        orderVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(orderVC, animated: true)
     }
     
     private func pushToGenAIViewController() {

@@ -19,8 +19,8 @@ struct OrderRequest: Codable {
     let addressName: String
     let receiverName: String
     let receiverPhone: String
-    let address: String
-    let postcode: String
+    let address: String?
+    let postcode: String?
     let detailAddress: String?
     let request: String?
     let deliveryFee: Int

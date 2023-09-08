@@ -55,7 +55,7 @@ final class ZoocTextField: UITextField {
     private func style() {
         self.autocapitalizationType = .none
         self.returnKeyType = .done
-        self.backgroundColor = .white
+        self.backgroundColor = .zoocWhite2
         self.addLeftPadding(inset: 18)
         self.makeCornerRound(radius: 7)
         

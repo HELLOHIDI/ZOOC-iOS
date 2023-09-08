@@ -9,13 +9,24 @@ import Foundation
 
 extension Int {
     
-    var priceText: String {
+    var priceTextWithSpacing: String {
         get {
             let numberFormatter = NumberFormatter()
             numberFormatter.numberStyle = .decimal
             
             var priceString = numberFormatter.string(for: self) ?? "-1"
             priceString = priceString + " 원"
+            return priceString
+        }
+    }
+    
+    var priceText: String {
+        get {
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            
+            var priceString = numberFormatter.string(for: self) ?? "-1"
+            priceString = priceString + "원"
             return priceString
         }
     }

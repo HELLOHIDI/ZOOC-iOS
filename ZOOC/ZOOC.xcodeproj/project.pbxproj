@@ -270,6 +270,9 @@
 		D27D9EAA2A8EFA2F00E02842 /* GenAISelectImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9EA92A8EFA2F00E02842 /* GenAISelectImageView.swift */; };
 		D27D9EAC2A8F41B000E02842 /* GenAISelectImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9EAB2A8F41B000E02842 /* GenAISelectImageViewModel.swift */; };
 		D27D9EAE2A8F46EA00E02842 /* GenAIPetImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9EAD2A8F46EA00E02842 /* GenAIPetImageCollectionViewCell.swift */; };
+		D299441A2AAADE7C00C4F280 /* OrderProductCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29944192AAADE7C00C4F280 /* OrderProductCollectionViewCell.swift */; };
+		D299441C2AAB04E100C4F280 /* ZoocRequiredInputLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D299441B2AAB04E100C4F280 /* ZoocRequiredInputLabel.swift */; };
+		D299441E2AAB065A00C4F280 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D299441D2AAB065A00C4F280 /* Pretendard-Bold.otf */; };
 		D299957A2A95B8520004FB5D /* NSItemProvider+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29995792A95B8520004FB5D /* NSItemProvider+.swift */; };
 		D2B735562A86681800F93C45 /* MyEditProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735552A86681800F93C45 /* MyEditProfileRepository.swift */; };
 		D2B735582A8669BA00F93C45 /* MyEditPetProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735572A8669BA00F93C45 /* MyEditPetProfileRepository.swift */; };
@@ -562,6 +565,9 @@
 		D27D9EA92A8EFA2F00E02842 /* GenAISelectImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAISelectImageView.swift; sourceTree = "<group>"; };
 		D27D9EAB2A8F41B000E02842 /* GenAISelectImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAISelectImageViewModel.swift; sourceTree = "<group>"; };
 		D27D9EAD2A8F46EA00E02842 /* GenAIPetImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIPetImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		D29944192AAADE7C00C4F280 /* OrderProductCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderProductCollectionViewCell.swift; sourceTree = "<group>"; };
+		D299441B2AAB04E100C4F280 /* ZoocRequiredInputLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocRequiredInputLabel.swift; sourceTree = "<group>"; };
+		D299441D2AAB065A00C4F280 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		D29995792A95B8520004FB5D /* NSItemProvider+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSItemProvider+.swift"; sourceTree = "<group>"; };
 		D2B735552A86681800F93C45 /* MyEditProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditProfileRepository.swift; sourceTree = "<group>"; };
 		D2B735572A8669BA00F93C45 /* MyEditPetProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditPetProfileRepository.swift; sourceTree = "<group>"; };
@@ -721,6 +727,7 @@
 				87809C322A8CFDA20060641F /* VersionAlertViewController.swift */,
 				874369582A8FFB7F0035AFD6 /* NetworkAlertView.swift */,
 				87A3D8912A97756E002C36DB /* ZoocTextField.swift */,
+				D299441B2AAB04E100C4F280 /* ZoocRequiredInputLabel.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1324,6 +1331,7 @@
 		87B6625929521EFF00B6FFA9 /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				D299441D2AAB065A00C4F280 /* Pretendard-Bold.otf */,
 				877BAFC1295EEA6900C2AA1C /* Pretendard-SemiBold.otf */,
 				877BAFC3295EEA7700C2AA1C /* Pretendard-Medium.otf */,
 				D2D440202AA5F2C200329F35 /* Pretendard-Regular.otf */,
@@ -1500,6 +1508,7 @@
 				87F2880A2A9FDE2500A53218 /* OrderAssistantHeaderView.swift */,
 				87F287FC2A9F7D3000A53218 /* OrderAssistantCollectionViewCell.swift */,
 				D2D440172AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift */,
+				D29944192AAADE7C00C4F280 /* OrderProductCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1780,6 +1789,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D299441E2AAB065A00C4F280 /* Pretendard-Bold.otf in Resources */,
 				87DC47832A545A1C007823CB /* symbol_logo.png in Resources */,
 				877BAFC2295EEA6900C2AA1C /* Pretendard-SemiBold.otf in Resources */,
 				87B6624D29521E7600B6FFA9 /* LaunchScreen.storyboard in Resources */,
@@ -1915,6 +1925,7 @@
 				87A76A9F295F6EA30096F669 /* OnboardingService.swift in Sources */,
 				D21CEC5C29AB9B3D00854A36 /* BaseTextFieldState.swift in Sources */,
 				D2F98F9F29676E3300CC82DE /* UINavigationController+.swift in Sources */,
+				D299441C2AAB04E100C4F280 /* ZoocRequiredInputLabel.swift in Sources */,
 				D21CEC6029ABC01200854A36 /* MyRegisterPetsRequest.swift in Sources */,
 				D2F98F9D2967154D00CC82DE /* ZoocAlertViewController.swift in Sources */,
 				87F287FA2A9F446400A53218 /* OrderAssistantViewController.swift in Sources */,
@@ -2047,6 +2058,7 @@
 				877184382A052BF500AB7DE4 /* ZoocInterceptor.swift in Sources */,
 				D2F3D6022A441AC900C90A5A /* EditPetProfileRequest.swift in Sources */,
 				D26C85F229693CFA00AEAF9B /* OnboardingWelcomeViewController.swift in Sources */,
+				D299441A2AAADE7C00C4F280 /* OrderProductCollectionViewCell.swift in Sources */,
 				D24AFAC22A8E2BD100823E9C /* GenAIChoosePetCollectionViewCell.swift in Sources */,
 				871EA35329704CD200D0E8CC /* UIImage+.swift in Sources */,
 				D20C008A2A96DDB000666963 /* GenAIModelRepository.swift in Sources */,

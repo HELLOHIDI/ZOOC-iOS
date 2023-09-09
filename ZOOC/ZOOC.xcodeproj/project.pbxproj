@@ -204,7 +204,7 @@
 		D235030B2964991700F01101 /* MyEditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D235030A2964991700F01101 /* MyEditProfileViewController.swift */; };
 		D24AFAB22A8DFB9F00823E9C /* GenAIChoosePetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB12A8DFB9F00823E9C /* GenAIChoosePetViewController.swift */; };
 		D24AFAB42A8DFBB300823E9C /* GenAIChoosePetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB32A8DFBB300823E9C /* GenAIChoosePetView.swift */; };
-		D24AFAB62A8DFC3000823E9C /* GenAIChoosePetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB52A8DFC3000823E9C /* GenAIChoosePetModel.swift */; };
+		D24AFAB62A8DFC3000823E9C /* GenAIChoosePetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB52A8DFC3000823E9C /* GenAIChoosePetViewModel.swift */; };
 		D24AFAB82A8DFCE800823E9C /* GenAIRegisterPetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB72A8DFCE800823E9C /* GenAIRegisterPetView.swift */; };
 		D24AFABA2A8E011800823E9C /* GenAIRegisterPetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB92A8E011800823E9C /* GenAIRegisterPetViewController.swift */; };
 		D24AFABC2A8E03EF00823E9C /* GenAIRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFABB2A8E03EF00823E9C /* GenAIRegisterViewModel.swift */; };
@@ -273,6 +273,12 @@
 		D299441A2AAADE7C00C4F280 /* OrderProductCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29944192AAADE7C00C4F280 /* OrderProductCollectionViewCell.swift */; };
 		D299441C2AAB04E100C4F280 /* ZoocRequiredInputLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D299441B2AAB04E100C4F280 /* ZoocRequiredInputLabel.swift */; };
 		D299441E2AAB065A00C4F280 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D299441D2AAB065A00C4F280 /* Pretendard-Bold.otf */; };
+		D29944242AAC7EA100C4F280 /* GenAIRegisterPetUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29944232AAC7EA100C4F280 /* GenAIRegisterPetUseCase.swift */; };
+		D29944272AAC7F0D00C4F280 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D29944262AAC7F0D00C4F280 /* RxCocoa */; };
+		D29944292AAC7F0D00C4F280 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D29944282AAC7F0D00C4F280 /* RxSwift */; };
+		D299442B2AAC833F00C4F280 /* DefaultGenAIChoosePetUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D299442A2AAC833F00C4F280 /* DefaultGenAIChoosePetUseCase.swift */; };
+		D299442E2AAC8D9B00C4F280 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D299442D2AAC8D9B00C4F280 /* ViewModelType.swift */; };
+		D29944302AAC979700C4F280 /* Reactive+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D299442F2AAC979700C4F280 /* Reactive+.swift */; };
 		D299957A2A95B8520004FB5D /* NSItemProvider+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29995792A95B8520004FB5D /* NSItemProvider+.swift */; };
 		D2B735562A86681800F93C45 /* MyEditProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735552A86681800F93C45 /* MyEditProfileRepository.swift */; };
 		D2B735582A8669BA00F93C45 /* MyEditPetProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735572A8669BA00F93C45 /* MyEditPetProfileRepository.swift */; };
@@ -499,7 +505,7 @@
 		D235030A2964991700F01101 /* MyEditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditProfileViewController.swift; sourceTree = "<group>"; };
 		D24AFAB12A8DFB9F00823E9C /* GenAIChoosePetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetViewController.swift; sourceTree = "<group>"; };
 		D24AFAB32A8DFBB300823E9C /* GenAIChoosePetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetView.swift; sourceTree = "<group>"; };
-		D24AFAB52A8DFC3000823E9C /* GenAIChoosePetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetModel.swift; sourceTree = "<group>"; };
+		D24AFAB52A8DFC3000823E9C /* GenAIChoosePetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetViewModel.swift; sourceTree = "<group>"; };
 		D24AFAB72A8DFCE800823E9C /* GenAIRegisterPetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIRegisterPetView.swift; sourceTree = "<group>"; };
 		D24AFAB92A8E011800823E9C /* GenAIRegisterPetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIRegisterPetViewController.swift; sourceTree = "<group>"; };
 		D24AFABB2A8E03EF00823E9C /* GenAIRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIRegisterViewModel.swift; sourceTree = "<group>"; };
@@ -568,6 +574,10 @@
 		D29944192AAADE7C00C4F280 /* OrderProductCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderProductCollectionViewCell.swift; sourceTree = "<group>"; };
 		D299441B2AAB04E100C4F280 /* ZoocRequiredInputLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocRequiredInputLabel.swift; sourceTree = "<group>"; };
 		D299441D2AAB065A00C4F280 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		D29944232AAC7EA100C4F280 /* GenAIRegisterPetUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIRegisterPetUseCase.swift; sourceTree = "<group>"; };
+		D299442A2AAC833F00C4F280 /* DefaultGenAIChoosePetUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGenAIChoosePetUseCase.swift; sourceTree = "<group>"; };
+		D299442D2AAC8D9B00C4F280 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		D299442F2AAC979700C4F280 /* Reactive+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+.swift"; sourceTree = "<group>"; };
 		D29995792A95B8520004FB5D /* NSItemProvider+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSItemProvider+.swift"; sourceTree = "<group>"; };
 		D2B735552A86681800F93C45 /* MyEditProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditProfileRepository.swift; sourceTree = "<group>"; };
 		D2B735572A8669BA00F93C45 /* MyEditPetProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditPetProfileRepository.swift; sourceTree = "<group>"; };
@@ -613,7 +623,9 @@
 				D2D4401F2AA5D08D00329F35 /* RealmSwift in Frameworks */,
 				8781DE4829B20F61005ABF23 /* FirebaseMessaging in Frameworks */,
 				87809C302A8CE3930060641F /* FirebaseRemoteConfig in Frameworks */,
+				D29944272AAC7F0D00C4F280 /* RxCocoa in Frameworks */,
 				871EA35629706F4300D0E8CC /* Lottie in Frameworks */,
+				D29944292AAC7F0D00C4F280 /* RxSwift in Frameworks */,
 				8764833229523BBD00F74882 /* SnapKit in Frameworks */,
 				870A4BFC2AA268E900D7CFD8 /* FloatingPanel in Frameworks */,
 				872367162A19062700DCBBFF /* Sentry in Frameworks */,
@@ -719,6 +731,7 @@
 		8743694E2A8E50E30035AFD6 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D299442C2AAC8D8B00C4F280 /* Protocol */,
 				870A4C002AA26F5700D7CFD8 /* FloatingPanel */,
 				D2F98F9C2967154D00CC82DE /* ZoocAlertViewController.swift */,
 				8765549E295846F3006BBDA9 /* ZoocTabBarController.swift */,
@@ -758,6 +771,7 @@
 				D2C028F12A81F8B2003F4727 /* String+.swift */,
 				D29995792A95B8520004FB5D /* NSItemProvider+.swift */,
 				87A3D8942A97C458002C36DB /* Int+.swift */,
+				D299442F2AAC979700C4F280 /* Reactive+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1244,6 +1258,7 @@
 		87B6623F29521E7500B6FFA9 /* ZOOC */ = {
 			isa = PBXGroup;
 			children = (
+				D299441F2AAC7E6A00C4F280 /* Domain */,
 				D2D686BA299B59F400C290A8 /* ZOOC.entitlements */,
 				87DC47EF2A7ADF66007823CB /* Configuration */,
 				87B6625429521EAC00B6FFA9 /* Application */,
@@ -1636,6 +1651,47 @@
 			path = HeaderFooterVIew;
 			sourceTree = "<group>";
 		};
+		D299441F2AAC7E6A00C4F280 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				D29944202AAC7E7500C4F280 /* UseCase */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		D29944202AAC7E7500C4F280 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				D29944212AAC7E7A00C4F280 /* AI */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		D29944212AAC7E7A00C4F280 /* AI */ = {
+			isa = PBXGroup;
+			children = (
+				D29944222AAC7E8000C4F280 /* Protocol */,
+				D299442A2AAC833F00C4F280 /* DefaultGenAIChoosePetUseCase.swift */,
+			);
+			path = AI;
+			sourceTree = "<group>";
+		};
+		D29944222AAC7E8000C4F280 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				D29944232AAC7EA100C4F280 /* GenAIRegisterPetUseCase.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		D299442C2AAC8D8B00C4F280 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				D299442D2AAC8D9B00C4F280 /* ViewModelType.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		D2B735542A86680500F93C45 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
@@ -1685,7 +1741,7 @@
 		D2B7355F2A8B951200F93C45 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				D24AFAB52A8DFC3000823E9C /* GenAIChoosePetModel.swift */,
+				D24AFAB52A8DFC3000823E9C /* GenAIChoosePetViewModel.swift */,
 				D24AFABB2A8E03EF00823E9C /* GenAIRegisterViewModel.swift */,
 				D27D9EAB2A8F41B000E02842 /* GenAISelectImageViewModel.swift */,
 				D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */,
@@ -1734,6 +1790,8 @@
 				870A4BFB2AA268E900D7CFD8 /* FloatingPanel */,
 				D2D4401C2AA5D08D00329F35 /* Realm */,
 				D2D4401E2AA5D08D00329F35 /* RealmSwift */,
+				D29944262AAC7F0D00C4F280 /* RxCocoa */,
+				D29944282AAC7F0D00C4F280 /* RxSwift */,
 			);
 			productName = ZOOC;
 			productReference = 87B6623D29521E7500B6FFA9 /* ZOOC-Dev.app */;
@@ -1774,6 +1832,7 @@
 				872367142A19062700DCBBFF /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				870A4BFA2AA268E900D7CFD8 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 				D2D4401B2AA5D08D00329F35 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				D29944252AAC7F0D00C4F280 /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = 87B6623E29521E7500B6FFA9 /* Products */;
 			projectDirPath = "";
@@ -1891,6 +1950,7 @@
 				D2C028F22A81F8B2003F4727 /* String+.swift in Sources */,
 				87A3D8802A97546D002C36DB /* OrderViewController.swift in Sources */,
 				874369592A8FFB7F0035AFD6 /* NetworkAlertView.swift in Sources */,
+				D29944302AAC979700C4F280 /* Reactive+.swift in Sources */,
 				D23502F52961A69E00F01101 /* MyView.swift in Sources */,
 				D26C8616296BEF9800AEAF9B /* OnboardingRegisterPetViewController.swift in Sources */,
 				87F287D72A9A63CC00A53218 /* OrderAddress.swift in Sources */,
@@ -1898,6 +1958,7 @@
 				876554A3295848D6006BBDA9 /* BaseViewController.swift in Sources */,
 				D20C00952A96FE3200666963 /* GenAIPetDatasetsResult.swift in Sources */,
 				4C6B1860296B40C00059840D /* RecordModel.swift in Sources */,
+				D29944242AAC7EA100C4F280 /* GenAIRegisterPetUseCase.swift in Sources */,
 				87809C2E2A8CC32F0060641F /* VersionState.swift in Sources */,
 				D23502F92961F34100F01101 /* MySettingSectionCollectionViewCell.swift in Sources */,
 				876483212952369500F74882 /* UICollectionViewCell+.swift in Sources */,
@@ -1910,6 +1971,7 @@
 				D23503032964728700F01101 /* MyAppInformationTableViewCell.swift in Sources */,
 				D26C68F22970AD820088DC9A /* HomeNoticeViewController.swift in Sources */,
 				8718A06429AD3445001C7460 /* EditProfileRequest.swift in Sources */,
+				D299442E2AAC8D9B00C4F280 /* ViewModelType.swift in Sources */,
 				D2D440182AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift in Sources */,
 				8771843F2A0541C500AB7DE4 /* AuthAPI.swift in Sources */,
 				8782C7F3296CC13A00C9324B /* ArchiveCommentCollectionViewCell.swift in Sources */,
@@ -1935,6 +1997,7 @@
 				D22EF9002A7C9B720050E325 /* MyViewModel.swift in Sources */,
 				87F288032A9FA68A00A53218 /* OrderAssistantDepositView.swift in Sources */,
 				4C6B1864296B6C600059840D /* RecordRegisterModel.swift in Sources */,
+				D299442B2AAC833F00C4F280 /* DefaultGenAIChoosePetUseCase.swift in Sources */,
 				87A76AA1295F6EA90096F669 /* OnboardingAPI.swift in Sources */,
 				D25543A4299A239B0072BF0D /* OnboardingRegisterPetRequest.swift in Sources */,
 				D26C85F029693C8500AEAF9B /* OnboardingWelcomeView.swift in Sources */,
@@ -2005,7 +2068,7 @@
 				D26C85D7296888D000AEAF9B /* MyDeleteAccountSectionCollectionViewCell.swift in Sources */,
 				87DDDD94298E607C00CBEC79 /* Device.swift in Sources */,
 				87F287DB2A9C6E6F00A53218 /* OrderOrderer.swift in Sources */,
-				D24AFAB62A8DFC3000823E9C /* GenAIChoosePetModel.swift in Sources */,
+				D24AFAB62A8DFC3000823E9C /* GenAIChoosePetViewModel.swift in Sources */,
 				D22EF9032A7C9BB70050E325 /* Observable.swift in Sources */,
 				877DF3292A534DF2001CD452 /* NotificationName+.swift in Sources */,
 				87D5AF5A29606AC900CA7F12 /* NetworkResult.swift in Sources */,
@@ -2423,6 +2486,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		D29944252AAC7F0D00C4F280 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		D2D4401B2AA5D08D00329F35 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift";
@@ -2498,6 +2569,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 87A76AB4295F760C0096F669 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKUser;
+		};
+		D29944262AAC7F0D00C4F280 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D29944252AAC7F0D00C4F280 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		D29944282AAC7F0D00C4F280 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D29944252AAC7F0D00C4F280 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
 		};
 		D2D4401C2AA5D08D00329F35 /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;

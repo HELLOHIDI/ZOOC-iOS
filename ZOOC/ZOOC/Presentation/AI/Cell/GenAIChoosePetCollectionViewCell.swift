@@ -102,14 +102,6 @@ final class GenAIChoosePetCollectionViewCell: UICollectionViewCell {
     // MARK: - Action Method
     
     func dataBind(data: RecordRegisterModel) {
-        if let imageURL = data.petImageURL {
-            profilePetImageView.kfSetImage(url: imageURL)
-        } else {
-            profilePetImageView.image = Image.defaultProfile
-        }
-        petNameLabel.text = data.petName
-        selectImageView.isHidden = data.isSelected ? false : true
-        
         if data.isSelected {
             contentView.backgroundColor = .zoocWhite2
             profilePetImageView.layer.borderColor = UIColor.zoocMainGreen.cgColor

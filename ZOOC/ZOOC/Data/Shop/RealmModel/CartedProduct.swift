@@ -27,20 +27,9 @@ class CartedProduct: Object {
         self.productID = product.id
         self.name = product.name
         self.image = product.images.first ?? ""
+        self.optionID = selectedProductOption.id
         self.option = selectedProductOption.option
         self.price = selectedProductOption.price
         self.pieces = selectedProductOption.amount
-    }
-}
-
-extension CartedProduct {
-    func increase() throws {
-        guard pieces < 1000 else { throw AmountError.increase }
-        pieces += 1
-    }
-    
-    func decrease() throws {
-        guard pieces > 1 else { throw AmountError.decrease }
-        pieces -= 1
     }
 }

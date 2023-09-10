@@ -53,7 +53,7 @@ final class RealmService {
     @MainActor
     func setCartedProduct(cartedProducts: CartedProduct) {
         try! localRealm.write {
-            localRealm.add(cartedProducts, update: .all)
+            localRealm.add(cartedProducts, update: .modified)
         }
     }
     

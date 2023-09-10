@@ -212,7 +212,7 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
                       bottomInset: 86)
             return
         }
-        dismiss(animated: false)
+        dismiss(animated: true)
         delegate?.cartButtonDidTap(selectedOptions: selectedOptionsData)
     }
     

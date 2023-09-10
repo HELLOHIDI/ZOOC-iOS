@@ -26,14 +26,8 @@ final class OrderNewAddressView: UIView {
     
     //MARK: - UI Components
     
-    private let receiverLabel: UILabel = {
-        let label = UILabel()
-        label.text = "수령인"
-        label.font = .zoocBody2
-        label.textColor = .zoocGray2
-        return label
-    }()
-    
+    private let receiverLabel = ZoocRequiredInputLabel.init(text: "수령인")
+
     private let receiverTextField: ZoocTextField = {
         let textField = ZoocTextField()
         textField.placeholder = "실명"
@@ -42,13 +36,7 @@ final class OrderNewAddressView: UIView {
         return textField
     }()
     
-    private let phoneNumberLabel: UILabel = {
-        let label = UILabel()
-        label.text = "연락처"
-        label.font = .zoocBody2
-        label.textColor = .zoocGray2
-        return label
-    }()
+    private let phoneNumberLabel = ZoocRequiredInputLabel.init(text: "연락처")
     
     private let receiverPhoneNumberTextField: ZoocTextField = {
         let textField = ZoocTextField(.numberPad)
@@ -59,13 +47,8 @@ final class OrderNewAddressView: UIView {
     }()
     
     
-    private let addressLabel: UILabel = {
-        let label = UILabel()
-        label.text = "배송지"
-        label.font = .zoocBody2
-        label.textColor = .zoocGray2
-        return label
-    }()
+    private let addressLabel = ZoocRequiredInputLabel.init(text: "배송지")
+    
     private let postCodeLabelBox: BasePaddingLabel = {
         let label = BasePaddingLabel()
         label.backgroundColor = .zoocWhite2

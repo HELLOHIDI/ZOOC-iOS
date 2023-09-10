@@ -23,9 +23,18 @@ final class OrderViewController: BaseViewController {
     
     private var deliveryFee = 4000 {
         didSet {
-            priceView.updateUI(selectedProductData, deliveryFee: deliveryFee)
+            let productsTotalPrice = selectedProductData.reduce(0) { $0 + $1.productsPrice }
+            totalPrice = productsTotalPrice + deliveryFee
         }
     }
+    
+    private var totalPrice = 0 {
+        didSet {
+            priceView.updateUI(totalPrice, deliveryFee: deliveryFee)
+            orderButton.setTitle("\(totalPrice.priceText) 결제하기", for: .normal)
+        }
+    }
+    
     private let selectedProductData: [SelectedProductOption]
     
     private var agreementData = OrderAgreement()
@@ -156,8 +165,10 @@ final class OrderViewController: BaseViewController {
         }
         
         productView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(1)
+            let totalHeight = 60 + selectedProductData.count * 90 + (selectedProductData.count - 1) * 24 + 30
+            $0.top.equalToSuperview()
             $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(totalHeight)
         }
         
         ordererView.snp.makeConstraints {
@@ -203,7 +214,7 @@ final class OrderViewController: BaseViewController {
         ordererView.updateUI(ordererData)
         addressView.updateUI(newAddressData: newAddressData, basicAddressDatas: basicAddressResult)
         productView.updateUI(selectedProductData)
-        priceView.updateUI(selectedProductData, deliveryFee: deliveryFee)
+        priceView.updateUI(totalPrice, deliveryFee: deliveryFee)
     }
     
     private func registerBasicAddress(_ data: OrderAddress) {
@@ -235,10 +246,20 @@ final class OrderViewController: BaseViewController {
         }
     }
     
+    private func resetBasicAddressIsSelected() {
+        try! basicAddressRealm.write {
+            basicAddressResult.forEach {
+                $0.isSelected = false
+            }
+            basicAddressResult.first?.isSelected = true
+        }
+    }
+    
     //MARK: - Action Method
     
     @objc
     private func backButtonDidTap() {
+        resetBasicAddressIsSelected()
         navigationController?.popViewController(animated: true)
     }
     
@@ -256,6 +277,7 @@ final class OrderViewController: BaseViewController {
                             deliveryFee)
             
             registerBasicAddress(newAddressData)
+            resetBasicAddressIsSelected()
             
         } catch OrderInvalidError.ordererInvalid {
             showToast("구매자 정보를 모두 입력해주세요.",
@@ -332,9 +354,15 @@ extension OrderViewController: OrderOrdererViewDelegate {
 //MARK: - OrderAddressViewDelegate
 
 extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDelegate & OrderBasicAddressViewDelegate {
+    func basicAddressButtonDidTap() {
+        if basicAddressResult.isEmpty {
+            showToast("먼저 신규입력으로 배송지를 등록해주세요", type: .bad)
+            addressView.updateUI(newAddressData: addressData, hasBasicAddress: false)
+        }
+    }
+    
 
     func copyButtonDidTap() {
-        print(#function)
         view.endEditing(true)
         newAddressData.receiverName = ordererData.name
         newAddressData.receiverPhoneNumber = ordererData.phoneNumber

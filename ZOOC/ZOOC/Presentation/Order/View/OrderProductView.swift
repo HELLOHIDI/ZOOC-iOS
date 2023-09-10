@@ -13,6 +13,11 @@ final class OrderProductView: UIView {
     
     //MARK: - Properties
     
+    private var productData: [SelectedProductOption] = [] {
+        didSet {
+            productCollectionView.reloadData()
+        }
+    }
     
     //MARK: - UI Components
     
@@ -28,61 +33,36 @@ final class OrderProductView: UIView {
         return label
     }()
     
-    private lazy var foldButton: UIButton = {
-        let button = UIButton()
-        button.tintColor = .zoocDarkGray1
-        button.setImage(UIImage(systemName: "chevron.up"), for: .normal)
-        button.setImage(UIImage(systemName: "chevron.down"), for: .selected)
-        button.addTarget(self,
-                         action: #selector(foldButtonDidTap),
-                         for: .touchUpInside)
-        button.isHidden = true //TODO: - 추후 폴더블한 애니메이션 구현
-        return button
-    }()
+//    private lazy var foldButton: UIButton = {
+//        let button = UIButton()
+//        button.tintColor = .zoocDarkGray1
+//        button.setImage(UIImage(systemName: "chevron.up"), for: .normal)
+//        button.setImage(UIImage(systemName: "chevron.down"), for: .selected)
+//        button.addTarget(self,
+//                         action: #selector(foldButtonDidTap),
+//                         for: .touchUpInside)
+//        button.isHidden = true //TODO: - 추후 폴더블한 애니메이션 구현
+//        return button
+//    }()
     
-    private let productImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.makeCornerRound(radius: 7)
-        return imageView
-    }()
-    
-    private let productNameLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .zoocGray3
-        label.font = .zoocSubhead1
-        return label
-    }()
-    
-    private let priceLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor(r: 64, g: 64, b: 64)
-        label.font = .zoocHeadLine
-        return label
-    }()
-    
-    private let productCntLabel: UILabel = {
-        let label = UILabel()
-        label.text = "1개 | "
-        label.textColor = .zoocGray2
-        label.font = .zoocBody1
-        label.textAlignment = .right
-        return label
-    }()
-    
-    private let phoneModelLabel: UILabel = {
-        let label = UILabel()
-        label.text = "갤럭시 노트 10"
-        label.textColor = .zoocGray2
-        label.font = .zoocBody1
-        label.textAlignment = .right
-        return label
+    private let productCollectionView : UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.isScrollEnabled = false
+        return collectionView
     }()
     
     //MARK: - Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        register()
+        delegate()
         
         style()
         hierarchy()
@@ -96,26 +76,32 @@ final class OrderProductView: UIView {
     
     //MARK: - Custom Method
     
+    private func delegate() {
+        productCollectionView.delegate = self
+        productCollectionView.dataSource = self
+    }
+    
+    private func register() {
+        productCollectionView.register(
+            OrderProductCollectionViewCell.self,
+            forCellWithReuseIdentifier: OrderProductCollectionViewCell.cellIdentifier
+        )
+    }
     
     private func style() {
         backgroundColor = .zoocBackgroundGreen
     }
     
     private func hierarchy() {
-        headerView.addSubviews(titleLabel, foldButton)
+        headerView.addSubviews(titleLabel)
         
         addSubviews(headerView, mainView)
         
-        mainView.addSubviews(productImageView,
-                             productNameLabel,
-                             priceLabel,
-                             productCntLabel,
-                             phoneModelLabel)
+        mainView.addSubview(productCollectionView)
         
     }
     
     private func layout() {
-        
         headerView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.horizontalEdges.equalToSuperview()
@@ -127,61 +113,55 @@ final class OrderProductView: UIView {
             $0.centerY.equalToSuperview()
         }
         
-        foldButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(20)
-        }
+//        foldButton.snp.makeConstraints {
+//            $0.centerY.equalToSuperview()
+//            $0.trailing.equalToSuperview().inset(20)
+//        }
         
         mainView.snp.makeConstraints {
-            $0.top.equalTo(headerView.snp.bottom).offset(5)
+            $0.top.equalTo(headerView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(30)
         }
         
-        productImageView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().inset(30)
-            $0.size.equalTo(90)
-            $0.bottom.equalToSuperview().inset(20)
-        }
-        
-        productNameLabel.snp.makeConstraints {
-            $0.top.equalTo(productImageView)
-            $0.leading.equalTo(productImageView.snp.trailing).offset(16)
-        }
-        
-        priceLabel.snp.makeConstraints {
-            $0.top.equalTo(productNameLabel.snp.bottom).offset(7)
-            $0.leading.equalTo(productNameLabel)
-        }
-        
-        productCntLabel.snp.makeConstraints {
-            $0.top.equalTo(self.priceLabel.snp.bottom).offset(18)
-            $0.leading.equalTo(self.productImageView.snp.trailing).offset(16)
-        }
-        
-        phoneModelLabel.snp.makeConstraints {
-            $0.top.equalTo(self.productCntLabel)
-            $0.leading.equalTo(self.productCntLabel.snp.trailing)
+        productCollectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
     
     func updateUI(_ data: [SelectedProductOption]) {
-        
-        //TODO: - data 배열을 사용하여 CollectionView 만들어야함!!
-        
-        productImageView.kfSetImage(url: data[0].image)
-        productNameLabel.text = data[0].option
-        priceLabel.text = data[0].price.priceText
+        productData = data
     }
     
     //MARK: - Action Method
     
-    @objc
-    private func foldButtonDidTap() {
-        foldButton.isSelected.toggle()
+//    @objc
+//    private func foldButtonDidTap() {
+////        foldButton.isSelected.toggle()
+//        
+//    }
+}
+
+extension OrderProductView: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = collectionView.frame.width
         
+        return CGSize(width: width, height: 90)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 24
+    }
+}
+
+extension OrderProductView: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return productData.count
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OrderProductCollectionViewCell.cellIdentifier, for: indexPath) as? OrderProductCollectionViewCell else { return UICollectionViewCell() }
+        cell.dataBind(productData[indexPath.item])
+        return cell
+    }
 }

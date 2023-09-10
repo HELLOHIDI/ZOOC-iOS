@@ -12,6 +12,7 @@ import RealmSwift
 
 protocol OrderAddressViewDelegate: AnyObject {
     func copyButtonDidTap()
+    func basicAddressButtonDidTap()
 }
 
 final class OrderAddressView: UIView {
@@ -19,6 +20,7 @@ final class OrderAddressView: UIView {
     //MARK: - Properties
     
     weak var delegate: OrderAddressViewDelegate?
+    private var basicAddressDatas: Results<OrderBasicAddress>?
     
     //MARK: - UI Components
     
@@ -156,9 +158,12 @@ final class OrderAddressView: UIView {
     
     func updateUI(newAddressData: OrderAddress,
                   basicAddressDatas: Results<OrderBasicAddress>? = nil,
-                  isPostData: Bool = false) {
+                  isPostData: Bool = false,
+                  hasBasicAddress: Bool = true
+        ) {
         basicAddressView.updateUI(basicAddressDatas)
         newAddressView.updateUI(newAddressData,isPostData: isPostData)
+        self.basicAddressDatas = basicAddressDatas
         
         guard let basicAddressDatas = basicAddressDatas else { return }
         if !basicAddressDatas.isEmpty {
@@ -184,6 +189,14 @@ final class OrderAddressView: UIView {
         }
     }
     
+    func updateBasicViewAppear(_ hasBasicAddress: Bool) {
+        copyButton.isHidden = hasBasicAddress
+        basicAddressView.isHidden = !hasBasicAddress
+        newAddressView.isHidden = hasBasicAddress
+        basicAddressButton.updateButtonUI(hasBasicAddress)
+        newAddressButton.updateButtonUI(!hasBasicAddress)
+    }
+    
     //MARK: - Action Method
     
     @objc
@@ -193,12 +206,18 @@ final class OrderAddressView: UIView {
     
     @objc
     private func basicAddressButtonDidTap() {
-        copyButton.isHidden = true
-        basicAddressView.isHidden = false
-        newAddressView.isHidden = true
-        basicAddressButton.updateButtonUI(true)
-        newAddressButton.updateButtonUI(false)
-        basicAddressView.basicAddressCollectionView.reloadData()
+        guard let basicAddressDatas = basicAddressDatas else {
+            print("여기서 걸리나?")
+            delegate?.basicAddressButtonDidTap()
+            updateBasicViewAppear(false)
+            return
+        }
+        
+        if !basicAddressDatas.isEmpty { updateBasicViewAppear(true) }
+        else {
+            delegate?.basicAddressButtonDidTap()
+            updateBasicViewAppear(false)
+        }
     }
     
     @objc

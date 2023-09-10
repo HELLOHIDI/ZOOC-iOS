@@ -47,34 +47,6 @@ final class OrderAgreementView: UIView {
         return label
     }()
     
-    private lazy var onwardTransferCheckButton: UIButton = {
-        let button = UIButton()
-        button.setImage(Image.checkBox, for: .normal)
-        button.setImage(Image.checkBoxFill, for: .selected)
-        button.setImage(Image.checkBoxRed, for: .highlighted)
-        button.addTarget(self,
-                         action: #selector(checkButtonDidTap),
-                         for: .touchUpInside)
-        return button
-    }()
-    
-    private let onwardTransferLabel: UILabel = {
-        let label = UILabel()
-        label.text = "(필수) 개인정보 이용약관 동의"
-        label.font = .zoocBody2
-        label.textColor = .zoocGray1
-        return label
-    }()
-    
-    private lazy var watchOnwardTransferButton: UIButton = {
-        let button = UIButton()
-        button.setImage(Image.next, for: .normal)
-        button.addTarget(self,
-                         action: #selector(watchButtonDidTap),
-                         for: .touchUpInside)
-        return button
-    }()
-    
     private lazy var privacyPolicyCheckButton: UIButton = {
         let button = UIButton()
         button.setImage(Image.checkBox, for: .normal)
@@ -88,7 +60,7 @@ final class OrderAgreementView: UIView {
     
     private let privacyPolicyLabel: UILabel = {
         let label = UILabel()
-        label.text = "(선택) 마케팅 정보 수신 동의"
+        label.text = "(필수) 개인정보 이용약관 동의"
         label.font = .zoocBody2
         label.textColor = .zoocGray1
         return label
@@ -103,6 +75,33 @@ final class OrderAgreementView: UIView {
         return button
     }()
     
+    private lazy var onwardTransferCheckButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Image.checkBox, for: .normal)
+        button.setImage(Image.checkBoxFill, for: .selected)
+        button.setImage(Image.checkBoxRed, for: .highlighted)
+        button.addTarget(self,
+                         action: #selector(checkButtonDidTap),
+                         for: .touchUpInside)
+        return button
+    }()
+    
+    private let onwardTransferLabel: UILabel = {
+        let label = UILabel()
+        label.text = "(필수) 제 3자 정보제공 동의 "
+        label.font = .zoocBody2
+        label.textColor = .zoocGray1
+        return label
+    }()
+    
+    private lazy var watchOnwardTransferButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Image.next, for: .normal)
+        button.addTarget(self,
+                         action: #selector(watchButtonDidTap),
+                         for: .touchUpInside)
+        return button
+    }()
     
     //MARK: - Life Cycle
     
@@ -149,28 +148,10 @@ final class OrderAgreementView: UIView {
             $0.leading.equalTo(allPoliciesAgreemCheckButton.snp.trailing)
         }
         
-        onwardTransferCheckButton.snp.makeConstraints {
+        privacyPolicyCheckButton.snp.makeConstraints {
             $0.top.equalTo(allPoliciesAgreemCheckButton.snp.bottom)
             $0.leading.equalToSuperview().inset(20)
             $0.size.equalTo(42)
-        }
-        
-        onwardTransferLabel.snp.makeConstraints {
-            $0.centerY.equalTo(onwardTransferCheckButton)
-            $0.leading.equalTo(onwardTransferCheckButton.snp.trailing)
-        }
-        
-        watchOnwardTransferButton.snp.makeConstraints {
-            $0.centerY.equalTo(onwardTransferCheckButton)
-            $0.trailing.equalToSuperview().inset(30)
-            $0.height.equalTo(30)
-        }
-        
-        privacyPolicyCheckButton.snp.makeConstraints {
-            $0.top.equalTo(onwardTransferCheckButton.snp.bottom)
-            $0.leading.equalToSuperview().inset(20)
-            $0.size.equalTo(42)
-            $0.bottom.equalToSuperview().inset(20)
         }
         
         privacyPolicyLabel.snp.makeConstraints {
@@ -180,6 +161,24 @@ final class OrderAgreementView: UIView {
         
         watchPrivacyPolicyButton.snp.makeConstraints {
             $0.centerY.equalTo(privacyPolicyCheckButton)
+            $0.trailing.equalToSuperview().inset(30)
+            $0.height.equalTo(30)
+        }
+        
+        onwardTransferCheckButton.snp.makeConstraints {
+            $0.top.equalTo(privacyPolicyCheckButton.snp.bottom)
+            $0.leading.equalToSuperview().inset(20)
+            $0.size.equalTo(42)
+            $0.bottom.equalToSuperview().inset(20)
+        }
+        
+        onwardTransferLabel.snp.makeConstraints {
+            $0.centerY.equalTo(onwardTransferCheckButton)
+            $0.leading.equalTo(onwardTransferCheckButton.snp.trailing)
+        }
+        
+        watchOnwardTransferButton.snp.makeConstraints {
+            $0.centerY.equalTo(onwardTransferCheckButton)
             $0.trailing.equalToSuperview().inset(30)
             $0.height.equalTo(30)
         }

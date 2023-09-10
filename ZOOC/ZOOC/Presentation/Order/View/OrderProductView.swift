@@ -10,10 +10,10 @@ import UIKit
 import SnapKit
 
 final class OrderProductView: UIView {
-    
+
     //MARK: - Properties
     
-    private var productData: [SelectedProductOption] = [] {
+    private var productData: [OrderProduct] = [] {
         didSet {
             productCollectionView.reloadData()
         }
@@ -32,18 +32,6 @@ final class OrderProductView: UIView {
         label.textAlignment = .left
         return label
     }()
-    
-//    private lazy var foldButton: UIButton = {
-//        let button = UIButton()
-//        button.tintColor = .zoocDarkGray1
-//        button.setImage(UIImage(systemName: "chevron.up"), for: .normal)
-//        button.setImage(UIImage(systemName: "chevron.down"), for: .selected)
-//        button.addTarget(self,
-//                         action: #selector(foldButtonDidTap),
-//                         for: .touchUpInside)
-//        button.isHidden = true //TODO: - 추후 폴더블한 애니메이션 구현
-//        return button
-//    }()
     
     private let productCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -113,11 +101,6 @@ final class OrderProductView: UIView {
             $0.centerY.equalToSuperview()
         }
         
-//        foldButton.snp.makeConstraints {
-//            $0.centerY.equalToSuperview()
-//            $0.trailing.equalToSuperview().inset(20)
-//        }
-        
         mainView.snp.makeConstraints {
             $0.top.equalTo(headerView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
@@ -129,17 +112,12 @@ final class OrderProductView: UIView {
         }
     }
     
-    func updateUI(_ data: [SelectedProductOption]) {
+    func updateUI(_ data: [OrderProduct]) {
         productData = data
     }
     
     //MARK: - Action Method
     
-//    @objc
-//    private func foldButtonDidTap() {
-////        foldButton.isSelected.toggle()
-//        
-//    }
 }
 
 extension OrderProductView: UICollectionViewDelegateFlowLayout {

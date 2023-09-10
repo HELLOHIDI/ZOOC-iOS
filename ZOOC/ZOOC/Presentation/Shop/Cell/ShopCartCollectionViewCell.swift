@@ -181,13 +181,13 @@ final class ShopCartCollectionViewCell: UICollectionViewCell {
     }
     
     func dataBind(indexPath: IndexPath,
-                  selectedOption: SelectedProductOption) {
+                  selectedOption: CartedProduct) {
         self.indexPath = indexPath
         
         imageView.kfSetImage(url: selectedOption.image)
         nameLabel.text = selectedOption.name
         optionLabel.text = selectedOption.option
-        amountLabel.text = String(selectedOption.amount)
+        amountLabel.text = String(selectedOption.pieces)
         priceLabel.text = selectedOption.productsPrice.priceText
     }
     

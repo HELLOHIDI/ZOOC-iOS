@@ -8,8 +8,8 @@
 import UIKit
 
 protocol ProductBottomSheetDelegate: AnyObject {
-    func cartButtonDidTap(selectedOptions: [SelectedProductOption])
-    func orderButtonDidTap(selectedOptions: [SelectedProductOption])
+    func cartButtonDidTap(_ selectedProductOptions: [SelectedProductOption])
+    func orderButtonDidTap(_ selectedProductOptions: [SelectedProductOption])
 }
 
 final class ProductBottomSheet: UIViewController, ScrollableViewController {
@@ -212,8 +212,8 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
                       bottomInset: 86)
             return
         }
-        dismiss(animated: false)
-        delegate?.cartButtonDidTap(selectedOptions: selectedOptionsData)
+        dismiss(animated: true)
+        delegate?.cartButtonDidTap(selectedOptionsData)
     }
     
     @objc
@@ -225,7 +225,7 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
             return
         }
         dismiss(animated: false)
-        delegate?.orderButtonDidTap(selectedOptions: selectedOptionsData)
+        delegate?.orderButtonDidTap(selectedOptionsData)
     }
 }
 

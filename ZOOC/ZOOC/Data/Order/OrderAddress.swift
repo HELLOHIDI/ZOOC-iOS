@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 struct OrderAddress {
     var addressName: String
     var receiverName: String
@@ -16,11 +17,21 @@ struct OrderAddress {
     var detailAddress: String?
     var request: String?
     
-    init() {
-        self.addressName = ""
-        self.receiverName = ""
-        self.receiverPhoneNumber = ""
-        self.address = ""
-        self.postCode = ""
+    init(addressName: String = "",
+         receiverName: String = "",
+         receiverPhoneNumber: String = "",
+         address: String = "",
+         postCode: String = "",
+         detailAddress: String? = nil,
+         request: String? = nil) {
+        
+        self.addressName = receiverName //TODO: - 리디자인 피그마에 배송지명 개념이 사라져서 receiverName으로 대체
+        self.receiverName = receiverName
+        self.receiverPhoneNumber = receiverPhoneNumber
+        self.address = address
+        self.postCode = postCode
+        self.detailAddress = detailAddress
+        self.request = request
+        
     }
 }

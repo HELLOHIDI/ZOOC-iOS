@@ -155,7 +155,7 @@ final class ProductSelectedOptionCollectionViewCell: UICollectionViewCell {
         self.indexPath = indexPath
         
         optionLabel.text = selectedOption.option
-        amountLabel.text = String(selectedOption.amount)
+        amountLabel.text = String(selectedOption.pieces)
         priceLabel.text = selectedOption.productsPrice.priceText
     }
     

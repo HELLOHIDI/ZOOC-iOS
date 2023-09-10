@@ -13,6 +13,7 @@ import RealmSwift
 protocol OrderAddressViewDelegate: AnyObject {
     func copyButtonDidTap()
     func basicAddressButtonDidTap()
+    func newAddressButtonDidTap()
 }
 
 final class OrderAddressView: UIView {
@@ -156,6 +157,10 @@ final class OrderAddressView: UIView {
     
     //MARK: - Public Methods
     
+    func dataBind(_ basicAddressData: Results<OrderBasicAddress>) {
+        self.basicAddressDatas = basicAddressData
+    }
+    
     func updateUI(newAddressData: OrderAddress,
                   basicAddressDatas: Results<OrderBasicAddress>? = nil,
                   isPostData: Bool = false,
@@ -163,9 +168,11 @@ final class OrderAddressView: UIView {
         ) {
         basicAddressView.updateUI(basicAddressDatas)
         newAddressView.updateUI(newAddressData,isPostData: isPostData)
-        self.basicAddressDatas = basicAddressDatas
         
         guard let basicAddressDatas = basicAddressDatas else { return }
+        
+        self.basicAddressDatas = basicAddressDatas
+        
         if !basicAddressDatas.isEmpty {
             updateViewAppear(true)
             basicAddressButton.updateButtonUI(true)
@@ -206,14 +213,15 @@ final class OrderAddressView: UIView {
     
     @objc
     private func basicAddressButtonDidTap() {
-        guard let basicAddressDatas = basicAddressDatas else {
-            print("여기서 걸리나?")
+        guard let basicAddressDatas else {
             delegate?.basicAddressButtonDidTap()
             updateBasicViewAppear(false)
             return
         }
         
-        if !basicAddressDatas.isEmpty { updateBasicViewAppear(true) }
+        if !basicAddressDatas.isEmpty {
+            delegate?.basicAddressButtonDidTap()
+            updateBasicViewAppear(true) }
         else {
             delegate?.basicAddressButtonDidTap()
             updateBasicViewAppear(false)
@@ -222,6 +230,8 @@ final class OrderAddressView: UIView {
     
     @objc
     private func newAddressButtonDidTap() {
+        delegate?.newAddressButtonDidTap()
+        
         copyButton.isHidden = false
         basicAddressView.isHidden = true
         newAddressView.isHidden = false

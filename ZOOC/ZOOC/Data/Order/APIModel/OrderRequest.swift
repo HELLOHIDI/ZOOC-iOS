@@ -7,20 +7,21 @@
 
 import Foundation
 
-struct ProductOptionRequest: Codable {
+struct ProductRequest: Codable {
+    let productId: Int
     let optionId: Int
     let pieces: Int
 }
 
 struct OrderRequest: Codable {
-    let products: [ProductOptionRequest]
+    let products: [ProductRequest]
     let ordererName: String
     let ordererPhone: String
     let addressName: String
     let receiverName: String
     let receiverPhone: String
-    let address: String?
-    let postcode: String?
+    let address: String
+    let postcode: String
     let detailAddress: String?
     let request: String?
     let deliveryFee: Int
@@ -28,7 +29,7 @@ struct OrderRequest: Codable {
     
     init(orderer: OrderOrderer,
          address: OrderAddress,
-         products: [SelectedProductOption],
+         products: [OrderProduct],
          deliveryFee: Int) {
         
         self.products = products.map { $0.transform() }

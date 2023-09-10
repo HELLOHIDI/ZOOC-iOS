@@ -24,14 +24,14 @@ class CartedProduct: Object {
     }
     
     convenience init(product: ProductDetailResult,
-                     selectedProductOption: SelectedProductOption) {
+                     selectedProduct: SelectedProductOption) {
         self.init()
         self.productID = product.id
         self.name = product.name
         self.image = product.images.first ?? ""
-        self.optionID = selectedProductOption.id
-        self.option = selectedProductOption.option
-        self.price = selectedProductOption.price
-        self.pieces = selectedProductOption.amount
+        self.optionID = selectedProduct.id
+        self.option = selectedProduct.option
+        self.price = selectedProduct.price
+        self.pieces = selectedProduct.pieces
     }
 }

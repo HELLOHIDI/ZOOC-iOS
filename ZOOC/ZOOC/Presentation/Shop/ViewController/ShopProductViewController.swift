@@ -289,12 +289,12 @@ final class ShopProductViewController: BaseViewController {
 }
 
 extension ShopProductViewController: ProductBottomSheetDelegate {
-    func cartButtonDidTap(selectedOptions: [SelectedProductOption]) {
+    func cartButtonDidTap(_ selectedProductOptions: [SelectedProductOption]) {
         guard let productData else { return }
         
-        selectedOptions.forEach { 
+        selectedProductOptions.forEach {
             let cartedProduct = CartedProduct(product: productData,
-                                               selectedProductOption: $0)
+                                               selectedProduct: $0)
             RealmService().setCartedProduct(cartedProduct)
         }
        
@@ -303,8 +303,14 @@ extension ShopProductViewController: ProductBottomSheetDelegate {
                   bottomInset: 86)
     }
     
-    func orderButtonDidTap(selectedOptions: [SelectedProductOption]) {
-        let orderVC = OrderViewController(selectedProduct: selectedOptions)
+    func orderButtonDidTap(_ selectedProductOptions: [SelectedProductOption]) {
+        guard let productData else { return }
+        var orderProducts: [OrderProduct] = []
+        selectedProductOptions.forEach {
+            orderProducts.append(OrderProduct(product: productData,
+                                              selectedProductOption: $0))
+        }
+        let orderVC = OrderViewController(orderProducts)
         navigationController?.pushViewController(orderVC, animated: true)
     }
     

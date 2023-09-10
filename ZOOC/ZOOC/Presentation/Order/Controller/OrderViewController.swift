@@ -16,6 +16,8 @@ final class OrderViewController: BaseViewController {
     
     //MARK: - Properties
     
+    private let productsData: [OrderProduct]
+    
     private var ordererData = OrderOrderer()
     private var addressData = OrderAddress()
     private var newAddressData = OrderAddress()
@@ -23,7 +25,7 @@ final class OrderViewController: BaseViewController {
     
     private var deliveryFee = 4000 {
         didSet {
-            let productsTotalPrice = selectedProductData.reduce(0) { $0 + $1.productsPrice }
+            let productsTotalPrice = productsData.reduce(0) { $0 + $1.productsPrice }
             totalPrice = productsTotalPrice + deliveryFee
         }
     }
@@ -34,8 +36,6 @@ final class OrderViewController: BaseViewController {
             orderButton.setTitle("\(totalPrice.priceText) 결제하기", for: .normal)
         }
     }
-    
-    private let selectedProductData: [SelectedProductOption]
     
     private var agreementData = OrderAgreement()
     
@@ -61,8 +61,8 @@ final class OrderViewController: BaseViewController {
     
     //MARK: - Life Cycle
     
-    init(selectedProduct: [SelectedProductOption]) {
-        self.selectedProductData = selectedProduct
+    init(_ products: [OrderProduct]) {
+        self.productsData = products
         super.init(nibName: nil, bundle: nil)
         
     }
@@ -165,7 +165,7 @@ final class OrderViewController: BaseViewController {
         }
         
         productView.snp.makeConstraints {
-            let totalHeight = 60 + selectedProductData.count * 90 + (selectedProductData.count - 1) * 24 + 30
+            let totalHeight = 60 + productsData.count * 90 + (productsData.count - 1) * 24 + 30
             $0.top.equalToSuperview()
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(totalHeight)
@@ -213,7 +213,7 @@ final class OrderViewController: BaseViewController {
         
         ordererView.updateUI(ordererData)
         addressView.updateUI(newAddressData: newAddressData, basicAddressDatas: basicAddressResult)
-        productView.updateUI(selectedProductData)
+        productView.updateUI(productsData)
         priceView.updateUI(totalPrice, deliveryFee: deliveryFee)
     }
     
@@ -273,7 +273,7 @@ final class OrderViewController: BaseViewController {
             
             requestOrderAPI(ordererData,
                             addressData,
-                            selectedProductData,
+                            productsData,
                             deliveryFee)
             
             registerBasicAddress(newAddressData)
@@ -317,7 +317,7 @@ final class OrderViewController: BaseViewController {
     
     private func requestOrderAPI(_ orderer: OrderOrderer,
                                  _ address: OrderAddress,
-                                 _ products: [SelectedProductOption],
+                                 _ products: [OrderProduct],
                                  _ deliveryFee: Int) {
         
         let request = OrderRequest(orderer: orderer,
@@ -326,8 +326,10 @@ final class OrderViewController: BaseViewController {
                                    deliveryFee: deliveryFee)
         
         ShopAPI.shared.postOrder(request: request) { result in
-            
-            self.validateResult(result)
+            guard let result = self.validateResult(result) else {
+                self.showToast("주문하기에 실패하였습니다. 다시 시도해주세요", type: .bad)
+                return
+            }
             
             let totalPrice = products.reduce(0) { $0 + $1.productsPrice} + deliveryFee
             let payVC = OrderAssistantViewController(totalPrice: totalPrice)

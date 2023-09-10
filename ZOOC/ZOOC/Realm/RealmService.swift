@@ -51,10 +51,21 @@ final class RealmService {
     
  
     @MainActor
-    func setCartedProduct(cartedProducts: CartedProduct) {
-        try! localRealm.write {
-            localRealm.add(cartedProducts, update: .modified)
+    func setCartedProduct(_ newProduct: CartedProduct) {
+        
+        if let existedProduct = getCartedProduct(optionID: newProduct.optionID) {
+            try! localRealm.write {
+                localRealm.create(CartedProduct.self,
+                                  value: ["optionID": newProduct.optionID,
+                                          "pieces": existedProduct.pieces + newProduct.pieces],
+                                  update: .modified)
+            }
+        } else {
+            try! localRealm.write {
+                localRealm.add(newProduct, update: .modified)
+            }
         }
+        
     }
     
     @MainActor

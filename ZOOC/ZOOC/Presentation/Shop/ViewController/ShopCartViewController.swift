@@ -131,9 +131,12 @@ final class ShopCartViewController: BaseViewController {
         return label
     }()
     
-    private let payButton: ZoocGradientButton = {
+    private lazy var payButton: ZoocGradientButton = {
         let button = ZoocGradientButton()
         button.setTitle("\(0.priceText) 결제하기", for: .normal)
+        button.addTarget(self,
+                         action: #selector(orderButtonDidTap),
+                         for: .touchUpInside)
         return button
     }()
     
@@ -309,8 +312,12 @@ final class ShopCartViewController: BaseViewController {
     
     @objc
     private func orderButtonDidTap() {
-//        let orderVC = OrderViewController()
-//        navigationController?.pushViewController(orderVC, animated: true)
+        var orderProducts: [OrderProduct] = []
+        cartedProducts.forEach {
+            orderProducts.append(OrderProduct(cartedProduct: $0))
+        }
+        let orderVC = OrderViewController(orderProducts)
+        navigationController?.pushViewController(orderVC, animated: true)
     }
     
 }

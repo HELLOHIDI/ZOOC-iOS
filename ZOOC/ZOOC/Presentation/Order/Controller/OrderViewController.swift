@@ -19,7 +19,11 @@ final class OrderViewController: BaseViewController {
     private let productsData: [OrderProduct]
     
     private var ordererData = OrderOrderer()
-    private var addressData = OrderAddress()
+    private var addressData = OrderAddress() {
+        didSet {
+            print(addressData)
+        }
+    }
     private var newAddressData = OrderAddress()
     private var basicAddressData = OrderAddress()
     
@@ -74,10 +78,17 @@ final class OrderViewController: BaseViewController {
         hierarchy()
         layout()
         setDelegate()
+        setAddressData()
         requestDeliveryFee()
         updateUI()
         
         dismissKeyboardWhenTappedAround()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        RealmService().resetBasicAddressSelected()
     }
     
     required init?(coder: NSCoder) {
@@ -208,8 +219,17 @@ final class OrderViewController: BaseViewController {
         agreementView.delegate = self
     }
     
-    private func updateUI() {
+    private func setAddressData() {
         basicAddressResult = basicAddressRealm.objects(OrderBasicAddress.self)
+        
+        if let selectedAddressData = RealmService().getSelectedAddress() {
+            addressData = selectedAddressData.transform()
+            basicAddressData = selectedAddressData.transform()
+            addressView.dataBind(basicAddressResult)
+        }
+    }
+    
+    private func updateUI() {
         
         ordererView.updateUI(ordererData)
         addressView.updateUI(newAddressData: newAddressData, basicAddressDatas: basicAddressResult)
@@ -219,47 +239,30 @@ final class OrderViewController: BaseViewController {
     
     private func registerBasicAddress(_ data: OrderAddress) {
         if addressView.newAddressView.registerBasicAddressCheckButton.isSelected == true && addressView.newAddressView.isHidden == false {
-            let fullAddress = "(\(data.postCode)) \(data.address)"
-            let newAddress = OrderBasicAddress.init(
-                postCode: data.postCode,
-                name: data.receiverName,
-                address: fullAddress,
-                detailAddress: data.detailAddress,
-                phoneNumber: data.receiverPhoneNumber,
-                request: nil,
-                isSelected: false
-            )
-            
-            let filter = basicAddressResult.filter("fullAddress=='\(newAddress.fullAddress)'")
-            print("filter: \(filter)")
-            
-            if filter.isEmpty {
-                try! basicAddressRealm.write {
-                    basicAddressRealm.add(newAddress)
-                    print(newAddress)
-                }
-            } else {
-                showToast("이미 등록된 주소입니다!", type: .bad)
+            do {
+               try RealmService().updateBasicAddress(data)
+            } catch {
+                guard let error = error as? OrderError else { return }
+                showToast(error.message, type: .bad)
             }
         } else {
             print("로컬DB에 등록이 불가능합니다!")
         }
     }
     
-    private func resetBasicAddressIsSelected() {
-        try! basicAddressRealm.write {
-            basicAddressResult.forEach {
-                $0.isSelected = false
-            }
-            basicAddressResult.first?.isSelected = true
-        }
-    }
+//    private func resetBasicAddressIsSelected() {
+//        try! basicAddressRealm.write {
+//            basicAddressResult.forEach {
+//                $0.isSelected = false
+//            }
+//            basicAddressResult.first?.isSelected = true
+//        }
+//    }
     
     //MARK: - Action Method
     
     @objc
     private func backButtonDidTap() {
-        resetBasicAddressIsSelected()
         navigationController?.popViewController(animated: true)
     }
     
@@ -277,7 +280,6 @@ final class OrderViewController: BaseViewController {
                             deliveryFee)
             
             registerBasicAddress(newAddressData)
-            resetBasicAddressIsSelected()
             
         } catch OrderInvalidError.ordererInvalid {
             showToast("구매자 정보를 모두 입력해주세요.",
@@ -326,7 +328,7 @@ final class OrderViewController: BaseViewController {
                                    deliveryFee: deliveryFee)
         
         ShopAPI.shared.postOrder(request: request) { result in
-            guard let result = self.validateResult(result) else {
+            guard self.validateResult(result) != nil else {
                 self.showToast("주문하기에 실패하였습니다. 다시 시도해주세요", type: .bad)
                 return
             }
@@ -356,11 +358,18 @@ extension OrderViewController: OrderOrdererViewDelegate {
 //MARK: - OrderAddressViewDelegate
 
 extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDelegate & OrderBasicAddressViewDelegate {
+    func newAddressButtonDidTap() {
+        addressData = newAddressData
+    }
+    
     func basicAddressButtonDidTap() {
-        if basicAddressResult.isEmpty {
+        guard !basicAddressResult.isEmpty else {
             showToast("먼저 신규입력으로 배송지를 등록해주세요", type: .bad)
             addressView.updateUI(newAddressData: addressData, hasBasicAddress: false)
+            return
         }
+        
+        addressData = basicAddressData
     }
     
 
@@ -402,6 +411,7 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
             basicAddressData.receiverName = basicAddressResult[tag].name
             basicAddressData.receiverPhoneNumber = basicAddressResult[tag].phoneNumber
             basicAddressData.detailAddress = basicAddressResult[tag].detailAddress
+            
             addressData = basicAddressData
             addressView.updateUI(newAddressData: newAddressData, basicAddressDatas: basicAddressResult)
         }

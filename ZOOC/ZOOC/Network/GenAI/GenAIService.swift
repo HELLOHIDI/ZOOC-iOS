@@ -22,7 +22,7 @@ extension GenAIService: BaseTargetType {
         switch self {
         case .postDataset:
             return URLs.postDataset
-        case .getPetDataset(let petId):
+        case .getPetDataset(petId: let petId):
             return URLs.getPetDataset.replacingOccurrences(of: "{petId}", with: petId)
         case .patchDatasetImage(let datasetId, file: _):
             return URLs.patchDatasetImage.replacingOccurrences(of: "{datasetId}", with: datasetId)
@@ -112,16 +112,14 @@ extension GenAIService: BaseTargetType {
         
         var headers: [String : String]? {
             switch self {
-            case .postDataset:
-                return APIConstants.hasTokenHeader
-            case .getPetDataset:
-                return APIConstants.hasTokenHeader
             case .patchDatasetImage:
                 return APIConstants.multipartHeader
             case .patchDatasetImages:
                 return APIConstants.multipartHeader
             case .postRecordDatasetImages:
                 return APIConstants.multipartHeader
+            default:
+                return APIConstants.hasTokenHeader
             }
         }
     }

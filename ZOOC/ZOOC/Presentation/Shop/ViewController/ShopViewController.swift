@@ -70,6 +70,7 @@ final class ShopViewController: BaseViewController {
         layout()
         
         requestProductsAPI()
+        requestPetDatasetAPI()
     }
     
     //MARK: - Custom Method
@@ -118,6 +119,13 @@ final class ShopViewController: BaseViewController {
             $0.bottom.equalToSuperview()
         }
         
+    }
+    
+    private func requestPetDatasetAPI() {
+        GenAIAPI.shared.getPetDataset(petId: "1") { result in
+            guard let result = self.validateResult(result) as? GenAIPetDatasetsResult else { return }
+            print(result)
+        }
     }
     
     private func requestProductsAPI() {

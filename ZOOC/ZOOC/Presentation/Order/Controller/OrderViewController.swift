@@ -88,7 +88,7 @@ final class OrderViewController: BaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        RealmService().resetBasicAddressSelected()
+        DefaultRealmService.shared.resetBasicAddressSelected()
     }
     
     required init?(coder: NSCoder) {
@@ -222,7 +222,7 @@ final class OrderViewController: BaseViewController {
     private func setAddressData() {
         basicAddressResult = basicAddressRealm.objects(OrderBasicAddress.self)
         
-        if let selectedAddressData = RealmService().getSelectedAddress() {
+        if let selectedAddressData = DefaultRealmService.shared.getSelectedAddress() {
             addressData = selectedAddressData.transform()
             basicAddressData = selectedAddressData.transform()
             addressView.dataBind(basicAddressResult)
@@ -240,7 +240,7 @@ final class OrderViewController: BaseViewController {
     private func registerBasicAddress(_ data: OrderAddress) {
         if addressView.newAddressView.registerBasicAddressCheckButton.isSelected == true && addressView.newAddressView.isHidden == false {
             do {
-               try RealmService().updateBasicAddress(data)
+                try DefaultRealmService.shared.updateBasicAddress(data)
             } catch {
                 guard let error = error as? OrderError else { return }
                 showToast(error.message, type: .bad)

@@ -295,7 +295,7 @@ extension ShopProductViewController: ProductBottomSheetDelegate {
         selectedProductOptions.forEach {
             let cartedProduct = CartedProduct(product: productData,
                                                selectedProduct: $0)
-            RealmService().setCartedProduct(cartedProduct)
+            DefaultRealmService.shared.setCartedProduct(cartedProduct)
         }
        
         showToast("장바구니에 상품이 담겼습니다.",

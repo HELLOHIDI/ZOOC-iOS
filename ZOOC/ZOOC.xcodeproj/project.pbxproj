@@ -156,7 +156,7 @@
 		87E462EE2A110867006FC35D /* ZoocGradinetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */; };
 		87E462F12A110E18006FC35D /* CGColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462F02A110E18006FC35D /* CGColor+.swift */; };
 		87E462F32A113A37006FC35D /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462F22A113A37006FC35D /* CALayer+.swift */; };
-		87E4A1C92AAAF8AC005C012E /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E4A1C82AAAF8AC005C012E /* RealmService.swift */; };
+		87E4A1C92AAAF8AC005C012E /* DefaultRealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E4A1C82AAAF8AC005C012E /* DefaultRealmService.swift */; };
 		87E4A1CC2AAAFCA5005C012E /* CartedProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E4A1CB2AAAFCA5005C012E /* CartedProduct.swift */; };
 		87E4A1CE2AAB3075005C012E /* Results+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E4A1CD2AAB3075005C012E /* Results+.swift */; };
 		87F287D52A9A4EC100A53218 /* KakaoPostCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287D42A9A4EC100A53218 /* KakaoPostCodeViewController.swift */; };
@@ -455,7 +455,7 @@
 		87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocGradinetButton.swift; sourceTree = "<group>"; };
 		87E462F02A110E18006FC35D /* CGColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGColor+.swift"; sourceTree = "<group>"; };
 		87E462F22A113A37006FC35D /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
-		87E4A1C82AAAF8AC005C012E /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
+		87E4A1C82AAAF8AC005C012E /* DefaultRealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRealmService.swift; sourceTree = "<group>"; };
 		87E4A1CB2AAAFCA5005C012E /* CartedProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartedProduct.swift; sourceTree = "<group>"; };
 		87E4A1CD2AAB3075005C012E /* Results+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Results+.swift"; sourceTree = "<group>"; };
 		87F287D42A9A4EC100A53218 /* KakaoPostCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoPostCodeViewController.swift; sourceTree = "<group>"; };
@@ -1478,7 +1478,7 @@
 		87E4A1C72AAAF8A0005C012E /* Realm */ = {
 			isa = PBXGroup;
 			children = (
-				87E4A1C82AAAF8AC005C012E /* RealmService.swift */,
+				87E4A1C82AAAF8AC005C012E /* DefaultRealmService.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -2103,7 +2103,7 @@
 				D27D9560296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift in Sources */,
 				87E4A1CC2AAAFCA5005C012E /* CartedProduct.swift in Sources */,
 				D26C68EC296DE7B60088DC9A /* MyPetRegisterModel.swift in Sources */,
-				87E4A1C92AAAF8AC005C012E /* RealmService.swift in Sources */,
+				87E4A1C92AAAF8AC005C012E /* DefaultRealmService.swift in Sources */,
 				D2EA37EF29BEAB57007EF4B7 /* OnboardingBaseView.swift in Sources */,
 				D24AFABC2A8E03EF00823E9C /* GenAIRegisterViewModel.swift in Sources */,
 				D21CEC6229ABC1F900854A36 /* MyRegisterPetResult.swift in Sources */,

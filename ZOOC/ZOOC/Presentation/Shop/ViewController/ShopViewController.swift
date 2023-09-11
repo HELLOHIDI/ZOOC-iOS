@@ -14,6 +14,11 @@ final class ShopViewController: BaseViewController {
     
     //MARK: - Properties
     
+    sdvar petId: Int? {
+        didSet {
+            print("petId: \(petId)")
+        }
+    }
     private var productsData: [ProductResult] = [] {
         didSet {
             collectionView.reloadData()

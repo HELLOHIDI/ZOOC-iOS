@@ -15,24 +15,24 @@ protocol MyViewModelInput {
 }
 
 protocol MyViewModelOutput {
-    var myFamilyMemberData: Observable<[UserResult]> { get }
-    var myPetMemberData: Observable<[PetResult]> { get }
-    var myProfileData: Observable<UserResult?> { get }
-    var inviteCode: Observable<String?> { get }
-    var logoutOutput: Observable<Bool?> { get }
-    var deleteAccoutOutput: Observable<Bool?> { get }
+    var myFamilyMemberData: ObservablePattern<[UserResult]> { get }
+    var myPetMemberData: ObservablePattern<[PetResult]> { get }
+    var myProfileData: ObservablePattern<UserResult?> { get }
+    var inviteCode: ObservablePattern<String?> { get }
+    var logoutOutput: ObservablePattern<Bool?> { get }
+    var deleteAccoutOutput: ObservablePattern<Bool?> { get }
 }
 
 typealias MyViewModel = MyViewModelInput & MyViewModelOutput
 
 final class DefaultMyViewModel: MyViewModel {
     
-    var myFamilyMemberData: Observable<[UserResult]> = Observable([])
-    var myPetMemberData: Observable<[PetResult]> = Observable([])
-    var myProfileData: Observable<UserResult?> = Observable(nil)
-    var inviteCode: Observable<String?> = Observable(nil)
-    var logoutOutput: Observable<Bool?> = Observable(nil)
-    var deleteAccoutOutput: Observable<Bool?> = Observable(nil)
+    var myFamilyMemberData: ObservablePattern<[UserResult]> = ObservablePattern([])
+    var myPetMemberData: ObservablePattern<[PetResult]> = ObservablePattern([])
+    var myProfileData: ObservablePattern<UserResult?> = ObservablePattern(nil)
+    var inviteCode: ObservablePattern<String?> = ObservablePattern(nil)
+    var logoutOutput: ObservablePattern<Bool?> = ObservablePattern(nil)
+    var deleteAccoutOutput: ObservablePattern<Bool?> = ObservablePattern(nil)
     
     let repository: MyRepository
     

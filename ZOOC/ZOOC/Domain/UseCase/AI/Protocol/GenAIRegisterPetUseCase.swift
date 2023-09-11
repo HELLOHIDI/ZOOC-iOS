@@ -2,19 +2,27 @@
 //  GenAIRegisterPetUseCase.swift
 //  ZOOC
 //
-//  Created by 류희재 on 2023/09/09.
+//  Created by 류희재 on 2023/09/11.
 //
 
-import Foundation
+import UIKit
 
 import RxSwift
 import RxCocoa
 
-protocol GenAIChoosePetUseCase {
-    var petList: BehaviorRelay<[RecordRegisterModel]> { get set }
+protocol GenAIRegisterPetUseCase {
     var petId: BehaviorRelay<Int?> { get set }
+    var textFieldState: BehaviorRelay<BaseTextFieldState> { get }
     var canRegisterPet: BehaviorRelay<Bool> { get set }
-    func selectPet(at index: Int)
-    func getTotalPet()
+    var isRegistedPet: BehaviorRelay<Bool> { get set }
+    var isTextCountExceeded: BehaviorRelay<Bool> {get set}
+    var name: BehaviorRelay<String> { get set}
+    var photo: BehaviorRelay<UIImage?> { get set}
+    
+    func deleteProfileImage()
+    func registerProfileImage(_ image: UIImage)
+    func registerPet()
+    func isTextCountExceeded(for type: MyEditTextField.TextFieldType)
+    func nameTextFieldDidChangeEvent(_ text: String?)
 }
 

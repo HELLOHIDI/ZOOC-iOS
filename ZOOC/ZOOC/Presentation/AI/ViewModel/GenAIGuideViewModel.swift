@@ -16,18 +16,18 @@ protocol GenAIGuideViewModelInput {
 }
 
 protocol GenAIGuideViewModelOutput {
-    var selectedImageDatasets: Observable<[PHPickerResult]> { get }
-    var enablePhotoUpload: Observable<Bool?> { get }
-    var isPopped: Observable<Bool> { get }
+    var selectedImageDatasets: ObservablePattern<[PHPickerResult]> { get }
+    var enablePhotoUpload: ObservablePattern<Bool?> { get }
+    var isPopped: ObservablePattern<Bool> { get }
 }
 
 typealias GenAIGuideViewModel = GenAIGuideViewModelInput & GenAIGuideViewModelOutput
 
 final class DefaultGenAIGuideViewModel: GenAIGuideViewModel {
     
-    var selectedImageDatasets: Observable<[PHPickerResult]> = Observable([])
-    var enablePhotoUpload: Observable<Bool?> = Observable(nil)
-    var isPopped: Observable<Bool> = Observable(false)
+    var selectedImageDatasets: ObservablePattern<[PHPickerResult]> = ObservablePattern([])
+    var enablePhotoUpload: ObservablePattern<Bool?> = ObservablePattern(nil)
+    var isPopped: ObservablePattern<Bool> = ObservablePattern(false)
     
     func viewWillDisappearEvent() {
         selectedImageDatasets.value = []

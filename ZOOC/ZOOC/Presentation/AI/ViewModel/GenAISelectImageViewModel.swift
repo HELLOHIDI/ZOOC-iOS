@@ -18,11 +18,11 @@ protocol GenAISelectImageViewModelInput {
 }
 
 protocol GenAISelectImageViewModelOutput {
-    var selectedImageDatasets : Observable<[PHPickerResult]> { get }
-    var petImageDatasets : Observable<[UIImage]> { get }
-    var showEnabled: Observable<Bool> { get }
-    var isCompleted: Observable<Bool?> { get }
-    var uploadRequestCompleted: Observable<Bool?> { get }
+    var selectedImageDatasets : ObservablePattern<[PHPickerResult]> { get }
+    var petImageDatasets : ObservablePattern<[UIImage]> { get }
+    var showEnabled: ObservablePattern<Bool> { get }
+    var isCompleted: ObservablePattern<Bool?> { get }
+    var uploadRequestCompleted: ObservablePattern<Bool?> { get }
 }
 
 typealias GenAISelectImageViewModel = GenAISelectImageViewModelInput & GenAISelectImageViewModelOutput
@@ -32,11 +32,11 @@ final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
     private var petId: Int
     let repository: GenAIModelRepository
     
-    var selectedImageDatasets: Observable<[PHPickerResult]> = Observable([])
-    var petImageDatasets: Observable<[UIImage]> = Observable([])
-    var showEnabled: Observable<Bool> = Observable(false)
-    var isCompleted: Observable<Bool?> = Observable(nil)
-    var uploadRequestCompleted: Observable<Bool?> = Observable(nil)
+    var selectedImageDatasets: ObservablePattern<[PHPickerResult]> = ObservablePattern([])
+    var petImageDatasets: ObservablePattern<[UIImage]> = ObservablePattern([])
+    var showEnabled: ObservablePattern<Bool> = ObservablePattern(false)
+    var isCompleted: ObservablePattern<Bool?> = ObservablePattern(nil)
+    var uploadRequestCompleted: ObservablePattern<Bool?> = ObservablePattern(nil)
     
     
     init(petId: Int, selectedImageDatasets: [PHPickerResult], repository: GenAIModelRepository) {

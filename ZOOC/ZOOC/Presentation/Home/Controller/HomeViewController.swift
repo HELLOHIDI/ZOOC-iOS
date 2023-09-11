@@ -60,7 +60,7 @@ final class HomeViewController : BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        requestTotalPetAPI()
+        //        requestTotalPetAPI()
         rootView.aiView.startAnimation()
     }
     
@@ -129,9 +129,9 @@ final class HomeViewController : BaseViewController {
         rootView.archiveBottomView
             .addGestureRecognizer(
                 UITapGestureRecognizer(target: self,
-                action: #selector(bottomViewDidTap)
+                                       action: #selector(bottomViewDidTap)
+                                      )
             )
-        )
         
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     }
@@ -173,8 +173,8 @@ final class HomeViewController : BaseViewController {
         
         
         let shopVC = ShopViewController()
-//        let orderVC = OrderViewController(selectedProduct: [SelectedProductOption(id: 1, name: "!@", option: "!@3", image: "!@3", price: 1, amount: 1)])
-//
+        //        let orderVC = OrderViewController(selectedProduct: [SelectedProductOption(id: 1, name: "!@", option: "!@3", image: "!@3", price: 1, amount: 1)])
+        //
         shopVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(shopVC, animated: true)
     }
@@ -182,16 +182,20 @@ final class HomeViewController : BaseViewController {
     private func pushToGenAIViewController() {
         if self.petData.count > 0 {
             let genAIChoosePetVC = GenAIChoosePetViewController(
-                viewModel: DefaultGenAIChoosePetModel(
-                    repository: GenAIPetRepositoryImpl()
+                viewModel: GenAIChoosePetViewModel(
+                    genAIChoosePetUseCase: DefaultGenAIChoosePetUseCase(
+                        repository: GenAIPetRepositoryImpl()
+                    )
                 )
             )
             genAIChoosePetVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(genAIChoosePetVC, animated: true)
         } else {
             let genAIRegisterPetVC = GenAIRegisterPetViewController(
-                viewModel: DefaultGenAIRegisterViewModel(
-                    repository: GenAIPetRepositoryImpl()
+                viewModel: GenAIRegisterPetViewModel(
+                    genAIRegisterPetUseCase: DefaultGenAIRegisterPetUseCase(
+                        repository: GenAIPetRepositoryImpl()
+                    )
                 )
             )
             genAIRegisterPetVC.hidesBottomBarWhenPushed = true

@@ -60,7 +60,6 @@ final class HomeViewController : BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        requestTotalPetAPI()
         rootView.aiView.startAnimation()
     }
     
@@ -172,7 +171,7 @@ final class HomeViewController : BaseViewController {
     private func pushToShopViewController() {
         
         
-        let shopVC = ShopViewController()
+        let shopVC = ShopChoosePetViewController(viewModel: DefaultGenAIChoosePetModel(repository: GenAIPetRepositoryImpl()))
 //        let orderVC = OrderViewController(selectedProduct: [SelectedProductOption(id: 1, name: "!@", option: "!@3", image: "!@3", price: 1, amount: 1)])
 //
         shopVC.hidesBottomBarWhenPushed = true

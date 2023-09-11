@@ -273,6 +273,7 @@
 		D299441A2AAADE7C00C4F280 /* OrderProductCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29944192AAADE7C00C4F280 /* OrderProductCollectionViewCell.swift */; };
 		D299441C2AAB04E100C4F280 /* ZoocRequiredInputLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D299441B2AAB04E100C4F280 /* ZoocRequiredInputLabel.swift */; };
 		D299441E2AAB065A00C4F280 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D299441D2AAB065A00C4F280 /* Pretendard-Bold.otf */; };
+		D29944362AAF1D7A00C4F280 /* ShopChoosePetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29944352AAF1D7A00C4F280 /* ShopChoosePetViewController.swift */; };
 		D299957A2A95B8520004FB5D /* NSItemProvider+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29995792A95B8520004FB5D /* NSItemProvider+.swift */; };
 		D2B735562A86681800F93C45 /* MyEditProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735552A86681800F93C45 /* MyEditProfileRepository.swift */; };
 		D2B735582A8669BA00F93C45 /* MyEditPetProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735572A8669BA00F93C45 /* MyEditPetProfileRepository.swift */; };
@@ -568,6 +569,7 @@
 		D29944192AAADE7C00C4F280 /* OrderProductCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderProductCollectionViewCell.swift; sourceTree = "<group>"; };
 		D299441B2AAB04E100C4F280 /* ZoocRequiredInputLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocRequiredInputLabel.swift; sourceTree = "<group>"; };
 		D299441D2AAB065A00C4F280 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		D29944352AAF1D7A00C4F280 /* ShopChoosePetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopChoosePetViewController.swift; sourceTree = "<group>"; };
 		D29995792A95B8520004FB5D /* NSItemProvider+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSItemProvider+.swift"; sourceTree = "<group>"; };
 		D2B735552A86681800F93C45 /* MyEditProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditProfileRepository.swift; sourceTree = "<group>"; };
 		D2B735572A8669BA00F93C45 /* MyEditPetProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditPetProfileRepository.swift; sourceTree = "<group>"; };
@@ -1363,6 +1365,7 @@
 				87A3D8772A975385002C36DB /* ShopViewController.swift */,
 				870A4BF82AA252CB00D7CFD8 /* ShopProductViewController.swift */,
 				87BCAD392AA718D800A03DA3 /* ShopCartViewController.swift */,
+				D29944352AAF1D7A00C4F280 /* ShopChoosePetViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1882,6 +1885,7 @@
 				D26C860A296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift in Sources */,
 				D24AFAC42A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift in Sources */,
 				D26C85CF2968681900AEAF9B /* MyPetCollectionFooterView.swift in Sources */,
+				D29944362AAF1D7A00C4F280 /* ShopChoosePetViewController.swift in Sources */,
 				872F638929B89D9B002EC413 /* HomeGuideViewController.swift in Sources */,
 				8765549F295846F3006BBDA9 /* ZoocTabBarController.swift in Sources */,
 				87F287EF2A9F36CE00A53218 /* ShopService.swift in Sources */,

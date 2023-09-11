@@ -10,7 +10,6 @@ import UIKit
 protocol GenAIChoosePetModelInput {
     func viewWillAppearEvent()
     func petButtonDidTapEvent(at index: Int)
-    func registerButtonDidTapEvent()
 }
 
 protocol GenAIChoosePetModelOutput {
@@ -52,13 +51,5 @@ final class DefaultGenAIChoosePetModel: GenAIChoosePetModel {
         }
         ableToChoosePet.value = true
         petId.value = petList.value[index].petID
-    }
-    
-    func registerButtonDidTapEvent() {
-        print(#function)
-        NotificationCenter.default.post(
-            name: .petSelected,
-            object: petId.value
-        )
     }
 }

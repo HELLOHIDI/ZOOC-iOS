@@ -14,7 +14,7 @@ final class MyRegisterPetView: UIView {
 
     //MARK: - UI Components
     
-    public var backButton = UIButton()
+    public var xmarkButton = UIButton()
     public var completedProgressBarView = UIView()
     private var registerPetTitleLabel = UILabel()
     private var registerPetSubTitleLabel = UILabel()
@@ -56,8 +56,8 @@ final class MyRegisterPetView: UIView {
     private func style() {
         self.backgroundColor = .zoocBackgroundGreen
         
-        backButton.do {
-            $0.setImage(Image.back, for: .normal)
+        xmarkButton.do {
+            $0.setImage(Image.xmark, for: .normal)
         }
         
         completedProgressBarView.do {
@@ -92,12 +92,12 @@ final class MyRegisterPetView: UIView {
     }
     
     private func hierarchy() {
-        addSubviews(backButton, registerPetTitleLabel, registerPetSubTitleLabel,
+        addSubviews(xmarkButton, registerPetTitleLabel, registerPetSubTitleLabel,
                     registerPetTableView, registerPetButton)
     }
     
     private func layout() {
-        backButton.snp.makeConstraints {
+        xmarkButton.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(6)
             $0.leading.equalToSuperview().offset(17)
             $0.size.equalTo(42)

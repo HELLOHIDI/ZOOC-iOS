@@ -64,7 +64,7 @@ final class MyRegisterPetViewController: BaseViewController {
     }
     
     private func target() {
-        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        rootView.xmarkButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
         rootView.registerPetButton.addTarget(self, action: #selector(registerPetButtonDidTap), for: .touchUpInside)
     }
     

@@ -32,3 +32,15 @@ class OrderBasicAddress: Object {
         self.fullAddress = "(\(postCode)) \(address) \(detailAddress ?? "")"
     }
 }
+
+extension OrderBasicAddress {
+    func transform() -> OrderAddress {
+        OrderAddress(addressName: "",
+                     receiverName: name,
+                     receiverPhoneNumber: phoneNumber,
+                     address: address,
+                     postCode: postCode,
+                     detailAddress: detailAddress,
+                     request: request)
+    }
+}

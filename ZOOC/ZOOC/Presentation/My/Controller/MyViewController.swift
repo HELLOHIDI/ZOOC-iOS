@@ -155,7 +155,7 @@ extension MyViewController: UICollectionViewDelegateFlowLayout {
         case 2:
             return CGSize(width: 315, height: 127)
         case 3:
-            return CGSize(width: 315, height: 346)
+            return CGSize(width: 315, height: 284)
         case 4:
             return CGSize(width: 315, height: 17)
         default:

@@ -132,7 +132,7 @@ class ZoocTabBarController: UITabBarController {
     }
     
     private func presentZoocAlertVC() {
-        let alertVC = ZoocAlertViewController(.noDataset)
+        let alertVC = ZoocAlertViewController(.noPet)
         alertVC.delegate = self
         present(alertVC, animated: false)
     }

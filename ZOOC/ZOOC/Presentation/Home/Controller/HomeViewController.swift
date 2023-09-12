@@ -128,9 +128,9 @@ final class HomeViewController : BaseViewController {
         rootView.archiveBottomView
             .addGestureRecognizer(
                 UITapGestureRecognizer(target: self,
-                action: #selector(bottomViewDidTap)
+                                       action: #selector(bottomViewDidTap)
+                                      )
             )
-        )
         
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     }
@@ -143,7 +143,6 @@ final class HomeViewController : BaseViewController {
             object: nil
         )
     }
-    
     
     @objc
     public func updateUI() {
@@ -168,12 +167,12 @@ final class HomeViewController : BaseViewController {
         navigationController?.pushViewController(noticeVC, animated: true)
     }
     
-    private func pushToShopViewController() {
-        
+    private func pushToShopViewController(_ petData: [HomePetResult]) {
+        for pet in petData {
+            print("🐶 \(pet.name)")
+        }
         
         let shopVC = ShopChoosePetViewController(viewModel: DefaultGenAIChoosePetModel(repository: GenAIPetRepositoryImpl()))
-//        let orderVC = OrderViewController(selectedProduct: [SelectedProductOption(id: 1, name: "!@", option: "!@3", image: "!@3", price: 1, amount: 1)])
-//
         shopVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(shopVC, animated: true)
     }
@@ -284,6 +283,33 @@ final class HomeViewController : BaseViewController {
         }
     }
     
+    private func requestPetDatasetAPI() {
+        rootView.shopButton.isEnabled = false
+        var petData: [HomePetResult] = []
+        let dispatchGroup = DispatchGroup()
+        
+        for pet in self.petData {
+            dispatchGroup.enter()
+            
+            GenAIAPI.shared.getPetDataset(petId: String(pet.id)) { [weak self] result in
+                if let result = self?.validateResult(result) as? GenAIPetDatasetsResult {
+                    if !result.datasetImages.isEmpty {
+                        print("성공한 펫 아이디 \(pet.id)")
+                        petData.append(pet)
+                    }
+                }
+                dispatchGroup.leave()
+            }
+        }
+        dispatchGroup.notify(queue: .main) {
+            self.rootView.shopButton.isEnabled = true
+            if petData.isEmpty {
+                self.showToast("아무런 데이터셋도 없습니다", type: .bad)
+            } else {
+                self.pushToShopViewController(petData)
+            }
+        }
+    }
     
     //MARK: - Action Method
     
@@ -294,7 +320,7 @@ final class HomeViewController : BaseViewController {
     
     @objc
     private func shopButtonDidTap() {
-        pushToShopViewController()
+        requestPetDatasetAPI()
     }
     
     @objc

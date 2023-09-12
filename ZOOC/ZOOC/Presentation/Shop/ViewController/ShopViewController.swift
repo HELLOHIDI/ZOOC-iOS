@@ -14,7 +14,7 @@ final class ShopViewController: BaseViewController {
     
     //MARK: - Properties
     
-    sdvar petId: Int? {
+    var petId: Int? {
         didSet {
             print("petId: \(petId)")
         }

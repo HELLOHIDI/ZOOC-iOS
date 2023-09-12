@@ -78,7 +78,7 @@ final class ShopChoosePetViewController: BaseViewController{
     }
     
     @objc private func registerButtonDidTap(){
-        requestPetDatasetAPI()
+//        requestPetDatasetAPI()
     }
 }
 
@@ -158,20 +158,5 @@ extension ShopChoosePetViewController {
     
     func updateRegisterButtonUI(_ isSelected: Bool) {
         rootView.registerButton.isEnabled = isSelected
-    }
-    
-    func requestPetDatasetAPI() {
-        guard let petId = viewModel.petId.value else { return }
-        GenAIAPI.shared.getPetDataset(petId: String(petId)) { [weak self] result in
-            guard let result = self?.validateResult(result) as? GenAIPetDatasetsResult else {
-                self?.showToast("데이터셋이 없습니다.", type: .bad)
-                return
-            }
-            if result.datasetImages.isEmpty {
-                self?.showToast("데이터셋에 이미지가 업로드중입니다", type: .bad)
-            } else {
-                self?.pushToShopVC()
-            }
-        }
     }
 }

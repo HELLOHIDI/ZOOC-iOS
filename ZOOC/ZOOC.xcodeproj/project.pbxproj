@@ -1362,10 +1362,10 @@
 		87BCAD302AA4EF5900A03DA3 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				D29944352AAF1D7A00C4F280 /* ShopChoosePetViewController.swift */,
 				87A3D8772A975385002C36DB /* ShopViewController.swift */,
 				870A4BF82AA252CB00D7CFD8 /* ShopProductViewController.swift */,
 				87BCAD392AA718D800A03DA3 /* ShopCartViewController.swift */,
-				D29944352AAF1D7A00C4F280 /* ShopChoosePetViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";

@@ -50,7 +50,7 @@ final class RecordRegisterViewController : BaseViewController{
         super.viewWillAppear(animated)
         
         RecordAPI.shared.getTotalPet { result in
-            guard let result = self.validateResult(result) as? [RecordPetResult] else { return }
+            guard let result = self.validateResult(result) as? [PetResult] else { return }
             self.petList = []
             result.forEach { self.petList.append($0.transform()) }
             self.rootView.petCollectionView.reloadData()

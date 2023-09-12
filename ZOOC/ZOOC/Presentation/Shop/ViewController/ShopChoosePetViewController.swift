@@ -10,11 +10,18 @@ import UIKit
 import SnapKit
 import Then
 
-final class ShopChoosePetViewController: BaseViewController{
+final class ShopChoosePetViewController: BaseViewController {
     
     // MARK: - Properties
 
     let viewModel: GenAIChoosePetModel
+    var petData: [PetResult] = [] {
+        didSet {
+            for pet in petData {
+                viewModel.petList.value.append(pet.transform())
+            }
+        }
+    }
     
     //MARK: - UI Components
     
@@ -41,12 +48,6 @@ final class ShopChoosePetViewController: BaseViewController{
         bind()
         target()
         delegate()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        viewModel.viewWillAppearEvent()
     }
     
     //MARK: - Custom Method

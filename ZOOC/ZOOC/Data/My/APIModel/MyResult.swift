@@ -27,10 +27,10 @@ struct UserResult: Codable {
     }
 }
 
-// MARK: - Pet
-struct PetResult: Codable {
-    let id: Int
-    let name: String
-    let photo: String?
-}
+//// MARK: - Pet
+//struct PetResult: Codable {
+//    let id: Int
+//    let name: String
+//    let photo: String?
+//}
 

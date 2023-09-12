@@ -18,7 +18,7 @@ final class HomeViewController : BaseViewController {
     private var limit: Int = 20
     private var isFetchingData = false
     private let refreshControl = UIRefreshControl()
-    private var petData: [HomePetResult] = [] {
+    private var petData: [PetResult] = [] {
         didSet{
             rootView.petCollectionView.reloadData()
         }
@@ -167,12 +167,9 @@ final class HomeViewController : BaseViewController {
         navigationController?.pushViewController(noticeVC, animated: true)
     }
     
-    private func pushToShopViewController(_ petData: [HomePetResult]) {
-        for pet in petData {
-            print("🐶 \(pet.name)")
-        }
-        
+    private func pushToShopViewController(_ petData: [PetResult]) {
         let shopVC = ShopChoosePetViewController(viewModel: DefaultGenAIChoosePetModel(repository: GenAIPetRepositoryImpl()))
+        shopVC.petData = petData
         shopVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(shopVC, animated: true)
     }
@@ -248,7 +245,7 @@ final class HomeViewController : BaseViewController {
     
     private func requestTotalPetAPI() {
         HomeAPI.shared.getTotalPet(familyID: UserDefaultsManager.familyID) { result in
-            guard let result = self.validateResult(result) as? [HomePetResult] else { return }
+            guard let result = self.validateResult(result) as? [PetResult] else { return }
             
             self.petData = result
             guard let id = self.petData.first?.id else {
@@ -285,7 +282,7 @@ final class HomeViewController : BaseViewController {
     
     private func requestPetDatasetAPI() {
         rootView.shopButton.isEnabled = false
-        var petData: [HomePetResult] = []
+        var petData: [PetResult] = []
         let dispatchGroup = DispatchGroup()
         
         for pet in self.petData {

@@ -19,7 +19,7 @@ extension RecordAPI{
     func getTotalPet(completion: @escaping (NetworkResult<Any>) -> Void) {
         recordProvider.request(.getTotalPet(familyID: UserDefaultsManager.familyID)) { (result) in
             self.disposeNetwork(result,
-                                dataModel: [RecordPetResult].self,
+                                dataModel: [PetResult].self,
                                 completion: completion)
         }
     }

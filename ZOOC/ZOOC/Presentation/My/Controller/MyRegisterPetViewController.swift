@@ -71,7 +71,13 @@ final class MyRegisterPetViewController: BaseViewController {
     //MARK: - Action Method
     
     @objc private func backButtonDidTap() {
-        self.navigationController?.popViewController(animated: true)
+        if let presentingViewController = presentingViewController {
+            // presented로 표시된 경우
+            presentingViewController.dismiss(animated: true)
+        } else if let navigationController = navigationController {
+            // pushed로 표시된 경우
+            navigationController.popViewController(animated: true)
+        }
     }
     
     @objc private func registerPetButtonDidTap() {
@@ -98,7 +104,13 @@ final class MyRegisterPetViewController: BaseViewController {
             self.validateResult(result)
             NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
             NotificationCenter.default.post(name: .myPageUpdate, object: nil)
-            self.navigationController?.popViewController(animated: true)
+            if let presentingViewController = self.presentingViewController {
+                // presented로 표시된 경우
+                presentingViewController.dismiss(animated: true)
+            } else if let navigationController = self.navigationController {
+                // pushed로 표시된 경우
+                navigationController.popViewController(animated: true)
+            }
         }
         
     }

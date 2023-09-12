@@ -20,6 +20,7 @@ enum AlertType {
     case shortOfPictures
     case deleteProduct
     case noDataset
+    case noPet
     
     
     var title: String {
@@ -43,6 +44,8 @@ enum AlertType {
             return "선택한 상품을 삭제하시나요?"
         case .noDataset:
             return "먼저 AI 모델을 생성해야해요"
+        case .noPet:
+            return "먼저 반려동물을 등록 해주세요"
         }
     }
     
@@ -67,6 +70,8 @@ enum AlertType {
             return "장바구니에서 상품이 제외돼요"
         case .noDataset:
             return "생성한 후에 쇼핑몰에서 구매가 가능해요"
+        case .noPet:
+            return "반려동물을 등록한 후에 작성이 가능해요"
         }
     }
     
@@ -91,6 +96,8 @@ enum AlertType {
             return "삭제하기"
         case .noDataset:
             return "생성하기"
+        case .noPet:
+            return "생성하기"
         }
     }
     
@@ -114,6 +121,8 @@ enum AlertType {
         case .deleteProduct:
             return "취소"
         case .noDataset:
+            return "취소"
+        case .noPet:
             return "취소"
         }
     }

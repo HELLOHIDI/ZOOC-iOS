@@ -194,6 +194,12 @@ final class HomeViewController : BaseViewController {
         }
     }
     
+    private func presentZoocAlertVC() {
+        let alertVC = ZoocAlertViewController(.noDataset)
+        alertVC.delegate = self
+        present(alertVC, animated: false)
+    }
+    
     private func deselectAllOfListArchiveCollectionViewCell(completion: (() -> Void)?) {
         rootView.archiveListCollectionView.indexPathsForSelectedItems?.forEach {
             rootView.archiveListCollectionView.deselectItem(at: $0, animated: false)
@@ -301,7 +307,7 @@ final class HomeViewController : BaseViewController {
         dispatchGroup.notify(queue: .main) {
             self.rootView.shopButton.isEnabled = true
             if petData.isEmpty {
-                self.showToast("아무런 데이터셋도 없습니다", type: .bad)
+                self.presentZoocAlertVC()
             } else {
                 self.pushToShopViewController(petData)
             }
@@ -606,6 +612,15 @@ extension HomeViewController {
 extension HomeViewController: HomeGuideViewControllerDelegate {
     func dismiss() {
         rootView.emptyView.isHidden = !archiveData.isEmpty
+    }
+}
+
+extension HomeViewController: ZoocAlertViewControllerDelegate{
+    func keepButtonDidTap() {
+        pushToGenAIViewController()
+    }
+    func exitButtonDidTap() {
+        self.dismiss()
     }
 }
 

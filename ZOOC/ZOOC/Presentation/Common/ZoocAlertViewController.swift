@@ -19,6 +19,7 @@ enum AlertType {
     case leaveAIPage
     case shortOfPictures
     case deleteProduct
+    case noDataset
     
     
     var title: String {
@@ -40,6 +41,8 @@ enum AlertType {
             return "생성에 필요한 사진이 부족해요"
         case .deleteProduct:
             return "선택한 상품을 삭제하시나요?"
+        case .noDataset:
+            return "먼저 AI 모델을 생성해야해요"
         }
     }
     
@@ -62,6 +65,8 @@ enum AlertType {
             return "8장 - 15장의 사진을 업로드 해주세요"
         case.deleteProduct:
             return "장바구니에서 상품이 제외돼요"
+        case .noDataset:
+            return "생성한 후에 쇼핑몰에서 구매가 가능해요"
         }
     }
     
@@ -84,6 +89,8 @@ enum AlertType {
             return "다시 고르기"
         case .deleteProduct:
             return "삭제하기"
+        case .noDataset:
+            return "생성하기"
         }
     }
     
@@ -105,6 +112,8 @@ enum AlertType {
         case .shortOfPictures:
             return "나가기"
         case .deleteProduct:
+            return "취소"
+        case .noDataset:
             return "취소"
         }
     }

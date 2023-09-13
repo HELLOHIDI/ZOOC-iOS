@@ -29,7 +29,6 @@ typealias MyEditPetProfileViewModel = MyEditPetProfileModelInput & MyEditPetProf
 
 final class DefaultMyEditPetProfileViewModel: MyEditPetProfileViewModel {
     let id: Int
-    let editPetProfileRequest: EditPetProfileRequest
     let repository: MyEditPetProfileRepository
     
     var ableToEditPetProfile: Observable<Bool> = Observable(false)
@@ -41,7 +40,7 @@ final class DefaultMyEditPetProfileViewModel: MyEditPetProfileViewModel {
         editPetProfileRequest: EditPetProfileRequest,
         repository: MyEditPetProfileRepository) {
         self.id = id
-        self.editPetProfileRequest = editPetProfileRequest
+        self.editPetProfileDataOutput.value = editPetProfileRequest
         self.repository = repository
     }
     

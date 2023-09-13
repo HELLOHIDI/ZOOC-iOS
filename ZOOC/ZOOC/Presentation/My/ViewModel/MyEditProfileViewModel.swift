@@ -79,6 +79,9 @@ final class MyEditProfileViewModel: MyEditProfileModelInput, MyEditProfileModelO
 
 extension MyEditProfileViewModel {
     func patchMyPetProfile() {
+        print("🍎🍎🍎🍎🍎🍎🍎")
+        print("\(editProfileDataOutput.value.nickName)")
+        print("🍎🍎🍎🍎🍎🍎🍎")
         repository.patchMyProfile(request: editProfileDataOutput.value) { result in
             switch result {
             case .success(_):

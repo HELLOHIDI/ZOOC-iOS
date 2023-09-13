@@ -133,7 +133,7 @@ extension GenAIGuideViewController {
 extension GenAIGuideViewController: ZoocAlertViewControllerDelegate {
     
     func exitButtonDidTap() {
-        dismiss(animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     func keepButtonDidTap() {

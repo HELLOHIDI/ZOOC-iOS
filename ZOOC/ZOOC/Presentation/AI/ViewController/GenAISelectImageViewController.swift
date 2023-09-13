@@ -82,6 +82,10 @@ final class GenAISelectImageViewController : BaseViewController {
                 self?.showToast("AI 모델 생성 중 문제가 발생했습니다", type: .bad)
             }
         }
+        
+        viewModel.isEnabled.observe(on: self) { [weak self] isEnabled in
+            self?.rootView.generateAIModelButton.isEnabled = isEnabled
+        }
     }
     
     func delegate() {
@@ -118,6 +122,7 @@ final class GenAISelectImageViewController : BaseViewController {
     }
     
     @objc func generateAIModelButtonDidTap() {
+        rootView.generateAIModelButton.isEnabled = false
         viewModel.generateAIModelButtonDidTapEvent()
     }
     

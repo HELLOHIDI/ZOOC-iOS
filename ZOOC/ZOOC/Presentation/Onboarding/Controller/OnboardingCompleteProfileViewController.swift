@@ -68,7 +68,7 @@ private extension OnboardingCompleteProfileViewController {
     }
     
     func updateCompleteProfileView() {
-        UIView.animate(withDuration: 1, delay: 1) {
+        UIView.animate(withDuration: 0.5, delay: 0.5) {
             self.onboardingCompleteProfileView.completeProfileLabel.alpha = 0.4
             self.onboardingCompleteProfileView.completeProfileSubLabel.alpha = 1
             self.onboardingCompleteProfileView.completeImage.alpha = 1

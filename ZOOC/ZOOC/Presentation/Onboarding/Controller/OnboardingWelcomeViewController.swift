@@ -53,7 +53,7 @@ final class OnboardingWelcomeViewController: UIViewController{
 
 extension OnboardingWelcomeViewController {
     private func updateWelcomeView() {
-        UIView.animate(withDuration: 1, delay: 1) {
+        UIView.animate(withDuration: 0.5, delay: 0.5) {
             self.rootView.welcomeLabel.alpha = 0.4
             self.rootView.welcomeSubLabel.alpha = 1
             self.rootView.welcomeImage.alpha = 1

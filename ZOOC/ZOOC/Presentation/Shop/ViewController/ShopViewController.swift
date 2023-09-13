@@ -14,11 +14,8 @@ final class ShopViewController: BaseViewController {
     
     //MARK: - Properties
     
-    var petId: Int? {
-        didSet {
-            print("petId: \(petId)")
-        }
-    }
+    private var petID: Int
+    
     private var productsData: [ProductResult] = [] {
         didSet {
             collectionView.reloadData()
@@ -64,6 +61,17 @@ final class ShopViewController: BaseViewController {
     }()
     
     //MARK: - Life Cycle
+    
+    init(petID: Int) {
+        self.petID = petID
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -177,7 +185,7 @@ extension ShopViewController {
                         didSelectItemAt indexPath: IndexPath) {
         
         if indexPath.row + 1 <= productsData.count {
-            let productVC = ShopProductViewController(productID: productsData[indexPath.row].id)
+            let productVC = ShopProductViewController(productID: productsData[indexPath.row].id, petID: petID)
             navigationController?.pushViewController(productVC, animated: true)
         } else {
             self.showToast("오픈 예정 제품이에요", type: .normal)

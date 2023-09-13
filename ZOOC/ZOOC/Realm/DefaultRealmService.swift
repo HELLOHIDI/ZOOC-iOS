@@ -9,11 +9,30 @@ import Foundation
 
 import RealmSwift
 
-final class RealmService {
+protocol RealmService {
+    
+    // 장바구니
+    func getCartedProducts() -> [CartedProduct]
+    func getCartedProduct(optionID: Int) -> CartedProduct?
+    func setCartedProduct(_ newProduct: CartedProduct)
+    func updateCartedProductPieces(optionID: Int, isPlus: Bool) throws
+    func deleteCartedProduct(_ product: CartedProduct)
+    
+    // 기존 배송지
+    func getBasicAddress() -> Results<OrderBasicAddress>
+    func getSelectedAddress() -> OrderBasicAddress?
+    func setAddress(_ newAddress: OrderBasicAddress)
+    func updateBasicAddress(_ data: OrderAddress) throws
+    func resetBasicAddressSelected()
+}
+
+final class DefaultRealmService: RealmService {
+    
+    static let shared = DefaultRealmService()
     
     private let localRealm: Realm
     
-    init() {
+    private init() {
         do {
             localRealm = try Realm()
             print("Realm Location: ", localRealm.configuration.fileURL ?? "cannot find location.")
@@ -47,6 +66,14 @@ final class RealmService {
         }
         try! localRealm.write {
             product.pieces += delta
+        }
+    }
+    
+    @MainActor
+    func deleteCartedProducts()  {
+        try! localRealm.write {
+            let products = localRealm.objects(CartedProduct.self)
+            localRealm.delete(products)
         }
     }
     
@@ -118,7 +145,7 @@ final class RealmService {
     
     @MainActor
     func resetBasicAddressSelected() {
-        let basicAddress = localRealm.objects(OrderBasicAddress.self)
+        let basicAddress = getBasicAddress()
         
         try! localRealm.write {
             basicAddress.forEach {

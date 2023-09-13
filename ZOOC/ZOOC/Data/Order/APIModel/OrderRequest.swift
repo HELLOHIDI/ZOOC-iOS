@@ -8,6 +8,7 @@
 import Foundation
 
 struct ProductRequest: Codable {
+    let petId: Int
     let productId: Int
     let optionId: Int
     let pieces: Int

@@ -300,7 +300,7 @@ final class ShopCartViewController: BaseViewController {
     }
     
     private func requestCartedProducts() {
-        cartedProducts = RealmService().getCartedProducts()
+        cartedProducts = DefaultRealmService.shared.getCartedProducts()
     }
     
     //MARK: - Action Method
@@ -362,13 +362,13 @@ extension ShopCartViewController: ShopCartCollectionViewCellDelegate {
     func adjustAmountButtonDidTap(row: Int, isPlus: Bool) {
         let optionID = cartedProducts[row].optionID
         do {
-            try RealmService().updateCartedProductPieces(optionID: optionID, isPlus: isPlus)
+            try DefaultRealmService.shared.updateCartedProductPieces(optionID: optionID, isPlus: isPlus)
         } catch  {
             guard let error =  error as? AmountError else { return }
             showToast(error.message, type: .bad)
         }
         
-        cartedProducts = RealmService().getCartedProducts()
+        cartedProducts = DefaultRealmService.shared.getCartedProducts()
     }
     
     func xButtonDidTap(row: Int) {
@@ -386,7 +386,7 @@ extension ShopCartViewController: ZoocAlertViewControllerDelegate {
     internal func keepButtonDidTap(_ data: Any?) {
         guard let row = data as? Int else { return }
         let product = cartedProducts[row]
-        RealmService().deleteCartedProduct(product)
+        DefaultRealmService.shared.deleteCartedProduct(product)
         cartedProducts.remove(at: row)
     }
 }

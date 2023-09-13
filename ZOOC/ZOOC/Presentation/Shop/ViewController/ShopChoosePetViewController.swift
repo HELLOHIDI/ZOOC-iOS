@@ -60,6 +60,11 @@ final class ShopChoosePetViewController: BaseViewController {
         viewModel.ableToChoosePet.observe(on: self) { [weak self] isSelected in
             self?.updateRegisterButtonUI(isSelected)
         }
+        
+        viewModel.petId.observe(on: self) { [weak self] petID in
+            guard let petID else { return }
+            self?.pushToShopVC(petID: petID)
+        }
     }
     
     private func target() {
@@ -79,7 +84,7 @@ final class ShopChoosePetViewController: BaseViewController {
     }
     
     @objc private func registerButtonDidTap(){
-//        requestPetDatasetAPI()
+        //pushToShopVC(
     }
 }
 
@@ -150,10 +155,9 @@ extension ShopChoosePetViewController: ZoocAlertViewControllerDelegate {
 }
 
 extension ShopChoosePetViewController {
-    func pushToShopVC() {
-        let shopVC = ShopViewController()
+    func pushToShopVC(petID: Int) {
+        let shopVC = ShopViewController(petID: petID)
         shopVC.hidesBottomBarWhenPushed = true
-        shopVC.petId = viewModel.petId.value
         navigationController?.pushViewController(shopVC, animated: true)
     }
     

@@ -22,6 +22,7 @@ protocol GenAISelectImageViewModelOutput {
     var petImageDatasets : Observable<[UIImage]> { get }
     var showEnabled: Observable<Bool> { get }
     var isCompleted: Observable<Bool?> { get }
+    var isEnabled: Observable<Bool> { get }
     var uploadRequestCompleted: Observable<Bool?> { get }
 }
 
@@ -36,6 +37,7 @@ final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
     var petImageDatasets: Observable<[UIImage]> = Observable([])
     var showEnabled: Observable<Bool> = Observable(false)
     var isCompleted: Observable<Bool?> = Observable(nil)
+    var isEnabled: Observable<Bool> = Observable(true)
     var uploadRequestCompleted: Observable<Bool?> = Observable(nil)
     
     
@@ -98,7 +100,6 @@ final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
             default:
                 self?.uploadRequestCompleted.value = false
             }
-            
         }
     }
     

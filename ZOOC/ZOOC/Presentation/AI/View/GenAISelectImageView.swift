@@ -21,7 +21,7 @@ final class GenAISelectImageView: UIView {
     private let titleLabel = UILabel()
     public let subTitleLabel = UILabel()
     
-    public lazy var generateAIModelButton = ZoocGradientButton()
+    public lazy var generateAIModelButton = ZoocGradientButton.init(.network)
     
     public let activityIndicatorView = UIActivityIndicatorView(style: .large)
     

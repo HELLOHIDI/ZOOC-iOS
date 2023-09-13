@@ -50,7 +50,7 @@ final class RecordRegisterViewController : BaseViewController{
         super.viewWillAppear(animated)
         
         RecordAPI.shared.getTotalPet { result in
-            guard let result = self.validateResult(result) as? [RecordPetResult] else { return }
+            guard let result = self.validateResult(result) as? [PetResult] else { return }
             self.petList = []
             result.forEach { self.petList.append($0.transform()) }
             self.rootView.petCollectionView.reloadData()
@@ -158,7 +158,6 @@ extension RecordRegisterViewController: UICollectionViewDelegate {
             petList[indexPath.row].isSelected = false
             cell.updateUI(isSelected: false)
         }
-        rootView.registerButton.isEnabled = false
         let indexPathArray = collectionView.indexPathsForSelectedItems
         activateButton(indexPathArray: indexPathArray)
     }
@@ -198,7 +197,6 @@ extension RecordRegisterViewController {
                 selectedPetIDList.append($0.petID)
             }
         }
-        rootView.registerButton.isEnabled = false
         
         RecordAPI.shared.postRecord(photo: recordData.image ?? UIImage(),
                                     content: recordData.content ?? "",

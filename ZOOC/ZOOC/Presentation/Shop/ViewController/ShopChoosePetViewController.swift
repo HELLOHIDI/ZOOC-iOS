@@ -1,8 +1,8 @@
 //
-//  GenAIChoosePetViewController.swift
+//  ShopChoosePetViewController.swift
 //  ZOOC
 //
-//  Created by 류희재 on 2023/08/17.
+//  Created by 류희재 on 2023/09/11.
 //
 
 import UIKit
@@ -10,11 +10,18 @@ import UIKit
 import SnapKit
 import Then
 
-final class GenAIChoosePetViewController: BaseViewController{
+final class ShopChoosePetViewController: BaseViewController {
     
     // MARK: - Properties
 
     let viewModel: GenAIChoosePetModel
+    var petData: [PetResult] = [] {
+        didSet {
+            for pet in petData {
+                viewModel.petList.value.append(pet.transform())
+            }
+        }
+    }
     
     //MARK: - UI Components
     
@@ -41,12 +48,6 @@ final class GenAIChoosePetViewController: BaseViewController{
         bind()
         target()
         delegate()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        viewModel.viewWillAppearEvent()
     }
     
     //MARK: - Custom Method
@@ -78,13 +79,13 @@ final class GenAIChoosePetViewController: BaseViewController{
     }
     
     @objc private func registerButtonDidTap(){
-        pushToGenAIGuideVC()
+//        requestPetDatasetAPI()
     }
 }
 
 //MARK: - UICollectionViewDataSource
 
-extension GenAIChoosePetViewController: UICollectionViewDataSource {
+extension ShopChoosePetViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.petList.value.count
     }
@@ -109,7 +110,7 @@ extension GenAIChoosePetViewController: UICollectionViewDataSource {
 
 //MARK: - UICollectionViewDelegate
 
-extension GenAIChoosePetViewController: UICollectionViewDelegate {
+extension ShopChoosePetViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.petButtonDidTapEvent(at: indexPath.item)
     }
@@ -117,7 +118,7 @@ extension GenAIChoosePetViewController: UICollectionViewDelegate {
 
 //MARK: - UICollectionViewDelegateFlowLayout
 
-extension GenAIChoosePetViewController: UICollectionViewDelegateFlowLayout {
+extension ShopChoosePetViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch viewModel.petList.value.count {
         case 1:
@@ -142,20 +143,18 @@ extension GenAIChoosePetViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension GenAIChoosePetViewController: ZoocAlertViewControllerDelegate {
+extension ShopChoosePetViewController: ZoocAlertViewControllerDelegate {
     func exitButtonDidTap() {
         dismiss(animated: true)
     }
 }
 
-extension GenAIChoosePetViewController {
-    func pushToGenAIGuideVC() {
-        let genAIGuideVC = GenAIGuideViewController(
-            viewModel: DefaultGenAIGuideViewModel()
-        )
-        genAIGuideVC.hidesBottomBarWhenPushed = true
-        genAIGuideVC.petId = viewModel.petId.value
-        navigationController?.pushViewController(genAIGuideVC, animated: true)
+extension ShopChoosePetViewController {
+    func pushToShopVC() {
+        let shopVC = ShopViewController()
+        shopVC.hidesBottomBarWhenPushed = true
+        shopVC.petId = viewModel.petId.value
+        navigationController?.pushViewController(shopVC, animated: true)
     }
     
     func updateRegisterButtonUI(_ isSelected: Bool) {

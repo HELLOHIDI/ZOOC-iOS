@@ -38,7 +38,6 @@ extension ShopService: BaseTargetType {
         case .postOrder:
             return .post
         }
-        
     }
     
     var task: Moya.Task {

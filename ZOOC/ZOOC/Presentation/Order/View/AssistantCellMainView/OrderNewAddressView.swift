@@ -51,8 +51,8 @@ final class OrderNewAddressView: UIView {
     
     private let postCodeLabelBox: BasePaddingLabel = {
         let label = BasePaddingLabel()
-        label.backgroundColor = .zoocWhite2
-        label.textColor = .zoocGray1
+        label.backgroundColor = .zoocLightGray
+        label.textColor = .zoocGray2
         label.font = .zoocBody1
         label.setBorder(borderWidth: 1, borderColor: .zoocLightGray)
         label.makeCornerRound(radius: 7)
@@ -71,8 +71,8 @@ final class OrderNewAddressView: UIView {
     
     private let addressLabelBox: BasePaddingLabel = {
         let label = BasePaddingLabel()
-        label.textColor = .zoocGray1
-        label.backgroundColor = .zoocWhite2
+        label.backgroundColor = .zoocLightGray
+        label.textColor = .zoocGray2
         label.font = .zoocBody1
         label.setBorder(borderWidth: 1, borderColor: .zoocLightGray)
         label.makeCornerRound(radius: 7)

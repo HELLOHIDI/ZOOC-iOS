@@ -8,6 +8,8 @@
 import Foundation
 
 struct OrderProduct {
+    let petID: Int
+    
     let productID: Int
     let name: String
     let image: String
@@ -24,8 +26,10 @@ struct OrderProduct {
 
 extension OrderProduct {
     
-    init(product: ProductDetailResult,
+    init(petID: Int,
+         product: ProductDetailResult,
          selectedProductOption: SelectedProductOption) {
+        self.petID = petID
         self.productID = product.id
         self.name = product.name
         self.image = product.images.first ?? ""
@@ -37,6 +41,8 @@ extension OrderProduct {
     }
     
     init (cartedProduct: CartedProduct) {
+        self.petID = cartedProduct.petID
+        
         self.productID = cartedProduct.productID
         self.name = cartedProduct.name
         self.image = cartedProduct.image
@@ -53,7 +59,8 @@ extension OrderProduct {
 
 extension OrderProduct {
     func transform() -> ProductRequest {
-        return ProductRequest(productId: productID,
+        return ProductRequest(petId: petID,
+                              productId: productID,
                               optionId: optionID,
                               pieces: pieces)
     }

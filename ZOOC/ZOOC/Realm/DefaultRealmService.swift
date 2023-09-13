@@ -69,6 +69,14 @@ final class DefaultRealmService: RealmService {
         }
     }
     
+    @MainActor
+    func deleteCartedProducts()  {
+        try! localRealm.write {
+            let products = localRealm.objects(CartedProduct.self)
+            localRealm.delete(products)
+        }
+    }
+    
     
  
     @MainActor

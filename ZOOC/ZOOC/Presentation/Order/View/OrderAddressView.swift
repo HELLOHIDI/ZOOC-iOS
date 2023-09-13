@@ -259,8 +259,13 @@ final class OrderAddressView: UIView {
     
     @objc
     private func basicAddressButtonDidTap() {
-        addressType = .registed
+        
         delegate?.basicAddressButtonDidTap()
+        
+        guard !(basicAddressDatas?.isEmpty ?? false) else {
+            return
+        }
+        addressType = .registed
     }
     
     @objc

@@ -332,7 +332,7 @@ final class OrderViewController: BaseViewController {
                 self.showToast("주문하기에 실패하였습니다. 다시 시도해주세요", type: .bad)
                 return
             }
-            
+            DefaultRealmService.shared.deleteCartedProducts()
             let totalPrice = products.reduce(0) { $0 + $1.productsPrice} + deliveryFee
             let payVC = OrderAssistantViewController(totalPrice: totalPrice)
             payVC.modalPresentationStyle = .fullScreen

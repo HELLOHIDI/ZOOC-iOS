@@ -18,7 +18,7 @@ final class GenAICompletedView: UIView {
     private let titleLabel = UILabel()
     private let subTitleLabel = UILabel()
     private let notifyImageView = UIImageView()
-    public var goShopButton = ZoocGradientButton()
+    public var goShopButton = ZoocGradientButton.init(.network)
     
     // MARK: - UI Components
     

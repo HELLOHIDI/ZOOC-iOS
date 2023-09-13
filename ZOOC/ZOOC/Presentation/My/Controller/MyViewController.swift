@@ -155,7 +155,7 @@ extension MyViewController: UICollectionViewDelegateFlowLayout {
         case 2:
             return CGSize(width: 315, height: 127)
         case 3:
-            return CGSize(width: 315, height: 346)
+            return CGSize(width: 315, height: 284)
         case 4:
             return CGSize(width: 315, height: 17)
         default:
@@ -245,11 +245,9 @@ extension MyViewController: SettingMenuTableViewCellDelegate {
             presentSafariViewController(url)
         case 2: // 문의하기
             sendMail(subject: "[ZOOC] 문의하기", body: TextLiteral.mailInquiryBody)
-        case 3: // 미션 제안하기
-            sendMail(subject: "[ZOOC] 미션 제안하기", body: TextLiteral.mailMissionAdviceBody)
-        case 4: // 앱 정보
+        case 3: // 앱 정보
             pushToAppInformationView()
-        case 5: // 로그아웃
+        case 4: // 로그아웃
             viewModel.logoutButtonDidTapEvent()
         default:
             break

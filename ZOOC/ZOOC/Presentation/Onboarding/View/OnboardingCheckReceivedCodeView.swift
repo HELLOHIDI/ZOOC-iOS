@@ -17,7 +17,7 @@ final class OnboardingCheckReceivedCodeView: OnboardingBaseView {
     public let titleLabel = UILabel()
     public let subTitleLabel = UILabel()
     public let completeImage = UIImageView()
-    public lazy var getCodeButton = ZoocGradientButton()
+    public lazy var getCodeButton = ZoocGradientButton.init(.network)
     public lazy var notGetCodeButton = ZoocGradientButton()
     
     //MARK: - Life Cycles

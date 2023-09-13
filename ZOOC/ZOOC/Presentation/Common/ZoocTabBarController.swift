@@ -106,14 +106,53 @@ class ZoocTabBarController: UITabBarController {
     //MARK: - Action Method
     
     @objc func plusButtonDidTap(){
-        print(#function)
-        let recordVC = RecordViewController()
-        let recordNVC = UINavigationController(rootViewController: recordVC)
-        recordNVC.modalPresentationStyle = .fullScreen
-        recordNVC.setNavigationBarHidden(true, animated: true)
-        present(recordNVC, animated: true)
+        requestTotalPetAPI()
+        
     }
     
+    
+    private func requestTotalPetAPI() {
+        HomeAPI.shared.getTotalPet(familyID: UserDefaultsManager.familyID) { result in
+            switch result {
+            case .success(let data):
+                guard let result = data as? [PetResult] else { return }
+                if result.isEmpty {
+                    self.presentZoocAlertVC()
+                } else {
+                    let recordVC = RecordViewController()
+                    let recordNVC = UINavigationController(rootViewController: recordVC)
+                    recordNVC.modalPresentationStyle = .fullScreen
+                    recordNVC.setNavigationBarHidden(true, animated: true)
+                    self.present(recordNVC, animated: true)
+                }
+            default:
+                break
+            }
+        }
+    }
+    
+    private func presentZoocAlertVC() {
+        let alertVC = ZoocAlertViewController(.noPet)
+        alertVC.delegate = self
+        present(alertVC, animated: false)
+    }
 }
+
+extension ZoocTabBarController: ZoocAlertViewControllerDelegate {
+    func keepButtonDidTap() {
+        let myRegisterPetVC = MyRegisterPetViewController(
+            myPetRegisterViewModel: MyPetRegisterViewModel()
+        )
+        let myRegisterPetNVC = UINavigationController(rootViewController: myRegisterPetVC)
+        myRegisterPetNVC.modalPresentationStyle = .fullScreen
+        myRegisterPetNVC.setNavigationBarHidden(true, animated: true)
+        self.present(myRegisterPetNVC, animated: true)
+    }
+    
+    func exitButtonDidTap() {
+        self.dismiss(animated: true)
+    }
+}
+
 
 

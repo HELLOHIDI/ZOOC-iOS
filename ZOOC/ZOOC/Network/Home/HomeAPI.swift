@@ -19,7 +19,7 @@ extension HomeAPI{
     public func getTotalPet(familyID: String ,completion: @escaping (NetworkResult<Any>) -> Void) {
         homeProvider.request(.getTotalPet(familyID: familyID)) { (result) in
             self.disposeNetwork(result,
-                                dataModel: [HomePetResult].self,
+                                dataModel: [PetResult].self,
                                 completion: completion)
         }
     }

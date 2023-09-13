@@ -127,7 +127,8 @@ class BaseViewController : UIViewController{
             print(data)
             return data
         case .requestErr(let message):
-            showToast(message, type: .bad)
+            break
+            //showToast(message, type: .bad)
         case .pathErr:
             showToast("path 혹은 method 오류입니다.", type: .bad)
         case .serverErr:

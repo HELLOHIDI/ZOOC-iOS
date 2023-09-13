@@ -38,5 +38,13 @@ extension GenAIAPI {
                 completion: completion)
         }
     }
+    
+    public func getPetDataset(petId: String, completion: @escaping ((NetworkResult<Any>) -> Void)) {
+        aiProvider.request(.getPetDataset(petId: petId)) { result in
+            self.disposeNetwork(
+                result,
+                dataModel: GenAIPetDatasetsResult.self,
+                completion: completion)
+        }
+    }
 }
-

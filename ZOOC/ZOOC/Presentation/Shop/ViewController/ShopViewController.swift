@@ -14,6 +14,11 @@ final class ShopViewController: BaseViewController {
     
     //MARK: - Properties
     
+    var petId: Int? {
+        didSet {
+            print("petId: \(petId)")
+        }
+    }
     private var productsData: [ProductResult] = [] {
         didSet {
             collectionView.reloadData()
@@ -119,7 +124,7 @@ final class ShopViewController: BaseViewController {
         }
         
     }
-    
+
     private func requestProductsAPI() {
         ShopAPI.shared.getTotalProducts { result in
             guard let result = self.validateResult(result) as? [ProductResult] else { return }

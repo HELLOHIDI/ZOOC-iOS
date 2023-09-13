@@ -245,8 +245,8 @@
 		D26C85EE2968D51F00AEAF9B /* UITableViewHeaderFooterView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85ED2968D51F00AEAF9B /* UITableViewHeaderFooterView+.swift */; };
 		D26C85F029693C8500AEAF9B /* OnboardingWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85EF29693C8500AEAF9B /* OnboardingWelcomeView.swift */; };
 		D26C85F229693CFA00AEAF9B /* OnboardingWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85F129693CFA00AEAF9B /* OnboardingWelcomeViewController.swift */; };
-		D26C8600296B27B100AEAF9B /* OnboardingCompleteProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85FF296B27B100AEAF9B /* OnboardingCompleteProfileView.swift */; };
-		D26C8602296B285700AEAF9B /* OnboardingCompleteProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8601296B285700AEAF9B /* OnboardingCompleteProfileViewController.swift */; };
+		D26C8600296B27B100AEAF9B /* OnboardingCheckReceivedCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85FF296B27B100AEAF9B /* OnboardingCheckReceivedCodeView.swift */; };
+		D26C8602296B285700AEAF9B /* OnboardingCheckReceivedCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8601296B285700AEAF9B /* OnboardingCheckReceivedCodeViewController.swift */; };
 		D26C8608296B585600AEAF9B /* OnboardingJoinFamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8607296B585600AEAF9B /* OnboardingJoinFamilyView.swift */; };
 		D26C860A296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8609296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift */; };
 		D26C860C296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C860B296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift */; };
@@ -542,8 +542,8 @@
 		D26C85ED2968D51F00AEAF9B /* UITableViewHeaderFooterView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewHeaderFooterView+.swift"; sourceTree = "<group>"; };
 		D26C85EF29693C8500AEAF9B /* OnboardingWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeView.swift; sourceTree = "<group>"; };
 		D26C85F129693CFA00AEAF9B /* OnboardingWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeViewController.swift; sourceTree = "<group>"; };
-		D26C85FF296B27B100AEAF9B /* OnboardingCompleteProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCompleteProfileView.swift; sourceTree = "<group>"; };
-		D26C8601296B285700AEAF9B /* OnboardingCompleteProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCompleteProfileViewController.swift; sourceTree = "<group>"; };
+		D26C85FF296B27B100AEAF9B /* OnboardingCheckReceivedCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCheckReceivedCodeView.swift; sourceTree = "<group>"; };
+		D26C8601296B285700AEAF9B /* OnboardingCheckReceivedCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCheckReceivedCodeViewController.swift; sourceTree = "<group>"; };
 		D26C8607296B585600AEAF9B /* OnboardingJoinFamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyView.swift; sourceTree = "<group>"; };
 		D26C8609296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyViewController.swift; sourceTree = "<group>"; };
 		D26C860B296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyCompletedView.swift; sourceTree = "<group>"; };
@@ -995,7 +995,7 @@
 				D26C85E02968C63F00AEAF9B /* OnboardingLoginViewController.swift */,
 				D26C85E72968CD8E00AEAF9B /* OnboardingAgreementViewController.swift */,
 				D26C85F129693CFA00AEAF9B /* OnboardingWelcomeViewController.swift */,
-				D26C8601296B285700AEAF9B /* OnboardingCompleteProfileViewController.swift */,
+				D26C8601296B285700AEAF9B /* OnboardingCheckReceivedCodeViewController.swift */,
 				D26C8609296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift */,
 				D26C860F296B761900AEAF9B /* OnboardingJoinFamilyCompletedViewController.swift */,
 				D27D9561296CA4640097CD03 /* OnboardingInviteFamilyViewController.swift */,
@@ -1012,7 +1012,7 @@
 				D26C85DE2968C26500AEAF9B /* OnboardingLoginView.swift */,
 				D26C85E22968C88800AEAF9B /* OnboardingAgreementView.swift */,
 				D26C85EF29693C8500AEAF9B /* OnboardingWelcomeView.swift */,
-				D26C85FF296B27B100AEAF9B /* OnboardingCompleteProfileView.swift */,
+				D26C85FF296B27B100AEAF9B /* OnboardingCheckReceivedCodeView.swift */,
 				D26C8607296B585600AEAF9B /* OnboardingJoinFamilyView.swift */,
 				D26C860B296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift */,
 				D27D9567296CB5930097CD03 /* OnboardingInviteFamilyView.swift */,
@@ -1870,7 +1870,7 @@
 				87A3D88E2A975D78002C36DB /* OrderPaymentMethodView.swift in Sources */,
 				D2F1936729713FCD00AD87D3 /* OnboardingJWTTokenResult.swift in Sources */,
 				870A4C062AA2704800D7CFD8 /* ProductBottomSheet.swift in Sources */,
-				D26C8600296B27B100AEAF9B /* OnboardingCompleteProfileView.swift in Sources */,
+				D26C8600296B27B100AEAF9B /* OnboardingCheckReceivedCodeView.swift in Sources */,
 				87F287D92A9A667500A53218 /* BasePaddingLabel.swift in Sources */,
 				D24AFABA2A8E011800823E9C /* GenAIRegisterPetViewController.swift in Sources */,
 				87A3D8902A975D84002C36DB /* OrderPriceView.swift in Sources */,
@@ -1909,7 +1909,7 @@
 				872F638929B89D9B002EC413 /* HomeGuideViewController.swift in Sources */,
 				8765549F295846F3006BBDA9 /* ZoocTabBarController.swift in Sources */,
 				87F287EF2A9F36CE00A53218 /* ShopService.swift in Sources */,
-				D26C8602296B285700AEAF9B /* OnboardingCompleteProfileViewController.swift in Sources */,
+				D26C8602296B285700AEAF9B /* OnboardingCheckReceivedCodeViewController.swift in Sources */,
 				D26C68E6296DE61F0088DC9A /* MyRegisterPetTableViewCell.swift in Sources */,
 				872367112A12AC4E00DCBBFF /* ArchiveModel.swift in Sources */,
 				D2C028F22A81F8B2003F4727 /* String+.swift in Sources */,

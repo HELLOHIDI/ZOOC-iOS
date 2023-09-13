@@ -53,9 +53,9 @@ final class GenAICompletedView: UIView {
         }
         
         subTitleLabel.do{
-            $0.text = "앞으로 만들 수 있는 굿즈를 둘러보세요"
+            $0.text = "앞으로 쭉 만들 수 있는 굿즈를 둘러보세요"
             $0.font = .zoocBody2
-            $0.textColor = .zoocGray2
+            $0.textColor = .zoocGray1
         }
         
         notifyImageView.do{
@@ -87,7 +87,7 @@ final class GenAICompletedView: UIView {
         }
         
         subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.titleLabel.snp.bottom).offset(2)
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(15)
             $0.centerX.equalToSuperview()
         }
         

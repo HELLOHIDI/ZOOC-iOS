@@ -22,6 +22,8 @@ final class ShopProductViewController: BaseViewController {
         }
     }
     
+    private var petID: Int
+    
     
     //MARK: - UI Components
     
@@ -67,7 +69,8 @@ final class ShopProductViewController: BaseViewController {
     
     //MARK: - Life Cycle
     
-    init(productID: Int){
+    init(productID: Int, petID: Int){
+        self.petID = petID
         super.init(nibName: nil, bundle: nil)
         
         requestDetailProductAPI(id: productID)
@@ -293,9 +296,10 @@ extension ShopProductViewController: ProductBottomSheetDelegate {
         guard let productData else { return }
         
         selectedProductOptions.forEach {
-            let cartedProduct = CartedProduct(product: productData,
-                                               selectedProduct: $0)
-            RealmService().setCartedProduct(cartedProduct)
+            let cartedProduct = CartedProduct(petID: petID,
+                                              product: productData,
+                                              selectedProduct: $0)
+            DefaultRealmService.shared.setCartedProduct(cartedProduct)
         }
        
         showToast("장바구니에 상품이 담겼습니다.",
@@ -307,7 +311,8 @@ extension ShopProductViewController: ProductBottomSheetDelegate {
         guard let productData else { return }
         var orderProducts: [OrderProduct] = []
         selectedProductOptions.forEach {
-            orderProducts.append(OrderProduct(product: productData,
+            orderProducts.append(OrderProduct(petID: petID,
+                                              product: productData,
                                               selectedProductOption: $0))
         }
         let orderVC = OrderViewController(orderProducts)

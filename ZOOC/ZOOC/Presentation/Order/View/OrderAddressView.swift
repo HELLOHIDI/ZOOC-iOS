@@ -23,11 +23,19 @@ final class OrderAddressView: UIView {
     weak var delegate: OrderAddressViewDelegate?
     private var basicAddressDatas: Results<OrderBasicAddress>?
     
+    private var addressType: AddressType = .new {
+        didSet {
+            updateViewHidden()
+            updateTintBar()
+        }
+    }
+    
     //MARK: - UI Components
     
     private let headerView = UIView()
     private let mainView = UIView()
     private let buttonView = UIView()
+    
     let basicAddressView = OrderBasicAddressView()
     let newAddressView = OrderNewAddressView()
     
@@ -52,19 +60,36 @@ final class OrderAddressView: UIView {
         return button
     }()
     
-    private lazy var basicAddressButton: ZoocGradientButton = {
-        let button = ZoocGradientButton.init(.order)
+    private lazy var basicAddressButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.zoocGray1, for: .normal)
+        button.setTitleColor(.zoocMainGreen, for: .selected)
         button.setTitle("기존 배송지", for: .normal)
-        button.addTarget(self, action: #selector(basicAddressButtonDidTap), for: .touchUpInside)
+        button.titleLabel?.font = .zoocFont(font: .semiBold, size: 16)
+        button.addTarget(self,
+                         action: #selector(basicAddressButtonDidTap),
+                         for: .touchUpInside)
         return button
     }()
     
-    lazy var newAddressButton: ZoocGradientButton = {
-        let button = ZoocGradientButton.init(.order)
+    private lazy var newAddressButton: UIButton = {
+        let button = UIButton()
         button.setTitle("신규 입력", for: .normal)
-        button.addTarget(self, action: #selector(newAddressButtonDidTap), for: .touchUpInside)
+        button.setTitleColor(.zoocGray1, for: .normal)
+        button.setTitleColor(.zoocMainGreen, for: .selected)
+        button.titleLabel?.font = .zoocFont(font: .semiBold, size: 16)
+        button.addTarget(self,
+                         action: #selector(newAddressButtonDidTap),
+                         for: .touchUpInside)
         return button
     }()
+    
+    private let tintBar: UIView = {
+        let view = UIView()
+        view.backgroundColor = .zoocMainGreen
+        return view
+    }()
+    
     
     //MARK: - Life Cycle
     
@@ -79,6 +104,11 @@ final class OrderAddressView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
         
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        tintBar.makeCornerRound(ratio: 2)
     }
     
     //MARK: - Custom Method
@@ -97,7 +127,7 @@ final class OrderAddressView: UIView {
                              basicAddressView,
                              newAddressView)
         
-        buttonView.addSubviews(basicAddressButton, newAddressButton)
+        buttonView.addSubviews(basicAddressButton, newAddressButton, tintBar)
     }
     
     private func layout() {
@@ -118,7 +148,7 @@ final class OrderAddressView: UIView {
         }
         
         mainView.snp.makeConstraints {
-            $0.top.equalTo(headerView.snp.bottom).offset(5)
+            $0.top.equalTo(headerView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
@@ -131,15 +161,11 @@ final class OrderAddressView: UIView {
         basicAddressButton.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview().offset(30)
-            $0.width.equalTo(152)
-            $0.height.equalTo(54)
         }
         
         newAddressButton.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(30)
-            $0.width.equalTo(152)
-            $0.height.equalTo(54)
+            $0.leading.equalTo(basicAddressButton.snp.trailing).offset(16)
         }
         
         basicAddressView.snp.makeConstraints {
@@ -152,6 +178,13 @@ final class OrderAddressView: UIView {
             $0.top.equalTo(buttonView.snp.bottom).offset(24)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
+        }
+        
+        tintBar.snp.makeConstraints {
+            $0.top.equalTo(newAddressButton.snp.bottom)
+            $0.centerX.equalTo(newAddressButton)
+            $0.width.equalTo(50)
+            $0.height.equalTo(2)
         }
     }
     
@@ -169,26 +202,13 @@ final class OrderAddressView: UIView {
         basicAddressView.updateUI(basicAddressDatas)
         newAddressView.updateUI(newAddressData,isPostData: isPostData)
         
-        guard let basicAddressDatas = basicAddressDatas else { return }
+        guard let basicAddressDatas else { return }
         
         self.basicAddressDatas = basicAddressDatas
         
-        if !basicAddressDatas.isEmpty {
-            updateViewAppear(true)
-            basicAddressButton.updateButtonUI(true)
-            newAddressButton.updateButtonUI(false)
-        } else {
-            updateViewAppear(false)
-            basicAddressButton.updateButtonUI(false)
-            newAddressButton.updateButtonUI(true)
-        }
+        addressType = basicAddressDatas.isEmpty ? .new : .registed
     }
     
-    func updateViewAppear(_ hasBasicAddress: Bool) {
-        basicAddressView.isHidden = !hasBasicAddress
-        newAddressView.isHidden = hasBasicAddress
-        copyButton.isHidden = hasBasicAddress
-    }
     
     func checkValidity() throws {
         if !newAddressView.isHidden {
@@ -196,12 +216,38 @@ final class OrderAddressView: UIView {
         }
     }
     
-    func updateBasicViewAppear(_ hasBasicAddress: Bool) {
-        copyButton.isHidden = hasBasicAddress
-        basicAddressView.isHidden = !hasBasicAddress
-        newAddressView.isHidden = hasBasicAddress
-        basicAddressButton.updateButtonUI(hasBasicAddress)
-        newAddressButton.updateButtonUI(!hasBasicAddress)
+    private func updateViewHidden() {
+        basicAddressButton.isSelected = addressType == .registed
+        basicAddressView.isHidden = addressType != .registed
+        
+        newAddressButton.isSelected = addressType == .new
+        copyButton.isHidden = addressType != .new
+        newAddressView.isHidden = addressType != .new
+        
+    }
+    
+    private func updateTintBar() {
+        switch addressType {
+        case .registed:
+            tintBar.snp.remakeConstraints {
+                $0.top.equalTo(basicAddressButton.snp.bottom)
+                $0.centerX.equalTo(basicAddressButton)
+                $0.width.equalTo(70)
+                $0.height.equalTo(2)
+            }
+            
+        case .new:
+            tintBar.snp.remakeConstraints {
+                $0.top.equalTo(newAddressButton.snp.bottom)
+                $0.centerX.equalTo(newAddressButton)
+                $0.width.equalTo(50)
+                $0.height.equalTo(2)
+            }
+        }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.layoutIfNeeded()
+        }
     }
     
     //MARK: - Action Method
@@ -213,29 +259,18 @@ final class OrderAddressView: UIView {
     
     @objc
     private func basicAddressButtonDidTap() {
-        guard let basicAddressDatas else {
-            delegate?.basicAddressButtonDidTap()
-            updateBasicViewAppear(false)
+        
+        delegate?.basicAddressButtonDidTap()
+        
+        guard !(basicAddressDatas?.isEmpty ?? false) else {
             return
         }
-        
-        if !basicAddressDatas.isEmpty {
-            delegate?.basicAddressButtonDidTap()
-            updateBasicViewAppear(true) }
-        else {
-            delegate?.basicAddressButtonDidTap()
-            updateBasicViewAppear(false)
-        }
+        addressType = .registed
     }
     
     @objc
     private func newAddressButtonDidTap() {
+        addressType = .new
         delegate?.newAddressButtonDidTap()
-        
-        copyButton.isHidden = false
-        basicAddressView.isHidden = true
-        newAddressView.isHidden = false
-        basicAddressButton.updateButtonUI(false)
-        newAddressButton.updateButtonUI(true)
     }
 }

@@ -19,13 +19,18 @@ class CartedProduct: Object {
     @Persisted var price: Int = 0
     @Persisted var pieces: Int = 0
     
+    @Persisted var petID: Int = 0
+    
     var productsPrice: Int {
         price * pieces
     }
     
-    convenience init(product: ProductDetailResult,
+    convenience init(petID: Int,
+                     product: ProductDetailResult,
                      selectedProduct: SelectedProductOption) {
         self.init()
+        self.petID = petID
+        
         self.productID = product.id
         self.name = product.name
         self.image = product.images.first ?? ""

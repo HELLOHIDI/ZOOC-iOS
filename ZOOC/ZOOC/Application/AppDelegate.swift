@@ -26,7 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setKaKaoSDK()
         setFirebaseMessaging()
         setSentry()
-        
         return true
     }
     

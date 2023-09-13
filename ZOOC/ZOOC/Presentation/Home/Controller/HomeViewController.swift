@@ -18,7 +18,7 @@ final class HomeViewController : BaseViewController {
     private var limit: Int = 20
     private var isFetchingData = false
     private let refreshControl = UIRefreshControl()
-    private var petData: [HomePetResult] = [] {
+    private var petData: [PetResult] = [] {
         didSet{
             rootView.petCollectionView.reloadData()
         }
@@ -60,7 +60,6 @@ final class HomeViewController : BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        requestTotalPetAPI()
         rootView.aiView.startAnimation()
     }
     
@@ -129,9 +128,9 @@ final class HomeViewController : BaseViewController {
         rootView.archiveBottomView
             .addGestureRecognizer(
                 UITapGestureRecognizer(target: self,
-                action: #selector(bottomViewDidTap)
+                                       action: #selector(bottomViewDidTap)
+                                      )
             )
-        )
         
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     }
@@ -144,7 +143,6 @@ final class HomeViewController : BaseViewController {
             object: nil
         )
     }
-    
     
     @objc
     public func updateUI() {
@@ -169,8 +167,9 @@ final class HomeViewController : BaseViewController {
         navigationController?.pushViewController(noticeVC, animated: true)
     }
     
-    private func pushToShopViewController() {
-        let shopVC = ShopViewController()
+    private func pushToShopViewController(_ petData: [PetResult]) {
+        let shopVC = ShopChoosePetViewController(viewModel: DefaultGenAIChoosePetModel(repository: GenAIPetRepositoryImpl()))
+        shopVC.petData = petData
         shopVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(shopVC, animated: true)
     }
@@ -193,6 +192,12 @@ final class HomeViewController : BaseViewController {
             genAIRegisterPetVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(genAIRegisterPetVC, animated: true)
         }
+    }
+    
+    private func presentZoocAlertVC() {
+        let alertVC = ZoocAlertViewController(.noDataset)
+        alertVC.delegate = self
+        present(alertVC, animated: false)
     }
     
     private func deselectAllOfListArchiveCollectionViewCell(completion: (() -> Void)?) {
@@ -246,7 +251,7 @@ final class HomeViewController : BaseViewController {
     
     private func requestTotalPetAPI() {
         HomeAPI.shared.getTotalPet(familyID: UserDefaultsManager.familyID) { result in
-            guard let result = self.validateResult(result) as? [HomePetResult] else { return }
+            guard let result = self.validateResult(result) as? [PetResult] else { return }
             
             self.petData = result
             guard let id = self.petData.first?.id else {
@@ -281,6 +286,33 @@ final class HomeViewController : BaseViewController {
         }
     }
     
+    private func requestPetDatasetAPI() {
+        rootView.shopButton.isEnabled = false
+        var petData: [PetResult] = []
+        let dispatchGroup = DispatchGroup()
+        
+        for pet in self.petData {
+            dispatchGroup.enter()
+            
+            GenAIAPI.shared.getPetDataset(petId: String(pet.id)) { [weak self] result in
+                if let result = self?.validateResult(result) as? GenAIPetDatasetsResult {
+                    if !result.datasetImages.isEmpty {
+                        print("성공한 펫 아이디 \(pet.id)")
+                        petData.append(pet)
+                    }
+                }
+                dispatchGroup.leave()
+            }
+        }
+        dispatchGroup.notify(queue: .main) {
+            self.rootView.shopButton.isEnabled = true
+            if petData.isEmpty {
+                self.presentZoocAlertVC()
+            } else {
+                self.pushToShopViewController(petData)
+            }
+        }
+    }
     
     //MARK: - Action Method
     
@@ -291,7 +323,7 @@ final class HomeViewController : BaseViewController {
     
     @objc
     private func shopButtonDidTap() {
-        pushToShopViewController()
+        requestPetDatasetAPI()
     }
     
     @objc
@@ -580,6 +612,15 @@ extension HomeViewController {
 extension HomeViewController: HomeGuideViewControllerDelegate {
     func dismiss() {
         rootView.emptyView.isHidden = !archiveData.isEmpty
+    }
+}
+
+extension HomeViewController: ZoocAlertViewControllerDelegate{
+    func keepButtonDidTap() {
+        pushToGenAIViewController()
+    }
+    func exitButtonDidTap() {
+        self.dismiss()
     }
 }
 

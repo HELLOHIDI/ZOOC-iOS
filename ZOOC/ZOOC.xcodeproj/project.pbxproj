@@ -181,6 +181,7 @@
 		87F288092A9FC41F00A53218 /* Bank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F288082A9FC41F00A53218 /* Bank.swift */; };
 		87F2880B2A9FDE2500A53218 /* OrderAssistantHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F2880A2A9FDE2500A53218 /* OrderAssistantHeaderView.swift */; };
 		87FAF8B72AAE1D8300DADCC4 /* OrderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FAF8B62AAE1D8300DADCC4 /* OrderError.swift */; };
+		87FAF8BD2AB090D700DADCC4 /* AddressType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FAF8BC2AB090D700DADCC4 /* AddressType.swift */; };
 		D20C008A2A96DDB000666963 /* GenAIModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C00892A96DDB000666963 /* GenAIModelRepository.swift */; };
 		D20C008D2A96E23500666963 /* GenAIGuideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */; };
 		D20C008F2A96F22600666963 /* GenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008E2A96F22600666963 /* GenAIService.swift */; };
@@ -480,6 +481,7 @@
 		87F288082A9FC41F00A53218 /* Bank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bank.swift; sourceTree = "<group>"; };
 		87F2880A2A9FDE2500A53218 /* OrderAssistantHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAssistantHeaderView.swift; sourceTree = "<group>"; };
 		87FAF8B62AAE1D8300DADCC4 /* OrderError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderError.swift; sourceTree = "<group>"; };
+		87FAF8BC2AB090D700DADCC4 /* AddressType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressType.swift; sourceTree = "<group>"; };
 		D20C00892A96DDB000666963 /* GenAIModelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIModelRepository.swift; sourceTree = "<group>"; };
 		D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideViewModel.swift; sourceTree = "<group>"; };
 		D20C008E2A96F22600666963 /* GenAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIService.swift; sourceTree = "<group>"; };
@@ -978,6 +980,7 @@
 		87A3D8932A977960002C36DB /* Order */ = {
 			isa = PBXGroup;
 			children = (
+				87FAF8BB2AB08BB300DADCC4 /* Enum */,
 				87F287F22A9F371A00A53218 /* APIModel */,
 				87F287DA2A9C6E6F00A53218 /* OrderOrderer.swift */,
 				87F287D62A9A63CC00A53218 /* OrderAddress.swift */,
@@ -1553,6 +1556,14 @@
 			path = AssistantCellMainView;
 			sourceTree = "<group>";
 		};
+		87FAF8BB2AB08BB300DADCC4 /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				87FAF8BC2AB090D700DADCC4 /* AddressType.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
 		D20C008B2A96DDD900666963 /* GenAI */ = {
 			isa = PBXGroup;
 			children = (
@@ -2097,6 +2108,7 @@
 				87E4A1CE2AAB3075005C012E /* Results+.swift in Sources */,
 				876483192952366A00F74882 /* Image.swift in Sources */,
 				4C6B1868296B930B0059840D /* RecordRegisterCollectionViewCell.swift in Sources */,
+				87FAF8BD2AB090D700DADCC4 /* AddressType.swift in Sources */,
 				87F288052A9FA69200A53218 /* OrderAssistantCompleteView.swift in Sources */,
 				87A3D88A2A975D4F002C36DB /* OrderAddressView.swift in Sources */,
 				87648323295236B700F74882 /* UIColor+.swift in Sources */,

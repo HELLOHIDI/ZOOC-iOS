@@ -115,18 +115,4 @@ final class ZoocGradientButton: UIButton {
             self.gradientLayer = layer
         }
     }
-    
-    func updateButtonUI(_ isTapped: Bool) {
-        if isTapped {
-            setBorder(borderWidth: 0, borderColor: .zoocMainGreen)
-            makeCornerRound(radius: 8)
-            gradientColors = [activeColorTop, activeColorBottom]
-            setTitleColor(.zoocWhite1, for: .normal)
-        } else {
-            setBorder(borderWidth: 1, borderColor: .zoocMainGreen)
-            makeCornerRound(radius: 8)
-            gradientColors = [unSelectedColor, unSelectedColor]
-            setTitleColor(.zoocMainGreen, for: .normal)
-        }
-    }
 }

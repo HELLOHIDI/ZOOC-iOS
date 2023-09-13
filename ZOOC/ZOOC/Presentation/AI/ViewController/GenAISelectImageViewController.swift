@@ -122,7 +122,6 @@ final class GenAISelectImageViewController : BaseViewController {
     }
     
     @objc func generateAIModelButtonDidTap() {
-        rootView.generateAIModelButton.isEnabled = false
         viewModel.generateAIModelButtonDidTapEvent()
     }
     

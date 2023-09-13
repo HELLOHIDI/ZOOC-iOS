@@ -75,7 +75,6 @@ final class MyRegisterPetViewController: BaseViewController {
     }
     
     @objc private func registerPetButtonDidTap() {
-        rootView.registerPetButton.isEnabled = false
         var names: [String] = []
         var photos: [Data] = []
         var isPhotos: [Bool] = []

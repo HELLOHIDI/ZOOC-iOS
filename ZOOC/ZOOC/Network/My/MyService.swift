@@ -68,12 +68,12 @@ extension MyService: BaseTargetType {
             var multipartFormData: [MultipartFormData] = []
             
             let nickNameData = MultipartFormData(provider: .data(request.nickName.data(using: String.Encoding.utf8)!),
-                                                 name: "name",
+                                                 name: "nickName",
                                                  mimeType: "application/json")
             if let photo = request.profileImage{
                 let photo = photo.jpegData(compressionQuality: 1.0) ?? Data()
                 let imageData = MultipartFormData(provider: .data(photo),
-                                                  name: "photo",
+                                                  name: "file",
                                                   fileName: "image.jpeg",
                                                   mimeType: "image/jpeg")
                 multipartFormData.append(imageData)

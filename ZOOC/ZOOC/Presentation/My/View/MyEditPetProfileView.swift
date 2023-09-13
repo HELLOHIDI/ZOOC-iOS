@@ -22,7 +22,7 @@ final class MyEditPetProfileView: UIView {
     public var nameTextField = MyEditTextField(textFieldType: .pet)
     public var underLineView = UIView()
     public var numberOfNameCharactersLabel = UILabel()
-    public var completeButton = ZoocGradientButton()
+    public var completeButton = ZoocGradientButton.init(.network)
     
     //MARK: - Life Cycles
     

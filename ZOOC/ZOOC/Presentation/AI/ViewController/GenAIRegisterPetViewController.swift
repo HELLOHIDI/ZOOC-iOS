@@ -99,7 +99,6 @@ final class GenAIRegisterPetViewController: BaseViewController {
     }
     
     @objc func registerPetButtonDidTap(){
-        rootView.completeButton.isEnabled = false
         viewModel.registerPetButtonDidTap()
     }
 }

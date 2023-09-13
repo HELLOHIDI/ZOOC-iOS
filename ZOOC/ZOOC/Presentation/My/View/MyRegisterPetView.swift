@@ -19,7 +19,7 @@ final class MyRegisterPetView: UIView {
     private var registerPetTitleLabel = UILabel()
     private var registerPetSubTitleLabel = UILabel()
     public var registerPetTableView = UITableView(frame: .zero, style: .plain)
-    public var registerPetButton =  ZoocGradientButton()
+    public var registerPetButton =  ZoocGradientButton.init(.network)
     
     //MARK: - Life Cycles
     

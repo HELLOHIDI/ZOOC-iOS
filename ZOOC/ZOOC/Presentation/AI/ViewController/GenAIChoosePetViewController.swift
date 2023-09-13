@@ -78,7 +78,6 @@ final class GenAIChoosePetViewController: BaseViewController{
     }
     
     @objc private func registerButtonDidTap(){
-        rootView.registerButton.isEnabled = false
         viewModel.registerButtonDidTapEvent()
         pushToGenAIGuideVC()
     }

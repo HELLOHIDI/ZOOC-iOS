@@ -25,7 +25,7 @@ final class GenAIChoosePetView : UIView{
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
     public lazy var petCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-    public lazy var registerButton = ZoocGradientButton()
+    public lazy var registerButton = ZoocGradientButton.init(.network)
     
     //MARK: - Life Cycle
     

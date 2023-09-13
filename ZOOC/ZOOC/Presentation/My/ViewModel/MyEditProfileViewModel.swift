@@ -69,19 +69,18 @@ final class MyEditProfileViewModel: MyEditProfileModelInput, MyEditProfileModelO
     func deleteButtonDidTap() {
         self.editProfileDataOutput.value.profileImage = nil
         self.editProfileDataOutput.value.hasPhoto = false
+        ableToProfile()
     }
     
     func editProfileImageEvent(_ image: UIImage) {
         self.editProfileDataOutput.value.profileImage = image
         self.editProfileDataOutput.value.hasPhoto = true
+        ableToProfile()
     }
 }
 
 extension MyEditProfileViewModel {
     func patchMyPetProfile() {
-        print("🍎🍎🍎🍎🍎🍎🍎")
-        print("\(editProfileDataOutput.value.nickName)")
-        print("🍎🍎🍎🍎🍎🍎🍎")
         repository.patchMyProfile(request: editProfileDataOutput.value) { result in
             switch result {
             case .success(_):
@@ -92,5 +91,9 @@ extension MyEditProfileViewModel {
                 self.editCompletedOutput.value = false
             }
         }
+    }
+    
+    func ableToProfile() {
+        ableToEditProfile.value = self.editProfileDataOutput.value.nickName.count != 0
     }
 }

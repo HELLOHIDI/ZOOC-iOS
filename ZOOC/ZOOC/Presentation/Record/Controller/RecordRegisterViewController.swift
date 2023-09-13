@@ -158,7 +158,6 @@ extension RecordRegisterViewController: UICollectionViewDelegate {
             petList[indexPath.row].isSelected = false
             cell.updateUI(isSelected: false)
         }
-        rootView.registerButton.isEnabled = false
         let indexPathArray = collectionView.indexPathsForSelectedItems
         activateButton(indexPathArray: indexPathArray)
     }
@@ -198,7 +197,6 @@ extension RecordRegisterViewController {
                 selectedPetIDList.append($0.petID)
             }
         }
-        rootView.registerButton.isEnabled = false
         
         RecordAPI.shared.postRecord(photo: recordData.image ?? UIImage(),
                                     content: recordData.content ?? "",

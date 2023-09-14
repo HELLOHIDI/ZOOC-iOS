@@ -12,8 +12,8 @@ import RealmSwift
 
 protocol OrderAddressViewDelegate: AnyObject {
     func copyButtonDidTap()
-    func basicAddressButtonDidTap()
-    func newAddressButtonDidTap()
+    func basicAddressButtonDidTap(_ height: CGFloat)
+    func newAddressButtonDidTap(_ height: CGFloat)
 }
 
 final class OrderAddressView: UIView {
@@ -27,6 +27,7 @@ final class OrderAddressView: UIView {
         didSet {
             updateViewHidden()
             updateTintBar()
+            
         }
     }
     
@@ -200,6 +201,8 @@ final class OrderAddressView: UIView {
                   hasBasicAddress: Bool = true
         ) {
         basicAddressView.updateUI(basicAddressDatas)
+        
+        
         newAddressView.updateUI(newAddressData,isPostData: isPostData)
         
         guard let basicAddressDatas else { return }
@@ -207,6 +210,12 @@ final class OrderAddressView: UIView {
         self.basicAddressDatas = basicAddressDatas
         
         addressType = basicAddressDatas.isEmpty ? .new : .registed
+        
+        if addressType == .registed {
+            basicAddressView.layoutIfNeeded()
+            basicAddressButtonDidTap()
+        }
+        
     }
     
     
@@ -260,7 +269,8 @@ final class OrderAddressView: UIView {
     @objc
     private func basicAddressButtonDidTap() {
         
-        delegate?.basicAddressButtonDidTap()
+        delegate?.basicAddressButtonDidTap(headerView.frame.height +
+                                           buttonView.frame.height + basicAddressView.basicAddressCollectionView.contentSize.height)
         
         guard !(basicAddressDatas?.isEmpty ?? false) else {
             return
@@ -271,6 +281,6 @@ final class OrderAddressView: UIView {
     @objc
     private func newAddressButtonDidTap() {
         addressType = .new
-        delegate?.newAddressButtonDidTap()
+        delegate?.newAddressButtonDidTap(498)
     }
 }

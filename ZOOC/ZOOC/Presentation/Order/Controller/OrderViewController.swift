@@ -358,11 +358,21 @@ extension OrderViewController: OrderOrdererViewDelegate {
 //MARK: - OrderAddressViewDelegate
 
 extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDelegate & OrderBasicAddressViewDelegate {
-    func newAddressButtonDidTap() {
+    func newAddressButtonDidTap(_ height: CGFloat) {
         addressData = newAddressData
+        
+        addressView.snp.remakeConstraints {
+            $0.top.equalTo(ordererView.snp.bottom).offset(1)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(height)
+        }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
     }
     
-    func basicAddressButtonDidTap() {
+    func basicAddressButtonDidTap(_ height: CGFloat) {
         guard !basicAddressResult.isEmpty else {
             showToast("먼저 신규입력으로 배송지를 등록해주세요", type: .bad)
             addressView.updateUI(newAddressData: addressData, hasBasicAddress: false)
@@ -370,6 +380,16 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
         }
         
         addressData = basicAddressData
+        
+        addressView.snp.remakeConstraints {
+            $0.top.equalTo(ordererView.snp.bottom).offset(1)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(height)
+        }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
     }
     
 

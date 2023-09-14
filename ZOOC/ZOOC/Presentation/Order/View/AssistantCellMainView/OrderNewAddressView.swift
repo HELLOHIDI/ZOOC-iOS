@@ -192,26 +192,27 @@ final class OrderNewAddressView: UIView {
             $0.leading.equalToSuperview().inset(30)
         }
         
-        postCodeLabelBox.snp.makeConstraints {
-            $0.top.equalTo(receiverPhoneNumberTextField.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(97)
-            $0.trailing.equalToSuperview().inset(134)
-            $0.height.equalTo(41)
-        }
-        
         addressLabel.snp.makeConstraints {
             $0.centerY.equalTo(postCodeLabelBox)
             $0.leading.equalToSuperview().inset(30)
         }
         
+        postCodeLabelBox.snp.makeConstraints {
+            $0.top.equalTo(receiverPhoneNumberTextField.snp.bottom).offset(12)
+            $0.leading.equalTo(receiverTextField)
+            $0.trailing.equalTo(findAddressButton.snp.leading).offset(-12)
+            $0.height.equalTo(41)
+        }
+        
         findAddressButton.snp.makeConstraints {
-            $0.top.height.equalTo(postCodeLabelBox)
-            $0.leading.equalTo(postCodeLabelBox.snp.trailing).offset(12)
+            $0.top.equalTo(receiverPhoneNumberTextField.snp.bottom).offset(12)
             $0.trailing.equalToSuperview().inset(30)
+            $0.width.equalTo(92)
+            $0.height.equalTo(41)
         }
         
         addressLabelBox.snp.makeConstraints {
-            $0.top.equalTo(findAddressButton.snp.bottom).offset(12)
+            $0.top.equalTo(postCodeLabelBox.snp.bottom).offset(12)
             $0.leading.height.equalTo(postCodeLabelBox)
             $0.trailing.equalToSuperview().inset(30)
         }
@@ -241,7 +242,7 @@ final class OrderNewAddressView: UIView {
         requestTextField.snp.makeConstraints {
             $0.top.equalTo(registerBasicAddressCheckButton.snp.bottom).offset(12)
             $0.leading.trailing.height.equalTo(addressLabelBox)
-            $0.bottom.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(20).priority(.low)
         }
     }
     

@@ -44,7 +44,7 @@ final class OrderBasicAddressView: UIView {
         collectionView.backgroundColor = .clear
         collectionView.bounces = false
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.isScrollEnabled = true
+        collectionView.isScrollEnabled = false
         return collectionView
     }()
     

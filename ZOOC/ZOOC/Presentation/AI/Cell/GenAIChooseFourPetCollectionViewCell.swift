@@ -12,20 +12,6 @@ import SnapKit
 
 final class GenAIChooseFourPetCollectionViewCell: UICollectionViewCell {
     
-    // MARK: - Properties
-    
-    private var size: CGFloat? {
-        didSet {
-            guard let size = self.size else { return }
-            profilePetImageView.snp.updateConstraints {
-                $0.centerY.equalToSuperview()
-                $0.centerX.equalToSuperview()
-                $0.size.equalTo(size)
-            }
-            profilePetImageView.makeCornerRound(radius: size / 2)
-        }
-    }
-    
     // MARK: - UI Components
     
     private let borderView: UIView = {
@@ -134,6 +120,12 @@ final class GenAIChooseFourPetCollectionViewCell: UICollectionViewCell {
             $0.edges.equalToSuperview()
         }
         
+        profilePetImageView.snp.updateConstraints {
+            $0.top.equalToSuperview().offset(50)
+            $0.centerX.equalToSuperview()
+            $0.size.equalTo(50)
+        }
+        
         petNameLabel.snp.makeConstraints {
             $0.top.equalTo(self.profilePetImageView.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
@@ -142,7 +134,7 @@ final class GenAIChooseFourPetCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Action Method
     
-    func dataBind(data: RecordRegisterModel, cellHeight: Int) {
+    func dataBind(data: RecordRegisterModel) {
 
         if let imageURL = data.petImageURL{
             profilePetImageView.kfSetImage(url: imageURL)
@@ -152,7 +144,6 @@ final class GenAIChooseFourPetCollectionViewCell: UICollectionViewCell {
 
         petNameLabel.text = data.petName
         selectImageView.isHidden = data.isSelected ? false : true
-        self.size = CGFloat(cellHeight * 5/12)
 
         if data.isSelected {
             contentView.backgroundColor = .zoocWhite2

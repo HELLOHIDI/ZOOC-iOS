@@ -101,7 +101,7 @@ extension GenAIChoosePetViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: GenAIChooseFourPetCollectionViewCell.cellIdentifier, for: indexPath)
                     as? GenAIChooseFourPetCollectionViewCell else { return UICollectionViewCell() }
-            cell.dataBind(data: viewModel.petList.value[indexPath.item], cellHeight: Int(collectionView.frame.height) / 2)
+            cell.dataBind(data: viewModel.petList.value[indexPath.item])
             return cell
         }
     }

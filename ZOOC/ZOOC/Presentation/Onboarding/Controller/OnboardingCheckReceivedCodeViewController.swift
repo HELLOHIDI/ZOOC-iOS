@@ -10,36 +10,30 @@ import UIKit
 import SnapKit
 import Then
 
-final class OnboardingCompleteProfileViewController: BaseViewController{
+final class OnboardingCheckReceivedCodeViewController: BaseViewController{
     
     //MARK: - Properties
     
-    private let onboardingCompleteProfileView = OnboardingCompleteProfileView()
+    private let rootView = OnboardingCheckReceivedCodeView()
     
     //MARK: - Life Cycle
     
     override func loadView() {
-        self.view = onboardingCompleteProfileView
+        self.view = rootView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         target()
-        
-        style()
     }
     
     //MARK: - Custom Method
     
     func target() {
-        onboardingCompleteProfileView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        onboardingCompleteProfileView.getCodeButton.addTarget(self, action: #selector(getCodeButtonDidTap), for: .touchUpInside)
-        onboardingCompleteProfileView.notGetCodeButton.addTarget(self, action: #selector(notGetCodeButtonDidTap), for: .touchUpInside)
-    }
-    
-    func style() {
-        updateCompleteProfileView()
+        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        rootView.getCodeButton.addTarget(self, action: #selector(getCodeButtonDidTap), for: .touchUpInside)
+        rootView.notGetCodeButton.addTarget(self, action: #selector(notGetCodeButtonDidTap), for: .touchUpInside)
     }
     
     //MARK: - Action Method
@@ -57,23 +51,13 @@ final class OnboardingCompleteProfileViewController: BaseViewController{
     }
 }
 
-private extension OnboardingCompleteProfileViewController {
+private extension OnboardingCheckReceivedCodeViewController {
     private func requestMakeFamilyAPI() {
         OnboardingAPI.shared.postMakeFamily() { result in
             guard let result = self.validateResult(result) as? OnboardingMakeFamilyResult else { return }
             UserDefaultsManager.familyID = String(result.familyId)
             
             self.pushToInviteFamilyView()
-        }
-    }
-    
-    func updateCompleteProfileView() {
-        UIView.animate(withDuration: 1, delay: 1) {
-            self.onboardingCompleteProfileView.completeProfileLabel.alpha = 0.4
-            self.onboardingCompleteProfileView.completeProfileSubLabel.alpha = 1
-            self.onboardingCompleteProfileView.completeImage.alpha = 1
-            self.onboardingCompleteProfileView.getCodeButton.alpha = 1
-            self.onboardingCompleteProfileView.notGetCodeButton.alpha = 1
         }
     }
     

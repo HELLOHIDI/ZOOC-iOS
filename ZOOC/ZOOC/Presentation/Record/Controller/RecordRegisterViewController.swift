@@ -125,7 +125,7 @@ extension RecordRegisterViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RecordRegisterFourCollectionViewCell.cellIdentifier, for: indexPath)
                     as? RecordRegisterFourCollectionViewCell else { return UICollectionViewCell() }
-            cell.dataBind(data: petList[indexPath.item], cellHeight: Int(collectionView.frame.height) / 2)
+            cell.dataBind(data: petList[indexPath.item])
             return cell
         }
     }

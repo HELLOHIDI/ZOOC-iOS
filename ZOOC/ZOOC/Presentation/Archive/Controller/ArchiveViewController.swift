@@ -442,7 +442,7 @@ final class ArchiveViewController : BaseViewController {
             
             
             guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
-            tabVC.homeViewController.selectPetCollectionView(petID: self.archiveModel.petID)
+            tabVC.homeViewController.recordID = nil
             self.dismiss(animated: true)
             print("게시물 삭제 완료!")
                     

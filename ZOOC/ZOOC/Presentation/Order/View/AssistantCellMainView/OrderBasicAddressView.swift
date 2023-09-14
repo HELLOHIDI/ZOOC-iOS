@@ -10,16 +10,9 @@ import UIKit
 import SnapKit
 import RealmSwift
 
-protocol OrderBasicAddressViewDelegate: AnyObject {
-    func basicAddressCheckButtonDidTap(item: Int)
-    func basicAddressTextFieldDidEndEditing(item: Int, request: String)
-}
-
 final class OrderBasicAddressView: UIView {
     
     //MARK: - Properties
-    
-    weak var delegate: OrderBasicAddressViewDelegate?
     
     private var basicAddressDatas: Results<OrderBasicAddress>?  {
         didSet {
@@ -99,8 +92,6 @@ extension OrderBasicAddressView: UICollectionViewDelegateFlowLayout {
         let width = collectionView.frame.width - 60
         var size = CGSize(width: width, height: 0) // 기본 높이 설정
         
-        guard let basicAddressDatas = basicAddressDatas else { return size }
-        
         switch collectionView.indexPathsForSelectedItems?.first {
         case .some(indexPath):
             size.height = 229 // 선택된 주소의 높이
@@ -118,10 +109,6 @@ extension OrderBasicAddressView: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! OrderBasicAddressCollectionViewCell
-        let request = cell.requestTextField.text ?? ""
-        
-        delegate?.basicAddressCheckButtonDidTap(item: indexPath.item)
         collectionView.performBatchUpdates(nil)
     }
 }

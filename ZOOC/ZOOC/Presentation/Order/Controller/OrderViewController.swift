@@ -270,12 +270,13 @@ final class OrderViewController: BaseViewController {
             switch addressView.addressType {
             case .new:
                 registerNewAddress(newAddressData)
-                addressData = newAddressData
+                self.addressData = newAddressData
             case .registed:
                 let addressData = DefaultRealmService.shared.getSelectedAddress()
                 guard let addressData else {
                     throw OrderInvalidError.noAddressSelected
                 }
+                self.addressData = addressData.transform()
                     
                 
             }

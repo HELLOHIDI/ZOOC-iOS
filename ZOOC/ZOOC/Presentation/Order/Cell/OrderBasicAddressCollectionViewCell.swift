@@ -10,7 +10,6 @@ import UIKit
 import SnapKit
 
 protocol OrderBasicAddressCollectionViewCellDelegate: AnyObject {
-    func basicAddressCheckButtonDidTap(tag: Int)
     func basicAddressTextFieldDidChange(tag: Int, request: String?)
 }
 
@@ -20,16 +19,28 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
     
     weak var delegate: OrderBasicAddressCollectionViewCellDelegate?
     
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                checkButtonView.backgroundColor = .zoocMainGreen
+                checkButtonView.setBorder(borderWidth: 0, borderColor: .clear)
+                miniCircleView.backgroundColor = .zoocWhite3
+                contentView.setBorder(borderWidth: 1, borderColor: .zoocMainGreen)
+                contentView.backgroundColor = UIColor(r: 222, g: 239, b: 227)
+            } else {
+                checkButtonView.backgroundColor = .clear
+                checkButtonView.setBorder(borderWidth: 1, borderColor: .zoocDarkGray1)
+                miniCircleView.backgroundColor = .clear
+                contentView.setBorder(borderWidth: 0, borderColor: .zoocBackgroundGreen)
+                contentView.backgroundColor = .zoocBackgroundGreen
+            }
+        }
+    }
+    
     //MARK: - UI Components
     
-    private lazy var basicAddressCheckButton: UIButton = {
-        let button = UIButton()
-        button.setImage(Image.checkBox, for: .normal)
-        button.setImage(Image.checkBoxFill, for: .selected)
-        button.setImage(Image.checkBoxRed, for: .highlighted)
-        button.addTarget(self, action: #selector(checkButtonDidTap), for: .touchUpInside)
-        return button
-    }()
+    private let checkButtonView = UIView()
+    private let miniCircleView = UIView()
     
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -65,7 +76,7 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
     }()
     
     lazy var requestTextField: ZoocTextField = {
-        let textField = ZoocTextField(.numberPad)
+        let textField = ZoocTextField()
         textField.placeholder = "부재 시 경비실에 맡겨주세요"
         textField.font = .zoocBody1
         textField.textColor = .zoocGray3
@@ -87,37 +98,52 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
+        checkButtonView.makeCornerRound(ratio: 2)
+        miniCircleView.makeCornerRound(ratio: 2)
+    }
+    
     //MARK: - Custom Method
     
     private func style() {
         contentView.backgroundColor = .zoocBackgroundGreen
+        contentView.makeCornerRound(radius: 16)
     }
     
     private func hierarchy() {
-        contentView.addSubviews(basicAddressCheckButton,
+        contentView.addSubviews(checkButtonView,
                                 nameLabel,
                                 basicAddressLabel,
                                 phoneNumLabel,
                                 requestLabel,
                                 requestTextField)
         
+        checkButtonView.addSubview(miniCircleView)
+        
     }
     
     private func layout() {
-        basicAddressCheckButton.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().offset(30)
+        checkButtonView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().offset(20)
             $0.size.equalTo(20)
         }
         
+        miniCircleView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(5)
+        }
+        
         nameLabel.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalTo(basicAddressCheckButton.snp.trailing).offset(12)
+            $0.top.equalToSuperview().inset(20)
+            $0.leading.equalTo(checkButtonView.snp.trailing).offset(12)
         }
         
         basicAddressLabel.snp.makeConstraints {
             $0.top.equalTo(nameLabel.snp.bottom).offset(12)
-            $0.leading.equalToSuperview().offset(62)
+            $0.leading.equalTo(nameLabel)
         }
         
         phoneNumLabel.snp.makeConstraints {
@@ -138,11 +164,6 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    @objc
-    private func checkButtonDidTap(_ sender: UIButton) {
-        delegate?.basicAddressCheckButtonDidTap(tag: sender.tag)
-    }
-    
     @objc private func textFieldDidChange(_ textField: UITextField) {
         print(#function)
         delegate?.basicAddressTextFieldDidChange(tag: tag, request: textField.text)
@@ -150,13 +171,15 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Public Methods
     
+    
     func dataBind(tag: Int, _ data: OrderBasicAddress) {
         nameLabel.text = data.name
         basicAddressLabel.text = "\(data.address) \n\(data.detailAddress ?? "")"
         phoneNumLabel.text = data.phoneNumber
-        basicAddressCheckButton.tag = tag
+        requestTextField.text = data.request
+        checkButtonView.tag = tag
         requestTextField.tag = tag
-        basicAddressCheckButton.isSelected = data.isSelected
+        self.isSelected = data.isSelected
         requestLabel.isHidden = !data.isSelected
         requestTextField.isHidden = !data.isSelected
     }

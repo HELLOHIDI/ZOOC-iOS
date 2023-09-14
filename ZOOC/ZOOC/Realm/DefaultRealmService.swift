@@ -118,10 +118,9 @@ final class DefaultRealmService: RealmService {
     
     @MainActor
     func updateBasicAddress(_ data: OrderAddress) throws {
-        let fullAddress = "(\(data.postCode)) \(data.address)"
         let newAddress = OrderBasicAddress(postCode: data.postCode,
                                            name: data.receiverName,
-                                           address: fullAddress,
+                                           address: data.address,
                                            detailAddress: data.detailAddress,
                                            phoneNumber: data.receiverPhoneNumber,
                                            request: data.request,

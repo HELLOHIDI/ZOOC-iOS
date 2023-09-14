@@ -24,6 +24,13 @@ final class OrderBasicAddressView: UIView {
     private var basicAddressDatas: Results<OrderBasicAddress>?  {
         didSet {
             basicAddressCollectionView.reloadData()
+            let selectedIndex = basicAddressDatas?.firstIndex(where: { data in
+                data.isSelected == true
+            })
+            guard let selectedIndex else { return }
+            basicAddressCollectionView.selectItem(at: IndexPath(item: selectedIndex,
+                                                                section: 0),
+                                                  animated: true, scrollPosition: .centeredVertically)
         }
     }
     
@@ -35,6 +42,7 @@ final class OrderBasicAddressView: UIView {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
+        collectionView.bounces = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isScrollEnabled = true
         return collectionView
@@ -78,8 +86,10 @@ final class OrderBasicAddressView: UIView {
                                             forCellWithReuseIdentifier: OrderBasicAddressCollectionViewCell.cellIdentifier)
     }
     
-    func updateUI(_ data: Results<OrderBasicAddress>? = nil, hasBasicAddressData: Bool = true) {
+    func updateUI(_ data: Results<OrderBasicAddress>? = nil,
+                  hasBasicAddressData: Bool = true) {
         basicAddressDatas = data
+        
         if !hasBasicAddressData {
             self.isHidden = true
         }
@@ -89,7 +99,7 @@ final class OrderBasicAddressView: UIView {
 extension OrderBasicAddressView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let width = collectionView.frame.width
+        let width = collectionView.frame.width - 60
         var size = CGSize(width: width, height: 0) // 기본 높이 설정
         
         guard let basicAddressDatas = basicAddressDatas else { return size }
@@ -97,18 +107,22 @@ extension OrderBasicAddressView: UICollectionViewDelegateFlowLayout {
         let address = basicAddressDatas[indexPath.item]
         
         if address.isSelected {
-            size.height = 189 // 선택된 주소의 높이
+            size.height = 229 // 선택된 주소의 높이
         } else {
-            size.height = 108 // 선택되지 않은 주소의 높이
+            size.height = 138 // 선택되지 않은 주소의 높이
         }
         
         return size
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.basicAddressCheckButtonDidTap(tag: indexPath.row)
     }
 }
 
 extension OrderBasicAddressView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let basicAddressDatas = basicAddressDatas else { return 0}
+        guard let basicAddressDatas else { return 0 }
         return basicAddressDatas.count
     }
     
@@ -120,16 +134,18 @@ extension OrderBasicAddressView: UICollectionViewDataSource {
         cell.delegate = self
         return cell
     }
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+    }
 }
 
 extension OrderBasicAddressView: OrderBasicAddressCollectionViewCellDelegate {
+    
     func basicAddressTextFieldDidChange(tag: Int, request: String?) {
         delegate?.basicAddressTextFieldDidChange(tag: tag, request: request)
-    }
-    
-    
-    func basicAddressCheckButtonDidTap(tag: Int) {
-        delegate?.basicAddressCheckButtonDidTap(tag: tag)
     }
 }
 

@@ -169,13 +169,13 @@ final class OrderAddressView: UIView {
         }
         
         basicAddressView.snp.makeConstraints {
-            $0.top.equalTo(buttonView.snp.bottom).offset(24)
+            $0.top.equalTo(buttonView.snp.bottom).offset(12)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
         
         newAddressView.snp.makeConstraints {
-            $0.top.equalTo(buttonView.snp.bottom).offset(24)
+            $0.top.equalTo(buttonView.snp.bottom).offset(12)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }

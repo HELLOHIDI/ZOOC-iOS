@@ -433,7 +433,7 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
             basicAddressData.detailAddress = basicAddressResult[tag].detailAddress
             
             addressData = basicAddressData
-            addressView.updateUI(newAddressData: newAddressData, basicAddressDatas: basicAddressResult)
+//            addressView.updateUI(newAddressData: newAddressData, basicAddressDatas: basicAddressResult)
         }
     }
     

@@ -21,26 +21,24 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            if isSelected {
-                checkButtonView.backgroundColor = .zoocMainGreen
-                checkButtonView.setBorder(borderWidth: 0, borderColor: .clear)
-                miniCircleView.backgroundColor = .zoocWhite3
-                contentView.setBorder(borderWidth: 1, borderColor: .zoocMainGreen)
-                contentView.backgroundColor = UIColor(r: 222, g: 239, b: 227)
-            } else {
-                checkButtonView.backgroundColor = .clear
-                checkButtonView.setBorder(borderWidth: 1, borderColor: .zoocDarkGray1)
-                miniCircleView.backgroundColor = .clear
-                contentView.setBorder(borderWidth: 0, borderColor: .zoocBackgroundGreen)
-                contentView.backgroundColor = .zoocBackgroundGreen
-            }
+            updateUI(isSelected)
         }
     }
     
     //MARK: - UI Components
     
-    private let checkButtonView = UIView()
-    private let miniCircleView = UIView()
+    private let checkButtonView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.setBorder(borderWidth: 1, borderColor: .zoocDarkGray1)
+        return view
+    }()
+    
+    private let miniCircleView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }()
     
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -106,6 +104,23 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         miniCircleView.makeCornerRound(ratio: 2)
     }
     
+    private func updateUI(_ isSelected: Bool) {
+        requestLabel.isHidden = !isSelected
+        requestTextField.isHidden = !isSelected
+        
+        checkButtonView.backgroundColor = isSelected ? .zoocMainGreen : .clear
+        miniCircleView.backgroundColor = isSelected ? .zoocWhite3 : .clear
+        contentView.backgroundColor = isSelected ? UIColor(r: 222, g: 239, b: 227) : .zoocBackgroundGreen
+        
+        if isSelected {
+            checkButtonView.setBorder(borderWidth: 0, borderColor: .clear)
+            contentView.setBorder(borderWidth: 1, borderColor: .zoocMainGreen)
+        } else {
+            checkButtonView.setBorder(borderWidth: 1, borderColor: .zoocDarkGray1)
+            contentView.setBorder(borderWidth: 0, borderColor: .zoocBackgroundGreen)
+        }
+    }
+    
     //MARK: - Custom Method
     
     private func style() {
@@ -165,7 +180,6 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        print(#function)
         delegate?.basicAddressTextFieldDidChange(tag: tag, request: textField.text)
     }
     
@@ -180,7 +194,5 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         checkButtonView.tag = tag
         requestTextField.tag = tag
         self.isSelected = data.isSelected
-        requestLabel.isHidden = !data.isSelected
-        requestTextField.isHidden = !data.isSelected
     }
 }

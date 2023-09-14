@@ -106,17 +106,25 @@ extension OrderBasicAddressView: UICollectionViewDelegateFlowLayout {
         
         let address = basicAddressDatas[indexPath.item]
         
-        if address.isSelected {
+        switch collectionView.indexPathsForSelectedItems?.first {
+        case .some(indexPath):
             size.height = 229 // 선택된 주소의 높이
-        } else {
+        default:
             size.height = 138 // 선택되지 않은 주소의 높이
         }
+        
+//        if address.isSelected {
+//            size.height = 229 // 선택된 주소의 높이
+//        } else {
+//            size.height = 138 // 선택되지 않은 주소의 높이
+//        }
         
         return size
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.basicAddressCheckButtonDidTap(tag: indexPath.row)
+        collectionView.performBatchUpdates(nil)
     }
 }
 

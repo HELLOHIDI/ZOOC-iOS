@@ -108,7 +108,7 @@ final class DefaultRealmService: RealmService {
     
     @MainActor
     func getBasicAddress() -> Results<OrderBasicAddress> {
-        return localRealm.objects(OrderBasicAddress.self)
+        return localRealm.objects(OrderBasicAddress.self).sorted(byKeyPath: "isSelected", ascending: false)
     }
     
     @MainActor
@@ -117,11 +117,10 @@ final class DefaultRealmService: RealmService {
     }
     
     @MainActor
-    func updateBasicAddress(_ data: OrderAddress) throws {
-        let fullAddress = "(\(data.postCode)) \(data.address)"
+    func updateBasicAddress(_ data: OrderAddress) {
         let newAddress = OrderBasicAddress(postCode: data.postCode,
                                            name: data.receiverName,
-                                           address: fullAddress,
+                                           address: data.address,
                                            detailAddress: data.detailAddress,
                                            phoneNumber: data.receiverPhoneNumber,
                                            request: data.request,
@@ -131,9 +130,7 @@ final class DefaultRealmService: RealmService {
         
         if filter.isEmpty {
             self.setAddress(newAddress)
-        } else {
-            throw OrderError.existedAddress
-        }
+        } 
     }
     
     @MainActor
@@ -155,10 +152,23 @@ final class DefaultRealmService: RealmService {
         }
     }
     
+    @MainActor
+    func selectBasicAddress(_ object: OrderBasicAddress) {
+        let objects = getBasicAddress()
+        try! localRealm.write {
+            objects.forEach { data in
+                data.isSelected = false
+            }
+            object.isSelected = true
+        }
+    }
     
-    
-    
-    
+    @MainActor
+    func updateBasicAddressRequest(_ object: OrderBasicAddress, request: String) {
+        try! localRealm.write {
+            object.request = request
+        }
+    }
    
 }
      

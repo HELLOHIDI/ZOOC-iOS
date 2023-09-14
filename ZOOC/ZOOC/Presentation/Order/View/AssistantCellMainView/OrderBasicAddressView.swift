@@ -10,20 +10,20 @@ import UIKit
 import SnapKit
 import RealmSwift
 
-protocol OrderBasicAddressViewDelegate: AnyObject {
-    func basicAddressCheckButtonDidTap(tag: Int)
-    func basicAddressTextFieldDidChange(tag: Int, request: String?)
-}
-
 final class OrderBasicAddressView: UIView {
     
     //MARK: - Properties
     
-    weak var delegate: OrderBasicAddressViewDelegate?
-    
     private var basicAddressDatas: Results<OrderBasicAddress>?  {
         didSet {
             basicAddressCollectionView.reloadData()
+            let selectedIndex = basicAddressDatas?.firstIndex(where: { data in
+                data.isSelected == true
+            })
+            guard let selectedIndex else { return }
+            basicAddressCollectionView.selectItem(at: IndexPath(item: selectedIndex,
+                                                                section: 0),
+                                                  animated: true, scrollPosition: .centeredVertically)
         }
     }
     
@@ -35,8 +35,9 @@ final class OrderBasicAddressView: UIView {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
+        collectionView.bounces = false
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.isScrollEnabled = true
+        collectionView.isScrollEnabled = false
         return collectionView
     }()
     
@@ -78,37 +79,43 @@ final class OrderBasicAddressView: UIView {
                                             forCellWithReuseIdentifier: OrderBasicAddressCollectionViewCell.cellIdentifier)
     }
     
-    func updateUI(_ data: Results<OrderBasicAddress>? = nil, hasBasicAddressData: Bool = true) {
+    func dataBind(_ data: Results<OrderBasicAddress>?) {
         basicAddressDatas = data
-        if !hasBasicAddressData {
-            self.isHidden = true
-        }
     }
 }
 
 extension OrderBasicAddressView: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let width = collectionView.frame.width
+        let width = collectionView.frame.width - 60
         var size = CGSize(width: width, height: 0) // 기본 높이 설정
         
-        guard let basicAddressDatas = basicAddressDatas else { return size }
-        
-        let address = basicAddressDatas[indexPath.item]
-        
-        if address.isSelected {
-            size.height = 189 // 선택된 주소의 높이
-        } else {
-            size.height = 108 // 선택되지 않은 주소의 높이
+        switch collectionView.indexPathsForSelectedItems?.first {
+        case .some(indexPath):
+            size.height = 229 // 선택된 주소의 높이
+        default:
+            size.height = 138 // 선택되지 않은 주소의 높이
         }
         
         return size
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        
+        let cell = collectionView.cellForItem(at: indexPath) as! OrderBasicAddressCollectionViewCell
+        return !cell.isSelected
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.performBatchUpdates(nil)
     }
 }
 
 extension OrderBasicAddressView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let basicAddressDatas = basicAddressDatas else { return 0}
+        guard let basicAddressDatas else { return 0 }
         return basicAddressDatas.count
     }
     
@@ -116,20 +123,14 @@ extension OrderBasicAddressView: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OrderBasicAddressCollectionViewCell.cellIdentifier, for: indexPath) as! OrderBasicAddressCollectionViewCell
         
         guard let basicAddressDatas = basicAddressDatas else { return UICollectionViewCell()}
-        cell.dataBind(tag: indexPath.item, basicAddressDatas[indexPath.item])
-        cell.delegate = self
+        cell.dataBind(basicAddressDatas[indexPath.item])
         return cell
     }
-}
-
-extension OrderBasicAddressView: OrderBasicAddressCollectionViewCellDelegate {
-    func basicAddressTextFieldDidChange(tag: Int, request: String?) {
-        delegate?.basicAddressTextFieldDidChange(tag: tag, request: request)
-    }
     
     
-    func basicAddressCheckButtonDidTap(tag: Int) {
-        delegate?.basicAddressCheckButtonDidTap(tag: tag)
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
     }
 }
 

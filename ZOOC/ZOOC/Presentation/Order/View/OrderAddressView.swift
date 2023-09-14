@@ -12,8 +12,8 @@ import RealmSwift
 
 protocol OrderAddressViewDelegate: AnyObject {
     func copyButtonDidTap()
-    func basicAddressButtonDidTap()
-    func newAddressButtonDidTap()
+    func basicAddressButtonDidTap(_ height: CGFloat)
+    func newAddressButtonDidTap(_ height: CGFloat)
 }
 
 final class OrderAddressView: UIView {
@@ -23,10 +23,11 @@ final class OrderAddressView: UIView {
     weak var delegate: OrderAddressViewDelegate?
     private var basicAddressDatas: Results<OrderBasicAddress>?
     
-    private var addressType: AddressType = .new {
+    var addressType: AddressType = .new {
         didSet {
             updateViewHidden()
             updateTintBar()
+            
         }
     }
     
@@ -169,13 +170,13 @@ final class OrderAddressView: UIView {
         }
         
         basicAddressView.snp.makeConstraints {
-            $0.top.equalTo(buttonView.snp.bottom).offset(24)
+            $0.top.equalTo(buttonView.snp.bottom).offset(12)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
         
         newAddressView.snp.makeConstraints {
-            $0.top.equalTo(buttonView.snp.bottom).offset(24)
+            $0.top.equalTo(buttonView.snp.bottom).offset(12)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
@@ -196,10 +197,11 @@ final class OrderAddressView: UIView {
     
     func updateUI(newAddressData: OrderAddress,
                   basicAddressDatas: Results<OrderBasicAddress>? = nil,
-                  isPostData: Bool = false,
-                  hasBasicAddress: Bool = true
+                  isPostData: Bool = false
         ) {
-        basicAddressView.updateUI(basicAddressDatas)
+        basicAddressView.dataBind(basicAddressDatas)
+        
+        
         newAddressView.updateUI(newAddressData,isPostData: isPostData)
         
         guard let basicAddressDatas else { return }
@@ -207,6 +209,12 @@ final class OrderAddressView: UIView {
         self.basicAddressDatas = basicAddressDatas
         
         addressType = basicAddressDatas.isEmpty ? .new : .registed
+        
+        if addressType == .registed {
+            basicAddressView.layoutIfNeeded()
+            basicAddressButtonDidTap()
+        }
+        
     }
     
     
@@ -260,7 +268,8 @@ final class OrderAddressView: UIView {
     @objc
     private func basicAddressButtonDidTap() {
         
-        delegate?.basicAddressButtonDidTap()
+        delegate?.basicAddressButtonDidTap(headerView.frame.height +
+                                           buttonView.frame.height + basicAddressView.basicAddressCollectionView.contentSize.height)
         
         guard !(basicAddressDatas?.isEmpty ?? false) else {
             return
@@ -271,6 +280,6 @@ final class OrderAddressView: UIView {
     @objc
     private func newAddressButtonDidTap() {
         addressType = .new
-        delegate?.newAddressButtonDidTap()
+        delegate?.newAddressButtonDidTap(498)
     }
 }

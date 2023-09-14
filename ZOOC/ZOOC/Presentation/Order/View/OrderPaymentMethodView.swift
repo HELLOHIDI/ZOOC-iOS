@@ -9,6 +9,7 @@ import UIKit
 
 import SnapKit
 
+
 protocol OrderPaymentMethodViewDelegate: AnyObject {
     
 }
@@ -135,9 +136,9 @@ final class OrderPaymentMethodView: UIView {
 extension OrderPaymentMethodView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-//        let width = collectionView.frame.width
+        let width = collectionView.frame.width - 60
         
-        return CGSize(width: 122, height: 41)
+        return CGSize(width: width, height: 40)
     }
     
 }

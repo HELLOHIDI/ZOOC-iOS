@@ -133,6 +133,37 @@ final class ShopCartViewController: BaseViewController {
         return button
     }()
     
+    private let emptyCartView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .zoocBackgroundGreen
+        view.isHidden = true
+        return view
+    }()
+    
+    private let emptyCartImageView: UIImageView = {
+        let imageView = UIImageView(image: Image.cartLight)
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    private let emptyCartLabel: UILabel = {
+        let label = UILabel()
+        label.text = "아직 담은 상품이 없어요"
+        label.font = .zoocHeadLine
+        label.textColor = .zoocGray2
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var emptyCartButton: ZoocGradientButton = {
+        let button = ZoocGradientButton(.order)
+        button.setTitle("굿즈 담으러 가기", for: .normal)
+        button.addTarget(self,
+                         action: #selector(backButtonDidTap),
+                         for: .touchUpInside)
+        return button
+    }()
+    
     //MARK: - Life Cycle
     
     
@@ -161,7 +192,8 @@ final class ShopCartViewController: BaseViewController {
         view.addSubviews(backButton,
                          titleLabel,
                          collectionView,
-                         bottomView)
+                         bottomView,
+                         emptyCartView)
         
         bottomView.addSubviews(lineView,
                                paymentInformationLabel,
@@ -172,6 +204,13 @@ final class ShopCartViewController: BaseViewController {
                                totalPriceLabel,
                                totalPriceValueLabel,
                                payButton)
+        
+        emptyCartView.addSubviews(emptyCartImageView,
+                                  emptyCartLabel,
+                                  emptyCartButton)
+        
+        
+        
     }
     
     private func layout() {
@@ -248,6 +287,29 @@ final class ShopCartViewController: BaseViewController {
             $0.horizontalEdges.equalToSuperview().inset(30)
             $0.height.equalTo(54)
         }
+        
+        
+        emptyCartView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        emptyCartImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-40)
+            $0.size.equalTo(95)
+        }
+        
+        emptyCartLabel.snp.makeConstraints {
+            $0.top.equalTo(emptyCartImageView.snp.bottom).offset(30)
+            $0.centerX.equalToSuperview()
+        }
+        
+        emptyCartButton.snp.makeConstraints {
+            $0.top.equalTo(emptyCartLabel.snp.bottom).offset(24)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(emptyCartLabel)
+            $0.height.equalTo(52)
+        }
     }
     
     
@@ -257,22 +319,18 @@ final class ShopCartViewController: BaseViewController {
     }
     
     private func updateUI() {
+        
+        emptyCartView.isHidden = !cartedProducts.isEmpty
+        payButton.isEnabled = !cartedProducts.isEmpty
+        
         let productsTotalPrice = cartedProducts.reduce(0) { $0 + $1.productsPrice }
         let totalPrice = deliveryFee + productsTotalPrice
         
         productsPriceValueLabel.text = productsTotalPrice.priceText
         
-        if cartedProducts.isEmpty {
-            deliveryFeeValueLabel.text = 0.priceText
-            totalPriceValueLabel.text = 0.priceText
-            payButton.isEnabled = false
-            payButton.setTitle("주문 상품을 추가해주세요.", for: .normal)
-        } else {
-            deliveryFeeValueLabel.text = deliveryFee.priceText
-            totalPriceValueLabel.text = totalPrice.priceText
-            payButton.isEnabled = true
-            payButton.setTitle("\(totalPrice.priceText) 결제하기", for: .normal)
-        }
+        deliveryFeeValueLabel.text = deliveryFee.priceText
+        totalPriceValueLabel.text = totalPrice.priceText
+        payButton.setTitle("\(totalPrice.priceText) 결제하기", for: .normal)
         
         totalPriceValueLabel.setAttributeLabel(
             targetString: ["원"],

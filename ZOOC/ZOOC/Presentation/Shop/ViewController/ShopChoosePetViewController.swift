@@ -61,15 +61,17 @@ final class ShopChoosePetViewController: BaseViewController {
             self?.updateRegisterButtonUI(isSelected)
         }
         
-        viewModel.petId.observe(on: self) { [weak self] petID in
-            guard let petID else { return }
+        viewModel.pushToShopVC.observe(on: self) { [weak self] petID in
+            guard let petID else {return }
             self?.pushToShopVC(petID: petID)
         }
+        
+        
     }
     
     private func target() {
         rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        rootView.registerButton.addTarget(self, action: #selector(registerButtonDidTap), for: .touchUpInside)
+        rootView.registerButton.addTarget(self, action: #selector(selectButtonDidTap), for: .touchUpInside)
     }
     
     private func delegate() {
@@ -83,8 +85,8 @@ final class ShopChoosePetViewController: BaseViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc private func registerButtonDidTap(){
-        //pushToShopVC(
+    @objc private func selectButtonDidTap(){
+        viewModel.selectButtonDidTap()
     }
 }
 

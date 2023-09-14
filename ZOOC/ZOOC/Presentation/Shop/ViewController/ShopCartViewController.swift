@@ -21,13 +21,6 @@ final class ShopCartViewController: BaseViewController {
         }
     }
     
-//    private var selectedProductData: [SelectedProductOption] {
-//        didSet {
-//            collectionView.reloadData()
-//            updateUI()
-//        }
-//    }
-    
     private var cartedProducts: [CartedProduct] = [] {
         didSet {
             collectionView.reloadData()
@@ -48,7 +41,7 @@ final class ShopCartViewController: BaseViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "주문하기"
+        label.text = "장바구니"
         label.font = .zoocHeadLine
         label.textColor = .zoocDarkGray2
         label.textAlignment = .left
@@ -142,12 +135,6 @@ final class ShopCartViewController: BaseViewController {
     
     //MARK: - Life Cycle
     
-//    init(selectedProduct: [SelectedProductOption]) {
-//        self.selectedProductData = selectedProduct
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//
-//    init
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -161,10 +148,6 @@ final class ShopCartViewController: BaseViewController {
         requestCartedProducts()
         dismissKeyboardWhenTappedAround()
     }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
     
     //MARK: - Custom Method
     

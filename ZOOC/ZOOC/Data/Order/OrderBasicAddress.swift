@@ -35,7 +35,7 @@ class OrderBasicAddress: Object {
 
 extension OrderBasicAddress {
     func transform() -> OrderAddress {
-        OrderAddress(addressName: "",
+        OrderAddress(addressName: name,
                      receiverName: name,
                      receiverPhoneNumber: phoneNumber,
                      address: address,

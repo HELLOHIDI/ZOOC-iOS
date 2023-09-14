@@ -34,6 +34,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let vc = SplashViewController(userInfo: userInfo)
         self.window?.rootViewController = vc
         self.window?.makeKeyAndVisible()
+        
+//        UIApplication.shared.changeRootViewController(UINavigationController(rootViewController: ShopCart))
     }
 }
 

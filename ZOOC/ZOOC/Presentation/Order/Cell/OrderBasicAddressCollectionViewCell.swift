@@ -8,20 +8,25 @@
 import UIKit
 
 import SnapKit
-
-protocol OrderBasicAddressCollectionViewCellDelegate: AnyObject {
-    func basicAddressTextFieldDidChange(tag: Int, request: String?)
-}
-
 final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Properties
     
-    weak var delegate: OrderBasicAddressCollectionViewCellDelegate?
+    private var data: OrderBasicAddress? {
+        didSet {
+            guard let data else { return }
+            updateUI(data)
+        }
+    }
     
     override var isSelected: Bool {
         didSet {
+            guard let data else { return }
             updateUI(isSelected)
+            
+            if isSelected {
+                DefaultRealmService.shared.selectBasicAddress(data)
+            }
         }
     }
     
@@ -80,7 +85,9 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         textField.textColor = .zoocGray3
         textField.setPlaceholderColor(color: .zoocGray1)
         textField.isHidden = true
-        textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingDidEnd)
+        textField.addTarget(self,
+                            action: #selector(textFieldDidEndEditing(_:)),
+                            for: .editingDidEnd)
         return textField
     }()
     
@@ -102,23 +109,6 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         
         checkButtonView.makeCornerRound(ratio: 2)
         miniCircleView.makeCornerRound(ratio: 2)
-    }
-    
-    private func updateUI(_ isSelected: Bool) {
-        requestLabel.isHidden = !isSelected
-        requestTextField.isHidden = !isSelected
-        
-        checkButtonView.backgroundColor = isSelected ? .zoocMainGreen : .clear
-        miniCircleView.backgroundColor = isSelected ? .zoocWhite3 : .clear
-        contentView.backgroundColor = isSelected ? UIColor(r: 222, g: 239, b: 227) : .zoocBackgroundGreen
-        
-        if isSelected {
-            checkButtonView.setBorder(borderWidth: 0, borderColor: .clear)
-            contentView.setBorder(borderWidth: 1, borderColor: .zoocMainGreen)
-        } else {
-            checkButtonView.setBorder(borderWidth: 1, borderColor: .zoocDarkGray1)
-            contentView.setBorder(borderWidth: 0, borderColor: .zoocBackgroundGreen)
-        }
     }
     
     //MARK: - Custom Method
@@ -179,20 +169,43 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    @objc private func textFieldDidChange(_ textField: UITextField) {
-        delegate?.basicAddressTextFieldDidChange(tag: tag, request: textField.text)
+    @objc
+    private func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let text = textField.text else { return }
+        guard let data else { return }
+        DefaultRealmService.shared.updateBasicAddressRequest(data, request: text)
+    }
+    
+    
+    private func updateUI(_ isSelected: Bool) {
+        requestLabel.isHidden = !isSelected
+        requestTextField.isHidden = !isSelected
+        
+        checkButtonView.backgroundColor = isSelected ? .zoocMainGreen : .clear
+        miniCircleView.backgroundColor = isSelected ? .zoocWhite3 : .clear
+        contentView.backgroundColor = isSelected ? UIColor(r: 222, g: 239, b: 227) : .zoocBackgroundGreen
+        
+        if isSelected {
+            checkButtonView.setBorder(borderWidth: 0, borderColor: .clear)
+            contentView.setBorder(borderWidth: 1, borderColor: .zoocMainGreen)
+        } else {
+            checkButtonView.setBorder(borderWidth: 1, borderColor: .zoocDarkGray1)
+            contentView.setBorder(borderWidth: 0, borderColor: .zoocBackgroundGreen)
+        }
+    }
+    
+    private func updateUI(_ data: OrderBasicAddress) {
+        self.isSelected = data.isSelected
+        nameLabel.text = data.name
+        basicAddressLabel.text = "\(data.address) \n\(data.detailAddress ?? "")"
+        phoneNumLabel.text = data.phoneNumber
+        requestTextField.text = data.request
     }
     
     //MARK: - Public Methods
     
     
-    func dataBind(tag: Int, _ data: OrderBasicAddress) {
-        nameLabel.text = data.name
-        basicAddressLabel.text = "\(data.address) \n\(data.detailAddress ?? "")"
-        phoneNumLabel.text = data.phoneNumber
-        requestTextField.text = data.request
-        checkButtonView.tag = tag
-        requestTextField.tag = tag
-        self.isSelected = data.isSelected
+    func dataBind(_ data: OrderBasicAddress) {
+        self.data = data
     }
 }

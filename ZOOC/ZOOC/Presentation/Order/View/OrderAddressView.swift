@@ -23,7 +23,7 @@ final class OrderAddressView: UIView {
     weak var delegate: OrderAddressViewDelegate?
     private var basicAddressDatas: Results<OrderBasicAddress>?
     
-    private var addressType: AddressType = .new {
+    var addressType: AddressType = .new {
         didSet {
             updateViewHidden()
             updateTintBar()
@@ -197,10 +197,9 @@ final class OrderAddressView: UIView {
     
     func updateUI(newAddressData: OrderAddress,
                   basicAddressDatas: Results<OrderBasicAddress>? = nil,
-                  isPostData: Bool = false,
-                  hasBasicAddress: Bool = true
+                  isPostData: Bool = false
         ) {
-        basicAddressView.updateUI(basicAddressDatas)
+        basicAddressView.dataBind(basicAddressDatas)
         
         
         newAddressView.updateUI(newAddressData,isPostData: isPostData)

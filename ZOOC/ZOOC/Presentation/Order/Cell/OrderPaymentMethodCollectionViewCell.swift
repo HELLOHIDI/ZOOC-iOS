@@ -14,52 +14,32 @@ final class OrderPaymentMethodCollectionViewCell: UICollectionViewCell {
     //MARK: - Properties
     
 
-    enum PaymentType {
-        case withoutBankBook
-        case kakaoPay
-        case toss
-        case mobile
 
-        var image: UIImage? {
-
-            switch self {
-            case .withoutBankBook:
-                return nil
-            default:
-                return nil
-            }
-        }
-
-        var text: String {
-            switch self {
-            case .withoutBankBook:
-                return "무통장 입금"
-            default:
-                return "아직 개발 전"
-            }
-        }
-    }
 
     private var type: PaymentType = .withoutBankBook  {
         didSet {
-            updateUI()
+            updateUI(type)
+        }
+    }
+    
+    override var isSelected: Bool {
+        didSet {
+            updateUI(isSelected)
         }
     }
 
     //MARK: - UI Components
     
-    private let checkButton: UIButton = {
-        let button = UIButton()
-        button.setBackgroundColor(.white, for: .normal)
-        button.setBackgroundColor(.zoocMainGreen, for: .selected)
-        button.setBorder(borderWidth: 1, borderColor: .zoocLightGray)
-        button.isSelected = true
-        return button
-    }()
-
-    private let smallCircleView: UIView = {
+    private let checkButtonView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
+        view.setBorder(borderWidth: 1, borderColor: .zoocDarkGray1)
+        return view
+    }()
+    
+    private let miniCircleView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
         return view
     }()
 
@@ -94,8 +74,8 @@ final class OrderPaymentMethodCollectionViewCell: UICollectionViewCell {
 
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        checkButton.makeCornerRound(ratio: 2)
-        smallCircleView.makeCornerRound(ratio: 2)
+        checkButtonView.makeCornerRound(ratio: 2)
+        miniCircleView.makeCornerRound(ratio: 2)
     }
 
     //MARK: - Custom Method
@@ -105,31 +85,24 @@ final class OrderPaymentMethodCollectionViewCell: UICollectionViewCell {
     }
 
     private func hierarchy() {
-        contentView.addSubviews(checkButton, imageView, titleLabel)
-        checkButton.addSubview(smallCircleView)
+        contentView.addSubviews(checkButtonView, imageView, titleLabel)
+        checkButtonView.addSubview(miniCircleView)
     }
 
     private func layout() {
 
-        checkButton.snp.makeConstraints {
-            $0.leading.equalToSuperview()
-            $0.size.equalTo(25)
+        checkButtonView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.size.equalTo(20)
         }
-
-        smallCircleView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(7)
+        
+        miniCircleView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(5)
         }
-
-//        imageView.snp.makeConstraints {
-//            $0.leading.equalTo(checkButton.snp.trailing)
-//            $0.centerY.equalToSuperview()
-//            $0.height.equalTo(35)
-//            $0.width.equalTo(60)
-//        }
 
         titleLabel.snp.makeConstraints {
-            $0.leading.equalTo(checkButton.snp.trailing).offset(10)
+            $0.leading.equalTo(checkButtonView.snp.trailing).offset(10)
             $0.centerY.equalToSuperview()
         }
 
@@ -139,9 +112,19 @@ final class OrderPaymentMethodCollectionViewCell: UICollectionViewCell {
         self.type = type
     }
 
-    private func updateUI() {
+    private func updateUI(_ type: PaymentType) {
         imageView.image = type.image
         titleLabel.text = type.text
+    }
+    
+    private func updateUI(_ isSelected: Bool) {
+        let borderColor: UIColor = isSelected ? .clear : .zoocDarkGreen
+        
+        checkButtonView.setBorder(borderWidth: 1, borderColor: borderColor)
+        checkButtonView.backgroundColor = isSelected ? .zoocMainGreen : .clear
+        miniCircleView.backgroundColor = isSelected ? .zoocWhite3 : .clear
+        
+        
     }
 
 

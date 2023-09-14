@@ -182,6 +182,7 @@
 		87F2880B2A9FDE2500A53218 /* OrderAssistantHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F2880A2A9FDE2500A53218 /* OrderAssistantHeaderView.swift */; };
 		87FAF8B72AAE1D8300DADCC4 /* OrderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FAF8B62AAE1D8300DADCC4 /* OrderError.swift */; };
 		87FAF8BD2AB090D700DADCC4 /* AddressType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FAF8BC2AB090D700DADCC4 /* AddressType.swift */; };
+		87FD185F2AB36A1800A1431E /* PaymentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FD185E2AB36A1800A1431E /* PaymentType.swift */; };
 		D209F9302AB0594B0017D623 /* PetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D209F92F2AB0594B0017D623 /* PetResult.swift */; };
 		D20C008A2A96DDB000666963 /* GenAIModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C00892A96DDB000666963 /* GenAIModelRepository.swift */; };
 		D20C008D2A96E23500666963 /* GenAIGuideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */; };
@@ -480,6 +481,7 @@
 		87F2880A2A9FDE2500A53218 /* OrderAssistantHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAssistantHeaderView.swift; sourceTree = "<group>"; };
 		87FAF8B62AAE1D8300DADCC4 /* OrderError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderError.swift; sourceTree = "<group>"; };
 		87FAF8BC2AB090D700DADCC4 /* AddressType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressType.swift; sourceTree = "<group>"; };
+		87FD185E2AB36A1800A1431E /* PaymentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentType.swift; sourceTree = "<group>"; };
 		D209F92F2AB0594B0017D623 /* PetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetResult.swift; sourceTree = "<group>"; };
 		D20C00892A96DDB000666963 /* GenAIModelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIModelRepository.swift; sourceTree = "<group>"; };
 		D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideViewModel.swift; sourceTree = "<group>"; };
@@ -1529,10 +1531,10 @@
 		87F287FB2A9F7D0700A53218 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				87A3D8962A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift */,
 				87F2880A2A9FDE2500A53218 /* OrderAssistantHeaderView.swift */,
 				87F287FC2A9F7D3000A53218 /* OrderAssistantCollectionViewCell.swift */,
 				D2D440172AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift */,
+				87A3D8962A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift */,
 				D29944192AAADE7C00C4F280 /* OrderProductCollectionViewCell.swift */,
 			);
 			path = Cell;
@@ -1554,6 +1556,7 @@
 			isa = PBXGroup;
 			children = (
 				87FAF8BC2AB090D700DADCC4 /* AddressType.swift */,
+				87FD185E2AB36A1800A1431E /* PaymentType.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -2081,6 +2084,7 @@
 				874AE9FA29B4A12F007A637D /* OnboardingJoinUserResult.swift in Sources */,
 				872BBD9529F959FC002E2C71 /* UserDefaultWrapper.swift in Sources */,
 				87A76AA5295F6EC40096F669 /* HomeAPI.swift in Sources */,
+				87FD185F2AB36A1800A1431E /* PaymentType.swift in Sources */,
 				D2F3D6002A4411FF00C90A5A /* MyEditPetProfileView.swift in Sources */,
 				87A76AA7295F6ECD0096F669 /* MyService.swift in Sources */,
 				D26C8614296B7F3E00AEAF9B /* OnboardingRegisterPetTableViewCell.swift in Sources */,

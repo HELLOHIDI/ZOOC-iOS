@@ -11,7 +11,7 @@ import SnapKit
 
 
 protocol OrderPaymentMethodViewDelegate: AnyObject {
-    
+    func paymentMethodDidChange(_ paymentType: PaymentType)
 }
 
 final class OrderPaymentMethodView: UIView {
@@ -19,6 +19,7 @@ final class OrderPaymentMethodView: UIView {
     //MARK: - Properties
     
     weak var delegate: OrderPaymentMethodViewDelegate?
+    private var paymentTypes = PaymentType.allCases
     
     //MARK: - UI Components
     
@@ -41,6 +42,7 @@ final class OrderPaymentMethodView: UIView {
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isScrollEnabled = false
+        collectionView.allowsSelection = true
         return collectionView
     }()
     
@@ -108,7 +110,7 @@ final class OrderPaymentMethodView: UIView {
         paymentCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(20)
             $0.leading.trailing.equalToSuperview()
-            $0.height.greaterThanOrEqualTo(41)
+            $0.height.greaterThanOrEqualTo(40)
         }
         
         descriptionLabel.snp.makeConstraints {
@@ -127,6 +129,12 @@ final class OrderPaymentMethodView: UIView {
                                        forCellWithReuseIdentifier: OrderPaymentMethodCollectionViewCell.cellIdentifier)
     }
     
+    func checkValidity() throws {
+        guard paymentCollectionView.indexPathsForSelectedItems?.first != nil else {
+            throw OrderInvalidError.paymentMethodInvalid
+        }
+    }
+    
     //MARK: - Action Method
     
     
@@ -141,17 +149,21 @@ extension OrderPaymentMethodView: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: 40)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.paymentMethodDidChange(paymentTypes[indexPath.item])
+    }
+    
 }
 
 extension OrderPaymentMethodView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
+        paymentTypes.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OrderPaymentMethodCollectionViewCell.cellIdentifier, for: indexPath) as! OrderPaymentMethodCollectionViewCell
         
-        cell.dataBind(.withoutBankBook)
+        cell.dataBind(paymentTypes[indexPath.item])
         return cell
     }
 }

@@ -35,7 +35,7 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
     private let checkButtonView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
-        view.setBorder(borderWidth: 1, borderColor: .zoocDarkGray1)
+        view.setBorder(borderWidth: 1, borderColor: .zoocDarkGreen)
         return view
     }()
     
@@ -181,17 +181,15 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         requestLabel.isHidden = !isSelected
         requestTextField.isHidden = !isSelected
         
+        let checkButtonBorderColor: UIColor = isSelected ? .clear : .zoocDarkGreen
+        let contentViewBorderColor: UIColor = isSelected ? .zoocMainGreen : .zoocBackgroundGreen
+        
+        checkButtonView.setBorder(borderWidth: 1, borderColor: checkButtonBorderColor)
+        contentView.setBorder(borderWidth: 1, borderColor: contentViewBorderColor)
+        
         checkButtonView.backgroundColor = isSelected ? .zoocMainGreen : .clear
         miniCircleView.backgroundColor = isSelected ? .zoocWhite3 : .clear
         contentView.backgroundColor = isSelected ? UIColor(r: 222, g: 239, b: 227) : .zoocBackgroundGreen
-        
-        if isSelected {
-            checkButtonView.setBorder(borderWidth: 0, borderColor: .clear)
-            contentView.setBorder(borderWidth: 1, borderColor: .zoocMainGreen)
-        } else {
-            checkButtonView.setBorder(borderWidth: 1, borderColor: .zoocDarkGray1)
-            contentView.setBorder(borderWidth: 0, borderColor: .zoocBackgroundGreen)
-        }
     }
     
     private func updateUI(_ data: OrderBasicAddress) {

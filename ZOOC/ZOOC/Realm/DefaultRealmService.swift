@@ -117,7 +117,7 @@ final class DefaultRealmService: RealmService {
     }
     
     @MainActor
-    func updateBasicAddress(_ data: OrderAddress) throws {
+    func updateBasicAddress(_ data: OrderAddress) {
         let newAddress = OrderBasicAddress(postCode: data.postCode,
                                            name: data.receiverName,
                                            address: data.address,
@@ -130,9 +130,7 @@ final class DefaultRealmService: RealmService {
         
         if filter.isEmpty {
             self.setAddress(newAddress)
-        } else {
-            throw OrderError.existedAddress
-        }
+        } 
     }
     
     @MainActor

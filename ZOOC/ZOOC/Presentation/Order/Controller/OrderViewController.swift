@@ -26,6 +26,12 @@ final class OrderViewController: BaseViewController {
     }
     private var newAddressData = OrderAddress()
     private var basicAddressData = OrderAddress()
+    private var paymentType : PaymentType = .withoutBankBook
+    private var agreementData = OrderAgreement()
+    
+    let basicAddressRealm = try! Realm()
+    var basicAddressResult: Results<OrderBasicAddress>!
+    
     
     private var deliveryFee = 4000 {
         didSet {
@@ -40,11 +46,6 @@ final class OrderViewController: BaseViewController {
             orderButton.setTitle("\(totalPrice.priceText) 결제하기", for: .normal)
         }
     }
-    
-    private var agreementData = OrderAgreement()
-    
-    let basicAddressRealm = try! Realm()
-    var basicAddressResult: Results<OrderBasicAddress>!
 
     //MARK: - UI Components
     
@@ -239,12 +240,9 @@ final class OrderViewController: BaseViewController {
     
     private func registerNewAddress(_ data: OrderAddress) {
         if addressView.newAddressView.registerBasicAddressCheckButton.isSelected == true && addressView.newAddressView.isHidden == false {
-            do {
-                try DefaultRealmService.shared.updateBasicAddress(data)
-            } catch {
-                guard let error = error as? OrderError else { return }
-                showToast(error.message, type: .bad)
-            }
+            
+            DefaultRealmService.shared.updateBasicAddress(data)
+            
         } else {
             print("로컬DB에 등록이 불가능합니다!")
         }
@@ -264,23 +262,10 @@ final class OrderViewController: BaseViewController {
         do {
             try ordererView.checkValidity()
             try addressView.checkValidity()
+            try paymentMethodView.checkValidity()
             try agreementView.checkValidity()
             
-            
-            switch addressView.addressType {
-            case .new:
-                registerNewAddress(newAddressData)
-                self.addressData = newAddressData
-            case .registed:
-                let addressData = DefaultRealmService.shared.getSelectedAddress()
-                guard let addressData else {
-                    throw OrderInvalidError.noAddressSelected
-                }
-                self.addressData = addressData.transform()
-                    
-                
-            }
-            
+            try updateAddressData()
             
             requestOrderAPI(ordererData,
                             addressData,
@@ -313,6 +298,20 @@ final class OrderViewController: BaseViewController {
         }
     }
     
+    private func updateAddressData() throws{
+        switch addressView.addressType {
+        case .new:
+            registerNewAddress(newAddressData)
+            self.addressData = newAddressData
+        case .registed:
+            let addressData = DefaultRealmService.shared.getSelectedAddress()
+            guard let addressData else {
+                throw OrderInvalidError.noAddressSelected
+            }
+            self.addressData = addressData.transform()
+        }
+    }
+    
     private func requestOrderAPI(_ orderer: OrderOrderer,
                                  _ address: OrderAddress,
                                  _ products: [OrderProduct],
@@ -328,14 +327,21 @@ final class OrderViewController: BaseViewController {
                 self.showToast("주문하기에 실패하였습니다. 다시 시도해주세요", type: .bad)
                 return
             }
+            
             DefaultRealmService.shared.deleteCartedProducts()
-            let totalPrice = products.reduce(0) { $0 + $1.productsPrice} + deliveryFee
-            let payVC = OrderAssistantViewController(totalPrice: totalPrice)
-            payVC.modalPresentationStyle = .fullScreen
-            self.present(payVC, animated: true) {
+            
+            switch self.paymentType {
+            case .withoutBankBook:
+                let totalPrice = products.reduce(0) { $0 + $1.productsPrice} + deliveryFee
+                let payVC = OrderAssistantViewController(totalPrice: totalPrice)
+                payVC.modalPresentationStyle = .fullScreen
+                self.present(payVC, animated: true) {
+                    self.navigationController?.popToRootViewController(animated: false)
+                }
+            default:
+                self.showToast("주문하기 완료", type: .good)
                 self.navigationController?.popToRootViewController(animated: false)
             }
-            
         }
     }
     
@@ -423,6 +429,10 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
 //MARK: - OrderPaymentMethodViewDelegate
 
 extension OrderViewController: OrderPaymentMethodViewDelegate {
+    func paymentMethodDidChange(_ paymentType: PaymentType) {
+        self.paymentType = paymentType
+    }
+    
     
 }
 

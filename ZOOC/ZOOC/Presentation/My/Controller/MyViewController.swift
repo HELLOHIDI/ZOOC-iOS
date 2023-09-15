@@ -346,16 +346,9 @@ extension MyViewController {
         
         activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
             let message = success ? "초대 코드 복사에 성공했습니다"  : "초대 코드 복사에 실패했습니다"
-            let title = success ? "복사 성공" : "복사 실패"
-            self.showAlertCopyCompleted(message: message, title: title)
+            let type: Toast.ToastType = success ? .good : .bad
+            self.showToast(message, type: type)
         }
-    }
-    
-    private func showAlertCopyCompleted(message: String, title: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "확인", style: .default)
-        alert.addAction(okAction)
-        present(alert, animated: false, completion: nil)
     }
 }
 

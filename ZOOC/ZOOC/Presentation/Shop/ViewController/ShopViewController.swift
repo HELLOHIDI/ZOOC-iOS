@@ -188,7 +188,7 @@ extension ShopViewController {
             let productVC = ShopProductViewController(productID: productsData[indexPath.row].id, petID: petID)
             navigationController?.pushViewController(productVC, animated: true)
         } else {
-            self.showToast("오픈 예정 제품이에요", type: .normal)
+            showToast("오픈 예정 제품이에요", type: .normal)
         }
   
     }

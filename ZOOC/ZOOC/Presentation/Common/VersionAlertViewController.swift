@@ -11,6 +11,8 @@ import UIKit
 import SnapKit
 import Then
 
+import FirebaseRemoteConfig
+
 protocol VersionAlertViewControllerDelegate: AnyObject {
     func updateButtonDidTap()
     func exitButtonDidTap()
@@ -25,6 +27,8 @@ final class VersionAlertViewController: UIViewController {
             updateUI()
         }
     }
+    
+    var appID: String = "1669547675"
     
     weak var delegate: VersionAlertViewControllerDelegate?
     
@@ -44,6 +48,7 @@ final class VersionAlertViewController: UIViewController {
         self.versionState = state
         
         super.init(nibName: nil, bundle: nil)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -58,8 +63,9 @@ final class VersionAlertViewController: UIViewController {
         style()
         hierarchy()
         layout()
-        
+        requestAppID()
         updateUI()
+        
     }
     
     //MARK: - Custom Method
@@ -173,9 +179,7 @@ final class VersionAlertViewController: UIViewController {
     //MARK: - Action Method
     
     @objc func updateButtonDidTap() {
-        
-        let appleID = "1669547675"
-        guard let url = URL(string: "itms-apps://itunes.apple.com/app/\(appleID)") else { return }
+        guard let url = URL(string: ExternalURL.zoocAppStore(appID)) else { return }
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
             delegate?.updateButtonDidTap()
@@ -189,3 +193,27 @@ final class VersionAlertViewController: UIViewController {
     }
 }
 
+extension VersionAlertViewController {
+    private func requestAppID() {
+        
+        let remoteConfig = RemoteConfig.remoteConfig()
+        let settings =  RemoteConfigSettings()
+        settings.minimumFetchInterval = 0
+        remoteConfig.configSettings = settings
+        
+        remoteConfig.fetch() { [weak self] status, error in
+            
+            if status == .success {
+                remoteConfig.activate() { [weak self] changed, error in
+                    DispatchQueue.main.async {
+                        guard let appID = remoteConfig["iosZoocAppId"].stringValue else { return }
+                        self?.appID = appID
+                    }
+                }
+            } else {
+                return
+            }
+        }
+    }
+
+}

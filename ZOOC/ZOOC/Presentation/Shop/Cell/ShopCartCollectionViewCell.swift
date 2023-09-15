@@ -29,7 +29,7 @@ final class ShopCartCollectionViewCell: UICollectionViewCell {
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.setBorder(borderWidth: 1, borderColor: .lightGray)
+        imageView.setBorder(borderWidth: 1, borderColor: .zoocLightGray)
         imageView.makeCornerRound(radius: 6)
         return imageView
     }()

@@ -23,6 +23,8 @@ final class OnboardingInviteFamilyViewController: BaseViewController {
     지금 바로 아래 초대 코드를 입력하고 가족과 추억을 공유하세요!
 
     초대코드 : \(invitedCode)
+    
+    \(ExternalURL.zoocAppStoreKR())
     """
     
     private let onboardingInviteFamilyView = OnboardingInviteFamilyView()

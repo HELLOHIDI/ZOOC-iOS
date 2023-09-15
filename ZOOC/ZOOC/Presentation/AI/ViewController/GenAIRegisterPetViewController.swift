@@ -122,10 +122,10 @@ extension GenAIRegisterPetViewController: GalleryAlertControllerDelegate {
         present(imagePickerController, animated: true)
     }
     
-//    func deleteButtonDidTap() {
-//        rootView.petProfileImageButton.setImage(Image.defaultProfile, for: .normal)
-//        //        viewModel.deleteButtonDidTap()
-//    }
+    func deleteButtonDidTap() {
+        rootView.petProfileImageButton.setImage(Image.defaultProfile, for: .normal)
+        //        viewModel.deleteButtonDidTap()
+    }
 }
 
 //MARK: - UIImagePickerControllerDelegate

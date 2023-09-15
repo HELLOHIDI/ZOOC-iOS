@@ -28,12 +28,8 @@ final class GenAIChoosePetViewModel: ViewModelType {
         var petId: BehaviorRelay<Int?> = BehaviorRelay<Int?>(value: nil)
         var petList: BehaviorRelay<[RecordRegisterModel]> = BehaviorRelay<[RecordRegisterModel]>(value: [])
         var canRegisterPet: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
+        var canPushNextView: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
     }
-    
-    private var petList = BehaviorRelay<[RecordRegisterModel]>(value: [])
-    private var petId = BehaviorRelay<Int?>(value: nil)
-    private var canRegisterPet = BehaviorRelay<Bool>(value: false)
-    
     
     func transform(from input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output()
@@ -45,6 +41,10 @@ final class GenAIChoosePetViewModel: ViewModelType {
         
         input.petCellTapEvent.subscribe(onNext: { [weak self] indexPath in
             self?.genAIChoosePetUseCase.selectPet(at: indexPath.item)
+        }).disposed(by: disposeBag)
+        
+        input.registerButtonDidTapEvent.subscribe(onNext: { [weak self] in
+            self?.genAIChoosePetUseCase.pushNextView()
         }).disposed(by: disposeBag)
         
         return output
@@ -62,6 +62,10 @@ final class GenAIChoosePetViewModel: ViewModelType {
         
         genAIChoosePetUseCase.canRegisterPet.subscribe(onNext: { canRegister in
             output.canRegisterPet.accept(canRegister)
+        }).disposed(by: disposeBag)
+        
+        genAIChoosePetUseCase.canPushNextView.subscribe(onNext: { canPush in
+            output.canPushNextView.accept(canPush)
         }).disposed(by: disposeBag)
     }
 }

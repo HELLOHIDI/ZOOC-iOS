@@ -23,6 +23,7 @@ final class GenAIChoosePetViewController: BaseViewController{
     //MARK: - UI Components
     
     private let rootView = GenAIChoosePetView()
+    private let layout = UICollectionViewFlowLayout()
     
     //MARK: - Life Cycle
     
@@ -42,9 +43,10 @@ final class GenAIChoosePetViewController: BaseViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.rootView.petCollectionView.collectionViewLayout = layout
         bind()
         target()
-        delegate()
+        //        delegate()
     }
     
     //MARK: - Custom Method
@@ -57,111 +59,55 @@ final class GenAIChoosePetViewController: BaseViewController{
         )
         
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
-        
-        output.petList.asDriver()
-            .drive(rootView.petCollectionView.rx.items) { collectionView, index, data in
-                let cell: UICollectionViewCell
-                if self.viewModel.getPetListData().value.count == 4 {
-                    cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenAIChooseFourPetCollectionViewCell.cellIdentifier, for: IndexPath(item: index, section: 0))
-                    if let fourViewCell = cell as? GenAIChooseFourPetCollectionViewCell {
-                        fourViewCell.dataBind(data: data, cellHeight: Int(collectionView.frame.height) / 2)
-                    }
-                } else {
-                    cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenAIChoosePetCollectionViewCell.cellIdentifier, for: IndexPath(item: index, section: 0))
-                    if let petCell = cell as? GenAIChoosePetCollectionViewCell {
-                        petCell.dataBind(data: data)
-                    }
+    
+        output.petList
+            .asDriver(onErrorJustReturn: [])
+            .drive(self.rootView.petCollectionView.rx.items) { collectionView, index, data in
+                self.layout.minimumLineSpacing = 0
+                self.layout.minimumInteritemSpacing = 0
+                self.layout.scrollDirection = .vertical
+                switch output.petList.value.count {
+                case 4:
+                    self.layout.itemSize = CGSize(
+                        width: collectionView.frame.width / 2,
+                        height: collectionView.frame.height / 2
+                    )
+                    
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenAIChooseFourPetCollectionViewCell.cellIdentifier, for: IndexPath(item: index, section: 0)) as? GenAIChooseFourPetCollectionViewCell else { return UICollectionViewCell() }
+                    cell.dataBind(data: data)
+                    return cell
+                default:
+                    self.layout.itemSize = CGSize(
+                        width: collectionView.frame.width,
+                        height: collectionView.frame.height / CGFloat(output.petList.value.count)
+                    )
+                    
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenAIChoosePetCollectionViewCell.cellIdentifier, for: IndexPath(item: index, section: 0)) as? GenAIChoosePetCollectionViewCell else { return UICollectionViewCell() }
+                    cell.dataBind(data: data)
+                    return cell
                 }
-                return cell
-            }.disposed(by: self.disposeBag)
+            }
+            .disposed(by: self.disposeBag)
         
-        output.petList.asObservable().subscribe(onNext: { [weak self] _ in
-            self?.rootView.petCollectionView.reloadData()
+        output.canRegisterPet.subscribe(onNext: { [weak self] canRegister in
+            self?.updateRegisterButtonUI(canRegister)
         }).disposed(by: self.disposeBag)
         
-        output.canRegisterPet.asObservable().subscribe(onNext: { [weak self] canRegister in
-            self?.updateRegisterButtonUI(canRegister)
+        output.canPushNextView.subscribe(onNext: { [weak self] _ in
+            guard let petId = output.petId.value else { return }
+            self?.pushToGenAIGuideVC(with: petId)
         }).disposed(by: self.disposeBag)
     }
     
     private func target() {
         rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        rootView.registerButton.addTarget(self, action: #selector(registerButtonDidTap), for: .touchUpInside)
     }
-    
-    private func delegate() {
-        rootView.petCollectionView.delegate = self
-        //        rootView.petCollectionView.dataSource = self
-    }
+
     
     //MARK: - Action Method
     
     @objc private func backButtonDidTap(){
         navigationController?.popViewController(animated: true)
-    }
-    
-    @objc private func registerButtonDidTap(){
-        pushToGenAIGuideVC()
-    }
-}
-
-//MARK: - UICollectionViewDataSource
-
-//extension GenAIChoosePetViewController: UICollectionViewDataSource {
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return viewModel.petList.value.count
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        if(viewModel.petList.value.count <= 3) {
-//            guard let cell = collectionView.dequeueReusableCell(
-//                withReuseIdentifier: GenAIChoosePetCollectionViewCell.cellIdentifier, for: indexPath)
-//                    as? GenAIChoosePetCollectionViewCell else { return UICollectionViewCell() }
-//
-//            cell.dataBind(data: viewModel.petList.value[indexPath.item])
-//            return cell
-//        } else {
-//            guard let cell = collectionView.dequeueReusableCell(
-//                withReuseIdentifier: GenAIChooseFourPetCollectionViewCell.cellIdentifier, for: indexPath)
-//                    as? GenAIChooseFourPetCollectionViewCell else { return UICollectionViewCell() }
-//            cell.dataBind(data: viewModel.petList.value[indexPath.item], cellHeight: Int(collectionView.frame.height) / 2)
-//            return cell
-//        }
-//    }
-//}
-
-//MARK: - UICollectionViewDelegate
-//
-//extension GenAIChoosePetViewController: UICollectionViewDelegate {
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        viewModel.petButtonDidTapEvent(at: indexPath.item)
-//    }
-//}
-
-//MARK: - UICollectionViewDelegateFlowLayout
-
-extension GenAIChoosePetViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch viewModel.getPetListData().value.count {
-        case 1:
-            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
-        case 2:
-            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height/2)
-        case 3:
-            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height/3)
-        case 4:
-            return CGSize(width: collectionView.frame.width / 2, height: collectionView.frame.height / 2)
-        default:
-            return CGSize(width: 0, height: 0)
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
     }
 }
 
@@ -172,12 +118,12 @@ extension GenAIChoosePetViewController: ZoocAlertViewControllerDelegate {
 }
 
 extension GenAIChoosePetViewController {
-    func pushToGenAIGuideVC() {
+    func pushToGenAIGuideVC(with petId: Int) {
         let genAIGuideVC = GenAIGuideViewController(
             viewModel: DefaultGenAIGuideViewModel()
         )
         genAIGuideVC.hidesBottomBarWhenPushed = true
-        genAIGuideVC.petId = viewModel.getPetId().value
+        genAIGuideVC.petId = petId
         navigationController?.pushViewController(genAIGuideVC, animated: true)
     }
     

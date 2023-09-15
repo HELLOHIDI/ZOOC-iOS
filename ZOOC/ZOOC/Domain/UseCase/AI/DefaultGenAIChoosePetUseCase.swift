@@ -22,6 +22,7 @@ final class DefaultGenAIChoosePetUseCase: GenAIChoosePetUseCase {
     var petList = BehaviorRelay<[RecordRegisterModel]>(value: [])
     var petId = BehaviorRelay<Int?>(value: nil)
     var canRegisterPet = BehaviorRelay<Bool>(value: false)
+    var canPushNextView = BehaviorRelay<Bool>(value: false)
     
     
     func selectPet(at index: Int) {
@@ -32,18 +33,24 @@ final class DefaultGenAIChoosePetUseCase: GenAIChoosePetUseCase {
         }
         petList.accept(updatedPetList)
         canRegisterPet.accept(true)
+        petId.accept(index)
     }
     
     func getTotalPet() {
         repository.getTotalPet() { [weak self] result in
             switch result {
             case .success(let data):
-                guard let result = data as? [RecordRegisterModel] else { return }
-                self?.petList.accept(result)
+                guard let result = data as? [RecordPetResult] else { return }
+                var updatedList: [RecordRegisterModel] = []
+                result.forEach { updatedList.append($0.transform()) }
+                self?.petList.accept(updatedList)
             default:
                 break
             }
         }
     }
+    
+    func pushNextView() {
+        canPushNextView.accept(canRegisterPet.value)
+    }
 }
-

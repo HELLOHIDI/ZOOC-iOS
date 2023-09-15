@@ -189,11 +189,11 @@ final class ShopCartViewController: BaseViewController {
     }
     
     private func hierarchy() {
-        view.addSubviews(backButton,
-                         titleLabel,
-                         collectionView,
+        view.addSubviews(collectionView,
                          bottomView,
-                         emptyCartView)
+                         emptyCartView,
+                         backButton,
+                         titleLabel)
         
         bottomView.addSubviews(lineView,
                                paymentInformationLabel,
@@ -208,18 +208,15 @@ final class ShopCartViewController: BaseViewController {
         emptyCartView.addSubviews(emptyCartImageView,
                                   emptyCartLabel,
                                   emptyCartButton)
-        
-        
-        
     }
     
     private func layout() {
         
         //root View
         backButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(53)
-            $0.leading.equalToSuperview().offset(16)
-            $0.height.width.equalTo(42)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(11)
+            $0.leading.equalToSuperview().inset(17)
+            $0.size.equalTo(42)
         }
         
         titleLabel.snp.makeConstraints {

@@ -88,7 +88,7 @@ final class ArchiveViewController : BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        dismissKeyboardWhenTappedAround()
+        dismissKeyboardWhenTappedAround(cancelsTouchesInView: true)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow),
                                                name: UIResponder.keyboardWillShowNotification ,

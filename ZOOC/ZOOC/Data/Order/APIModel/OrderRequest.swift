@@ -36,7 +36,7 @@ struct OrderRequest: Codable {
         self.products = products.map { $0.transform() }
         self.ordererName = orderer.name
         self.ordererPhone = orderer.phoneNumber
-        self.addressName = address.addressName
+        self.addressName = address.receiverName
         self.receiverName = address.receiverName
         self.receiverPhone = address.receiverPhoneNumber
         self.address = address.address

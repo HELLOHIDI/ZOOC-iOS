@@ -7,160 +7,125 @@
 
 import UIKit
 
+import UIKit
+
 final class OrderPaymentMethodCollectionViewCell: UICollectionViewCell {
-    
+
     //MARK: - Properties
     
-    
-    enum PaymentType {
-        case withoutBankBook
-        case kakaoPay
-        case toss
-        case mobile
-        
-        var image: UIImage? {
-            
-            switch self {
-            case .withoutBankBook:
-                return UIImage(systemName: "dollarsign.circle")
-            default:
-                return UIImage(systemName: "dollarsign.circle")
-            }
-        }
-        
-        var text: String {
-            switch self {
-            case .withoutBankBook:
-                return "무통장 입금"
-            default:
-                return "아직 개발 전"
-            }
-        }
-    }
-    
+
+
+
     private var type: PaymentType = .withoutBankBook  {
         didSet {
-            updateUI()
+            updateUI(type)
         }
     }
     
+    override var isSelected: Bool {
+        didSet {
+            updateUI(isSelected)
+        }
+    }
+
     //MARK: - UI Components
     
-    private let paymentTypeButton: UIButton = {
-        let button = UIButton()
-        button.titleLabel?.font = UIFont(name: "Pretendard-SemiBold", size: 14)!
-        button.titleLabel?.textAlignment = .left
-        button.setTitleColor(.zoocGray2, for: .normal)
-        button.setBorder(borderWidth: 1, borderColor: .zoocGray2)
-        button.makeCornerRound(radius: 8)
-        return button
+    private let checkButtonView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.setBorder(borderWidth: 1, borderColor: .zoocDarkGray1)
+        return view
     }()
     
-//    private let checkButton: UIButton = {
-//        let button = UIButton()
-//        button.setBackgroundColor(.white, for: .normal)
-//        button.setBackgroundColor(.zoocMainGreen, for: .selected)
-//        button.setBorder(borderWidth: 1, borderColor: .zoocLightGray)
-//        button.isSelected = true
-//        return button
-//    }()
-//
-//    private let smallCircleView: UIView = {
-//        let view = UIView()
-//        view.backgroundColor = .white
-//        return view
-//    }()
-//
-//    private let imageView: UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.contentMode = .scaleAspectFit
-//        imageView.tintColor = .zoocDarkGray1
-//        return imageView
-//    }()
-//
-//    private let titleLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .zoocBody3
-//        label.textColor = .zoocDarkGray1
-//        return label
-//    }()
-    
-    
+    private let miniCircleView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }()
+
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .zoocDarkGray1
+        return imageView
+    }()
+
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .zoocBody3
+        label.textColor = .zoocGray2
+        return label
+    }()
+
+
     //MARK: - Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         style()
         hierarchy()
         layout()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        
-//        checkButton.makeCornerRound(ratio: 2)
-//        smallCircleView.makeCornerRound(ratio: 2)
+        checkButtonView.makeCornerRound(ratio: 2)
+        miniCircleView.makeCornerRound(ratio: 2)
     }
-    
+
     //MARK: - Custom Method
     
     private func style() {
- 
+
     }
-    
+
     private func hierarchy() {
-        contentView.addSubview(paymentTypeButton)
-//        contentView.addSubviews(checkButton, imageView, titleLabel)
-//        checkButton.addSubview(smallCircleView)
+        contentView.addSubviews(checkButtonView, imageView, titleLabel)
+        checkButtonView.addSubview(miniCircleView)
     }
-    
+
     private func layout() {
-        paymentTypeButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(30)
-            $0.top.equalToSuperview()
-            $0.width.equalTo(122)
-            $0.height.equalTo(41)
+
+        checkButtonView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.size.equalTo(20)
         }
-//        checkButton.snp.makeConstraints {
-//            $0.leading.equalToSuperview().inset(20)
-//            $0.size.equalTo(25)
-//            $0.centerY.equalToSuperview()
-//        }
-//
-//        smallCircleView.snp.makeConstraints {
-//            $0.edges.equalToSuperview().inset(7)
-//        }
-//
-//        imageView.snp.makeConstraints {
-//            $0.leading.equalTo(checkButton.snp.trailing).offset(5)
-//            $0.centerY.equalToSuperview()
-//            $0.height.equalTo(25)
-//            $0.width.equalTo(40)
-//        }
-//
-//        titleLabel.snp.makeConstraints {
-//            $0.leading.equalTo(imageView.snp.trailing)
-//            $0.centerY.equalToSuperview()
-//        }
         
+        miniCircleView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(5)
+        }
+
+        titleLabel.snp.makeConstraints {
+            $0.leading.equalTo(checkButtonView.snp.trailing).offset(10)
+            $0.centerY.equalToSuperview()
+        }
+
     }
-    
+
     func dataBind(_ type: PaymentType) {
         self.type = type
     }
-    
-    private func updateUI() {
-//        imageView.image = type.image
-//        titleLabel.text = type.text
-        paymentTypeButton.setTitle(type.text, for: .normal)
-        
+
+    private func updateUI(_ type: PaymentType) {
+        imageView.image = type.image
+        titleLabel.text = type.text
     }
     
-    
-}
+    private func updateUI(_ isSelected: Bool) {
+        let borderColor: UIColor = isSelected ? .clear : .zoocDarkGreen
+        
+        checkButtonView.setBorder(borderWidth: 1, borderColor: borderColor)
+        checkButtonView.backgroundColor = isSelected ? .zoocMainGreen : .clear
+        miniCircleView.backgroundColor = isSelected ? .zoocWhite3 : .clear
+        
+        
+    }
 
+
+}

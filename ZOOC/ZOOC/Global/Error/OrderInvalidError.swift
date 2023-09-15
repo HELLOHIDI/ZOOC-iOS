@@ -12,17 +12,20 @@ enum OrderInvalidError: Error {
     case addressInvlid
     case paymentMethodInvalid
     case agreementInvalid
+    case noAddressSelected
     
     var message: String {
         switch self {
         case .ordererInvalid:
-            return "구매자 정보를 입력해주세요."
+            return "구매자 정보를 모두 입력해주세요"
         case .addressInvlid:
-            return "배송지 정보를 입력해주세요."
+            return "필수 배송 정보를 모두 입력해주세요"
         case .paymentMethodInvalid:
-            return "결제수단을 확인해주세요."
+            return "결제수단 정보를 확인해주세요"
         case .agreementInvalid:
-            return "결제 진행 필수사항을 동의해주세요."
+            return "필수 동의 항목을 확인해주세요"
+        case .noAddressSelected:
+            return "선택된 주소지가 없습니다."
         }
     }
 }

@@ -9,6 +9,8 @@ import UIKit
 
 import SnapKit
 
+
+
 final class Toast: UIView {
     
     enum ToastType {
@@ -108,7 +110,7 @@ final class Toast: UIView {
         UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: {
             self.alpha = 1.0
         }, completion: { _ in
-            UIView.animate(withDuration: 0.4, delay: 1.0, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 1, delay: 1.0, options: .curveEaseOut, animations: {
                 self.alpha = 0.0
             }, completion: {_ in
                 self.removeFromSuperview()

@@ -12,10 +12,12 @@ extension UIViewController{
     
     func showToast(_ message: String,
                    type: Toast.ToastType,
+                   view: UIView? = UIApplication.shared.rootViewController?.view,
                    bottomInset: CGFloat = 40) {
+        guard let view else { return }
         Toast().show(message: message,
                      type: type,
-                     view: self.view,
+                     view: view,
                      bottomInset: bottomInset)
     }
     

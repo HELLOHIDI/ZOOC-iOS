@@ -12,7 +12,7 @@ extension UIViewController{
     
     func showToast(_ message: String,
                    type: Toast.ToastType,
-                   view: UIView? = UIApplication.shared.rootViewController?.view,
+                   view: UIView? = UIApplication.shared.firstWindow,
                    bottomInset: CGFloat = 40) {
         guard let view else { return }
         Toast().show(message: message,

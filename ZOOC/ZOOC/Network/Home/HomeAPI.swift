@@ -46,7 +46,7 @@ extension HomeAPI{
     }
             
     func getNotice(completion: @escaping (NetworkResult<Any>) -> Void) {
-        homeProvider.request(.getNotice) { (result) in
+        homeProvider.request(.getNotice(familyID: UserDefaultsManager.familyID)) { (result) in
             self.disposeNetwork(result, dataModel: [HomeNoticeResult].self, completion: completion)
         }
     }

@@ -81,7 +81,7 @@ final class HomeNoticeView: UIView {
         }
         
         noticeTableView.snp.makeConstraints {
-            $0.top.equalTo(self.alarmTitleLabel.snp.bottom).offset(38)
+            $0.top.equalTo(self.alarmTitleLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
         }

@@ -232,8 +232,6 @@ final class OrderViewController: BaseViewController {
     private func updateUI() {
         
         ordererView.updateUI(ordererData)
-        addressView.updateUI(newAddressData: newAddressData,
-                             basicAddressDatas: basicAddressResult)
         productView.updateUI(productsData)
         priceView.updateUI(totalPrice, deliveryFee: deliveryFee)
     }
@@ -398,9 +396,16 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
 
     func copyButtonDidTap() {
         view.endEditing(true)
+        
+        guard !ordererData.name.isEmpty ||
+                !ordererData.phoneNumber.isEmpty else {
+            showToast("먼저 구매자 정보를 입력해주세요", type: .bad, bottomInset: 86)
+            scrollView.setContentOffset(CGPoint(x: 0, y: ordererView.frame.minY), animated: true)
+            return
+        }
+        
         newAddressData.receiverName = ordererData.name
         newAddressData.receiverPhoneNumber = ordererData.phoneNumber
-        
         addressView.updateUI(newAddressData: newAddressData)
     }
     
@@ -473,7 +478,8 @@ extension OrderViewController: KakaoPostCodeViewControllerDelegate {
     func fetchPostCode(roadAddress: String, zoneCode: String) {
         newAddressData.address = roadAddress
         newAddressData.postCode = zoneCode
-        addressView.updateUI(newAddressData: newAddressData, isPostData: true)
+        //addressView.updateUI(newAddressData: newAddressData, isPostData: true)
+        addressView.updateUI(newAddressData: newAddressData)
     }
 }
 

@@ -955,6 +955,7 @@
 		87A3D8842A975CEA002C36DB /* View */ = {
 			isa = PBXGroup;
 			children = (
+				87FD18602AB7A06100A1431E /* AddressView */,
 				87F2880C2AA0689600A53218 /* AssistantCellMainView */,
 				87A3D8872A975D48002C36DB /* OrderOrdererView.swift */,
 				87A3D8892A975D4F002C36DB /* OrderAddressView.swift */,
@@ -1546,8 +1547,6 @@
 				87F288002A9FA67E00A53218 /* OrderAssistantCopyView.swift */,
 				87F288022A9FA68A00A53218 /* OrderAssistantDepositView.swift */,
 				87F288042A9FA69200A53218 /* OrderAssistantCompleteView.swift */,
-				D2D440132AA5C08200329F35 /* OrderNewAddressView.swift */,
-				D2D440152AA5C88D00329F35 /* OrderBasicAddressView.swift */,
 			);
 			path = AssistantCellMainView;
 			sourceTree = "<group>";
@@ -1559,6 +1558,15 @@
 				87FD185E2AB36A1800A1431E /* PaymentType.swift */,
 			);
 			path = Enum;
+			sourceTree = "<group>";
+		};
+		87FD18602AB7A06100A1431E /* AddressView */ = {
+			isa = PBXGroup;
+			children = (
+				D2D440132AA5C08200329F35 /* OrderNewAddressView.swift */,
+				D2D440152AA5C88D00329F35 /* OrderBasicAddressView.swift */,
+			);
+			path = AddressView;
 			sourceTree = "<group>";
 		};
 		D20C008B2A96DDD900666963 /* GenAI */ = {

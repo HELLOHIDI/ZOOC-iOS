@@ -57,15 +57,21 @@ extension UIFont {
     
     
     enum Pretendard {
+        case regular
         case medium
         case semiBold
+        case bold
         
         var name: String {
             switch self {
+            case .regular:
+                return "Pretendard-Regular"
             case .medium:
                 return "Pretendard-Medium"
             case .semiBold:
                 return "Pretendard-SemiBold"
+            case .bold:
+                return "Pretendard-Bold"
             }
         }
     }

@@ -43,13 +43,34 @@ final class OrderAssistantDepositView: UIView {
         return collectionView
     }()
     
+    private let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "선택하시면 해당 앱 서비스로 이동할 수 있어요"
+        label.font = .zoocFont(font: .regular, size: 14)
+        label.textColor = .zoocGray2
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var chooseOtherBankButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("다른 앱에서 결제할래요", for: .normal)
+        button.titleLabel?.asUnderLine(button.titleLabel?.text)
+        button.setTitleColor(.zoocGray2, for: .normal)
+        button.titleLabel?.font = .zoocFont(font: .regular, size: 14)
+        button.addTarget(self,
+                         action: #selector(chooseOtherBankButtonDidTap),
+                         for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var completeButton: ZoocGradientButton = {
         let button = ZoocGradientButton(.medium)
-        button.setTitle("결제 완료했습니다", for: .normal)
+        button.setTitle("입금 완료했어요", for: .normal)
         button.addTarget(self,
                          action: #selector(completeButtonDidTap),
                          for: .touchUpInside)
-        button.alpha = 0
+        button.isEnabled = false
         return button
     }()
     
@@ -79,6 +100,8 @@ final class OrderAssistantDepositView: UIView {
     private func hierarchy() {
         addSubviews(titleLabel,
                     collectionView,
+                    descriptionLabel,
+                    chooseOtherBankButton,
                     completeButton)
     }
     
@@ -91,11 +114,22 @@ final class OrderAssistantDepositView: UIView {
         collectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.horizontalEdges.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(20)
+            $0.height.greaterThanOrEqualTo(320)
+        }
+        
+        descriptionLabel.snp.makeConstraints {
+            $0.top.equalTo(collectionView.snp.bottom)
+            $0.centerX.equalToSuperview()
+        }
+        
+        chooseOtherBankButton.snp.makeConstraints {
+            $0.bottom.equalTo(completeButton.snp.top).offset(-12)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(30)
         }
         
         completeButton.snp.makeConstraints {
-            $0.height.equalTo(47)
+            $0.height.equalTo(52)
             $0.horizontalEdges.equalToSuperview().inset(16)
             $0.bottom.equalToSuperview().inset(16)
         }
@@ -126,6 +160,14 @@ final class OrderAssistantDepositView: UIView {
     }
     
     //MARK: - Action Method
+    
+    @objc private func chooseOtherBankButtonDidTap() {
+        showToast("타 금융앱에서 결제한 후\n입금 완료 버튼을 눌러주세요", type: .good)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.completeButton.isEnabled = true
+        }
+
+    }
 
     
     @objc private func completeButtonDidTap() {
@@ -162,7 +204,7 @@ extension OrderAssistantDepositView: UICollectionViewDelegateFlowLayout {
         delegate?.bankButtonDidTap(Bank.allCases[indexPath.row])
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.showCompleteButton()
+            self.completeButton.isEnabled = true
         }
     }
     

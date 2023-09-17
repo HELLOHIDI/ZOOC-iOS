@@ -31,17 +31,17 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
     
     private let stepNumberLabel: UILabel = {
         let label = UILabel()
-        label.font = .zoocBody3
-        label.textColor = .zoocGray3
-        label.backgroundColor = .zoocWhite3
+        label.font = .zoocSubhead1
+        label.textColor = .zoocWhite1
+        label.backgroundColor = .zoocLightGray
         label.textAlignment = .center
         return label
     }()
     
     private let stepLabel: UILabel = {
         let label = UILabel()
-        label.font = .zoocBody3
-        label.textColor = .zoocDarkGray1
+        label.font = .zoocFont(font: .medium, size: 16)
+        label.textColor = .zoocGray3
         return label
     }()
     

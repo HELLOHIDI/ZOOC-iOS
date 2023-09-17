@@ -27,12 +27,19 @@ final class OrderAssistantCompleteView: UIView {
         label.font = .zoocBody3
         label.textColor = .zoocDarkGray1
         label.numberOfLines = 0
+        label.textAlignment = .center
         return label
+    }()
+    
+    private let imageView: UIImageView = {
+        let imageView = UIImageView(image: Image.checkCircleBig)
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
     
     private lazy var completeButton: ZoocGradientButton = {
         let button = ZoocGradientButton(.medium)
-        button.setTitle("네, 알겠습니다", for: .normal)
+        button.setTitle("네, 확인했어요", for: .normal)
         button.addTarget(self,
                          action: #selector(completeButtonDidTap),
                          for: .touchUpInside)
@@ -62,20 +69,26 @@ final class OrderAssistantCompleteView: UIView {
     
     private func hierarchy() {
         addSubviews(titleLabel,
+                    imageView,
                     completeButton)
     }
     
     private func layout() {
-        titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().inset(20)
+        imageView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(20)
+            $0.size.equalTo(100)
+            $0.centerX.equalToSuperview()
         }
-            
+        
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(imageView.snp.bottom).offset(22)
+            $0.centerX.equalToSuperview()
+        }
+        
         completeButton.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(25)
             $0.horizontalEdges.equalToSuperview().inset(16)
-            $0.height.equalTo(47)
-            
+            $0.height.equalTo(52)
+            $0.bottom.equalToSuperview().inset(18)
         }
     }
 

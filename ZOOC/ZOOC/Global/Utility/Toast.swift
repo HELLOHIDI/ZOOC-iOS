@@ -21,7 +21,7 @@ final class Toast: UIView {
         var backgroundColor: UIColor {
             switch self {
             case .good:
-                return .zoocMainGreen.withAlphaComponent(0.8)
+                return .zoocMainGreen.withAlphaComponent(0.85)
             case .normal:
                 return .zoocDarkGray1.withAlphaComponent(0.8)
             case .bad:
@@ -110,7 +110,7 @@ final class Toast: UIView {
         UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: {
             self.alpha = 1.0
         }, completion: { _ in
-            UIView.animate(withDuration: 1, delay: 1.0, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 1, delay: 1.8, options: .curveEaseOut, animations: {
                 self.alpha = 0.0
             }, completion: {_ in
                 self.removeFromSuperview()

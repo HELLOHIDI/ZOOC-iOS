@@ -291,8 +291,7 @@ final class OrderViewController: BaseViewController {
             scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: true)
         } catch {
             showToast("알 수 없는 오류가 발생했습니다.",
-                      type: .bad,
-                      bottomInset: 86)
+                      type: .bad)
         }
     }
     
@@ -322,7 +321,7 @@ final class OrderViewController: BaseViewController {
         
         ShopAPI.shared.postOrder(request: request) { result in
             guard self.validateResult(result) != nil else {
-                self.showToast("주문하기에 실패하였습니다. 다시 시도해주세요", type: .bad, bottomInset: 86)
+                self.showToast("주문하기에 실패하였습니다. 다시 시도해주세요", type: .bad)
                 return
             }
             
@@ -337,7 +336,7 @@ final class OrderViewController: BaseViewController {
                     self.navigationController?.popToRootViewController(animated: false)
                 }
             default:
-                self.showToast("주문하기 완료", type: .good, bottomInset: 86)
+                self.showToast("주문하기 완료", type: .good)
                 self.navigationController?.popToRootViewController(animated: false)
             }
         }
@@ -376,7 +375,7 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
     
     func basicAddressButtonDidTap(_ height: CGFloat) {
         guard !basicAddressResult.isEmpty else {
-            showToast("먼저 신규입력으로 배송지를 등록해주세요", type: .bad, bottomInset: 86)
+            showToast("먼저 신규입력으로 배송지를 등록해주세요", type: .bad)
             return
         }
         
@@ -399,7 +398,7 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
         
         guard !ordererData.name.isEmpty ||
                 !ordererData.phoneNumber.isEmpty else {
-            showToast("먼저 구매자 정보를 입력해주세요", type: .bad, bottomInset: 86)
+            showToast("먼저 구매자 정보를 입력해주세요", type: .bad)
             scrollView.setContentOffset(CGPoint(x: 0, y: ordererView.frame.minY), animated: true)
             return
         }

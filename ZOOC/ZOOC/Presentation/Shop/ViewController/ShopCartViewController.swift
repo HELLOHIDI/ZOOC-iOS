@@ -404,8 +404,7 @@ extension ShopCartViewController: ShopCartCollectionViewCellDelegate {
         } catch  {
             guard let error =  error as? AmountError else { return }
             showToast(error.message,
-                      type: .bad,
-                      bottomInset: 86)
+                      type: .bad)
         }
         
         cartedProducts = DefaultRealmService.shared.getCartedProducts()

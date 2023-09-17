@@ -340,7 +340,7 @@ final class ArchiveViewController : BaseViewController {
         }
         
         guard let id else {
-            showToast(message, type: .normal, bottomInset: 86)
+            showToast(message, type: .normal)
             return
         }
         

@@ -379,7 +379,6 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
     func basicAddressButtonDidTap(_ height: CGFloat) {
         guard !basicAddressResult.isEmpty else {
             showToast("먼저 신규입력으로 배송지를 등록해주세요", type: .bad, bottomInset: 86)
-            addressView.updateUI(newAddressData: addressData)
             return
         }
         

@@ -28,8 +28,6 @@ class BaseViewController : UIViewController{
         
     }
     
-    
-    
     var viewTranslation = CGPoint(x: 0, y: 0)
     var viewVelocity = CGPoint(x: 0, y: 0)
     
@@ -41,34 +39,14 @@ class BaseViewController : UIViewController{
         super.viewDidLoad()
         
         setUI()
-        setLayout()
-        
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-        self.navigationController?.isNavigationBarHidden = true
-        navigationController?.delegate = self
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
     
     //MARK: - Custom Method
     
     private func setUI(){
         view.backgroundColor = .zoocBackgroundGreen
-    }
-    
-    private func setLayout(){
-        
-        
     }
     
     func addPanDismissGesture() {
@@ -191,20 +169,20 @@ class BaseViewController : UIViewController{
     
 }
 
-extension BaseViewController: UINavigationControllerDelegate, UIGestureRecognizerDelegate {
-    
-    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-        print("Child ViewControllers", navigationController.viewControllers.count)
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = navigationController.viewControllers.count > 1
-        
-    }
-
-        
-    
-    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        guard let navigationController else { return false }
-        return navigationController.viewControllers.count > 1
-    }
-
-    
-}
+//extension BaseViewController: UINavigationControllerDelegate, UIGestureRecognizerDelegate {
+//
+//    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+//        print("Child ViewControllers", navigationController.viewControllers.count)
+//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = navigationController.viewControllers.count > 1
+//
+//    }
+//
+//
+//
+//    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+//        guard let navigationController else { return false }
+//        return navigationController.viewControllers.count > 1
+//    }
+//
+//
+//}

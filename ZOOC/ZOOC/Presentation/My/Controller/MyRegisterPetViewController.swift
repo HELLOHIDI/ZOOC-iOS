@@ -265,7 +265,7 @@ extension MyRegisterPetViewController: MyDeleteButtonTappedDelegate {
 
 //MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 
-extension MyRegisterPetViewController: UIImagePickerControllerDelegate {
+extension MyRegisterPetViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         self.myPetRegisterViewModel.petList[self.myPetRegisterViewModel.index].image = image

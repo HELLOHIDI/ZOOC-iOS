@@ -39,8 +39,13 @@ class BaseViewController : UIViewController{
         super.viewDidLoad()
         
         setUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     //MARK: - Custom Method
@@ -169,20 +174,9 @@ class BaseViewController : UIViewController{
     
 }
 
-//extension BaseViewController: UINavigationControllerDelegate, UIGestureRecognizerDelegate {
-//
-//    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-//        print("Child ViewControllers", navigationController.viewControllers.count)
-//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = navigationController.viewControllers.count > 1
-//
-//    }
-//
-//
-//
-//    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-//        guard let navigationController else { return false }
-//        return navigationController.viewControllers.count > 1
-//    }
-//
-//
-//}
+extension BaseViewController: UIGestureRecognizerDelegate {
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+            guard let navigationController else { return false }
+            return navigationController.viewControllers.count > 1
+        }
+}

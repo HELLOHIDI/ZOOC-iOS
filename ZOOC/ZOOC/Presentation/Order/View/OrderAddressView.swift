@@ -213,6 +213,8 @@ final class OrderAddressView: UIView {
         if addressType == .registed {
             basicAddressView.layoutIfNeeded()
             basicAddressButtonDidTap()
+        } else {
+            newAddressButtonDidTap()
         }
         
     }

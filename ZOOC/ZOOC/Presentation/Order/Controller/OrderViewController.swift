@@ -324,7 +324,7 @@ final class OrderViewController: BaseViewController {
         
         ShopAPI.shared.postOrder(request: request) { result in
             guard self.validateResult(result) != nil else {
-                self.showToast("주문하기에 실패하였습니다. 다시 시도해주세요", type: .bad)
+                self.showToast("주문하기에 실패하였습니다. 다시 시도해주세요", type: .bad, bottomInset: 86)
                 return
             }
             
@@ -339,7 +339,7 @@ final class OrderViewController: BaseViewController {
                     self.navigationController?.popToRootViewController(animated: false)
                 }
             default:
-                self.showToast("주문하기 완료", type: .good)
+                self.showToast("주문하기 완료", type: .good, bottomInset: 86)
                 self.navigationController?.popToRootViewController(animated: false)
             }
         }
@@ -378,7 +378,7 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
     
     func basicAddressButtonDidTap(_ height: CGFloat) {
         guard !basicAddressResult.isEmpty else {
-            showToast("먼저 신규입력으로 배송지를 등록해주세요", type: .bad)
+            showToast("먼저 신규입력으로 배송지를 등록해주세요", type: .bad, bottomInset: 86)
             addressView.updateUI(newAddressData: addressData)
             return
         }

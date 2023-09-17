@@ -11,6 +11,7 @@ protocol GenAIChoosePetModelInput {
     func viewWillAppearEvent()
     func petButtonDidTapEvent(at index: Int)
     func selectButtonDidTap()
+    func deselectAllPet()
 }
 
 protocol GenAIChoosePetModelOutput {
@@ -56,7 +57,15 @@ final class DefaultGenAIChoosePetModel: GenAIChoosePetModel {
         petId.value = petList.value[index].petID
     }
     
+    
+    func deselectAllPet() {
+        for i in 0..<petList.value.count {
+            petList.value[i].isSelected = false
+        }
+    }
+    
     func selectButtonDidTap() {
         pushToShopVC.value = petId.value
     }
+    
 }

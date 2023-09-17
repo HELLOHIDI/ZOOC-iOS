@@ -50,6 +50,12 @@ final class ShopChoosePetViewController: BaseViewController {
         delegate()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        viewModel.deselectAllPet()
+    }
+    
     //MARK: - Custom Method
     
     private func bind() {

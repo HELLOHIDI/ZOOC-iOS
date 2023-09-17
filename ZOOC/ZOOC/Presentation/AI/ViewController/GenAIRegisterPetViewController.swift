@@ -118,7 +118,7 @@ extension GenAIRegisterPetViewController: GalleryAlertControllerDelegate {
 
 //MARK: - UIImagePickerControllerDelegate
 
-extension GenAIRegisterPetViewController: UIImagePickerControllerDelegate {
+extension GenAIRegisterPetViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         

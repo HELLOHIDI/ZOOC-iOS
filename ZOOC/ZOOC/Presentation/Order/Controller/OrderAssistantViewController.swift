@@ -198,6 +198,8 @@ extension OrderAssistantViewController: OrderAssistantCollectionViewCellDelegate
     //MARK: - Complete
     
     func completeButtonDidTap() {
+        showToast("주문이 성공적으로 접수되었어요",
+                  type: .good)
         dismiss(animated: true)
     }
     

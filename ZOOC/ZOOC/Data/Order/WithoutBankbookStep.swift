@@ -29,9 +29,9 @@ enum WithoutBankBookStep: Int, CaseIterable {
         case .copy:
             return 200
         case .deposit:
-            return 540
+            return 620
         case .complete:
-            return 200
+            return 360
         }
     }
 }

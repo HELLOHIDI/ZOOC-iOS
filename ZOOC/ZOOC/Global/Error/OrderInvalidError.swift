@@ -21,7 +21,7 @@ enum OrderInvalidError: Error {
         case .addressInvlid:
             return "필수 배송 정보를 모두 입력해주세요"
         case .paymentMethodInvalid:
-            return "결제수단 정보를 확인해주세요"
+            return "결제수단을 선택해주세요"
         case .agreementInvalid:
             return "필수 동의 항목을 확인해주세요"
         case .noAddressSelected:

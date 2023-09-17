@@ -14,6 +14,7 @@ import Then
     @objc optional func zoocTextFieldTextDidChange(_ textField: ZoocTextField, text: String)
     @objc optional func zoocTextFieldDidReturn(_ textField: ZoocTextField)
     @objc optional func zoocTextFieldDidEndEditing(_ textField: ZoocTextField)
+    @objc optional func zoocTextField(_ textField: ZoocTextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
 }
 
 extension ZoocTextFieldDelegate {
@@ -100,6 +101,12 @@ extension ZoocTextField: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         guard let text = textField.text else { return }
         zoocDelegate?.zoocTextFieldTextDidChange?(self, text: text)
+    }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let bool = zoocDelegate?.zoocTextField?(self, shouldChangeCharactersIn: range, replacementString: string)
+        
+        return bool ?? true
+        
     }
 }
 

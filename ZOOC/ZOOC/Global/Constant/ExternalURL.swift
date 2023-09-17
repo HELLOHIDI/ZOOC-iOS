@@ -21,4 +21,14 @@ struct ExternalURL {
     static let reportURL = "https://www.police.go.kr/www/security/report/report01.jsp"
     
     static let postCodeURL = "https://teamzooc.github.io/Kakao-Postcode/"
+    
+    
+    static func zoocAppStore(_ appID: String = "1669547675") -> String {
+        return "itms-apps://itunes.apple.com/app/\(appID)"
+    }
+    
+    static func zoocAppStoreKR(_ appID: String = "1669547675") -> String {
+        return "https://apps.apple.com/kr/app/zooc/id\(appID)"
+    }
+
 }

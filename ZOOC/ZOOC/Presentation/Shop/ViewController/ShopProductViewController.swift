@@ -303,8 +303,7 @@ extension ShopProductViewController: ProductBottomSheetDelegate {
         }
        
         showToast("장바구니에 상품이 담겼습니다.",
-                  type: .good,
-                  bottomInset: 86)
+                  type: .good)
     }
     
     func orderButtonDidTap(_ selectedProductOptions: [SelectedProductOption]) {

@@ -43,12 +43,9 @@ final class OrderAssistantCopyView: UIView {
         return label
     }()
     
-    private lazy var copyButton: UIButton = {
-        let button = UIButton()
+    private lazy var copyButton: ZoocGradientButton = {
+        let button = ZoocGradientButton(.medium)
         button.setTitle("복사하기", for: .normal)
-        button.setTitleColor(.zoocDarkGray1, for: .normal)
-        button.titleLabel?.font = .zoocSubhead1
-        button.backgroundColor = .zoocWhite2
         button.addTarget(self,
                          action: #selector(copyButtonDidTap),
                          for: .touchUpInside)
@@ -92,7 +89,7 @@ final class OrderAssistantCopyView: UIView {
     
     private func layout() {
         imageView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(20)
+            $0.top.equalToSuperview().inset(8)
             $0.leading.equalToSuperview().inset(24)
             $0.size.equalTo(40)
         }
@@ -103,7 +100,7 @@ final class OrderAssistantCopyView: UIView {
         }
         
         copyButton.snp.makeConstraints {
-            $0.height.equalTo(40)
+            $0.height.equalTo(52)
             $0.horizontalEdges.equalToSuperview().inset(16)
             $0.bottom.equalToSuperview().inset(16)
         }

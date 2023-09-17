@@ -208,8 +208,7 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
     private func cartButtonDidTap() {
         guard !selectedOptionsData.isEmpty else {
             showToast("상품 옵션을 선택해주세요",
-                      type: .bad,
-                      bottomInset: 86)
+                      type: .bad)
             return
         }
         dismiss(animated: true)
@@ -220,8 +219,7 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
     private func orderButtonDidTap() {
         guard !selectedOptionsData.isEmpty else {
             showToast("상품 옵션을 선택해주세요",
-                      type: .bad,
-                      bottomInset: 86)
+                      type: .bad)
             return
         }
         dismiss(animated: false)

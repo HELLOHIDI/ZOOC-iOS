@@ -193,28 +193,21 @@ final class OrderAddressView: UIView {
     
     func dataBind(_ basicAddressData: Results<OrderBasicAddress>) {
         self.basicAddressDatas = basicAddressData
-    }
-    
-    func updateUI(newAddressData: OrderAddress,
-                  basicAddressDatas: Results<OrderBasicAddress>? = nil,
-                  isPostData: Bool = false
-        ) {
         basicAddressView.dataBind(basicAddressDatas)
         
-        
-        newAddressView.updateUI(newAddressData,isPostData: isPostData)
-        
-        guard let basicAddressDatas else { return }
-        
-        self.basicAddressDatas = basicAddressDatas
-        
-        addressType = basicAddressDatas.isEmpty ? .new : .registed
+        addressType = basicAddressData.isEmpty ? .new : .registed
         
         if addressType == .registed {
             basicAddressView.layoutIfNeeded()
             basicAddressButtonDidTap()
+        } else {
+            newAddressView.layoutIfNeeded()
+            newAddressButtonDidTap()
         }
-        
+    }
+    
+    func updateUI(newAddressData: OrderAddress) {
+        newAddressView.updateUI(newAddressData)
     }
     
     

@@ -232,8 +232,6 @@ final class OrderViewController: BaseViewController {
     private func updateUI() {
         
         ordererView.updateUI(ordererData)
-        addressView.updateUI(newAddressData: newAddressData,
-                             basicAddressDatas: basicAddressResult)
         productView.updateUI(productsData)
         priceView.updateUI(totalPrice, deliveryFee: deliveryFee)
     }
@@ -293,8 +291,7 @@ final class OrderViewController: BaseViewController {
             scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: true)
         } catch {
             showToast("알 수 없는 오류가 발생했습니다.",
-                      type: .bad,
-                      bottomInset: 86)
+                      type: .bad)
         }
     }
     
@@ -379,7 +376,6 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
     func basicAddressButtonDidTap(_ height: CGFloat) {
         guard !basicAddressResult.isEmpty else {
             showToast("먼저 신규입력으로 배송지를 등록해주세요", type: .bad)
-            addressView.updateUI(newAddressData: addressData)
             return
         }
         
@@ -399,9 +395,16 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
 
     func copyButtonDidTap() {
         view.endEditing(true)
+        
+        guard !ordererData.name.isEmpty ||
+                !ordererData.phoneNumber.isEmpty else {
+            showToast("먼저 구매자 정보를 입력해주세요", type: .bad)
+            scrollView.setContentOffset(CGPoint(x: 0, y: ordererView.frame.minY), animated: true)
+            return
+        }
+        
         newAddressData.receiverName = ordererData.name
         newAddressData.receiverPhoneNumber = ordererData.phoneNumber
-        
         addressView.updateUI(newAddressData: newAddressData)
     }
     
@@ -474,7 +477,8 @@ extension OrderViewController: KakaoPostCodeViewControllerDelegate {
     func fetchPostCode(roadAddress: String, zoneCode: String) {
         newAddressData.address = roadAddress
         newAddressData.postCode = zoneCode
-        addressView.updateUI(newAddressData: newAddressData, isPostData: true)
+        //addressView.updateUI(newAddressData: newAddressData, isPostData: true)
+        addressView.updateUI(newAddressData: newAddressData)
     }
 }
 

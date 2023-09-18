@@ -24,8 +24,7 @@ final class GenAIRegisterPetViewModel: ViewModelType {
         var nameTextFieldDidChangeEvent: Observable<String?>
         var registerPetButtonTapEvent: Observable<Void>
         var deleteButtonTapEvent: Observable<Void>
-        var registerPetProfileImageButtonTapEvent: Observable<UIImage>
-//        var isTextCountExceeded: Observable<MyEditTextField.TextFieldType>
+        var registerPetProfileImageButtonTapEvent: Observable<UIImage?>
     }
     
     struct Output {
@@ -35,6 +34,7 @@ final class GenAIRegisterPetViewModel: ViewModelType {
         var canRegisterPet = BehaviorRelay<Bool>(value: false)
         var isRegistedPet = BehaviorRelay<Bool>(value: false)
         var textFieldState = BehaviorRelay<BaseTextFieldState>(value: .isEmpty)
+        var isTextCountExceeded = BehaviorRelay<Bool>(value: false)
     }
     
     func transform(from input: Input, disposeBag: RxSwift.DisposeBag) -> Output {
@@ -50,16 +50,12 @@ final class GenAIRegisterPetViewModel: ViewModelType {
         }).disposed(by: disposeBag)
         
         input.registerPetProfileImageButtonTapEvent.subscribe(onNext: { [weak self] image in
-            self?.genAIRegisterPetUseCase.registerProfileImage(image)
+            self?.genAIRegisterPetUseCase.registerProfileImage(image ?? Image.defaultProfile)
         }).disposed(by: disposeBag)
         
         input.deleteButtonTapEvent.subscribe(onNext: { [weak self] _ in
             self?.genAIRegisterPetUseCase.deleteProfileImage()
         }).disposed(by: disposeBag)
-        
-//        input.isTextCountExceeded.drive(onNext: { [weak self] textFieldType in
-//            self?.genAIRegisterPetUseCase.isTextCountExceeded(for: textFieldType)
-//        }).disposed(by: disposeBag)
         
         return output
     }
@@ -87,6 +83,10 @@ final class GenAIRegisterPetViewModel: ViewModelType {
         
         genAIRegisterPetUseCase.textFieldState.subscribe(onNext: { textFieldState in
             output.textFieldState.accept(textFieldState)
+        }).disposed(by: disposeBag)
+        
+        genAIRegisterPetUseCase.isTextCountExceeded.subscribe(onNext: { isTextCountExceeded in
+            output.isTextCountExceeded.accept(isTextCountExceeded)
         }).disposed(by: disposeBag)
     }
 }

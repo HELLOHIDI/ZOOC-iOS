@@ -58,44 +58,47 @@ final class GenAIRegisterPetViewController: BaseViewController {
             nameTextFieldDidChangeEvent: rootView.petProfileNameTextField.rx.text.asObservable(),
             registerPetButtonTapEvent: self.rootView.completeButton.rx.tap.asObservable(),
             deleteButtonTapEvent: self.rootView.petProfileImageButton.rx.tap.asObservable(),
-            registerPetProfileImageButtonTapEvent: rootView.petProfileImageButton.rx.tap
-                .flatMapLatest { [unowned self] _ in
-                    return self.showImagePicker()
+            registerPetProfileImageButtonTapEvent: self.rootView.petProfileImageButton.rx.tap.flatMapLatest { [weak self] _ in
+                return UIImagePickerController.rx.createWithParent(self) { picker in
+                    picker.sourceType = .photoLibrary
+                    picker.allowsEditing = false
                 }
-            
-            //            isTextCountExceeded: rootView.petProfileNameTextField.rx.textFieldType.asDriver()
+                .flatMap {
+                    $0.rx.didFinishPickingMediaWithInfo
+                }
+                .take(1)
+            }
+            .map { info in
+                return info[.originalImage] as? UIImage
+            }
         )
         
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
         
-//        var petId = BehaviorRelay<Int?>(value: nil)
-//        var name = BehaviorRelay<String>(value: "")
-//        var canRegisterPet = BehaviorRelay<Bool>(value: false)
-
-        output.photo.asObservable().subscribe(onNext: { [weak self] photo in
+        output.photo.subscribe(onNext: { [weak self] photo in
             self?.rootView.petProfileImageButton.setImage(photo, for: .normal)
         }).disposed(by: disposeBag)
         
-        output.textFieldState.asObservable().subscribe(onNext: { [weak self] textFieldState in
+        output.textFieldState.subscribe(onNext: { [weak self] textFieldState in
             self?.rootView.petProfileNameTextField.textColor = textFieldState.textColor
         }).disposed(by: disposeBag)
         
-        output.isRegistedPet.asObservable().subscribe(onNext: { [weak self] isRegisted in
+        output.isRegistedPet.subscribe(onNext: { [weak self] isRegisted in
             if isRegisted { self?.pushToGenAIGuideVC() }
         }).disposed(by: disposeBag)
         
+        output.isTextCountExceeded.subscribe(onNext: { [weak self] isTextCountExceeded in
+            if isTextCountExceeded { self?.updateTextField(self?.rootView.petProfileNameTextField) }
+        }).disposed(by: disposeBag)
     }
     
     private func delegate() {
-        rootView.petProfileNameTextField.editDelegate = self
         galleryAlertController.delegate = self
         imagePickerController.delegate = self
     }
     
     private func target() {
         rootView.cancelButton.addTarget(self, action: #selector(cancelButtonDidTap), for: .touchUpInside)
-        
-        rootView.petProfileImageButton.addTarget(self, action: #selector(profileImageButtonDidTap) , for: .touchUpInside)
     }
     
     private func style() {
@@ -124,7 +127,6 @@ extension GenAIRegisterPetViewController: GalleryAlertControllerDelegate {
     
     func deleteButtonDidTap() {
         rootView.petProfileImageButton.setImage(Image.defaultProfile, for: .normal)
-        //        viewModel.deleteButtonDidTap()
     }
 }
 
@@ -147,22 +149,6 @@ extension GenAIRegisterPetViewController: ZoocAlertViewControllerDelegate {
     func exitButtonDidTap() {
         navigationController?.popViewController(animated: true)
         dismiss(animated: true)
-    }
-}
-
-//MARK: - MyTextFieldDelegate
-
-extension GenAIRegisterPetViewController: MyTextFieldDelegate {
-    func myTextFieldTextDidChange(_ textFieldType: MyEditTextField.TextFieldType, text: String) {
-        //        self.viewModel.nameTextFieldDidChangeEvent(text)
-        
-        //        if viewModel.isTextCountExceeded(for: textFieldType) {
-        //            let fixedText = text.substring(from: 0, to:textFieldType.limit-1)
-        //
-        //            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-        //                self.rootView.petProfileNameTextField.text = fixedText
-        //            }
-        //        }
     }
 }
 
@@ -197,6 +183,15 @@ extension GenAIRegisterPetViewController {
         //            self.present(self.imagePickerController, animated: true, completion: nil)
         
         return Disposables.create() as! Observable<UIImage>
+    }
+    
+    private func updateTextField(_ textField: MyEditTextField?) {
+        guard let textField = textField else { return }
+        let fixedText = textField.text?.substring(from: 0, to:textField.textFieldType.limit-1)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            self.rootView.petProfileNameTextField.text = fixedText
+        }
     }
 }
 

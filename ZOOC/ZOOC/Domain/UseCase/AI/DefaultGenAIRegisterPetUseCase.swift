@@ -59,12 +59,15 @@ final class DefaultGenAIRegisterPetUseCase: GenAIRegisterPetUseCase {
         case 1...3:
             textFieldState.accept(.isWritten)
             canRegisterPet.accept(true)
+            isTextCountExceeded.accept(false)
         case 4...:
             textFieldState.accept(.isFull)
             canRegisterPet.accept(true)
+            isTextCountExceeded.accept(true)
         default:
             textFieldState.accept(.isEmpty)
             canRegisterPet.accept(false)
+            isTextCountExceeded.accept(false)
         }
     }
 }

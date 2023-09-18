@@ -50,6 +50,12 @@ final class ShopChoosePetViewController: BaseViewController {
         delegate()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.viewWillAppearEvent()
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
@@ -67,9 +73,14 @@ final class ShopChoosePetViewController: BaseViewController {
             self?.updateRegisterButtonUI(isSelected)
         }
         
-        viewModel.pushToShopVC.observe(on: self) { [weak self] petID in
-            guard let petID else {return }
-            self?.pushToShopVC(petID: petID)
+        viewModel.pushToShopVC.observe(on: self) { [weak self] canPush in
+            guard let canPush = canPush else { return }
+            if canPush {
+                guard let petId = self?.viewModel.petId.value else { return }
+                self?.pushToShopVC(petID: petId)
+            } else {
+                self?.presentZoocAlertVC()
+            }
         }
         
         
@@ -157,6 +168,9 @@ extension ShopChoosePetViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension ShopChoosePetViewController: ZoocAlertViewControllerDelegate {
+    func keepButtonDidTap() {
+        pushToGenAIViewController()
+    }
     func exitButtonDidTap() {
         dismiss(animated: true)
     }
@@ -171,5 +185,28 @@ extension ShopChoosePetViewController {
     
     func updateRegisterButtonUI(_ isSelected: Bool) {
         rootView.registerButton.isEnabled = isSelected
+    }
+    
+    private func presentZoocAlertVC() {
+        let alertVC = ZoocAlertViewController(.noDataset)
+        alertVC.delegate = self
+        present(alertVC, animated: false)
+    }
+    
+    private func pushToGenAIViewController() {
+        if self.viewModel.petList.value.count > 0 {
+            let genAIGuideVC = GenAIGuideViewController(
+                viewModel: DefaultGenAIGuideViewModel()
+            )
+            genAIGuideVC.petId = viewModel.petId.value
+            navigationController?.pushViewController(genAIGuideVC, animated: true)
+        } else {
+            let genAIRegisterPetVC = GenAIRegisterPetViewController(
+                viewModel: DefaultGenAIRegisterViewModel(
+                    repository: GenAIPetRepositoryImpl()
+                )
+            )
+            navigationController?.pushViewController(genAIRegisterPetVC, animated: true)
+        }
     }
 }

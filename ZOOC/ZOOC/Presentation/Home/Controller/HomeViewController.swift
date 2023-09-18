@@ -167,37 +167,14 @@ final class HomeViewController : BaseViewController {
         navigationController?.pushViewController(noticeVC, animated: true)
     }
     
-    private func pushToShopViewController(_ petData: [PetResult]) {
-        let shopVC = ShopChoosePetViewController(viewModel: DefaultGenAIChoosePetModel(repository: GenAIPetRepositoryImpl()))
-        shopVC.petData = petData
+    private func pushToShopViewController() {
+        let shopVC = ShopChoosePetViewController(
+            viewModel: DefaultGenAIChoosePetModel(
+                repository: GenAIPetRepositoryImpl()
+            )
+        )
         shopVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(shopVC, animated: true)
-    }
-    
-    private func pushToGenAIViewController() {
-        if self.petData.count > 0 {
-            let genAIChoosePetVC = GenAIChoosePetViewController(
-                viewModel: DefaultGenAIChoosePetModel(
-                    repository: GenAIPetRepositoryImpl()
-                )
-            )
-            genAIChoosePetVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(genAIChoosePetVC, animated: true)
-        } else {
-            let genAIRegisterPetVC = GenAIRegisterPetViewController(
-                viewModel: DefaultGenAIRegisterViewModel(
-                    repository: GenAIPetRepositoryImpl()
-                )
-            )
-            genAIRegisterPetVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(genAIRegisterPetVC, animated: true)
-        }
-    }
-    
-    private func presentZoocAlertVC() {
-        let alertVC = ZoocAlertViewController(.noDataset)
-        alertVC.delegate = self
-        present(alertVC, animated: false)
     }
     
     private func deselectAllOfListArchiveCollectionViewCell(completion: (() -> Void)?) {
@@ -286,34 +263,6 @@ final class HomeViewController : BaseViewController {
         }
     }
     
-    private func requestPetDatasetAPI() {
-        rootView.shopButton.isEnabled = false
-        var petData: [PetResult] = []
-        let dispatchGroup = DispatchGroup()
-        
-        for pet in self.petData {
-            dispatchGroup.enter()
-            
-            GenAIAPI.shared.getPetDataset(petId: String(pet.id)) { [weak self] result in
-                if let result = self?.validateResult(result) as? GenAIPetDatasetsResult {
-                    if !result.datasetImages.isEmpty {
-                        print("성공한 펫 아이디 \(pet.id)")
-                        petData.append(pet)
-                    }
-                }
-                dispatchGroup.leave()
-            }
-        }
-        dispatchGroup.notify(queue: .main) {
-            self.rootView.shopButton.isEnabled = true
-            if petData.isEmpty {
-                self.presentZoocAlertVC()
-            } else {
-                self.pushToShopViewController(petData)
-            }
-        }
-    }
-    
     //MARK: - Action Method
     
     @objc
@@ -323,7 +272,7 @@ final class HomeViewController : BaseViewController {
     
     @objc
     private func shopButtonDidTap() {
-        requestPetDatasetAPI()
+        pushToShopViewController()
     }
     
     @objc
@@ -606,21 +555,32 @@ extension HomeViewController {
         }
     }
     
+    private func pushToGenAIViewController() {
+        if petData.count > 0 {
+            let genAIChoosePetVC = GenAIChoosePetViewController(
+                viewModel: DefaultGenAIChoosePetModel(
+                    repository: GenAIPetRepositoryImpl()
+                )
+            )
+            genAIChoosePetVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(genAIChoosePetVC, animated: true)
+        } else {
+            let genAIRegisterPetVC = GenAIRegisterPetViewController(
+                viewModel: DefaultGenAIRegisterViewModel(
+                    repository: GenAIPetRepositoryImpl()
+                )
+            )
+            genAIRegisterPetVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(genAIRegisterPetVC, animated: true)
+        }
+    }
+    
     
 }
 
 extension HomeViewController: HomeGuideViewControllerDelegate {
     func dismiss() {
         rootView.emptyView.isHidden = !archiveData.isEmpty
-    }
-}
-
-extension HomeViewController: ZoocAlertViewControllerDelegate{
-    func keepButtonDidTap() {
-        pushToGenAIViewController()
-    }
-    func exitButtonDidTap() {
-        self.dismiss()
     }
 }
 

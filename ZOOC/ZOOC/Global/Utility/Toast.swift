@@ -23,7 +23,7 @@ final class Toast: UIView {
             case .good:
                 return .zoocMainGreen.withAlphaComponent(0.85)
             case .normal:
-                return .zoocDarkGray1.withAlphaComponent(0.8)
+                return UIColor(r: 131, g: 131, b: 131).withAlphaComponent(0.8)
             case .bad:
                 return .zoocRed.withAlphaComponent(0.8)
             }
@@ -34,7 +34,7 @@ final class Toast: UIView {
             case .good:
                 return .zoocMainGreen
             case .normal:
-                return .zoocDarkGray1
+                return UIColor(r: 131, g: 131, b: 131)
             case .bad:
                 return .zoocRed
             }

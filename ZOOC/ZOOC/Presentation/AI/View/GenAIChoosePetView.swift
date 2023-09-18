@@ -75,7 +75,7 @@ final class GenAIChoosePetView : UIView{
         }
         
         subtitleLabel.do {
-            $0.text = "AI 모델을 생성할 반려동물을 선택해주세요."
+            $0.text = "굿즈에 들어갈 반려동물을 선택해주세요."
             $0.font = .zoocBody2
             $0.textColor = .zoocGray1
         }

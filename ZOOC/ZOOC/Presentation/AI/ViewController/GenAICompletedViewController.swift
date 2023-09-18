@@ -34,13 +34,22 @@ final class GenAICompletedViewController : UIViewController{
     
     private func target() {
         rootView.cancelButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        
+        rootView.goShopButton.addTarget(self, action: #selector(goShopButtonDidTap), for: .touchUpInside)
     }
     
     //MARK: - Action Method
     
     @objc func backButtonDidTap() {
         self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @objc func goShopButtonDidTap() {
+        let shopChoosePetVC = ShopChoosePetViewController(
+            viewModel: DefaultGenAIChoosePetModel(
+                repository: GenAIPetRepositoryImpl()
+            )
+        )
+        self.navigationController?.pushViewController(shopChoosePetVC, animated: true)
     }
 }
 

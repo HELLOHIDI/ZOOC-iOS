@@ -13,7 +13,7 @@ final class RecordCompleteViewController : BaseViewController {
     
     //MARK: - Properties
     
-    var firstPetID: Int?
+    private let selectedPetID: [Int]
     
     //MARK: - UI Components
     
@@ -63,6 +63,16 @@ final class RecordCompleteViewController : BaseViewController {
     }()
     
     //MARK: - Life Cycle
+    
+    init(selectedPetID: [Int]) {
+        self.selectedPetID = selectedPetID
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,10 +124,6 @@ final class RecordCompleteViewController : BaseViewController {
         }
     }
     
-    func dataBind(data: [Int]){
-        firstPetID = data.first
-    }
-    
     //MARK: - Action Method
     
     @objc
@@ -126,14 +132,17 @@ final class RecordCompleteViewController : BaseViewController {
         guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController
         else {
             print("가드문에 막힘 tabVC가 없는듯")
-            return }
+            return
+        }
 
-        guard let petID = firstPetID else {
+        guard let petID = selectedPetID.first else {
             print("가드문에 막힘 petID가 없는듯")
-            return }
+            return
+        }
         
-        print("가드문 통과")
+        tabVC.homeViewController.recordID = nil
         tabVC.homeViewController.selectPetCollectionView(petID: petID)
         self.navigationController?.previousViewController?.navigationController?.previousViewController?.dismiss(animated: true)
     }
 }
+

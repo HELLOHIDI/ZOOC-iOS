@@ -26,8 +26,6 @@ final class OnboardingWelcomeViewController: UIViewController{
         super.viewDidLoad()
         
         target()
-        
-        style()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -40,10 +38,6 @@ final class OnboardingWelcomeViewController: UIViewController{
     private func target() {
         rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
         rootView.nextButton.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
-    }
-    
-    private func style() {
-        
     }
     
     //MARK: - Action Method
@@ -59,7 +53,7 @@ final class OnboardingWelcomeViewController: UIViewController{
 
 extension OnboardingWelcomeViewController {
     private func updateWelcomeView() {
-        UIView.animate(withDuration: 1, delay: 1) {
+        UIView.animate(withDuration: 0.5, delay: 0.5) {
             self.rootView.welcomeLabel.alpha = 0.4
             self.rootView.welcomeSubLabel.alpha = 1
             self.rootView.welcomeImage.alpha = 1
@@ -68,7 +62,7 @@ extension OnboardingWelcomeViewController {
     }
     
     private func pushToChooseFamilyRoleView() {
-        let onboardingChooseFamilyRoleViewController = OnboardingChooseRoleViewController()
-        self.navigationController?.pushViewController(onboardingChooseFamilyRoleViewController, animated: true)
+        let onboardingCompleteProfileViewController = OnboardingCheckReceivedCodeViewController()
+        self.navigationController?.pushViewController(onboardingCompleteProfileViewController, animated: true)
     }
 }

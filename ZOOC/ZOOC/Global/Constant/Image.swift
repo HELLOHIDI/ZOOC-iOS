@@ -17,13 +17,21 @@ public enum Image{
     
     //MARK: - Icon
     
+    static let arrowDropDown = UIImage(named: "arrow.dropdown")
     static let arrowDown = UIImage(named: "arrow.down")
     static let backCircle = UIImage(named: "back.circle")!
     static let back = UIImage(named: "back")!
     static let backWhite = UIImage(named: "back.white")!
     static let cameraCircleGreen = UIImage(named: "camera.circle.green")!
     static let cameraCircle = UIImage(named: "camera.circle")!
+    static let cart = UIImage(named: "cart")!
+    static let cartLight = UIImage(named: "cart.light")!
+    static let checkCircleBig = UIImage(named: "check.circle.big")!
     static let check = UIImage(named: "check")!
+    static let checkTint = UIImage(named: "check.tint")!
+    static let checkToast = UIImage(named: "check.toast")!
+    static let checkWhite = UIImage(named: "check.white")!
+    static let checkBoxRed = UIImage(named: "checkbox.red")!
     static let checkBoxFill = UIImage(named: "checkbox.fill")!
     static let checkBox = UIImage(named: "checkbox")!
     static let delete = UIImage(named: "delete")!
@@ -35,14 +43,23 @@ public enum Image{
     static let kakaoLogin = UIImage(named: "kakaoLogin")!
     static let listFill = UIImage(named: "list.fill")!
     static let list = UIImage(named: "list")!
+    static let minusCircle = UIImage(named: "minus.circle")!
+    static let noise = UIImage(named: "noise")!
     static let person = UIImage(named: "person")!
+    static let plusCircle = UIImage(named: "plus.circle")!
     static let plus = UIImage(named: "plus")!
     static let plusTabCircle = UIImage(named: "plus.tab.circle")!
     static let ring = UIImage(named: "ring")!
+    static let shop = UIImage(named: "shop")!
     static let smile = UIImage(named: "smile")!
     static let upload = UIImage(named: "upload")!
+    static let xToast = UIImage(named: "x.toast")!
     static let xmark = UIImage(named: "xmark")!
     static let xmarkWhite = UIImage(named: "xmark.white")!
+    static let aiLogo = UIImage(named: "ai")!
+    static let next = UIImage(named: "next")!
+    
+    static let gradient = UIImage(named: "gradient")
     
     //MARK: - Default
     
@@ -73,6 +90,8 @@ public enum Image{
     static let graphics10 = UIImage(named: "graphics_10")!
     static let graphics11 = UIImage(named: "graphics_11")!
     static let graphics12 = UIImage(named: "graphics_12")!
+    static let graphics13 = UIImage(named: "graphics_13")!
+    static let graphics14 = UIImage(named: "graphics_14")!
     
     //MARK: - Mock
     
@@ -81,4 +100,37 @@ public enum Image{
     static let mockSeokWoo = UIImage(named: "mock_seokwoo")!
     static let mockYunSun = UIImage(named: "mock_yunsun")!
     static let mockHidi = UIImage(named: "mock_hidi")!
+    
+    static let mockfeaturedImage = UIImage(named: "featuredImage")!
+    static let mockdeprecated1 = UIImage(named: "mock_deprecated1")!
+    static let mockdeprecated2 = UIImage(named: "mock_deprecated2")!
+    static let mockdeprecated3 = UIImage(named: "mock_deprecated3")!
+    
+    //MARK: - Bank
+    
+    static let bankToss = UIImage(named: "toss")!
+    static let bankKakaoPay = UIImage(named: "kakaopay")!
+    static let bankKaKaoBank = UIImage(named: "kakaobank")!
+    static let bankKBStarBanking = UIImage(named: "kbstarbanking")!
+    static let bankBankSalad = UIImage(named: "banksalad")!
+    
+    static func load(_ bank: Bank) -> UIImage {
+        switch bank {
+            
+        case .toss:
+            return Image.bankToss
+        case .kakaoBank:
+            return Image.bankKaKaoBank
+        case .kakaoPay:
+            return Image.bankKakaoPay
+        case .kbStarBanking:
+            return Image.bankKBStarBanking
+        case .bankSalad:
+            return Image.bankBankSalad
+        }
+    }
+}
+
+extension Image {
+    
 }

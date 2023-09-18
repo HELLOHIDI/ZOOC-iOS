@@ -37,10 +37,20 @@ extension UIView {
         clipsToBounds = true
     }
     
-    func makeCornerBorder (borderWidth: CGFloat, borderColor: UIColor) {
+    func setBorder(borderWidth: CGFloat, borderColor: UIColor) {
         layer.borderWidth = borderWidth
         layer.borderColor = borderColor.cgColor
     }
-
+    
+    func showToast(_ message: String,
+                   type: Toast.ToastType,
+                   view: UIView? = UIApplication.shared.firstWindow,
+                   bottomInset: CGFloat = 86) {
+        guard let view else { return }
+        Toast().show(message: message,
+                     type: type,
+                     view: view,
+                     bottomInset: bottomInset)
+    }
 }
 

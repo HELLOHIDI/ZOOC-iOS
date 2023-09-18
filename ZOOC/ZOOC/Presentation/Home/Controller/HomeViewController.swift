@@ -14,18 +14,24 @@ final class HomeViewController : BaseViewController {
     
     //MARK: - Properties
     
-    private var petData: [HomePetResult] = [] {
+    var recordID: Int?
+    private var limit: Int = 20
+    private var isFetchingData = false
+    private let refreshControl = UIRefreshControl()
+    private var petData: [PetResult] = [] {
         didSet{
             rootView.petCollectionView.reloadData()
         }
     }
-    
+    private var petID: Int?
     private var archiveData: [HomeArchiveResult] = [] {
         didSet {
             rootView.archiveListCollectionView.reloadData()
-            rootView.archiveGridCollectionView.reloadData() 
+            rootView.archiveGridCollectionView.reloadData()
+            recordID  = archiveData.last?.record.id
         }
     }
+    
     
     //MARK: - UI Components
     
@@ -41,39 +47,53 @@ final class HomeViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        delegate()
         register()
         gesture()
         
         setNotificationCenter()
         
         requestTotalPetAPI()
+        rootView.homeScrollView.refreshControl = refreshControl
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        rootView.aiView.startAnimation()
+    }
+    
+    
     override func viewDidAppear(_ animated: Bool) {
-        if UserDefaultsManager.validateGuideVCInHome() {
+        if UserDefaultsManager.isFirstAttemptHome {
             rootView.emptyView.isHidden = true
             guideVC.modalPresentationStyle = .overCurrentContext
             present(guideVC, animated: false)
         }
+        
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         guideVC.dismiss(animated: false)
+        rootView.aiView.endAnimation()
     }
     
     //MARK: - Custom Method
     
-    private func register() {
+    private func delegate() {
         guideVC.delegate = self
         
         rootView.petCollectionView.delegate = self
         rootView.petCollectionView.dataSource = self
-        
+        rootView.homeScrollView.delegate = self
         rootView.archiveListCollectionView.delegate = self
         rootView.archiveListCollectionView.dataSource = self
         rootView.archiveGridCollectionView.delegate = self
         rootView.archiveGridCollectionView.dataSource = self
-        
+    }
+    
+    private func register() {
         rootView.petCollectionView.register(HomePetCollectionViewCell.self,
                                             forCellWithReuseIdentifier:HomePetCollectionViewCell.cellIdentifier)
         
@@ -88,6 +108,11 @@ final class HomeViewController : BaseViewController {
         rootView.noticeButton.addTarget(self,
                                         action: #selector(noticeButtonDidTap),
                                         for: .touchUpInside)
+        
+        rootView.shopButton.addTarget(self,
+                                      action: #selector(shopButtonDidTap),
+                                      for: .touchUpInside)
+        
         rootView.listButton.addTarget(self,
                                       action: #selector(listButtonDidTap),
                                       for: .touchUpInside)
@@ -96,9 +121,18 @@ final class HomeViewController : BaseViewController {
                                       action: #selector(galleryButtonDidTap),
                                       for: .touchUpInside)
         
+        rootView.aiView.addTarget(self,
+                                  action: #selector(genAIViewDidTap),
+                                  for: .touchUpInside)
+        
         rootView.archiveBottomView
-            .addGestureRecognizer(UITapGestureRecognizer(target: self,
-                                        action: #selector(bottomViewDidTap)))
+            .addGestureRecognizer(
+                UITapGestureRecognizer(target: self,
+                                       action: #selector(bottomViewDidTap)
+                                      )
+            )
+        
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     }
     
     private func setNotificationCenter() {
@@ -110,22 +144,21 @@ final class HomeViewController : BaseViewController {
         )
     }
     
-    
     @objc
     public func updateUI() {
         requestTotalPetAPI()
     }
     
-    private func pushToDetailViewController(recordID: Int) {
+    private func pushToArchiveViewController(recordID: Int) {
         guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
             fatalError("선택된 펫이 없습니다.")
         }
         let petID = petData[index].id
-        
-        let detailVC = ArchiveViewController()
-        detailVC.dataBind(recordID: recordID, petID: petID)
-        detailVC.modalPresentationStyle = .fullScreen
-        present(detailVC, animated: true)
+        let archiveModel = ArchiveModel(recordID: recordID,
+                                        petID: petID)
+        let archiveVC = ArchiveViewController(archiveModel, scrollDown: false)
+        archiveVC.modalPresentationStyle = .fullScreen
+        present(archiveVC, animated: true)
     }
     
     private func pushToHomeAlarmViewController() {
@@ -134,9 +167,29 @@ final class HomeViewController : BaseViewController {
         navigationController?.pushViewController(noticeVC, animated: true)
     }
     
+    private func pushToShopViewController() {
+        HomeAPI.shared.getTotalPet(familyID: UserDefaultsManager.familyID) { [weak self] result in
+            guard let result = self?.validateResult(result) as? [PetResult] else { return }
+            if result.isEmpty {
+                self?.presentAlertViewController()
+                print("안녕하세용!")
+            }
+            else {
+                let shopVC = ShopChoosePetViewController(
+                    viewModel: DefaultGenAIChoosePetModel(
+                        repository: GenAIPetRepositoryImpl()
+                    )
+                )
+                shopVC.hidesBottomBarWhenPushed = true
+                self?.navigationController?.pushViewController(shopVC, animated: true)
+            }
+        }
+        
+    }
+    
     private func deselectAllOfListArchiveCollectionViewCell(completion: (() -> Void)?) {
         rootView.archiveListCollectionView.indexPathsForSelectedItems?.forEach {
-                rootView.archiveListCollectionView.deselectItem(at: $0, animated: false)
+            rootView.archiveListCollectionView.deselectItem(at: $0, animated: false)
         }
         
         rootView.archiveListCollectionView.performBatchUpdates(nil) { _ in
@@ -153,18 +206,16 @@ final class HomeViewController : BaseViewController {
         
         guard index < self.petData.count else {
             print("\(#function)의 가드문")
-
             return
-                  
-                  }
+        }
         
         self.rootView.petCollectionView.selectItem(at:IndexPath(item: index, section: 0),
-                                              animated: false,
-                                              scrollPosition: .centeredHorizontally)
+                                                   animated: false,
+                                                   scrollPosition: .centeredHorizontally)
         self.view.layoutIfNeeded()
         self.rootView.petCollectionView.performBatchUpdates(nil)
-        self.requestTotalArchiveAPI(petID: self.petData[index].id)
-
+        self.requestTotalArchiveAPI(petID: self.petData[index].id, pagination: false)
+        
     }
     
     private func configIndicatorBarWidth(_ scrollView: UIScrollView) {
@@ -178,7 +229,7 @@ final class HomeViewController : BaseViewController {
                 self.rootView.archiveIndicatorView.isHidden = true
                 self.rootView.archiveIndicatorView.widthRatio = 0
             }
-             
+            
             self.rootView.archiveIndicatorView.layoutIfNeeded()
         }
     }
@@ -186,31 +237,41 @@ final class HomeViewController : BaseViewController {
     //MARK: - Network
     
     private func requestTotalPetAPI() {
-        HomeAPI.shared.getTotalPet(familyID: User.shared.familyID) { result in
-            
-            guard let result = self.validateResult(result) as? [HomePetResult] else { return }
+        HomeAPI.shared.getTotalPet(familyID: UserDefaultsManager.familyID) { result in
+            guard let result = self.validateResult(result) as? [PetResult] else { return }
             
             self.petData = result
-            guard let id = self.petData.first?.id else { return }
+            guard let id = self.petData.first?.id else {
+                self.rootView.emptyView.isHidden = false
+                if self.guideVC.isViewLoaded {
+                    self.rootView.emptyView.isHidden = true
+                }
+                return }
+            self.petID = id
             self.selectPetCollectionView(petID: id)
         }
     }
     
-    private func requestTotalArchiveAPI(petID: Int) {
-        HomeAPI.shared.getTotalArchive(petID: String(petID)) { result in
+    private func requestTotalArchiveAPI(petID: Int, pagination: Bool) {
+        HomeAPI.shared.getTotalArchive(petID: String(petID), limit: String(limit), after: recordID) { result in
             
             guard let result = self.validateResult(result) as? [HomeArchiveResult] else { return }
             
-            self.archiveData = result
-            self.rootView.emptyView.isHidden = !result.isEmpty
+            if pagination {
+                for data in result {
+                    self.archiveData.append(data)
+                }
+            } else { self.archiveData = result }
+            
+            self.rootView.emptyView.isHidden = !self.archiveData.isEmpty
             if self.guideVC.isViewLoaded {
                 self.rootView.emptyView.isHidden = true
             }
             self.view.layoutIfNeeded()
             self.configIndicatorBarWidth(self.rootView.archiveListCollectionView)
+            self.isFetchingData = result.isEmpty ? true : false // 마지막 게시물 아이디 이후엔 서버통신 금지
         }
     }
-    
     
     //MARK: - Action Method
     
@@ -220,13 +281,18 @@ final class HomeViewController : BaseViewController {
     }
     
     @objc
+    private func shopButtonDidTap() {
+        pushToShopViewController()
+    }
+    
+    @objc
     private func listButtonDidTap() {
         rootView.archiveListCollectionView.isHidden = false
         rootView.archiveGridCollectionView.isHidden = true
         rootView.archiveBottomView.isHidden = false
         rootView.listButton.isSelected = true
         rootView.gridButton.isSelected = false
-
+        
     }
     
     @objc
@@ -242,6 +308,20 @@ final class HomeViewController : BaseViewController {
     @objc
     private func bottomViewDidTap() {
         deselectAllOfListArchiveCollectionViewCell(completion: nil)
+    }
+    
+    @objc func genAIViewDidTap() {
+        pushToGenAIViewController()
+    }
+    
+    @objc
+    private func refreshData() {
+        self.recordID = nil
+        requestTotalPetAPI()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.refreshControl.endRefreshing()
+        }
     }
 }
 
@@ -298,7 +378,8 @@ extension HomeViewController: UICollectionViewDataSource {
 
 //MARK: - UICollectionViewDelegate
 
-extension HomeViewController {
+extension HomeViewController: UICollectionViewDelegate {
+    
     
     func collectionView(_ collectionView: UICollectionView,
                         shouldSelectItemAt indexPath: IndexPath) -> Bool
@@ -311,7 +392,7 @@ extension HomeViewController {
                 return true
             case .expanded:
                 let id = archiveData[indexPath.item].record.id
-                pushToDetailViewController(recordID: id)
+                pushToArchiveViewController(recordID: id)
                 return false
             }
         }
@@ -325,7 +406,11 @@ extension HomeViewController {
         if collectionView == rootView.petCollectionView {
             collectionView.performBatchUpdates(nil)
             deselectAllOfListArchiveCollectionViewCell {
-                self.requestTotalArchiveAPI(petID: self.petData[indexPath.item].id )
+                if self.petID != self.petData[indexPath.item].id {
+                    self.petID = self.petData[indexPath.item].id
+                    self.recordID = nil
+                    self.requestTotalArchiveAPI(petID: self.petData[indexPath.item].id, pagination: false)
+                }
             }
         }
         
@@ -335,7 +420,7 @@ extension HomeViewController {
         
         if collectionView == rootView.archiveGridCollectionView {
             let id = archiveData[indexPath.item].record.id
-            pushToDetailViewController(recordID: id)
+            pushToArchiveViewController(recordID: id)
         }
         
     }
@@ -390,7 +475,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         
         if collectionView == rootView.archiveGridCollectionView {
             
-            var width = collectionView.frame.width
+            var width = collectionView.frame.width - 60
             let spacing: CGFloat = 10
             width = width - (spacing * 2)
             width = width / 3
@@ -433,7 +518,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         }
         
         if collectionView == rootView.archiveGridCollectionView{
-            return .zero
+            return UIEdgeInsets(top: 0, left: 30, bottom: 30, right: 30)
         }
         
         return .zero
@@ -444,35 +529,81 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 //MARK: - ScrollViewDelegate
 
 extension HomeViewController {
+    func presentAlertViewController() {
+        let zoocAlertVC = ZoocAlertViewController(.noPet)
+        zoocAlertVC.delegate = self
+        self.present(zoocAlertVC, animated: false, completion: nil)
+    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == rootView.archiveListCollectionView{
-            pagination(scrollView)
+        
+        if scrollView == rootView.archiveListCollectionView {
             
             let scroll = scrollView.contentOffset.x + scrollView.contentInset.left
             let width = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
             let scrollRatio = scroll / width
             
             self.rootView.archiveIndicatorView.leftOffsetRatio = scrollRatio
-            
-            
+            pagination(rootView.archiveListCollectionView)
+        }
+        
+    }
+    
+    
+    func pagination(_ scrollView: UIScrollView) {
+        
+        let contentOffsetX = scrollView.contentOffset.x
+        let collectionViewContentSizeX = rootView.archiveListCollectionView.contentSize.width
+        let paginationX = collectionViewContentSizeX * 0.2
+        
+        guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
+            fatalError("선택된 펫이 없습니다.")
+        }
+        
+        let petID = petData[index].id
+        if contentOffsetX > paginationX && !isFetchingData {
+            isFetchingData = true
+            requestTotalArchiveAPI(petID: petID, pagination: true)
         }
     }
     
-    func pagination(_ scrollView: UIScrollView) {
-        let contentOffsetX = scrollView.contentOffset.y
-        let collectionViewContentSizeX = rootView.archiveListCollectionView.contentSize.height
-        let paginationX = collectionViewContentSizeX * 0.5
-        
-        if contentOffsetX > collectionViewContentSizeX - paginationX {
-            requestTotalPetAPI()
+    private func pushToGenAIViewController() {
+        if petData.count > 0 {
+            let genAIChoosePetVC = GenAIChoosePetViewController(
+                viewModel: DefaultGenAIChoosePetModel(
+                    repository: GenAIPetRepositoryImpl()
+                )
+            )
+            genAIChoosePetVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(genAIChoosePetVC, animated: true)
+        } else {
+            let genAIRegisterPetVC = GenAIRegisterPetViewController(
+                viewModel: DefaultGenAIRegisterViewModel(
+                    repository: GenAIPetRepositoryImpl()
+                )
+            )
+            genAIRegisterPetVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(genAIRegisterPetVC, animated: true)
         }
     }
+    
+    
 }
 
 extension HomeViewController: HomeGuideViewControllerDelegate {
     func dismiss() {
         rootView.emptyView.isHidden = !archiveData.isEmpty
+    }
+}
+
+extension HomeViewController: ZoocAlertViewControllerDelegate {
+    func keepButtonDidTap() {
+        let registerPetViewController = MyRegisterPetViewController(myPetRegisterViewModel: MyPetRegisterViewModel())
+        registerPetViewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(registerPetViewController, animated: true)
+    }
+    func exitButtonDidTap() {
+        self.dismiss()
     }
 }
 

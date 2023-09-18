@@ -22,9 +22,9 @@ final class ArchiveViewController : BaseViewController {
         case right
     }
     
-    private var isNewPage = true
+    private var scrollDown = false
     
-    private var archiveModel: ArchiveModel?
+    private var archiveModel: ArchiveModel
     
     private var archiveData: ArchiveResult? {
         didSet{
@@ -63,6 +63,17 @@ final class ArchiveViewController : BaseViewController {
     
     //MARK: - Life Cycle
     
+    init(_ archiveModel: ArchiveModel, scrollDown: Bool) {
+        self.archiveModel = archiveModel
+        self.scrollDown = scrollDown
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -72,11 +83,12 @@ final class ArchiveViewController : BaseViewController {
         style()
         hierarchy()
         layout()
+        requestDetailArchiveAPI(request: archiveModel)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        dismissKeyboardWhenTappedAround()
+        dismissKeyboardWhenTappedAround(cancelsTouchesInView: true)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow),
                                                name: UIResponder.keyboardWillShowNotification ,
@@ -89,7 +101,7 @@ final class ArchiveViewController : BaseViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if UserDefaultsManager.validateGuideVCInArchive() {
+        if UserDefaultsManager.isFirstAttemptArchive {
             let guideVC = ArchiveGuideViewController()
             guideVC.modalPresentationStyle = .overFullScreen
             present(guideVC, animated: false)
@@ -109,13 +121,13 @@ final class ArchiveViewController : BaseViewController {
     }
 
     //MARK: - Custom Method
-    
-    func dataBind(recordID: Int, petID: Int) {
-        let data = ArchiveModel(recordID: recordID, petID: petID)
-        archiveModel = data
-        guard let archiveModel else { return }
-        requestDetailArchiveAPI(request: archiveModel)
-    }
+//
+//    func dataBind(data: ArchiveModelrecordID: Int, petID: Int) {
+//        let data = ArchiveModel(recordID: recordID, petID: petID)
+//        archiveModel = data
+//        guard let archiveModel else { return }
+//        requestDetailArchiveAPI(request: archiveModel)
+//    }
     
     private func register() {
         commentCollectionView.delegate = self
@@ -328,14 +340,15 @@ final class ArchiveViewController : BaseViewController {
         }
         
         guard let id else {
-            presentBottomAlert(message)
+            showToast(message, type: .normal)
             return
         }
         
-        archiveModel?.recordID = id
-        
-        guard let archiveModel else { return }
-        
+        archiveModel.recordID = id
+        scrollDown = false
+        self.scrollView.setContentOffset(CGPoint(x: 0,
+                                                 y: 0),
+                                         animated: true)
         requestDetailArchiveAPI(request: archiveModel)
     }
     
@@ -361,13 +374,15 @@ final class ArchiveViewController : BaseViewController {
             $0.height.greaterThanOrEqualTo(height)
         }
         
-        if isNewPage{
-            isNewPage = false
-        } else{
+        if scrollDown{
             scrollView.layoutSubviews()
-            self.scrollView.setContentOffset(CGPoint(x: 0,
-                                                     y: self.scrollView.contentSize.height - self.scrollView.bounds.height),
-                                             animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                self.scrollView.setContentOffset(CGPoint(x: 0,
+                                                         y: self.scrollView.contentSize.height - self.scrollView.bounds.height),
+                                                 animated: true)
+            }
+        } else {
+            scrollDown = true
         }
         
     }
@@ -380,11 +395,9 @@ final class ArchiveViewController : BaseViewController {
     }
     
     private func presentZoocAlertVC() {
-        let zoocAlertVC = ZoocAlertViewController()
-        zoocAlertVC.delegate = self
-        zoocAlertVC.alertType = .deleteArchive
-        zoocAlertVC.modalPresentationStyle = .overFullScreen
-        present(zoocAlertVC, animated: false)
+        let alertVC = ZoocAlertViewController(.deleteArchive)
+        alertVC.delegate = self
+        present(alertVC, animated: false)
     }
     
     //MARK: - API Method
@@ -395,7 +408,7 @@ final class ArchiveViewController : BaseViewController {
             
             guard let result = self.validateResult(result) as? ArchiveResult else { return }
             
-            self.isNewPage = true
+            //self.scrollDown = false
             self.archiveData = result
             self.commentsData = result.comments
         }
@@ -425,13 +438,11 @@ final class ArchiveViewController : BaseViewController {
             self.validateResult(result)
             
 
-            guard let petID = self.archiveModel?.petID else { return }
-            
             print("가드문 통과")
             
             
             guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
-            tabVC.homeViewController.selectPetCollectionView(petID: petID)
+            tabVC.homeViewController.recordID = nil
             self.dismiss(animated: true)
             print("게시물 삭제 완료!")
                     
@@ -442,9 +453,7 @@ final class ArchiveViewController : BaseViewController {
         ArchiveAPI.shared.deleteComment(commentID: commentID) { result in
             self.validateResult(result)
             
-            guard let archiveModel = self.archiveModel else { return }
-            
-            self.requestDetailArchiveAPI(request: archiveModel)
+            self.requestDetailArchiveAPI(request: self.archiveModel)
         }
     }
     
@@ -452,19 +461,21 @@ final class ArchiveViewController : BaseViewController {
     
     @objc
     func backButtonDidTap() {
+        guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
+        tabVC.homeViewController.recordID = nil
         dismiss(animated: true)
     }
     
     @objc
     private func etcButtonDidTap() {
-        guard let archiveModel else { return }
         let alert = UIAlertController(title: nil,
                                       message: nil,
                                       preferredStyle: .actionSheet)
         
         let reportAction =  UIAlertAction(title: "신고하기", style: .default) { action in
            
-            self.sendMail(subject: "[ZOOC] 게시글 신고하기", body: TextLiteral.mailRecordReportBody(recordID: archiveModel.recordID))
+            self.sendMail(subject: "[ZOOC] 게시글 신고하기",
+                          body: TextLiteral.mailRecordReportBody(recordID: self.archiveModel.recordID))
         }
         
         let destructiveAction = UIAlertAction(title: "삭제하기",
@@ -603,6 +614,7 @@ extension ArchiveViewController: ArchiveCommentViewDelegate {
     func uploadButtonDidTap(_ textField: UITextField, text: String) {
         guard let recordID = archiveData?.record.id else { return }
         textField.text = nil
+        view.endEditing(true)
         requestCommentsAPI(recordID: String(recordID), text: text)
     }
     
@@ -658,7 +670,6 @@ extension ArchiveViewController: EmojiBottomSheetDelegate{
 //MARK: - 구역
 
 extension ArchiveViewController: ZoocAlertViewControllerDelegate {
-    
     func exitButtonDidTap() {
         deleteArchive()
     }
@@ -696,13 +707,13 @@ extension ArchiveViewController: MFMailComposeViewControllerDelegate {
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         switch result {
         case .cancelled:
-            presentBottomAlert("신고가 취소되었습니다.")
+            showToast("신고가 취소되었습니다.", type: .good)
         case .sent:
-            presentBottomAlert("신고가 접수되었습니다.")
+            showToast("신고가 접수되었습니다.", type: .good)
         case .saved:
-            presentBottomAlert("신고내용이 저장되었습니다.")
+            showToast("신고내용이 저장되었습니다.", type: .good)
         case .failed:
-            presentBottomAlert("신고하기 실패")
+            showToast("신고하기에 오류가 발생했습니다.", type: .bad)
         default:
             break
         }

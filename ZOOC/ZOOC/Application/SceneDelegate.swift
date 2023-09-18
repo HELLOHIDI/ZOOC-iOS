@@ -7,9 +7,13 @@
 import UIKit
 import KakaoSDKAuth
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    
     var window: UIWindow?
+    
+    private var errorWindow: UIWindow?
+    private var networkMonitor: NetworkMonitor = NetworkMonitor()
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         if let url = URLContexts.first?.url {
@@ -18,109 +22,84 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         }
     }
-
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         print(#function)
+        
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        self.window = UIWindow(windowScene: windowScene)
+        startMonitoringNetwork(on: scene)
+        let userInfo = connectionOptions.notificationResponse?.notification.request.content.userInfo
         
-        let vc = UIViewController()
-        vc.view.backgroundColor = .zoocMainGreen
+        let vc = SplashViewController(userInfo: userInfo)
+        self.window?.rootViewController = vc
+        self.window?.makeKeyAndVisible()
         
-        window = UIWindow(windowScene: windowScene)
-        
-        window?.rootViewController = vc
-        
-        self.window?.backgroundColor = .white
-        window?.makeKeyAndVisible()
-        autoLogin()
+//        UIApplication.shared.changeRootViewController(UINavigationController(rootViewController: ShopCart))
     }
-
-    func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
-    }
-
-    func sceneDidBecomeActive(_ scene: UIScene) {
-        print("👶🏻 \(#function)")
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-    }
-
-    func sceneWillResignActive(_ scene: UIScene) {
-        print("👶🏻 \(#function)")
-        // Called when the scene will move from an active state to an inactive state.
-        // This may occur due to temporary interruptions (ex. an incoming phone call).
-    }
-
-    func sceneWillEnterForeground(_ scene: UIScene) {
-        print("👶🏻 \(#function)")
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
-    }
-
-    func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
-    }
-
-
 }
 
+func sceneDidDisconnect(_ scene: UIScene) {
+    // Called as the scene is being released by the system.
+    // This occurs shortly after the scene enters the background, or when its session is discarded.
+    // Release any resources associated with this scene that can be re-created the next time the scene connects.
+    // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
+}
 
-extension SceneDelegate {
+func sceneDidBecomeActive(_ scene: UIScene) {
+    print("👶🏻 \(#function)")
+    // Called when the scene has moved from an inactive state to an active state.
+    // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+}
+
+func sceneWillResignActive(_ scene: UIScene) {
+    print("👶🏻 \(#function)")
+    // Called when the scene will move from an active state to an inactive state.
+    // This may occur due to temporary interruptions (ex. an incoming phone call).
+}
+
+func sceneWillEnterForeground(_ scene: UIScene) {
+    print("👶🏻 \(#function)")
+    // Called as the scene transitions from the background to the foreground.
+    // Use this method to undo the changes made on entering the background.
+}
+
+func sceneDidEnterBackground(_ scene: UIScene) {
+    // Called as the scene transitions from the foreground to the background.
+    // Use this method to save data, release shared resources, and store enough scene-specific state information
+    // to restore the scene back to its current state.
+}
+
+private extension SceneDelegate {
     
-    private func autoLogin() {
-        guard !User.shared.zoocAccessToken.isEmpty else {
-            print("📌 DB에 AccessToken 값이 없습니다. 온보딩을 시작합니다.")
-            autoLoginFail()
-            return
-        }
-        requestFamilyAPI()
+    func startMonitoringNetwork(on scene: UIScene) {
+        networkMonitor.startMonitoring(statusUpdateHandler: { [weak self] connectionStatus in
+            switch connectionStatus {
+            case .satisfied: self?.removeNetworkErrorWindow()
+            case .unsatisfied: self?.loadNetworkErrorWindow(on: scene)
+            default: break
+            }
+        })
     }
     
+    func removeNetworkErrorWindow() {
+        DispatchQueue.main.async { [weak self] in
+            self?.errorWindow?.resignKey()
+            self?.errorWindow?.isHidden = true
+            self?.errorWindow = nil
+        }
+    }
     
-    
-    private func requestFamilyAPI() {
-        OnboardingAPI.shared.getFamily { result in
-            switch result{
-                
-            case .success(let data):
-                guard let data = data as? [OnboardingFamilyResult] else { return }
-                if data.count != 0 {
-                    let familyID = String(data[0].id)
-                    User.shared.familyID = familyID
-                    self.autoLoginSuccess()
-                } else {
-                    self.autoLoginFail()
-                }
-            default:
-                print("자동로그인 실패")
-                self.autoLoginFail()
+    func loadNetworkErrorWindow(on scene: UIScene) {
+        if let windowScene = scene as? UIWindowScene {
+            DispatchQueue.main.async { [weak self] in
+                let window = UIWindow(windowScene: windowScene)
+                window.windowLevel = .statusBar
+                window.makeKeyAndVisible()
+                let alertView = NetworkAlertView(frame: window.bounds)
+                window.addSubview(alertView)
+                self?.errorWindow = window
             }
         }
     }
-    
-    private func autoLoginSuccess() {
-        print(#function)
-        requestFCMTokenAPI()
-    }
-    
-    private func autoLoginFail () {
-        let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
-        onboardingNVC.setNavigationBarHidden(true, animated: true)
-        
-        UIApplication.shared.changeRootViewController(onboardingNVC)
-    }
-    
-    private func requestFCMTokenAPI() {
-        OnboardingAPI.shared.patchFCMToken(fcmToken: User.shared.fcmToken) { result in
-            let mainVC = ZoocTabBarController()
-            UIApplication.shared.changeRootViewController(mainVC)
-        }
-    }
-
-    
 }

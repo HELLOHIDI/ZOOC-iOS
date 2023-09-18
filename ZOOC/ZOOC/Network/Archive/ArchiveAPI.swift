@@ -22,7 +22,7 @@ extension ArchiveAPI{
     func getArchive(recordID: Int,
                     petID: Int,
                     completion: @escaping (NetworkResult<Any>) -> Void) {
-        archiveProvider.request(.getArchive(familyID: User.shared.familyID, recordID: recordID, petID: petID)) { (result) in
+        archiveProvider.request(.getArchive(familyID: UserDefaultsManager.familyID, recordID: recordID, petID: petID)) { (result) in
             self.disposeNetwork(result,
                                 dataModel: ArchiveResult.self,
                                 completion: completion)

@@ -14,15 +14,23 @@ final class MyEditProfileViewController: BaseViewController {
     
     //MARK: - Properties
     
-    private var myProfileData: UserResult?
-    private var editMyProfileData = EditProfileRequest()
+    private let viewModel: MyEditProfileViewModel
+    
+    init(viewModel: MyEditProfileViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: - UIComponents
     
     private lazy var rootView = MyEditProfileView()
     private let galleryAlertController = GalleryAlertController()
     private lazy var imagePickerController = UIImagePickerController()
-
+    
     //MARK: - Life Cycle
     
     override func loadView() {
@@ -32,17 +40,42 @@ final class MyEditProfileViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bind()
         delegate()
         target()
+        
         style()
     }
     
     //MARK: - Custom Method
     
+    private func bind() {
+        viewModel.editProfileDataOutput.observe(on: self) { [weak self] editProfileData in
+            self?.updateUI(editProfileData)
+        }
+        
+        viewModel.ableToEditProfile.observe(on: self) { [weak self] isEnabled in
+            self?.rootView.completeButton.isEnabled = isEnabled
+        }
+        
+        viewModel.textFieldState.observe(on: self) { [weak self] state in
+            self?.updateTextFieldUI(state)
+        }
+        
+        viewModel.editCompletedOutput.observe(on: self) { [weak self] isSuccess in
+            guard let isSuccess else { return }
+            if isSuccess {
+                self?.navigationController?.popViewController(animated: true)
+            } else {
+                self?.showToast("다시 시도해주세요", type: .bad)
+            }
+        }
+    }
+    
     private func delegate() {
+        rootView.nameTextField.editDelegate = self
         galleryAlertController.delegate = self
         imagePickerController.delegate = self
-        
     }
     
     private func target() {
@@ -50,38 +83,15 @@ final class MyEditProfileViewController: BaseViewController {
         rootView.completeButton.addTarget(self, action: #selector(editCompleteButtonDidTap), for: .touchUpInside)
         
         rootView.profileImageButton.addTarget(self, action: #selector(profileImageButtonDidTap) , for: .touchUpInside)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange), name: UITextField.textDidChangeNotification, object: nil)
     }
     
     private func style() {
-        imagePickerController.do { 
-            $0.sourceType = .photoLibrary
-        }
-        
-        rootView.numberOfNameCharactersLabel.text = "\(rootView.nameTextField.text!.count)/10"
-    }
-
-    func dataBind(data: UserResult?) {
-        rootView.nameTextField.text = data?.nickName
-        editMyProfileData.nickName = data?.nickName ?? ""
-        
-        if let photoURL = data?.photo{
-            rootView.profileImageButton.kfSetButtonImage(url: photoURL)
-        } else {
-            rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
-        }
+        imagePickerController.do { $0.sourceType = .photoLibrary }
     }
     
     private func requestPatchUserProfileAPI() {
-        MyAPI.shared.patchMyProfile(requset: editMyProfileData) { result in
-            self.validateResult(result)
-            NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
-            NotificationCenter.default.post(name: .myPageUpdate, object: nil)
-            self.navigationController?.popViewController(animated: true)
-        }
+        viewModel.editCompleteButtonDidTap()
     }
-    
     //MARK: - Action Method
     
     @objc
@@ -90,63 +100,14 @@ final class MyEditProfileViewController: BaseViewController {
     }
     
     @objc func backButtonDidTap() {
-        let zoocAlertVC = ZoocAlertViewController()
+        let zoocAlertVC = ZoocAlertViewController(.leavePage)
         zoocAlertVC.delegate = self
-        zoocAlertVC.alertType = .leavePage
-        zoocAlertVC.modalPresentationStyle = .overFullScreen
         present(zoocAlertVC, animated: false)
     }
     
-    @objc private func textDidChange(_ notification: Notification) {
-        guard let textField = notification.object as? UITextField else { return }
-        guard let text = textField.text else { return }
-        var textFieldState: BaseTextFieldState
-        switch text.count {
-        case 1...9:
-            textFieldState = .isWritten
-        case 10...:
-            textFieldState = .isFull
-            let fixedText = text.substring(from: 0, to:9)
-            textField.text = fixedText + " "
-            
-            let when = DispatchTime.now() + 0.01
-            DispatchQueue.main.asyncAfter(deadline: when) {
-                textField.text = fixedText
-            }
-        default:
-            textFieldState = .isEmpty
-        }
-        
-        textFieldState.setTextFieldState(
-            textField: nil,
-            underLineView: rootView.underLineView,
-            button: rootView.completeButton,
-            label: rootView.numberOfNameCharactersLabel
-        )
-        setTextFieldText(textCount: text.count)
-        
-    }
-    
     @objc func editCompleteButtonDidTap(){
-        guard let nickName = rootView.nameTextField.text else { return }
-        self.editMyProfileData.nickName = nickName
         requestPatchUserProfileAPI()
     }
-}
-
-extension MyEditProfileViewController {
-    func setTextFieldText(textCount: Int) {
-        rootView.numberOfNameCharactersLabel.text =  textCount < 10 ? "\(textCount)/10" : "10/10"
-    }
-    
-    func setDefaultProfileImage() {
-        rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
-    }
-    
-    func setFamilyMemberProfileImage(photo: String) {
-        rootView.profileImageButton.kfSetButtonImage(url: photo)
-    }
-    
 }
 
 //MARK: - GalleryAlertControllerDelegate
@@ -157,22 +118,20 @@ extension MyEditProfileViewController: GalleryAlertControllerDelegate {
     }
     
     func deleteButtonDidTap() {
+        viewModel.deleteButtonDidTap()
         rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
-        editMyProfileData.hasPhoto = false
     }
 }
 
 //MARK: - UIImagePickerControllerDelegate
 
-extension MyEditProfileViewController: UIImagePickerControllerDelegate {
+extension MyEditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         rootView.profileImageButton.setImage(image, for: .normal)
-        editMyProfileData.profileImage = image
-        rootView.completeButton.isEnabled = true
-        
+        viewModel.editProfileImageEvent(image)
         dismiss(animated: true)
     }
 }
@@ -182,5 +141,37 @@ extension MyEditProfileViewController: UIImagePickerControllerDelegate {
 extension MyEditProfileViewController: ZoocAlertViewControllerDelegate {
     func exitButtonDidTap() {
         navigationController?.popViewController(animated: true)
+    }
+}
+
+extension MyEditProfileViewController: MyTextFieldDelegate {
+    func myTextFieldTextDidChange(_ textFieldType: MyEditTextField.TextFieldType, text: String) {
+        self.viewModel.nameTextFieldDidChangeEvent(text)
+
+        if viewModel.isTextCountExceeded(for: textFieldType) {
+            let fixedText = text.substring(from: 0, to:textFieldType.limit-1)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                self.rootView.nameTextField.text = fixedText
+            }
+        }
+    }
+}
+
+extension MyEditProfileViewController {
+    private func updateTextFieldUI(_ textFieldState: BaseTextFieldState) {
+        rootView.underLineView.backgroundColor = textFieldState.underLineColor
+        rootView.nameTextField.textColor = textFieldState.textColor
+        rootView.numberOfNameCharactersLabel.textColor = textFieldState.indexColor
+    }
+    
+    private func updateUI(_ editProfileData: EditProfileRequest) {
+        rootView.nameTextField.text = editProfileData.nickName
+        if editProfileData.profileImage != nil {
+            rootView.profileImageButton.setImage(editProfileData.profileImage, for: .normal)
+        } else {
+            rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
+        }
+        rootView.numberOfNameCharactersLabel.text = "\(editProfileData.nickName.count)/10"
     }
 }

@@ -56,7 +56,7 @@ final class OnboardingAgreementTableHeaderView: UITableViewHeaderFooterView {
         allAgreementView.do {
             $0.makeCornerRound(radius: 12)
             $0.backgroundColor = .white
-            $0.makeCornerBorder(borderWidth: 1, borderColor: UIColor.zoocLightGray)
+            $0.setBorder(borderWidth: 1, borderColor: UIColor.zoocLightGray)
         }
         
         allAgreementLabel.do {

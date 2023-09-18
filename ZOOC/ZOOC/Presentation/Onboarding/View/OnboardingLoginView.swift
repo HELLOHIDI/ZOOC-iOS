@@ -53,7 +53,12 @@ final class OnboardingLoginView: UIView {
             $0.textAlignment = .left
             $0.font = .zoocDisplay1
             $0.numberOfLines = 2
-            $0.setAttributeLabel(targetString: ["쭉", "우리만의"], color: .zoocMainGreen, spacing: 2)
+            $0.setAttributeLabel(
+                targetString: ["쭉", "우리만의"],
+                color: .zoocMainGreen,
+                font: .zoocDisplay1,
+                spacing: 2
+            )
         }
         
         loginDescribeLabel.do {

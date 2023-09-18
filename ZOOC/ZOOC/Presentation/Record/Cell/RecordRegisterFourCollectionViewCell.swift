@@ -12,20 +12,6 @@ import SnapKit
 
 final class RecordRegisterFourCollectionViewCell: UICollectionViewCell {
     
-    // MARK: - Properties
-    
-    private var size: CGFloat? {
-        didSet {
-            guard let size = self.size else { return }
-            profilePetImageView.snp.updateConstraints {
-                $0.centerY.equalToSuperview()
-                $0.centerX.equalToSuperview()
-                $0.size.equalTo(size)
-            }
-            profilePetImageView.makeCornerRound(radius: size / 2)
-        }
-    }
-    
     // MARK: - UI Components
     
     private let borderView: UIView = {
@@ -36,7 +22,7 @@ final class RecordRegisterFourCollectionViewCell: UICollectionViewCell {
     
     private let selectImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = Image.check
+        imageView.image = Image.checkTint
         imageView.contentMode = .scaleAspectFill
         imageView.isHidden = true
         return imageView
@@ -90,7 +76,7 @@ final class RecordRegisterFourCollectionViewCell: UICollectionViewCell {
         }
         
         selectImageView.do {
-            $0.image = Image.check
+            $0.image = Image.checkTint
             $0.contentMode = .scaleAspectFill
             $0.isHidden = true
         }
@@ -134,6 +120,12 @@ final class RecordRegisterFourCollectionViewCell: UICollectionViewCell {
             $0.edges.equalToSuperview()
         }
         
+        profilePetImageView.snp.updateConstraints {
+            $0.top.equalToSuperview().offset(50)
+            $0.centerX.equalToSuperview()
+            $0.size.equalTo(50)
+        }
+        
         petNameLabel.snp.makeConstraints {
             $0.top.equalTo(self.profilePetImageView.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
@@ -142,7 +134,7 @@ final class RecordRegisterFourCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Action Method
     
-    func dataBind(data: RecordRegisterModel, cellHeight: Int) {
+    func dataBind(data: RecordRegisterModel) {
         
         if let imageURL = data.petImageURL{
             profilePetImageView.kfSetImage(url: imageURL)
@@ -152,7 +144,6 @@ final class RecordRegisterFourCollectionViewCell: UICollectionViewCell {
             
         petNameLabel.text = data.petName
         selectImageView.isHidden = data.isSelected ? false : true
-        self.size = CGFloat(cellHeight * 5/12)
     }
     
     func updateUI(isSelected: Bool){

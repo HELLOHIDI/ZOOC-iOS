@@ -27,18 +27,18 @@ extension APIConstants{
     
     static var hasTokenHeader: Dictionary<String,String> {
         [contentType: applicationJSON,
-               auth : User.shared.zoocAccessToken]
+               auth : UserDefaultsManager.zoocAccessToken]
     }
     
     static var multipartHeader: Dictionary<String,String> {
         [contentType: multipartFormData,
-               auth : User.shared.zoocAccessToken]
+               auth : UserDefaultsManager.zoocAccessToken]
     }
     
     static var refreshHeader: Dictionary<String,String> {
         [contentType: applicationJSON,
-               auth : User.shared.zoocAccessToken,
-             refresh: User.shared.zoocRefreshToken,
-                 fcm: User.shared.fcmToken]
+               auth : UserDefaultsManager.zoocAccessToken,
+             refresh: UserDefaultsManager.zoocRefreshToken,
+                 fcm: UserDefaultsManager.fcmToken]
     }
 }

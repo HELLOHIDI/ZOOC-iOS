@@ -11,19 +11,6 @@ import SnapKit
 
 final class RecordRegisterCollectionViewCell: UICollectionViewCell {
     
-    // MARK: - Properties
-    
-    private var size: CGFloat? {
-        didSet {
-//            guard let size = self.size else { return }
-//            profilePetImageView.snp.updateConstraints {
-//                $0.top.equalToSuperview().offset(49)
-//                $0.leading.equalToSuperview().offset(40)
-//                $0.size.equalTo(50)
-//            }
-        }
-    }
-    
     // MARK: - UI Components
     
     private let borderView = UIView()
@@ -73,7 +60,7 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
         }
 
         selectImageView.do {
-            $0.image = Image.check
+            $0.image = Image.checkTint
             $0.contentMode = .scaleAspectFill
             $0.isHidden = true
         }
@@ -114,7 +101,7 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Action Method
     
-    func dataBind(data: RecordRegisterModel, cellHeight: Int) {
+    func dataBind(data: RecordRegisterModel) {
         if let imageURL = data.petImageURL {
             profilePetImageView.kfSetImage(url: imageURL)
         } else {
@@ -122,7 +109,6 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
         }
         petNameLabel.text = data.petName
         selectImageView.isHidden = data.isSelected ? false : true
-        //self.size = CGFloat(cellHeight * 5/12)
     }
     
     func updateUI(isSelected: Bool){

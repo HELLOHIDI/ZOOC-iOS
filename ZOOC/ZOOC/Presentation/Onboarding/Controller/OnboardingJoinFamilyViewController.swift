@@ -60,10 +60,10 @@ extension OnboardingJoinFamilyViewController {
             switch result {
             case .success(let data):
                 guard let result = data as? OnboardingJoinFamilyResult else { return }
-                User.shared.familyID = String(result.familyID)
+                UserDefaultsManager.familyID = String(result.familyID)
                 self.requestFCMTokenAPI()
             case .requestErr(let msg):
-                self.presentBottomAlert(msg)
+                self.showToast(msg, type: .bad)
             default:
                 self.validateResult(result)
             }
@@ -71,7 +71,7 @@ extension OnboardingJoinFamilyViewController {
     }
     
     private func requestFCMTokenAPI() {
-        OnboardingAPI.shared.patchFCMToken(fcmToken: User.shared.fcmToken) { result in
+        OnboardingAPI.shared.patchFCMToken(fcmToken: UserDefaultsManager.fcmToken) { result in
             self.pushToJoinCompletedViewController()
             
         }

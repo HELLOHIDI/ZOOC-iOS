@@ -50,7 +50,7 @@ final class OnboardingWelcomeView: OnboardingBaseView {
         }
         
         welcomeSubLabel.do {
-            $0.text = "먼저 프로필을 만들고\n가족과 함께 해요!"
+            $0.text = "소중한 가족들과 함께 쭉\n잊지 못할 추억을 쌓아보세요"
             $0.textColor = .zoocDarkGray2
             $0.textAlignment = .left
             $0.font = .zoocDisplay1

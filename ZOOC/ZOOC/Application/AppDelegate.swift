@@ -21,20 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        print("👼🏻 \(#function)")
-        print(Config.baseURL)
-        #if DEBUG
-        print("디버그야!!!")
-        #else
-        print("디버그 아니야!!!")
-        #endif
+        
         setUserNotification(application)
         setKaKaoSDK()
         setFirebaseMessaging()
         setSentry()
-        
-        
-        
         return true
     }
     
@@ -109,6 +100,38 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
        completionHandler([.list, .banner, .sound])
    }
+    
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse) async {
+        let userInfo = response.notification.request.content.userInfo
+        
+        guard let apsValue = userInfo["aps"] as? [String : AnyObject] else { return }
+        guard let alertValue = apsValue["data"] as? [String : String] else { return }
+        
+        guard let familyID = alertValue["familyId"],
+              let recordID = alertValue["recordId"],
+              let petID = alertValue["petId"] else {
+            print("가드에막혔누")
+            return }
+        
+        guard let recordID = Int(recordID) else { return }
+        guard let petID = Int(petID) else { return }
+        
+        UserDefaultsManager.familyID = familyID
+        let archiveModel = ArchiveModel(recordID: recordID, petID: petID)
+        let archiveVC = ArchiveViewController(archiveModel, scrollDown: true)
+        archiveVC.modalPresentationStyle = .fullScreen
+        
+        let tabVC = ZoocTabBarController()
+        
+        
+        UIApplication.shared.changeRootViewController(tabVC)
+        
+        tabVC.present(archiveVC, animated: true)
+        
+        
+    }
 }
 
 
@@ -123,7 +146,7 @@ extension AppDelegate: MessagingDelegate {
             if let error = error {
                 print("Error fetching FCM registration token: \(error)")
               } else if let token = token {
-                  User.shared.fcmToken = token
+                  UserDefaultsManager.fcmToken = token
                  print("FCM registration token: \(token)")
               }
         }

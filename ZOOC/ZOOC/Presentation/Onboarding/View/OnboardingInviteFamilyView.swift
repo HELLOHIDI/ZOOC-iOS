@@ -38,7 +38,6 @@ final class OnboardingInviteFamilyView: OnboardingBaseView {
     
     private func style() {
         self.backgroundColor = .zoocBackgroundGreen
-        backButton.isHidden = true
         secondStep()
         
         titleLabel.do {

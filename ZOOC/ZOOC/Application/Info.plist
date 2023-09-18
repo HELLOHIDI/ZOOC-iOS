@@ -14,17 +14,31 @@
 				<string>kakao$(KAKAO_APPKEY)</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+			<key>CFBundleURLSchemes</key>
+			<array/>
+		</dict>
 	</array>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
 	<key>FirebaseMessagingAutoInitEnabled</key>
 	<false/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>KAKAO_APPKEY</key>
 	<string>$(KAKAO_APPKEY)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>kbbank</string>
+		<string>banksalad</string>
+		<string>kakaopay</string>
+		<string>kakaobank</string>
+		<string>supertoss</string>
 		<string>kakaokompassauth</string>
 		<string>kakaolink</string>
+		<string>itms-apps</string>
 	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
@@ -37,6 +51,8 @@
 	<array>
 		<string>Pretendard-SemiBold.otf</string>
 		<string>Pretendard-Medium.otf</string>
+		<string>Pretendard-Regular.otf</string>
+		<string>Pretendard-Bold.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
@@ -55,7 +71,5 @@
 			</array>
 		</dict>
 	</dict>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 </dict>
 </plist>

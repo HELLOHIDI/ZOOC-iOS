@@ -10,7 +10,7 @@ import Foundation
 struct RecordResult: Codable{
     let id: Int
     let photo: String
-    let content: String
+    let content: String?
     let date: String
     let writerPhoto: String?
     let writerName: String

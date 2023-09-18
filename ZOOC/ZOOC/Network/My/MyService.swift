@@ -14,7 +14,8 @@ enum MyService {
     case patchUserProfile(_ request: EditProfileRequest)
     case patchPetProfile(_ request: EditPetProfileRequest, _ id: Int)
     case deleteAccount
-    case postRegisterPet(param: MyRegisterPetRequest)
+    case postRegisterPets(_ request: MyRegisterPetsRequest)
+    case postRegisterPet(_ request: MyRegisterPetRequest)
     case logout
 }
 
@@ -22,13 +23,15 @@ extension MyService: BaseTargetType {
     var path: String {
         switch self {
         case .getMyPageData:
-            return URLs.myPage.replacingOccurrences(of: "{familyId}", with: User.shared.familyID)
+            return URLs.myPage.replacingOccurrences(of: "{familyId}", with: UserDefaultsManager.familyID)
         case .patchUserProfile:
             return URLs.editProfile
         case .deleteAccount:
             return URLs.deleteUser
+        case .postRegisterPets(param: _):
+            return URLs.registerPets.replacingOccurrences(of: "{familyId}", with: UserDefaultsManager.familyID)
         case .postRegisterPet(param: _):
-            return URLs.registerPet.replacingOccurrences(of: "{familyId}", with: User.shared.familyID) 
+            return URLs.registerPet.replacingOccurrences(of: "{familyId}", with: UserDefaultsManager.familyID)
         case .logout:
             return URLs.logout
         case .patchPetProfile(_, let id):
@@ -44,6 +47,8 @@ extension MyService: BaseTargetType {
             return .patch
         case .deleteAccount:
             return .delete
+        case .postRegisterPets(param: _):
+            return .post
         case .postRegisterPet(param: _):
             return .post
         case .logout:
@@ -66,7 +71,6 @@ extension MyService: BaseTargetType {
                                                  name: "nickName",
                                                  mimeType: "application/json")
             if let photo = request.profileImage{
-                print("포토있음")
                 let photo = photo.jpegData(compressionQuality: 1.0) ?? Data()
                 let imageData = MultipartFormData(provider: .data(photo),
                                                   name: "file",
@@ -83,7 +87,7 @@ extension MyService: BaseTargetType {
         case .deleteAccount:
             return .requestPlain
             
-        case .postRegisterPet(param: let param):
+        case .postRegisterPets(param: let param):
             var multipartFormDatas: [MultipartFormData] = []
             
             for name in param.petNames {
@@ -109,8 +113,28 @@ extension MyService: BaseTargetType {
             
             return .uploadMultipart(multipartFormDatas)
             
+        case .postRegisterPet(param: let param):
+            var multipartFormData: [MultipartFormData] = []
+            
+            let nameData = MultipartFormData(provider: .data(param.name.data(using: String.Encoding.utf8)!),
+                                                 name: "name",
+                                                 mimeType: "application/json")
+            multipartFormData.append(nameData)
+            
+            if let photo = param.photo{
+                print("포토있음")
+                let photo = photo.jpegData(compressionQuality: 1.0) ?? Data()
+                let imageData = MultipartFormData(provider: .data(photo),
+                                                  name: "file",
+                                                  fileName: "image.jpeg",
+                                                  mimeType: "image/jpeg")
+                multipartFormData.append(imageData)
+            }
+            
+            return .uploadMultipart(multipartFormData)
+            
         case .logout:
-            return .requestParameters(parameters: ["fcmToken": User.shared.fcmToken],
+            return .requestParameters(parameters: ["fcmToken": UserDefaultsManager.fcmToken],
                                       encoding: JSONEncoding.default)
         case .patchPetProfile(let request, _):
             var multipartFormDates: [MultipartFormData] = []
@@ -135,7 +159,6 @@ extension MyService: BaseTargetType {
             return .uploadCompositeMultipart(multipartFormDates, urlParameters: ["photo" : request.photo ? "true" : "false"] )
         }
     }
-    
     var headers: [String : String]? {
         switch self {
         case .getMyPageData:
@@ -144,6 +167,8 @@ extension MyService: BaseTargetType {
             return APIConstants.hasTokenHeader
         case .deleteAccount:
             return APIConstants.hasTokenHeader
+        case .postRegisterPets(param: _):
+            return APIConstants.multipartHeader
         case .postRegisterPet(param: _):
             return APIConstants.multipartHeader
         case .logout:

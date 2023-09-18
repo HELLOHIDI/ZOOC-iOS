@@ -65,8 +65,8 @@ extension OnboardingAPI {
         }
     }
     
-    public func postMakeFamily(request: OnboardingRegisterPetRequest, completion: @escaping (NetworkResult<Any>) -> Void) {
-        onboardingProvider.request(.makeFamily(request)) { (result) in
+    public func postMakeFamily(completion: @escaping (NetworkResult<Any>) -> Void) {
+        onboardingProvider.request(.makeFamily) { (result) in
             self.disposeNetwork(result,
                                 dataModel: OnboardingMakeFamilyResult.self,
                                 completion: completion)

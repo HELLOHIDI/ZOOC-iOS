@@ -14,16 +14,25 @@ final class RecordRegisterViewController : BaseViewController{
     
     // MARK: - Properties
     
-    var recordData: RecordModel = RecordModel()
-    var petList: [RecordRegisterModel] = []
-    var selectedPetIDList: [Int] = []
-    var missionID: Int?
+    private var recordData: RecordModel
+    private var petList: [RecordRegisterModel] = []
+    private var selectedPetIDList: [Int] = []
     
     //MARK: - UI Components
     
     private let rootView = RecordRegisterView()
     
     //MARK: - Life Cycle
+    
+    init(recordData: RecordModel) {
+        self.recordData = recordData
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         self.view = rootView
@@ -41,7 +50,7 @@ final class RecordRegisterViewController : BaseViewController{
         super.viewWillAppear(animated)
         
         RecordAPI.shared.getTotalPet { result in
-            guard let result = self.validateResult(result) as? [RecordPetResult] else { return }
+            guard let result = self.validateResult(result) as? [PetResult] else { return }
             self.petList = []
             result.forEach { self.petList.append($0.transform()) }
             self.rootView.petCollectionView.reloadData()
@@ -52,8 +61,6 @@ final class RecordRegisterViewController : BaseViewController{
     
     private func target() {
         rootView.xmarkButton.addTarget(self, action: #selector(xButtonDidTap), for: .touchUpInside)
-        //        rootView.dailyButton.addTarget(self, action: #selector(dailyButtonDidTap), for: .touchUpInside)
-        //        rootView.missionButton.addTarget(self, action: #selector(missionButtonDidTap), for: .touchUpInside)
         rootView.backButton.addTarget(self, action: #selector(backButtonDidTap),for: .touchUpInside)
         rootView.registerButton.addTarget(self, action: #selector(registerButtonDidTap), for: .touchUpInside)
         
@@ -62,23 +69,12 @@ final class RecordRegisterViewController : BaseViewController{
     }
     
     private func style() {
-        if missionID != nil {
-            rootView.missionButton.setTitleColor(.zoocDarkGray1, for: .normal)
-        } else {
-            rootView.dailyButton.setTitleColor(.zoocDarkGray1, for: .normal)
-        }
-    }
-    
-    func dataBind(data: RecordModel, missionID: Int?){
-        self.recordData = data
-        self.missionID = missionID
+        
     }
     
     private func presentAlertViewController() {
-        let zoocAlertVC = ZoocAlertViewController()
+        let zoocAlertVC = ZoocAlertViewController(.leavePage)
         zoocAlertVC.delegate = self
-        zoocAlertVC.alertType = .leavePage
-        zoocAlertVC.modalPresentationStyle = .overFullScreen
         self.present(zoocAlertVC, animated: false, completion: nil)
     }
     
@@ -106,8 +102,7 @@ final class RecordRegisterViewController : BaseViewController{
     }
     
     private func pushToRecordCompleteViewController() {
-        let recordCompleteVC = RecordCompleteViewController()
-        recordCompleteVC.dataBind(data: selectedPetIDList)
+        let recordCompleteVC = RecordCompleteViewController(selectedPetID: selectedPetIDList)
         self.navigationController?.pushViewController(recordCompleteVC, animated: true)
     }
 }
@@ -124,13 +119,13 @@ extension RecordRegisterViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RecordRegisterCollectionViewCell.cellIdentifier, for: indexPath)
                     as? RecordRegisterCollectionViewCell else { return UICollectionViewCell() }
-            cell.dataBind(data: petList[indexPath.item], cellHeight: Int(collectionView.frame.height) / petList.count)
+            cell.dataBind(data: petList[indexPath.item])
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RecordRegisterFourCollectionViewCell.cellIdentifier, for: indexPath)
                     as? RecordRegisterFourCollectionViewCell else { return UICollectionViewCell() }
-            cell.dataBind(data: petList[indexPath.item], cellHeight: Int(collectionView.frame.height) / 2)
+            cell.dataBind(data: petList[indexPath.item])
             return cell
         }
     }
@@ -163,7 +158,6 @@ extension RecordRegisterViewController: UICollectionViewDelegate {
             petList[indexPath.row].isSelected = false
             cell.updateUI(isSelected: false)
         }
-        rootView.registerButton.isEnabled = false
         let indexPathArray = collectionView.indexPathsForSelectedItems
         activateButton(indexPathArray: indexPathArray)
     }
@@ -203,7 +197,6 @@ extension RecordRegisterViewController {
                 selectedPetIDList.append($0.petID)
             }
         }
-        rootView.registerButton.isEnabled = false
         
         RecordAPI.shared.postRecord(photo: recordData.image ?? UIImage(),
                                     content: recordData.content ?? "",

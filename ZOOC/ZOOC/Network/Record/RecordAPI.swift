@@ -17,19 +17,18 @@ class RecordAPI: BaseAPI {
 
 extension RecordAPI{
     func getTotalPet(completion: @escaping (NetworkResult<Any>) -> Void) {
-        recordProvider.request(.getTotalPet(familyID: User.shared.familyID)) { (result) in
+        recordProvider.request(.getTotalPet(familyID: UserDefaultsManager.familyID)) { (result) in
             self.disposeNetwork(result,
-                                dataModel: [RecordPetResult].self,
+                                dataModel: [PetResult].self,
                                 completion: completion)
         }
     }
     
-    func postRecord(photo: UIImage, content: String, pets: [Int], completion: @escaping (NetworkResult<Any>) -> Void){
-        recordProvider.request(.postRecord(familyID: User.shared.familyID,
+    func postRecord(photo: UIImage, content: String?, pets: [Int], completion: @escaping (NetworkResult<Any>) -> Void){
+        recordProvider.request(.postRecord(familyID: UserDefaultsManager.familyID,
                                            photo: photo,
                                            content: content,
-                                           pets: pets))
-        { result in
+                                           pets: pets)) { result in
             self.disposeNetwork(result,
                                 dataModel: VoidResult.self,
                                 completion: completion)

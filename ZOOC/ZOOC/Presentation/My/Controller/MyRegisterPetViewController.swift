@@ -42,6 +42,7 @@ final class MyRegisterPetViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        delegate()
         register()
         target()
     }
@@ -52,27 +53,34 @@ final class MyRegisterPetViewController: BaseViewController {
     
     //MARK: - Custom Method
     
+    private func delegate() {
+        galleryAlertController.delegate = self
+        imagePickerController.delegate = self
+    }
+    
     private func register() {
         rootView.registerPetTableView.delegate = self
         rootView.registerPetTableView.dataSource = self
     }
     
     private func target() {
-        galleryAlertController.delegate = self
-        imagePickerController.delegate = self
-        
-        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        rootView.xmarkButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
         rootView.registerPetButton.addTarget(self, action: #selector(registerPetButtonDidTap), for: .touchUpInside)
     }
     
     //MARK: - Action Method
     
     @objc private func backButtonDidTap() {
-        self.navigationController?.popViewController(animated: true)
+        if let presentingViewController = presentingViewController {
+            // presented로 표시된 경우
+            presentingViewController.dismiss(animated: true)
+        } else if let navigationController = navigationController {
+            // pushed로 표시된 경우
+            navigationController.popViewController(animated: true)
+        }
     }
     
     @objc private func registerPetButtonDidTap() {
-        rootView.registerPetButton.isEnabled = false
         var names: [String] = []
         var photos: [Data] = []
         var isPhotos: [Bool] = []
@@ -89,13 +97,19 @@ final class MyRegisterPetViewController: BaseViewController {
             isPhotos.append(isPhoto)
         }
         
-        MyAPI.shared.registerPet(
-            param: MyRegisterPetRequest(petNames: names, files: photos, isPetPhotos: isPhotos)
+        MyAPI.shared.registerPets(
+            request: MyRegisterPetsRequest(petNames: names, files: photos, isPetPhotos: isPhotos)
         ) { result in
             self.validateResult(result)
             NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
             NotificationCenter.default.post(name: .myPageUpdate, object: nil)
-            self.navigationController?.popViewController(animated: true)
+            if let presentingViewController = self.presentingViewController {
+                // presented로 표시된 경우
+                presentingViewController.dismiss(animated: true)
+            } else if let navigationController = self.navigationController {
+                // pushed로 표시된 경우
+                navigationController.popViewController(animated: true)
+            }
         }
         
     }
@@ -117,14 +131,29 @@ extension MyRegisterPetViewController: UITableViewDelegate {
         print(#function)
         switch indexPath.section {
         case 0:
-            let editPetProfileVC = MyEditPetProfileViewController()
-            editPetProfileVC.dataBind(data: myPetMemberData[indexPath.row])
+            let petData = myPetMemberData[indexPath.row]
+            let hasPhoto = petData.photo == nil ? false : true
+            let imageView = UIImageView()
+            imageView.kfSetImage(url: petData.photo)
+            let image = imageView.image
+            let photo = hasPhoto ? image : nil
+            let editPetProfileVC = MyEditPetProfileViewController(
+                viewModel: DefaultMyEditPetProfileViewModel(
+                    id: petData.id,
+                    editPetProfileRequest: EditPetProfileRequest(
+                        photo: hasPhoto,
+                        nickName: petData.name,
+                        file: photo),
+                    repository: MyEditPetProfileRepositoryImpl()
+                )
+            )
             navigationController?.pushViewController(editPetProfileVC, animated: true)
         default:
             return
         }
     }
 }
+
 
 //MARK: - UITableViewDataSource
 
@@ -236,7 +265,7 @@ extension MyRegisterPetViewController: MyDeleteButtonTappedDelegate {
 
 //MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 
-extension MyRegisterPetViewController: UIImagePickerControllerDelegate {
+extension MyRegisterPetViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         self.myPetRegisterViewModel.petList[self.myPetRegisterViewModel.index].image = image
@@ -249,7 +278,6 @@ extension MyRegisterPetViewController: UIImagePickerControllerDelegate {
 extension MyRegisterPetViewController {
     func requestPetResult() {
         MyAPI.shared.getMyPageData() { result in
-            
             guard let result = self.validateResult(result) as? MyResult else { return }
             self.myPetMemberData = result.pet
             self.rootView.registerPetTableView.reloadData()
@@ -259,7 +287,6 @@ extension MyRegisterPetViewController {
 
 extension MyRegisterPetViewController: GalleryAlertControllerDelegate {
     func galleryButtonDidTap() {
-        print(#function)
         DispatchQueue.main.async {
             self.present(self.imagePickerController, animated: true)
         }

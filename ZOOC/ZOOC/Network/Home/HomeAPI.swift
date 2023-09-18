@@ -19,13 +19,16 @@ extension HomeAPI{
     public func getTotalPet(familyID: String ,completion: @escaping (NetworkResult<Any>) -> Void) {
         homeProvider.request(.getTotalPet(familyID: familyID)) { (result) in
             self.disposeNetwork(result,
-                                dataModel: [HomePetResult].self,
+                                dataModel: [PetResult].self,
                                 completion: completion)
         }
     }
     
-    func getTotalArchive(petID: String, completion: @escaping (NetworkResult<Any>) -> Void) {
-        homeProvider.request(.getTotalArchive(familyID: User.shared.familyID, petID: petID)) { (result) in
+    func getTotalArchive(petID: String,
+                         limit: String,
+                         after: Int?,
+                         completion: @escaping (NetworkResult<Any>) -> Void) {
+        homeProvider.request(.getTotalArchive(familyID: UserDefaultsManager.familyID, petID: petID, limit: limit, after: after)) { (result) in
             self.disposeNetwork(result,
                                 dataModel: [HomeArchiveResult].self,
                                 completion: completion)
@@ -35,7 +38,7 @@ extension HomeAPI{
     func getDetailPetArchive(recordID: Int,
                              petID: Int,
                              completion: @escaping (NetworkResult<Any>) -> Void) {
-        homeProvider.request(.getDetailPetArchive(familyID: User.shared.familyID, recordID: recordID, petID: petID)) { (result) in
+        homeProvider.request(.getDetailPetArchive(familyID: UserDefaultsManager.familyID, recordID: recordID, petID: petID)) { (result) in
             self.disposeNetwork(result,
                                 dataModel: ArchiveResult.self,
                                 completion: completion)
@@ -43,18 +46,22 @@ extension HomeAPI{
     }
             
     func getNotice(completion: @escaping (NetworkResult<Any>) -> Void) {
-        homeProvider.request(.getNotice) { (result) in
+        homeProvider.request(.getNotice(familyID: UserDefaultsManager.familyID)) { (result) in
             self.disposeNetwork(result, dataModel: [HomeNoticeResult].self, completion: completion)
         }
     }
     
-    func postComment(recordID: String, comment: String, completion: @escaping (NetworkResult<Any>) -> Void) {
+    func postComment(recordID: String,
+                     comment: String,
+                     completion: @escaping (NetworkResult<Any>) -> Void) {
         homeProvider.request(.postComment(recordID: recordID, comment: comment)) { (result) in
             self.disposeNetwork(result, dataModel: [CommentResult].self, completion: completion)
         }
     }
     
-    func postEmojiComment(recordID: String, emojiID: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+    func postEmojiComment(recordID: String,
+                          emojiID: Int,
+                          completion: @escaping (NetworkResult<Any>) -> Void) {
         homeProvider.request(.postEmojiComment(recordID: recordID, emojiID: emojiID)) { (result) in
             self.disposeNetwork(result, dataModel: [CommentResult].self, completion: completion)
         }

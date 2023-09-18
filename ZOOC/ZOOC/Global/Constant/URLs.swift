@@ -12,11 +12,12 @@ public enum URLs{
     //MARK: - Family
     
     static let makeFamily = "/family"
-    static let getNotice = "/alarm/list"
+    static let getNotice = "/alarm/list/{familyId}"
     static let myPage = "/family/mypage/{familyId}"
     static let getFamily = "/family"
     static let getInviteCode = "/family/code/{familyId}"
-    static let registerPet = "/family/pets/{familyId}"
+    static let registerPets = "/family/pets/{familyId}"
+    static let registerPet = "/family/pet/{familyId}"
     static let joinFamily = "/family/user"
     static let patchPet = "/pet/{petId}/profile"
     
@@ -40,6 +41,7 @@ public enum URLs{
     static let detailPetRecord = "/record/detail/{familyId}/{petId}/{recordId}"
     static let totalRecord = "/record/{familyId}/{petId}"
     static let deleteRecord = "/record/{recordId}"
+    static let postRecordDatasetImages = "/record/many/{familyId}"
     
     //MARK: - Comment
     
@@ -47,4 +49,16 @@ public enum URLs{
     static let postEmojiComment = "/comment/emoji/{recordId}"
     static let deleteComment = "/comment/{commentId}"
     
+    //MARK: - AI
+    
+    static let postDataset = "/ai/dataset"
+    static let getPetDataset = "/ai/dataset/{petId}"
+    static let patchDatasetImage = "/ai/image/{datasetId}"
+    static let patchDatasetImages = "/ai/images/{datasetId}"
+    
+    //MARK: - Shop
+    
+    static let getTotalProducts = "/shop/product"
+    static let getProduct = "/shop/product/{productId}"
+    static let postOrder = "/shop/order"
 }

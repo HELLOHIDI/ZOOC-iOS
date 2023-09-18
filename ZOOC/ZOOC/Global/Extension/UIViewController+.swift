@@ -8,53 +8,17 @@
 import UIKit
 
 extension UIViewController{
+ 
     
-    func presentBottomAlert(_ message: String) {
-      
-        let alertSuperview : UIView = {
-            let view = UIView()
-            view.backgroundColor = .darkGray.withAlphaComponent(0.85)
-            view.layer.cornerRadius = 10
-            view.isHidden = true
-            return view
-        }()
-    
-        
-        let alertLabel : UILabel = {
-            let label = UILabel()
-            label.font = .systemFont(ofSize: 15)
-            label.textColor = .white
-            label.text = message
-            return label
-        }()
-        
-        view.addSubview(alertSuperview)
-        alertSuperview.addSubview(alertLabel)
-        alertSuperview.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(35)
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(40)
-        }
-        
-        alertLabel.snp.makeConstraints {
-            $0.center.equalToSuperview()
-        }
-        
-        
-        alertLabel.text = message
-        alertSuperview.alpha = 1.0
-        alertSuperview.isHidden = false
-        
-        UIView.animate(
-            withDuration: 2.0,
-            delay: 1.0,
-            options: .curveEaseIn,
-            animations: { alertSuperview.alpha = 0 },
-            completion: { _ in
-                alertSuperview.removeFromSuperview()
-            }
-        )
+    func showToast(_ message: String,
+                   type: Toast.ToastType,
+                   view: UIView? = UIApplication.shared.firstWindow,
+                   bottomInset: CGFloat = 86) {
+        guard let view else { return }
+        Toast().show(message: message,
+                     type: type,
+                     view: view,
+                     bottomInset: bottomInset)
     }
     
     
@@ -96,17 +60,17 @@ extension UIViewController{
                                                   object: nil)
     }
     
-    func dismissKeyboardWhenTappedAround() {
+    func dismissKeyboardWhenTappedAround(cancelsTouchesInView: Bool = false) {
         print(#function)
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
                                                                  action: #selector(self.dismissKeyboard))
-        tap.cancelsTouchesInView = true
+        tap.cancelsTouchesInView = cancelsTouchesInView
         self.view.addGestureRecognizer(tap)
     }
     
     //MARK: - Action Method
     
-    @objc private func keyboardWillShow(_ notification: NSNotification){
+    @objc private func keyboardWillShow(_ notification: NSNotification) {
         // 키보드의 높이만큼 화면을 올려준다.
         print("키보드 올라감")
         
@@ -119,24 +83,21 @@ extension UIViewController{
         }
         guard view.frame.origin.y == 0 else { return }
         self.view.frame.origin.y -= keyboardHeight
+        Device.keyBoardHeight = keyboardHeight
     }
 
     // 키보드가 사라졌다는 알림을 받으면 실행할 메서드
     @objc private func keyboardWillHide(_ notification: NSNotification){
         // 키보드의 높이만큼 화면을 내려준다.
         print("키보드 내려감")
-        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-        let keyboardRectangle = keyboardFrame.cgRectValue
-        let keyboardHeight = keyboardRectangle.height
         
         if let view = notification.object as? UIView{
-            view.frame.origin.y += keyboardHeight
+            view.frame.origin.y += Device.keyBoardHeight
+
         } else {
             guard view.frame.origin.y < 0 else { return }
-            self.view.frame.origin.y += keyboardHeight
+            self.view.frame.origin.y += Device.keyBoardHeight
         }
-        
-        
     }
     
     @objc func dismissKeyboard() {

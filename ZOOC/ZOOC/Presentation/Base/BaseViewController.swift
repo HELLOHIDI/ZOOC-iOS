@@ -28,8 +28,6 @@ class BaseViewController : UIViewController{
         
     }
     
-    
-    
     var viewTranslation = CGPoint(x: 0, y: 0)
     var viewVelocity = CGPoint(x: 0, y: 0)
     
@@ -41,23 +39,13 @@ class BaseViewController : UIViewController{
         super.viewDidLoad()
         
         setUI()
-        setLayout()
-        
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-        self.navigationController?.isNavigationBarHidden = true
-        navigationController?.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     //MARK: - Custom Method
@@ -66,18 +54,13 @@ class BaseViewController : UIViewController{
         view.backgroundColor = .zoocBackgroundGreen
     }
     
-    private func setLayout(){
-        
-        
-    }
-    
     func addPanDismissGesture() {
         view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handleDismiss)))
     }
     
     func presentSafariViewController(_ url: String) {
         guard let url = URL(string: url) else {
-            self.presentBottomAlert("잘못된 URL입니다.")
+            self.showToast("잘못된 URL 입니다.", type: .bad)
             return
         }
         let safariViewController = SFSafariViewController(url: url)
@@ -127,17 +110,19 @@ class BaseViewController : UIViewController{
             print(data)
             return data
         case .requestErr(let message):
-            presentBottomAlert(message)
+            break
+            //showToast(message, type: .bad)
         case .pathErr:
-            presentBottomAlert("path 혹은 method 오류입니다.")
+            showToast("path 혹은 method 오류입니다.", type: .bad)
         case .serverErr:
-            presentBottomAlert("서버 내 오류입니다.")
+            
+            showToast("서버 내 오류입니다.", type: .bad)
         case .networkFail:
-            presentBottomAlert("네트워크가 불안정합니다.")
+            showToast("네트워크가 불안정합니다.", type: .bad)
         case .decodedErr:
-            presentBottomAlert("디코딩 오류가 발생했습니다.")
+            showToast("디코딩 오류가 발생했습니다.", type: .bad)
         case .authorizationFail(_):
-            presentBottomAlert("인증 오류가 발생했습니다. 다시 로그인해주세요")
+            showToast("인증 오류가 발생했습니다. 다시 로그인해주세요", type: .bad)
         }
         return nil
     }
@@ -189,20 +174,9 @@ class BaseViewController : UIViewController{
     
 }
 
-extension BaseViewController: UINavigationControllerDelegate, UIGestureRecognizerDelegate {
-    
-    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-        print("Child ViewControllers", navigationController.viewControllers.count)
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = navigationController.viewControllers.count > 1
-        
-    }
-
-        
-    
+extension BaseViewController: UIGestureRecognizerDelegate {
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        guard let navigationController else { return false }
-        return navigationController.viewControllers.count > 1
-    }
-
-    
+            guard let navigationController else { return false }
+            return navigationController.viewControllers.count > 1
+        }
 }

@@ -36,14 +36,19 @@ extension UILabel {
         attributedText = attributeString
     }
     
-    func setAttributeLabel(targetString: [String], color: UIColor?, spacing: CGFloat) {
+    func setAttributeLabel(targetString: [String], color: UIColor?, font: UIFont?, spacing: CGFloat = 0, baseLineOffset: CGFloat = 0) {
         let fullText = text ?? ""
         let style = NSMutableParagraphStyle()
         let attributedString = NSMutableAttributedString(string: fullText)
         
         for target in targetString {
             let range = (fullText as NSString).range(of: target)
-            attributedString.addAttributes([.font: font as Any, .foregroundColor: color as Any], range: range)
+            attributedString.addAttributes(
+                [.font: font as Any,
+                 .foregroundColor: color as Any,
+                 .baselineOffset: baseLineOffset], // Add baseline offset here
+                range: range
+            )
         }
         
         style.lineSpacing = spacing
@@ -51,7 +56,6 @@ extension UILabel {
                                      value: style,
                                      range: NSRange(location: 0, length: attributedString.length))
         attributedText = attributedString
-        
     }
 
 }

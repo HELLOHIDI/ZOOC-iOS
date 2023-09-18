@@ -14,19 +14,12 @@ final class RecordViewController : BaseViewController{
     
     //MARK: - Properties
     
-//    enum DestinationType {
-//        case home
-//        case mission
-//    }
-    
-    var petImage: UIImage?
     private var recordData = RecordModel()
     private let placeHoldText: String = """
                                         ex) 2023년 2월 30일
                                         가족에게 어떤 순간이었는지 남겨주세요
                                         """
-    var contentTextViewIsRegistered: Bool = false
-    private let galleryAlertController = GalleryAlertController()
+    private var contentTextViewIsRegistered: Bool = false
     private lazy var imagePickerController = UIImagePickerController()
     
     //MARK: - UI Components
@@ -80,11 +73,6 @@ final class RecordViewController : BaseViewController{
         presentAlertViewController()
     }
     
-    @objc private func missionButtonDidTap(){
-        presentBottomAlert("삭제된 기능입니다")
-        presentAlertViewController()
-    }
-    
     @objc private func galleryImageViewDidTap(){
         DispatchQueue.main.async {
             let imagePicker = UIImagePickerController()
@@ -122,7 +110,7 @@ extension RecordViewController: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        if textView.text == placeHoldText || textView.text.isEmpty {
+        if textView.text == placeHoldText || textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty  {
             contentTextViewIsRegistered = false
         } else {
             contentTextViewIsRegistered = true
@@ -131,7 +119,7 @@ extension RecordViewController: UITextViewDelegate {
     }
 }
 
-extension RecordViewController: UIImagePickerControllerDelegate {
+extension RecordViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
@@ -145,23 +133,20 @@ extension RecordViewController: UIImagePickerControllerDelegate {
 
 extension RecordViewController {
     func presentAlertViewController() {
-        let zoocAlertVC = ZoocAlertViewController()
+        let zoocAlertVC = ZoocAlertViewController(.leavePage)
         zoocAlertVC.delegate = self
-        zoocAlertVC.alertType = .leavePage
-        zoocAlertVC.modalPresentationStyle = .overFullScreen
         self.present(zoocAlertVC, animated: false, completion: nil)
     }
     
     func pushToRecordRegisterViewController() {
-        let recordRegisterViewController = RecordRegisterViewController()
-        
         if let text = rootView.contentTextView.text{
             recordData.content = text
-        } else { return }
-        
-        recordRegisterViewController.dataBind(data: recordData, missionID: nil)
-        navigationController?.pushViewController(recordRegisterViewController, animated: true)
-        print(#function)
+            let recordRegisterVC = RecordRegisterViewController(recordData: recordData)
+            navigationController?.pushViewController(recordRegisterVC, animated: true)
+        } else {
+            showToast("내용을 입력해주세요.", type: .bad)
+            return
+        }
     }
     
     private func updateUI(){
@@ -172,23 +157,24 @@ extension RecordViewController {
         }
     }
     
-    private func ImageViewDidTap(tag: Int) {
-        checkAlbumPermission { hasPermission in
-            if hasPermission {
-                DispatchQueue.main.async {
-                    self.present(self.galleryAlertController,animated: true)
-                }
-            } else {
-                self.showAccessDenied()
-            }
-        }
-    }
+//    private func ImageViewDidTap(tag: Int) {
+//        checkAlbumPermission { hasPermission in
+//            if hasPermission {
+//                DispatchQueue.main.async {
+//                    let galleryAlertController = GalleryAlertController()
+//                    geallertAlertController.delegate = self
+//                    self.present(self.galleryAlertController,animated: true)
+//                }
+//            } else {
+//                self.showAccessDenied()
+//            }
+//        }
+//    }
 }
 
 //MARK: - ZoocAlertViewControllerDelegate
 
 extension RecordViewController: ZoocAlertViewControllerDelegate {
-    
     func exitButtonDidTap() {
         dismiss(animated: true)
     }

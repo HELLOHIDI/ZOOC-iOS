@@ -172,6 +172,7 @@ extension ShopChoosePetViewController: ZoocAlertViewControllerDelegate {
         pushToGenAIViewController()
     }
     func exitButtonDidTap() {
+        rootView.registerButton.isEnabled = true
         dismiss(animated: true)
     }
 }

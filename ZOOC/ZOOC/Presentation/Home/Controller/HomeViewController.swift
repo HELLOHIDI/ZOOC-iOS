@@ -168,13 +168,23 @@ final class HomeViewController : BaseViewController {
     }
     
     private func pushToShopViewController() {
-        let shopVC = ShopChoosePetViewController(
-            viewModel: DefaultGenAIChoosePetModel(
-                repository: GenAIPetRepositoryImpl()
-            )
-        )
-        shopVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(shopVC, animated: true)
+        HomeAPI.shared.getTotalPet(familyID: UserDefaultsManager.familyID) { [weak self] result in
+            guard let result = self?.validateResult(result) as? [PetResult] else { return }
+            if result.isEmpty {
+                self?.presentAlertViewController()
+                print("안녕하세용!")
+            }
+            else {
+                let shopVC = ShopChoosePetViewController(
+                    viewModel: DefaultGenAIChoosePetModel(
+                        repository: GenAIPetRepositoryImpl()
+                    )
+                )
+                shopVC.hidesBottomBarWhenPushed = true
+                self?.navigationController?.pushViewController(shopVC, animated: true)
+            }
+        }
+        
     }
     
     private func deselectAllOfListArchiveCollectionViewCell(completion: (() -> Void)?) {
@@ -519,6 +529,11 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 //MARK: - ScrollViewDelegate
 
 extension HomeViewController {
+    func presentAlertViewController() {
+        let zoocAlertVC = ZoocAlertViewController(.noPet)
+        zoocAlertVC.delegate = self
+        self.present(zoocAlertVC, animated: false, completion: nil)
+    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
@@ -537,7 +552,6 @@ extension HomeViewController {
     
     func pagination(_ scrollView: UIScrollView) {
         
-        
         let contentOffsetX = scrollView.contentOffset.x
         let collectionViewContentSizeX = rootView.archiveListCollectionView.contentSize.width
         let paginationX = collectionViewContentSizeX * 0.2
@@ -545,8 +559,6 @@ extension HomeViewController {
         guard let index = rootView.petCollectionView.indexPathsForSelectedItems?[0].item else {
             fatalError("선택된 펫이 없습니다.")
         }
-        
-        print("contentOffsetX: \(contentOffsetX), paginationX: \(paginationX)")
         
         let petID = petData[index].id
         if contentOffsetX > paginationX && !isFetchingData {
@@ -581,6 +593,17 @@ extension HomeViewController {
 extension HomeViewController: HomeGuideViewControllerDelegate {
     func dismiss() {
         rootView.emptyView.isHidden = !archiveData.isEmpty
+    }
+}
+
+extension HomeViewController: ZoocAlertViewControllerDelegate {
+    func keepButtonDidTap() {
+        let registerPetViewController = MyRegisterPetViewController(myPetRegisterViewModel: MyPetRegisterViewModel())
+        registerPetViewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(registerPetViewController, animated: true)
+    }
+    func exitButtonDidTap() {
+        self.dismiss()
     }
 }
 

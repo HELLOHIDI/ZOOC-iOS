@@ -91,6 +91,7 @@ final class GenAIRegisterPetViewController: BaseViewController {
         
         output.isRegistedPet.subscribe(onNext: { [weak self] isRegisted in
             if isRegisted { self?.pushToGenAIGuideVC() }
+            else { self?.rootView.completeButton.isEnabled = true }
         }).disposed(by: disposeBag)
         
         output.isTextCountExceeded.subscribe(onNext: { [weak self] isTextCountExceeded in

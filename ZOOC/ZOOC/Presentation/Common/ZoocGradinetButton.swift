@@ -28,7 +28,13 @@ final class ZoocGradientButton: UIButton {
         }
     }
     
+    enum Purpose {
+        case basic
+        case network
+    }
+    
     private var cornerStyle: CornerStyle = .capsule
+    private var purpose: Purpose = .basic
     
     
     override var isEnabled: Bool {
@@ -61,13 +67,20 @@ final class ZoocGradientButton: UIButton {
         
         super.init(frame: frame)
         style()
+        target()
     }
     
-    init(_ cornerStyle: CornerStyle = .capsule) {
+    init(_ cornerStyle: CornerStyle = .capsule, _ purpose: Purpose = .basic) {
         self.gradientColors = [activeColorTop, activeColorBottom]
         self.cornerStyle = cornerStyle
+        self.purpose = purpose
         super.init(frame: .zero)
         style()
+        target()
+    }
+    
+    convenience init(_ purpose: Purpose) {
+        self.init(.capsule, purpose)
     }
     
     override func draw(_ rect: CGRect) {
@@ -87,6 +100,18 @@ final class ZoocGradientButton: UIButton {
         titleLabel?.textColor = .zoocMainGreen
     }
     
+    private func target() {
+        addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func buttonTapped() {
+        switch purpose {
+        case .basic:
+            isEnabled = true
+        case .network:
+            isEnabled = false
+        }
+    }
     
     
     private func configureLayers(_ rect: CGRect) {
@@ -113,20 +138,6 @@ final class ZoocGradientButton: UIButton {
             
             self.layer.insertSublayer(layer, at: 1)
             self.gradientLayer = layer
-        }
-    }
-    
-    func updateButtonUI(_ isTapped: Bool) {
-        if isTapped {
-            setBorder(borderWidth: 0, borderColor: .zoocMainGreen)
-            makeCornerRound(radius: 8)
-            gradientColors = [activeColorTop, activeColorBottom]
-            setTitleColor(.zoocWhite1, for: .normal)
-        } else {
-            setBorder(borderWidth: 1, borderColor: .zoocMainGreen)
-            makeCornerRound(radius: 8)
-            gradientColors = [unSelectedColor, unSelectedColor]
-            setTitleColor(.zoocMainGreen, for: .normal)
         }
     }
 }

@@ -168,12 +168,9 @@ final class OrderAddressView: UIView {
         guard let basicAddressDatas = basicAddressDatas else { return }
         if !basicAddressDatas.isEmpty {
             updateViewAppear(true)
-            basicAddressButton.updateButtonUI(true)
-            newAddressButton.updateButtonUI(false)
+            
         } else {
             updateViewAppear(false)
-            basicAddressButton.updateButtonUI(false)
-            newAddressButton.updateButtonUI(true)
         }
     }
     
@@ -193,8 +190,8 @@ final class OrderAddressView: UIView {
         copyButton.isHidden = hasBasicAddress
         basicAddressView.isHidden = !hasBasicAddress
         newAddressView.isHidden = hasBasicAddress
-        basicAddressButton.updateButtonUI(hasBasicAddress)
-        newAddressButton.updateButtonUI(!hasBasicAddress)
+//        basicAddressButton.updateButtonUI(hasBasicAddress)
+//        newAddressButton.updateButtonUI(!hasBasicAddress)
     }
     
     //MARK: - Action Method
@@ -225,7 +222,7 @@ final class OrderAddressView: UIView {
         copyButton.isHidden = false
         basicAddressView.isHidden = true
         newAddressView.isHidden = false
-        basicAddressButton.updateButtonUI(false)
-        newAddressButton.updateButtonUI(true)
+//        basicAddressButton.updateButtonUI(false)
+//        newAddressButton.updateButtonUI(true)
     }
 }

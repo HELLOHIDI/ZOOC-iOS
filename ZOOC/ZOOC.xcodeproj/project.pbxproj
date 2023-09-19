@@ -301,6 +301,7 @@
 		D2DD45C7297D9612001722A1 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DD45C6297D9612001722A1 /* BaseButton.swift */; };
 		D2EA37EF29BEAB57007EF4B7 /* OnboardingBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA37EE29BEAB57007EF4B7 /* OnboardingBaseView.swift */; };
 		D2ED948A2AB962A90040B687 /* ShopChoosePetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED94892AB962A90040B687 /* ShopChoosePetView.swift */; };
+		D2ED948C2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED948B2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift */; };
 		D2F193612970B3FB00AD87D3 /* HomeNoticeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F193602970B3FB00AD87D3 /* HomeNoticeModel.swift */; };
 		D2F193632970B95E00AD87D3 /* HomeNoticeResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F193622970B95E00AD87D3 /* HomeNoticeResult.swift */; };
 		D2F193652970E72500AD87D3 /* OnboardingJoinFamilyRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F193642970E72500AD87D3 /* OnboardingJoinFamilyRequest.swift */; };
@@ -600,6 +601,7 @@
 		D2DD45C6297D9612001722A1 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		D2EA37EE29BEAB57007EF4B7 /* OnboardingBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBaseView.swift; sourceTree = "<group>"; };
 		D2ED94892AB962A90040B687 /* ShopChoosePetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopChoosePetView.swift; sourceTree = "<group>"; };
+		D2ED948B2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocUploadingImageAlertView.swift; sourceTree = "<group>"; };
 		D2F193602970B3FB00AD87D3 /* HomeNoticeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNoticeModel.swift; sourceTree = "<group>"; };
 		D2F193622970B95E00AD87D3 /* HomeNoticeResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNoticeResult.swift; sourceTree = "<group>"; };
 		D2F193642970E72500AD87D3 /* OnboardingJoinFamilyRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyRequest.swift; sourceTree = "<group>"; };
@@ -740,6 +742,7 @@
 				874369582A8FFB7F0035AFD6 /* NetworkAlertView.swift */,
 				87A3D8912A97756E002C36DB /* ZoocTextField.swift */,
 				D299441B2AAB04E100C4F280 /* ZoocRequiredInputLabel.swift */,
+				D2ED948B2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1928,6 +1931,7 @@
 				D2DC80D52A0DFDF600F48209 /* RecordRegisterView.swift in Sources */,
 				87F288072A9FA86600A53218 /* BankAccount.swift in Sources */,
 				D26C860A296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift in Sources */,
+				D2ED948C2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift in Sources */,
 				D24AFAC42A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift in Sources */,
 				D26C85CF2968681900AEAF9B /* MyPetCollectionFooterView.swift in Sources */,
 				D29944362AAF1D7A00C4F280 /* ShopChoosePetViewController.swift in Sources */,

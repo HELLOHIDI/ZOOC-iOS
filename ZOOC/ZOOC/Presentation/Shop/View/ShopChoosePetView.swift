@@ -28,6 +28,8 @@ final class ShopChoosePetView : UIView{
     public lazy var petCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
     public lazy var registerButton = ZoocGradientButton.init(.network)
     
+    public let activityIndicatorView = UIActivityIndicatorView(style: .large)
+    
     //MARK: - Life Cycle
     
     override init(frame: CGRect) {
@@ -98,7 +100,7 @@ final class ShopChoosePetView : UIView{
     }
     
     private func hierarchy(){
-        self.addSubviews(backButton, cardView, registerButton)
+        self.addSubviews(backButton, cardView, registerButton, activityIndicatorView)
         cardView.addSubviews(headerView, petCollectionView)
         headerView.addSubviews(titleLabel, subtitleLabel)
     }
@@ -143,6 +145,10 @@ final class ShopChoosePetView : UIView{
             $0.top.equalTo(self.headerView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
+        }
+        
+        activityIndicatorView.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
 }

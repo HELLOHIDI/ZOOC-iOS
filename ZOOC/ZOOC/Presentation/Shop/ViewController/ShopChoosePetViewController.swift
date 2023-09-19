@@ -73,7 +73,7 @@ final class ShopChoosePetViewController: BaseViewController {
             self?.updateRegisterButtonUI(isSelected)
         }
         
-        viewModel.pushToShopVC.observe(on: self) { [weak self] canPush in
+        viewModel.isUploadedImage.observe(on: self) { [weak self] canPush in
             guard let canPush = canPush else { return }
             if canPush {
                 guard let petId = self?.viewModel.petId.value else { return }
@@ -83,7 +83,14 @@ final class ShopChoosePetViewController: BaseViewController {
             }
         }
         
-        
+        viewModel.isLoading.observe(on: self) { [weak self] isLoading in
+            guard let isLoading = isLoading else { return }
+            if isLoading {
+                self?.rootView.activityIndicatorView.startAnimating()
+            } else {
+                self?.rootView.activityIndicatorView.stopAnimating()
+            }
+        }
     }
     
     private func target() {
@@ -189,9 +196,14 @@ extension ShopChoosePetViewController {
     }
     
     private func presentZoocAlertVC() {
-        let alertVC = ZoocAlertViewController(.noDataset)
-        alertVC.delegate = self
-        present(alertVC, animated: false)
+        if viewModel.hasDataset.value != nil {
+            let alertVC = ZoocUploadingImageAlertView()
+            present(alertVC, animated: false)
+        } else {
+            let alertVC = ZoocAlertViewController(.noDataset)
+            alertVC.delegate = self
+            present(alertVC, animated: false)
+        }
     }
     
     private func pushToGenAIViewController() {

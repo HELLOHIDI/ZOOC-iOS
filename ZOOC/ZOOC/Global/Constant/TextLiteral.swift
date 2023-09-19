@@ -24,20 +24,18 @@ struct TextLiteral {
                                  -------------------
                                  """
     
-    static let mailMissionAdviceBody = """
-                                        추가하고 싶은 미션을 말씀해주세요.
-                                        
-                                        <예시>
-                                        이런 미션이 있었으면 좋겠어요
-                                        
-                                        -------------------
-                                        
-                                        Device Model : \(Device.getDeviceIdentifier())
-                                        Device OS : \(Device.osVersion)
-                                        App Version : \(Device.getCurrentVersion())
-                                        
-                                        -------------------
-                                        """
+    static func invitedMessage(invitedCode: String) -> String {
+        return """
+               [ZOOC]
+               
+               ‘ZOOC’에 우리 가족을 초대하고 있어요!
+               지금 바로 아래 초대 코드를 입력하고 가족과 추억을 공유하세요!
+               
+               초대코드 : \(invitedCode)
+               
+               \(ExternalURL.zoocAppStoreKR())
+               """
+    }
     
     static func mailRecordReportBody(recordID: Int) -> String {
         

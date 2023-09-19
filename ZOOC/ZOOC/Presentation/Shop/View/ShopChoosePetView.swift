@@ -1,8 +1,8 @@
 //
-//  GenAIChoosePetView.swift
+//  ShopChoosePetView.swift
 //  ZOOC
 //
-//  Created by 류희재 on 2023/08/17.
+//  Created by 류희재 on 2023/09/19.
 //
 
 import UIKit
@@ -11,7 +11,7 @@ import SnapKit
 import Then
 
 
-final class GenAIChoosePetView : UIView {
+final class ShopChoosePetView : UIView{
     
     // MARK: - Properties
     
@@ -76,7 +76,7 @@ final class GenAIChoosePetView : UIView {
         }
         
         subtitleLabel.do {
-            $0.text = "AI 모델을 생성할 반려동물을 선택해주세요. "
+            $0.text = "굿즈에 들어갈 반려동물을 선택해주세요."
             $0.font = .zoocBody2
             $0.textColor = .zoocGray1
         }
@@ -146,3 +146,4 @@ final class GenAIChoosePetView : UIView {
         }
     }
 }
+

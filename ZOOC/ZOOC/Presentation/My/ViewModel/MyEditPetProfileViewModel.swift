@@ -22,7 +22,6 @@ protocol MyEditPetProfileModelOutput {
     var textFieldState: Observable<BaseTextFieldState> { get }
     var editCompletedOutput: Observable<Bool?> { get }
     var editPetProfileDataOutput: Observable<EditPetProfileRequest> { get }
-    
 }
 
 typealias MyEditPetProfileViewModel = MyEditPetProfileModelInput & MyEditPetProfileModelOutput
@@ -73,11 +72,13 @@ final class DefaultMyEditPetProfileViewModel: MyEditPetProfileViewModel {
     func deleteButtonDidTap() {
         self.editPetProfileDataOutput.value.file = nil
         self.editPetProfileDataOutput.value.photo = false
+        ableToProfile()
     }
     
     func editPetProfileImageEvent(_ image: UIImage) {
         self.editPetProfileDataOutput.value.file = image
         self.editPetProfileDataOutput.value.photo = true
+        ableToProfile()
     }
 }
 
@@ -93,5 +94,9 @@ extension DefaultMyEditPetProfileViewModel {
                 self.editCompletedOutput.value = false
             }
         }
+    }
+    
+    func ableToProfile() {
+        ableToEditPetProfile.value = self.editPetProfileDataOutput.value.nickName.count != 0
     }
 }

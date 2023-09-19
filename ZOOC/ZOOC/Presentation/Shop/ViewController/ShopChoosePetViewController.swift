@@ -25,7 +25,7 @@ final class ShopChoosePetViewController: BaseViewController {
     
     //MARK: - UI Components
     
-    private let rootView = GenAIChoosePetView()
+    private let rootView = ShopChoosePetView()
     
     //MARK: - Life Cycle
     
@@ -99,7 +99,7 @@ final class ShopChoosePetViewController: BaseViewController {
     //MARK: - Action Method
     
     @objc private func backButtonDidTap(){
-        navigationController?.popViewController(animated: true)
+        navigationController?.popToRootViewController(animated: true)
     }
     
     @objc private func selectButtonDidTap(){

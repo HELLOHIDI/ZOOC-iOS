@@ -41,7 +41,9 @@ final class DefaultGenAIChoosePetModel: GenAIChoosePetModel {
     }
     
     func viewWillAppearEvent() {
+        isLoading.value = true
         repository.getTotalPet() { result in
+            self.isLoading.value = false
             switch result {
             case .success(let data):
                 guard let result = data as? [PetResult] else { return }

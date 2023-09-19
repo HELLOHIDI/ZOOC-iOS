@@ -64,6 +64,8 @@ private extension OnboardingCheckReceivedCodeViewController {
     func pushToParticipateCompletedView() {
         let onboardingParticipateViewController = OnboardingJoinFamilyViewController()
         self.navigationController?.pushViewController(onboardingParticipateViewController, animated: true)
+        
+        rootView.getCodeButton.isEnabled = true
     }
     
     func pushToInviteFamilyView() {

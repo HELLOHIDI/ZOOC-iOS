@@ -172,5 +172,7 @@ extension GenAIRegisterPetViewController {
         genAIGuideVC.hidesBottomBarWhenPushed = true
         genAIGuideVC.petId = viewModel.petId.value
         navigationController?.pushViewController(genAIGuideVC, animated: true)
+        
+        self.rootView.completeButton.isEnabled = true
     }
 }

@@ -1,8 +1,8 @@
 //
-//  GenAIChoosePetView.swift
+//  ShopChoosePetView.swift
 //  ZOOC
 //
-//  Created by 류희재 on 2023/08/17.
+//  Created by 류희재 on 2023/09/19.
 //
 
 import UIKit
@@ -11,7 +11,7 @@ import SnapKit
 import Then
 
 
-final class GenAIChoosePetView : UIView {
+final class ShopChoosePetView : UIView{
     
     // MARK: - Properties
     
@@ -27,6 +27,8 @@ final class GenAIChoosePetView : UIView {
     private let subtitleLabel = UILabel()
     public lazy var petCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
     public lazy var registerButton = ZoocGradientButton.init(.network)
+    
+    public let activityIndicatorView = UIActivityIndicatorView(style: .large)
     
     //MARK: - Life Cycle
     
@@ -76,7 +78,7 @@ final class GenAIChoosePetView : UIView {
         }
         
         subtitleLabel.do {
-            $0.text = "AI 모델을 생성할 반려동물을 선택해주세요. "
+            $0.text = "굿즈에 들어갈 반려동물을 선택해주세요."
             $0.font = .zoocBody2
             $0.textColor = .zoocGray1
         }
@@ -98,7 +100,7 @@ final class GenAIChoosePetView : UIView {
     }
     
     private func hierarchy(){
-        self.addSubviews(backButton, cardView, registerButton)
+        self.addSubviews(backButton, cardView, registerButton, activityIndicatorView)
         cardView.addSubviews(headerView, petCollectionView)
         headerView.addSubviews(titleLabel, subtitleLabel)
     }
@@ -144,5 +146,10 @@ final class GenAIChoosePetView : UIView {
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
+        
+        activityIndicatorView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
     }
 }
+

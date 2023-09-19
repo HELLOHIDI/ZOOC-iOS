@@ -18,7 +18,7 @@ protocol MyViewModelOutput {
     var myFamilyMemberData: Observable<[UserResult]> { get }
     var myPetMemberData: Observable<[PetResult]> { get }
     var myProfileData: Observable<UserResult?> { get }
-    var inviteCode: Observable<String?> { get }
+    var inviteCodeMessage: Observable<String?> { get }
     var logoutOutput: Observable<Bool?> { get }
     var deleteAccoutOutput: Observable<Bool?> { get }
 }
@@ -30,7 +30,7 @@ final class DefaultMyViewModel: MyViewModel {
     var myFamilyMemberData: Observable<[UserResult]> = Observable([])
     var myPetMemberData: Observable<[PetResult]> = Observable([])
     var myProfileData: Observable<UserResult?> = Observable(nil)
-    var inviteCode: Observable<String?> = Observable(nil)
+    var inviteCodeMessage: Observable<String?> = Observable(nil)
     var logoutOutput: Observable<Bool?> = Observable(nil)
     var deleteAccoutOutput: Observable<Bool?> = Observable(nil)
     
@@ -64,7 +64,7 @@ extension DefaultMyViewModel {
             switch result {
             case .success(let data):
                 guard let result = data as? OnboardingInviteResult else { return }
-                self.inviteCode.value = result.code
+                self.inviteCodeMessage.value = TextLiteral.invitedMessage(invitedCode: result.code)
             default:
                 break
             }

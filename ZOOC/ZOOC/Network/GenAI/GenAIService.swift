@@ -124,6 +124,3 @@ extension GenAIService: BaseTargetType {
         }
     }
 }
-
-
-

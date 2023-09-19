@@ -46,7 +46,6 @@ final class GenAIChoosePetViewController: BaseViewController{
         self.rootView.petCollectionView.collectionViewLayout = layout
         bind()
         target()
-        //        delegate()
     }
     
     //MARK: - Custom Method

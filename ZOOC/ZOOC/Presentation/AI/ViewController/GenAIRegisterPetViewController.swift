@@ -32,8 +32,19 @@ final class GenAIRegisterPetViewController: BaseViewController {
     //MARK: - UIComponents
     
     private lazy var rootView = GenAIRegisterPetView()
-    private let galleryAlertController = GalleryAlertController()
-    private lazy var imagePickerController = UIImagePickerController()
+    
+    private var galleryAlertController: GalleryAlertController {
+        let galleryAlertController = GalleryAlertController()
+        galleryAlertController.delegate = self
+        return galleryAlertController
+    }
+    private lazy var imagePickerController: UIImagePickerController = {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        return imagePickerController
+    }()
     
     //MARK: - Life Cycle
     
@@ -44,39 +55,34 @@ final class GenAIRegisterPetViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bind()
-        delegate()
-        target()
-        
-        style()
+        bindUI()
+        bindViewModel()
     }
     
-    //MARK: - Custom Method
+    private func bindUI() {
+        rootView.cancelButton.rx.tap.subscribe(onNext: { [weak self] _ in
+            guard let self = self else{ return }
+            self.presentZoocAlertVC()
+        }).disposed(by: disposeBag)
+        
+        rootView.petProfileImageButton.rx.tap.subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
+            self.present(self.galleryAlertController, animated: true)
+        }).disposed(by: disposeBag)
+    }
     
-    private func bind() {
+    private func bindViewModel() {
         let input = GenAIRegisterPetViewModel.Input(
             nameTextFieldDidChangeEvent: rootView.petProfileNameTextField.rx.text.asObservable(),
-            registerPetButtonTapEvent: self.rootView.completeButton.rx.tap.asObservable(),
-            deleteButtonTapEvent: self.rootView.petProfileImageButton.rx.tap.asObservable(),
-            registerPetProfileImageButtonTapEvent: self.rootView.petProfileImageButton.rx.tap.flatMapLatest { [weak self] _ in
-                return UIImagePickerController.rx.createWithParent(self) { picker in
-                    picker.sourceType = .photoLibrary
-                    picker.allowsEditing = false
-                }
-                .flatMap {
-                    $0.rx.didFinishPickingMediaWithInfo
-                }
-                .take(1)
-            }
-            .map { info in
-                return info[.originalImage] as? UIImage
+            registerPetButtonTapEvent: self.rootView.completeButton.rx.tap.asObservable().map { [weak self] _ in
+                self?.rootView.petProfileImageButton.currentImage ?? Image.cameraCircle
             }
         )
         
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
         
-        output.photo.subscribe(onNext: { [weak self] photo in
-            self?.rootView.petProfileImageButton.setImage(photo, for: .normal)
+        output.canRegisterPet.subscribe(onNext: { [weak self] canRegister in
+            self?.rootView.completeButton.isEnabled = canRegister
         }).disposed(by: disposeBag)
         
         output.textFieldState.subscribe(onNext: { [weak self] textFieldState in
@@ -91,31 +97,6 @@ final class GenAIRegisterPetViewController: BaseViewController {
             if isTextCountExceeded { self?.updateTextField(self?.rootView.petProfileNameTextField) }
         }).disposed(by: disposeBag)
     }
-    
-    private func delegate() {
-        galleryAlertController.delegate = self
-        imagePickerController.delegate = self
-    }
-    
-    private func target() {
-        rootView.cancelButton.addTarget(self, action: #selector(cancelButtonDidTap), for: .touchUpInside)
-    }
-    
-    private func style() {
-        imagePickerController.do {
-            $0.sourceType = .photoLibrary
-        }
-    }
-    
-    //MARK: - Action Method
-    
-    @objc private func profileImageButtonDidTap() {
-        present(galleryAlertController,animated: true)
-    }
-    
-    @objc func cancelButtonDidTap() {
-        presentZoocAlertVC()
-    }
 }
 
 //MARK: - GalleryAlertControllerDelegate
@@ -124,7 +105,7 @@ extension GenAIRegisterPetViewController: GalleryAlertControllerDelegate {
     func galleryButtonDidTap() {
         present(imagePickerController, animated: true)
     }
-    
+
     func deleteButtonDidTap() {
         rootView.petProfileImageButton.setImage(Image.defaultProfile, for: .normal)
     }
@@ -135,11 +116,14 @@ extension GenAIRegisterPetViewController: GalleryAlertControllerDelegate {
 extension GenAIRegisterPetViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
+
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         rootView.petProfileImageButton.setImage(image, for: .normal)
-        //        viewModel.registerPetProfileImageEvent(image)
         dismiss(animated: true)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -167,22 +151,6 @@ extension GenAIRegisterPetViewController {
         genAIGuideVC.hidesBottomBarWhenPushed = true
         genAIGuideVC.petId = viewModel.getPetId().value
         navigationController?.pushViewController(genAIGuideVC, animated: true)
-    }
-    
-    private func showImagePicker() -> Observable<UIImage> {
-        //        return Observable.create { [unowned self] observer in
-        //            self.imagePickerController.rx.image
-        //                .subscribe(onNext: { image in
-        //                    observer.onNext(image)
-        //                    observer.onCompleted()
-        //                }, onError: { error in
-        //                    observer.onError(error)
-        //                })
-        //                .disposed(by: self.disposeBag)
-        //
-        //            self.present(self.imagePickerController, animated: true, completion: nil)
-        
-        return Disposables.create() as! Observable<UIImage>
     }
     
     private func updateTextField(_ textField: MyEditTextField?) {

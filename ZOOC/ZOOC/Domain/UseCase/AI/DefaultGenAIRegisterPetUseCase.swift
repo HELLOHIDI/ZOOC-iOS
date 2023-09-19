@@ -26,9 +26,6 @@ final class DefaultGenAIRegisterPetUseCase: GenAIRegisterPetUseCase {
     var isTextCountExceeded = BehaviorRelay<Bool>(value: false)
     var textFieldState = BehaviorRelay<BaseTextFieldState>(value: .isEmpty)
     
-    func deleteProfileImage() {
-        self.photo.accept(Image.defaultProfile)
-    }
     func registerProfileImage(_ image: UIImage) {
         self.photo.accept(image)
     }
@@ -40,9 +37,9 @@ final class DefaultGenAIRegisterPetUseCase: GenAIRegisterPetUseCase {
             case .success(let data):
                 guard let result = data as? MyRegisterPetResult else { return }
                 self?.petId.accept(result.id)
-                self?.canRegisterPet.accept(true)
+                self?.isRegistedPet.accept(true)
             default:
-                self?.canRegisterPet.accept(false)
+                self?.isRegistedPet.accept(false)
             }
         }
     }

@@ -22,15 +22,12 @@ final class GenAIRegisterPetViewModel: ViewModelType {
     
     struct Input {
         var nameTextFieldDidChangeEvent: Observable<String?>
-        var registerPetButtonTapEvent: Observable<Void>
-        var deleteButtonTapEvent: Observable<Void>
-        var registerPetProfileImageButtonTapEvent: Observable<UIImage?>
+        var registerPetButtonTapEvent: Observable<UIImage>
     }
     
     struct Output {
         var petId = BehaviorRelay<Int?>(value: nil)
         var name = BehaviorRelay<String>(value: "")
-        var photo = BehaviorRelay<UIImage?>(value: nil)
         var canRegisterPet = BehaviorRelay<Bool>(value: false)
         var isRegistedPet = BehaviorRelay<Bool>(value: false)
         var textFieldState = BehaviorRelay<BaseTextFieldState>(value: .isEmpty)
@@ -45,16 +42,11 @@ final class GenAIRegisterPetViewModel: ViewModelType {
             self?.genAIRegisterPetUseCase.nameTextFieldDidChangeEvent(name)
         }).disposed(by: disposeBag)
         
-        input.registerPetButtonTapEvent.subscribe(onNext: { [weak self] _ in
+        input.registerPetButtonTapEvent
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] image in
+            self?.genAIRegisterPetUseCase.registerProfileImage(image)
             self?.genAIRegisterPetUseCase.registerPet()
-        }).disposed(by: disposeBag)
-        
-        input.registerPetProfileImageButtonTapEvent.subscribe(onNext: { [weak self] image in
-            self?.genAIRegisterPetUseCase.registerProfileImage(image ?? Image.defaultProfile)
-        }).disposed(by: disposeBag)
-        
-        input.deleteButtonTapEvent.subscribe(onNext: { [weak self] _ in
-            self?.genAIRegisterPetUseCase.deleteProfileImage()
         }).disposed(by: disposeBag)
         
         return output
@@ -67,10 +59,6 @@ final class GenAIRegisterPetViewModel: ViewModelType {
         
         genAIRegisterPetUseCase.name.subscribe(onNext: { name in
             output.name.accept(name)
-        }).disposed(by: disposeBag)
-        
-        genAIRegisterPetUseCase.photo.subscribe(onNext: { photo in
-            output.photo.accept(photo)
         }).disposed(by: disposeBag)
         
         genAIRegisterPetUseCase.canRegisterPet.subscribe(onNext: { canRegisterPet in

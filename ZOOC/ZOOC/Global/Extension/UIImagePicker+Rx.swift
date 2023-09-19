@@ -14,7 +14,6 @@ func dismissViewController(_ viewController: UIViewController, animated: Bool) {
         DispatchQueue.main.async {
             dismissViewController(viewController, animated: animated)
         }
-
         return
     }
 
@@ -52,9 +51,7 @@ extension Reactive where Base: UIImagePickerController {
             let dismissDisposable = imagePicker.rx
                 .didCancel
                 .subscribe(onNext: { [weak imagePicker] _ in
-                    guard let imagePicker = imagePicker else {
-                        return
-                    }
+                    guard let imagePicker = imagePicker else { return }
                     dismissViewController(imagePicker, animated: animated)
                 })
             

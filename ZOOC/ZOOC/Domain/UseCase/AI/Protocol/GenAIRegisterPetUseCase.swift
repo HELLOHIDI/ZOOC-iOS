@@ -19,7 +19,6 @@ protocol GenAIRegisterPetUseCase {
     var name: BehaviorRelay<String> { get set}
     var photo: BehaviorRelay<UIImage?> { get set}
     
-    func deleteProfileImage()
     func registerProfileImage(_ image: UIImage)
     func registerPet()
     func isTextCountExceeded(for type: MyEditTextField.TextFieldType)

@@ -8,7 +8,7 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-BASE_URL = https:/$()/www.zooc.store/
+BASE_URL = https:/$()/www.zooc.store
 
 KAKAO_APPKEY = d594d72f1d6a6935702b35865faf122f
 

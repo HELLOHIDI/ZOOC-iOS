@@ -168,21 +168,16 @@ final class HomeViewController : BaseViewController {
     }
     
     private func pushToShopViewController() {
-        HomeAPI.shared.getTotalPet(familyID: UserDefaultsManager.familyID) { [weak self] result in
-            guard let result = self?.validateResult(result) as? [PetResult] else { return }
-            if result.isEmpty {
-                self?.presentAlertViewController()
-                print("안녕하세용!")
-            }
-            else {
-                let shopVC = ShopChoosePetViewController(
-                    viewModel: DefaultGenAIChoosePetModel(
-                        repository: GenAIPetRepositoryImpl()
-                    )
+        if petData.isEmpty {
+            presentAlertViewController()
+        } else {
+            let shopVC = ShopChoosePetViewController(
+                viewModel: DefaultGenAIChoosePetModel(
+                    repository: GenAIPetRepositoryImpl()
                 )
-                shopVC.hidesBottomBarWhenPushed = true
-                self?.navigationController?.pushViewController(shopVC, animated: true)
-            }
+            )
+            shopVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(shopVC, animated: true)
         }
         
     }

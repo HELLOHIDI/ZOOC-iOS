@@ -43,6 +43,8 @@ final class DefaultGenAISelectImageViewModel: GenAISelectImageViewModel {
         self.petId = petId
         self.selectedImageDatasets.value = selectedImageDatasets
         self.repository = repository
+        
+        print("selectedImageDatasets.value.isEmpty \(selectedImageDatasets.isEmpty)")
     }
     
     func viewWillAppearEvent() {

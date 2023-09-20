@@ -119,7 +119,9 @@ extension GenAIChoosePetViewController: ZoocAlertViewControllerDelegate {
 extension GenAIChoosePetViewController {
     func pushToGenAIGuideVC(with petId: Int) {
         let genAIGuideVC = GenAIGuideViewController(
-            viewModel: DefaultGenAIGuideViewModel()
+            viewModel: GenAIGuideViewModel(
+                genAIGuideUseCase: DefaultGenAIGuideUseCase()
+            )
         )
         genAIGuideVC.hidesBottomBarWhenPushed = true
         genAIGuideVC.petId = petId

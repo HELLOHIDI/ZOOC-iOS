@@ -147,7 +147,9 @@ extension GenAIRegisterPetViewController {
     
     private func pushToGenAIGuideVC() {
         let genAIGuideVC = GenAIGuideViewController(
-            viewModel: DefaultGenAIGuideViewModel()
+            viewModel: GenAIGuideViewModel(
+                genAIGuideUseCase: DefaultGenAIGuideUseCase()
+            )
         )
         genAIGuideVC.hidesBottomBarWhenPushed = true
         genAIGuideVC.petId = viewModel.getPetId().value

@@ -216,12 +216,11 @@ final class OrderViewController: BaseViewController {
     
     private func setAddressData() {
         basicAddressResult = DefaultRealmService.shared.getBasicAddress()
+        addressView.dataBind(basicAddressResult)
         
         if let selectedAddressData = DefaultRealmService.shared.getSelectedAddress() {
             currentAddressData = selectedAddressData.transform()
-            basicAddressData = selectedAddressData.transform()
         }
-        addressView.dataBind(basicAddressResult)
     }
     
     private func updateUI() {
@@ -470,7 +469,6 @@ extension OrderViewController: KakaoPostCodeViewControllerDelegate {
     func fetchPostCode(roadAddress: String, zoneCode: String) {
         newAddressData.address = roadAddress
         newAddressData.postCode = zoneCode
-        //addressView.updateUI(newAddressData: newAddressData, isPostData: true)
         addressView.updateUI(newAddressData: newAddressData)
     }
 }

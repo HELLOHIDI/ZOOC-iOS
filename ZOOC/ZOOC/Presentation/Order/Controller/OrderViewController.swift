@@ -19,18 +19,19 @@ final class OrderViewController: BaseViewController {
     private let productsData: [OrderProduct]
     
     private var ordererData = OrderOrderer()
-    private var addressData = OrderAddress() {
+    private var currentAddressData = OrderAddress() {
         didSet {
-            print(addressData)
+            print(currentAddressData)
         }
     }
-    private var newAddressData = OrderAddress()
-    private var basicAddressData = OrderAddress()
-    private var paymentType : PaymentType = .withoutBankBook
-    private var agreementData = OrderAgreement()
     
     let basicAddressRealm = try! Realm()
     var basicAddressResult: Results<OrderBasicAddress>!
+    private var newAddressData = OrderAddress()
+    
+    private var paymentType : PaymentType = .withoutBankBook
+    private var agreementData = OrderAgreement()
+    
     
     
     private var deliveryFee = 4000 {
@@ -84,12 +85,6 @@ final class OrderViewController: BaseViewController {
         updateUI()
         
         dismissKeyboardWhenTappedAround()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        //DefaultRealmService.shared.resetBasicAddressSelected()
     }
     
     required init?(coder: NSCoder) {
@@ -221,11 +216,10 @@ final class OrderViewController: BaseViewController {
     
     private func setAddressData() {
         basicAddressResult = DefaultRealmService.shared.getBasicAddress()
+        addressView.dataBind(basicAddressResult)
         
         if let selectedAddressData = DefaultRealmService.shared.getSelectedAddress() {
-            addressData = selectedAddressData.transform()
-            basicAddressData = selectedAddressData.transform()
-            addressView.dataBind(basicAddressResult)
+            currentAddressData = selectedAddressData.transform()
         }
     }
     
@@ -266,7 +260,7 @@ final class OrderViewController: BaseViewController {
             try updateAddressData()
             
             requestOrderAPI(ordererData,
-                            addressData,
+                            currentAddressData,
                             productsData,
                             deliveryFee)
             
@@ -299,13 +293,13 @@ final class OrderViewController: BaseViewController {
         switch addressView.addressType {
         case .new:
             registerNewAddress(newAddressData)
-            self.addressData = newAddressData
+            self.currentAddressData = newAddressData
         case .registed:
             let addressData = DefaultRealmService.shared.getSelectedAddress()
             guard let addressData else {
                 throw OrderInvalidError.noAddressSelected
             }
-            self.addressData = addressData.transform()
+            self.currentAddressData = addressData.transform()
         }
     }
     
@@ -360,7 +354,7 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
   
     
     func newAddressButtonDidTap(_ height: CGFloat) {
-        addressData = newAddressData
+        currentAddressData = newAddressData
         
         addressView.snp.remakeConstraints {
             $0.top.equalTo(ordererView.snp.bottom).offset(1)
@@ -378,8 +372,6 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
             showToast("먼저 신규입력으로 배송지를 등록해주세요", type: .bad)
             return
         }
-        
-        addressData = basicAddressData
         
         addressView.snp.remakeConstraints {
             $0.top.equalTo(ordererView.snp.bottom).offset(1)
@@ -425,7 +417,7 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
         newAddressData.receiverPhoneNumber = receiverPhoneNumber
         newAddressData.detailAddress = detailAddress
         newAddressData.request = request
-        addressData = newAddressData
+        currentAddressData = newAddressData
     }
 }
 
@@ -477,7 +469,6 @@ extension OrderViewController: KakaoPostCodeViewControllerDelegate {
     func fetchPostCode(roadAddress: String, zoneCode: String) {
         newAddressData.address = roadAddress
         newAddressData.postCode = zoneCode
-        //addressView.updateUI(newAddressData: newAddressData, isPostData: true)
         addressView.updateUI(newAddressData: newAddressData)
     }
 }

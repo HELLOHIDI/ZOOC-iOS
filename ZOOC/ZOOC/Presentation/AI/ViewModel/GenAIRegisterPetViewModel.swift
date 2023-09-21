@@ -38,15 +38,16 @@ final class GenAIRegisterPetViewModel: ViewModelType {
         let output = Output()
         self.bindOutput(output: output, disposeBag: disposeBag)
         
-        input.nameTextFieldDidChangeEvent.subscribe(onNext: { [weak self] name in
-            self?.genAIRegisterPetUseCase.nameTextFieldDidChangeEvent(name)
+        input.nameTextFieldDidChangeEvent
+            .subscribe(with: self, onNext: { owner, name in
+            owner.genAIRegisterPetUseCase.nameTextFieldDidChangeEvent(name)
         }).disposed(by: disposeBag)
         
         input.registerPetButtonTapEvent
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] image in
-            self?.genAIRegisterPetUseCase.registerProfileImage(image)
-            self?.genAIRegisterPetUseCase.registerPet()
+            .subscribe(with: self, onNext: { owner, image in
+            owner.genAIRegisterPetUseCase.registerProfileImage(image)
+            owner.genAIRegisterPetUseCase.registerPet()
         }).disposed(by: disposeBag)
         
         return output

@@ -60,14 +60,12 @@ final class GenAIRegisterPetViewController: BaseViewController {
     }
     
     private func bindUI() {
-        rootView.cancelButton.rx.tap.subscribe(onNext: { [weak self] _ in
-            guard let self = self else{ return }
-            self.presentZoocAlertVC()
+        rootView.cancelButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.presentZoocAlertVC()
         }).disposed(by: disposeBag)
         
-        rootView.petProfileImageButton.rx.tap.subscribe(onNext: { [weak self] _ in
-            guard let self = self else { return }
-            self.present(self.galleryAlertController, animated: true)
+        rootView.petProfileImageButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.present(self.galleryAlertController, animated: true)
         }).disposed(by: disposeBag)
     }
     
@@ -81,21 +79,25 @@ final class GenAIRegisterPetViewController: BaseViewController {
         
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
         
-        output.canRegisterPet.subscribe(onNext: { [weak self] canRegister in
-            self?.rootView.completeButton.isEnabled = canRegister
+        output.canRegisterPet
+            .subscribe(with: self, onNext: { owner, canRegister in
+            owner.rootView.completeButton.isEnabled = canRegister
         }).disposed(by: disposeBag)
         
-        output.textFieldState.subscribe(onNext: { [weak self] textFieldState in
-            self?.rootView.petProfileNameTextField.textColor = textFieldState.textColor
+        output.textFieldState
+            .subscribe(with: self, onNext: { owner, textFieldState in
+            owner.rootView.petProfileNameTextField.textColor = textFieldState.textColor
         }).disposed(by: disposeBag)
         
-        output.isRegistedPet.subscribe(onNext: { [weak self] isRegisted in
-            if isRegisted { self?.pushToGenAIGuideVC() }
-            else { self?.rootView.completeButton.isEnabled = true }
+        output.isRegistedPet
+            .subscribe(with: self, onNext: { owner, isRegisted in
+            if isRegisted { owner.pushToGenAIGuideVC() }
+            else { owner.rootView.completeButton.isEnabled = true }
         }).disposed(by: disposeBag)
         
-        output.isTextCountExceeded.subscribe(onNext: { [weak self] isTextCountExceeded in
-            if isTextCountExceeded { self?.updateTextField(self?.rootView.petProfileNameTextField) }
+        output.isTextCountExceeded
+            .subscribe(with: self, onNext: { owner, isTextCountExceeded in
+            if isTextCountExceeded { owner.updateTextField(owner.rootView.petProfileNameTextField) }
         }).disposed(by: disposeBag)
     }
 }

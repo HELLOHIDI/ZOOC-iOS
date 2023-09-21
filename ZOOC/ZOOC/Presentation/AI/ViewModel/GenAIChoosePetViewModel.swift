@@ -35,16 +35,19 @@ final class GenAIChoosePetViewModel: ViewModelType {
         let output = Output()
         self.bindOutput(output: output, disposeBag: disposeBag)
         
-        input.viewWillAppearEvent.subscribe(onNext: { [weak self] _ in
-            self?.genAIChoosePetUseCase.getTotalPet()
+        input.viewWillAppearEvent
+            .subscribe(with: self, onNext: { owner, _ in
+            owner.genAIChoosePetUseCase.getTotalPet()
         }).disposed(by: disposeBag)
         
-        input.petCellTapEvent.subscribe(onNext: { [weak self] indexPath in
-            self?.genAIChoosePetUseCase.selectPet(at: indexPath.item)
+        input.petCellTapEvent
+            .subscribe(with: self, onNext: { owner, indexPath in
+            owner.genAIChoosePetUseCase.selectPet(at: indexPath.item)
         }).disposed(by: disposeBag)
         
-        input.registerButtonDidTapEvent.subscribe(onNext: { [weak self] in
-            self?.genAIChoosePetUseCase.pushNextView()
+        input.registerButtonDidTapEvent
+            .subscribe(with: self, onNext: { owner, _ in
+            owner.genAIChoosePetUseCase.pushNextView()
         }).disposed(by: disposeBag)
         
         return output

@@ -111,8 +111,6 @@ final class GenAISelectImageViewController : BaseViewController {
     }
     
     @objc func backButtonDidTap() {
-        guard let previousVC = self.navigationController?.previousViewController as? GenAIGuideViewController else { return }
-        previousVC.viewModel.isPopped.value = true
         self.navigationController?.popViewController(animated: false)
         
     }

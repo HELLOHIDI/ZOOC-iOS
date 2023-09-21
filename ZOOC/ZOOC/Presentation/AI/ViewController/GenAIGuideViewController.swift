@@ -20,6 +20,7 @@ final class GenAIGuideViewController : BaseViewController {
     var petId: Int?
     private let disposeBag = DisposeBag()
     private let pickedImageSubject = PublishSubject<[PHPickerResult]>()
+    private let pushToGenAISelectImageSubject = PublishSubject<Void>()
     let viewModel: GenAIGuideViewModel
     
     //MARK: - UI Components
@@ -52,44 +53,41 @@ final class GenAIGuideViewController : BaseViewController {
     
     private func bindUI() {
         rootView.backButton.rx.tap
-            .withUnretained(self)
-            .subscribe(onNext: { owner, _ in
+            .subscribe(with: self, onNext: { owner, _ in
                 owner.navigationController?.popViewController(animated: true)
         }).disposed(by: disposeBag)
         
-        rootView.xmarkButton.rx.tap.withUnretained(self)
-            .subscribe(onNext: { owner, _ in
+        rootView.xmarkButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
                 owner.presentLeavePageAlertVC()
             }).disposed(by: disposeBag)
         
         rootView.selectImageButton.rx.tap
-            .withUnretained(self)
-            .subscribe(onNext: { owner, _ in
+            .subscribe(with: self, onNext: { owner, _ in
                 owner.presentPHPickerViewController()
             }).disposed(by: disposeBag)
     }
     
     private func bindViewModel() {
         let input = GenAIGuideViewModel.Input(
+            viewWillAppearEvent: self.rx.viewWillAppear.asObservable(),
             viewWillDisappearEvent: self.rx.viewWillDisappear.asObservable(),
-            didFinishPickingImageEvent: pickedImageSubject.asObservable()
-            )
+            didFinishPickingImageEvent: pickedImageSubject.asObservable(),
+            pushToGenAISelectImageVCEvent: pushToGenAISelectImageSubject.asObservable()
+        )
         
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
         
         output.ableToPhotoUpload
-            .withUnretained(self)
-            .subscribe(onNext: { owner, canUpload in
+            .subscribe(with: self, onNext: { owner, canUpload in
                 guard let canUpload = canUpload else { return }
                 if canUpload { owner.pushToGenAISelectImageVC()}
                 else { owner.presentDenineGenerateAIViewController() }
             }).disposed(by: disposeBag)
         
-//        viewModel.isPopped.observe(on: self) { [weak self] isPopped in
-//            if isPopped {
-//                self?.presentPHPickerViewController()
-//            }
-//        }
+        output.isPopped.subscribe(with: self, onNext: { owner, isPopped in
+            if isPopped { owner.presentPHPickerViewController() }
+        }).disposed(by: disposeBag)
     }
 }
 
@@ -104,10 +102,9 @@ extension GenAIGuideViewController {
             )
         )
         self.navigationController?.pushViewController(genAISelectImageVC, animated: true)
+        pushToGenAISelectImageSubject.onNext(())
     }
-}
-
-extension GenAIGuideViewController {
+    
     private func presentPHPickerViewController() {
         var config = PHPickerConfiguration()
         config.filter = .images

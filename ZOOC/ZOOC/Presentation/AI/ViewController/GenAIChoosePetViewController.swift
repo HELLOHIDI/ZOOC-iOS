@@ -44,20 +44,21 @@ final class GenAIChoosePetViewController: BaseViewController{
         super.viewDidLoad()
         
         self.rootView.petCollectionView.collectionViewLayout = layout
-        bind()
-        target()
+        bindUI()
+        bindViewModel()
+        
     }
     
     //MARK: - Custom Method
     
-    private func bind() {
+    private func bindViewModel() {
         let input = GenAIChoosePetViewModel.Input(
             viewWillAppearEvent: self.rx.viewWillAppear.asObservable(),
             petCellTapEvent: self.rootView.petCollectionView.rx.itemSelected.asObservable(),
             registerButtonDidTapEvent: self.rootView.registerButton.rx.tap.asObservable()
         )
         
-        let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
+        let output = self.viewModel.transform(from: input, disposeBag: disposeBag)
     
         output.petList
             .asDriver(onErrorJustReturn: [])
@@ -72,7 +73,9 @@ final class GenAIChoosePetViewController: BaseViewController{
                         height: collectionView.frame.height / 2
                     )
                     
-                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenAIChooseFourPetCollectionViewCell.cellIdentifier, for: IndexPath(item: index, section: 0)) as? GenAIChooseFourPetCollectionViewCell else { return UICollectionViewCell() }
+                    guard let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: GenAIChooseFourPetCollectionViewCell.cellIdentifier,
+                        for: IndexPath(item: index, section: 0)) as? GenAIChooseFourPetCollectionViewCell else { return UICollectionViewCell() }
                     cell.dataBind(data: data)
                     return cell
                 default:
@@ -81,32 +84,32 @@ final class GenAIChoosePetViewController: BaseViewController{
                         height: collectionView.frame.height / CGFloat(output.petList.value.count)
                     )
                     
-                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenAIChoosePetCollectionViewCell.cellIdentifier, for: IndexPath(item: index, section: 0)) as? GenAIChoosePetCollectionViewCell else { return UICollectionViewCell() }
+                    guard let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: GenAIChoosePetCollectionViewCell.cellIdentifier,
+                        for: IndexPath(item: index, section: 0)) as? GenAIChoosePetCollectionViewCell else { return UICollectionViewCell() }
                     cell.dataBind(data: data)
                     return cell
                 }
             }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
-        output.canRegisterPet.subscribe(onNext: { [weak self] canRegister in
-            self?.updateRegisterButtonUI(canRegister)
-        }).disposed(by: self.disposeBag)
+        output.canRegisterPet
+            .subscribe(with: self, onNext: { owner, canRegister in
+            owner.updateRegisterButtonUI(canRegister)
+        }).disposed(by: disposeBag)
         
-        output.canPushNextView.subscribe(onNext: { [weak self] _ in
+        output.canPushNextView
+            .subscribe(with: self, onNext: { owner, _ in
             guard let petId = output.petId.value else { return }
-            self?.pushToGenAIGuideVC(with: petId)
-        }).disposed(by: self.disposeBag)
+            owner.pushToGenAIGuideVC(with: petId)
+        }).disposed(by: disposeBag)
     }
     
-    private func target() {
-        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-    }
-
-    
-    //MARK: - Action Method
-    
-    @objc private func backButtonDidTap(){
-        navigationController?.popViewController(animated: true)
+    private func bindUI() {
+        rootView.backButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.navigationController?.popViewController(animated: true)
+            }).disposed(by: disposeBag)
     }
 }
 

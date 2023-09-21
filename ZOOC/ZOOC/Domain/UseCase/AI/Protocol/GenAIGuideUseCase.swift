@@ -14,6 +14,11 @@ import PhotosUI
 protocol GenAIGuideUseCase {
     var selectedImageDatasets: BehaviorRelay<[PHPickerResult]> { get }
     var ableToPhotoUpload: BehaviorRelay<Bool?> { get }
+    var isPushed: BehaviorRelay<Bool?> { get }
+    var isPopped: BehaviorRelay<Bool> { get }
+    
     func clearImageDatasets()
     func canUploadImageDatasets(_ result: [PHPickerResult])
+    func pushToSelectImageVCEvent()
+    func checkPresentPHPPickerVC()
 }

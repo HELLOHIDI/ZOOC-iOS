@@ -79,4 +79,9 @@ extension GenAIGuideViewModel {
     func getSelectedImageDatasets() -> [PHPickerResult] {
         return genAIGuideUseCase.selectedImageDatasets.value
     }
+    
+    func getPetId() -> Int? {
+        guard let petId = genAIGuideUseCase.petId.value else { return nil}
+        return petId
+    }
 }

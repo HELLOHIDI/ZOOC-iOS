@@ -10,11 +10,16 @@ import UIKit
 import SnapKit
 import Then
 
+import RxSwift
+import RxCocoa
+
 final class GenAISelectImageViewController : BaseViewController {
     
     //MARK: - Properties
     
     let viewModel: GenAISelectImageViewModel
+    private let reloadData = PublishSubject<Void>()
+    private let disposeBag = DisposeBag()
     
     //MARK: - UI Components
     
@@ -38,120 +43,70 @@ final class GenAISelectImageViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        delegate()
-        bind()
-        target()
-        
-        setNotificationCenter()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        viewModel.viewWillAppearEvent()
-        
+        bindUI()
+        bindViewModel()
     }
     
     //MARK: - Custom Method
     
-    func bind() {
-        viewModel.showEnabled.observe(on: self) { [weak self] canShow in
-            if canShow {
-                self?.rootView.activityIndicatorView.stopAnimating()
-                self?.rootView.petImageCollectionView.reloadData()
-            } else {
-                self?.rootView.activityIndicatorView.startAnimating()
-            }
-        }
+    func bindUI() {
+        rootView.xmarkButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.presentAlertViewController()
+            }).disposed(by: disposeBag)
         
-        viewModel.uploadRequestCompleted.observe(on: self) { [weak self] uploadCompleted in
-            guard let uploadCompleted = uploadCompleted else { return }
-            if uploadCompleted {
-                self?.pushToGenAICompletedVC()
-            } else {
-                self?.showToast("AI 모델 생성 중 문제가 발생했습니다", type: .bad)
-            }
-        }
-        
-        viewModel.isCompleted.observe(on: self) { [weak self] isCompleted in
-            // 푸시알림을 통해서 분기처리하면 좋을 거 같습니다!
-            guard let isCompleted = isCompleted else { return }
-            if isCompleted {
-                self?.showToast("AI 모델 생성이 완료되었습니다", type: .good)
-            } else {
-                self?.showToast("AI 모델 생성 중 문제가 발생했습니다", type: .bad)
-            }
-        }
+        rootView.reSelectedImageButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.navigationController?.popViewController(animated: false)
+            }).disposed(by: disposeBag)
     }
     
-    func delegate() {
-        rootView.petImageCollectionView.delegate = self
-        rootView.petImageCollectionView.dataSource = self
-    }
-    
-    func target() {
-        rootView.xmarkButton.addTarget(self, action: #selector(xmarkButtonDidTap), for: .touchUpInside)
-        rootView.reSelectedImageButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        rootView.generateAIModelButton.addTarget(self, action: #selector(generateAIModelButtonDidTap), for: .touchUpInside)
-    }
-    
-    func setNotificationCenter() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(petIdReceived(_:)),
-            name: .petSelected,
-            object: nil
+    func bindViewModel() {
+        let input = GenAISelectImageViewModel.Input(
+            viewWillAppearEvent: self.rx.viewWillAppear.asObservable(),
+            refreshEvent: reloadData.asObservable(),
+            generateAIModelButtonDidTapEvent: self.rootView.generateAIModelButton.rx.tap.asObservable()
         )
-    }
-    
-    //MARK: - Action Method
-    
-    @objc func xmarkButtonDidTap() {
-        presentAlertViewController()
-    }
-    
-    @objc func backButtonDidTap() {
-        self.navigationController?.popViewController(animated: false)
         
-    }
-    
-    @objc func generateAIModelButtonDidTap() {
-        viewModel.generateAIModelButtonDidTapEvent()
-    }
-    
-    @objc func petIdReceived(_ notification: Notification) {
-        viewModel.observePetIdEvent(notification: notification)
-    }
-}
-
-extension GenAISelectImageViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellWidth = (collectionView.frame.width - 20) / 3
-        let cellHeight = cellWidth
-        return CGSize(width: cellWidth, height: cellHeight)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
-    }
-}
-extension GenAISelectImageViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.petImageDatasets.value.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenAIPetImageCollectionViewCell.cellIdentifier, for: indexPath) as? GenAIPetImageCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        if viewModel.petImageDatasets.value.count > 0 {
-            cell.petImageView.image = viewModel.petImageDatasets.value[indexPath.item]
-        }
-        return cell
+        let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
+        
+        output.convertCompleted.subscribe(with: self, onNext: { owner, convertCompleted in
+            guard let convertCompleted = convertCompleted else { return }
+            if convertCompleted {
+                owner.rootView.petImageCollectionView.reloadData()
+                owner.reloadData.onNext(())
+            }
+        }).disposed(by: disposeBag)
+        
+        output.petImageDatasets.bind(to: self.rootView.petImageCollectionView.rx.items(
+            cellIdentifier: GenAIPetImageCollectionViewCell.cellIdentifier,
+            cellType: GenAIPetImageCollectionViewCell.self
+        )) { index, _, cell in
+            if output.petImageDatasets.value.count > 0 {
+                cell.petImageView.image = output.petImageDatasets.value[index]
+            }
+        }.disposed(by: self.disposeBag)
+        
+        output.ableToShowImages.subscribe(with: self, onNext: { owner, canShow in
+            if canShow {
+                owner.rootView.activityIndicatorView.stopAnimating()
+                owner.rootView.petImageCollectionView.reloadData()
+            } else {
+                owner.rootView.activityIndicatorView.startAnimating()
+            }
+        }).disposed(by: disposeBag)
+        
+        output.uploadRequestCompleted.subscribe(with: self, onNext: { owner, uploadCompleted in
+            guard let uploadCompleted = uploadCompleted else { return }
+            if uploadCompleted { owner.pushToGenAICompletedVC() }
+            else { owner.showToast("AI 모델 생성 중 문제가 발생했습니다", type: .bad) }
+        }).disposed(by: disposeBag)
+        
+        output.uploadCompleted.subscribe(with: self, onNext: { owner, convertCompleted in
+            guard let convertCompleted = convertCompleted else { return }
+            if convertCompleted { owner.showToast("AI 모델 생성이 완료되었습니다", type: .good) }
+            else { owner.showToast("AI 모델 생성 중 문제가 발생했습니다", type: .bad) }
+        }).disposed(by: disposeBag)
     }
 }
 

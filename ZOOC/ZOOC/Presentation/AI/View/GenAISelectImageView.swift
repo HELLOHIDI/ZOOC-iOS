@@ -71,6 +71,9 @@ final class GenAISelectImageView: UIView {
         petImageCollectionView.do {
             let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .vertical
+            layout.itemSize = CGSize(width: 98, height: 98)
+            layout.minimumLineSpacing = 10
+            layout.minimumInteritemSpacing = 10
             
             $0.collectionViewLayout = layout
             $0.backgroundColor = .clear

@@ -17,7 +17,6 @@ final class GenAIGuideViewController : BaseViewController {
     
     //MARK: - Properties
     
-    var petId: Int?
     private let disposeBag = DisposeBag()
     private let pickedImageSubject = PublishSubject<[PHPickerResult]>()
     private let pushToGenAISelectImageSubject = PublishSubject<Void>()
@@ -93,12 +92,13 @@ final class GenAIGuideViewController : BaseViewController {
 
 extension GenAIGuideViewController {
     private func pushToGenAISelectImageVC() {
-        guard let petId = self.petId else { return }
         let genAISelectImageVC = GenAISelectImageViewController(
-            viewModel: DefaultGenAISelectImageViewModel(
-                petId: petId,
-                selectedImageDatasets: viewModel.getSelectedImageDatasets(),
-                repository: GenAIModelRepositoryImpl()
+            viewModel: GenAISelectImageViewModel(
+                genAISelectImageUseCase: DefaultGenAISelectImageUseCase(
+                    petId: viewModel.getPetId(),
+                    selectedImageDatesets: viewModel.getSelectedImageDatasets(),
+                    repository: GenAIModelRepositoryImpl()
+                )
             )
         )
         self.navigationController?.pushViewController(genAISelectImageVC, animated: true)

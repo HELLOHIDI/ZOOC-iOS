@@ -12,6 +12,7 @@ import RxCocoa
 import PhotosUI
 
 protocol GenAIGuideUseCase {
+    var petId: BehaviorRelay<Int?> { get }
     var selectedImageDatasets: BehaviorRelay<[PHPickerResult]> { get }
     var ableToPhotoUpload: BehaviorRelay<Bool?> { get }
     var isPushed: BehaviorRelay<Bool?> { get }

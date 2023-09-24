@@ -317,6 +317,8 @@
 		D2F3D6042A453E1000C90A5A /* EditPetProfileResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F3D6032A453E1000C90A5A /* EditPetProfileResult.swift */; };
 		D2F98F9D2967154D00CC82DE /* ZoocAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F98F9C2967154D00CC82DE /* ZoocAlertViewController.swift */; };
 		D2F98F9F29676E3300CC82DE /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F98F9E29676E3300CC82DE /* UINavigationController+.swift */; };
+		D2F99B452ABC22E200C7C91F /* GenAISelectImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F99B442ABC22E200C7C91F /* GenAISelectImageUseCase.swift */; };
+		D2F99B472ABC25B000C7C91F /* DefaultGenAISelectImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F99B462ABC25B000C7C91F /* DefaultGenAISelectImageUseCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -620,6 +622,8 @@
 		D2F3D6032A453E1000C90A5A /* EditPetProfileResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPetProfileResult.swift; sourceTree = "<group>"; };
 		D2F98F9C2967154D00CC82DE /* ZoocAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocAlertViewController.swift; sourceTree = "<group>"; };
 		D2F98F9E29676E3300CC82DE /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
+		D2F99B442ABC22E200C7C91F /* GenAISelectImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAISelectImageUseCase.swift; sourceTree = "<group>"; };
+		D2F99B462ABC25B000C7C91F /* DefaultGenAISelectImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGenAISelectImageUseCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1685,6 +1689,7 @@
 				D299442A2AAC833F00C4F280 /* DefaultGenAIChoosePetUseCase.swift */,
 				D29944332AAEE5C400C4F280 /* DefaultGenAIRegisterPetUseCase.swift */,
 				D2ED948F2ABAC1EE0040B687 /* DefaultGenAIGuideUseCase.swift */,
+				D2F99B462ABC25B000C7C91F /* DefaultGenAISelectImageUseCase.swift */,
 			);
 			path = AI;
 			sourceTree = "<group>";
@@ -1695,6 +1700,7 @@
 				D29944232AAC7EA100C4F280 /* GenAIChoosePetUseCase.swift */,
 				D29944312AAEDC4100C4F280 /* GenAIRegisterPetUseCase.swift */,
 				D2ED948D2ABAB5B40040B687 /* GenAIGuideUseCase.swift */,
+				D2F99B442ABC22E200C7C91F /* GenAISelectImageUseCase.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -1906,6 +1912,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D23503012964702400F01101 /* MyAppInformationView.swift in Sources */,
+				D2F99B452ABC22E200C7C91F /* GenAISelectImageUseCase.swift in Sources */,
 				874369572A8FFB260035AFD6 /* NetworkMonitor.swift in Sources */,
 				87E462F12A110E18006FC35D /* CGColor+.swift in Sources */,
 				D235030729647B4200F01101 /* MyAppInformationViewController.swift in Sources */,
@@ -2152,6 +2159,7 @@
 				87F288052A9FA69200A53218 /* OrderAssistantCompleteView.swift in Sources */,
 				87A3D88A2A975D4F002C36DB /* OrderAddressView.swift in Sources */,
 				87648323295236B700F74882 /* UIColor+.swift in Sources */,
+				D2F99B472ABC25B000C7C91F /* DefaultGenAISelectImageUseCase.swift in Sources */,
 				D27D9560296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift in Sources */,
 				D26C68EC296DE7B60088DC9A /* MyPetRegisterModel.swift in Sources */,
 				D2EA37EF29BEAB57007EF4B7 /* OnboardingBaseView.swift in Sources */,

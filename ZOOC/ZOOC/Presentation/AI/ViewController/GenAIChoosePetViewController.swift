@@ -123,11 +123,12 @@ extension GenAIChoosePetViewController {
     func pushToGenAIGuideVC(with petId: Int) {
         let genAIGuideVC = GenAIGuideViewController(
             viewModel: GenAIGuideViewModel(
-                genAIGuideUseCase: DefaultGenAIGuideUseCase()
+                genAIGuideUseCase: DefaultGenAIGuideUseCase(
+                    petId: viewModel.getPetId().value
+                )
             )
         )
         genAIGuideVC.hidesBottomBarWhenPushed = true
-        genAIGuideVC.petId = petId
         navigationController?.pushViewController(genAIGuideVC, animated: true)
     }
     

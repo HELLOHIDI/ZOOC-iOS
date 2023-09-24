@@ -12,14 +12,18 @@ import RxCocoa
 import PhotosUI
 
 final class DefaultGenAIGuideUseCase: GenAIGuideUseCase {
-    
     private let disposeBag = DisposeBag()
     
+    var petId = BehaviorRelay<Int?>(value: nil)
     var selectedImageDatasets = BehaviorRelay<[PHPickerResult]>(value: [])
     var ableToPhotoUpload = BehaviorRelay<Bool?>(value: nil)
     var isPushed = BehaviorRelay<Bool?>(value: nil)
     var isPopped = BehaviorRelay<Bool>(value: false)
     
+    init(petId: Int?) {
+        self.petId.accept(petId)
+    }
+
     func clearImageDatasets() {
         selectedImageDatasets.accept([])
     }

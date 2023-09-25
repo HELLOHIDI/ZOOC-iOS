@@ -74,15 +74,15 @@ final class GenAIChoosePetViewModel: ViewModelType {
 }
 
 extension GenAIChoosePetViewModel {
-    func getPetListData() -> BehaviorRelay<[RecordRegisterModel]> {
-        return genAIChoosePetUseCase.petList
+    func getPetListData() -> [RecordRegisterModel] {
+        return genAIChoosePetUseCase.petList.value
     }
     
-    func getPetId() -> BehaviorRelay<Int?> {
-        return genAIChoosePetUseCase.petId
+    func getPetId() -> Int? {
+        return genAIChoosePetUseCase.petId.value
     }
     
-    func getCanRegisterPet() ->  BehaviorRelay<Bool> {
-        return genAIChoosePetUseCase.canRegisterPet
+    func getCanRegisterPet() -> Bool {
+        return genAIChoosePetUseCase.canRegisterPet.value
     }
 }

@@ -22,7 +22,7 @@ final class GenAISelectImageViewModel: ViewModelType {
     
     struct Input {
         var viewWillAppearEvent: Observable<Void>
-        var refreshEvent: Observable<Void>
+        var reloadData: Observable<Void>
         var generateAIModelButtonDidTapEvent: Observable<Void>
     }
     
@@ -42,7 +42,7 @@ final class GenAISelectImageViewModel: ViewModelType {
             self.genAISelectImageUseCase.loadImageEvent()
         }).disposed(by: disposeBag)
         
-        input.refreshEvent.subscribe(onNext: {
+        input.reloadData.subscribe(onNext: {
             self.genAISelectImageUseCase.reloadEvent()
         }).disposed(by: disposeBag)
         

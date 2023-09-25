@@ -23,14 +23,11 @@ final class GenAIGuideViewModel: ViewModelType {
         var viewWillAppearEvent: Observable<Void>
         var viewWillDisappearEvent: Observable<Void>
         var didFinishPickingImageEvent: Observable<[PHPickerResult]>
-        var pushToGenAISelectImageVCEvent: Observable<Void>
     }
     
     struct Output {
         var selectedImageDatasets = BehaviorRelay<[PHPickerResult]>(value: [])
         var ableToPhotoUpload = BehaviorRelay<Bool?>(value: nil)
-        var isPushed = BehaviorRelay<Bool?>(value: nil)
-        var isPopped = BehaviorRelay<Bool>(value: false)
     }
     
     func transform(from input: Input, disposeBag: DisposeBag) -> Output {
@@ -49,10 +46,6 @@ final class GenAIGuideViewModel: ViewModelType {
             self.genAIGuideUseCase.canUploadImageDatasets(result)
         }).disposed(by: disposeBag)
         
-        input.pushToGenAISelectImageVCEvent.subscribe(onNext: {
-            self.genAIGuideUseCase.pushToSelectImageVCEvent()
-        }).disposed(by: disposeBag)
-        
         return output
     }
     
@@ -63,14 +56,6 @@ final class GenAIGuideViewModel: ViewModelType {
         
         genAIGuideUseCase.ableToPhotoUpload.subscribe(onNext: { canUpload in
             output.ableToPhotoUpload.accept(canUpload)
-        }).disposed(by: disposeBag)
-        
-        genAIGuideUseCase.isPushed.subscribe(onNext: { isPushed in
-            output.isPushed.accept(isPushed)
-        }).disposed(by: disposeBag)
-        
-        genAIGuideUseCase.isPopped.subscribe(onNext: { isPopped in
-            output.isPopped.accept(isPopped)
         }).disposed(by: disposeBag)
     }
 }

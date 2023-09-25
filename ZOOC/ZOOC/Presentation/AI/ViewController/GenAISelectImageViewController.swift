@@ -7,9 +7,6 @@
 
 import UIKit
 
-import SnapKit
-import Then
-
 import RxSwift
 import RxCocoa
 
@@ -57,6 +54,10 @@ final class GenAISelectImageViewController : BaseViewController {
         
         rootView.reSelectedImageButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
+                NotificationCenter.default.post(
+                    name: Notification.Name("reselectImage"),
+                    object: nil
+                )
                 owner.navigationController?.popViewController(animated: false)
             }).disposed(by: disposeBag)
     }
@@ -64,7 +65,7 @@ final class GenAISelectImageViewController : BaseViewController {
     func bindViewModel() {
         let input = GenAISelectImageViewModel.Input(
             viewWillAppearEvent: self.rx.viewWillAppear.asObservable(),
-            refreshEvent: reloadData.asObservable(),
+            reloadData: reloadData.asObservable(),
             generateAIModelButtonDidTapEvent: self.rootView.generateAIModelButton.rx.tap.asObservable()
         )
         
@@ -87,14 +88,16 @@ final class GenAISelectImageViewController : BaseViewController {
             }
         }.disposed(by: self.disposeBag)
         
-        output.ableToShowImages.subscribe(with: self, onNext: { owner, canShow in
-            if canShow {
-                owner.rootView.activityIndicatorView.stopAnimating()
-                owner.rootView.petImageCollectionView.reloadData()
-            } else {
-                owner.rootView.activityIndicatorView.startAnimating()
-            }
-        }).disposed(by: disposeBag)
+        output.ableToShowImages
+            .asDriver(onErrorJustReturn: false)
+            .drive(with: self, onNext: { owner, canShow in
+                if canShow {
+                    owner.rootView.activityIndicatorView.stopAnimating()
+                    owner.rootView.petImageCollectionView.reloadData()
+                } else {
+                    owner.rootView.activityIndicatorView.startAnimating()
+                }
+            }).disposed(by: disposeBag)
         
         output.uploadRequestCompleted.subscribe(with: self, onNext: { owner, uploadCompleted in
             guard let uploadCompleted = uploadCompleted else { return }

@@ -10,8 +10,6 @@ import PhotosUI
 
 import RxSwift
 import RxCocoa
-import SnapKit
-import Then
 
 final class GenAIGuideViewController : BaseViewController {
     
@@ -19,7 +17,6 @@ final class GenAIGuideViewController : BaseViewController {
     
     private let disposeBag = DisposeBag()
     private let pickedImageSubject = PublishSubject<[PHPickerResult]>()
-    private let pushToGenAISelectImageSubject = PublishSubject<Void>()
     let viewModel: GenAIGuideViewModel
     
     //MARK: - UI Components
@@ -46,6 +43,8 @@ final class GenAIGuideViewController : BaseViewController {
         
         bindUI()
         bindViewModel()
+        
+        setNotification()
     }
 
     //MARK: - Custom Method
@@ -71,8 +70,7 @@ final class GenAIGuideViewController : BaseViewController {
         let input = GenAIGuideViewModel.Input(
             viewWillAppearEvent: self.rx.viewWillAppear.asObservable(),
             viewWillDisappearEvent: self.rx.viewWillDisappear.asObservable(),
-            didFinishPickingImageEvent: pickedImageSubject.asObservable(),
-            pushToGenAISelectImageVCEvent: pushToGenAISelectImageSubject.asObservable()
+            didFinishPickingImageEvent: pickedImageSubject.asObservable()
         )
         
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
@@ -83,10 +81,19 @@ final class GenAIGuideViewController : BaseViewController {
                 if canUpload { owner.pushToGenAISelectImageVC()}
                 else { owner.presentDenineGenerateAIViewController() }
             }).disposed(by: disposeBag)
-        
-        output.isPopped.subscribe(with: self, onNext: { owner, isPopped in
-            if isPopped { owner.presentPHPickerViewController() }
-        }).disposed(by: disposeBag)
+    }
+    
+    private func setNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(reselectImage),
+            name: Notification.Name("reselectImage"),
+            object: nil
+        )
+    }
+    
+    @objc func reselectImage() {
+        presentPHPickerViewController()
     }
 }
 
@@ -102,7 +109,6 @@ extension GenAIGuideViewController {
             )
         )
         self.navigationController?.pushViewController(genAISelectImageVC, animated: true)
-        pushToGenAISelectImageSubject.onNext(())
     }
     
     private func presentPHPickerViewController() {
@@ -132,7 +138,7 @@ extension GenAIGuideViewController {
 extension GenAIGuideViewController: ZoocAlertViewControllerDelegate {
     
     func exitButtonDidTap() {
-        dismiss(animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     func keepButtonDidTap() {

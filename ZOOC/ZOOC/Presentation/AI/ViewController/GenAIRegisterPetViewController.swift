@@ -7,9 +7,6 @@
 
 import UIKit
 
-import SnapKit
-import Then
-
 import RxSwift
 import RxCocoa
 
@@ -151,7 +148,7 @@ extension GenAIRegisterPetViewController {
         let genAIGuideVC = GenAIGuideViewController(
             viewModel: GenAIGuideViewModel(
                 genAIGuideUseCase: DefaultGenAIGuideUseCase(
-                    petId: viewModel.getPetId().value
+                    petId: viewModel.getPetId()
                 )
             )
         )

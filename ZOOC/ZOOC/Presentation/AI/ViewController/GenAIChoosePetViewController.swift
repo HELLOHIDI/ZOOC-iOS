@@ -7,9 +7,6 @@
 
 import UIKit
 
-import SnapKit
-import Then
-
 import RxSwift
 import RxCocoa
 
@@ -43,7 +40,7 @@ final class GenAIChoosePetViewController: BaseViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.rootView.petCollectionView.collectionViewLayout = layout
+        configureCollectionViewLayout()
         bindUI()
         bindViewModel()
         
@@ -63,9 +60,6 @@ final class GenAIChoosePetViewController: BaseViewController{
         output.petList
             .asDriver(onErrorJustReturn: [])
             .drive(self.rootView.petCollectionView.rx.items) { collectionView, index, data in
-                self.layout.minimumLineSpacing = 0
-                self.layout.minimumInteritemSpacing = 0
-                self.layout.scrollDirection = .vertical
                 switch output.petList.value.count {
                 case 4:
                     self.layout.itemSize = CGSize(
@@ -94,14 +88,14 @@ final class GenAIChoosePetViewController: BaseViewController{
             .disposed(by: disposeBag)
         
         output.canRegisterPet
-            .subscribe(with: self, onNext: { owner, canRegister in
-            owner.updateRegisterButtonUI(canRegister)
-        }).disposed(by: disposeBag)
+            .asDriver(onErrorJustReturn: false)
+            .drive(with: self, onNext: { owner, canRegister in
+                owner.updateRegisterButtonUI(canRegister)
+            }).disposed(by: disposeBag)
         
         output.canPushNextView
             .subscribe(with: self, onNext: { owner, _ in
-            guard let petId = output.petId.value else { return }
-            owner.pushToGenAIGuideVC(with: petId)
+                owner.pushToGenAIGuideVC(with: owner.viewModel.getPetId())
         }).disposed(by: disposeBag)
     }
     
@@ -110,6 +104,14 @@ final class GenAIChoosePetViewController: BaseViewController{
             .subscribe(with: self, onNext: { owner, _ in
                 owner.navigationController?.popViewController(animated: true)
             }).disposed(by: disposeBag)
+    }
+    
+    private func configureCollectionViewLayout() {
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.scrollDirection = .vertical
+        
+        self.rootView.petCollectionView.collectionViewLayout = layout
     }
 }
 
@@ -120,11 +122,11 @@ extension GenAIChoosePetViewController: ZoocAlertViewControllerDelegate {
 }
 
 extension GenAIChoosePetViewController {
-    func pushToGenAIGuideVC(with petId: Int) {
+    func pushToGenAIGuideVC(with petId: Int?) {
         let genAIGuideVC = GenAIGuideViewController(
             viewModel: GenAIGuideViewModel(
                 genAIGuideUseCase: DefaultGenAIGuideUseCase(
-                    petId: viewModel.getPetId().value
+                    petId: viewModel.getPetId()
                 )
             )
         )

@@ -33,7 +33,7 @@ final class DefaultGenAIChoosePetUseCase: GenAIChoosePetUseCase {
         }
         petList.accept(updatedPetList)
         canRegisterPet.accept(true)
-        petId.accept(index)
+        petId.accept(petList.value[index].petID)
     }
     
     func getTotalPet() {

@@ -81,7 +81,7 @@ final class GenAIRegisterPetViewModel: ViewModelType {
 }
 
 extension GenAIRegisterPetViewModel {
-    func getPetId() -> BehaviorRelay<Int?> {
-        return genAIRegisterPetUseCase.petId
+    func getPetId() -> Int? {
+        return genAIRegisterPetUseCase.petId.value
     }
 }

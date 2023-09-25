@@ -7,10 +7,7 @@
 
 import UIKit
 
-import SnapKit
-import Then
-
-final class GenAICompletedViewController : UIViewController{
+final class GenAICompletedViewController : UIViewController {
     
     //MARK: - Properties
     
@@ -34,7 +31,6 @@ final class GenAICompletedViewController : UIViewController{
     
     private func target() {
         rootView.cancelButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        
     }
     
     //MARK: - Action Method

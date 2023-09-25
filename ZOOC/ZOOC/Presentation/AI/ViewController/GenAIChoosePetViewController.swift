@@ -125,7 +125,6 @@ extension GenAIChoosePetViewController: ZoocAlertViewControllerDelegate {
 
 extension GenAIChoosePetViewController {
     func pushToGenAIGuideVC(with petId: Int?) {
-        print(#function)
         let genAIGuideVC = GenAIGuideViewController(
             viewModel: GenAIGuideViewModel(
                 genAIGuideUseCase: DefaultGenAIGuideUseCase(

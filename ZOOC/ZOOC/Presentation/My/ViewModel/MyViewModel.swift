@@ -64,7 +64,7 @@ extension DefaultMyViewModel {
             switch result {
             case .success(let data):
                 guard let result = data as? OnboardingInviteResult else { return }
-                self.inviteCodeMessage.value = TextLiteral.invitedMessage(invitedCode: result.code)
+                self.inviteCode.value = TextLiteral.invitedMessage(invitedCode: result.code)
             default:
                 break
             }

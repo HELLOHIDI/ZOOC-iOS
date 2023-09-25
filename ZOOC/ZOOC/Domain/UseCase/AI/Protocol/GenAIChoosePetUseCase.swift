@@ -11,10 +11,10 @@ import RxSwift
 import RxCocoa
 
 protocol GenAIChoosePetUseCase {
-    var petList: BehaviorRelay<[RecordRegisterModel]> { get set }
-    var petId: BehaviorRelay<Int?> { get set }
-    var canRegisterPet: BehaviorRelay<Bool> { get set }
-    var canPushNextView: BehaviorRelay<Bool> { get set }
+    var petList: BehaviorRelay<[RecordRegisterModel]> { get }
+    var petId: BehaviorRelay<Int?> { get }
+    var canRegisterPet: BehaviorRelay<Bool> { get }
+    var canPushNextView: BehaviorRelay<Bool> { get }
     func selectPet(at index: Int)
     func pushNextView()
     func getTotalPet()

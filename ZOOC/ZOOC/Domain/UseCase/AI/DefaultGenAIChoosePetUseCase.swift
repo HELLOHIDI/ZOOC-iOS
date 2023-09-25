@@ -26,6 +26,7 @@ final class DefaultGenAIChoosePetUseCase: GenAIChoosePetUseCase {
     
     
     func selectPet(at index: Int) {
+        print(#function)
         let updatedPetList = petList.value.map { pet in
             var updatedPet = pet
             updatedPet.isSelected = pet.petID == petList.value[index].petID
@@ -40,7 +41,7 @@ final class DefaultGenAIChoosePetUseCase: GenAIChoosePetUseCase {
         repository.getTotalPet() { [weak self] result in
             switch result {
             case .success(let data):
-                guard let result = data as? [RecordPetResult] else { return }
+                guard let result = data as? [PetResult] else { return }
                 var updatedList: [RecordRegisterModel] = []
                 result.forEach { updatedList.append($0.transform()) }
                 self?.petList.accept(updatedList)
@@ -51,6 +52,9 @@ final class DefaultGenAIChoosePetUseCase: GenAIChoosePetUseCase {
     }
     
     func pushNextView() {
+        print(#function)
+        print("canRegisterPet.value \(canRegisterPet.value)")
+        print("canPushNextView.value \(canPushNextView.value)")
         canPushNextView.accept(canRegisterPet.value)
     }
 }

@@ -94,9 +94,11 @@ final class GenAIChoosePetViewController: BaseViewController{
             }).disposed(by: disposeBag)
         
         output.canPushNextView
-            .subscribe(with: self, onNext: { owner, _ in
+            .asDriver(onErrorJustReturn: false)
+            .filter { $0 }
+            .drive(with: self, onNext: { owner, _ in
                 owner.pushToGenAIGuideVC(with: owner.viewModel.getPetId())
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
     }
     
     private func bindUI() {
@@ -123,6 +125,7 @@ extension GenAIChoosePetViewController: ZoocAlertViewControllerDelegate {
 
 extension GenAIChoosePetViewController {
     func pushToGenAIGuideVC(with petId: Int?) {
+        print(#function)
         let genAIGuideVC = GenAIGuideViewController(
             viewModel: GenAIGuideViewModel(
                 genAIGuideUseCase: DefaultGenAIGuideUseCase(

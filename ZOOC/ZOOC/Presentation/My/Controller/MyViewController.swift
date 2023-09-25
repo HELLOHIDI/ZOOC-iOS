@@ -72,7 +72,7 @@ final class MyViewController: BaseViewController {
             self?.rootView.myCollectionView.reloadData()
         }
         
-        viewModel.inviteCode.observe(on: self) { [weak self] inviteCode in
+        viewModel.inviteCodeMessage.observe(on: self) { [weak self] inviteCode in
             guard let code = inviteCode else { return }
             self?.shareInviteCode(code: code)
         }
@@ -345,7 +345,7 @@ extension MyViewController {
         self.present(activityViewController, animated: true, completion: nil)
         
         activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
-            let message = success ? "초대 코드 복사에 성공했습니다"  : "초대 코드 복사에 실패했습니다"
+            let message = success ? "초대 코드 복사에 성공했습니다"  : "초대 코드 복사가 되지 않았어요"
             let type: Toast.ToastType = success ? .good : .bad
             self.showToast(message, type: type)
         }
@@ -374,7 +374,9 @@ extension MyViewController: MFMailComposeViewControllerDelegate {
             self.present(composeViewController, animated: true, completion: nil)
         } else {
             print("메일 보내기 실패")
-            let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "메일을 보내려면 'Mail' 앱이 필요합니다. App Store에서 해당 앱을 복원하거나 이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+            let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패",
+                                                       message: "메일을 보내려면 'Mail' 앱이 필요합니다. App Store에서 해당 앱을 복원하거나 이메일 설정을 확인하고 다시 시도해주세요.",
+                                                       preferredStyle: .alert)
             let goAppStoreAction = UIAlertAction(title: "App Store로 이동하기", style: .default) { _ in
                 // 앱스토어로 이동하기(Mail)
                 let url = "https://apps.apple.com/kr/app/mail/id1108187098"

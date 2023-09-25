@@ -264,7 +264,7 @@ final class OrderAddressView: UIView {
         delegate?.basicAddressButtonDidTap(headerView.frame.height +
                                            buttonView.frame.height + basicAddressView.basicAddressCollectionView.contentSize.height)
         
-        guard !(basicAddressDatas?.isEmpty ?? false) else {
+        guard !(basicAddressDatas?.isEmpty ?? true) else {
             return
         }
         addressType = .registed

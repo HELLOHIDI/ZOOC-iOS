@@ -88,7 +88,7 @@ final class GenAIChoosePetCollectionViewCell: UICollectionViewCell {
         profilePetImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(40)
-            $0.width.height.equalTo(50)
+            $0.size.equalTo(50)
         }
         
         selectImageView.snp.makeConstraints {
@@ -102,11 +102,12 @@ final class GenAIChoosePetCollectionViewCell: UICollectionViewCell {
     // MARK: - Action Method
     
     func dataBind(data: RecordRegisterModel) {
-        if let imageURL = data.petImageURL {
+        if let imageURL = data.petImageURL{
             profilePetImageView.kfSetImage(url: imageURL)
         } else {
             profilePetImageView.image = Image.defaultProfile
         }
+
         petNameLabel.text = data.petName
         selectImageView.isHidden = data.isSelected ? false : true
         

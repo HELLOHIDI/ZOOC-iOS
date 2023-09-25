@@ -18,10 +18,11 @@ protocol MyEditPetProfileModelInput {
 }
 
 protocol MyEditPetProfileModelOutput {
-    var ableToEditPetProfile: Observable<Bool> { get }
-    var textFieldState: Observable<BaseTextFieldState> { get }
-    var editCompletedOutput: Observable<Bool?> { get }
-    var editPetProfileDataOutput: Observable<EditPetProfileRequest> { get }
+    var ableToEditPetProfile: ObservablePattern<Bool> { get }
+    var textFieldState: ObservablePattern<BaseTextFieldState> { get }
+    var editCompletedOutput: ObservablePattern<Bool?> { get }
+    var editPetProfileDataOutput: ObservablePattern<EditPetProfileRequest> { get }
+    
 }
 
 typealias MyEditPetProfileViewModel = MyEditPetProfileModelInput & MyEditPetProfileModelOutput
@@ -30,10 +31,10 @@ final class DefaultMyEditPetProfileViewModel: MyEditPetProfileViewModel {
     let id: Int
     let repository: MyEditPetProfileRepository
     
-    var ableToEditPetProfile: Observable<Bool> = Observable(false)
-    var textFieldState: Observable<BaseTextFieldState> = Observable(.isEmpty)
-    var editCompletedOutput: Observable<Bool?> = Observable(nil)
-    var editPetProfileDataOutput: Observable<EditPetProfileRequest> = Observable(EditPetProfileRequest())
+    var ableToEditPetProfile: ObservablePattern<Bool> = ObservablePattern(false)
+    var textFieldState: ObservablePattern<BaseTextFieldState> = ObservablePattern(.isEmpty)
+    var editCompletedOutput: ObservablePattern<Bool?> = ObservablePattern(nil)
+    var editPetProfileDataOutput: ObservablePattern<EditPetProfileRequest> = ObservablePattern(EditPetProfileRequest())
     
     init(id: Int,
         editPetProfileRequest: EditPetProfileRequest,

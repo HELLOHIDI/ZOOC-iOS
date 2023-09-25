@@ -72,7 +72,7 @@ final class MyViewController: BaseViewController {
             self?.rootView.myCollectionView.reloadData()
         }
         
-        viewModel.inviteCodeMessage.observe(on: self) { [weak self] inviteCode in
+        viewModel.inviteCode.observe(on: self) { [weak self] inviteCode in
             guard let code = inviteCode else { return }
             self?.shareInviteCode(code: code)
         }

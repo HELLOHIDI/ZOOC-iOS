@@ -15,9 +15,9 @@ protocol OnboardingChooseRoleViewModelInput {
 }
 
 protocol OnboardingChooseRoleViewModelOutput {
-    var ableToEditProfile: Observable<Bool> { get }
-    var textFieldState: Observable<BaseTextFieldState> { get }
-    var editCompletedOutput: Observable<Bool?> { get }
+    var ableToEditProfile: ObservablePattern<Bool> { get }
+    var textFieldState: ObservablePattern<BaseTextFieldState> { get }
+    var editCompletedOutput: ObservablePattern<Bool?> { get }
 }
 
 protocol OnboardingChooseRoleNetworkHandlerProtocol {
@@ -26,10 +26,10 @@ protocol OnboardingChooseRoleNetworkHandlerProtocol {
 
 final class OnboardingChooseRoleViewModel: OnboardingChooseRoleViewModelInput, OnboardingChooseRoleViewModelOutput {
     
-    var ableToEditProfile: Observable<Bool> = Observable(false)
-    var textFieldState: Observable<BaseTextFieldState> = Observable(.isEmpty)
-    var editCompletedOutput: Observable<Bool?> = Observable(nil)
-    var editProfileDataOutput: Observable<EditProfileRequest> = Observable(EditProfileRequest())
+    var ableToEditProfile: ObservablePattern<Bool> = ObservablePattern(false)
+    var textFieldState: ObservablePattern<BaseTextFieldState> = ObservablePattern(.isEmpty)
+    var editCompletedOutput: ObservablePattern<Bool?> = ObservablePattern(nil)
+    var editProfileDataOutput: ObservablePattern<EditProfileRequest> = ObservablePattern(EditProfileRequest())
     
     
     init(editProfileData: EditProfileRequest) {

@@ -7,46 +7,66 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
 import PhotosUI
 
-protocol GenAIGuideViewModelInput {
-    func viewWillDisappearEvent()
-    func keepButtonTapEvent()
-    func didFinishChoosingPhotosEvent(results: [PHPickerResult])
-}
-
-protocol GenAIGuideViewModelOutput {
-    var selectedImageDatasets: Observable<[PHPickerResult]> { get }
-    var enablePhotoUpload: Observable<Bool?> { get }
-    var isPopped: Observable<Bool> { get }
-}
-
-typealias GenAIGuideViewModel = GenAIGuideViewModelInput & GenAIGuideViewModelOutput
-
-final class DefaultGenAIGuideViewModel: GenAIGuideViewModel {
+final class GenAIGuideViewModel: ViewModelType {
+    internal var disposeBag = DisposeBag()
+    private let genAIGuideUseCase: GenAIGuideUseCase
     
-    var selectedImageDatasets: Observable<[PHPickerResult]> = Observable([])
-    var enablePhotoUpload: Observable<Bool?> = Observable(nil)
-    var isPopped: Observable<Bool> = Observable(false)
-    
-    func viewWillDisappearEvent() {
-        selectedImageDatasets.value = []
+    init(genAIGuideUseCase: GenAIGuideUseCase) {
+        self.genAIGuideUseCase = genAIGuideUseCase
     }
     
-    func keepButtonTapEvent() {
-        selectedImageDatasets.value = []
+    struct Input {
+        var viewWillAppearEvent: Observable<Void>
+        var viewWillDisappearEvent: Observable<Void>
+        var didFinishPickingImageEvent: Observable<[PHPickerResult]>
     }
     
-    func didFinishChoosingPhotosEvent(results: [PHPickerResult]) {
-        for result in results {
-            selectedImageDatasets.value.append(result)
-        }
+    struct Output {
+        var selectedImageDatasets = BehaviorRelay<[PHPickerResult]>(value: [])
+        var ableToPhotoUpload = BehaviorRelay<Bool?>(value: nil)
+    }
+    
+    func transform(from input: Input, disposeBag: DisposeBag) -> Output {
+        let output = Output()
+        self.bindOutput(output: output, disposeBag: disposeBag)
         
-        if 8 <= selectedImageDatasets.value.count && selectedImageDatasets.value.count <= 15 {
-            enablePhotoUpload.value = true
-        } else {
-            enablePhotoUpload.value = false
-        }
+        input.viewWillAppearEvent.subscribe(onNext: {
+            self.genAIGuideUseCase.checkPresentPHPPickerVC()
+        }).disposed(by: disposeBag)
+        
+        input.viewWillDisappearEvent.subscribe(onNext: {
+            self.genAIGuideUseCase.clearImageDatasets()
+        }).disposed(by: disposeBag)
+        
+        input.didFinishPickingImageEvent.subscribe(onNext: { result in
+            self.genAIGuideUseCase.canUploadImageDatasets(result)
+        }).disposed(by: disposeBag)
+        
+        return output
+    }
+    
+    private func bindOutput(output: Output, disposeBag: DisposeBag) {
+        genAIGuideUseCase.selectedImageDatasets.subscribe(onNext: { imageDatasets in
+            output.selectedImageDatasets.accept(imageDatasets)
+        }).disposed(by: disposeBag)
+        
+        genAIGuideUseCase.ableToPhotoUpload.subscribe(onNext: { canUpload in
+            output.ableToPhotoUpload.accept(canUpload)
+        }).disposed(by: disposeBag)
     }
 }
 
+extension GenAIGuideViewModel {
+    func getSelectedImageDatasets() -> [PHPickerResult] {
+        return genAIGuideUseCase.selectedImageDatasets.value
+    }
+    
+    func getPetId() -> Int? {
+        guard let petId = genAIGuideUseCase.petId.value else { return nil}
+        return petId
+    }
+}

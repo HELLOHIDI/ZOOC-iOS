@@ -211,10 +211,10 @@
 		D235030B2964991700F01101 /* MyEditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D235030A2964991700F01101 /* MyEditProfileViewController.swift */; };
 		D24AFAB22A8DFB9F00823E9C /* GenAIChoosePetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB12A8DFB9F00823E9C /* GenAIChoosePetViewController.swift */; };
 		D24AFAB42A8DFBB300823E9C /* GenAIChoosePetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB32A8DFBB300823E9C /* GenAIChoosePetView.swift */; };
-		D24AFAB62A8DFC3000823E9C /* GenAIChoosePetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB52A8DFC3000823E9C /* GenAIChoosePetModel.swift */; };
+		D24AFAB62A8DFC3000823E9C /* GenAIChoosePetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB52A8DFC3000823E9C /* GenAIChoosePetViewModel.swift */; };
 		D24AFAB82A8DFCE800823E9C /* GenAIRegisterPetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB72A8DFCE800823E9C /* GenAIRegisterPetView.swift */; };
 		D24AFABA2A8E011800823E9C /* GenAIRegisterPetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB92A8E011800823E9C /* GenAIRegisterPetViewController.swift */; };
-		D24AFABC2A8E03EF00823E9C /* GenAIRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFABB2A8E03EF00823E9C /* GenAIRegisterViewModel.swift */; };
+		D24AFABC2A8E03EF00823E9C /* GenAIRegisterPetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFABB2A8E03EF00823E9C /* GenAIRegisterPetViewModel.swift */; };
 		D24AFABF2A8E11DA00823E9C /* GenAIChoosePetRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFABE2A8E11DA00823E9C /* GenAIChoosePetRepository.swift */; };
 		D24AFAC22A8E2BD100823E9C /* GenAIChoosePetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAC12A8E2BD100823E9C /* GenAIChoosePetCollectionViewCell.swift */; };
 		D24AFAC42A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAC32A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift */; };
@@ -276,6 +276,14 @@
 		D299441A2AAADE7C00C4F280 /* OrderProductCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29944192AAADE7C00C4F280 /* OrderProductCollectionViewCell.swift */; };
 		D299441C2AAB04E100C4F280 /* ZoocRequiredInputLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D299441B2AAB04E100C4F280 /* ZoocRequiredInputLabel.swift */; };
 		D299441E2AAB065A00C4F280 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D299441D2AAB065A00C4F280 /* Pretendard-Bold.otf */; };
+		D29944242AAC7EA100C4F280 /* GenAIChoosePetUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29944232AAC7EA100C4F280 /* GenAIChoosePetUseCase.swift */; };
+		D29944272AAC7F0D00C4F280 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D29944262AAC7F0D00C4F280 /* RxCocoa */; };
+		D29944292AAC7F0D00C4F280 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D29944282AAC7F0D00C4F280 /* RxSwift */; };
+		D299442B2AAC833F00C4F280 /* DefaultGenAIChoosePetUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D299442A2AAC833F00C4F280 /* DefaultGenAIChoosePetUseCase.swift */; };
+		D299442E2AAC8D9B00C4F280 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D299442D2AAC8D9B00C4F280 /* ViewModelType.swift */; };
+		D29944302AAC979700C4F280 /* Reactive+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D299442F2AAC979700C4F280 /* Reactive+.swift */; };
+		D29944322AAEDC4100C4F280 /* GenAIRegisterPetUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29944312AAEDC4100C4F280 /* GenAIRegisterPetUseCase.swift */; };
+		D29944342AAEE5C400C4F280 /* DefaultGenAIRegisterPetUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29944332AAEE5C400C4F280 /* DefaultGenAIRegisterPetUseCase.swift */; };
 		D29944362AAF1D7A00C4F280 /* ShopChoosePetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29944352AAF1D7A00C4F280 /* ShopChoosePetViewController.swift */; };
 		D299957A2A95B8520004FB5D /* NSItemProvider+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29995792A95B8520004FB5D /* NSItemProvider+.swift */; };
 		D2B735562A86681800F93C45 /* MyEditProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735552A86681800F93C45 /* MyEditProfileRepository.swift */; };
@@ -300,6 +308,9 @@
 		D2DC80D72A0E158000F48209 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC80D62A0E158000F48209 /* RecordView.swift */; };
 		D2DD45C7297D9612001722A1 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DD45C6297D9612001722A1 /* BaseButton.swift */; };
 		D2EA37EF29BEAB57007EF4B7 /* OnboardingBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA37EE29BEAB57007EF4B7 /* OnboardingBaseView.swift */; };
+		D2ED94882AB8476F0040B687 /* UIImagePicker+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED94872AB8476F0040B687 /* UIImagePicker+Rx.swift */; };
+		D2ED948E2ABAB5B40040B687 /* GenAIGuideUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED948D2ABAB5B40040B687 /* GenAIGuideUseCase.swift */; };
+		D2ED94902ABAC1EE0040B687 /* DefaultGenAIGuideUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED948F2ABAC1EE0040B687 /* DefaultGenAIGuideUseCase.swift */; };
 		D2ED948A2AB962A90040B687 /* ShopChoosePetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED94892AB962A90040B687 /* ShopChoosePetView.swift */; };
 		D2ED948C2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED948B2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift */; };
 		D2F193612970B3FB00AD87D3 /* HomeNoticeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F193602970B3FB00AD87D3 /* HomeNoticeModel.swift */; };
@@ -312,6 +323,8 @@
 		D2F3D6042A453E1000C90A5A /* EditPetProfileResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F3D6032A453E1000C90A5A /* EditPetProfileResult.swift */; };
 		D2F98F9D2967154D00CC82DE /* ZoocAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F98F9C2967154D00CC82DE /* ZoocAlertViewController.swift */; };
 		D2F98F9F29676E3300CC82DE /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F98F9E29676E3300CC82DE /* UINavigationController+.swift */; };
+		D2F99B452ABC22E200C7C91F /* GenAISelectImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F99B442ABC22E200C7C91F /* GenAISelectImageUseCase.swift */; };
+		D2F99B472ABC25B000C7C91F /* DefaultGenAISelectImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F99B462ABC25B000C7C91F /* DefaultGenAISelectImageUseCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -512,10 +525,10 @@
 		D235030A2964991700F01101 /* MyEditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditProfileViewController.swift; sourceTree = "<group>"; };
 		D24AFAB12A8DFB9F00823E9C /* GenAIChoosePetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetViewController.swift; sourceTree = "<group>"; };
 		D24AFAB32A8DFBB300823E9C /* GenAIChoosePetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetView.swift; sourceTree = "<group>"; };
-		D24AFAB52A8DFC3000823E9C /* GenAIChoosePetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetModel.swift; sourceTree = "<group>"; };
+		D24AFAB52A8DFC3000823E9C /* GenAIChoosePetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetViewModel.swift; sourceTree = "<group>"; };
 		D24AFAB72A8DFCE800823E9C /* GenAIRegisterPetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIRegisterPetView.swift; sourceTree = "<group>"; };
 		D24AFAB92A8E011800823E9C /* GenAIRegisterPetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIRegisterPetViewController.swift; sourceTree = "<group>"; };
-		D24AFABB2A8E03EF00823E9C /* GenAIRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIRegisterViewModel.swift; sourceTree = "<group>"; };
+		D24AFABB2A8E03EF00823E9C /* GenAIRegisterPetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIRegisterPetViewModel.swift; sourceTree = "<group>"; };
 		D24AFABE2A8E11DA00823E9C /* GenAIChoosePetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetRepository.swift; sourceTree = "<group>"; };
 		D24AFAC12A8E2BD100823E9C /* GenAIChoosePetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetCollectionViewCell.swift; sourceTree = "<group>"; };
 		D24AFAC32A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChooseFourPetCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -577,6 +590,12 @@
 		D29944192AAADE7C00C4F280 /* OrderProductCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderProductCollectionViewCell.swift; sourceTree = "<group>"; };
 		D299441B2AAB04E100C4F280 /* ZoocRequiredInputLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocRequiredInputLabel.swift; sourceTree = "<group>"; };
 		D299441D2AAB065A00C4F280 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		D29944232AAC7EA100C4F280 /* GenAIChoosePetUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetUseCase.swift; sourceTree = "<group>"; };
+		D299442A2AAC833F00C4F280 /* DefaultGenAIChoosePetUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGenAIChoosePetUseCase.swift; sourceTree = "<group>"; };
+		D299442D2AAC8D9B00C4F280 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		D299442F2AAC979700C4F280 /* Reactive+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+.swift"; sourceTree = "<group>"; };
+		D29944312AAEDC4100C4F280 /* GenAIRegisterPetUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIRegisterPetUseCase.swift; sourceTree = "<group>"; };
+		D29944332AAEE5C400C4F280 /* DefaultGenAIRegisterPetUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGenAIRegisterPetUseCase.swift; sourceTree = "<group>"; };
 		D29944352AAF1D7A00C4F280 /* ShopChoosePetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopChoosePetViewController.swift; sourceTree = "<group>"; };
 		D29995792A95B8520004FB5D /* NSItemProvider+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSItemProvider+.swift"; sourceTree = "<group>"; };
 		D2B735552A86681800F93C45 /* MyEditProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditProfileRepository.swift; sourceTree = "<group>"; };
@@ -602,6 +621,9 @@
 		D2EA37EE29BEAB57007EF4B7 /* OnboardingBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBaseView.swift; sourceTree = "<group>"; };
 		D2ED94892AB962A90040B687 /* ShopChoosePetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopChoosePetView.swift; sourceTree = "<group>"; };
 		D2ED948B2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocUploadingImageAlertView.swift; sourceTree = "<group>"; };
+		D2ED94872AB8476F0040B687 /* UIImagePicker+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePicker+Rx.swift"; sourceTree = "<group>"; };
+		D2ED948D2ABAB5B40040B687 /* GenAIGuideUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideUseCase.swift; sourceTree = "<group>"; };
+		D2ED948F2ABAC1EE0040B687 /* DefaultGenAIGuideUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGenAIGuideUseCase.swift; sourceTree = "<group>"; };
 		D2F193602970B3FB00AD87D3 /* HomeNoticeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNoticeModel.swift; sourceTree = "<group>"; };
 		D2F193622970B95E00AD87D3 /* HomeNoticeResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNoticeResult.swift; sourceTree = "<group>"; };
 		D2F193642970E72500AD87D3 /* OnboardingJoinFamilyRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyRequest.swift; sourceTree = "<group>"; };
@@ -612,6 +634,8 @@
 		D2F3D6032A453E1000C90A5A /* EditPetProfileResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPetProfileResult.swift; sourceTree = "<group>"; };
 		D2F98F9C2967154D00CC82DE /* ZoocAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocAlertViewController.swift; sourceTree = "<group>"; };
 		D2F98F9E29676E3300CC82DE /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
+		D2F99B442ABC22E200C7C91F /* GenAISelectImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAISelectImageUseCase.swift; sourceTree = "<group>"; };
+		D2F99B462ABC25B000C7C91F /* DefaultGenAISelectImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGenAISelectImageUseCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -625,7 +649,9 @@
 				D2D4401F2AA5D08D00329F35 /* RealmSwift in Frameworks */,
 				8781DE4829B20F61005ABF23 /* FirebaseMessaging in Frameworks */,
 				87809C302A8CE3930060641F /* FirebaseRemoteConfig in Frameworks */,
+				D29944272AAC7F0D00C4F280 /* RxCocoa in Frameworks */,
 				871EA35629706F4300D0E8CC /* Lottie in Frameworks */,
+				D29944292AAC7F0D00C4F280 /* RxSwift in Frameworks */,
 				8764833229523BBD00F74882 /* SnapKit in Frameworks */,
 				870A4BFC2AA268E900D7CFD8 /* FloatingPanel in Frameworks */,
 				872367162A19062700DCBBFF /* Sentry in Frameworks */,
@@ -733,6 +759,7 @@
 		8743694E2A8E50E30035AFD6 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D299442C2AAC8D8B00C4F280 /* Protocol */,
 				870A4C002AA26F5700D7CFD8 /* FloatingPanel */,
 				D2F98F9C2967154D00CC82DE /* ZoocAlertViewController.swift */,
 				8765549E295846F3006BBDA9 /* ZoocTabBarController.swift */,
@@ -773,6 +800,8 @@
 				D2C028F12A81F8B2003F4727 /* String+.swift */,
 				D29995792A95B8520004FB5D /* NSItemProvider+.swift */,
 				87A3D8942A97C458002C36DB /* Int+.swift */,
+				D299442F2AAC979700C4F280 /* Reactive+.swift */,
+				D2ED94872AB8476F0040B687 /* UIImagePicker+Rx.swift */,
 				87E4A1CD2AAB3075005C012E /* Results+.swift */,
 			);
 			path = Extension;
@@ -1258,6 +1287,7 @@
 		87B6623F29521E7500B6FFA9 /* ZOOC */ = {
 			isa = PBXGroup;
 			children = (
+				D299441F2AAC7E6A00C4F280 /* Domain */,
 				D2D686BA299B59F400C290A8 /* ZOOC.entitlements */,
 				87DC47EF2A7ADF66007823CB /* Configuration */,
 				87B6625429521EAC00B6FFA9 /* Application */,
@@ -1686,6 +1716,53 @@
 			path = HeaderFooterVIew;
 			sourceTree = "<group>";
 		};
+		D299441F2AAC7E6A00C4F280 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				D29944202AAC7E7500C4F280 /* UseCase */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		D29944202AAC7E7500C4F280 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				D29944212AAC7E7A00C4F280 /* AI */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		D29944212AAC7E7A00C4F280 /* AI */ = {
+			isa = PBXGroup;
+			children = (
+				D29944222AAC7E8000C4F280 /* Protocol */,
+				D299442A2AAC833F00C4F280 /* DefaultGenAIChoosePetUseCase.swift */,
+				D29944332AAEE5C400C4F280 /* DefaultGenAIRegisterPetUseCase.swift */,
+				D2ED948F2ABAC1EE0040B687 /* DefaultGenAIGuideUseCase.swift */,
+				D2F99B462ABC25B000C7C91F /* DefaultGenAISelectImageUseCase.swift */,
+			);
+			path = AI;
+			sourceTree = "<group>";
+		};
+		D29944222AAC7E8000C4F280 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				D29944232AAC7EA100C4F280 /* GenAIChoosePetUseCase.swift */,
+				D29944312AAEDC4100C4F280 /* GenAIRegisterPetUseCase.swift */,
+				D2ED948D2ABAB5B40040B687 /* GenAIGuideUseCase.swift */,
+				D2F99B442ABC22E200C7C91F /* GenAISelectImageUseCase.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		D299442C2AAC8D8B00C4F280 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				D299442D2AAC8D9B00C4F280 /* ViewModelType.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		D2B735542A86680500F93C45 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
@@ -1723,8 +1800,8 @@
 		D2B7355E2A8B94DF00F93C45 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				D24AFAB92A8E011800823E9C /* GenAIRegisterPetViewController.swift */,
 				D24AFAB12A8DFB9F00823E9C /* GenAIChoosePetViewController.swift */,
+				D24AFAB92A8E011800823E9C /* GenAIRegisterPetViewController.swift */,
 				D2B735612A8BA1D700F93C45 /* GenAIGuideViewController.swift */,
 				D27D9EA72A8EFA1B00E02842 /* GenAISelectImageViewController.swift */,
 				D27BDDC62A8C6FA2008E290D /* GenAICompletedViewController.swift */,
@@ -1735,8 +1812,8 @@
 		D2B7355F2A8B951200F93C45 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				D24AFAB52A8DFC3000823E9C /* GenAIChoosePetModel.swift */,
-				D24AFABB2A8E03EF00823E9C /* GenAIRegisterViewModel.swift */,
+				D24AFAB52A8DFC3000823E9C /* GenAIChoosePetViewModel.swift */,
+				D24AFABB2A8E03EF00823E9C /* GenAIRegisterPetViewModel.swift */,
 				D27D9EAB2A8F41B000E02842 /* GenAISelectImageViewModel.swift */,
 				D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */,
 			);
@@ -1784,6 +1861,8 @@
 				870A4BFB2AA268E900D7CFD8 /* FloatingPanel */,
 				D2D4401C2AA5D08D00329F35 /* Realm */,
 				D2D4401E2AA5D08D00329F35 /* RealmSwift */,
+				D29944262AAC7F0D00C4F280 /* RxCocoa */,
+				D29944282AAC7F0D00C4F280 /* RxSwift */,
 			);
 			productName = ZOOC;
 			productReference = 87B6623D29521E7500B6FFA9 /* ZOOC-Dev.app */;
@@ -1824,6 +1903,7 @@
 				872367142A19062700DCBBFF /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				870A4BFA2AA268E900D7CFD8 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 				D2D4401B2AA5D08D00329F35 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				D29944252AAC7F0D00C4F280 /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = 87B6623E29521E7500B6FFA9 /* Products */;
 			projectDirPath = "";
@@ -1882,6 +1962,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D23503012964702400F01101 /* MyAppInformationView.swift in Sources */,
+				D2F99B452ABC22E200C7C91F /* GenAISelectImageUseCase.swift in Sources */,
 				874369572A8FFB260035AFD6 /* NetworkMonitor.swift in Sources */,
 				87E462F12A110E18006FC35D /* CGColor+.swift in Sources */,
 				D235030729647B4200F01101 /* MyAppInformationViewController.swift in Sources */,
@@ -1944,12 +2025,14 @@
 				D2C028F22A81F8B2003F4727 /* String+.swift in Sources */,
 				87A3D8802A97546D002C36DB /* OrderViewController.swift in Sources */,
 				874369592A8FFB7F0035AFD6 /* NetworkAlertView.swift in Sources */,
+				D29944302AAC979700C4F280 /* Reactive+.swift in Sources */,
 				D23502F52961A69E00F01101 /* MyView.swift in Sources */,
 				87F287D72A9A63CC00A53218 /* OrderAddress.swift in Sources */,
 				8781DE4E29B273FB005ABF23 /* OnboardingFamilyResult.swift in Sources */,
 				876554A3295848D6006BBDA9 /* BaseViewController.swift in Sources */,
 				D20C00952A96FE3200666963 /* GenAIPetDatasetsResult.swift in Sources */,
 				4C6B1860296B40C00059840D /* RecordModel.swift in Sources */,
+				D29944242AAC7EA100C4F280 /* GenAIChoosePetUseCase.swift in Sources */,
 				87809C2E2A8CC32F0060641F /* VersionState.swift in Sources */,
 				D23502F92961F34100F01101 /* MySettingSectionCollectionViewCell.swift in Sources */,
 				876483212952369500F74882 /* UICollectionViewCell+.swift in Sources */,
@@ -1962,6 +2045,7 @@
 				D23503032964728700F01101 /* MyAppInformationTableViewCell.swift in Sources */,
 				D26C68F22970AD820088DC9A /* HomeNoticeViewController.swift in Sources */,
 				8718A06429AD3445001C7460 /* EditProfileRequest.swift in Sources */,
+				D299442E2AAC8D9B00C4F280 /* ViewModelType.swift in Sources */,
 				D2D440182AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift in Sources */,
 				8771843F2A0541C500AB7DE4 /* AuthAPI.swift in Sources */,
 				8782C7F3296CC13A00C9324B /* ArchiveCommentCollectionViewCell.swift in Sources */,
@@ -1987,6 +2071,7 @@
 				D22EF9002A7C9B720050E325 /* MyViewModel.swift in Sources */,
 				87F288032A9FA68A00A53218 /* OrderAssistantDepositView.swift in Sources */,
 				4C6B1864296B6C600059840D /* RecordRegisterModel.swift in Sources */,
+				D299442B2AAC833F00C4F280 /* DefaultGenAIChoosePetUseCase.swift in Sources */,
 				87A76AA1295F6EA90096F669 /* OnboardingAPI.swift in Sources */,
 				D25543A4299A239B0072BF0D /* OnboardingRegisterPetRequest.swift in Sources */,
 				D26C85F029693C8500AEAF9B /* OnboardingWelcomeView.swift in Sources */,
@@ -2035,6 +2120,7 @@
 				87F287D52A9A4EC100A53218 /* KakaoPostCodeViewController.swift in Sources */,
 				87BCAD3E2AA9BA2900A03DA3 /* Toast.swift in Sources */,
 				870A4C122AA374D000D7CFD8 /* SelectedProductOption.swift in Sources */,
+				D2ED94882AB8476F0040B687 /* UIImagePicker+Rx.swift in Sources */,
 				D299957A2A95B8520004FB5D /* NSItemProvider+.swift in Sources */,
 				87A76ABF2960423C0096F669 /* GenericResponse.swift in Sources */,
 				8782C7E42968B03500C9324B /* HomePetCollectionViewCell.swift in Sources */,
@@ -2055,10 +2141,12 @@
 				870A4C042AA26F8000D7CFD8 /* TouchPassIntrinsicPanelLayout.swift in Sources */,
 				D26C85D7296888D000AEAF9B /* MyDeleteAccountSectionCollectionViewCell.swift in Sources */,
 				87DDDD94298E607C00CBEC79 /* Device.swift in Sources */,
+				D29944322AAEDC4100C4F280 /* GenAIRegisterPetUseCase.swift in Sources */,
 				87F287DB2A9C6E6F00A53218 /* OrderOrderer.swift in Sources */,
-				D24AFAB62A8DFC3000823E9C /* GenAIChoosePetModel.swift in Sources */,
+				D24AFAB62A8DFC3000823E9C /* GenAIChoosePetViewModel.swift in Sources */,
 				D22EF9032A7C9BB70050E325 /* Observable.swift in Sources */,
 				877DF3292A534DF2001CD452 /* NotificationName+.swift in Sources */,
+				D2ED948E2ABAB5B40040B687 /* GenAIGuideUseCase.swift in Sources */,
 				87D5AF5A29606AC900CA7F12 /* NetworkResult.swift in Sources */,
 				4C8A7C33297063F400783979 /* OnboardingInviteResult.swift in Sources */,
 				D2D440162AA5C88D00329F35 /* OrderBasicAddressView.swift in Sources */,
@@ -2078,6 +2166,7 @@
 				D24AFAC62A8E3F7A00823E9C /* MyRegisterPetRequest.swift in Sources */,
 				D2B735642A8BA2B500F93C45 /* GenAIGuideView.swift in Sources */,
 				D2B735562A86681800F93C45 /* MyEditProfileRepository.swift in Sources */,
+				D29944342AAEE5C400C4F280 /* DefaultGenAIRegisterPetUseCase.swift in Sources */,
 				87F287DD2A9C6F1200A53218 /* OrderProduct.swift in Sources */,
 				D27D9568296CB5930097CD03 /* OnboardingInviteFamilyView.swift in Sources */,
 				D27D9566296CA99B0097CD03 /* OnboardingInviteFamilyCompletedViewController.swift in Sources */,
@@ -2125,12 +2214,13 @@
 				87F288052A9FA69200A53218 /* OrderAssistantCompleteView.swift in Sources */,
 				87A3D88A2A975D4F002C36DB /* OrderAddressView.swift in Sources */,
 				87648323295236B700F74882 /* UIColor+.swift in Sources */,
+				D2F99B472ABC25B000C7C91F /* DefaultGenAISelectImageUseCase.swift in Sources */,
 				D27D9560296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift in Sources */,
 				87E4A1CC2AAAFCA5005C012E /* CartedProduct.swift in Sources */,
 				D26C68EC296DE7B60088DC9A /* MyPetRegisterModel.swift in Sources */,
 				87E4A1C92AAAF8AC005C012E /* DefaultRealmService.swift in Sources */,
 				D2EA37EF29BEAB57007EF4B7 /* OnboardingBaseView.swift in Sources */,
-				D24AFABC2A8E03EF00823E9C /* GenAIRegisterViewModel.swift in Sources */,
+				D24AFABC2A8E03EF00823E9C /* GenAIRegisterPetViewModel.swift in Sources */,
 				D21CEC6229ABC1F900854A36 /* MyRegisterPetResult.swift in Sources */,
 				87C109252971A5B40086466F /* ArchiveCommentReqeust.swift in Sources */,
 				D2F193652970E72500AD87D3 /* OnboardingJoinFamilyRequest.swift in Sources */,
@@ -2158,6 +2248,7 @@
 				877E57EE2966AAE6006D82FC /* HomeArchiveListCollectionViewCell.swift in Sources */,
 				D26C8610296B761900AEAF9B /* OnboardingJoinFamilyCompletedViewController.swift in Sources */,
 				87A76AAD295F6EE70096F669 /* RecordAPI.swift in Sources */,
+				D2ED94902ABAC1EE0040B687 /* DefaultGenAIGuideUseCase.swift in Sources */,
 				D26C68F42970AD930088DC9A /* HomeNoticeView.swift in Sources */,
 				D24AFAB82A8DFCE800823E9C /* GenAIRegisterPetView.swift in Sources */,
 			);
@@ -2479,6 +2570,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		D29944252AAC7F0D00C4F280 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		D2D4401B2AA5D08D00329F35 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift";
@@ -2554,6 +2653,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 87A76AB4295F760C0096F669 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKUser;
+		};
+		D29944262AAC7F0D00C4F280 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D29944252AAC7F0D00C4F280 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		D29944282AAC7F0D00C4F280 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D29944252AAC7F0D00C4F280 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
 		};
 		D2D4401C2AA5D08D00329F35 /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;

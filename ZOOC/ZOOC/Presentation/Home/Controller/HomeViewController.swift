@@ -172,9 +172,9 @@ final class HomeViewController : BaseViewController {
             presentAlertViewController()
         } else {
             let shopVC = ShopChoosePetViewController(
-                viewModel: DefaultGenAIChoosePetModel(
-                    repository: GenAIPetRepositoryImpl()
-                )
+//                viewModel: DefaultGenAIChoosePetModel(
+//                    repository: GenAIPetRepositoryImpl()
+//                )
             )
             shopVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(shopVC, animated: true)
@@ -565,24 +565,26 @@ extension HomeViewController {
     private func pushToGenAIViewController() {
         if petData.count > 0 {
             let genAIChoosePetVC = GenAIChoosePetViewController(
-                viewModel: DefaultGenAIChoosePetModel(
-                    repository: GenAIPetRepositoryImpl()
+                viewModel: GenAIChoosePetViewModel(
+                    genAIChoosePetUseCase: DefaultGenAIChoosePetUseCase(
+                        repository: GenAIPetRepositoryImpl()
+                    )
                 )
             )
             genAIChoosePetVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(genAIChoosePetVC, animated: true)
         } else {
             let genAIRegisterPetVC = GenAIRegisterPetViewController(
-                viewModel: DefaultGenAIRegisterViewModel(
-                    repository: GenAIPetRepositoryImpl()
+                viewModel: GenAIRegisterPetViewModel(
+                    genAIRegisterPetUseCase: DefaultGenAIRegisterPetUseCase(
+                        repository: GenAIPetRepositoryImpl()
+                    )
                 )
             )
             genAIRegisterPetVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(genAIRegisterPetVC, animated: true)
         }
     }
-    
-    
 }
 
 extension HomeViewController: HomeGuideViewControllerDelegate {

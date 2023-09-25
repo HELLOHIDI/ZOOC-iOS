@@ -8,15 +8,15 @@
 import UIKit
 import PhotosUI
 
-import SnapKit
-import Then
+import RxSwift
+import RxCocoa
 
 final class GenAIGuideViewController : BaseViewController {
     
     //MARK: - Properties
     
-    var petId: Int?
-    
+    private let disposeBag = DisposeBag()
+    private let pickedImageSubject = PublishSubject<[PHPickerResult]>()
     let viewModel: GenAIGuideViewModel
     
     //MARK: - UI Components
@@ -41,71 +41,76 @@ final class GenAIGuideViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        target()
-        bind()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
+        bindUI()
+        bindViewModel()
         
-        viewModel.viewWillDisappearEvent()
+        setNotification()
     }
-    
+
     //MARK: - Custom Method
     
-    private func bind() {
-        viewModel.enablePhotoUpload.observe(on: self) { [weak self] canUpload in
-            guard let canUpload = canUpload else { return }
-            if canUpload {
-                self?.pushToGenAISelectImageVC()
-            } else {
-                self?.presentDenineGenerateAIViewController()
-            }
-        }
+    private func bindUI() {
+        rootView.backButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.navigationController?.popViewController(animated: true)
+        }).disposed(by: disposeBag)
         
-        viewModel.isPopped.observe(on: self) { [weak self] isPopped in
-            if isPopped {
-                self?.presentPHPickerViewController()
-            }
-        }
+        rootView.xmarkButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.presentLeavePageAlertVC()
+            }).disposed(by: disposeBag)
+        
+        rootView.selectImageButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.presentPHPickerViewController()
+            }).disposed(by: disposeBag)
     }
     
-    private func target() {
-        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        rootView.xmarkButton.addTarget(self, action: #selector(xmarkButtonDidTap), for: .touchUpInside)
-        rootView.selectImageButton.addTarget(self, action: #selector(selectImageButtonDidTap), for: .touchUpInside)
+    private func bindViewModel() {
+        let input = GenAIGuideViewModel.Input(
+            viewWillAppearEvent: self.rx.viewWillAppear.asObservable(),
+            viewWillDisappearEvent: self.rx.viewWillDisappear.asObservable(),
+            didFinishPickingImageEvent: pickedImageSubject.asObservable()
+        )
+        
+        let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
+        
+        output.ableToPhotoUpload
+            .subscribe(with: self, onNext: { owner, canUpload in
+                guard let canUpload = canUpload else { return }
+                if canUpload { owner.pushToGenAISelectImageVC()}
+                else { owner.presentDenineGenerateAIViewController() }
+            }).disposed(by: disposeBag)
     }
     
-    //MARK: - Action Method
-    
-    @objc func backButtonDidTap() {
-        self.navigationController?.popViewController(animated: true)
+    private func setNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(reselectImage),
+            name: Notification.Name("reselectImage"),
+            object: nil
+        )
     }
     
-    @objc func xmarkButtonDidTap() {
-        presentLeavePageAlertVC()
-    }
-    
-    @objc func selectImageButtonDidTap() {
+    @objc func reselectImage() {
         presentPHPickerViewController()
     }
 }
 
 extension GenAIGuideViewController {
     private func pushToGenAISelectImageVC() {
-        guard let petId = self.petId else { return }
         let genAISelectImageVC = GenAISelectImageViewController(
-            viewModel: DefaultGenAISelectImageViewModel(
-                petId: petId,
-                selectedImageDatasets: viewModel.selectedImageDatasets.value,
-                repository: GenAIModelRepositoryImpl()
+            viewModel: GenAISelectImageViewModel(
+                genAISelectImageUseCase: DefaultGenAISelectImageUseCase(
+                    petId: viewModel.getPetId(),
+                    selectedImageDatesets: viewModel.getSelectedImageDatasets(),
+                    repository: GenAIModelRepositoryImpl()
+                )
             )
         )
         self.navigationController?.pushViewController(genAISelectImageVC, animated: true)
     }
-}
-
-extension GenAIGuideViewController {
+    
     private func presentPHPickerViewController() {
         var config = PHPickerConfiguration()
         config.filter = .images
@@ -137,7 +142,6 @@ extension GenAIGuideViewController: ZoocAlertViewControllerDelegate {
     }
     
     func keepButtonDidTap() {
-        viewModel.keepButtonTapEvent()
         presentPHPickerViewController()
     }
 }
@@ -146,7 +150,6 @@ extension GenAIGuideViewController: ZoocAlertViewControllerDelegate {
 extension GenAIGuideViewController : PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
-        
-        viewModel.didFinishChoosingPhotosEvent(results: results)
+        pickedImageSubject.onNext(results)
     }
 }

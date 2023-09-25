@@ -5,7 +5,7 @@
 //  Created by 류희재 on 2023/08/04.
 //
 
-final class Observable<T> {
+final class ObservablePattern<T> {
 
     struct Observer<T> {
         weak var observer: AnyObject?

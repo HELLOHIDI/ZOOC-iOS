@@ -84,7 +84,10 @@ final class GenAIChoosePetView : UIView {
         petCollectionView.do {
             let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .vertical
+            layout.minimumInteritemSpacing = 0
+            layout.minimumLineSpacing = 0
             $0.collectionViewLayout = layout
+            
             $0.backgroundColor = .clear
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.isScrollEnabled = false

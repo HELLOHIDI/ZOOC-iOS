@@ -7,16 +7,17 @@
 
 import UIKit
 
-import SnapKit
-import Then
+import RxSwift
+import RxCocoa
 
 final class GenAIRegisterPetViewController: BaseViewController {
     
     //MARK: - Properties
     
-    private let viewModel: GenAIRegisterViewModel
+    private let viewModel: GenAIRegisterPetViewModel
+    private let disposeBag = DisposeBag()
     
-    init(viewModel: GenAIRegisterViewModel) {
+    init(viewModel: GenAIRegisterPetViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -28,8 +29,19 @@ final class GenAIRegisterPetViewController: BaseViewController {
     //MARK: - UIComponents
     
     private lazy var rootView = GenAIRegisterPetView()
-    private let galleryAlertController = GalleryAlertController()
-    private lazy var imagePickerController = UIImagePickerController()
+    
+    private var galleryAlertController: GalleryAlertController {
+        let galleryAlertController = GalleryAlertController()
+        galleryAlertController.delegate = self
+        return galleryAlertController
+    }
+    private lazy var imagePickerController: UIImagePickerController = {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        return imagePickerController
+    }()
     
     //MARK: - Life Cycle
     
@@ -40,66 +52,50 @@ final class GenAIRegisterPetViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bind()
-        delegate()
-        target()
-        
-        style()
+        bindUI()
+        bindViewModel()
     }
     
-    //MARK: - Custom Method
+    private func bindUI() {
+        rootView.cancelButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.presentZoocAlertVC()
+        }).disposed(by: disposeBag)
+        
+        rootView.petProfileImageButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.present(self.galleryAlertController, animated: true)
+        }).disposed(by: disposeBag)
+    }
     
-    private func bind() {
-        viewModel.ableToEditPetProfile.observe(on: self) { [weak self] isEnabled in
-            self?.rootView.completeButton.isEnabled = isEnabled
-        }
-        
-        viewModel.textFieldState.observe(on: self) { [weak self] state in
-            self?.updateTextFieldUI(state)
-        }
-        
-        viewModel.registerCompletedOutput.observe(on: self) { [weak self] isSuccess in
-            guard let isSuccess else { return }
-            if isSuccess {
-                self?.pushToGenAIGuideVC()
-            } else {
-                self?.showToast("다시 시도해주세요.", type: .bad)
+    private func bindViewModel() {
+        let input = GenAIRegisterPetViewModel.Input(
+            nameTextFieldDidChangeEvent: rootView.petProfileNameTextField.rx.text.asObservable(),
+            registerPetButtonTapEvent: self.rootView.completeButton.rx.tap.asObservable().map { [weak self] _ in
+                self?.rootView.petProfileImageButton.currentImage ?? Image.cameraCircle
             }
-        }
-    }
-    
-    private func delegate() {
-        rootView.petProfileNameTextField.editDelegate = self
-        galleryAlertController.delegate = self
-        imagePickerController.delegate = self
-    }
-    
-    private func target() {
-        rootView.cancelButton.addTarget(self, action: #selector(cancelButtonDidTap), for: .touchUpInside)
+        )
         
-        rootView.completeButton.addTarget(self, action: #selector(registerPetButtonDidTap), for: .touchUpInside)
+        let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
         
-        rootView.petProfileImageButton.addTarget(self, action: #selector(profileImageButtonDidTap) , for: .touchUpInside)
-    }
-    
-    private func style() {
-        imagePickerController.do {
-            $0.sourceType = .photoLibrary
-        }
-    }
-    
-    //MARK: - Action Method
-    
-    @objc private func profileImageButtonDidTap() {
-        present(galleryAlertController,animated: true)
-    }
-    
-    @objc func cancelButtonDidTap() {
-        presentZoocAlertVC()
-    }
-    
-    @objc func registerPetButtonDidTap(){
-        viewModel.registerPetButtonDidTap()
+        output.canRegisterPet
+            .subscribe(with: self, onNext: { owner, canRegister in
+            owner.rootView.completeButton.isEnabled = canRegister
+        }).disposed(by: disposeBag)
+        
+        output.textFieldState
+            .subscribe(with: self, onNext: { owner, textFieldState in
+            owner.rootView.petProfileNameTextField.textColor = textFieldState.textColor
+        }).disposed(by: disposeBag)
+        
+        output.isRegistedPet
+            .subscribe(with: self, onNext: { owner, isRegisted in
+            if isRegisted { owner.pushToGenAIGuideVC() }
+            else { owner.rootView.completeButton.isEnabled = true }
+        }).disposed(by: disposeBag)
+        
+        output.isTextCountExceeded
+            .subscribe(with: self, onNext: { owner, isTextCountExceeded in
+            if isTextCountExceeded { owner.updateTextField(owner.rootView.petProfileNameTextField) }
+        }).disposed(by: disposeBag)
     }
 }
 
@@ -109,10 +105,9 @@ extension GenAIRegisterPetViewController: GalleryAlertControllerDelegate {
     func galleryButtonDidTap() {
         present(imagePickerController, animated: true)
     }
-    
+
     func deleteButtonDidTap() {
         rootView.petProfileImageButton.setImage(Image.defaultProfile, for: .normal)
-        viewModel.deleteButtonDidTap()
     }
 }
 
@@ -121,11 +116,14 @@ extension GenAIRegisterPetViewController: GalleryAlertControllerDelegate {
 extension GenAIRegisterPetViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
+
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         rootView.petProfileImageButton.setImage(image, for: .normal)
-        viewModel.registerPetProfileImageEvent(image)
         dismiss(animated: true)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -138,26 +136,7 @@ extension GenAIRegisterPetViewController: ZoocAlertViewControllerDelegate {
     }
 }
 
-//MARK: - MyTextFieldDelegate
-
-extension GenAIRegisterPetViewController: MyTextFieldDelegate {
-    func myTextFieldTextDidChange(_ textFieldType: MyEditTextField.TextFieldType, text: String) {
-        self.viewModel.nameTextFieldDidChangeEvent(text)
-        
-        if viewModel.isTextCountExceeded(for: textFieldType) {
-            let fixedText = text.substring(from: 0, to:textFieldType.limit-1)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                self.rootView.petProfileNameTextField.text = fixedText
-            }
-        }
-    }
-}
-
 extension GenAIRegisterPetViewController {
-    private func updateTextFieldUI(_ textFieldState: BaseTextFieldState) {
-        rootView.petProfileNameTextField.textColor = textFieldState.textColor
-    }
     
     private func presentZoocAlertVC() {
         let alertVC = ZoocAlertViewController.init(.leavePage)
@@ -167,12 +146,25 @@ extension GenAIRegisterPetViewController {
     
     private func pushToGenAIGuideVC() {
         let genAIGuideVC = GenAIGuideViewController(
-            viewModel: DefaultGenAIGuideViewModel()
+            viewModel: GenAIGuideViewModel(
+                genAIGuideUseCase: DefaultGenAIGuideUseCase(
+                    petId: viewModel.getPetId()
+                )
+            )
         )
         genAIGuideVC.hidesBottomBarWhenPushed = true
-        genAIGuideVC.petId = viewModel.petId.value
         navigationController?.pushViewController(genAIGuideVC, animated: true)
         
         self.rootView.completeButton.isEnabled = true
     }
+    
+    private func updateTextField(_ textField: MyEditTextField?) {
+        guard let textField = textField else { return }
+        let fixedText = textField.text?.substring(from: 0, to:textField.textFieldType.limit-1)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            self.rootView.petProfileNameTextField.text = fixedText
+        }
+    }
 }
+

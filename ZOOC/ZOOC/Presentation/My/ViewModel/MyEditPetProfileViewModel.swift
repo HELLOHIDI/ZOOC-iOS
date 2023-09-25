@@ -29,7 +29,6 @@ typealias MyEditPetProfileViewModel = MyEditPetProfileModelInput & MyEditPetProf
 
 final class DefaultMyEditPetProfileViewModel: MyEditPetProfileViewModel {
     let id: Int
-    let editPetProfileRequest: EditPetProfileRequest
     let repository: MyEditPetProfileRepository
     
     var ableToEditPetProfile: ObservablePattern<Bool> = ObservablePattern(false)
@@ -41,7 +40,7 @@ final class DefaultMyEditPetProfileViewModel: MyEditPetProfileViewModel {
         editPetProfileRequest: EditPetProfileRequest,
         repository: MyEditPetProfileRepository) {
         self.id = id
-        self.editPetProfileRequest = editPetProfileRequest
+        self.editPetProfileDataOutput.value = editPetProfileRequest
         self.repository = repository
     }
     
@@ -74,11 +73,13 @@ final class DefaultMyEditPetProfileViewModel: MyEditPetProfileViewModel {
     func deleteButtonDidTap() {
         self.editPetProfileDataOutput.value.file = nil
         self.editPetProfileDataOutput.value.photo = false
+        ableToProfile()
     }
     
     func editPetProfileImageEvent(_ image: UIImage) {
         self.editPetProfileDataOutput.value.file = image
         self.editPetProfileDataOutput.value.photo = true
+        ableToProfile()
     }
 }
 
@@ -94,5 +95,9 @@ extension DefaultMyEditPetProfileViewModel {
                 self.editCompletedOutput.value = false
             }
         }
+    }
+    
+    func ableToProfile() {
+        ableToEditPetProfile.value = self.editPetProfileDataOutput.value.nickName.count != 0
     }
 }

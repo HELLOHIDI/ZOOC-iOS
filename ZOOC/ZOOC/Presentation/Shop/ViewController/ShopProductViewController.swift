@@ -22,6 +22,8 @@ final class ShopProductViewController: BaseViewController {
         }
     }
     
+    private var petID: Int
+    
     
     //MARK: - UI Components
     
@@ -63,11 +65,12 @@ final class ShopProductViewController: BaseViewController {
     private let descriptionLabel = UILabel()
     
     private let buyView = UIView()
-    private let buyButton = ZoocGradientButton(.medium)
+    private let buyButton = ZoocGradientButton(.capsule)
     
     //MARK: - Life Cycle
     
-    init(productID: Int){
+    init(productID: Int, petID: Int){
+        self.petID = petID
         super.init(nibName: nil, bundle: nil)
         
         requestDetailProductAPI(id: productID)
@@ -200,7 +203,7 @@ final class ShopProductViewController: BaseViewController {
         
         buyView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(19)
+            $0.bottom.equalToSuperview()
             $0.height.equalTo(77)
         }
         
@@ -244,9 +247,9 @@ final class ShopProductViewController: BaseViewController {
         }
         
         buyButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(10)
-            $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.height.equalTo(47)
+            $0.bottom.equalToSuperview().inset(37)
+            $0.horizontalEdges.equalToSuperview().inset(30)
+            $0.height.equalTo(54)
         }
     }
     
@@ -278,7 +281,7 @@ final class ShopProductViewController: BaseViewController {
     
     @objc
     private func naviCartButtonDidTap() {
-        let cartVC = UIViewController()
+        let cartVC = ShopCartViewController()
         navigationController?.pushViewController(cartVC, animated: true)
     }
     
@@ -289,13 +292,29 @@ final class ShopProductViewController: BaseViewController {
 }
 
 extension ShopProductViewController: ProductBottomSheetDelegate {
-    func cartButtonDidTap(selectedOptions: [SelectedProductOption]) {
-        let cartVC = ShopCartViewController(selectedProduct: selectedOptions)
-        navigationController?.pushViewController(cartVC, animated: true)
+    func cartButtonDidTap(_ selectedProductOptions: [SelectedProductOption]) {
+        guard let productData else { return }
+        
+        selectedProductOptions.forEach {
+            let cartedProduct = CartedProduct(petID: petID,
+                                              product: productData,
+                                              selectedProduct: $0)
+            DefaultRealmService.shared.setCartedProduct(cartedProduct)
+        }
+       
+        showToast("장바구니에 상품이 담겼습니다.",
+                  type: .good)
     }
     
-    func orderButtonDidTap(selectedOptions: [SelectedProductOption]) {
-        let orderVC = OrderViewController(selectedProduct: selectedOptions)
+    func orderButtonDidTap(_ selectedProductOptions: [SelectedProductOption]) {
+        guard let productData else { return }
+        var orderProducts: [OrderProduct] = []
+        selectedProductOptions.forEach {
+            orderProducts.append(OrderProduct(petID: petID,
+                                              product: productData,
+                                              selectedProductOption: $0))
+        }
+        let orderVC = OrderViewController(orderProducts)
         navigationController?.pushViewController(orderVC, animated: true)
     }
     

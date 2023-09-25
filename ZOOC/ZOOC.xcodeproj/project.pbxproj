@@ -156,6 +156,9 @@
 		87E462EE2A110867006FC35D /* ZoocGradinetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */; };
 		87E462F12A110E18006FC35D /* CGColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462F02A110E18006FC35D /* CGColor+.swift */; };
 		87E462F32A113A37006FC35D /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462F22A113A37006FC35D /* CALayer+.swift */; };
+		87E4A1C92AAAF8AC005C012E /* DefaultRealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E4A1C82AAAF8AC005C012E /* DefaultRealmService.swift */; };
+		87E4A1CC2AAAFCA5005C012E /* CartedProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E4A1CB2AAAFCA5005C012E /* CartedProduct.swift */; };
+		87E4A1CE2AAB3075005C012E /* Results+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E4A1CD2AAB3075005C012E /* Results+.swift */; };
 		87F287D52A9A4EC100A53218 /* KakaoPostCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287D42A9A4EC100A53218 /* KakaoPostCodeViewController.swift */; };
 		87F287D72A9A63CC00A53218 /* OrderAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287D62A9A63CC00A53218 /* OrderAddress.swift */; };
 		87F287D92A9A667500A53218 /* BasePaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F287D82A9A667500A53218 /* BasePaddingLabel.swift */; };
@@ -177,6 +180,10 @@
 		87F288072A9FA86600A53218 /* BankAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F288062A9FA86600A53218 /* BankAccount.swift */; };
 		87F288092A9FC41F00A53218 /* Bank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F288082A9FC41F00A53218 /* Bank.swift */; };
 		87F2880B2A9FDE2500A53218 /* OrderAssistantHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F2880A2A9FDE2500A53218 /* OrderAssistantHeaderView.swift */; };
+		87FAF8B72AAE1D8300DADCC4 /* OrderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FAF8B62AAE1D8300DADCC4 /* OrderError.swift */; };
+		87FAF8BD2AB090D700DADCC4 /* AddressType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FAF8BC2AB090D700DADCC4 /* AddressType.swift */; };
+		87FD185F2AB36A1800A1431E /* PaymentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FD185E2AB36A1800A1431E /* PaymentType.swift */; };
+		D209F9302AB0594B0017D623 /* PetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D209F92F2AB0594B0017D623 /* PetResult.swift */; };
 		D20C008A2A96DDB000666963 /* GenAIModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C00892A96DDB000666963 /* GenAIModelRepository.swift */; };
 		D20C008D2A96E23500666963 /* GenAIGuideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */; };
 		D20C008F2A96F22600666963 /* GenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008E2A96F22600666963 /* GenAIService.swift */; };
@@ -240,18 +247,14 @@
 		D26C85EE2968D51F00AEAF9B /* UITableViewHeaderFooterView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85ED2968D51F00AEAF9B /* UITableViewHeaderFooterView+.swift */; };
 		D26C85F029693C8500AEAF9B /* OnboardingWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85EF29693C8500AEAF9B /* OnboardingWelcomeView.swift */; };
 		D26C85F229693CFA00AEAF9B /* OnboardingWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85F129693CFA00AEAF9B /* OnboardingWelcomeViewController.swift */; };
-		D26C85F8296B0B4E00AEAF9B /* OnboardingChooseRoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85F7296B0B4E00AEAF9B /* OnboardingChooseRoleView.swift */; };
-		D26C85FA296B109500AEAF9B /* OnboardingChooseRoleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85F9296B109500AEAF9B /* OnboardingChooseRoleViewController.swift */; };
-		D26C8600296B27B100AEAF9B /* OnboardingCompleteProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85FF296B27B100AEAF9B /* OnboardingCompleteProfileView.swift */; };
-		D26C8602296B285700AEAF9B /* OnboardingCompleteProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8601296B285700AEAF9B /* OnboardingCompleteProfileViewController.swift */; };
+		D26C8600296B27B100AEAF9B /* OnboardingCheckReceivedCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85FF296B27B100AEAF9B /* OnboardingCheckReceivedCodeView.swift */; };
+		D26C8602296B285700AEAF9B /* OnboardingCheckReceivedCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8601296B285700AEAF9B /* OnboardingCheckReceivedCodeViewController.swift */; };
 		D26C8608296B585600AEAF9B /* OnboardingJoinFamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8607296B585600AEAF9B /* OnboardingJoinFamilyView.swift */; };
 		D26C860A296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8609296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift */; };
 		D26C860C296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C860B296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift */; };
 		D26C860E296B6E8600AEAF9B /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C860D296B6E8600AEAF9B /* UILabel+.swift */; };
 		D26C8610296B761900AEAF9B /* OnboardingJoinFamilyCompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C860F296B761900AEAF9B /* OnboardingJoinFamilyCompletedViewController.swift */; };
-		D26C8612296B7CA500AEAF9B /* OnboardingRegisterPetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8611296B7CA500AEAF9B /* OnboardingRegisterPetView.swift */; };
 		D26C8614296B7F3E00AEAF9B /* OnboardingRegisterPetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8613296B7F3E00AEAF9B /* OnboardingRegisterPetTableViewCell.swift */; };
-		D26C8616296BEF9800AEAF9B /* OnboardingRegisterPetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8615296BEF9800AEAF9B /* OnboardingRegisterPetViewController.swift */; };
 		D26C861A296C0FC800AEAF9B /* OnboardingPetRegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8619296C0FC800AEAF9B /* OnboardingPetRegisterModel.swift */; };
 		D26C861C296C1A8A00AEAF9B /* OnboardingRegisterPetTableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C861B296C1A8A00AEAF9B /* OnboardingRegisterPetTableFooterView.swift */; };
 		D2779742299F76FD008A237D /* OnboardingAppleSocialLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2779741299F76FD008A237D /* OnboardingAppleSocialLoginRequest.swift */; };
@@ -281,6 +284,7 @@
 		D29944302AAC979700C4F280 /* Reactive+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D299442F2AAC979700C4F280 /* Reactive+.swift */; };
 		D29944322AAEDC4100C4F280 /* GenAIRegisterPetUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29944312AAEDC4100C4F280 /* GenAIRegisterPetUseCase.swift */; };
 		D29944342AAEE5C400C4F280 /* DefaultGenAIRegisterPetUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29944332AAEE5C400C4F280 /* DefaultGenAIRegisterPetUseCase.swift */; };
+		D29944362AAF1D7A00C4F280 /* ShopChoosePetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29944352AAF1D7A00C4F280 /* ShopChoosePetViewController.swift */; };
 		D299957A2A95B8520004FB5D /* NSItemProvider+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29995792A95B8520004FB5D /* NSItemProvider+.swift */; };
 		D2B735562A86681800F93C45 /* MyEditProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735552A86681800F93C45 /* MyEditProfileRepository.swift */; };
 		D2B735582A8669BA00F93C45 /* MyEditPetProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B735572A8669BA00F93C45 /* MyEditPetProfileRepository.swift */; };
@@ -307,6 +311,8 @@
 		D2ED94882AB8476F0040B687 /* UIImagePicker+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED94872AB8476F0040B687 /* UIImagePicker+Rx.swift */; };
 		D2ED948E2ABAB5B40040B687 /* GenAIGuideUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED948D2ABAB5B40040B687 /* GenAIGuideUseCase.swift */; };
 		D2ED94902ABAC1EE0040B687 /* DefaultGenAIGuideUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED948F2ABAC1EE0040B687 /* DefaultGenAIGuideUseCase.swift */; };
+		D2ED948A2AB962A90040B687 /* ShopChoosePetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED94892AB962A90040B687 /* ShopChoosePetView.swift */; };
+		D2ED948C2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED948B2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift */; };
 		D2F193612970B3FB00AD87D3 /* HomeNoticeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F193602970B3FB00AD87D3 /* HomeNoticeModel.swift */; };
 		D2F193632970B95E00AD87D3 /* HomeNoticeResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F193622970B95E00AD87D3 /* HomeNoticeResult.swift */; };
 		D2F193652970E72500AD87D3 /* OnboardingJoinFamilyRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F193642970E72500AD87D3 /* OnboardingJoinFamilyRequest.swift */; };
@@ -464,6 +470,9 @@
 		87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocGradinetButton.swift; sourceTree = "<group>"; };
 		87E462F02A110E18006FC35D /* CGColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGColor+.swift"; sourceTree = "<group>"; };
 		87E462F22A113A37006FC35D /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
+		87E4A1C82AAAF8AC005C012E /* DefaultRealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRealmService.swift; sourceTree = "<group>"; };
+		87E4A1CB2AAAFCA5005C012E /* CartedProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartedProduct.swift; sourceTree = "<group>"; };
+		87E4A1CD2AAB3075005C012E /* Results+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Results+.swift"; sourceTree = "<group>"; };
 		87F287D42A9A4EC100A53218 /* KakaoPostCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoPostCodeViewController.swift; sourceTree = "<group>"; };
 		87F287D62A9A63CC00A53218 /* OrderAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAddress.swift; sourceTree = "<group>"; };
 		87F287D82A9A667500A53218 /* BasePaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePaddingLabel.swift; sourceTree = "<group>"; };
@@ -485,6 +494,10 @@
 		87F288062A9FA86600A53218 /* BankAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankAccount.swift; sourceTree = "<group>"; };
 		87F288082A9FC41F00A53218 /* Bank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bank.swift; sourceTree = "<group>"; };
 		87F2880A2A9FDE2500A53218 /* OrderAssistantHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAssistantHeaderView.swift; sourceTree = "<group>"; };
+		87FAF8B62AAE1D8300DADCC4 /* OrderError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderError.swift; sourceTree = "<group>"; };
+		87FAF8BC2AB090D700DADCC4 /* AddressType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressType.swift; sourceTree = "<group>"; };
+		87FD185E2AB36A1800A1431E /* PaymentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentType.swift; sourceTree = "<group>"; };
+		D209F92F2AB0594B0017D623 /* PetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetResult.swift; sourceTree = "<group>"; };
 		D20C00892A96DDB000666963 /* GenAIModelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIModelRepository.swift; sourceTree = "<group>"; };
 		D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideViewModel.swift; sourceTree = "<group>"; };
 		D20C008E2A96F22600666963 /* GenAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIService.swift; sourceTree = "<group>"; };
@@ -548,18 +561,14 @@
 		D26C85ED2968D51F00AEAF9B /* UITableViewHeaderFooterView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewHeaderFooterView+.swift"; sourceTree = "<group>"; };
 		D26C85EF29693C8500AEAF9B /* OnboardingWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeView.swift; sourceTree = "<group>"; };
 		D26C85F129693CFA00AEAF9B /* OnboardingWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeViewController.swift; sourceTree = "<group>"; };
-		D26C85F7296B0B4E00AEAF9B /* OnboardingChooseRoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingChooseRoleView.swift; sourceTree = "<group>"; };
-		D26C85F9296B109500AEAF9B /* OnboardingChooseRoleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingChooseRoleViewController.swift; sourceTree = "<group>"; };
-		D26C85FF296B27B100AEAF9B /* OnboardingCompleteProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCompleteProfileView.swift; sourceTree = "<group>"; };
-		D26C8601296B285700AEAF9B /* OnboardingCompleteProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCompleteProfileViewController.swift; sourceTree = "<group>"; };
+		D26C85FF296B27B100AEAF9B /* OnboardingCheckReceivedCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCheckReceivedCodeView.swift; sourceTree = "<group>"; };
+		D26C8601296B285700AEAF9B /* OnboardingCheckReceivedCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCheckReceivedCodeViewController.swift; sourceTree = "<group>"; };
 		D26C8607296B585600AEAF9B /* OnboardingJoinFamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyView.swift; sourceTree = "<group>"; };
 		D26C8609296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyViewController.swift; sourceTree = "<group>"; };
 		D26C860B296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyCompletedView.swift; sourceTree = "<group>"; };
 		D26C860D296B6E8600AEAF9B /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		D26C860F296B761900AEAF9B /* OnboardingJoinFamilyCompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyCompletedViewController.swift; sourceTree = "<group>"; };
-		D26C8611296B7CA500AEAF9B /* OnboardingRegisterPetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRegisterPetView.swift; sourceTree = "<group>"; };
 		D26C8613296B7F3E00AEAF9B /* OnboardingRegisterPetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRegisterPetTableViewCell.swift; sourceTree = "<group>"; };
-		D26C8615296BEF9800AEAF9B /* OnboardingRegisterPetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRegisterPetViewController.swift; sourceTree = "<group>"; };
 		D26C8619296C0FC800AEAF9B /* OnboardingPetRegisterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPetRegisterModel.swift; sourceTree = "<group>"; };
 		D26C861B296C1A8A00AEAF9B /* OnboardingRegisterPetTableFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRegisterPetTableFooterView.swift; sourceTree = "<group>"; };
 		D2779741299F76FD008A237D /* OnboardingAppleSocialLoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAppleSocialLoginRequest.swift; sourceTree = "<group>"; };
@@ -587,6 +596,7 @@
 		D299442F2AAC979700C4F280 /* Reactive+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+.swift"; sourceTree = "<group>"; };
 		D29944312AAEDC4100C4F280 /* GenAIRegisterPetUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIRegisterPetUseCase.swift; sourceTree = "<group>"; };
 		D29944332AAEE5C400C4F280 /* DefaultGenAIRegisterPetUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGenAIRegisterPetUseCase.swift; sourceTree = "<group>"; };
+		D29944352AAF1D7A00C4F280 /* ShopChoosePetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopChoosePetViewController.swift; sourceTree = "<group>"; };
 		D29995792A95B8520004FB5D /* NSItemProvider+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSItemProvider+.swift"; sourceTree = "<group>"; };
 		D2B735552A86681800F93C45 /* MyEditProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditProfileRepository.swift; sourceTree = "<group>"; };
 		D2B735572A8669BA00F93C45 /* MyEditPetProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditPetProfileRepository.swift; sourceTree = "<group>"; };
@@ -609,6 +619,8 @@
 		D2DC80D62A0E158000F48209 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		D2DD45C6297D9612001722A1 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		D2EA37EE29BEAB57007EF4B7 /* OnboardingBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBaseView.swift; sourceTree = "<group>"; };
+		D2ED94892AB962A90040B687 /* ShopChoosePetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopChoosePetView.swift; sourceTree = "<group>"; };
+		D2ED948B2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocUploadingImageAlertView.swift; sourceTree = "<group>"; };
 		D2ED94872AB8476F0040B687 /* UIImagePicker+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePicker+Rx.swift"; sourceTree = "<group>"; };
 		D2ED948D2ABAB5B40040B687 /* GenAIGuideUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideUseCase.swift; sourceTree = "<group>"; };
 		D2ED948F2ABAC1EE0040B687 /* DefaultGenAIGuideUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGenAIGuideUseCase.swift; sourceTree = "<group>"; };
@@ -699,6 +711,7 @@
 			children = (
 				871EA350297042D800D0E8CC /* RecordResult.swift */,
 				874AE9F729B49D5A007A637D /* VoidResult.swift */,
+				D209F92F2AB0594B0017D623 /* PetResult.swift */,
 			);
 			path = APIModel;
 			sourceTree = "<group>";
@@ -717,6 +730,7 @@
 				872367182A19080600DCBBFF /* AuthError.swift */,
 				87F287E22A9D182800A53218 /* OrderInvalidError.swift */,
 				870A4C152AA382F800D7CFD8 /* AmountError.swift */,
+				87FAF8B62AAE1D8300DADCC4 /* OrderError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -755,6 +769,7 @@
 				874369582A8FFB7F0035AFD6 /* NetworkAlertView.swift */,
 				87A3D8912A97756E002C36DB /* ZoocTextField.swift */,
 				D299441B2AAB04E100C4F280 /* ZoocRequiredInputLabel.swift */,
+				D2ED948B2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -787,6 +802,7 @@
 				87A3D8942A97C458002C36DB /* Int+.swift */,
 				D299442F2AAC979700C4F280 /* Reactive+.swift */,
 				D2ED94872AB8476F0040B687 /* UIImagePicker+Rx.swift */,
+				87E4A1CD2AAB3075005C012E /* Results+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -973,6 +989,7 @@
 		87A3D8842A975CEA002C36DB /* View */ = {
 			isa = PBXGroup;
 			children = (
+				87FD18602AB7A06100A1431E /* AddressView */,
 				87F2880C2AA0689600A53218 /* AssistantCellMainView */,
 				87A3D8872A975D48002C36DB /* OrderOrdererView.swift */,
 				87A3D8892A975D4F002C36DB /* OrderAddressView.swift */,
@@ -997,6 +1014,7 @@
 		87A3D8932A977960002C36DB /* Order */ = {
 			isa = PBXGroup;
 			children = (
+				87FAF8BB2AB08BB300DADCC4 /* Enum */,
 				87F287F22A9F371A00A53218 /* APIModel */,
 				87F287DA2A9C6E6F00A53218 /* OrderOrderer.swift */,
 				87F287D62A9A63CC00A53218 /* OrderAddress.swift */,
@@ -1017,11 +1035,9 @@
 				D26C85E02968C63F00AEAF9B /* OnboardingLoginViewController.swift */,
 				D26C85E72968CD8E00AEAF9B /* OnboardingAgreementViewController.swift */,
 				D26C85F129693CFA00AEAF9B /* OnboardingWelcomeViewController.swift */,
-				D26C85F9296B109500AEAF9B /* OnboardingChooseRoleViewController.swift */,
-				D26C8601296B285700AEAF9B /* OnboardingCompleteProfileViewController.swift */,
+				D26C8601296B285700AEAF9B /* OnboardingCheckReceivedCodeViewController.swift */,
 				D26C8609296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift */,
 				D26C860F296B761900AEAF9B /* OnboardingJoinFamilyCompletedViewController.swift */,
-				D26C8615296BEF9800AEAF9B /* OnboardingRegisterPetViewController.swift */,
 				D27D9561296CA4640097CD03 /* OnboardingInviteFamilyViewController.swift */,
 				D27D9569296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift */,
 				D27D9565296CA99B0097CD03 /* OnboardingInviteFamilyCompletedViewController.swift */,
@@ -1036,11 +1052,9 @@
 				D26C85DE2968C26500AEAF9B /* OnboardingLoginView.swift */,
 				D26C85E22968C88800AEAF9B /* OnboardingAgreementView.swift */,
 				D26C85EF29693C8500AEAF9B /* OnboardingWelcomeView.swift */,
-				D26C85F7296B0B4E00AEAF9B /* OnboardingChooseRoleView.swift */,
-				D26C85FF296B27B100AEAF9B /* OnboardingCompleteProfileView.swift */,
+				D26C85FF296B27B100AEAF9B /* OnboardingCheckReceivedCodeView.swift */,
 				D26C8607296B585600AEAF9B /* OnboardingJoinFamilyView.swift */,
 				D26C860B296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift */,
-				D26C8611296B7CA500AEAF9B /* OnboardingRegisterPetView.swift */,
 				D27D9567296CB5930097CD03 /* OnboardingInviteFamilyView.swift */,
 				D27D955F296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift */,
 				D27D9563296CA9720097CD03 /* OnboardingInviteCompletedFamilyView.swift */,
@@ -1278,6 +1292,7 @@
 				87DC47EF2A7ADF66007823CB /* Configuration */,
 				87B6625429521EAC00B6FFA9 /* Application */,
 				876483162952351500F74882 /* Global */,
+				87E4A1C72AAAF8A0005C012E /* Realm */,
 				87B6625629521EBC00B6FFA9 /* Resource */,
 				87B6625729521EC200B6FFA9 /* Data */,
 				87B6625829521EC900B6FFA9 /* Network */,
@@ -1383,6 +1398,7 @@
 			isa = PBXGroup;
 			children = (
 				870A4BFD2AA26E7500D7CFD8 /* BottomSheet */,
+				D2ED94892AB962A90040B687 /* ShopChoosePetView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1390,6 +1406,7 @@
 		87BCAD302AA4EF5900A03DA3 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				D29944352AAF1D7A00C4F280 /* ShopChoosePetViewController.swift */,
 				87A3D8772A975385002C36DB /* ShopViewController.swift */,
 				870A4BF82AA252CB00D7CFD8 /* ShopProductViewController.swift */,
 				87BCAD392AA718D800A03DA3 /* ShopCartViewController.swift */,
@@ -1494,6 +1511,22 @@
 			path = APIModel;
 			sourceTree = "<group>";
 		};
+		87E4A1C72AAAF8A0005C012E /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				87E4A1C82AAAF8AC005C012E /* DefaultRealmService.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
+		87E4A1CA2AAAFC79005C012E /* RealmModel */ = {
+			isa = PBXGroup;
+			children = (
+				87E4A1CB2AAAFCA5005C012E /* CartedProduct.swift */,
+			);
+			path = RealmModel;
+			sourceTree = "<group>";
+		};
 		87F287ED2A9F36B800A53218 /* Shop */ = {
 			isa = PBXGroup;
 			children = (
@@ -1514,6 +1547,7 @@
 		87F287F52A9F3EED00A53218 /* Shop */ = {
 			isa = PBXGroup;
 			children = (
+				87E4A1CA2AAAFC79005C012E /* RealmModel */,
 				87F287F82A9F3F7000A53218 /* APIModel */,
 				870A4C112AA374D000D7CFD8 /* SelectedProductOption.swift */,
 			);
@@ -1534,10 +1568,10 @@
 		87F287FB2A9F7D0700A53218 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				87A3D8962A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift */,
 				87F2880A2A9FDE2500A53218 /* OrderAssistantHeaderView.swift */,
 				87F287FC2A9F7D3000A53218 /* OrderAssistantCollectionViewCell.swift */,
 				D2D440172AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift */,
+				87A3D8962A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift */,
 				D29944192AAADE7C00C4F280 /* OrderProductCollectionViewCell.swift */,
 			);
 			path = Cell;
@@ -1549,10 +1583,26 @@
 				87F288002A9FA67E00A53218 /* OrderAssistantCopyView.swift */,
 				87F288022A9FA68A00A53218 /* OrderAssistantDepositView.swift */,
 				87F288042A9FA69200A53218 /* OrderAssistantCompleteView.swift */,
+			);
+			path = AssistantCellMainView;
+			sourceTree = "<group>";
+		};
+		87FAF8BB2AB08BB300DADCC4 /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				87FAF8BC2AB090D700DADCC4 /* AddressType.swift */,
+				87FD185E2AB36A1800A1431E /* PaymentType.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
+		87FD18602AB7A06100A1431E /* AddressView */ = {
+			isa = PBXGroup;
+			children = (
 				D2D440132AA5C08200329F35 /* OrderNewAddressView.swift */,
 				D2D440152AA5C88D00329F35 /* OrderBasicAddressView.swift */,
 			);
-			path = AssistantCellMainView;
+			path = AddressView;
 			sourceTree = "<group>";
 		};
 		D20C008B2A96DDD900666963 /* GenAI */ = {
@@ -1920,6 +1970,7 @@
 				87A76AA3295F6EB80096F669 /* HomeService.swift in Sources */,
 				8743695F2A90C4FB0035AFD6 /* HomeAiButton.swift in Sources */,
 				871DC6C82A1F7CDF006BA780 /* Config.swift in Sources */,
+				87FAF8B72AAE1D8300DADCC4 /* OrderError.swift in Sources */,
 				D26C68E8296DE65E0088DC9A /* MyRegisterPetViewController.swift in Sources */,
 				8723671E2A19277300DCBBFF /* ArchiveAPI.swift in Sources */,
 				8764831D2952368100F74882 /* UIView+.swift in Sources */,
@@ -1928,7 +1979,7 @@
 				87A3D88E2A975D78002C36DB /* OrderPaymentMethodView.swift in Sources */,
 				D2F1936729713FCD00AD87D3 /* OnboardingJWTTokenResult.swift in Sources */,
 				870A4C062AA2704800D7CFD8 /* ProductBottomSheet.swift in Sources */,
-				D26C8600296B27B100AEAF9B /* OnboardingCompleteProfileView.swift in Sources */,
+				D26C8600296B27B100AEAF9B /* OnboardingCheckReceivedCodeView.swift in Sources */,
 				87F287D92A9A667500A53218 /* BasePaddingLabel.swift in Sources */,
 				D24AFABA2A8E011800823E9C /* GenAIRegisterPetViewController.swift in Sources */,
 				87A3D8902A975D84002C36DB /* OrderPriceView.swift in Sources */,
@@ -1961,12 +2012,14 @@
 				D2DC80D52A0DFDF600F48209 /* RecordRegisterView.swift in Sources */,
 				87F288072A9FA86600A53218 /* BankAccount.swift in Sources */,
 				D26C860A296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift in Sources */,
+				D2ED948C2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift in Sources */,
 				D24AFAC42A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift in Sources */,
 				D26C85CF2968681900AEAF9B /* MyPetCollectionFooterView.swift in Sources */,
+				D29944362AAF1D7A00C4F280 /* ShopChoosePetViewController.swift in Sources */,
 				872F638929B89D9B002EC413 /* HomeGuideViewController.swift in Sources */,
 				8765549F295846F3006BBDA9 /* ZoocTabBarController.swift in Sources */,
 				87F287EF2A9F36CE00A53218 /* ShopService.swift in Sources */,
-				D26C8602296B285700AEAF9B /* OnboardingCompleteProfileViewController.swift in Sources */,
+				D26C8602296B285700AEAF9B /* OnboardingCheckReceivedCodeViewController.swift in Sources */,
 				D26C68E6296DE61F0088DC9A /* MyRegisterPetTableViewCell.swift in Sources */,
 				872367112A12AC4E00DCBBFF /* ArchiveModel.swift in Sources */,
 				D2C028F22A81F8B2003F4727 /* String+.swift in Sources */,
@@ -1974,7 +2027,6 @@
 				874369592A8FFB7F0035AFD6 /* NetworkAlertView.swift in Sources */,
 				D29944302AAC979700C4F280 /* Reactive+.swift in Sources */,
 				D23502F52961A69E00F01101 /* MyView.swift in Sources */,
-				D26C8616296BEF9800AEAF9B /* OnboardingRegisterPetViewController.swift in Sources */,
 				87F287D72A9A63CC00A53218 /* OrderAddress.swift in Sources */,
 				8781DE4E29B273FB005ABF23 /* OnboardingFamilyResult.swift in Sources */,
 				876554A3295848D6006BBDA9 /* BaseViewController.swift in Sources */,
@@ -2055,7 +2107,6 @@
 				D27D9EA82A8EFA1B00E02842 /* GenAISelectImageViewController.swift in Sources */,
 				87BCAD3C2AA8DF3600A03DA3 /* ShopCartCollectionViewCell.swift in Sources */,
 				D26C85EE2968D51F00AEAF9B /* UITableViewHeaderFooterView+.swift in Sources */,
-				D26C85F8296B0B4E00AEAF9B /* OnboardingChooseRoleView.swift in Sources */,
 				87D5AF5C29606AFC00CA7F12 /* BaseTargetType.swift in Sources */,
 				8771843D2A0541B700AB7DE4 /* AuthService.swift in Sources */,
 				87BCA64429BB524D00D8DB58 /* OnboardingMakeFamilyResult.swift in Sources */,
@@ -2129,15 +2180,16 @@
 				871DC6C42A1DC691006BA780 /* ZoocImageController.swift in Sources */,
 				8747389E299E84B400C4CC52 /* EmojiBottomSheetViewController.swift in Sources */,
 				8718A06829ADB423001C7460 /* GalleryAlertController.swift in Sources */,
-				D26C85FA296B109500AEAF9B /* OnboardingChooseRoleViewController.swift in Sources */,
 				D2C028F02A81F542003F4727 /* MyEditTextField.swift in Sources */,
 				87A3D8972A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift in Sources */,
+				D2ED948A2AB962A90040B687 /* ShopChoosePetView.swift in Sources */,
 				D27D9EAC2A8F41B000E02842 /* GenAISelectImageViewModel.swift in Sources */,
 				870A4BF92AA252CB00D7CFD8 /* ShopProductViewController.swift in Sources */,
 				87A3D8882A975D48002C36DB /* OrderOrdererView.swift in Sources */,
 				874AE9FA29B4A12F007A637D /* OnboardingJoinUserResult.swift in Sources */,
 				872BBD9529F959FC002E2C71 /* UserDefaultWrapper.swift in Sources */,
 				87A76AA5295F6EC40096F669 /* HomeAPI.swift in Sources */,
+				87FD185F2AB36A1800A1431E /* PaymentType.swift in Sources */,
 				D2F3D6002A4411FF00C90A5A /* MyEditPetProfileView.swift in Sources */,
 				87A76AA7295F6ECD0096F669 /* MyService.swift in Sources */,
 				D26C8614296B7F3E00AEAF9B /* OnboardingRegisterPetTableViewCell.swift in Sources */,
@@ -2149,19 +2201,24 @@
 				D26C85F229693CFA00AEAF9B /* OnboardingWelcomeViewController.swift in Sources */,
 				D299441A2AAADE7C00C4F280 /* OrderProductCollectionViewCell.swift in Sources */,
 				D24AFAC22A8E2BD100823E9C /* GenAIChoosePetCollectionViewCell.swift in Sources */,
+				D209F9302AB0594B0017D623 /* PetResult.swift in Sources */,
 				871EA35329704CD200D0E8CC /* UIImage+.swift in Sources */,
 				D20C008A2A96DDB000666963 /* GenAIModelRepository.swift in Sources */,
 				D2C028F42A8246C1003F4727 /* MyEditPetProfileViewModel.swift in Sources */,
 				D20C00972A9711C200666963 /* GenAIDatasetResult.swift in Sources */,
 				870A4C022AA26F6900D7CFD8 /* TouchBlockIntrinsicPanelLayout.swift in Sources */,
+				87E4A1CE2AAB3075005C012E /* Results+.swift in Sources */,
 				876483192952366A00F74882 /* Image.swift in Sources */,
 				4C6B1868296B930B0059840D /* RecordRegisterCollectionViewCell.swift in Sources */,
+				87FAF8BD2AB090D700DADCC4 /* AddressType.swift in Sources */,
 				87F288052A9FA69200A53218 /* OrderAssistantCompleteView.swift in Sources */,
 				87A3D88A2A975D4F002C36DB /* OrderAddressView.swift in Sources */,
 				87648323295236B700F74882 /* UIColor+.swift in Sources */,
 				D2F99B472ABC25B000C7C91F /* DefaultGenAISelectImageUseCase.swift in Sources */,
 				D27D9560296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift in Sources */,
+				87E4A1CC2AAAFCA5005C012E /* CartedProduct.swift in Sources */,
 				D26C68EC296DE7B60088DC9A /* MyPetRegisterModel.swift in Sources */,
+				87E4A1C92AAAF8AC005C012E /* DefaultRealmService.swift in Sources */,
 				D2EA37EF29BEAB57007EF4B7 /* OnboardingBaseView.swift in Sources */,
 				D24AFABC2A8E03EF00823E9C /* GenAIRegisterPetViewModel.swift in Sources */,
 				D21CEC6229ABC1F900854A36 /* MyRegisterPetResult.swift in Sources */,
@@ -2177,7 +2234,6 @@
 				870A4C0C2AA2823900D7CFD8 /* ProductSelectedOptionCollectionViewCell.swift in Sources */,
 				D23502E22961898C00F01101 /* MyProfileSectionCollectionViewCell.swift in Sources */,
 				D27D956A296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift in Sources */,
-				D26C8612296B7CA500AEAF9B /* OnboardingRegisterPetView.swift in Sources */,
 				D23502F129619D4700F01101 /* MyPetCollectionViewCell.swift in Sources */,
 				871EA34A2970403300D0E8CC /* ArchiveResult.swift in Sources */,
 				87F287E12A9D113E00A53218 /* OrderAgreement.swift in Sources */,
@@ -2363,7 +2419,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID)";
 				PRODUCT_NAME = "$(APP_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -2406,7 +2462,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID)";
 				PRODUCT_NAME = "$(APP_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

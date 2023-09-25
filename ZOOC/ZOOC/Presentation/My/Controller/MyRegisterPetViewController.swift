@@ -64,18 +64,23 @@ final class MyRegisterPetViewController: BaseViewController {
     }
     
     private func target() {
-        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        rootView.xmarkButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
         rootView.registerPetButton.addTarget(self, action: #selector(registerPetButtonDidTap), for: .touchUpInside)
     }
     
     //MARK: - Action Method
     
     @objc private func backButtonDidTap() {
-        self.navigationController?.popViewController(animated: true)
+        if let presentingViewController = presentingViewController {
+            // presented로 표시된 경우
+            presentingViewController.dismiss(animated: true)
+        } else if let navigationController = navigationController {
+            // pushed로 표시된 경우
+            navigationController.popViewController(animated: true)
+        }
     }
     
     @objc private func registerPetButtonDidTap() {
-        rootView.registerPetButton.isEnabled = false
         var names: [String] = []
         var photos: [Data] = []
         var isPhotos: [Bool] = []
@@ -98,7 +103,13 @@ final class MyRegisterPetViewController: BaseViewController {
             self.validateResult(result)
             NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
             NotificationCenter.default.post(name: .myPageUpdate, object: nil)
-            self.navigationController?.popViewController(animated: true)
+            if let presentingViewController = self.presentingViewController {
+                // presented로 표시된 경우
+                presentingViewController.dismiss(animated: true)
+            } else if let navigationController = self.navigationController {
+                // pushed로 표시된 경우
+                navigationController.popViewController(animated: true)
+            }
         }
         
     }
@@ -254,7 +265,7 @@ extension MyRegisterPetViewController: MyDeleteButtonTappedDelegate {
 
 //MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 
-extension MyRegisterPetViewController: UIImagePickerControllerDelegate {
+extension MyRegisterPetViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         self.myPetRegisterViewModel.petList[self.myPetRegisterViewModel.index].image = image

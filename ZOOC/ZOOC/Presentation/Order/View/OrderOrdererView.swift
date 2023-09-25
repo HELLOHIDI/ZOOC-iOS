@@ -196,6 +196,28 @@ extension OrderOrdererView: ZoocTextFieldDelegate {
         delegate?.textFieldDidEndEditing(name: nameTextField.text,
                                          phoneNumber: phoneNumberTextField.text)
     }
+    
+    func zoocTextField(_ textField: ZoocTextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard textField == phoneNumberTextField else { return true }
+        // All digits entered
+        if range.location == 13 {
+            return false
+        }
+        
+        // Auto-add hyphen before appending 4rd or 7th digit
+        if range.length == 0 && (range.location == 3 || range.location == 8) {
+            textField.text = "\(textField.text!)-\(string)"
+            return false
+        }
+        // Delete hyphen when deleting its trailing digit
+//        if range.length == 1 && (range.location == 4 || range.location == 8) {
+//            range.location --
+//            range.length = 2
+//            textField.text = textField.text!.stringByReplacingCharactersInRange(range, withString: "")
+//            return false
+//        }
+        return true
+    }
 }
 
 

@@ -51,8 +51,9 @@ final class OrderNewAddressView: UIView {
     
     private let postCodeLabelBox: BasePaddingLabel = {
         let label = BasePaddingLabel()
-        label.backgroundColor = .zoocWhite2
-        label.textColor = .zoocGray1
+        label.text = "우편번호"
+        label.backgroundColor = .zoocLightGray
+        label.textColor = .zoocGray2
         label.font = .zoocBody1
         label.setBorder(borderWidth: 1, borderColor: .zoocLightGray)
         label.makeCornerRound(radius: 7)
@@ -71,8 +72,9 @@ final class OrderNewAddressView: UIView {
     
     private let addressLabelBox: BasePaddingLabel = {
         let label = BasePaddingLabel()
-        label.textColor = .zoocGray1
-        label.backgroundColor = .zoocWhite2
+        label.text = "주소"
+        label.backgroundColor = .zoocLightGray
+        label.textColor = .zoocGray2
         label.font = .zoocBody1
         label.setBorder(borderWidth: 1, borderColor: .zoocLightGray)
         label.makeCornerRound(radius: 7)
@@ -192,26 +194,27 @@ final class OrderNewAddressView: UIView {
             $0.leading.equalToSuperview().inset(30)
         }
         
-        postCodeLabelBox.snp.makeConstraints {
-            $0.top.equalTo(receiverPhoneNumberTextField.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(97)
-            $0.trailing.equalToSuperview().inset(134)
-            $0.height.equalTo(41)
-        }
-        
         addressLabel.snp.makeConstraints {
             $0.centerY.equalTo(postCodeLabelBox)
             $0.leading.equalToSuperview().inset(30)
         }
         
+        postCodeLabelBox.snp.makeConstraints {
+            $0.top.equalTo(receiverPhoneNumberTextField.snp.bottom).offset(12)
+            $0.leading.equalTo(receiverTextField)
+            $0.trailing.equalTo(findAddressButton.snp.leading).offset(-12)
+            $0.height.equalTo(41)
+        }
+        
         findAddressButton.snp.makeConstraints {
-            $0.top.height.equalTo(postCodeLabelBox)
-            $0.leading.equalTo(postCodeLabelBox.snp.trailing).offset(12)
+            $0.top.equalTo(receiverPhoneNumberTextField.snp.bottom).offset(12)
             $0.trailing.equalToSuperview().inset(30)
+            $0.width.equalTo(92)
+            $0.height.equalTo(41)
         }
         
         addressLabelBox.snp.makeConstraints {
-            $0.top.equalTo(findAddressButton.snp.bottom).offset(12)
+            $0.top.equalTo(postCodeLabelBox.snp.bottom).offset(12)
             $0.leading.height.equalTo(postCodeLabelBox)
             $0.trailing.equalToSuperview().inset(30)
         }
@@ -241,7 +244,7 @@ final class OrderNewAddressView: UIView {
         requestTextField.snp.makeConstraints {
             $0.top.equalTo(registerBasicAddressCheckButton.snp.bottom).offset(12)
             $0.leading.trailing.height.equalTo(addressLabelBox)
-            $0.bottom.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(20).priority(.low)
         }
     }
     
@@ -259,20 +262,22 @@ final class OrderNewAddressView: UIView {
         requestTextField.zoocDelegate = self
     }
     
-    func updateUI(_ data: OrderAddress, isPostData: Bool = false) {
+    func updateUI(_ data: OrderAddress) {
         receiverTextField.text = data.receiverName
         receiverPhoneNumberTextField.text = data.receiverPhoneNumber
         postCodeLabelBox.text = data.postCode
         addressLabelBox.text = data.address
         detailAddressTextField.text = data.detailAddress
         
-        if isPostData {
-            postCodeLabelBox.textColor = .zoocGray3
-            addressLabelBox.textColor = .zoocGray3
-            detailAddressTextField.becomeFirstResponder()
-        } else {
+        detailAddressTextField.becomeFirstResponder()
+
+        if data.address.isEmpty {
             postCodeLabelBox.text = "우편번호"
             addressLabelBox.text = "주소"
+        } else {
+            addressLabel.style("배송지") // validity에서 빨간 라벨 다시 돌려놓기 위해
+            postCodeLabelBox.textColor = .zoocGray3
+            addressLabelBox.textColor = .zoocGray3
         }
         
     }
@@ -280,10 +285,10 @@ final class OrderNewAddressView: UIView {
     func checkValidity() throws {
         receiverTextField.updateInvalidUI()
         receiverPhoneNumberTextField.updateInvalidUI()
-        if postCodeLabelBox.text == "우편번호" { addressLabel.textColor = .red}
+        if postCodeLabelBox.text == "우편번호" { addressLabel.textColor = .zoocRed}
         else { addressLabel.textColor = .zoocGray2 }
         
-        if addressLabelBox.text == "주소" { addressLabel.textColor = .red}
+        if addressLabelBox.text == "주소" { addressLabel.textColor = .zoocRed}
         else { addressLabel.textColor = .zoocGray2 }
         
         guard receiverTextField.hasText,
@@ -332,4 +337,28 @@ extension OrderNewAddressView: ZoocTextFieldDelegate {
                                          detailAddress: detailAddressTextField.hasText ? detailAddressTextField.text : nil,
                                          request: detailAddressTextField.hasText ? requestTextField.text : nil)
     }
+    
+    
+    func zoocTextField(_ textField: ZoocTextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard textField == receiverPhoneNumberTextField else { return true }
+        // All digits entered
+        if range.location == 13 {
+            return false
+        }
+        
+        // Auto-add hyphen before appending 4rd or 7th digit
+        if range.length == 0 && (range.location == 3 || range.location == 8) {
+            textField.text = "\(textField.text!)-\(string)"
+            return false
+        }
+        // Delete hyphen when deleting its trailing digit
+        //        if range.length == 1 && (range.location == 4 || range.location == 8) {
+        //            range.location --
+        //            range.length = 2
+        //            textField.text = textField.text!.stringByReplacingCharactersInRange(range, withString: "")
+        //            return false
+        //        }
+        return true
+    }
+
 }

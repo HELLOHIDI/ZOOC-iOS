@@ -110,11 +110,11 @@ final class OrderProductCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Public Methods
     
-    func dataBind(_ data: SelectedProductOption) {
+    func dataBind(_ data: OrderProduct) {
         productImageView.kfSetImage(url: data.image)
         productNameLabel.text = data.name
         priceLabel.text = data.price.priceText
-        productCntLabel.text = "\(data.amount)개"
+        productCntLabel.text = "\(data.pieces)개"
         phoneModelLabel.text = " | \(data.option)"
     }
 }

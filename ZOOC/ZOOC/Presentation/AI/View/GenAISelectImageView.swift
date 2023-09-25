@@ -21,7 +21,7 @@ final class GenAISelectImageView: UIView {
     private let titleLabel = UILabel()
     public let subTitleLabel = UILabel()
     
-    public lazy var generateAIModelButton = ZoocGradientButton()
+    public lazy var generateAIModelButton = ZoocGradientButton.init(.network)
     
     public let activityIndicatorView = UIActivityIndicatorView(style: .large)
     
@@ -63,7 +63,7 @@ final class GenAISelectImageView: UIView {
         
         subTitleLabel.do {
             $0.text = "선택한 사진으로 AI 모델 생성이 진행돼요"
-            $0.textColor = .zoocGray2
+            $0.textColor = .zoocGray1
             $0.font = .zoocBody2
             $0.textAlignment = .center
         }
@@ -128,7 +128,7 @@ final class GenAISelectImageView: UIView {
         }
         
         subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.titleLabel.snp.bottom).offset(6)
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(15)
             $0.centerX.equalToSuperview()
         }
         

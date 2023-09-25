@@ -8,64 +8,16 @@
 import UIKit
 
 extension UIViewController{
-    
-//    func presentBottomAlert(_ message: String) {
-//      
-//        let alertSuperview: UIView = {
-//            let view = UIView()
-//            view.backgroundColor = .darkGray.withAlphaComponent(0.85)
-//            view.layer.cornerRadius = 10
-//            view.isHidden = true
-//            return view
-//        }()
-//    
-//        
-//        let alertLabel: UILabel = {
-//            let label = UILabel()
-//            label.font = .systemFont(ofSize: 15)
-//            label.textColor = .white
-//            label.text = message
-//            return label
-//        }()
-//        
-//        view.addSubview(alertSuperview)
-//        alertSuperview.addSubview(alertLabel)
-//        alertSuperview.snp.makeConstraints {
-//            $0.centerX.equalToSuperview()
-//            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(35)
-//            $0.leading.trailing.equalToSuperview().inset(20)
-//            $0.height.equalTo(40)
-//        }
-//        
-//        alertLabel.snp.makeConstraints {
-//            $0.center.equalToSuperview()
-//        }
-//        
-//        
-//        alertLabel.text = message
-//        alertSuperview.alpha = 1.0
-//        alertSuperview.isHidden = false
-//        
-//        UIView.animate(
-//            withDuration: 2.0,
-//            delay: 1.0,
-//            options: .curveEaseIn,
-//            animations: { alertSuperview.alpha = 0 },
-//            completion: { _ in
-//                alertSuperview.removeFromSuperview()
-//            }
-//        )
-//    }
-    
-    // MARK: 2023.09.07 생성. 커스텀 가능한 bottomAlert를 만들기 위해 추가 구현.
-    // TODO: presentBottom -> ShowToast로 모두 변경하기
+ 
     
     func showToast(_ message: String,
                    type: Toast.ToastType,
-                   bottomInset: CGFloat = 40) {
+                   view: UIView? = UIApplication.shared.firstWindow,
+                   bottomInset: CGFloat = 86) {
+        guard let view else { return }
         Toast().show(message: message,
                      type: type,
-                     view: self.view,
+                     view: view,
                      bottomInset: bottomInset)
     }
     
@@ -108,11 +60,11 @@ extension UIViewController{
                                                   object: nil)
     }
     
-    func dismissKeyboardWhenTappedAround() {
+    func dismissKeyboardWhenTappedAround(cancelsTouchesInView: Bool = false) {
         print(#function)
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
                                                                  action: #selector(self.dismissKeyboard))
-        tap.cancelsTouchesInView = true
+        tap.cancelsTouchesInView = cancelsTouchesInView
         self.view.addGestureRecognizer(tap)
     }
     

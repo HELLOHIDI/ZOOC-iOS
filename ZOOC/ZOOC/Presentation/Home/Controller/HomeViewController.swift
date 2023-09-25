@@ -18,7 +18,7 @@ final class HomeViewController : BaseViewController {
     private var limit: Int = 20
     private var isFetchingData = false
     private let refreshControl = UIRefreshControl()
-    private var petData: [HomePetResult] = [] {
+    private var petData: [PetResult] = [] {
         didSet{
             rootView.petCollectionView.reloadData()
         }
@@ -60,7 +60,6 @@ final class HomeViewController : BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //        requestTotalPetAPI()
         rootView.aiView.startAnimation()
     }
     
@@ -145,7 +144,6 @@ final class HomeViewController : BaseViewController {
         )
     }
     
-    
     @objc
     public func updateUI() {
         requestTotalPetAPI()
@@ -170,37 +168,18 @@ final class HomeViewController : BaseViewController {
     }
     
     private func pushToShopViewController() {
-        
-        
-        let shopVC = ShopViewController()
-        //        let orderVC = OrderViewController(selectedProduct: [SelectedProductOption(id: 1, name: "!@", option: "!@3", image: "!@3", price: 1, amount: 1)])
-        //
-        shopVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(shopVC, animated: true)
-    }
-    
-    private func pushToGenAIViewController() {
-        if self.petData.count > 0 {
-            let genAIChoosePetVC = GenAIChoosePetViewController(
-                viewModel: GenAIChoosePetViewModel(
-                    genAIChoosePetUseCase: DefaultGenAIChoosePetUseCase(
-                        repository: GenAIPetRepositoryImpl()
-                    )
-                )
-            )
-            genAIChoosePetVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(genAIChoosePetVC, animated: true)
+        if petData.isEmpty {
+            presentAlertViewController()
         } else {
-            let genAIRegisterPetVC = GenAIRegisterPetViewController(
-                viewModel: GenAIRegisterPetViewModel(
-                    genAIRegisterPetUseCase: DefaultGenAIRegisterPetUseCase(
-                        repository: GenAIPetRepositoryImpl()
-                    )
+            let shopVC = ShopChoosePetViewController(
+                viewModel: DefaultGenAIChoosePetModel(
+                    repository: GenAIPetRepositoryImpl()
                 )
             )
-            genAIRegisterPetVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(genAIRegisterPetVC, animated: true)
+            shopVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(shopVC, animated: true)
         }
+        
     }
     
     private func deselectAllOfListArchiveCollectionViewCell(completion: (() -> Void)?) {
@@ -254,7 +233,7 @@ final class HomeViewController : BaseViewController {
     
     private func requestTotalPetAPI() {
         HomeAPI.shared.getTotalPet(familyID: UserDefaultsManager.familyID) { result in
-            guard let result = self.validateResult(result) as? [HomePetResult] else { return }
+            guard let result = self.validateResult(result) as? [PetResult] else { return }
             
             self.petData = result
             guard let id = self.petData.first?.id else {
@@ -288,7 +267,6 @@ final class HomeViewController : BaseViewController {
             self.isFetchingData = result.isEmpty ? true : false // 마지막 게시물 아이디 이후엔 서버통신 금지
         }
     }
-    
     
     //MARK: - Action Method
     
@@ -546,6 +524,11 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 //MARK: - ScrollViewDelegate
 
 extension HomeViewController {
+    func presentAlertViewController() {
+        let zoocAlertVC = ZoocAlertViewController(.noPet)
+        zoocAlertVC.delegate = self
+        self.present(zoocAlertVC, animated: false, completion: nil)
+    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
@@ -564,7 +547,6 @@ extension HomeViewController {
     
     func pagination(_ scrollView: UIScrollView) {
         
-        
         let contentOffsetX = scrollView.contentOffset.x
         let collectionViewContentSizeX = rootView.archiveListCollectionView.contentSize.width
         let paginationX = collectionViewContentSizeX * 0.2
@@ -573,12 +555,30 @@ extension HomeViewController {
             fatalError("선택된 펫이 없습니다.")
         }
         
-        print("contentOffsetX: \(contentOffsetX), paginationX: \(paginationX)")
-        
         let petID = petData[index].id
         if contentOffsetX > paginationX && !isFetchingData {
             isFetchingData = true
             requestTotalArchiveAPI(petID: petID, pagination: true)
+        }
+    }
+    
+    private func pushToGenAIViewController() {
+        if petData.count > 0 {
+            let genAIChoosePetVC = GenAIChoosePetViewController(
+                viewModel: DefaultGenAIChoosePetModel(
+                    repository: GenAIPetRepositoryImpl()
+                )
+            )
+            genAIChoosePetVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(genAIChoosePetVC, animated: true)
+        } else {
+            let genAIRegisterPetVC = GenAIRegisterPetViewController(
+                viewModel: DefaultGenAIRegisterViewModel(
+                    repository: GenAIPetRepositoryImpl()
+                )
+            )
+            genAIRegisterPetVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(genAIRegisterPetVC, animated: true)
         }
     }
     
@@ -588,6 +588,17 @@ extension HomeViewController {
 extension HomeViewController: HomeGuideViewControllerDelegate {
     func dismiss() {
         rootView.emptyView.isHidden = !archiveData.isEmpty
+    }
+}
+
+extension HomeViewController: ZoocAlertViewControllerDelegate {
+    func keepButtonDidTap() {
+        let registerPetViewController = MyRegisterPetViewController(myPetRegisterViewModel: MyPetRegisterViewModel())
+        registerPetViewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(registerPetViewController, animated: true)
+    }
+    func exitButtonDidTap() {
+        self.dismiss()
     }
 }
 

@@ -72,7 +72,7 @@ final class MyViewController: BaseViewController {
             self?.rootView.myCollectionView.reloadData()
         }
         
-        viewModel.inviteCode.observe(on: self) { [weak self] inviteCode in
+        viewModel.inviteCodeMessage.observe(on: self) { [weak self] inviteCode in
             guard let code = inviteCode else { return }
             self?.shareInviteCode(code: code)
         }
@@ -155,7 +155,7 @@ extension MyViewController: UICollectionViewDelegateFlowLayout {
         case 2:
             return CGSize(width: 315, height: 127)
         case 3:
-            return CGSize(width: 315, height: 346)
+            return CGSize(width: 315, height: 284)
         case 4:
             return CGSize(width: 315, height: 17)
         default:
@@ -245,11 +245,9 @@ extension MyViewController: SettingMenuTableViewCellDelegate {
             presentSafariViewController(url)
         case 2: // 문의하기
             sendMail(subject: "[ZOOC] 문의하기", body: TextLiteral.mailInquiryBody)
-        case 3: // 미션 제안하기
-            sendMail(subject: "[ZOOC] 미션 제안하기", body: TextLiteral.mailMissionAdviceBody)
-        case 4: // 앱 정보
+        case 3: // 앱 정보
             pushToAppInformationView()
-        case 5: // 로그아웃
+        case 4: // 로그아웃
             viewModel.logoutButtonDidTapEvent()
         default:
             break
@@ -347,17 +345,10 @@ extension MyViewController {
         self.present(activityViewController, animated: true, completion: nil)
         
         activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
-            let message = success ? "초대 코드 복사에 성공했습니다"  : "초대 코드 복사에 실패했습니다"
-            let title = success ? "복사 성공" : "복사 실패"
-            self.showAlertCopyCompleted(message: message, title: title)
+            let message = success ? "초대 코드 복사에 성공했습니다"  : "초대 코드 복사가 되지 않았어요"
+            let type: Toast.ToastType = success ? .good : .bad
+            self.showToast(message, type: type)
         }
-    }
-    
-    private func showAlertCopyCompleted(message: String, title: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "확인", style: .default)
-        alert.addAction(okAction)
-        present(alert, animated: false, completion: nil)
     }
 }
 
@@ -383,7 +374,9 @@ extension MyViewController: MFMailComposeViewControllerDelegate {
             self.present(composeViewController, animated: true, completion: nil)
         } else {
             print("메일 보내기 실패")
-            let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "메일을 보내려면 'Mail' 앱이 필요합니다. App Store에서 해당 앱을 복원하거나 이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+            let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패",
+                                                       message: "메일을 보내려면 'Mail' 앱이 필요합니다. App Store에서 해당 앱을 복원하거나 이메일 설정을 확인하고 다시 시도해주세요.",
+                                                       preferredStyle: .alert)
             let goAppStoreAction = UIAlertAction(title: "App Store로 이동하기", style: .default) { _ in
                 // 앱스토어로 이동하기(Mail)
                 let url = "https://apps.apple.com/kr/app/mail/id1108187098"

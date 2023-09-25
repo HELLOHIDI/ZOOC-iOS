@@ -8,8 +8,8 @@
 import UIKit
 
 protocol ProductBottomSheetDelegate: AnyObject {
-    func cartButtonDidTap(selectedOptions: [SelectedProductOption])
-    func orderButtonDidTap(selectedOptions: [SelectedProductOption])
+    func cartButtonDidTap(_ selectedProductOptions: [SelectedProductOption])
+    func orderButtonDidTap(_ selectedProductOptions: [SelectedProductOption])
 }
 
 final class ProductBottomSheet: UIViewController, ScrollableViewController {
@@ -208,24 +208,22 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
     private func cartButtonDidTap() {
         guard !selectedOptionsData.isEmpty else {
             showToast("상품 옵션을 선택해주세요",
-                      type: .normal,
-                      bottomInset: 86)
+                      type: .bad)
             return
         }
-        dismiss(animated: false)
-        delegate?.cartButtonDidTap(selectedOptions: selectedOptionsData)
+        dismiss(animated: true)
+        delegate?.cartButtonDidTap(selectedOptionsData)
     }
     
     @objc
     private func orderButtonDidTap() {
         guard !selectedOptionsData.isEmpty else {
             showToast("상품 옵션을 선택해주세요",
-                      type: .bad,
-                      bottomInset: 86)
+                      type: .bad)
             return
         }
         dismiss(animated: false)
-        delegate?.orderButtonDidTap(selectedOptions: selectedOptionsData)
+        delegate?.orderButtonDidTap(selectedOptionsData)
     }
 }
 

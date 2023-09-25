@@ -25,6 +25,8 @@ public enum Image{
     static let cameraCircleGreen = UIImage(named: "camera.circle.green")!
     static let cameraCircle = UIImage(named: "camera.circle")!
     static let cart = UIImage(named: "cart")!
+    static let cartLight = UIImage(named: "cart.light")!
+    static let checkCircleBig = UIImage(named: "check.circle.big")!
     static let check = UIImage(named: "check")!
     static let checkTint = UIImage(named: "check.tint")!
     static let checkToast = UIImage(named: "check.toast")!

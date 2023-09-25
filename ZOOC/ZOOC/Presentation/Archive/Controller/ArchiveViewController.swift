@@ -88,7 +88,7 @@ final class ArchiveViewController : BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        dismissKeyboardWhenTappedAround()
+        dismissKeyboardWhenTappedAround(cancelsTouchesInView: true)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow),
                                                name: UIResponder.keyboardWillShowNotification ,
@@ -340,7 +340,7 @@ final class ArchiveViewController : BaseViewController {
         }
         
         guard let id else {
-            showToast(message, type: .normal, bottomInset: 86)
+            showToast(message, type: .normal)
             return
         }
         
@@ -442,7 +442,7 @@ final class ArchiveViewController : BaseViewController {
             
             
             guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
-            tabVC.homeViewController.selectPetCollectionView(petID: self.archiveModel.petID)
+            tabVC.homeViewController.recordID = nil
             self.dismiss(animated: true)
             print("게시물 삭제 완료!")
                     

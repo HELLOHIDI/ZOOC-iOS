@@ -91,7 +91,7 @@ final class GenAIGuideView: UIView {
             $0.text = "비슷한 자세의 정면사진들이 가장 좋아요"
             $0.font = .zoocBody1
             $0.textAlignment = .left
-            $0.textColor = UIColor(r: 104, g: 104, b: 85)
+            $0.textColor = .zoocGray3
             $0.asColor(targetString: "정면사진들", color: .zoocMainGreen)
         }
         
@@ -99,7 +99,7 @@ final class GenAIGuideView: UIView {
             $0.text = "최대한 발이 잘리지 않게 찍어주세요!"
             $0.font = .zoocCaption
             $0.textAlignment = .left
-            $0.textColor = UIColor(r: 104, g: 104, b: 85)
+            $0.textColor = .zoocGray2
         }
         
         deprecatedView.do {
@@ -114,7 +114,7 @@ final class GenAIGuideView: UIView {
         
         deprecatedCaption1.do {
             $0.text = "입을 벌림"
-            $0.textColor = UIColor(r: 104, g: 104, b: 85)
+            $0.textColor = .zoocGray2
             $0.font = .zoocCaption
         }
         
@@ -124,7 +124,7 @@ final class GenAIGuideView: UIView {
         
         deprecatedCaption2.do {
             $0.text = "신체 부위 잘림"
-            $0.textColor = UIColor(r: 104, g: 104, b: 85)
+            $0.textColor = .zoocGray2
             $0.font = .zoocCaption
         }
         
@@ -134,13 +134,13 @@ final class GenAIGuideView: UIView {
         
         deprecatedCaption3.do {
             $0.text = "화질이 나쁨"
-            $0.textColor = UIColor(r: 104, g: 104, b: 85)
+            $0.textColor = .zoocGray2
             $0.font = .zoocCaption
         }
         
         deprecatedDescribeLabel.do {
             $0.text = "옷 입은 사진도 AI 인식이 힘들어요"
-            $0.textColor = UIColor(r: 104, g: 104, b: 85)
+            $0.textColor = .zoocGray3
             $0.font = .zoocBody1
             $0.asColor(targetString: "옷 입은 사진", color: UIColor(r: 255, g: 83, b: 83))
         }
@@ -201,7 +201,7 @@ final class GenAIGuideView: UIView {
         }
         
         subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.titleLabel.snp.bottom).offset(6)
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(15)
             $0.centerX.equalToSuperview()
         }
         
@@ -240,7 +240,7 @@ final class GenAIGuideView: UIView {
         }
         
         featuredSubDescribeLabel.snp.makeConstraints {
-            $0.top.equalTo(self.featuredDescribeLabel.snp.bottom).offset(4)
+            $0.bottom.equalToSuperview().inset(22)
             $0.centerX.equalToSuperview()
         }
         
@@ -254,7 +254,7 @@ final class GenAIGuideView: UIView {
         
         deprecatedCaption1.snp.makeConstraints {
             $0.top.equalTo(self.deprecatedImageView1.snp.bottom).offset(8)
-            $0.leading.equalToSuperview().offset(33)
+            $0.centerX.equalTo(deprecatedImageView1)
         }
         
         deprecatedImageView2.snp.makeConstraints {
@@ -265,7 +265,7 @@ final class GenAIGuideView: UIView {
         
         deprecatedCaption2.snp.makeConstraints {
             $0.top.equalTo(self.deprecatedImageView1.snp.bottom).offset(8)
-            $0.centerX.equalToSuperview()
+            $0.centerX.equalTo(deprecatedImageView2)
         }
         
         deprecatedImageView3.snp.makeConstraints {
@@ -276,7 +276,7 @@ final class GenAIGuideView: UIView {
         
         deprecatedCaption3.snp.makeConstraints {
             $0.top.equalTo(self.deprecatedImageView1.snp.bottom).offset(8)
-            $0.trailing.equalToSuperview().inset(28)
+            $0.centerX.equalTo(deprecatedImageView3)
         }
         
         deprecatedDescribeLabel.snp.makeConstraints {

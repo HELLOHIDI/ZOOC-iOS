@@ -29,7 +29,7 @@ final class ShopCartCollectionViewCell: UICollectionViewCell {
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.setBorder(borderWidth: 1, borderColor: .lightGray)
+        imageView.setBorder(borderWidth: 1, borderColor: .zoocLightGray)
         imageView.makeCornerRound(radius: 6)
         return imageView
     }()
@@ -181,13 +181,13 @@ final class ShopCartCollectionViewCell: UICollectionViewCell {
     }
     
     func dataBind(indexPath: IndexPath,
-                  selectedOption: SelectedProductOption) {
+                  selectedOption: CartedProduct) {
         self.indexPath = indexPath
         
         imageView.kfSetImage(url: selectedOption.image)
         nameLabel.text = selectedOption.name
         optionLabel.text = selectedOption.option
-        amountLabel.text = String(selectedOption.amount)
+        amountLabel.text = String(selectedOption.pieces)
         priceLabel.text = selectedOption.productsPrice.priceText
     }
     

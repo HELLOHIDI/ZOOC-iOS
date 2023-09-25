@@ -21,7 +21,7 @@ final class GenAIRegisterPetView: UIView {
     private let petProfileView = UIView()
     public var petProfileImageButton = UIButton()
     public var petProfileNameTextField = MyEditTextField(textFieldType: .pet)
-    public var completeButton = ZoocGradientButton()
+    public var completeButton = ZoocGradientButton.init(.network)
     
     //MARK: - Life Cycles
     

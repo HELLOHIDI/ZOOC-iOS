@@ -113,7 +113,7 @@ extension GenAIRegisterPetViewController: GalleryAlertControllerDelegate {
 
 //MARK: - UIImagePickerControllerDelegate
 
-extension GenAIRegisterPetViewController: UIImagePickerControllerDelegate {
+extension GenAIRegisterPetViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 
@@ -154,6 +154,8 @@ extension GenAIRegisterPetViewController {
         )
         genAIGuideVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(genAIGuideVC, animated: true)
+        
+        self.rootView.completeButton.isEnabled = true
     }
     
     private func updateTextField(_ textField: MyEditTextField?) {

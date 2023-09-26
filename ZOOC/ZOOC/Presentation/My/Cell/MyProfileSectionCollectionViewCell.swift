@@ -16,7 +16,7 @@ protocol EditButtonTappedDelegate: AnyObject {
     func editButtonTapped()
 }
 
-final class MyProfileSectionCollectionViewCell: UICollectionViewCell  {
+final class MyProfileView: UIView {
     
     //MARK: - Properties
     
@@ -93,18 +93,6 @@ final class MyProfileSectionCollectionViewCell: UICollectionViewCell  {
         }
     }
     
-    func dataBind(data: UserResult?) {
-        profileNameLabel.text = data?.nickName
-        data?.photo == nil ? setDefaultProfileImage() : setProfileImage(photo: (data?.photo)!)
-    }
+    
 }
 
-extension MyProfileSectionCollectionViewCell {
-    func setDefaultProfileImage() {
-        profileImageView.image = Image.defaultProfile
-    }
-    
-    func setProfileImage(photo: String) {
-        profileImageView.kfSetImage(url: photo)
-    }
-}

@@ -27,8 +27,6 @@ final class DefaultMyEditProfileUseCase: MyEditProfileUseCase {
     var isTextCountExceeded = BehaviorRelay<Bool>(value: false)
     var isEdited = BehaviorRelay<Bool?>(value: false)
     
-
-    
     func editProfile(_ image: UIImage? = nil) {
         guard let profile = profileData.value else { return }
             repository.patchMyProfile(request: profile, completion: { [weak self] result in

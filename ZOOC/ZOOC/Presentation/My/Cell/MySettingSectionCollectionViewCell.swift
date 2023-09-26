@@ -16,7 +16,7 @@ protocol SettingMenuTableViewCellDelegate {
     func selectedSettingMenuTableViewCell(indexPath: IndexPath)
 }
 
-final class MySettingSectionCollectionViewCell: UICollectionViewCell {
+final class MySettingView: UIView {
     
     //MARK: - Properties
     
@@ -77,7 +77,7 @@ final class MySettingSectionCollectionViewCell: UICollectionViewCell {
 
 //MARK: - UITableViewDelegate
 
-extension MySettingSectionCollectionViewCell: UITableViewDelegate {
+extension MySettingView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 62
     }
@@ -89,11 +89,11 @@ extension MySettingSectionCollectionViewCell: UITableViewDelegate {
 
 //MARK: - UITableViewDataSource
 
-extension MySettingSectionCollectionViewCell: UITableViewDataSource {
+extension MySettingView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return mySettingData.count
     }
-    
+        
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MySettingTableViewCell.cellIdentifier, for: indexPath)
                 as? MySettingTableViewCell else { return UITableViewCell() }

@@ -47,7 +47,6 @@ final class MyEditProfileViewModel: ViewModelType {
         return output
     }
     
-    
     private func bindOutput(output: Output, disposeBag: DisposeBag) {
         myEditProfileUseCase.profileData.subscribe(onNext: { profileData in
             output.profileData.accept(profileData)

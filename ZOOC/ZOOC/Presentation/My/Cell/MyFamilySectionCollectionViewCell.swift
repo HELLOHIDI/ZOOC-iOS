@@ -10,12 +10,15 @@ import UIKit
 import SnapKit
 import Then
 
-final class MyFamilySectionCollectionViewCell: UICollectionViewCell {
+final class MyFamilyView: UIView {
     
     //MARK: - Properties
     
-    private var myProfileData: UserResult?
-    private var myFamilyData: [UserResult] = []
+    private var myFamilyData: [UserResult] = [] {
+        didSet {
+            familyCollectionView.reloadData()
+        }
+    }
     
     //MARK: - UI Components
     
@@ -30,6 +33,7 @@ final class MyFamilySectionCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        delegate()
         register()
         
         style()
@@ -43,10 +47,12 @@ final class MyFamilySectionCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Custom Method
     
-    private func register() {
+    private func delegate() {
         familyCollectionView.delegate = self
         familyCollectionView.dataSource = self
-        
+    }
+    
+    private func register() {
         familyCollectionView.register(
             MyFamilyCollectionViewCell.self,
             forCellWithReuseIdentifier: MyFamilyCollectionViewCell.cellIdentifier)
@@ -95,7 +101,8 @@ final class MyFamilySectionCollectionViewCell: UICollectionViewCell {
                     familyCountLabel,
                     inviteButton,
                     familyCollectionView,
-                    inviteButtonUnderLine)
+                    inviteButtonUnderLine
+        )
     }
     
     private func layout() {
@@ -131,17 +138,15 @@ final class MyFamilySectionCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    public func dataBind(myFamilyData: [UserResult], myProfileData: UserResult?) {
-        self.myProfileData = myProfileData
-        self.myFamilyData = myFamilyData
-        familyCountLabel.text = "\(myFamilyData.count)/8"
-        self.familyCollectionView.reloadData()
+    internal func updateUI(_ data: [UserResult]) {
+        familyCountLabel.text = "\(data.count)/8"
+        self.myFamilyData = data
     }
 }
 
 //MARK: - UICollectionViewDelegateFlowLayout
 
-extension MyFamilySectionCollectionViewCell: UICollectionViewDelegateFlowLayout {
+extension MyFamilyView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 48, height: 68)
     }
@@ -153,7 +158,7 @@ extension MyFamilySectionCollectionViewCell: UICollectionViewDelegateFlowLayout 
 
 //MARK: - UICollectionViewDataSource
 
-extension MyFamilySectionCollectionViewCell: UICollectionViewDataSource {
+extension MyFamilyView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return myFamilyData.count
     }
@@ -161,7 +166,12 @@ extension MyFamilySectionCollectionViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyFamilyCollectionViewCell.cellIdentifier, for: indexPath)
                 as? MyFamilyCollectionViewCell else { return UICollectionViewCell() }
-        cell.dataBind(data: myFamilyData[indexPath.item], myProfileData: myProfileData)
+        if (indexPath.first != nil) {
+            cell.dataBind(data: myFamilyData[indexPath.item], index: indexPath.item)
+        } else {
+            cell.dataBind(data: myFamilyData[indexPath.item], index: indexPath.item)
+        }
+        
         return cell
     }
 }

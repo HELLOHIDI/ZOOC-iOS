@@ -102,20 +102,14 @@ final class MyFamilyCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    public func dataBind(data: UserResult, myProfileData: UserResult?) {
+    public func dataBind(data: UserResult, index: Int) {
         profileNameLabel.text = data.nickName
-        data.photo == nil ? setDefaultProfileImage() : setFamilyMemberProfileImage(photo: data.photo!)
-        let profile: MyProfile = data.nickName == myProfileData?.nickName ? .my : .family
+        if let photo = data.photo {
+            profileImageView.kfSetImage(url: photo)
+        } else {
+            profileImageView.image = Image.defaultProfile
+        }
+        let profile: MyProfile = index == 0 ? .my : .family
         profile.configProfile(imageView: profileImageView, label: profileNameLabel)
-    }
-}
-
-extension MyFamilyCollectionViewCell {
-    func setDefaultProfileImage() {
-        profileImageView.image = Image.defaultProfile
-    }
-    
-    func setFamilyMemberProfileImage(photo: String) {
-        profileImageView.kfSetImage(url: photo)
     }
 }

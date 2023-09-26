@@ -17,7 +17,7 @@ protocol MyRegisterPetButtonTappedDelegate {
     func myRegisterPetButtonTapped(isSelected: Bool)
 }
 
-final class MyPetSectionCollectionViewCell: UICollectionViewCell {
+final class MyPetView: UIView {
     
     //MARK: - Properties
     
@@ -122,7 +122,7 @@ final class MyPetSectionCollectionViewCell: UICollectionViewCell {
 
 //MARK: - UICollectionViewDelegateFlowLayout
 
-extension MyPetSectionCollectionViewCell: UICollectionViewDelegateFlowLayout {
+extension MyPetView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cell = MyPetCollectionViewCell()
         cell.dataBind(data: myPetMemberData[indexPath.item])
@@ -141,7 +141,7 @@ extension MyPetSectionCollectionViewCell: UICollectionViewDelegateFlowLayout {
 
 //MARK: - UICollectionViewDataSource
 
-extension MyPetSectionCollectionViewCell: UICollectionViewDataSource {
+extension MyPetView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return myPetMemberData.count
     }
@@ -168,7 +168,7 @@ extension MyPetSectionCollectionViewCell: UICollectionViewDataSource {
 
 //MARK: - RegisterPetButtonTappedDelegate
 
-extension MyPetSectionCollectionViewCell: RegisterPetButtonTappedDelegate {
+extension MyPetView: RegisterPetButtonTappedDelegate {
     func registerPetButtonTapped(isSelected: Bool) {
         delegate?.myRegisterPetButtonTapped(isSelected: isSelected)
     }

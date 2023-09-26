@@ -14,7 +14,7 @@ protocol MyDeleteAccountSectionCollectionViewCellDelegate: AnyObject {
     func deleteAccountButtonDidTapped()
 }
 
-final class MyDeleteAccountSectionCollectionViewCell: UICollectionViewCell {
+final class MyDeleteAccountView: UIView {
     
     //MARK: - Properties
     

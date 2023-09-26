@@ -43,7 +43,7 @@ final class MyViewModel: ViewModelType {
     
     struct Input {
         let viewWillAppearEvent: Observable<Void>
-        let logoutButtonDidTapEvent: Observable<Void>
+        let logoutButtonDidTapEvent: Observable<IndexPath>
         let deleteAccountButtonDidTapEvent: Observable<Void>
         let inviteCodeButtonDidTapEvent: Observable<Void>
     }
@@ -68,11 +68,13 @@ final class MyViewModel: ViewModelType {
         input.inviteCodeButtonDidTapEvent.subscribe(with: self, onNext: { owner, _ in
             owner.myUseCase.getInviteCode()
         }).disposed(by: disposeBag)
-        
-        input.logoutButtonDidTapEvent.subscribe(with: self, onNext: { owner, _ in
-            owner.myUseCase.logout()
+
+        input.logoutButtonDidTapEvent.subscribe(with: self, onNext: { owner, index in
+            if index.item == 4 {
+                owner.myUseCase.logout()
+            }
         }).disposed(by: disposeBag)
-        
+
         input.deleteAccountButtonDidTapEvent.subscribe(with: self, onNext: { owner, _ in
             owner.myUseCase.deleteAccount()
         }).disposed(by: disposeBag)
@@ -108,3 +110,16 @@ final class MyViewModel: ViewModelType {
     }
 }
 
+extension MyViewModel {
+    func getProfileData() -> UserResult? {
+        return myUseCase.profileData.value
+    }
+    
+    func getFamilyData() -> [UserResult] {
+        return myUseCase.familyMemberData.value
+    }
+    
+    func getPetData() -> [PetResult] {
+        return myUseCase.petMemberData.value
+    }
+}

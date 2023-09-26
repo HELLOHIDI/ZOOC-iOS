@@ -14,7 +14,7 @@ final class MyView: UIView  {
     
     //MARK: - UI Components
     
-    public lazy var myCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()).then {
+    public lazy var myView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()).then {
         
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.isScrollEnabled = true
@@ -22,13 +22,16 @@ final class MyView: UIView  {
         $0.alwaysBounceVertical = true
         $0.backgroundColor = .zoocBackgroundGreen
     }
+    internal let profileView = MyProfileView()
+    internal let familyView = MyFamilyView()
+    internal let petView = MyPetView()
+    internal let settingView = MySettingView()
+    internal let deleteAccountView = MyDeleteAccountView()
     
     //MARK: - Life Cycles
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        register()
         
         style()
         hierarchy()
@@ -41,26 +44,8 @@ final class MyView: UIView  {
     
     //MARK: - Custom Method
     
-    private func register() {
-        myCollectionView.register(
-            MyProfileSectionCollectionViewCell.self,
-            forCellWithReuseIdentifier: MyProfileSectionCollectionViewCell.cellIdentifier)
-        myCollectionView.register(
-            MyFamilySectionCollectionViewCell.self,
-            forCellWithReuseIdentifier: MyFamilySectionCollectionViewCell.cellIdentifier)
-        myCollectionView.register(
-            MyPetSectionCollectionViewCell.self,
-            forCellWithReuseIdentifier: MyPetSectionCollectionViewCell.cellIdentifier)
-        myCollectionView.register(
-            MySettingSectionCollectionViewCell.self,
-            forCellWithReuseIdentifier: MySettingSectionCollectionViewCell.cellIdentifier)
-        myCollectionView.register(
-            MyDeleteAccountSectionCollectionViewCell.self,
-            forCellWithReuseIdentifier: MyDeleteAccountSectionCollectionViewCell.cellIdentifier)
-    }
-    
     private func style() {
-        myCollectionView.do {
+        myView.do {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.isScrollEnabled = true
             $0.showsVerticalScrollIndicator = false
@@ -70,17 +55,47 @@ final class MyView: UIView  {
     }
     
     private func hierarchy() {
-        self.addSubview(myCollectionView)
+        self.addSubview(myView)
+        myView.addSubviews(
+            profileView,
+            familyView,
+            petView,
+            settingView,
+            deleteAccountView
+        )
     }
     
     private func layout() {
-        myCollectionView.snp.makeConstraints {
+        myView.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(30)
             $0.bottom.equalToSuperview()
+        }
+        
+        profileView.snp.makeConstraints {
+            $0.top.equalTo(self.myView.snp.bottom).offset(38)
+            $0.width.equalToSuperview()
+            $0.height.equalTo(140)
+        }
+        familyView.snp.makeConstraints {
+            $0.top.equalTo(self.profileView.snp.bottom).offset(30)
+            $0.width.equalToSuperview()
+            $0.height.equalTo(155)
+        }
+        petView.snp.makeConstraints {
+            $0.top.equalTo(self.familyView.snp.bottom).offset(22)
+            $0.width.equalToSuperview()
+            $0.height.equalTo(127)
+        }
+        settingView.snp.makeConstraints {
+            $0.top.equalTo(self.petView.snp.bottom).offset(40)
+            $0.width.equalToSuperview()
+            $0.height.equalTo(284)
+        }
+        deleteAccountView.snp.makeConstraints {
+            $0.top.equalTo(self.settingView.snp.bottom).offset(103)
+            $0.width.equalToSuperview()
+            $0.height.equalTo(17)
         }
     }
 }
-
-
-

@@ -7,97 +7,55 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
 import Kingfisher
 
-protocol MyEditPetProfileModelInput {
-    func nameTextFieldDidChangeEvent(_ text: String)
-    func editCompleteButtonDidTap()
-    func deleteButtonDidTap()
-    func editPetProfileImageEvent(_ image: UIImage)
-    func isTextCountExceeded(for type: MyEditTextField.TextFieldType) -> Bool
-}
+//protocol MyEditPetProfileModelInput {
+//    func nameTextFieldDidChangeEvent(_ text: String)
+//    func editCompleteButtonDidTap()
+//    func deleteButtonDidTap()
+//    func editPetProfileImageEvent(_ image: UIImage)
+//    func isTextCountExceeded(for type: MyEditTextField.TextFieldType) -> Bool
+//}
+//
+//protocol MyEditPetProfileModelOutput {
+//    var ableToEditPetProfile: ObservablePattern<Bool> { get }
+//    var textFieldState: ObservablePattern<BaseTextFieldState> { get }
+//    var editCompletedOutput: ObservablePattern<Bool?> { get }
+//    var editPetProfileDataOutput: ObservablePattern<EditPetProfileRequest> { get }
+//
+//}
 
-protocol MyEditPetProfileModelOutput {
-    var ableToEditPetProfile: ObservablePattern<Bool> { get }
-    var textFieldState: ObservablePattern<BaseTextFieldState> { get }
-    var editCompletedOutput: ObservablePattern<Bool?> { get }
-    var editPetProfileDataOutput: ObservablePattern<EditPetProfileRequest> { get }
-    
-}
 
-typealias MyEditPetProfileViewModel = MyEditPetProfileModelInput & MyEditPetProfileModelOutput
-
-final class DefaultMyEditPetProfileViewModel: MyEditPetProfileViewModel {
-    let id: Int
-    let repository: MyEditPetProfileRepository
+final class MyEditPetProfileViewModel: ViewModelType {
+    internal var disposeBag = DisposeBag()
+    private let myEditProfileUseCase: MyEditProfileUseCase
     
-    var ableToEditPetProfile: ObservablePattern<Bool> = ObservablePattern(false)
-    var textFieldState: ObservablePattern<BaseTextFieldState> = ObservablePattern(.isEmpty)
-    var editCompletedOutput: ObservablePattern<Bool?> = ObservablePattern(nil)
-    var editPetProfileDataOutput: ObservablePattern<EditPetProfileRequest> = ObservablePattern(EditPetProfileRequest())
-    
-    init(id: Int,
-        editPetProfileRequest: EditPetProfileRequest,
-        repository: MyEditPetProfileRepository) {
-        self.id = id
-        self.editPetProfileDataOutput.value = editPetProfileRequest
-        self.repository = repository
+    init(myEditProfileUseCase: MyEditProfileUseCase) {
+        self.myEditProfileUseCase = myEditProfileUseCase
     }
     
-    func nameTextFieldDidChangeEvent(_ text: String) {
-        self.editPetProfileDataOutput.value.nickName = text
-        var textFieldState: BaseTextFieldState
-        switch text.count {
-        case 1...3:
-            textFieldState = .isWritten
-            ableToEditPetProfile.value = true
-        case 4...:
-            textFieldState = .isFull
-            ableToEditPetProfile.value = true
-        default:
-            textFieldState = .isEmpty
-            ableToEditPetProfile.value = false
-        }
-        self.textFieldState.value = textFieldState
+    struct Input {
+        var nameTextFieldDidChangeEvent: Observable<String?>
+        var registerPetButtonTapEvent: Observable<UIImage>
     }
     
-    func isTextCountExceeded(for type: MyEditTextField.TextFieldType) -> Bool {
-        let limit = type.limit
-        return editPetProfileDataOutput.value.nickName.count >= limit
+    struct Output {
+        
     }
     
-    func editCompleteButtonDidTap() {
-        patchPetProfile()
+    func transform(from input: Input, disposeBag: DisposeBag) -> Output {
+        let output = Output()
+        self.bindOutput(output: output, disposeBag: disposeBag)
+        
+       
+        
+        return output
     }
     
-    func deleteButtonDidTap() {
-        self.editPetProfileDataOutput.value.file = nil
-        self.editPetProfileDataOutput.value.photo = false
-        ableToProfile()
-    }
     
-    func editPetProfileImageEvent(_ image: UIImage) {
-        self.editPetProfileDataOutput.value.file = image
-        self.editPetProfileDataOutput.value.photo = true
-        ableToProfile()
-    }
-}
-
-extension DefaultMyEditPetProfileViewModel {
-    func patchPetProfile() {
-        repository.patchPetProfile(request: editPetProfileDataOutput.value, id: id) { result in
-            switch result {
-            case .success(_):
-                self.editCompletedOutput.value = true
-                NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
-                NotificationCenter.default.post(name: .myPageUpdate, object: nil)
-            default:
-                self.editCompletedOutput.value = false
-            }
-        }
-    }
-    
-    func ableToProfile() {
-        ableToEditPetProfile.value = self.editPetProfileDataOutput.value.nickName.count != 0
+    private func bindOutput(output: Output, disposeBag: DisposeBag) {
+        
     }
 }

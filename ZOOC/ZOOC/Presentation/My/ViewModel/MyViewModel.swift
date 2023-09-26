@@ -7,105 +7,104 @@
 
 import Foundation
 
-protocol MyViewModelInput {
-    func viewWillAppearEvent()
-    func logoutButtonDidTapEvent()
-    func deleteAccountButtonDidTapEvent()
-    func inviteCodeButtonDidTapEvent()
+import RxSwift
+import RxCocoa
+
+//protocol MyViewModelInput {
+//    func viewWillAppearEvent()
+//    func logoutButtonDidTapEvent()
+//    func deleteAccountButtonDidTapEvent()
+//    func inviteCodeButtonDidTapEvent()
+//}
+//
+//protocol MyViewModelOutput {
+//    var myFamilyMemberData: ObservablePattern<[UserResult]> { get }
+//    var myPetMemberData: ObservablePattern<[PetResult]> { get }
+//    var myProfileData: ObservablePattern<UserResult?> { get }
+//    var inviteCode: ObservablePattern<String?> { get }
+//    var logoutOutput: ObservablePattern<Bool?> { get }
+//    var deleteAccoutOutput: ObservablePattern<Bool?> { get }
+//}
+
+//typealias MyViewModel = MyViewModelInput & MyViewModelOutput
+
+import UIKit
+
+import RxSwift
+import RxCocoa
+
+final class MyViewModel: ViewModelType {
+    internal var disposeBag = DisposeBag()
+    private let myUseCase: MyUseCase
+    
+    init(myUseCase: MyUseCase) {
+        self.myUseCase = myUseCase
+    }
+    
+    struct Input {
+        let viewWillAppearEvent: Observable<Void>
+        let logoutButtonDidTapEvent: Observable<Void>
+        let deleteAccountButtonDidTapEvent: Observable<Void>
+        let inviteCodeButtonDidTapEvent: Observable<Void>
+    }
+    
+    struct Output {
+        var profileData = BehaviorRelay<UserResult?>(value: nil)
+        var familyMemberData = BehaviorRelay<[UserResult]>(value: [])
+        var petMemberData = BehaviorRelay<[PetResult]>(value: [])
+        var inviteCode = BehaviorRelay<String?>(value: nil)
+        var isloggedOut = BehaviorRelay<Bool>(value: false)
+        var isDeletedAccount = BehaviorRelay<Bool>(value: false)
+    }
+    
+    func transform(from input: Input, disposeBag: DisposeBag) -> Output {
+        let output = Output()
+        self.bindOutput(output: output, disposeBag: disposeBag)
+        
+        input.viewWillAppearEvent.subscribe(with: self, onNext: { owner, _ in
+            owner.myUseCase.requestMyPage()
+        }).disposed(by: disposeBag)
+        
+        input.inviteCodeButtonDidTapEvent.subscribe(with: self, onNext: { owner, _ in
+            owner.myUseCase.getInviteCode()
+        }).disposed(by: disposeBag)
+        
+        input.logoutButtonDidTapEvent.subscribe(with: self, onNext: { owner, _ in
+            owner.myUseCase.logout()
+        }).disposed(by: disposeBag)
+        
+        input.deleteAccountButtonDidTapEvent.subscribe(with: self, onNext: { owner, _ in
+            owner.myUseCase.deleteAccount()
+        }).disposed(by: disposeBag)
+        
+        return output
+    }
+    
+    
+    private func bindOutput(output: Output, disposeBag: DisposeBag) {
+        myUseCase.profileData.subscribe(onNext: { profileData in
+            output.profileData.accept(profileData)
+        }).disposed(by: disposeBag)
+        
+        myUseCase.familyMemberData.subscribe(onNext: { familyMemberData in
+            output.familyMemberData.accept(familyMemberData)
+        }).disposed(by: disposeBag)
+        
+        myUseCase.petMemberData.subscribe(onNext: { petMemberData in
+            output.petMemberData.accept(petMemberData)
+        }).disposed(by: disposeBag)
+        
+        myUseCase.inviteCode.subscribe(onNext: { inviteCode in
+            output.inviteCode.accept(inviteCode)
+        }).disposed(by: disposeBag)
+        
+        myUseCase.isloggedOut.subscribe(onNext: { isloggedOut in
+            output.isloggedOut.accept(isloggedOut)
+        }).disposed(by: disposeBag)
+        
+        myUseCase.isDeletedAccount.subscribe(onNext: { isDeletedAccount in
+            output.isDeletedAccount.accept(isDeletedAccount)
+        }).disposed(by: disposeBag)
+    }
 }
 
-protocol MyViewModelOutput {
-    var myFamilyMemberData: ObservablePattern<[UserResult]> { get }
-    var myPetMemberData: ObservablePattern<[PetResult]> { get }
-    var myProfileData: ObservablePattern<UserResult?> { get }
-    var inviteCode: ObservablePattern<String?> { get }
-    var logoutOutput: ObservablePattern<Bool?> { get }
-    var deleteAccoutOutput: ObservablePattern<Bool?> { get }
-}
-
-typealias MyViewModel = MyViewModelInput & MyViewModelOutput
-
-final class DefaultMyViewModel: MyViewModel {
-    
-    var myFamilyMemberData: ObservablePattern<[UserResult]> = ObservablePattern([])
-    var myPetMemberData: ObservablePattern<[PetResult]> = ObservablePattern([])
-    var myProfileData: ObservablePattern<UserResult?> = ObservablePattern(nil)
-    var inviteCode: ObservablePattern<String?> = ObservablePattern(nil)
-    var logoutOutput: ObservablePattern<Bool?> = ObservablePattern(nil)
-    var deleteAccoutOutput: ObservablePattern<Bool?> = ObservablePattern(nil)
-    
-    let repository: MyRepository
-    
-    init(repository: MyRepository) {
-        self.repository = repository
-    }
-    
-    func viewWillAppearEvent() {
-        requestMyPageAPI()
-    }
-    
-    func logoutButtonDidTapEvent() {
-        requestLogoutAPI()
-    }
-    
-    func deleteAccountButtonDidTapEvent() {
-        deleteAccount()
-    }
-    
-    func inviteCodeButtonDidTapEvent() {
-        getInviteCode()
-    }
-    
-}
-
-extension DefaultMyViewModel {
-    func getInviteCode() {
-        repository.getInviteCode {  result in
-            switch result {
-            case .success(let data):
-                guard let result = data as? OnboardingInviteResult else { return }
-                self.inviteCode.value = TextLiteral.invitedMessage(invitedCode: result.code)
-            default:
-                break
-            }
-        }
-    }
-    
-    func deleteAccount() {
-        repository.deleteAccount() { result in
-            switch result {
-            case .success(_):
-                UserDefaultsManager.reset()
-                self.deleteAccoutOutput.value = true
-            default:
-                self.deleteAccoutOutput.value = true
-            }
-        }
-    }
-
-    func requestMyPageAPI() {
-        repository.requestMyPageAPI() {  result in
-            switch result {
-            case .success(let data):
-                guard let result = data as? MyResult else { return }
-                self.myProfileData.value = result.user
-                self.myFamilyMemberData.value = result.familyMember
-                self.myPetMemberData.value = result.pet
-            default:
-                break
-            }
-        }
-    }
-    
-    func requestLogoutAPI() {
-        repository.requestLogoutAPI() { result in
-            switch result {
-            case .success(_):
-                UserDefaultsManager.reset()
-                self.logoutOutput.value = true
-            default:
-                self.logoutOutput.value = false
-            }
-        }
-    }
-}

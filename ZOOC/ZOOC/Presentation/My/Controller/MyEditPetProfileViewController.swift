@@ -50,30 +50,30 @@ final class MyEditPetProfileViewController: BaseViewController {
     //MARK: - Custom Method
     
     private func bind() {
-        viewModel.editPetProfileDataOutput.observe(on: self) { [weak self] editPetProfileData in
-            self?.updateUI(editPetProfileData)
-        }
-        
-        viewModel.ableToEditPetProfile.observe(on: self) { [weak self] isEnabled in
-            self?.rootView.completeButton.isEnabled = isEnabled
-        }
-        
-        viewModel.textFieldState.observe(on: self) { [weak self] state in
-            self?.updateTextFieldUI(state)
-        }
-        
-        viewModel.editCompletedOutput.observe(on: self) { [weak self] isSuccess in
-            guard let isSuccess else { return }
-            if isSuccess {
-                if let navigationController = self?.navigationController {
-                    navigationController.popViewController(animated: true)
-                } else {
-                    self?.dismiss(animated: true)
-                }
-            } else {
-                self?.showToast("다시 시도해주세요", type: .bad)
-            }
-        }
+//        viewModel.editPetProfileDataOutput.observe(on: self) { [weak self] editPetProfileData in
+//            self?.updateUI(editPetProfileData)
+//        }
+//
+//        viewModel.ableToEditPetProfile.observe(on: self) { [weak self] isEnabled in
+//            self?.rootView.completeButton.isEnabled = isEnabled
+//        }
+//
+//        viewModel.textFieldState.observe(on: self) { [weak self] state in
+//            self?.updateTextFieldUI(state)
+//        }
+//
+//        viewModel.editCompletedOutput.observe(on: self) { [weak self] isSuccess in
+//            guard let isSuccess else { return }
+//            if isSuccess {
+//                if let navigationController = self?.navigationController {
+//                    navigationController.popViewController(animated: true)
+//                } else {
+//                    self?.dismiss(animated: true)
+//                }
+//            } else {
+//                self?.showToast("다시 시도해주세요", type: .bad)
+//            }
+//        }
     }
     
     private func delegate() {
@@ -109,7 +109,7 @@ final class MyEditPetProfileViewController: BaseViewController {
     }
     
     @objc func editCompleteButtonDidTap(){
-        viewModel.editCompleteButtonDidTap()
+//        viewModel.editCompleteButtonDidTap()
     }
 }
 
@@ -122,7 +122,7 @@ extension MyEditPetProfileViewController: GalleryAlertControllerDelegate {
     
     func deleteButtonDidTap() {
         rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
-        viewModel.deleteButtonDidTap()
+//        viewModel.deleteButtonDidTap()
     }
 }
 
@@ -134,7 +134,7 @@ extension MyEditPetProfileViewController: UIImagePickerControllerDelegate, UINav
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         rootView.profileImageButton.setImage(image, for: .normal)
-        viewModel.editPetProfileImageEvent(image)
+//        viewModel.editPetProfileImageEvent(image)
         dismiss(animated: true)
     }
 }
@@ -152,15 +152,15 @@ extension MyEditPetProfileViewController: ZoocAlertViewControllerDelegate {
 
 extension MyEditPetProfileViewController: MyTextFieldDelegate {
     func myTextFieldTextDidChange(_ textFieldType: MyEditTextField.TextFieldType, text: String) {
-        self.viewModel.nameTextFieldDidChangeEvent(text)
-        
-        if viewModel.isTextCountExceeded(for: textFieldType) {
-            let fixedText = text.substring(from: 0, to:textFieldType.limit-1)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                self.rootView.nameTextField.text = fixedText
-            }
-        }
+//        self.viewModel.nameTextFieldDidChangeEvent(text)
+//        
+//        if viewModel.isTextCountExceeded(for: textFieldType) {
+//            let fixedText = text.substring(from: 0, to:textFieldType.limit-1)
+//            
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+//                self.rootView.nameTextField.text = fixedText
+//            }
+//        }
     }
 }
 

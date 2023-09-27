@@ -15,8 +15,8 @@ protocol MyUseCase {
     var familyMemberData: BehaviorRelay<[UserResult]> { get }
     var petMemberData: BehaviorRelay<[PetResult]> { get }
     var inviteCode: BehaviorRelay<String?> { get }
-    var isloggedOut: BehaviorRelay<Bool> { get }
-    var isDeletedAccount: BehaviorRelay<Bool> { get }
+    var isloggedOut: BehaviorRelay<Bool?> { get }
+    var isDeletedAccount: BehaviorRelay<Bool?> { get }
     
     func requestMyPage()
     func logout()

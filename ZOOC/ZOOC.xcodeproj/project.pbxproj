@@ -196,11 +196,11 @@
 		D21DADC1298BFF2700CCC089 /* MyPetRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21DADC0298BFF2700CCC089 /* MyPetRegisterViewModel.swift */; };
 		D22EF9002A7C9B720050E325 /* MyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22EF8FF2A7C9B720050E325 /* MyViewModel.swift */; };
 		D22EF9032A7C9BB70050E325 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22EF9022A7C9BB70050E325 /* Observable.swift */; };
-		D23502E22961898C00F01101 /* MyProfileSectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502E12961898C00F01101 /* MyProfileSectionCollectionViewCell.swift */; };
-		D23502EC296197C700F01101 /* MyPetSectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502EB296197C700F01101 /* MyPetSectionCollectionViewCell.swift */; };
+		D23502E22961898C00F01101 /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502E12961898C00F01101 /* MyProfileView.swift */; };
+		D23502EC296197C700F01101 /* MyPetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502EB296197C700F01101 /* MyPetView.swift */; };
 		D23502F129619D4700F01101 /* MyPetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502F029619D4700F01101 /* MyPetCollectionViewCell.swift */; };
 		D23502F52961A69E00F01101 /* MyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502F42961A69E00F01101 /* MyView.swift */; };
-		D23502F92961F34100F01101 /* MySettingSectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502F82961F34100F01101 /* MySettingSectionCollectionViewCell.swift */; };
+		D23502F92961F34100F01101 /* MySettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502F82961F34100F01101 /* MySettingView.swift */; };
 		D23502FB2961F44700F01101 /* MySettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502FA2961F44700F01101 /* MySettingTableViewCell.swift */; };
 		D23502FD2961F85100F01101 /* MySettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502FC2961F85100F01101 /* MySettingModel.swift */; };
 		D23503012964702400F01101 /* MyAppInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23503002964702400F01101 /* MyAppInformationView.swift */; };
@@ -214,6 +214,7 @@
 		D239C0892AC1619E00D1AA37 /* MyEditProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D239C0882AC1619E00D1AA37 /* MyEditProfileUseCase.swift */; };
 		D239C08B2AC161AF00D1AA37 /* MyEditPetProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D239C08A2AC161AF00D1AA37 /* MyEditPetProfileUseCase.swift */; };
 		D239C08D2AC1626B00D1AA37 /* DefaultMyEditProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D239C08C2AC1626B00D1AA37 /* DefaultMyEditProfileUseCase.swift */; };
+		D239C0912AC4038F00D1AA37 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = D239C0902AC4038F00D1AA37 /* RxGesture */; };
 		D24AFAB22A8DFB9F00823E9C /* GenAIChoosePetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB12A8DFB9F00823E9C /* GenAIChoosePetViewController.swift */; };
 		D24AFAB42A8DFBB300823E9C /* GenAIChoosePetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB32A8DFBB300823E9C /* GenAIChoosePetView.swift */; };
 		D24AFAB62A8DFC3000823E9C /* GenAIChoosePetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB52A8DFC3000823E9C /* GenAIChoosePetViewModel.swift */; };
@@ -241,7 +242,7 @@
 		D26C68F62970B0640088DC9A /* HomeNoticeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C68F52970B0640088DC9A /* HomeNoticeTableViewCell.swift */; };
 		D26C85CF2968681900AEAF9B /* MyPetCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85CE2968681900AEAF9B /* MyPetCollectionFooterView.swift */; };
 		D26C85D1296869DD00AEAF9B /* UICollectionReusableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85D0296869DD00AEAF9B /* UICollectionReusableView+.swift */; };
-		D26C85D7296888D000AEAF9B /* MyDeleteAccountSectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85D6296888D000AEAF9B /* MyDeleteAccountSectionCollectionViewCell.swift */; };
+		D26C85D7296888D000AEAF9B /* MyDeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85D6296888D000AEAF9B /* MyDeleteAccountView.swift */; };
 		D26C85DF2968C26500AEAF9B /* OnboardingLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85DE2968C26500AEAF9B /* OnboardingLoginView.swift */; };
 		D26C85E12968C63F00AEAF9B /* OnboardingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85E02968C63F00AEAF9B /* OnboardingLoginViewController.swift */; };
 		D26C85E32968C88800AEAF9B /* OnboardingAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85E22968C88800AEAF9B /* OnboardingAgreementView.swift */; };
@@ -273,7 +274,7 @@
 		D27D956A296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9569296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift */; };
 		D27D956C296CBA2D0097CD03 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D956B296CBA2D0097CD03 /* UIButton+.swift */; };
 		D27D95D5296DDF4F0097CD03 /* MyFamilyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D95D4296DDF4F0097CD03 /* MyFamilyCollectionViewCell.swift */; };
-		D27D95D7296DE0E30097CD03 /* MyFamilySectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D95D6296DE0E30097CD03 /* MyFamilySectionCollectionViewCell.swift */; };
+		D27D95D7296DE0E30097CD03 /* MyFamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D95D6296DE0E30097CD03 /* MyFamilyView.swift */; };
 		D27D9EA82A8EFA1B00E02842 /* GenAISelectImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9EA72A8EFA1B00E02842 /* GenAISelectImageViewController.swift */; };
 		D27D9EAA2A8EFA2F00E02842 /* GenAISelectImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9EA92A8EFA2F00E02842 /* GenAISelectImageView.swift */; };
 		D27D9EAC2A8F41B000E02842 /* GenAISelectImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9EAB2A8F41B000E02842 /* GenAISelectImageViewModel.swift */; };
@@ -513,11 +514,11 @@
 		D21DADC0298BFF2700CCC089 /* MyPetRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPetRegisterViewModel.swift; sourceTree = "<group>"; };
 		D22EF8FF2A7C9B720050E325 /* MyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewModel.swift; sourceTree = "<group>"; };
 		D22EF9022A7C9BB70050E325 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
-		D23502E12961898C00F01101 /* MyProfileSectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyProfileSectionCollectionViewCell.swift; path = ZOOC/Presentation/My/Cell/MyProfileSectionCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
-		D23502EB296197C700F01101 /* MyPetSectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPetSectionCollectionViewCell.swift; sourceTree = "<group>"; };
+		D23502E12961898C00F01101 /* MyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyProfileView.swift; path = ZOOC/Presentation/My/View/AssistantCellMainView/MyProfileView.swift; sourceTree = SOURCE_ROOT; };
+		D23502EB296197C700F01101 /* MyPetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPetView.swift; sourceTree = "<group>"; };
 		D23502F029619D4700F01101 /* MyPetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPetCollectionViewCell.swift; sourceTree = "<group>"; };
 		D23502F42961A69E00F01101 /* MyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyView.swift; sourceTree = "<group>"; };
-		D23502F82961F34100F01101 /* MySettingSectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySettingSectionCollectionViewCell.swift; sourceTree = "<group>"; };
+		D23502F82961F34100F01101 /* MySettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySettingView.swift; sourceTree = "<group>"; };
 		D23502FA2961F44700F01101 /* MySettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySettingTableViewCell.swift; sourceTree = "<group>"; };
 		D23502FC2961F85100F01101 /* MySettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MySettingModel.swift; path = ZOOC/Presentation/My/Cell/MySettingModel.swift; sourceTree = SOURCE_ROOT; };
 		D23503002964702400F01101 /* MyAppInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppInformationView.swift; sourceTree = "<group>"; };
@@ -558,7 +559,7 @@
 		D26C68F52970B0640088DC9A /* HomeNoticeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNoticeTableViewCell.swift; sourceTree = "<group>"; };
 		D26C85CE2968681900AEAF9B /* MyPetCollectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPetCollectionFooterView.swift; sourceTree = "<group>"; };
 		D26C85D0296869DD00AEAF9B /* UICollectionReusableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionReusableView+.swift"; sourceTree = "<group>"; };
-		D26C85D6296888D000AEAF9B /* MyDeleteAccountSectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDeleteAccountSectionCollectionViewCell.swift; sourceTree = "<group>"; };
+		D26C85D6296888D000AEAF9B /* MyDeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDeleteAccountView.swift; sourceTree = "<group>"; };
 		D26C85DE2968C26500AEAF9B /* OnboardingLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginView.swift; sourceTree = "<group>"; };
 		D26C85E02968C63F00AEAF9B /* OnboardingLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginViewController.swift; sourceTree = "<group>"; };
 		D26C85E22968C88800AEAF9B /* OnboardingAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAgreementView.swift; sourceTree = "<group>"; };
@@ -590,7 +591,7 @@
 		D27D9569296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingReInviteFamilyViewController.swift; sourceTree = "<group>"; };
 		D27D956B296CBA2D0097CD03 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		D27D95D4296DDF4F0097CD03 /* MyFamilyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFamilyCollectionViewCell.swift; sourceTree = "<group>"; };
-		D27D95D6296DE0E30097CD03 /* MyFamilySectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFamilySectionCollectionViewCell.swift; sourceTree = "<group>"; };
+		D27D95D6296DE0E30097CD03 /* MyFamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFamilyView.swift; sourceTree = "<group>"; };
 		D27D9EA72A8EFA1B00E02842 /* GenAISelectImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAISelectImageViewController.swift; sourceTree = "<group>"; };
 		D27D9EA92A8EFA2F00E02842 /* GenAISelectImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAISelectImageView.swift; sourceTree = "<group>"; };
 		D27D9EAB2A8F41B000E02842 /* GenAISelectImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAISelectImageViewModel.swift; sourceTree = "<group>"; };
@@ -659,6 +660,7 @@
 				871EA35629706F4300D0E8CC /* Lottie in Frameworks */,
 				D29944292AAC7F0D00C4F280 /* RxSwift in Frameworks */,
 				8764833229523BBD00F74882 /* SnapKit in Frameworks */,
+				D239C0912AC4038F00D1AA37 /* RxGesture in Frameworks */,
 				870A4BFC2AA268E900D7CFD8 /* FloatingPanel in Frameworks */,
 				872367162A19062700DCBBFF /* Sentry in Frameworks */,
 				8764833529523BCA00F74882 /* Then in Frameworks */,
@@ -1081,6 +1083,7 @@
 		87A76A8F295F6D8F0096F669 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D239C08E2AC3FE1500D1AA37 /* AssistantCellMainView */,
 				D23503002964702400F01101 /* MyAppInformationView.swift */,
 				D23502F42961A69E00F01101 /* MyView.swift */,
 				D2350308296490A700F01101 /* MyEditProfileView.swift */,
@@ -1659,11 +1662,6 @@
 			isa = PBXGroup;
 			children = (
 				D27D95D8296DE12D0097CD03 /* HeaderFooterVIew */,
-				D23502E12961898C00F01101 /* MyProfileSectionCollectionViewCell.swift */,
-				D27D95D6296DE0E30097CD03 /* MyFamilySectionCollectionViewCell.swift */,
-				D23502EB296197C700F01101 /* MyPetSectionCollectionViewCell.swift */,
-				D23502F82961F34100F01101 /* MySettingSectionCollectionViewCell.swift */,
-				D26C85D6296888D000AEAF9B /* MyDeleteAccountSectionCollectionViewCell.swift */,
 				D27D95D4296DDF4F0097CD03 /* MyFamilyCollectionViewCell.swift */,
 				D23502F029619D4700F01101 /* MyPetCollectionViewCell.swift */,
 				D23502FA2961F44700F01101 /* MySettingTableViewCell.swift */,
@@ -1692,6 +1690,18 @@
 				D239C08A2AC161AF00D1AA37 /* MyEditPetProfileUseCase.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		D239C08E2AC3FE1500D1AA37 /* AssistantCellMainView */ = {
+			isa = PBXGroup;
+			children = (
+				D23502E12961898C00F01101 /* MyProfileView.swift */,
+				D27D95D6296DE0E30097CD03 /* MyFamilyView.swift */,
+				D23502EB296197C700F01101 /* MyPetView.swift */,
+				D23502F82961F34100F01101 /* MySettingView.swift */,
+				D26C85D6296888D000AEAF9B /* MyDeleteAccountView.swift */,
+			);
+			path = AssistantCellMainView;
 			sourceTree = "<group>";
 		};
 		D24AFABD2A8E11B800823E9C /* Repository */ = {
@@ -1888,6 +1898,7 @@
 				D2D4401E2AA5D08D00329F35 /* RealmSwift */,
 				D29944262AAC7F0D00C4F280 /* RxCocoa */,
 				D29944282AAC7F0D00C4F280 /* RxSwift */,
+				D239C0902AC4038F00D1AA37 /* RxGesture */,
 			);
 			productName = ZOOC;
 			productReference = 87B6623D29521E7500B6FFA9 /* ZOOC-Dev.app */;
@@ -1929,6 +1940,7 @@
 				870A4BFA2AA268E900D7CFD8 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 				D2D4401B2AA5D08D00329F35 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				D29944252AAC7F0D00C4F280 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				D239C08F2AC4038E00D1AA37 /* XCRemoteSwiftPackageReference "RxGesture" */,
 			);
 			productRefGroup = 87B6623E29521E7500B6FFA9 /* Products */;
 			projectDirPath = "";
@@ -2061,7 +2073,7 @@
 				4C6B1860296B40C00059840D /* RecordModel.swift in Sources */,
 				D29944242AAC7EA100C4F280 /* GenAIChoosePetUseCase.swift in Sources */,
 				87809C2E2A8CC32F0060641F /* VersionState.swift in Sources */,
-				D23502F92961F34100F01101 /* MySettingSectionCollectionViewCell.swift in Sources */,
+				D23502F92961F34100F01101 /* MySettingView.swift in Sources */,
 				876483212952369500F74882 /* UICollectionViewCell+.swift in Sources */,
 				D26C85E82968CD8E00AEAF9B /* OnboardingAgreementViewController.swift in Sources */,
 				87A76AAB295F6EDE0096F669 /* RecordService.swift in Sources */,
@@ -2120,7 +2132,7 @@
 				D20C00912A96F23200666963 /* GenAIAPI.swift in Sources */,
 				87648329295237B500F74882 /* Adjusted+.swift in Sources */,
 				87F288012A9FA67E00A53218 /* OrderAssistantCopyView.swift in Sources */,
-				D27D95D7296DE0E30097CD03 /* MyFamilySectionCollectionViewCell.swift in Sources */,
+				D27D95D7296DE0E30097CD03 /* MyFamilyView.swift in Sources */,
 				87A3D8922A97756E002C36DB /* ZoocTextField.swift in Sources */,
 				87F287F12A9F36D400A53218 /* ShopAPI.swift in Sources */,
 				87A3D8992A987D55002C36DB /* OrderAgreementView.swift in Sources */,
@@ -2169,7 +2181,7 @@
 				871EA340296F6E5000D0E8CC /* BaseAPI.swift in Sources */,
 				D26C85EC2968D2E100AEAF9B /* OnboardingAgreementTableHeaderView.swift in Sources */,
 				870A4C042AA26F8000D7CFD8 /* TouchPassIntrinsicPanelLayout.swift in Sources */,
-				D26C85D7296888D000AEAF9B /* MyDeleteAccountSectionCollectionViewCell.swift in Sources */,
+				D26C85D7296888D000AEAF9B /* MyDeleteAccountView.swift in Sources */,
 				87DDDD94298E607C00CBEC79 /* Device.swift in Sources */,
 				D29944322AAEDC4100C4F280 /* GenAIRegisterPetUseCase.swift in Sources */,
 				87F287DB2A9C6E6F00A53218 /* OrderOrderer.swift in Sources */,
@@ -2260,7 +2272,7 @@
 				872367132A136C7300DCBBFF /* ArchiveGuideViewController.swift in Sources */,
 				872BBD9229F9576E002E2C71 /* UIApplication+.swift in Sources */,
 				870A4C0C2AA2823900D7CFD8 /* ProductSelectedOptionCollectionViewCell.swift in Sources */,
-				D23502E22961898C00F01101 /* MyProfileSectionCollectionViewCell.swift in Sources */,
+				D23502E22961898C00F01101 /* MyProfileView.swift in Sources */,
 				D27D956A296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift in Sources */,
 				D23502F129619D4700F01101 /* MyPetCollectionViewCell.swift in Sources */,
 				871EA34A2970403300D0E8CC /* ArchiveResult.swift in Sources */,
@@ -2269,7 +2281,7 @@
 				87F287F72A9F3F1500A53218 /* ProductDetailResult.swift in Sources */,
 				870A4C082AA2708700D7CFD8 /* SelfSizingCollectionView.swift in Sources */,
 				D24AFAB42A8DFBB300823E9C /* GenAIChoosePetView.swift in Sources */,
-				D23502EC296197C700F01101 /* MyPetSectionCollectionViewCell.swift in Sources */,
+				D23502EC296197C700F01101 /* MyPetView.swift in Sources */,
 				87F287F42A9F372400A53218 /* OrderRequest.swift in Sources */,
 				8782C7EB296AC58B00C9324B /* HomeArchiveIndicatorView.swift in Sources */,
 				D25543A22996B22E0072BF0D /* OnboardingRegisterPetResult.swift in Sources */,
@@ -2598,6 +2610,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		D239C08F2AC4038E00D1AA37 /* XCRemoteSwiftPackageReference "RxGesture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		D29944252AAC7F0D00C4F280 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
@@ -2681,6 +2701,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 87A76AB4295F760C0096F669 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKUser;
+		};
+		D239C0902AC4038F00D1AA37 /* RxGesture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D239C08F2AC4038E00D1AA37 /* XCRemoteSwiftPackageReference "RxGesture" */;
+			productName = RxGesture;
 		};
 		D29944262AAC7F0D00C4F280 /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;

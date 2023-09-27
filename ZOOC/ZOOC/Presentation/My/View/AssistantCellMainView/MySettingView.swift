@@ -83,6 +83,7 @@ extension MySettingView: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(#function)
         delegate?.selectedSettingMenuTableViewCell(indexPath: indexPath)
     }
 }

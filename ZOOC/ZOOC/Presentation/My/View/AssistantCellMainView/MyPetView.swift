@@ -23,13 +23,20 @@ final class MyPetView: UIView {
     
     var delegate: MyRegisterPetButtonTappedDelegate?
     private let myRegisterPetView = MyRegisterPetView()
-    private lazy var myPetMemberData: [PetResult] = []
+    private lazy var myPetMemberData: [PetResult] = [] {
+        didSet {
+            petCollectionView.reloadData()
+        }
+    }
     
     //MARK: - UI Components
     
     private var petLabel = UILabel()
     public var petCountLabel = UILabel()
-    public lazy var petCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    public lazy var petCollectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: UICollectionViewFlowLayout()
+    )
     //MARK: - Life Cycles
     
     override init(frame: CGRect) {
@@ -47,6 +54,7 @@ final class MyPetView: UIView {
     }
     
     //MARK: - Custom Method
+    
     
     private func register() {
         petCollectionView.delegate = self
@@ -113,10 +121,9 @@ final class MyPetView: UIView {
         }
     }
     
-    public func dataBind(myPetMemberData : [PetResult]) {
-        self.myPetMemberData = myPetMemberData
+    public func updateUI(_ myPetMemberData : [PetResult]) {
         petCountLabel.text = "\(myPetMemberData.count)/4"
-        self.petCollectionView.reloadData()
+        self.myPetMemberData = myPetMemberData
     }
 }
 
@@ -161,7 +168,6 @@ extension MyPetView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(#function)
         delegate?.petCellTapped(pet: myPetMemberData[indexPath.item])
     }
 }

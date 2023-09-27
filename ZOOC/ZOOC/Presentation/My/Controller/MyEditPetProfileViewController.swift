@@ -78,7 +78,7 @@ final class MyEditPetProfileViewController: BaseViewController {
     
     private func delegate() {
         rootView.nameTextField.editDelegate = self
-        galleryAlertController.delegate = self
+//        galleryAlertController.delegate = self
         imagePickerController.delegate = self
     }
     
@@ -122,7 +122,6 @@ extension MyEditPetProfileViewController: GalleryAlertControllerDelegate {
     
     func deleteButtonDidTap() {
         rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
-//        viewModel.deleteButtonDidTap()
     }
 }
 

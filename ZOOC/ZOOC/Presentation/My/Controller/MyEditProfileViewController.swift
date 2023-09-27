@@ -28,8 +28,17 @@ final class MyEditProfileViewController: BaseViewController {
     //MARK: - UIComponents
     
     private lazy var rootView = MyEditProfileView()
-    private let galleryAlertController = GalleryAlertController()
-    private lazy var imagePickerController = UIImagePickerController()
+    private var galleryAlertController: GalleryAlertController {
+        let galleryAlertController = GalleryAlertController()
+        return galleryAlertController
+    }
+    
+    private lazy var imagePickerController: UIImagePickerController = {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.allowsEditing = true
+        return imagePickerController
+    }()
     
     //MARK: - Life Cycle
     
@@ -40,20 +49,38 @@ final class MyEditProfileViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        delegate()
         bindUI()
         bindViewModel()
-        delegate()
-        
-        style()
     }
     
     //MARK: - Custom Method
+    
+    private func delegate() {
+        rootView.nameTextField.editDelegate = self
+        galleryAlertController.delegate = self
+        imagePickerController.delegate = self
+    }
+    
+    private func bindUI() {
+        rootView.backButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                let zoocAlertVC = ZoocAlertViewController(.leavePage)
+                zoocAlertVC.delegate = self
+                owner.present(zoocAlertVC, animated: false)
+            }).disposed(by: disposeBag)
+        
+        rootView.profileImageButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.present(owner.galleryAlertController,animated: true)
+            }).disposed(by: disposeBag)
+    }
     
     private func bindViewModel() {
         let input = MyEditProfileViewModel.Input(
             nameTextFieldDidChangeEvent: rootView.nameTextField.rx.text.asObservable(),
             editButtonTapEvent: self.rootView.completeButton.rx.tap.asObservable().map { [weak self] _ in
-                self?.rootView.profileImageButton.currentImage ?? Image.cameraCircle
+                self?.rootView.profileImageButton.currentImage ?? Image.defaultProfile
             }
         )
         
@@ -86,55 +113,17 @@ final class MyEditProfileViewController: BaseViewController {
                 owner.updateUI(profileData)
             }).disposed(by: disposeBag)
     }
-    
-    private func delegate() {
-        rootView.nameTextField.editDelegate = self
-        galleryAlertController.delegate = self
-        imagePickerController.delegate = self
-    }
-    
-    private func bindUI() {
-        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        rootView.completeButton.addTarget(self, action: #selector(editCompleteButtonDidTap), for: .touchUpInside)
-        
-        rootView.profileImageButton.addTarget(self, action: #selector(profileImageButtonDidTap) , for: .touchUpInside)
-    }
-    
-    private func style() {
-        imagePickerController.do { $0.sourceType = .photoLibrary }
-    }
-    
-    private func requestPatchUserProfileAPI() {
-        //viewModel.editCompleteButtonDidTap()
-    }
-    //MARK: - Action Method
-    
-    @objc
-    private func profileImageButtonDidTap() {
-        present(galleryAlertController,animated: true)
-    }
-    
-    @objc func backButtonDidTap() {
-        let zoocAlertVC = ZoocAlertViewController(.leavePage)
-        zoocAlertVC.delegate = self
-        present(zoocAlertVC, animated: false)
-    }
-    
-    @objc func editCompleteButtonDidTap(){
-        requestPatchUserProfileAPI()
-    }
 }
 
 //MARK: - GalleryAlertControllerDelegate
 
 extension MyEditProfileViewController: GalleryAlertControllerDelegate {
     func galleryButtonDidTap() {
-        present(imagePickerController, animated: true)
+        print(#function)
     }
     
     func deleteButtonDidTap() {
-//        viewModel.deleteButtonDidTap()
-        rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
+        print(#function)
     }
 }
 

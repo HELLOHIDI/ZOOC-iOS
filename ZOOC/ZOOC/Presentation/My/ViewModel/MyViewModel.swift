@@ -5,29 +5,6 @@
 //  Created by 류희재 on 2023/08/04.
 //
 
-import Foundation
-
-import RxSwift
-import RxCocoa
-
-//protocol MyViewModelInput {
-//    func viewWillAppearEvent()
-//    func logoutButtonDidTapEvent()
-//    func deleteAccountButtonDidTapEvent()
-//    func inviteCodeButtonDidTapEvent()
-//}
-//
-//protocol MyViewModelOutput {
-//    var myFamilyMemberData: ObservablePattern<[UserResult]> { get }
-//    var myPetMemberData: ObservablePattern<[PetResult]> { get }
-//    var myProfileData: ObservablePattern<UserResult?> { get }
-//    var inviteCode: ObservablePattern<String?> { get }
-//    var logoutOutput: ObservablePattern<Bool?> { get }
-//    var deleteAccoutOutput: ObservablePattern<Bool?> { get }
-//}
-
-//typealias MyViewModel = MyViewModelInput & MyViewModelOutput
-
 import UIKit
 
 import RxSwift
@@ -53,8 +30,8 @@ final class MyViewModel: ViewModelType {
         var familyMemberData = BehaviorRelay<[UserResult]>(value: [])
         var petMemberData = BehaviorRelay<[PetResult]>(value: [])
         var inviteCode = BehaviorRelay<String?>(value: nil)
-        var isloggedOut = BehaviorRelay<Bool>(value: false)
-        var isDeletedAccount = BehaviorRelay<Bool>(value: false)
+        var isloggedOut = BehaviorRelay<Bool?>(value: nil)
+        var isDeletedAccount = BehaviorRelay<Bool?>(value: nil)
     }
     
     func transform(from input: Input, disposeBag: DisposeBag) -> Output {
@@ -68,13 +45,11 @@ final class MyViewModel: ViewModelType {
         input.inviteCodeButtonDidTapEvent.subscribe(with: self, onNext: { owner, _ in
             owner.myUseCase.getInviteCode()
         }).disposed(by: disposeBag)
-
+        
         input.logoutButtonDidTapEvent.subscribe(with: self, onNext: { owner, index in
-            if index.item == 4 {
-                owner.myUseCase.logout()
-            }
+            owner.myUseCase.logout()
         }).disposed(by: disposeBag)
-
+        
         input.deleteAccountButtonDidTapEvent.subscribe(with: self, onNext: { owner, _ in
             owner.myUseCase.deleteAccount()
         }).disposed(by: disposeBag)

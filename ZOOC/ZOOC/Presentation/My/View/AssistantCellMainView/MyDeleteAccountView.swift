@@ -10,15 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-protocol MyDeleteAccountSectionCollectionViewCellDelegate: AnyObject {
-    func deleteAccountButtonDidTapped()
-}
-
 final class MyDeleteAccountView: UIView {
-    
-    //MARK: - Properties
-    
-    weak var delegate: MyDeleteAccountSectionCollectionViewCellDelegate?
     
     //MARK: - UI Components
     
@@ -30,8 +22,6 @@ final class MyDeleteAccountView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        target()
-        
         style()
         hierarchy()
         layout()
@@ -42,10 +32,6 @@ final class MyDeleteAccountView: UIView {
     }
     
     //MARK: - Custom Method
-
-    private func target() {
-        deleteAccountButton.addTarget(self, action: #selector(deleteAccountButtonDidTap), for: .touchUpInside)
-    }
     
     private func style() {
         deleteAccountButton.do {
@@ -77,11 +63,6 @@ final class MyDeleteAccountView: UIView {
             $0.width.equalTo(42)
             $0.height.equalTo(1)
         }
-    }
-    
-    @objc func deleteAccountButtonDidTap() {
-        print(#function)
-        delegate?.deleteAccountButtonDidTapped()
     }
 }
 

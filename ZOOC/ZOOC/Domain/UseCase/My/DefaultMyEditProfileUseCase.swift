@@ -25,7 +25,7 @@ final class DefaultMyEditProfileUseCase: MyEditProfileUseCase {
     var textFieldState = BehaviorRelay<BaseTextFieldState>(value: .isEmpty)
     var ableToEditProfile = BehaviorRelay<Bool>(value: false)
     var isTextCountExceeded = BehaviorRelay<Bool>(value: false)
-    var isEdited = BehaviorRelay<Bool?>(value: false)
+    var isEdited = BehaviorRelay<Bool?>(value: nil)
     
     func editProfile(_ image: UIImage? = nil) {
         guard let profile = profileData.value else { return }

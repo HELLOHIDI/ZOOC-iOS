@@ -28,7 +28,7 @@ final class MyEditProfileViewModel: ViewModelType {
         var textFieldState = BehaviorRelay<BaseTextFieldState>(value: .isEmpty)
         var ableToEditProfile = BehaviorRelay<Bool>(value: false)
         var isTextCountExceeded = BehaviorRelay<Bool>(value: false)
-        var isEdited = BehaviorRelay<Bool?>(value: false)
+        var isEdited = BehaviorRelay<Bool?>(value: nil)
         var profileData = BehaviorRelay<EditProfileRequest?>(value: nil)
     }
     

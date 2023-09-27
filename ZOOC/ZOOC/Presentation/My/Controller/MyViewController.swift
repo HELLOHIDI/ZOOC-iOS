@@ -9,6 +9,7 @@ import UIKit
 
 import RxSwift
 import RxCocoa
+import RxGesture
 import MessageUI
 
 final class MyViewController: BaseViewController {
@@ -17,6 +18,8 @@ final class MyViewController: BaseViewController {
     
     private let viewModel: MyViewModel
     private let disposeBag = DisposeBag()
+    
+    private let deleteAccountSubject = PublishSubject<Void>()
     
     init(viewModel: MyViewModel) {
         self.viewModel = viewModel
@@ -40,6 +43,7 @@ final class MyViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        delegate()
         bindUI()
         bindViewModel()
         //        setNotificationCenter()
@@ -47,26 +51,44 @@ final class MyViewController: BaseViewController {
     
     //MARK: - Custom Method
     
+    private func delegate() {
+        rootView.petView.delegate = self
+        rootView.settingView.delegate = self
+    }
+    
     private func bindUI() {
+        rootView.profileView.rx.tapGesture()
+            .when(.recognized)
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.pushToEditProfileView()
+            }).disposed(by: disposeBag)
+        
         rootView.profileView.editProfileButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
                 owner.pushToEditProfileView()
+            }).disposed(by: disposeBag)
+        
+        rootView.deleteAccountView.deleteAccountButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.presentDeleteAccountZoocAlertView()
             }).disposed(by: disposeBag)
         
     }
     private func bindViewModel() {
         let input = MyViewModel.Input(
             viewWillAppearEvent: self.rx.viewWillAppear.asObservable(),
-            logoutButtonDidTapEvent: self.rootView.settingView.settingMenuTableView.rx.itemSelected.asObservable(),
-            deleteAccountButtonDidTapEvent: self.rootView.deleteAccountView.deleteAccountButton.rx.tap.asObservable(),
+            logoutButtonDidTapEvent: self.rootView.settingView.settingMenuTableView.rx.itemSelected.asObservable()
+                .filter({ $0.item == 4 }),
+            deleteAccountButtonDidTapEvent: deleteAccountSubject.asObservable(),
             inviteCodeButtonDidTapEvent: self.rootView.familyView.inviteButton.rx.tap.asObservable()
         )
         
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
         
         output.isloggedOut
-            .asDriver(onErrorJustReturn: false)
+            .asDriver(onErrorJustReturn: nil)
             .drive(with: self, onNext: { owner, isLogout in
+                guard let isLogout = isLogout else { return }
                 if isLogout {
                     let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
                     UIApplication.shared.changeRootViewController(onboardingNVC)
@@ -76,8 +98,9 @@ final class MyViewController: BaseViewController {
             }).disposed(by: disposeBag)
         
         output.isDeletedAccount
-            .asDriver(onErrorJustReturn: false)
+            .asDriver(onErrorJustReturn: nil)
             .drive(with: self, onNext: { owner, isDeleted in
+                guard let isDeleted = isDeleted else { return }
                 if isDeleted {
                     let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
                     onboardingNVC.setNavigationBarHidden(true, animated: true)
@@ -104,14 +127,12 @@ final class MyViewController: BaseViewController {
             .asDriver(onErrorJustReturn: [])
             .drive(with: self, onNext: { owner, familyData in
                 owner.updateFamilyView(familyData)
-                owner.rootView.myView.reloadData()
             }).disposed(by: disposeBag)
         
         output.petMemberData
             .asDriver(onErrorJustReturn: [])
             .drive(with: self, onNext:  { owner, petData in
                 owner.updatePetView(petData)
-                owner.rootView.myView.reloadData()
             }).disposed(by: disposeBag)
     }
     
@@ -123,27 +144,17 @@ final class MyViewController: BaseViewController {
     //            object: nil
     //        )
     //    }
-    
-    //MARK: - Action Method
-    
-    @objc private func appInformationButtonDidTap() {
-        //        pushToAppInformationView()
-    }
 }
 
-//MARK: - UICollectionView Delegate
+//MARK: - MyRegisterPetButtonTappedDelegate
 
-extension MyViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 0:
-            break
-            //            pushToEditProfileView()
-        case 2:
-            break
-            //            pushToRegisterPetView()
-        default: return
-        }
+extension MyViewController: MyRegisterPetButtonTappedDelegate {
+    func petCellTapped(pet: PetResult) {
+        presentToEditPetProfileView(pet: pet)
+    }
+    
+    func myRegisterPetButtonTapped(isSelected: Bool) {
+        pushToRegisterPetView()
     }
 }
 
@@ -164,36 +175,16 @@ extension MyViewController: SettingMenuTableViewCellDelegate {
         case 3: // 앱 정보
             pushToAppInformationView()
         case 4: // 로그아웃
-            break
+            return
         default:
             break
         }
     }
 }
 
-//MARK: - MyRegisterPetButtonTappedDelegate
-
-extension MyViewController: MyRegisterPetButtonTappedDelegate {
-    func petCellTapped(pet: PetResult) {
-        //        presentToEditPetProfileView(pet: pet)
-    }
-    
-    func myRegisterPetButtonTapped(isSelected: Bool) {
-        //        pushToRegisterPetView()
-    }
-}
-
-//extension MyViewController: MyDeleteAccountSectionCollectionViewCellDelegate {
-//    func deleteAccountButtonDidTapped() {
-//        let zoocAlertVC = ZoocAlertViewController(.deleteAccount)
-//        zoocAlertVC.delegate = self
-//        present(zoocAlertVC, animated: false)
-//    }
-//}
-
 extension MyViewController {
-    func pushToEditProfileView() {
-        let hasPhoto = viewModel.getProfileData()?.photo == nil
+    private func pushToEditProfileView() {
+        let hasPhoto = viewModel.getProfileData()?.photo != nil
         let imageView = UIImageView()
         imageView.kfSetImage(url: viewModel.getProfileData()?.photo)
         let image = imageView.image
@@ -215,20 +206,27 @@ extension MyViewController {
         self.navigationController?.pushViewController(editProfileVC, animated: true)
     }
     
-    func pushToAppInformationView() {
-        let appInformationViewController = MyAppInformationViewController()
-        appInformationViewController.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(appInformationViewController, animated: true)
+    private func pushToAppInformationView() {
+        let appInformationVC = MyAppInformationViewController()
+        appInformationVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(appInformationVC, animated: true)
     }
     
-    func pushToNoticeSettingView() {
+    private func pushToNoticeSettingView() {
         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
     }
     
-    func pushToRegisterPetView() {
-        let registerPetViewController = MyRegisterPetViewController(myPetRegisterViewModel: MyPetRegisterViewModel())
-        registerPetViewController.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(registerPetViewController, animated: true)
+    private func pushToRegisterPetView() {
+        let registerPetVC = MyRegisterPetViewController(myPetRegisterViewModel: MyPetRegisterViewModel())
+        registerPetVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(registerPetVC, animated: true)
+    }
+    
+    private func presentDeleteAccountZoocAlertView() {
+        print(#function)
+        let zoocAlertVC = ZoocAlertViewController(.deleteAccount)
+        zoocAlertVC.delegate = self
+        present(zoocAlertVC, animated: false)
     }
     
     private func presentToEditPetProfileView(pet: PetResult) {
@@ -333,6 +331,16 @@ extension MyViewController {
     }
     
     func updatePetView(_ petData: [PetResult]) {
-        
+        rootView.petView.updateUI(petData)
+    }
+}
+
+extension MyViewController: ZoocAlertViewControllerDelegate {
+    func keepButtonDidTap() {
+        self.dismiss(animated: true)
+    }
+    
+    func exitButtonDidTap() {
+        deleteAccountSubject.onNext(())
     }
 }

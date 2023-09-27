@@ -139,13 +139,14 @@ extension MyRegisterPetViewController: UITableViewDelegate {
             let photo = hasPhoto ? image : nil
             let editPetProfileVC = MyEditPetProfileViewController(
                 viewModel: MyEditPetProfileViewModel(
-                    myEditProfileUseCase: DefaultMyEditProfileUseCase(
-                        profileData: EditProfileRequest(
-                            hasPhoto: hasPhoto,
+                    myEditPetProfileUseCase: DefaultMyEditPetProfileUseCase(
+                        petProfileData: EditPetProfileRequest(
+                            photo: hasPhoto,
                             nickName: petData.name,
-                            profileImage: photo
+                            file: photo
                         ),
-                        repository: MyRepositoryImpl())
+                        repository: MyRepositoryImpl()
+                    )
                 )
             )
             navigationController?.pushViewController(editPetProfileVC, animated: true)

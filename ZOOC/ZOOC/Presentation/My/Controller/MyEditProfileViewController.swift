@@ -28,15 +28,17 @@ final class MyEditProfileViewController: BaseViewController {
     //MARK: - UIComponents
     
     private lazy var rootView = MyEditProfileView()
+    
     private var galleryAlertController: GalleryAlertController {
         let galleryAlertController = GalleryAlertController()
+        galleryAlertController.delegate = self
         return galleryAlertController
     }
-    
     private lazy var imagePickerController: UIImagePickerController = {
         let imagePickerController = UIImagePickerController()
         imagePickerController.sourceType = .photoLibrary
         imagePickerController.allowsEditing = true
+        imagePickerController.delegate = self
         return imagePickerController
     }()
     
@@ -49,18 +51,11 @@ final class MyEditProfileViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        delegate()
         bindUI()
         bindViewModel()
     }
     
     //MARK: - Custom Method
-    
-    private func delegate() {
-        rootView.nameTextField.editDelegate = self
-        galleryAlertController.delegate = self
-        imagePickerController.delegate = self
-    }
     
     private func bindUI() {
         rootView.backButton.rx.tap
@@ -72,7 +67,7 @@ final class MyEditProfileViewController: BaseViewController {
         
         rootView.profileImageButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
-                owner.present(owner.galleryAlertController,animated: true)
+                owner.present(self.galleryAlertController,animated: true)
             }).disposed(by: disposeBag)
     }
     
@@ -95,7 +90,7 @@ final class MyEditProfileViewController: BaseViewController {
         output.textFieldState
             .asDriver()
             .drive(with: self, onNext: { owner, state in
-                owner.updateTextFieldUI(state)
+                owner.rootView.nameTextField.textColor = state.textColor
             }).disposed(by: disposeBag)
         
         output.isEdited
@@ -112,6 +107,18 @@ final class MyEditProfileViewController: BaseViewController {
                 guard let profileData = profileData else { return }
                 owner.updateUI(profileData)
             }).disposed(by: disposeBag)
+        
+        output.isTextCountExceeded
+            .subscribe(with: self, onNext: { owner, isTextCountExceeded in
+            if isTextCountExceeded { owner.updateTextField(owner.rootView.nameTextField) }
+        }).disposed(by: disposeBag)
+        
+        output.name
+            .asDriver(onErrorJustReturn: "")
+            .drive(with: self, onNext: { owner, name in
+                guard let name = name else { return }
+                owner.rootView.numberOfNameCharactersLabel.text = "\(name.count)/10"
+            }).disposed(by: disposeBag)
     }
 }
 
@@ -119,11 +126,11 @@ final class MyEditProfileViewController: BaseViewController {
 
 extension MyEditProfileViewController: GalleryAlertControllerDelegate {
     func galleryButtonDidTap() {
-        print(#function)
+        present(imagePickerController, animated: true)
     }
-    
+
     func deleteButtonDidTap() {
-        print(#function)
+        rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
     }
 }
 
@@ -135,7 +142,6 @@ extension MyEditProfileViewController: UIImagePickerControllerDelegate, UINaviga
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         rootView.profileImageButton.setImage(image, for: .normal)
-//        viewModel.editProfileImageEvent(image)
         dismiss(animated: true)
     }
 }
@@ -148,34 +154,26 @@ extension MyEditProfileViewController: ZoocAlertViewControllerDelegate {
     }
 }
 
-extension MyEditProfileViewController: MyTextFieldDelegate {
-    func myTextFieldTextDidChange(_ textFieldType: MyEditTextField.TextFieldType, text: String) {
-//        self.viewModel.nameTextFieldDidChangeEvent(text)
-
-//        if viewModel.isTextCountExceeded(for: textFieldType) {
-//            let fixedText = text.substring(from: 0, to:textFieldType.limit-1)
-//
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-//                self.rootView.nameTextField.text = fixedText
-//            }
-//        }
-    }
-}
-
 extension MyEditProfileViewController {
-    private func updateTextFieldUI(_ textFieldState: BaseTextFieldState) {
-        rootView.underLineView.backgroundColor = textFieldState.underLineColor
-        rootView.nameTextField.textColor = textFieldState.textColor
-        rootView.numberOfNameCharactersLabel.textColor = textFieldState.indexColor
+    private func updateTextField(_ textField: MyEditTextField?) {
+        guard let textField = textField else { return }
+        let fixedText = textField.text?.substring(from: 0, to:textField.textFieldType.limit-1)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            self.rootView.nameTextField.text = fixedText
+            guard let fixedText = fixedText else { return }
+            self.rootView.numberOfNameCharactersLabel.text = "\(String(describing: fixedText.count))/10"
+        }
     }
     
     private func updateUI(_ editProfileData: EditProfileRequest) {
+        print(editProfileData.nickName, editProfileData.nickName.count)
         rootView.nameTextField.text = editProfileData.nickName
+        rootView.numberOfNameCharactersLabel.text = "\(editProfileData.nickName.count)/10"
         if editProfileData.profileImage != nil {
             rootView.profileImageButton.setImage(editProfileData.profileImage, for: .normal)
         } else {
             rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
         }
-        rootView.numberOfNameCharactersLabel.text = "\(editProfileData.nickName.count)/10"
     }
 }

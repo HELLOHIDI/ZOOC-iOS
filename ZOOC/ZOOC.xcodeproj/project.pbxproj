@@ -301,6 +301,7 @@
 		D2C028F22A81F8B2003F4727 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C028F12A81F8B2003F4727 /* String+.swift */; };
 		D2C028F42A8246C1003F4727 /* MyEditPetProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C028F32A8246C1003F4727 /* MyEditPetProfileViewModel.swift */; };
 		D2C028F62A82BEAD003F4727 /* OnboardingChooseRoleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C028F52A82BEAD003F4727 /* OnboardingChooseRoleViewModel.swift */; };
+		D2CF76B22AC4980100BF1EFA /* DefaultMyEditPetProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CF76B12AC4980100BF1EFA /* DefaultMyEditPetProfileUseCase.swift */; };
 		D2D440142AA5C08200329F35 /* OrderNewAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D440132AA5C08200329F35 /* OrderNewAddressView.swift */; };
 		D2D440162AA5C88D00329F35 /* OrderBasicAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D440152AA5C88D00329F35 /* OrderBasicAddressView.swift */; };
 		D2D440182AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D440172AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift */; };
@@ -616,6 +617,7 @@
 		D2C028F12A81F8B2003F4727 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		D2C028F32A8246C1003F4727 /* MyEditPetProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditPetProfileViewModel.swift; sourceTree = "<group>"; };
 		D2C028F52A82BEAD003F4727 /* OnboardingChooseRoleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingChooseRoleViewModel.swift; sourceTree = "<group>"; };
+		D2CF76B12AC4980100BF1EFA /* DefaultMyEditPetProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMyEditPetProfileUseCase.swift; sourceTree = "<group>"; };
 		D2D440132AA5C08200329F35 /* OrderNewAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderNewAddressView.swift; sourceTree = "<group>"; };
 		D2D440152AA5C88D00329F35 /* OrderBasicAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBasicAddressView.swift; sourceTree = "<group>"; };
 		D2D440172AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBasicAddressCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1678,6 +1680,7 @@
 				D239C0832AC1464F00D1AA37 /* Protocol */,
 				D239C0862AC148A100D1AA37 /* DefaultMyUseCase.swift */,
 				D239C08C2AC1626B00D1AA37 /* DefaultMyEditProfileUseCase.swift */,
+				D2CF76B12AC4980100BF1EFA /* DefaultMyEditPetProfileUseCase.swift */,
 			);
 			path = My;
 			sourceTree = "<group>";
@@ -2155,6 +2158,7 @@
 				D27D9564296CA9720097CD03 /* OnboardingInviteCompletedFamilyView.swift in Sources */,
 				D2B735622A8BA1D700F93C45 /* GenAIGuideViewController.swift in Sources */,
 				877E57F22966D13E006D82FC /* ArchiveViewController.swift in Sources */,
+				D2CF76B22AC4980100BF1EFA /* DefaultMyEditPetProfileUseCase.swift in Sources */,
 				870A4BFF2AA26E9100D7CFD8 /* BottomSheetViewController.swift in Sources */,
 				4C6B1862296B69070059840D /* RecordRegisterViewController.swift in Sources */,
 				87B6624329521E7500B6FFA9 /* SceneDelegate.swift in Sources */,

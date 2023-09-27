@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 protocol MyEditProfileUseCase {
-    var name: BehaviorRelay<String> { get }
+    var name: BehaviorRelay<String?> { get }
     var profileData:BehaviorRelay<EditProfileRequest?> { get }
     var textFieldState: BehaviorRelay<BaseTextFieldState> { get }
     var ableToEditProfile: BehaviorRelay<Bool> { get }

@@ -237,14 +237,13 @@ extension MyViewController {
         let photo = hasPhoto ? image : nil
         let editPetProfileView = MyEditPetProfileViewController(
             viewModel: MyEditPetProfileViewModel(
-                myEditProfileUseCase: DefaultMyEditProfileUseCase(
-                    profileData: EditProfileRequest(
-                        hasPhoto: hasPhoto,
+                myEditPetProfileUseCase: DefaultMyEditPetProfileUseCase(
+                    petProfileData: EditPetProfileRequest(
+                        photo: hasPhoto,
                         nickName: pet.name,
-                        profileImage: photo
+                        file: photo
                     ),
-                    repository: MyRepositoryImpl()
-                )
+                    repository: MyRepositoryImpl())
             )
         )
         editPetProfileView.modalPresentationStyle = .fullScreen

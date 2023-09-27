@@ -1,8 +1,8 @@
 //
-//  DefaultMyEditProfileUseCase.swift
+//  DefaultMyEditPetProfileUseCase.swift
 //  ZOOC
 //
-//  Created by 류희재 on 2023/09/25.
+//  Created by 류희재 on 2023/09/28.
 //
 
 import UIKit
@@ -10,26 +10,28 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class DefaultMyEditProfileUseCase: MyEditProfileUseCase {
+final class DefaultMyEditPetProfileUseCase: MyEditPetProfileUseCase {
     private let repository: MyRepository
     private let disposeBag = DisposeBag()
     
-    init(profileData: EditProfileRequest?, repository: MyRepository) {
-        self.name.accept(profileData?.nickName)
-        self.profileData.accept(profileData)
+    init(petProfileData: EditPetProfileRequest?, repository: MyRepository) {
+        self.name.accept(petProfileData?.nickName)
+        self.petProfileData.accept(petProfileData)
         self.repository = repository
     }
     
+    var id = BehaviorRelay<Int?>(value: nil)
     var name = BehaviorRelay<String?>(value: nil)
-    var profileData = BehaviorRelay<EditProfileRequest?>(value: nil)
+    var petProfileData = BehaviorRelay<EditPetProfileRequest?>(value: nil)
     var textFieldState = BehaviorRelay<BaseTextFieldState>(value: .isEmpty)
     var ableToEditProfile = BehaviorRelay<Bool>(value: false)
     var isTextCountExceeded = BehaviorRelay<Bool>(value: false)
     var isEdited = BehaviorRelay<Bool?>(value: nil)
     
     func editProfile(_ image: UIImage? = nil) {
-        guard let profile = profileData.value else { return }
-            repository.patchMyProfile(request: profile, completion: { [weak self] result in
+        guard let profile = petProfileData.value else { return }
+        guard let id = id.value else { return }
+            repository.patchPetProfile(request: profile, id: id, completion: { [weak self] result in
             switch result {
             case .success(_):
                 self?.isEdited.accept(true)
@@ -49,11 +51,11 @@ final class DefaultMyEditProfileUseCase: MyEditProfileUseCase {
         guard let name = text else { return }
         self.name.accept(name)
         switch name.count {
-        case 1...9:
+        case 1...3:
             textFieldState.accept(.isWritten)
             ableToEditProfile.accept(true)
             isTextCountExceeded.accept(false)
-        case 10...:
+        case 4...:
             textFieldState.accept(.isFull)
             ableToEditProfile.accept(true)
             isTextCountExceeded.accept(true)
@@ -64,3 +66,4 @@ final class DefaultMyEditProfileUseCase: MyEditProfileUseCase {
         }
     }
 }
+

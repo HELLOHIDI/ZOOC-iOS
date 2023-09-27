@@ -25,11 +25,12 @@ final class MyEditProfileViewModel: ViewModelType {
     }
     
     struct Output {
+        var name = BehaviorRelay<String?>(value: nil)
+        var profileData = BehaviorRelay<EditProfileRequest?>(value: nil)
         var textFieldState = BehaviorRelay<BaseTextFieldState>(value: .isEmpty)
         var ableToEditProfile = BehaviorRelay<Bool>(value: false)
         var isTextCountExceeded = BehaviorRelay<Bool>(value: false)
         var isEdited = BehaviorRelay<Bool?>(value: nil)
-        var profileData = BehaviorRelay<EditProfileRequest?>(value: nil)
     }
     
     func transform(from input: Input, disposeBag: DisposeBag) -> Output {
@@ -66,6 +67,10 @@ final class MyEditProfileViewModel: ViewModelType {
         
         myEditProfileUseCase.isEdited.subscribe(onNext: { isEdited in
             output.isEdited.accept(isEdited)
+        }).disposed(by: disposeBag)
+        
+        myEditProfileUseCase.name.subscribe(onNext: { name in
+            output.name.accept(name)
         }).disposed(by: disposeBag)
     }
 }

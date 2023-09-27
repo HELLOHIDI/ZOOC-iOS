@@ -46,7 +46,6 @@ final class MyViewController: BaseViewController {
         delegate()
         bindUI()
         bindViewModel()
-        //        setNotificationCenter()
     }
     
     //MARK: - Custom Method
@@ -135,15 +134,6 @@ final class MyViewController: BaseViewController {
                 owner.updatePetView(petData)
             }).disposed(by: disposeBag)
     }
-    
-    //    private func setNotificationCenter() {
-    //        NotificationCenter.default.addObserver(
-    //            self,
-    //            selector: #selector(updateUI),
-    //            name: .myPageUpdate,
-    //            object: nil
-    //        )
-    //    }
 }
 
 //MARK: - MyRegisterPetButtonTappedDelegate
@@ -243,6 +233,7 @@ extension MyViewController {
                         nickName: pet.name,
                         file: photo
                     ),
+                    id: pet.id,
                     repository: MyRepositoryImpl())
             )
         )

@@ -145,6 +145,7 @@ extension MyRegisterPetViewController: UITableViewDelegate {
                             nickName: petData.name,
                             file: photo
                         ),
+                        id: petData.id,
                         repository: MyRepositoryImpl()
                     )
                 )

@@ -12,15 +12,16 @@ import RxCocoa
 
 protocol MyEditPetProfileUseCase {
     var id: BehaviorRelay<Int?> { get }
-    var name: BehaviorRelay<String?> { get }
     var petProfileData:BehaviorRelay<EditPetProfileRequest?> { get }
     var textFieldState: BehaviorRelay<BaseTextFieldState> { get }
     var ableToEditProfile: BehaviorRelay<Bool> { get }
     var isTextCountExceeded: BehaviorRelay<Bool> { get }
     var isEdited: BehaviorRelay<Bool?> { get set}
     
-    func editProfile(_ image: UIImage?)
+    func editProfile()
     func isTextCountExceeded(for type: MyEditTextField.TextFieldType)
     func nameTextFieldDidChangeEvent(_ text: String?)
+    func deleteProfileImage()
+    func selectProfileImage(_ image: UIImage)
 }
 

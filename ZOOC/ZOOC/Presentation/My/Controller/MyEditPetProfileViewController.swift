@@ -16,6 +16,9 @@ final class MyEditPetProfileViewController: BaseViewController {
     private let viewModel: MyEditPetProfileViewModel
     private let disposeBag = DisposeBag()
     
+    private let deleteProfileImageSubject = PublishSubject<Void>()
+    private let selectProfileImageSubject = PublishSubject<UIImage>()
+    
     init(viewModel: MyEditPetProfileViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -72,10 +75,13 @@ final class MyEditPetProfileViewController: BaseViewController {
     
     private func bindViewModel() {
         let input = MyEditPetProfileViewModel.Input(
-            nameTextFieldDidChangeEvent: rootView.nameTextField.rx.text.asObservable(),
+            nameTextFieldDidChangeEvent: rootView.nameTextField.rx.controlEvent(.editingChanged).map { self.rootView.nameTextField.text ?? "" }
+                .asObservable(),
             editButtonTapEvent: self.rootView.completeButton.rx.tap.asObservable().map { [weak self] _ in
-                self?.rootView.profileImageButton.currentImage ?? Image.defaultProfile
-            }
+                self?.rootView.profileImageButton.currentImage ?? nil
+            },
+            deleteButtonTapEvent: deleteProfileImageSubject.asObservable(),
+            selectImageEvent: selectProfileImageSubject.asObservable()
         )
         
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
@@ -96,7 +102,7 @@ final class MyEditPetProfileViewController: BaseViewController {
             .asDriver()
             .drive(with: self, onNext: { owner, isEdited in
                 guard let isEdited = isEdited else { return }
-                if isEdited { owner.navigationController?.popViewController(animated: true) }
+                if isEdited { owner.dismiss(animated: true) }
                 else { owner.showToast("다시 시도해주세요", type: .bad)}
             }).disposed(by: disposeBag)
         
@@ -111,13 +117,6 @@ final class MyEditPetProfileViewController: BaseViewController {
             .subscribe(with: self, onNext: { owner, isTextCountExceeded in
                 if isTextCountExceeded { owner.updateTextField(owner.rootView.nameTextField) }
             }).disposed(by: disposeBag)
-        
-        output.name
-            .asDriver(onErrorJustReturn: "")
-            .drive(with: self, onNext: { owner, name in
-                guard let name = name else { return }
-                owner.rootView.numberOfNameCharactersLabel.text = "\(name.count)/4"
-            }).disposed(by: disposeBag)
     }
 }
 
@@ -129,7 +128,7 @@ extension MyEditPetProfileViewController: GalleryAlertControllerDelegate {
     }
     
     func deleteButtonDidTap() {
-        rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
+        deleteProfileImageSubject.onNext(())
     }
 }
 
@@ -140,8 +139,7 @@ extension MyEditPetProfileViewController: UIImagePickerControllerDelegate, UINav
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        rootView.profileImageButton.setImage(image, for: .normal)
-        //        viewModel.editPetProfileImageEvent(image)
+        selectProfileImageSubject.onNext(image)
         dismiss(animated: true)
     }
 }

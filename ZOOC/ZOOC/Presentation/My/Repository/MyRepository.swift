@@ -34,6 +34,7 @@ class MyRepositoryImpl: MyRepository {
     }
     
     func patchPetProfile(request: EditPetProfileRequest, id: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+        print(#function)
         MyAPI.shared.patchPetProfile(requset: request, id: id, completion: completion)
     }
     

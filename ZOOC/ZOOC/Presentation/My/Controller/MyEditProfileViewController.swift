@@ -16,6 +16,9 @@ final class MyEditProfileViewController: BaseViewController {
     private let viewModel: MyEditProfileViewModel
     private let disposeBag = DisposeBag()
     
+    private let deleteProfileImageSubject = PublishSubject<Void>()
+    private let selectProfileImageSubject = PublishSubject<UIImage>()
+    
     init(viewModel: MyEditProfileViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -73,10 +76,11 @@ final class MyEditProfileViewController: BaseViewController {
     
     private func bindViewModel() {
         let input = MyEditProfileViewModel.Input(
-            nameTextFieldDidChangeEvent: rootView.nameTextField.rx.text.asObservable(),
-            editButtonTapEvent: self.rootView.completeButton.rx.tap.asObservable().map { [weak self] _ in
-                self?.rootView.profileImageButton.currentImage ?? Image.defaultProfile
-            }
+            nameTextFieldDidChangeEvent: rootView.nameTextField.rx.controlEvent(.editingChanged).map { self.rootView.nameTextField.text ?? "" }
+                .asObservable(),
+            editButtonTapEvent: self.rootView.completeButton.rx.tap.asObservable(),
+            deleteButtonTapEvent: deleteProfileImageSubject.asObservable(),
+            selectImageEvent: selectProfileImageSubject.asObservable()
         )
         
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
@@ -112,13 +116,6 @@ final class MyEditProfileViewController: BaseViewController {
             .subscribe(with: self, onNext: { owner, isTextCountExceeded in
             if isTextCountExceeded { owner.updateTextField(owner.rootView.nameTextField) }
         }).disposed(by: disposeBag)
-        
-        output.name
-            .asDriver(onErrorJustReturn: "")
-            .drive(with: self, onNext: { owner, name in
-                guard let name = name else { return }
-                owner.rootView.numberOfNameCharactersLabel.text = "\(name.count)/10"
-            }).disposed(by: disposeBag)
     }
 }
 
@@ -130,7 +127,7 @@ extension MyEditProfileViewController: GalleryAlertControllerDelegate {
     }
 
     func deleteButtonDidTap() {
-        rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
+        deleteProfileImageSubject.onNext(())
     }
 }
 
@@ -141,7 +138,7 @@ extension MyEditProfileViewController: UIImagePickerControllerDelegate, UINaviga
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        rootView.profileImageButton.setImage(image, for: .normal)
+        selectProfileImageSubject.onNext(image)
         dismiss(animated: true)
     }
 }

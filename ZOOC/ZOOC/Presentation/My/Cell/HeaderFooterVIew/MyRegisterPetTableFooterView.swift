@@ -7,11 +7,15 @@
 
 import UIKit
 
-//MARK: - MyAddButtonTappedDelegate
+protocol MyRegisterPetTableFooterViewDelegate: AnyObject {
+    func addPetProfileButtonDidTap()
+}
 
 final class MyRegisterPetTableFooterView: UITableViewHeaderFooterView {
     
     //MARK: - Properties
+    
+    weak var delegate: MyRegisterPetTableFooterViewDelegate?
     
     //MARK: - UI Components
     
@@ -80,5 +84,6 @@ final class MyRegisterPetTableFooterView: UITableViewHeaderFooterView {
     //MARK: - Action Method
     
     @objc func addPetProfileButtonDidTap() {
+        delegate?.addPetProfileButtonDidTap()
     }
 }

@@ -14,10 +14,12 @@ protocol MyRegisterPetUseCase {
     var petMemberData: BehaviorRelay<[PetResult]> { get }
     var ableToRegisterPets: BehaviorRelay<Bool?> { get }
     var isRegistered: BehaviorRelay<Bool?> { get }
-    var registerPetData: BehaviorRelay<[PetResult]> { get }
+    var registerPetData: BehaviorRelay<[MyPetRegisterModel]> { get }
     
     func requestPetData()
     func registerPet()
+    func addPet()
+    func deletePet(_ index: Int)
 }
 
 

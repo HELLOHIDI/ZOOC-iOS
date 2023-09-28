@@ -9,7 +9,7 @@ import UIKit
 
 //MARK: - MyDeleteButtonTappedDelegate
 
-protocol MyDeleteButtonTappedDelegate: AnyObject {
+protocol MyRegisterPetTableViewCellDelegate: AnyObject {
     func deleteButtonTapped(tag: Int)
     
     func petProfileImageButtonDidTap(tag: Int)
@@ -19,8 +19,7 @@ protocol MyDeleteButtonTappedDelegate: AnyObject {
 
 final class MyRegisterPetTableViewCell: UITableViewCell {
     
-    weak var delegate: MyDeleteButtonTappedDelegate?
-    var canRegister: Bool = false
+    weak var delegate: MyRegisterPetTableViewCellDelegate?
     
     //MARK: - UI Components
     
@@ -68,7 +67,7 @@ final class MyRegisterPetTableViewCell: UITableViewCell {
         }
         
         petProfileNameTextField.do {
-            $0.attributedPlaceholder = NSAttributedString(string: "ex) 사랑,토리 (4자 이내)", attributes: [NSAttributedString.Key.foregroundColor: UIColor.zoocGray1, NSAttributedString.Key.font: UIFont.zoocBody1])
+            $0.setPlaceholderColor(text: "ex) 사랑,토리 (4자 이내)", color: .zoocGray1)
             $0.addLeftPadding(inset: 10)
             $0.textColor = .zoocDarkGreen
             $0.font = .zoocBody1
@@ -105,6 +104,15 @@ final class MyRegisterPetTableViewCell: UITableViewCell {
             $0.leading.equalTo(self.petProfileNameTextField.snp.trailing).offset(10)
             $0.size.equalTo(30)
         }
+    }
+    
+    func dataBind(_ data: MyPetRegisterModel, index: Int) {
+        [deletePetProfileButton,
+         petProfileNameTextField,
+         petProfileImageButton].forEach { $0.tag = index}
+        
+        petProfileNameTextField.text = data.name
+        petProfileImageButton.setImage(data.image, for: .normal)
     }
     
     //MARK: - Action Method

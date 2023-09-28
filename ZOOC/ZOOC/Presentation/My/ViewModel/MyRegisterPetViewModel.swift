@@ -22,13 +22,15 @@ final class MyRegisterPetViewModel: ViewModelType {
     struct Input {
         let viewWillAppearEvent: Observable<Void>
         let registerButtonDidTapEvent: Observable<Void>
+        let deleteRegisterPetEvent: Observable<Int>
+        let addRegisterPetEvent: Observable<Void>
     }
     
     struct Output {
         var petMemberData = BehaviorRelay<[PetResult]>(value: [])
         var ableToRegisterPets = BehaviorRelay<Bool?>(value: nil)
         var isRegistered = BehaviorRelay<Bool?>(value: nil)
-        var registerPetData = BehaviorRelay<[PetResult]>(value: [])
+        var registerPetData = BehaviorRelay<[MyPetRegisterModel]>(value: [])
     }
     
     func transform(from input: Input, disposeBag: DisposeBag) -> Output {
@@ -41,6 +43,14 @@ final class MyRegisterPetViewModel: ViewModelType {
         
         input.registerButtonDidTapEvent.subscribe(with: self, onNext: { owner, _ in
             owner.myRegisterPetUseCase.registerPet()
+        }).disposed(by: disposeBag)
+        
+        input.addRegisterPetEvent.subscribe(with: self, onNext: { owner, _ in
+            owner.myRegisterPetUseCase.addPet()
+        }).disposed(by: disposeBag)
+        
+        input.deleteRegisterPetEvent.subscribe(with: self, onNext: { owner, tag in
+            owner.myRegisterPetUseCase.deletePet(tag)
         }).disposed(by: disposeBag)
         
         return output
@@ -58,6 +68,10 @@ final class MyRegisterPetViewModel: ViewModelType {
         myRegisterPetUseCase.isRegistered.subscribe(onNext: { isRegistered in
             output.isRegistered.accept(isRegistered)
         }).disposed(by: disposeBag)
+        
+        myRegisterPetUseCase.registerPetData.subscribe(onNext: { registerPetMember in
+            output.registerPetData.accept(registerPetMember)
+        }).disposed(by: disposeBag)
     }
 }
 
@@ -66,7 +80,7 @@ extension MyRegisterPetViewModel {
         return myRegisterPetUseCase.petMemberData.value
     }
     
-    func getRegisterPetData() -> [PetResult] {
+    func getRegisterPetData() -> [MyPetRegisterModel] {
         return myRegisterPetUseCase.registerPetData.value
     }
 }

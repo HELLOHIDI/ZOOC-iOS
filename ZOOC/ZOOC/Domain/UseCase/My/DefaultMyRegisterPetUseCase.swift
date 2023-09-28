@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 
 final class DefaultMyRegisterPetUseCase: MyRegisterPetUseCase {
+    
     private let repository: MyRepository
     private let disposeBag = DisposeBag()
     
@@ -21,7 +22,7 @@ final class DefaultMyRegisterPetUseCase: MyRegisterPetUseCase {
     var petMemberData = BehaviorRelay<[PetResult]>(value: [])
     var ableToRegisterPets = BehaviorRelay<Bool?>(value: nil)
     var isRegistered = BehaviorRelay<Bool?>(value: nil)
-    var registerPetData = BehaviorRelay<[PetResult]>(value: [])
+    var registerPetData = BehaviorRelay<[MyPetRegisterModel]>(value: [])
     
     func requestPetData() {
         repository.requestMyPageAPI(completion: { result in
@@ -36,7 +37,22 @@ final class DefaultMyRegisterPetUseCase: MyRegisterPetUseCase {
     }
     
     func registerPet() {
-//        repository.registerPets(request: <#T##MyRegisterPetsRequest#>, completion: <#T##(NetworkResult<Any>) -> Void#>)
+        //        repository.registerPets(request: <#T##MyRegisterPetsRequest#>, completion: <#T##(NetworkResult<Any>) -> Void#>)
+    }
+    
+    func addPet() {
+        registerPetData.add(
+            element: MyPetRegisterModel(
+                name: "",
+                image: Image.cameraCircle
+            )
+        )
+        
+        print(registerPetData.value.count)
+    }
+    
+    func deletePet(_ index: Int) {
+        registerPetData.remove(index: index)
     }
 }
 //    @objc private func registerPetButtonDidTap() {

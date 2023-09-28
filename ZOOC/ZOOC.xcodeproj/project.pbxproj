@@ -228,6 +228,7 @@
 		D24DA0BE2AC5D6760037D0A2 /* DefaultMyRegisterPetUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24DA0BD2AC5D6760037D0A2 /* DefaultMyRegisterPetUseCase.swift */; };
 		D24DA0C02AC5D7DB0037D0A2 /* MyRegisterPetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24DA0BF2AC5D7DB0037D0A2 /* MyRegisterPetViewModel.swift */; };
 		D24DA0C32AC5DF580037D0A2 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = D24DA0C22AC5DF580037D0A2 /* RxDataSources */; };
+		D24DA0C52AC5F9A50037D0A2 /* BehaviorRelay+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24DA0C42AC5F9A40037D0A2 /* BehaviorRelay+.swift */; };
 		D25323162A07330C00562D92 /* MyAppInformationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25323152A07330C00562D92 /* MyAppInformationHeaderView.swift */; };
 		D25543A22996B22E0072BF0D /* OnboardingRegisterPetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25543A12996B22E0072BF0D /* OnboardingRegisterPetResult.swift */; };
 		D25543A4299A239B0072BF0D /* OnboardingRegisterPetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25543A3299A239B0072BF0D /* OnboardingRegisterPetRequest.swift */; };
@@ -549,6 +550,7 @@
 		D24AFAC52A8E3F7A00823E9C /* MyRegisterPetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetRequest.swift; sourceTree = "<group>"; };
 		D24DA0BD2AC5D6760037D0A2 /* DefaultMyRegisterPetUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMyRegisterPetUseCase.swift; sourceTree = "<group>"; };
 		D24DA0BF2AC5D7DB0037D0A2 /* MyRegisterPetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetViewModel.swift; sourceTree = "<group>"; };
+		D24DA0C42AC5F9A40037D0A2 /* BehaviorRelay+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BehaviorRelay+.swift"; sourceTree = "<group>"; };
 		D25323152A07330C00562D92 /* MyAppInformationHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppInformationHeaderView.swift; sourceTree = "<group>"; };
 		D25543A12996B22E0072BF0D /* OnboardingRegisterPetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRegisterPetResult.swift; sourceTree = "<group>"; };
 		D25543A3299A239B0072BF0D /* OnboardingRegisterPetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRegisterPetRequest.swift; sourceTree = "<group>"; };
@@ -821,6 +823,7 @@
 				D299442F2AAC979700C4F280 /* Reactive+.swift */,
 				D2ED94872AB8476F0040B687 /* UIImagePicker+Rx.swift */,
 				87E4A1CD2AAB3075005C012E /* Results+.swift */,
+				D24DA0C42AC5F9A40037D0A2 /* BehaviorRelay+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -2221,6 +2224,7 @@
 				D26C861A296C0FC800AEAF9B /* OnboardingPetRegisterModel.swift in Sources */,
 				87A3D8782A975385002C36DB /* ShopViewController.swift in Sources */,
 				D27BDDC92A8C6FAC008E290D /* GenAICompletedView.swift in Sources */,
+				D24DA0C52AC5F9A50037D0A2 /* BehaviorRelay+.swift in Sources */,
 				87809C332A8CFDA20060641F /* VersionAlertViewController.swift in Sources */,
 				D21DADC1298BFF2700CCC089 /* MyPetRegisterViewModel.swift in Sources */,
 				D24AFAC62A8E3F7A00823E9C /* MyRegisterPetRequest.swift in Sources */,

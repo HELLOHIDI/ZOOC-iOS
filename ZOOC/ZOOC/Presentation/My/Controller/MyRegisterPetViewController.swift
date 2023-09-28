@@ -16,6 +16,9 @@ final class MyRegisterPetViewController: BaseViewController {
     //MARK: - Properties
     
     private let viewModel: MyRegisterPetViewModel
+    
+    private let deleteRegisterPetSubject = PublishSubject<Int>()
+    private let addRegisterPetSubject = PublishSubject<Void>()
     private let deleteProfileImageSubject = PublishSubject<Void>()
     private let selectProfileImageSubject = PublishSubject<UIImage>()
     
@@ -84,7 +87,9 @@ final class MyRegisterPetViewController: BaseViewController {
     private func bindViewModel() {
         let input = MyRegisterPetViewModel.Input(
             viewWillAppearEvent: self.rx.viewWillAppear.asObservable(),
-            registerButtonDidTapEvent: self.rootView.registerPetButton.rx.tap.asObservable()
+            registerButtonDidTapEvent: self.rootView.registerPetButton.rx.tap.asObservable(),
+            deleteRegisterPetEvent: deleteRegisterPetSubject.asObserver(),
+            addRegisterPetEvent: addRegisterPetSubject.asObserver()
         )
         
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
@@ -100,6 +105,24 @@ final class MyRegisterPetViewController: BaseViewController {
             .drive(with: self, onNext: { owner, canRegister in
                 guard let canRegister = canRegister else { return }
                 owner.rootView.registerPetButton.isEnabled = canRegister
+            }).disposed(by: disposeBag)
+        
+        output.isRegistered
+            .asDriver(onErrorJustReturn: nil)
+            .drive(with: self, onNext: { owner, isRegisterd in
+                guard let isRegisterd = isRegisterd else { return }
+                if isRegisterd {
+                    owner.dismiss(animated: true)
+                }
+                else {
+                    owner.showToast("반려동물 등록과정 중 문제가 발생했습니다", type: .bad)
+                }
+            }).disposed(by: disposeBag)
+        
+        output.registerPetData
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self, onNext: { owner, registerPetData in
+                owner.rootView.registerPetTableView.reloadData()
             }).disposed(by: disposeBag)
     }
     //MARK: - Action Method
@@ -170,6 +193,7 @@ extension MyRegisterPetViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print(#function)
         switch indexPath.section {
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MyRegisteredPetTableViewCell.cellIdentifier, for: indexPath)
@@ -178,11 +202,15 @@ extension MyRegisterPetViewController: UITableViewDataSource {
             cell.petProfileButton.tag = indexPath.row
             cell.dataBind(data: viewModel.getPetMember()[indexPath.row])
             return cell
-//        case 1:
-//            guard let cell = tableView.dequeueReusableCell(withIdentifier: MyRegisterPetTableViewCell.cellIdentifier, for: indexPath)
-//                    as? MyRegisterPetTableViewCell else { return UITableViewCell() }
-//            
-//            return cell
+        case 1:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: MyRegisterPetTableViewCell.cellIdentifier, for: indexPath)
+                    as? MyRegisterPetTableViewCell else { return UITableViewCell() }
+            cell.dataBind(
+                viewModel.getRegisterPetData()[indexPath.item],
+                index: indexPath.item
+            )
+            cell.delegate = self
+            return cell
         default:
             return UITableViewCell()
         }
@@ -191,12 +219,34 @@ extension MyRegisterPetViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         switch section {
-//        case 1:
-//            guard let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: MyRegisterPetTableFooterView.cellIdentifier) as? MyRegisterPetTableFooterView else { return UITableViewHeaderFooterView() }
-//
-//            return cell
+        case 1:
+            guard let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: MyRegisterPetTableFooterView.cellIdentifier) as? MyRegisterPetTableFooterView else { return UITableViewHeaderFooterView() }
+            cell.delegate = self
+            return cell
         default:
             return UIView()
         }
+    }
+}
+
+extension MyRegisterPetViewController: MyRegisterPetTableViewCellDelegate {
+    func deleteButtonTapped(tag: Int) {
+        print(#function)
+        deleteRegisterPetSubject.onNext(tag)
+    }
+    
+    func petProfileImageButtonDidTap(tag: Int) {
+        self.present(self.imagePickerController, animated: true)
+    }
+    
+    func collectionViewCell(valueChangedIn textField: UITextField, delegatedFrom cell: UITableViewCell, tag: Int, image: UIImage) {
+        print(#function)
+    }
+}
+
+extension MyRegisterPetViewController: MyRegisterPetTableFooterViewDelegate {
+    func addPetProfileButtonDidTap() {
+        print(#function)
+        addRegisterPetSubject.onNext(())
     }
 }

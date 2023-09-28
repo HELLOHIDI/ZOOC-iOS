@@ -30,14 +30,14 @@ final class MyRegisterPetViewController: BaseViewController {
     
     private var galleryAlertController: GalleryAlertController {
         let galleryAlertController = GalleryAlertController()
-//        galleryAlertController.delegate = self
+        galleryAlertController.delegate = self
         return galleryAlertController
     }
     private lazy var imagePickerController: UIImagePickerController = {
         let imagePickerController = UIImagePickerController()
         imagePickerController.sourceType = .photoLibrary
         imagePickerController.allowsEditing = true
-//        imagePickerController.delegate = self
+        imagePickerController.delegate = self
         return imagePickerController
     }()
     
@@ -78,7 +78,6 @@ final class MyRegisterPetViewController: BaseViewController {
             if let presentingViewController = owner.presentingViewController {
                 presentingViewController.dismiss(animated: true)
             } else if let navigationController = owner.navigationController {
-                // pushed로 표시된 경우
                 navigationController.popViewController(animated: true)
             }
         }).disposed(by: disposeBag)
@@ -209,6 +208,7 @@ extension MyRegisterPetViewController: UITableViewDataSource {
                 viewModel.getRegisterPetData()[indexPath.item],
                 index: indexPath.item
             )
+            cell.deletePetProfileButton.isHidden = viewModel.getDeleteButtonIsHidden()
             cell.delegate = self
             return cell
         default:
@@ -220,9 +220,10 @@ extension MyRegisterPetViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         switch section {
         case 1:
-            guard let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: MyRegisterPetTableFooterView.cellIdentifier) as? MyRegisterPetTableFooterView else { return UITableViewHeaderFooterView() }
-            cell.delegate = self
-            return cell
+            guard let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: MyRegisterPetTableFooterView.cellIdentifier) as? MyRegisterPetTableFooterView else { return UITableViewHeaderFooterView() }
+            footer.delegate = self
+            footer.addPetProfileButton.isHidden = viewModel.getAddButtonIsHidden()
+            return footer
         default:
             return UIView()
         }
@@ -236,7 +237,7 @@ extension MyRegisterPetViewController: MyRegisterPetTableViewCellDelegate {
     }
     
     func petProfileImageButtonDidTap(tag: Int) {
-        self.present(self.imagePickerController, animated: true)
+        self.present(self.galleryAlertController, animated: true)
     }
     
     func collectionViewCell(valueChangedIn textField: UITextField, delegatedFrom cell: UITableViewCell, tag: Int, image: UIImage) {
@@ -250,3 +251,15 @@ extension MyRegisterPetViewController: MyRegisterPetTableFooterViewDelegate {
         addRegisterPetSubject.onNext(())
     }
 }
+
+extension MyRegisterPetViewController: GalleryAlertControllerDelegate {
+    func galleryButtonDidTap() {
+        self.present(self.imagePickerController, animated: true)
+    }
+    
+    func deleteButtonDidTap() {
+        deleteProfileImageSubject.onNext(())
+    }
+}
+
+extension MyRegisterPetViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {}

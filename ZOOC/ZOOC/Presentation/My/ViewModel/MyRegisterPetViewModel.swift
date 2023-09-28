@@ -83,6 +83,14 @@ extension MyRegisterPetViewModel {
     func getRegisterPetData() -> [MyPetRegisterModel] {
         return myRegisterPetUseCase.registerPetData.value
     }
+    
+    func getAddButtonIsHidden() -> Bool {
+        return myRegisterPetUseCase.addButtonIsHidden.value
+    }
+    
+    func getDeleteButtonIsHidden() -> Bool {
+        return myRegisterPetUseCase.deleteButtonIsHidden.value
+    }
 }
 
 

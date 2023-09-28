@@ -23,6 +23,8 @@ final class DefaultMyRegisterPetUseCase: MyRegisterPetUseCase {
     var ableToRegisterPets = BehaviorRelay<Bool?>(value: nil)
     var isRegistered = BehaviorRelay<Bool?>(value: nil)
     var registerPetData = BehaviorRelay<[MyPetRegisterModel]>(value: [])
+    var addButtonIsHidden = BehaviorRelay<Bool>(value: false)
+    var deleteButtonIsHidden = BehaviorRelay<Bool>(value: false)
     
     func requestPetData() {
         repository.requestMyPageAPI(completion: { result in
@@ -37,7 +39,7 @@ final class DefaultMyRegisterPetUseCase: MyRegisterPetUseCase {
     }
     
     func registerPet() {
-        //        repository.registerPets(request: <#T##MyRegisterPetsRequest#>, completion: <#T##(NetworkResult<Any>) -> Void#>)
+        print(#function)
     }
     
     func addPet() {
@@ -47,12 +49,14 @@ final class DefaultMyRegisterPetUseCase: MyRegisterPetUseCase {
                 image: Image.cameraCircle
             )
         )
-        
-        print(registerPetData.value.count)
+        checkAddButtonState()
+        checkDeleteButtonState()
     }
     
     func deletePet(_ index: Int) {
         registerPetData.remove(index: index)
+        checkAddButtonState()
+        checkDeleteButtonState()
     }
 }
 //    @objc private func registerPetButtonDidTap() {
@@ -88,3 +92,13 @@ final class DefaultMyRegisterPetUseCase: MyRegisterPetUseCase {
 //        }
 //
 //    }
+
+extension DefaultMyRegisterPetUseCase {
+    func checkAddButtonState() {
+        addButtonIsHidden.accept(petMemberData.value.count + registerPetData.value.count == 4)
+    }
+    
+    func checkDeleteButtonState() {
+        deleteButtonIsHidden.accept(registerPetData.value.count == 1)
+    }
+}

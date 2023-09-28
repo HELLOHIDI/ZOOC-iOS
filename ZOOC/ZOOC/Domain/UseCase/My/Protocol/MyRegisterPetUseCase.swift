@@ -15,6 +15,8 @@ protocol MyRegisterPetUseCase {
     var ableToRegisterPets: BehaviorRelay<Bool?> { get }
     var isRegistered: BehaviorRelay<Bool?> { get }
     var registerPetData: BehaviorRelay<[MyPetRegisterModel]> { get }
+    var addButtonIsHidden: BehaviorRelay<Bool> { get }
+    var deleteButtonIsHidden: BehaviorRelay<Bool> { get }
     
     func requestPetData()
     func registerPet()

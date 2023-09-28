@@ -13,8 +13,6 @@ final class MyRegisterPetTableFooterView: UITableViewHeaderFooterView {
     
     //MARK: - Properties
     
-    let myPetRegisterViewModel = MyPetRegisterViewModel()
-    
     //MARK: - UI Components
     
     private var petRegisterButtonSeparatorLineView = UIView()
@@ -82,6 +80,5 @@ final class MyRegisterPetTableFooterView: UITableViewHeaderFooterView {
     //MARK: - Action Method
     
     @objc func addPetProfileButtonDidTap() {
-        myPetRegisterViewModel.addCellClosure?()
     }
 }

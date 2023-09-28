@@ -19,8 +19,6 @@ protocol MyDeleteButtonTappedDelegate: AnyObject {
 
 final class MyRegisterPetTableViewCell: UITableViewCell {
     
-    let myPetRegisterViewModel = MyPetRegisterViewModel()
-    
     weak var delegate: MyDeleteButtonTappedDelegate?
     var canRegister: Bool = false
     
@@ -113,7 +111,6 @@ final class MyRegisterPetTableViewCell: UITableViewCell {
     
     @objc private func deletePetProfileButtonDidTap(sender: UIButton) {
         delegate?.deleteButtonTapped(tag: sender.tag)
-        myPetRegisterViewModel.deleteCellClosure?()
     }
     
     @objc private func petProfileImageButtonDidTap(sender: UIButton) {

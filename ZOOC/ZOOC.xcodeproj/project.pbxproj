@@ -225,6 +225,9 @@
 		D24AFAC22A8E2BD100823E9C /* GenAIChoosePetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAC12A8E2BD100823E9C /* GenAIChoosePetCollectionViewCell.swift */; };
 		D24AFAC42A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAC32A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift */; };
 		D24AFAC62A8E3F7A00823E9C /* MyRegisterPetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAC52A8E3F7A00823E9C /* MyRegisterPetRequest.swift */; };
+		D24DA0BE2AC5D6760037D0A2 /* DefaultMyRegisterPetUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24DA0BD2AC5D6760037D0A2 /* DefaultMyRegisterPetUseCase.swift */; };
+		D24DA0C02AC5D7DB0037D0A2 /* MyRegisterPetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24DA0BF2AC5D7DB0037D0A2 /* MyRegisterPetViewModel.swift */; };
+		D24DA0C32AC5DF580037D0A2 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = D24DA0C22AC5DF580037D0A2 /* RxDataSources */; };
 		D25323162A07330C00562D92 /* MyAppInformationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25323152A07330C00562D92 /* MyAppInformationHeaderView.swift */; };
 		D25543A22996B22E0072BF0D /* OnboardingRegisterPetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25543A12996B22E0072BF0D /* OnboardingRegisterPetResult.swift */; };
 		D25543A4299A239B0072BF0D /* OnboardingRegisterPetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25543A3299A239B0072BF0D /* OnboardingRegisterPetRequest.swift */; };
@@ -302,6 +305,7 @@
 		D2C028F42A8246C1003F4727 /* MyEditPetProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C028F32A8246C1003F4727 /* MyEditPetProfileViewModel.swift */; };
 		D2C028F62A82BEAD003F4727 /* OnboardingChooseRoleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C028F52A82BEAD003F4727 /* OnboardingChooseRoleViewModel.swift */; };
 		D2CF76B22AC4980100BF1EFA /* DefaultMyEditPetProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CF76B12AC4980100BF1EFA /* DefaultMyEditPetProfileUseCase.swift */; };
+		D2CF76B42AC4C62500BF1EFA /* MyRegisterPetUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CF76B32AC4C62500BF1EFA /* MyRegisterPetUseCase.swift */; };
 		D2D440142AA5C08200329F35 /* OrderNewAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D440132AA5C08200329F35 /* OrderNewAddressView.swift */; };
 		D2D440162AA5C88D00329F35 /* OrderBasicAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D440152AA5C88D00329F35 /* OrderBasicAddressView.swift */; };
 		D2D440182AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D440172AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift */; };
@@ -543,6 +547,8 @@
 		D24AFAC12A8E2BD100823E9C /* GenAIChoosePetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetCollectionViewCell.swift; sourceTree = "<group>"; };
 		D24AFAC32A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChooseFourPetCollectionViewCell.swift; sourceTree = "<group>"; };
 		D24AFAC52A8E3F7A00823E9C /* MyRegisterPetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetRequest.swift; sourceTree = "<group>"; };
+		D24DA0BD2AC5D6760037D0A2 /* DefaultMyRegisterPetUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMyRegisterPetUseCase.swift; sourceTree = "<group>"; };
+		D24DA0BF2AC5D7DB0037D0A2 /* MyRegisterPetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetViewModel.swift; sourceTree = "<group>"; };
 		D25323152A07330C00562D92 /* MyAppInformationHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppInformationHeaderView.swift; sourceTree = "<group>"; };
 		D25543A12996B22E0072BF0D /* OnboardingRegisterPetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRegisterPetResult.swift; sourceTree = "<group>"; };
 		D25543A3299A239B0072BF0D /* OnboardingRegisterPetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRegisterPetRequest.swift; sourceTree = "<group>"; };
@@ -618,6 +624,7 @@
 		D2C028F32A8246C1003F4727 /* MyEditPetProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditPetProfileViewModel.swift; sourceTree = "<group>"; };
 		D2C028F52A82BEAD003F4727 /* OnboardingChooseRoleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingChooseRoleViewModel.swift; sourceTree = "<group>"; };
 		D2CF76B12AC4980100BF1EFA /* DefaultMyEditPetProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMyEditPetProfileUseCase.swift; sourceTree = "<group>"; };
+		D2CF76B32AC4C62500BF1EFA /* MyRegisterPetUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetUseCase.swift; sourceTree = "<group>"; };
 		D2D440132AA5C08200329F35 /* OrderNewAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderNewAddressView.swift; sourceTree = "<group>"; };
 		D2D440152AA5C88D00329F35 /* OrderBasicAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBasicAddressView.swift; sourceTree = "<group>"; };
 		D2D440172AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBasicAddressCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -669,6 +676,7 @@
 				87A76ABA295F760C0096F669 /* KakaoSDKUser in Frameworks */,
 				8764833829523BEE00F74882 /* Moya in Frameworks */,
 				87A76AB8295F760C0096F669 /* KakaoSDKCommon in Frameworks */,
+				D24DA0C32AC5DF580037D0A2 /* RxDataSources in Frameworks */,
 				87A76AB6295F760C0096F669 /* KakaoSDKAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1648,6 +1656,7 @@
 				D22EF8FF2A7C9B720050E325 /* MyViewModel.swift */,
 				D2C028ED2A81EEF3003F4727 /* MyEditProfileViewModel.swift */,
 				D2C028F32A8246C1003F4727 /* MyEditPetProfileViewModel.swift */,
+				D24DA0BF2AC5D7DB0037D0A2 /* MyRegisterPetViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1681,6 +1690,7 @@
 				D239C0862AC148A100D1AA37 /* DefaultMyUseCase.swift */,
 				D239C08C2AC1626B00D1AA37 /* DefaultMyEditProfileUseCase.swift */,
 				D2CF76B12AC4980100BF1EFA /* DefaultMyEditPetProfileUseCase.swift */,
+				D24DA0BD2AC5D6760037D0A2 /* DefaultMyRegisterPetUseCase.swift */,
 			);
 			path = My;
 			sourceTree = "<group>";
@@ -1691,6 +1701,7 @@
 				D239C0842AC1467C00D1AA37 /* MyUseCase.swift */,
 				D239C0882AC1619E00D1AA37 /* MyEditProfileUseCase.swift */,
 				D239C08A2AC161AF00D1AA37 /* MyEditPetProfileUseCase.swift */,
+				D2CF76B32AC4C62500BF1EFA /* MyRegisterPetUseCase.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -1902,6 +1913,7 @@
 				D29944262AAC7F0D00C4F280 /* RxCocoa */,
 				D29944282AAC7F0D00C4F280 /* RxSwift */,
 				D239C0902AC4038F00D1AA37 /* RxGesture */,
+				D24DA0C22AC5DF580037D0A2 /* RxDataSources */,
 			);
 			productName = ZOOC;
 			productReference = 87B6623D29521E7500B6FFA9 /* ZOOC-Dev.app */;
@@ -1944,6 +1956,7 @@
 				D2D4401B2AA5D08D00329F35 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				D29944252AAC7F0D00C4F280 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				D239C08F2AC4038E00D1AA37 /* XCRemoteSwiftPackageReference "RxGesture" */,
+				D24DA0C12AC5DF580037D0A2 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = 87B6623E29521E7500B6FFA9 /* Products */;
 			projectDirPath = "";
@@ -2086,6 +2099,7 @@
 				D26C85E52968CB2F00AEAF9B /* OnboardingAgreementTableViewCell.swift in Sources */,
 				D23503032964728700F01101 /* MyAppInformationTableViewCell.swift in Sources */,
 				D26C68F22970AD820088DC9A /* HomeNoticeViewController.swift in Sources */,
+				D2CF76B42AC4C62500BF1EFA /* MyRegisterPetUseCase.swift in Sources */,
 				8718A06429AD3445001C7460 /* EditProfileRequest.swift in Sources */,
 				D299442E2AAC8D9B00C4F280 /* ViewModelType.swift in Sources */,
 				D2D440182AA5CA3E00329F35 /* OrderBasicAddressCollectionViewCell.swift in Sources */,
@@ -2165,6 +2179,7 @@
 				87F287D52A9A4EC100A53218 /* KakaoPostCodeViewController.swift in Sources */,
 				87BCAD3E2AA9BA2900A03DA3 /* Toast.swift in Sources */,
 				870A4C122AA374D000D7CFD8 /* SelectedProductOption.swift in Sources */,
+				D24DA0C02AC5D7DB0037D0A2 /* MyRegisterPetViewModel.swift in Sources */,
 				D2ED94882AB8476F0040B687 /* UIImagePicker+Rx.swift in Sources */,
 				D299957A2A95B8520004FB5D /* NSItemProvider+.swift in Sources */,
 				87A76ABF2960423C0096F669 /* GenericResponse.swift in Sources */,
@@ -2274,6 +2289,7 @@
 				4C6B186A296C82850059840D /* RecordRegisterFourCollectionViewCell.swift in Sources */,
 				D26C68F62970B0640088DC9A /* HomeNoticeTableViewCell.swift in Sources */,
 				872367132A136C7300DCBBFF /* ArchiveGuideViewController.swift in Sources */,
+				D24DA0BE2AC5D6760037D0A2 /* DefaultMyRegisterPetUseCase.swift in Sources */,
 				872BBD9229F9576E002E2C71 /* UIApplication+.swift in Sources */,
 				870A4C0C2AA2823900D7CFD8 /* ProductSelectedOptionCollectionViewCell.swift in Sources */,
 				D23502E22961898C00F01101 /* MyProfileView.swift in Sources */,
@@ -2622,6 +2638,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		D24DA0C12AC5DF580037D0A2 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		D29944252AAC7F0D00C4F280 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
@@ -2710,6 +2734,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D239C08F2AC4038E00D1AA37 /* XCRemoteSwiftPackageReference "RxGesture" */;
 			productName = RxGesture;
+		};
+		D24DA0C22AC5DF580037D0A2 /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D24DA0C12AC5DF580037D0A2 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
 		};
 		D29944262AAC7F0D00C4F280 /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;

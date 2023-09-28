@@ -143,7 +143,11 @@ class ZoocTabBarController: UITabBarController {
 extension ZoocTabBarController: ZoocAlertViewControllerDelegate {
     func keepButtonDidTap() {
         let myRegisterPetVC = MyRegisterPetViewController(
-            myPetRegisterViewModel: MyPetRegisterViewModel()
+            viewModel: MyRegisterPetViewModel(
+                myRegisterPetUseCase: DefaultMyRegisterPetUseCase(
+                    repository: MyRepositoryImpl()
+                )
+            )
         )
         let myRegisterPetNVC = UINavigationController(rootViewController: myRegisterPetVC)
         myRegisterPetNVC.modalPresentationStyle = .fullScreen

@@ -101,7 +101,11 @@ final class MyEditProfileViewController: BaseViewController {
             .asDriver()
             .drive(with: self, onNext: { owner, isEdited in
                 guard let isEdited = isEdited else { return }
-                if isEdited { owner.navigationController?.popViewController(animated: true) }
+                if isEdited { if let presentingViewController = self.presentingViewController {
+                    presentingViewController.dismiss(animated: true)
+                } else if let navigationController = self.navigationController {
+                    navigationController.popViewController(animated: true) }
+                }
                 else { owner.showToast("다시 시도해주세요", type: .bad)}
             }).disposed(by: disposeBag)
         
@@ -114,8 +118,8 @@ final class MyEditProfileViewController: BaseViewController {
         
         output.isTextCountExceeded
             .subscribe(with: self, onNext: { owner, isTextCountExceeded in
-            if isTextCountExceeded { owner.updateTextField(owner.rootView.nameTextField) }
-        }).disposed(by: disposeBag)
+                if isTextCountExceeded { owner.updateTextField(owner.rootView.nameTextField) }
+            }).disposed(by: disposeBag)
     }
 }
 
@@ -125,7 +129,7 @@ extension MyEditProfileViewController: GalleryAlertControllerDelegate {
     func galleryButtonDidTap() {
         present(imagePickerController, animated: true)
     }
-
+    
     func deleteButtonDidTap() {
         deleteProfileImageSubject.onNext(())
     }

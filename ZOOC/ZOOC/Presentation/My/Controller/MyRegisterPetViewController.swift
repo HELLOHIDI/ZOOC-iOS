@@ -15,12 +15,15 @@ final class MyRegisterPetViewController: BaseViewController {
     
     //MARK: - Properties
     
+    private var index: Int?
+    
     private let viewModel: MyRegisterPetViewModel
     
     private let deleteRegisterPetSubject = PublishSubject<Int>()
     private let addRegisterPetSubject = PublishSubject<Void>()
-    private let deleteProfileImageSubject = PublishSubject<Void>()
-    private let selectProfileImageSubject = PublishSubject<UIImage>()
+    private let deleteProfileImageSubject = PublishSubject<Int>()
+    private let selectProfileImageSubject = PublishSubject<(UIImage, Int)>()
+    private let changeNameSubject = PublishSubject<(String, Int)>()
     
     private let disposeBag = DisposeBag()
     
@@ -88,7 +91,10 @@ final class MyRegisterPetViewController: BaseViewController {
             viewWillAppearEvent: self.rx.viewWillAppear.asObservable(),
             registerButtonDidTapEvent: self.rootView.registerPetButton.rx.tap.asObservable(),
             deleteRegisterPetEvent: deleteRegisterPetSubject.asObserver(),
-            addRegisterPetEvent: addRegisterPetSubject.asObserver()
+            addRegisterPetEvent: addRegisterPetSubject.asObserver(),
+            deleteRegisterPetImageEvent: deleteProfileImageSubject.asObserver(),
+            selectRegisterPetImageEvent: selectProfileImageSubject.asObserver(),
+            nameDidChangeEvent: changeNameSubject.asObserver()
         )
         
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
@@ -111,7 +117,11 @@ final class MyRegisterPetViewController: BaseViewController {
             .drive(with: self, onNext: { owner, isRegisterd in
                 guard let isRegisterd = isRegisterd else { return }
                 if isRegisterd {
-                    owner.dismiss(animated: true)
+                    if let presentingViewController = self.presentingViewController {
+                        presentingViewController.dismiss(animated: true)
+                    } else if let navigationController = self.navigationController {
+                        navigationController.popViewController(animated: true)
+                    }
                 }
                 else {
                     owner.showToast("반려동물 등록과정 중 문제가 발생했습니다", type: .bad)
@@ -232,16 +242,16 @@ extension MyRegisterPetViewController: UITableViewDataSource {
 
 extension MyRegisterPetViewController: MyRegisterPetTableViewCellDelegate {
     func deleteButtonTapped(tag: Int) {
-        print(#function)
         deleteRegisterPetSubject.onNext(tag)
     }
     
     func petProfileImageButtonDidTap(tag: Int) {
+        self.index = tag
         self.present(self.galleryAlertController, animated: true)
     }
     
-    func collectionViewCell(valueChangedIn textField: UITextField, delegatedFrom cell: UITableViewCell, tag: Int, image: UIImage) {
-        print(#function)
+    func nameDidChanged(text: String, tag: Int) {
+        changeNameSubject.onNext((text, tag))
     }
 }
 
@@ -258,8 +268,18 @@ extension MyRegisterPetViewController: GalleryAlertControllerDelegate {
     }
     
     func deleteButtonDidTap() {
-        deleteProfileImageSubject.onNext(())
+        guard let index = self.index else { return }
+        deleteProfileImageSubject.onNext(index)
     }
 }
 
-extension MyRegisterPetViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {}
+extension MyRegisterPetViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        guard let index = self.index else { return }
+        selectProfileImageSubject.onNext((image,index))
+        dismiss(animated: true)
+    }
+}

@@ -39,7 +39,35 @@ final class DefaultMyRegisterPetUseCase: MyRegisterPetUseCase {
     }
     
     func registerPet() {
-        print(#function)
+        var names: [String] = []
+        var photos: [Data] = []
+        var isPhotos: [Bool] = []
+        var isPhoto: Bool = true
+        
+        for pet in self.registerPetData.value {
+            isPhoto = pet.image != Image.cameraCircle
+            guard let photo = pet.image?.jpegData(compressionQuality: 1.0) else {
+                isPhoto = false
+                return
+            }
+            names.append(pet.name)
+            photos.append(photo)
+            isPhotos.append(isPhoto)
+        }
+        
+        repository.registerPets(
+            request: MyRegisterPetsRequest(
+                petNames: names,
+                files: photos,
+                isPetPhotos: isPhotos
+            ), completion: { result in
+                switch result {
+                case .success(_):
+                    self.isRegistered.accept(true)
+                default:
+                    self.isRegistered.accept(false)
+                }
+            })
     }
     
     func addPet() {
@@ -51,47 +79,39 @@ final class DefaultMyRegisterPetUseCase: MyRegisterPetUseCase {
         )
         checkAddButtonState()
         checkDeleteButtonState()
+        checkRegisterPets()
     }
     
     func deletePet(_ index: Int) {
         registerPetData.remove(index: index)
         checkAddButtonState()
         checkDeleteButtonState()
+        checkRegisterPets()
+    }
+    
+    func deleteProfileImage(_ index: Int) {
+        var updateRegisterPetData = registerPetData.value
+        updateRegisterPetData[index].image = nil
+        self.registerPetData.accept(updateRegisterPetData)
+        checkRegisterPets()
+    }
+    
+    func selectProfileImage(_ data: (UIImage, Int)) {
+        var updateRegisterPetData = registerPetData.value
+        updateRegisterPetData[data.1].image = data.0
+        self.registerPetData.accept(updateRegisterPetData)
+        checkRegisterPets()
+    }
+    
+    func updatePetName(_ data: (String, Int)) {
+        var updateRegisterPetData = registerPetData.value
+        updateRegisterPetData[data.1].name = data.0
+        self.registerPetData.accept(updateRegisterPetData)
+        checkRegisterPets()
     }
 }
-//    @objc private func registerPetButtonDidTap() {
-//        var names: [String] = []
-//        var photos: [Data] = []
-//        var isPhotos: [Bool] = []
-//        var isPhoto: Bool = true
-//
-//        for pet in self.myPetRegisterViewModel.petList {
-//            isPhoto = pet.image != Image.cameraCircle
-//            guard let photo = pet.image.jpegData(compressionQuality: 1.0) else {
-//                isPhoto = false
-//                return
-//            }
-//            names.append(pet.name)
-//            photos.append(photo)
-//            isPhotos.append(isPhoto)
-//        }
-//
-//        MyAPI.shared.registerPets(
-//            request: MyRegisterPetsRequest(petNames: names, files: photos, isPetPhotos: isPhotos)
-//        ) { result in
-//            self.validateResult(result)
-//            NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
-//            NotificationCenter.default.post(name: .myPageUpdate, object: nil)
-//            if let presentingViewController = self.presentingViewController {
-//                // presented로 표시된 경우
-//                presentingViewController.dismiss(animated: true)
-//            } else if let navigationController = self.navigationController {
-//                // pushed로 표시된 경우
-//                navigationController.popViewController(animated: true)
-//            }
-//        }
-//
-//    }
+
+
 
 extension DefaultMyRegisterPetUseCase {
     func checkAddButtonState() {
@@ -101,4 +121,15 @@ extension DefaultMyRegisterPetUseCase {
     func checkDeleteButtonState() {
         deleteButtonIsHidden.accept(registerPetData.value.count == 1)
     }
+    
+    func checkRegisterPets() {
+        for pet in registerPetData.value {
+            if pet.name.count == 0 {
+                ableToRegisterPets.accept(false)
+                return
+            }
+        }
+        ableToRegisterPets.accept(true)
+    }
 }
+

@@ -22,6 +22,9 @@ protocol MyRegisterPetUseCase {
     func registerPet()
     func addPet()
     func deletePet(_ index: Int)
+    func deleteProfileImage(_ index: Int)
+    func selectProfileImage(_ data: (UIImage, Int))
+    func updatePetName(_ data: (String, Int))
 }
 
 

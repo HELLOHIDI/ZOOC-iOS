@@ -11,10 +11,8 @@ import UIKit
 
 protocol MyRegisterPetTableViewCellDelegate: AnyObject {
     func deleteButtonTapped(tag: Int)
-    
     func petProfileImageButtonDidTap(tag: Int)
-    
-    func collectionViewCell(valueChangedIn textField: UITextField, delegatedFrom cell: UITableViewCell, tag: Int, image: UIImage)
+    func nameDidChanged(text: String, tag: Int)
 }
 
 final class MyRegisterPetTableViewCell: UITableViewCell {
@@ -112,7 +110,11 @@ final class MyRegisterPetTableViewCell: UITableViewCell {
          petProfileImageButton].forEach { $0.tag = index}
         
         petProfileNameTextField.text = data.name
-        petProfileImageButton.setImage(data.image, for: .normal)
+        if let image = data.image {
+            petProfileImageButton.setImage(image, for: .normal)
+        } else {
+            petProfileImageButton.setImage(Image.cameraCircle, for: .normal)
+        }
     }
     
     //MARK: - Action Method
@@ -138,13 +140,11 @@ final class MyRegisterPetTableViewCell: UITableViewCell {
 
 extension MyRegisterPetTableViewCell: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
-        delegate?.collectionViewCell(valueChangedIn: petProfileNameTextField, delegatedFrom: self, tag: textField.tag, image: petProfileImageButton.currentImage!)
+        delegate?.nameDidChanged(text: textField.text ?? "", tag: textField.tag)
     }
-    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-
 }

@@ -24,6 +24,9 @@ final class MyRegisterPetViewModel: ViewModelType {
         let registerButtonDidTapEvent: Observable<Void>
         let deleteRegisterPetEvent: Observable<Int>
         let addRegisterPetEvent: Observable<Void>
+        let deleteRegisterPetImageEvent: Observable<Int>
+        let selectRegisterPetImageEvent: Observable<(UIImage, Int)>
+        let nameDidChangeEvent: Observable<(String, Int)>
     }
     
     struct Output {
@@ -51,6 +54,18 @@ final class MyRegisterPetViewModel: ViewModelType {
         
         input.deleteRegisterPetEvent.subscribe(with: self, onNext: { owner, tag in
             owner.myRegisterPetUseCase.deletePet(tag)
+        }).disposed(by: disposeBag)
+        
+        input.deleteRegisterPetImageEvent.subscribe(with: self, onNext: { owner, tag in
+            owner.myRegisterPetUseCase.deleteProfileImage(tag)
+        }).disposed(by: disposeBag)
+        
+        input.selectRegisterPetImageEvent.subscribe(with: self, onNext: { owner, data in
+            owner.myRegisterPetUseCase.selectProfileImage(data)
+        }).disposed(by: disposeBag)
+        
+        input.nameDidChangeEvent.subscribe(with: self, onNext: { owner, data in
+            owner.myRegisterPetUseCase.updatePetName(data)
         }).disposed(by: disposeBag)
         
         return output

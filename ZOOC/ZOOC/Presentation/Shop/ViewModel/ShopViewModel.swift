@@ -28,7 +28,6 @@ final class ShopViewModel {
     //MARK: - Properties
     
     private var petID: Int
-    private var productData: [ProductResult] = []
     
     //MARK: - Life Cycle
     

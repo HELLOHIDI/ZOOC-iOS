@@ -64,13 +64,13 @@ final class MyEditProfileViewController: BaseViewController {
         rootView.backButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
                 let zoocAlertVC = ZoocAlertViewController(.leavePage)
-                zoocAlertVC.delegate = self
+                zoocAlertVC.delegate = owner
                 owner.present(zoocAlertVC, animated: false)
             }).disposed(by: disposeBag)
         
         rootView.profileImageButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
-                owner.present(self.galleryAlertController,animated: true)
+                owner.present(owner.galleryAlertController,animated: true)
             }).disposed(by: disposeBag)
     }
     
@@ -100,10 +100,10 @@ final class MyEditProfileViewController: BaseViewController {
         output.isEdited
             .asDriver()
             .drive(with: self, onNext: { owner, isEdited in
-                guard let isEdited = isEdited else { return }
-                if isEdited { if let presentingViewController = self.presentingViewController {
+                guard let isEdited else { return }
+                if isEdited { if let presentingViewController = owner.presentingViewController {
                     presentingViewController.dismiss(animated: true)
-                } else if let navigationController = self.navigationController {
+                } else if let navigationController = owner.navigationController {
                     navigationController.popViewController(animated: true) }
                 }
                 else { owner.showToast("다시 시도해주세요", type: .bad)}
@@ -112,7 +112,7 @@ final class MyEditProfileViewController: BaseViewController {
         output.profileData
             .asDriver(onErrorJustReturn: nil)
             .drive(with: self, onNext: { owner, profileData in
-                guard let profileData = profileData else { return }
+                guard let profileData else { return }
                 owner.updateUI(profileData)
             }).disposed(by: disposeBag)
         
@@ -160,9 +160,9 @@ extension MyEditProfileViewController {
         guard let textField = textField else { return }
         let fixedText = textField.text?.substring(from: 0, to:textField.textFieldType.limit-1)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.rootView.nameTextField.text = fixedText
-            guard let fixedText = fixedText else { return }
+            guard let fixedText else { return }
             self.rootView.numberOfNameCharactersLabel.text = "\(String(describing: fixedText.count))/10"
         }
     }

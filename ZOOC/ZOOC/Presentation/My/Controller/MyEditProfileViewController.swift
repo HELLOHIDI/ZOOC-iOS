@@ -70,13 +70,16 @@ final class MyEditProfileViewController: BaseViewController {
         
         rootView.profileImageButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
-                owner.present(self.galleryAlertController,animated: true)
+                owner.present(owner.galleryAlertController,animated: true)
             }).disposed(by: disposeBag)
     }
     
     private func bindViewModel() {
         let input = MyEditProfileViewModel.Input(
-            nameTextFieldDidChangeEvent: rootView.nameTextField.rx.controlEvent(.editingChanged).map { self.rootView.nameTextField.text ?? "" }
+            nameTextFieldDidChangeEvent: rootView.nameTextField.rx.controlEvent(.editingChanged)
+                .map { [weak self] in
+                    self?.rootView.nameTextField.text ?? ""
+                }
                 .asObservable(),
             editButtonTapEvent: self.rootView.completeButton.rx.tap.asObservable(),
             deleteButtonTapEvent: deleteProfileImageSubject.asObservable(),
@@ -101,9 +104,9 @@ final class MyEditProfileViewController: BaseViewController {
             .asDriver()
             .drive(with: self, onNext: { owner, isEdited in
                 guard let isEdited = isEdited else { return }
-                if isEdited { if let presentingViewController = self.presentingViewController {
+                if isEdited { if let presentingViewController = owner.presentingViewController {
                     presentingViewController.dismiss(animated: true)
-                } else if let navigationController = self.navigationController {
+                } else if let navigationController = owner.navigationController {
                     navigationController.popViewController(animated: true) }
                 }
                 else { owner.showToast("다시 시도해주세요", type: .bad)}
@@ -112,7 +115,7 @@ final class MyEditProfileViewController: BaseViewController {
         output.profileData
             .asDriver(onErrorJustReturn: nil)
             .drive(with: self, onNext: { owner, profileData in
-                guard let profileData = profileData else { return }
+                guard let profileData else { return }
                 owner.updateUI(profileData)
             }).disposed(by: disposeBag)
         

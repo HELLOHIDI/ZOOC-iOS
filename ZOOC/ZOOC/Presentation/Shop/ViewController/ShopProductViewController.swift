@@ -69,11 +69,11 @@ final class ShopProductViewController: BaseViewController {
     
     //MARK: - Life Cycle
     
-    init(productID: Int, petID: Int){
-        self.petID = petID
-        super.init(nibName: nil, bundle: nil)
+    init(model: ShopProductModel) {
+        self.petID = model.petID
         
-        requestDetailProductAPI(id: productID)
+        super.init(nibName: nil, bundle: nil)
+        requestDetailProductAPI(id: model.productID)
     }
     
     required init?(coder: NSCoder) {

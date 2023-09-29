@@ -22,6 +22,7 @@ final class ShopViewModel {
     struct Output {
         let productData = PublishRelay<[ProductResult]>()
         let pushShopProductVC = PublishRelay<ShopProductModel>()
+        let showCommingSoonToast = PublishRelay<Void>()
     }
     
     //MARK: - Properties
@@ -42,6 +43,19 @@ final class ShopViewModel {
             .subscribe(with: self) { owner, _ in
                 owner.requestProductsAPI(output: output)
             }
+            .disposed(by: disposeBag)
+        
+        input.productCellDidSelectEvent
+            .subscribe(with: self, onNext: { owner, data in
+                guard data != ProductResult() else {
+                    output.showCommingSoonToast.accept(())
+                    return
+                }
+                
+                let model = ShopProductModel(petID: owner.petID,
+                                             productID: data.id)
+                output.pushShopProductVC.accept(model)
+            })
             .disposed(by: disposeBag)
         
         return output

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProductResult: Codable {
+struct ProductResult: Codable, Equatable {
     let id: Int
     let thumbnail: String
     let name: String

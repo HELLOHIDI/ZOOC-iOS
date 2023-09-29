@@ -95,8 +95,6 @@ final class ShopViewController: BaseViewController {
                 owner.navigationController?.pushViewController(cartVC, animated: true)
             })
             .disposed(by: disposeBag)
-        
-        
     }
     
     func bindViewModel() {
@@ -112,7 +110,7 @@ final class ShopViewController: BaseViewController {
         output.productData
             .asDriver(onErrorJustReturn: [])
             .drive(
-                self.collectionView.rx.items(
+                collectionView.rx.items(
                     cellIdentifier: ShopProductCollectionViewCell.reuseCellIdentifier,
                     cellType: ShopProductCollectionViewCell.self)
             ) { row, data, cell in
@@ -128,7 +126,14 @@ final class ShopViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        
+        output.showCommingSoonToast
+            .asDriver(onErrorJustReturn: ())
+            .drive(with: self, onNext: { owner, _ in
+                owner.showToast("오픈 예정 상품이에요",
+                                type: .normal,
+                                bottomInset: 40)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func hierarchy() {
@@ -168,72 +173,3 @@ final class ShopViewController: BaseViewController {
     }
     
 }
-
-//MARK: - UICollectionViewDataSource
-//
-//extension ShopViewController: UICollectionViewDataSource {
-//    func collectionView(_ collectionView: UICollectionView,
-//                        numberOfItemsInSection section: Int) -> Int {
-//        productsData.count + 1
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView,
-//                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopProductCollectionViewCell.reuseCellIdentifier,
-//                                                      for: indexPath) as! ShopProductCollectionViewCell
-//
-//        if indexPath.row + 1 <= productsData.count {
-//            cell.dataBind(data: productsData[indexPath.row])
-//        } else {
-//            cell.setCommingSoon()
-//        }
-//        return cell
-//    }
-//}
-//
-////MARK: - UICollectionViewDelegate
-//
-//extension ShopViewController {
-//    func collectionView(_ collectionView: UICollectionView,
-//                        didSelectItemAt indexPath: IndexPath) {
-//
-////        if indexPath.row + 1 <= productsData.count {
-////            let productVC = ShopProductViewController(productID: productsData[indexPath.row].id, petID: petID)
-////            navigationController?.pushViewController(productVC, animated: true)
-////        } else {
-////            showToast("오픈 예정 제품이에요", type: .normal, bottomInset: 40)
-////        }
-//
-//    }
-//}
-//
-////MARK: - UICollectionViewDelegateFlowLayout
-//
-//extension ShopViewController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        var width = collectionView.frame.width - 60 - 9
-//        width /= 2
-//        let height = (width * 200 / 153) + 50
-//        return CGSize(width: width, height: height)
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return 30
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//        return 9
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        insetForSectionAt section: Int) -> UIEdgeInsets {
-//        UIEdgeInsets(top: 0, left: 30, bottom: 30, right: 30)
-//    }
-//}

@@ -95,9 +95,7 @@ final class ShopProductCollectionViewCell: UICollectionViewCell {
     }
     
     func dataBind(data: ProductResult) {
-        guard data.id != Int()
-                || data.name != String()
-                || data.price != Int() else {
+        guard data != ProductResult() else {
             setCommingSoon()
             return
         }

@@ -44,7 +44,7 @@ final class ShopViewModel {
             }
             .disposed(by: disposeBag)
         
-        
+    
         //bindOutput(output: output, disposeBag: disposeBag)
         return output
     }

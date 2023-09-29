@@ -18,14 +18,7 @@ final class ShopViewController: BaseViewController {
     
     private let viewModel: ShopViewModel
     private let disposeBag = DisposeBag()
-    
-    
-//    private var productsData: [ProductResult] = [] {
-//        didSet {
-//            collectionView.reloadData()
-//        }
-//    }
-//
+
     //MARK: - UI Components
     
     private lazy var backButton: UIButton = {
@@ -49,12 +42,18 @@ final class ShopViewController: BaseViewController {
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 30
+        layout.minimumInteritemSpacing = 9
+        
+        var width = Device.width - 60 - 9
+        width /= 2
+        let height = (width * 200 / 153) + 50
+        layout.itemSize = CGSize(width: width, height: height)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(ShopProductCollectionViewCell.self,
-                                forCellWithReuseIdentifier: ShopProductCollectionViewCell.reuseCellIdentifier)
+        collectionView.contentInset = .init(top: 0, left: 30, bottom: 30, right: 30)
         return collectionView
     }()
     

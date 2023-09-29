@@ -9,10 +9,26 @@ import UIKit
 
 import RxCocoa
 import RxSwift
+import RxDataSources
 
 import SnapKit
 
 final class ShopViewController: BaseViewController {
+    
+    let dataSource = RxCollectionViewSectionedReloadDataSource<ShopProductSection>(
+        configureCell: { dataSource, collectionView, indexPath, item in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopProductCollectionViewCell.reuseCellIdentifier,
+                                                          for: indexPath) as! ShopProductCollectionViewCell
+            switch indexPath.section {
+            case 0:
+                cell.dataBind(data: item)
+            default:
+                cell.setCommingSoon()
+            }
+            return cell
+        }
+    )
+
     
     //MARK: - Properties
     
@@ -44,16 +60,17 @@ final class ShopViewController: BaseViewController {
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 30
         layout.minimumInteritemSpacing = 9
-        
-        var width = Device.width - 60 - 9
-        width /= 2
+        //layout.sectionInset = .init(top: 0, left: 0, bottom: 30, right: 0)
+        var width = (Device.width - 60 - 9) / 2
         let height = (width * 200 / 153) + 50
         layout.itemSize = CGSize(width: width, height: height)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.contentInset = .init(top: 0, left: 30, bottom: 30, right: 30)
+        collectionView.contentInset = .init(top: 0, left: 30, bottom: 0, right: 30)
+        collectionView.register(ShopProductCollectionViewCell.self,
+                                forCellWithReuseIdentifier: ShopProductCollectionViewCell.reuseCellIdentifier)
         return collectionView
     }()
     
@@ -73,11 +90,11 @@ final class ShopViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bindUI()
-        bindViewModel()
-        
         hierarchy()
         layout()
+        
+        bindUI()
+        bindViewModel()
     }
     
     //MARK: - Custom Method
@@ -109,19 +126,24 @@ final class ShopViewController: BaseViewController {
         let output = self.viewModel.transform(input: input, disposeBag: disposeBag)
         
         
-        output.productData
+//        output.productData
+//            .asDriver(onErrorJustReturn: [])
+//            .drive(
+//                self.collectionView.rx.items(
+//                    cellIdentifier: ShopProductCollectionViewCell.reuseCellIdentifier,
+//                    cellType: ShopProductCollectionViewCell.self)
+//            ) { row, data, cell in
+//                cell.dataBind(data: data)
+//            }
+//            .disposed(by: disposeBag)
+        
+        output.sections
             .asDriver(onErrorJustReturn: [])
-            .drive(
-                self.collectionView.rx.items(
-                    cellIdentifier: ShopProductCollectionViewCell.reuseCellIdentifier,
-                    cellType: ShopProductCollectionViewCell.self)
-            ) { row, data, cell in
-                cell.dataBind(data: data)
-            }
+            .drive( collectionView.rx.items(dataSource: dataSource) )
             .disposed(by: disposeBag)
             
         output.pushShopProductVC
-            .asDriver(onErrorJustReturn: .init())
+            .asDriver(onErrorJustReturn: ShopProductModel())
             .drive(with: self, onNext: { owner, model in
                 let productVC = ShopProductViewController(model: model)
                 owner.navigationController?.pushViewController(productVC, animated: true)

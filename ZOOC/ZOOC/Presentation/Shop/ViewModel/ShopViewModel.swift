@@ -20,8 +20,9 @@ final class ShopViewModel {
     }
     
     struct Output {
-        let productData = BehaviorRelay<[ProductResult]>(value: [])
-        let pushShopProductVC = BehaviorRelay<ShopProductModel>(value: .init())        
+        let productData = PublishRelay<[ProductResult]>()
+        let sections = PublishRelay<[ShopProductSection]>()
+        let pushShopProductVC = PublishRelay<ShopProductModel>()
     }
     
     //MARK: - Properties
@@ -65,7 +66,12 @@ extension ShopViewModel {
                 guard let data = data as? [ProductResult] else {
                     return
                 }
-                output.productData.accept(data)
+                //output.productData.accept(data)
+                
+                let section = [ShopProductSection(items: data),
+                               ShopProductSection(items: [.init()])]
+                
+                output.sections.accept(section)
             default:
                 return
             }

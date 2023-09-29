@@ -155,6 +155,7 @@
 		87DDDD94298E607C00CBEC79 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DDDD93298E607C00CBEC79 /* Device.swift */; };
 		87DF04E02AC7287400E10B2D /* ShopProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04DF2AC7287400E10B2D /* ShopProductModel.swift */; };
 		87DF04E22AC72CBA00E10B2D /* ShopError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04E12AC72CBA00E10B2D /* ShopError.swift */; };
+		87DF04E42AC73FD100E10B2D /* ShopProductSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04E32AC73FD100E10B2D /* ShopProductSection.swift */; };
 		87E462E62A10FA60006FC35D /* ExternalURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462E52A10FA60006FC35D /* ExternalURL.swift */; };
 		87E462EE2A110867006FC35D /* ZoocGradinetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */; };
 		87E462F12A110E18006FC35D /* CGColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462F02A110E18006FC35D /* CGColor+.swift */; };
@@ -482,6 +483,7 @@
 		87DDDD93298E607C00CBEC79 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		87DF04DF2AC7287400E10B2D /* ShopProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopProductModel.swift; sourceTree = "<group>"; };
 		87DF04E12AC72CBA00E10B2D /* ShopError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopError.swift; sourceTree = "<group>"; };
+		87DF04E32AC73FD100E10B2D /* ShopProductSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopProductSection.swift; sourceTree = "<group>"; };
 		87E462E52A10FA60006FC35D /* ExternalURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalURL.swift; sourceTree = "<group>"; };
 		87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocGradinetButton.swift; sourceTree = "<group>"; };
 		87E462F02A110E18006FC35D /* CGColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGColor+.swift"; sourceTree = "<group>"; };
@@ -1589,6 +1591,7 @@
 				87F287F82A9F3F7000A53218 /* APIModel */,
 				870A4C112AA374D000D7CFD8 /* SelectedProductOption.swift */,
 				87DF04DF2AC7287400E10B2D /* ShopProductModel.swift */,
+				87DF04E32AC73FD100E10B2D /* ShopProductSection.swift */,
 			);
 			path = Shop;
 			sourceTree = "<group>";
@@ -2175,6 +2178,7 @@
 				87A3D8922A97756E002C36DB /* ZoocTextField.swift in Sources */,
 				87F287F12A9F36D400A53218 /* ShopAPI.swift in Sources */,
 				87A3D8992A987D55002C36DB /* OrderAgreementView.swift in Sources */,
+				87DF04E42AC73FD100E10B2D /* ShopProductSection.swift in Sources */,
 				D239C08B2AC161AF00D1AA37 /* MyEditPetProfileUseCase.swift in Sources */,
 				87A76AA9295F6ED70096F669 /* MyAPI.swift in Sources */,
 				D26C85D1296869DD00AEAF9B /* UICollectionReusableView+.swift in Sources */,

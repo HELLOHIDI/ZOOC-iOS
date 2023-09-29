@@ -27,6 +27,7 @@ final class ShopViewModel {
     //MARK: - Properties
     
     private var petID: Int
+    private var productData: [ProductResult] = []
     
     //MARK: - Life Cycle
     
@@ -37,12 +38,38 @@ final class ShopViewModel {
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output()
         
-        bindOutput(output: output, disposeBag: disposeBag)
+        input.viewWillAppearEvent
+            .subscribe(with: self) { owner, _ in
+                owner.requestProductsAPI(output: output)
+            }
+            .disposed(by: disposeBag)
+        
+        
+        //bindOutput(output: output, disposeBag: disposeBag)
         return output
     }
     
     private func bindOutput(output: Output, disposeBag: DisposeBag) {
+        
         return
     }
     
+}
+
+extension ShopViewModel {
+    
+    private func requestProductsAPI(output: Output) {
+        ShopAPI.shared.getTotalProducts { result in
+            switch result {
+            case .success(let data):
+                guard let data = data as? [ProductResult] else {
+                    return
+                }
+                output.productData.accept(data)
+            default:
+                return
+            }
+        }
+        
+    }
 }

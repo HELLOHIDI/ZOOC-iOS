@@ -79,8 +79,6 @@ final class ShopViewController: BaseViewController {
         
         hierarchy()
         layout()
-        
-        requestProductsAPI()
     }
     
     //MARK: - Custom Method
@@ -169,15 +167,6 @@ final class ShopViewController: BaseViewController {
         }
         
     }
-
-    private func requestProductsAPI() {
-        ShopAPI.shared.getTotalProducts { result in
-            guard let result = self.validateResult(result) as? [ProductResult] else { return }
-            //self.productsData = result
-        }
-    }
-    
-    
     
 }
 

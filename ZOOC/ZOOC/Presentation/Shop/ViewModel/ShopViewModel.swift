@@ -21,7 +21,6 @@ final class ShopViewModel {
     
     struct Output {
         let productData = PublishRelay<[ProductResult]>()
-        let sections = PublishRelay<[ShopProductSection]>()
         let pushShopProductVC = PublishRelay<ShopProductModel>()
     }
     
@@ -45,14 +44,7 @@ final class ShopViewModel {
             }
             .disposed(by: disposeBag)
         
-    
-        //bindOutput(output: output, disposeBag: disposeBag)
         return output
-    }
-    
-    private func bindOutput(output: Output, disposeBag: DisposeBag) {
-        
-        return
     }
     
 }
@@ -63,15 +55,11 @@ extension ShopViewModel {
         ShopAPI.shared.getTotalProducts { result in
             switch result {
             case .success(let data):
-                guard let data = data as? [ProductResult] else {
+                guard var data = data as? [ProductResult] else {
                     return
                 }
-                //output.productData.accept(data)
-                
-                let section = [ShopProductSection(items: data),
-                               ShopProductSection(items: [.init()])]
-                
-                output.sections.accept(section)
+                data.append(.init()) // 커밍쑨 담당 데이터 추가
+                output.productData.accept(data)
             default:
                 return
             }

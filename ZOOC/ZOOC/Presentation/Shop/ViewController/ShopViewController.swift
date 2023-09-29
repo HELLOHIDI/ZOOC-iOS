@@ -9,26 +9,10 @@ import UIKit
 
 import RxCocoa
 import RxSwift
-import RxDataSources
 
 import SnapKit
 
 final class ShopViewController: BaseViewController {
-    
-    let dataSource = RxCollectionViewSectionedReloadDataSource<ShopProductSection>(
-        configureCell: { dataSource, collectionView, indexPath, item in
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopProductCollectionViewCell.reuseCellIdentifier,
-                                                          for: indexPath) as! ShopProductCollectionViewCell
-            switch indexPath.section {
-            case 0:
-                cell.dataBind(data: item)
-            default:
-                cell.setCommingSoon()
-            }
-            return cell
-        }
-    )
-
     
     //MARK: - Properties
     
@@ -60,7 +44,6 @@ final class ShopViewController: BaseViewController {
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 30
         layout.minimumInteritemSpacing = 9
-        //layout.sectionInset = .init(top: 0, left: 0, bottom: 30, right: 0)
         var width = (Device.width - 60 - 9) / 2
         let height = (width * 200 / 153) + 50
         layout.itemSize = CGSize(width: width, height: height)
@@ -126,20 +109,15 @@ final class ShopViewController: BaseViewController {
         let output = self.viewModel.transform(input: input, disposeBag: disposeBag)
         
         
-//        output.productData
-//            .asDriver(onErrorJustReturn: [])
-//            .drive(
-//                self.collectionView.rx.items(
-//                    cellIdentifier: ShopProductCollectionViewCell.reuseCellIdentifier,
-//                    cellType: ShopProductCollectionViewCell.self)
-//            ) { row, data, cell in
-//                cell.dataBind(data: data)
-//            }
-//            .disposed(by: disposeBag)
-        
-        output.sections
+        output.productData
             .asDriver(onErrorJustReturn: [])
-            .drive( collectionView.rx.items(dataSource: dataSource) )
+            .drive(
+                self.collectionView.rx.items(
+                    cellIdentifier: ShopProductCollectionViewCell.reuseCellIdentifier,
+                    cellType: ShopProductCollectionViewCell.self)
+            ) { row, data, cell in
+                cell.dataBind(data: data)
+            }
             .disposed(by: disposeBag)
             
         output.pushShopProductVC

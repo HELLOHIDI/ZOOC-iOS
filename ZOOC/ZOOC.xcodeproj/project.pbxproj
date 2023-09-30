@@ -157,6 +157,8 @@
 		87DF04E22AC72CBA00E10B2D /* ShopError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04E12AC72CBA00E10B2D /* ShopError.swift */; };
 		87DF04E42AC73FD100E10B2D /* ShopProductSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04E32AC73FD100E10B2D /* ShopProductSection.swift */; };
 		87DF04E62AC751C200E10B2D /* ShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04E52AC751C200E10B2D /* ShopView.swift */; };
+		87DF04E82AC821CE00E10B2D /* ShopProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04E72AC821CE00E10B2D /* ShopProductViewModel.swift */; };
+		87DF04EA2AC822ED00E10B2D /* ShopProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04E92AC822ED00E10B2D /* ShopProductView.swift */; };
 		87E462E62A10FA60006FC35D /* ExternalURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462E52A10FA60006FC35D /* ExternalURL.swift */; };
 		87E462EE2A110867006FC35D /* ZoocGradinetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */; };
 		87E462F12A110E18006FC35D /* CGColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462F02A110E18006FC35D /* CGColor+.swift */; };
@@ -486,6 +488,8 @@
 		87DF04E12AC72CBA00E10B2D /* ShopError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopError.swift; sourceTree = "<group>"; };
 		87DF04E32AC73FD100E10B2D /* ShopProductSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopProductSection.swift; sourceTree = "<group>"; };
 		87DF04E52AC751C200E10B2D /* ShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopView.swift; sourceTree = "<group>"; };
+		87DF04E72AC821CE00E10B2D /* ShopProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopProductViewModel.swift; sourceTree = "<group>"; };
+		87DF04E92AC822ED00E10B2D /* ShopProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopProductView.swift; sourceTree = "<group>"; };
 		87E462E52A10FA60006FC35D /* ExternalURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalURL.swift; sourceTree = "<group>"; };
 		87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocGradinetButton.swift; sourceTree = "<group>"; };
 		87E462F02A110E18006FC35D /* CGColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGColor+.swift"; sourceTree = "<group>"; };
@@ -730,6 +734,7 @@
 			isa = PBXGroup;
 			children = (
 				87188C5F2AC7172200C31AC9 /* ShopViewModel.swift */,
+				87DF04E72AC821CE00E10B2D /* ShopProductViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1442,6 +1447,7 @@
 				870A4BFD2AA26E7500D7CFD8 /* BottomSheet */,
 				D2ED94892AB962A90040B687 /* ShopChoosePetView.swift */,
 				87DF04E52AC751C200E10B2D /* ShopView.swift */,
+				87DF04E92AC822ED00E10B2D /* ShopProductView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2212,7 +2218,9 @@
 				D24DA0C02AC5D7DB0037D0A2 /* MyRegisterPetViewModel.swift in Sources */,
 				D2ED94882AB8476F0040B687 /* UIImagePicker+Rx.swift in Sources */,
 				D299957A2A95B8520004FB5D /* NSItemProvider+.swift in Sources */,
+				87DF04E82AC821CE00E10B2D /* ShopProductViewModel.swift in Sources */,
 				87A76ABF2960423C0096F669 /* GenericResponse.swift in Sources */,
+				87DF04EA2AC822ED00E10B2D /* ShopProductView.swift in Sources */,
 				8782C7E42968B03500C9324B /* HomePetCollectionViewCell.swift in Sources */,
 				872367192A19080600DCBBFF /* AuthError.swift in Sources */,
 				D26989A829A60EE7008A5ACC /* OnboardingAgreementViewModel.swift in Sources */,

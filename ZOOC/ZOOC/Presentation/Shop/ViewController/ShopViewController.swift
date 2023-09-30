@@ -39,7 +39,7 @@ final class ShopViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bindUI()  // 뷰모델까지 거치기 이벤트
+        bindUI()  // 뷰모델까지 거치기 번거로운 이벤트
         bindViewModel()
     }
     

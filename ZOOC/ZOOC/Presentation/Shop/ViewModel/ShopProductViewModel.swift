@@ -21,7 +21,8 @@ final class ShopProductViewModel {
     }
     
     struct Output {
-        let productData = PublishRelay<ProductDetailResult>()
+        let productDetailData = PublishRelay<ProductDetailResult>()
+        let productImageData = PublishRelay<[String]>()
         let showToast = PublishRelay<ShopToastCase>()
         let pushToOrderVC = PublishRelay<[OrderProduct]>()
     }
@@ -97,7 +98,8 @@ extension ShopProductViewModel {
             switch result {
             case .success(let data):
                 guard let data = data as? ProductDetailResult else { return }
-                output.productData.accept(data)
+                output.productDetailData.accept(data)
+                output.productImageData.accept(data.images)
                 self.productData = data
             case .requestErr(let error):
                 output.showToast.accept(.serverError(message: error))

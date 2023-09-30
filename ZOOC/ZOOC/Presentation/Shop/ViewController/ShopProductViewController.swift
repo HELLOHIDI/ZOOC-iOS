@@ -42,12 +42,6 @@ final class ShopProductViewController: BaseViewController {
         bindViewModel()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -56,8 +50,6 @@ final class ShopProductViewController: BaseViewController {
 
     private func setDelegate() {
         rootView.productBottomSheet.delegate = self
-        rootView.imageCollectionView.delegate = self
-        rootView.imageCollectionView.dataSource = self
     }
     
     private func bindUI() {
@@ -91,7 +83,7 @@ final class ShopProductViewController: BaseViewController {
         
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
         
-        output.productData
+        output.productDetailData
             .asDriver(onErrorJustReturn: .init())
             .drive(with: self, onNext: { owner, data in
                 owner.rootView.updateUI(data)
@@ -99,6 +91,16 @@ final class ShopProductViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
+        output.productImageData
+            .asDriver(onErrorJustReturn: [])
+            .drive(
+                rootView.imageCollectionView.rx.items(cellIdentifier:
+                                                        ProductImageCollectionViewCell.reuseCellIdentifier,
+                                                      cellType: ProductImageCollectionViewCell.self)
+            ) { row, data, cell in
+                cell.dataBind(data)
+            }
+            .disposed(by: disposeBag)
         
         output.showToast
             .asDriver(onErrorJustReturn: .unknown)
@@ -117,6 +119,9 @@ final class ShopProductViewController: BaseViewController {
     }
 }
 
+
+//MARK: - ProductBottomSheetDelegate
+
 extension ShopProductViewController: ProductBottomSheetDelegate {
     
     func cartButtonDidTap(_ selectedProductOptions: [SelectedProductOption]) {
@@ -126,35 +131,6 @@ extension ShopProductViewController: ProductBottomSheetDelegate {
     func orderButtonDidTap(_ selectedProductOptions: [SelectedProductOption]) {
         orderButtonDidTap.accept(selectedProductOptions)
     }
-    
-    
 }
 
-extension ShopProductViewController: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.productData?.images.count ?? 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductImageCollectionViewCell.reuseCellIdentifier,
-                                                      for: indexPath) as! ProductImageCollectionViewCell
-        cell.dataBind(image: viewModel.productData?.images[indexPath.row])
-        return cell
-    }
-}
 
-extension ShopProductViewController: UICollectionViewDelegateFlowLayout {
-    func scrollViewWillEndDragging(
-        _ scrollView: UIScrollView,
-        withVelocity velocity: CGPoint,
-        targetContentOffset: UnsafeMutablePointer<CGPoint>
-    ) {
-        let scrolledOffsetX = targetContentOffset.pointee.x + scrollView.contentInset.left
-        let cellWidth = Device.width
-        let index = round(scrolledOffsetX / cellWidth)
-        rootView.pageControl.currentPage = Int(index)
-        targetContentOffset.pointee = CGPoint(x: index * cellWidth - scrollView.contentInset.left,
-                                              y: scrollView.contentInset.top)
-    }
-}

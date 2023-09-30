@@ -56,9 +56,11 @@ final class ShopProductView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        delegate()
         style()
         hierarchy()
         layout()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -66,6 +68,10 @@ final class ShopProductView: UIView {
     }
     
     //MARK: - Custom Method
+    
+    private func delegate() {
+        imageCollectionView.delegate = self
+    }
     
     
     private func style() {
@@ -219,3 +225,19 @@ final class ShopProductView: UIView {
     }
 }
 
+//MARK: - UICollectionViewDelegateFlowLayout
+
+extension ShopProductView: UICollectionViewDelegateFlowLayout {
+    func scrollViewWillEndDragging(
+        _ scrollView: UIScrollView,
+        withVelocity velocity: CGPoint,
+        targetContentOffset: UnsafeMutablePointer<CGPoint>
+    ) {
+        let scrolledOffsetX = targetContentOffset.pointee.x + scrollView.contentInset.left
+        let cellWidth = Device.width
+        let index = round(scrolledOffsetX / cellWidth)
+        pageControl.currentPage = Int(index)
+        targetContentOffset.pointee = CGPoint(x: index * cellWidth - scrollView.contentInset.left,
+                                              y: scrollView.contentInset.top)
+    }
+}

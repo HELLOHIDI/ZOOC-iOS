@@ -83,7 +83,7 @@ final class ShopViewController: BaseViewController {
         output.pushShopProductVC
             .asDriver(onErrorJustReturn: ShopProductModel())
             .drive(with: self, onNext: { owner, model in
-                let productVC = ShopProductViewController(model: model)
+                let productVC = ShopProductViewController(viewModel: ShopProductViewModel(model: model))
                 owner.navigationController?.pushViewController(productVC, animated: true)
             })
             .disposed(by: disposeBag)

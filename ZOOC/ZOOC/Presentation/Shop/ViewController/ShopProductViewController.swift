@@ -15,15 +15,11 @@ final class ShopProductViewController: BaseViewController {
     
     //MARK: - Properties
     
-    private var productData: ProductDetailResult? {
-        didSet{
-            updateUI()
-            rootView.productBottomSheet.dataBind(productData)
-        }
-    }
-    
-    private var petID: Int
+    private let viewModel: ShopProductViewModel
     private let disposeBag = DisposeBag()
+    
+    private let cartButtonDidTap = PublishRelay<[SelectedProductOption]>()
+    private let orderButtonDidTap = PublishRelay<[SelectedProductOption]>()
     
     
     //MARK: - UI Components
@@ -36,19 +32,20 @@ final class ShopProductViewController: BaseViewController {
         self.view = rootView
     }
     
-    init(model: ShopProductModel) {
-        self.petID = model.petID
+    init(viewModel: ShopProductViewModel) {
+        self.viewModel = viewModel
         
         super.init(nibName: nil, bundle: nil)
-        requestDetailProductAPI(id: model.productID)
+        
+        setDelegate()
+        bindUI()
+        bindViewModel()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setDelegate()
-        bindUI()
-        bindViewModel()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -86,54 +83,48 @@ final class ShopProductViewController: BaseViewController {
     }
     
     private func bindViewModel() {
+        let input = ShopProductViewModel.Input(
+            viewDidLoad: rx.viewDidLoad.asObservable(),
+            cartButtonDidTap: cartButtonDidTap.asObservable(),
+            orderButtonDidTap: orderButtonDidTap.asObservable()
+        )
         
-    }
-    
-    private func updateUI() {
-        rootView.imageCollectionView.reloadData()
-        rootView.pageControl.numberOfPages = productData?.images.count ?? 0
+        let output = viewModel.transform(input: input, disposeBag: disposeBag)
         
-        rootView.priceLabel.text = productData?.price.priceText
-        rootView.nameLabel.text = productData?.name
-        rootView.descriptionLabel.text = productData?.description
-    }
-    
-    
-    //MARK: - API Method
-    
-    private func requestDetailProductAPI(id: Int) {
-        ShopAPI.shared.getProduct(productID: id) { result in
-            guard let result = self.validateResult(result) as? ProductDetailResult else { return }
-            self.productData = result
-        }
+        output.productData
+            .asDriver(onErrorJustReturn: .init())
+            .drive(with: self, onNext: { owner, data in
+                owner.rootView.updateUI(data)
+                owner.rootView.productBottomSheet.dataBind(data)
+            })
+            .disposed(by: disposeBag)
+        
+        
+        output.showToast
+            .asDriver(onErrorJustReturn: .unknown)
+            .drive(with: self, onNext: { owner, toast in
+                owner.showToast(toast.message, type: toast.type)
+            })
+            .disposed(by: disposeBag)
+        
+        output.pushToOrderVC
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self, onNext: { owner, orderProducts in
+                let orderVC = OrderViewController(orderProducts)
+                owner.navigationController?.pushViewController(orderVC, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
 extension ShopProductViewController: ProductBottomSheetDelegate {
+    
     func cartButtonDidTap(_ selectedProductOptions: [SelectedProductOption]) {
-        guard let productData else { return }
-        
-        selectedProductOptions.forEach {
-            let cartedProduct = CartedProduct(petID: petID,
-                                              product: productData,
-                                              selectedProduct: $0)
-            DefaultRealmService.shared.setCartedProduct(cartedProduct)
-        }
-       
-        showToast("장바구니에 상품이 담겼습니다.",
-                  type: .good)
+        cartButtonDidTap.accept(selectedProductOptions)
     }
     
     func orderButtonDidTap(_ selectedProductOptions: [SelectedProductOption]) {
-        guard let productData else { return }
-        var orderProducts: [OrderProduct] = []
-        selectedProductOptions.forEach {
-            orderProducts.append(OrderProduct(petID: petID,
-                                              product: productData,
-                                              selectedProductOption: $0))
-        }
-        let orderVC = OrderViewController(orderProducts)
-        navigationController?.pushViewController(orderVC, animated: true)
+        orderButtonDidTap.accept(selectedProductOptions)
     }
     
     
@@ -142,13 +133,13 @@ extension ShopProductViewController: ProductBottomSheetDelegate {
 extension ShopProductViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        self.productData?.images.count ?? 0
+        viewModel.productData?.images.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductImageCollectionViewCell.reuseCellIdentifier,
                                                       for: indexPath) as! ProductImageCollectionViewCell
-        cell.dataBind(image: productData?.images[indexPath.row])
+        cell.dataBind(image: viewModel.productData?.images[indexPath.row])
         return cell
     }
 }

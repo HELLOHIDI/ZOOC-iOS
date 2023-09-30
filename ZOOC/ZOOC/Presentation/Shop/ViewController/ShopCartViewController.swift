@@ -338,7 +338,10 @@ final class ShopCartViewController: BaseViewController {
     }
     
     private func requestCartedProducts() {
-        cartedProducts = DefaultRealmService.shared.getCartedProducts()
+        Task {
+            cartedProducts = await DefaultRealmService.shared.getCartedProducts()
+        }
+        
     }
     
     //MARK: - Action Method
@@ -399,15 +402,20 @@ extension ShopCartViewController: UICollectionViewDelegateFlowLayout {
 extension ShopCartViewController: ShopCartCollectionViewCellDelegate {
     func adjustAmountButtonDidTap(row: Int, isPlus: Bool) {
         let optionID = cartedProducts[row].optionID
-        do {
-            try DefaultRealmService.shared.updateCartedProductPieces(optionID: optionID, isPlus: isPlus)
-        } catch  {
-            guard let error =  error as? AmountError else { return }
-            showToast(error.message,
-                      type: .bad)
+            Task {
+                do {
+                    try await DefaultRealmService.shared.updateCartedProductPieces(optionID: optionID, isPlus: isPlus)
+                } catch  {
+                    guard let error =  error as? AmountError else { return }
+                    showToast(error.message,
+                              type: .bad)
+                }
+            }
+        
+        Task {
+            cartedProducts = await DefaultRealmService.shared.getCartedProducts()
         }
         
-        cartedProducts = DefaultRealmService.shared.getCartedProducts()
     }
     
     func xButtonDidTap(row: Int) {
@@ -425,8 +433,12 @@ extension ShopCartViewController: ZoocAlertViewControllerDelegate {
     internal func keepButtonDidTap(_ data: Any?) {
         guard let row = data as? Int else { return }
         let product = cartedProducts[row]
-        DefaultRealmService.shared.deleteCartedProduct(product)
-        cartedProducts.remove(at: row)
+        Task {
+            await DefaultRealmService.shared.deleteCartedProduct(product)
+            cartedProducts.remove(at: row)
+        }
+        
+        
     }
 }
 

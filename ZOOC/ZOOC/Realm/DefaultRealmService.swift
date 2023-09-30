@@ -12,11 +12,11 @@ import RealmSwift
 protocol RealmService {
     
     // 장바구니
-    func getCartedProducts() -> [CartedProduct]
-    func getCartedProduct(optionID: Int) -> CartedProduct?
-    func setCartedProduct(_ newProduct: CartedProduct)
-    func updateCartedProductPieces(optionID: Int, isPlus: Bool) throws
-    func deleteCartedProduct(_ product: CartedProduct)
+    func getCartedProducts() async -> [CartedProduct]
+    func getCartedProduct(optionID: Int) async -> CartedProduct?
+    func setCartedProduct(_ newProduct: CartedProduct) async
+    func updateCartedProductPieces(optionID: Int, isPlus: Bool) async throws
+    func deleteCartedProduct(_ product: CartedProduct) async 
     
     // 기존 배송지
     func getBasicAddress() -> Results<OrderBasicAddress>
@@ -44,63 +44,71 @@ final class DefaultRealmService: RealmService {
     //MARK: - 장바구니 Realm
     
     @MainActor
-    func getCartedProducts() -> [CartedProduct] {
-        return localRealm.objects(CartedProduct.self).toArray(ofType: CartedProduct.self) as [CartedProduct]
+    func getCartedProducts() async -> [CartedProduct] {
+        let realm = try! await Realm()
+        return realm.objects(CartedProduct.self).toArray(ofType: CartedProduct.self) as [CartedProduct]
     }
     
     @MainActor
-    func getCartedProduct(optionID: Int) -> CartedProduct? {
-        return localRealm.objects(CartedProduct.self).filter("optionID == \(optionID)").first
+    func getCartedProduct(optionID: Int) async -> CartedProduct? {
+        let realm = try! await Realm()
+        return realm.objects(CartedProduct.self).filter("optionID == \(optionID)").first
     }
     
     @MainActor
-    func updateCartedProductPieces(optionID: Int, isPlus: Bool) throws {
+    func updateCartedProductPieces(optionID: Int, isPlus: Bool) async throws {
+        let realm = try! await Realm()
+        
         let delta = isPlus ? +1 : -1
         
-        guard let product = getCartedProduct(optionID: optionID) else { return }
+        guard let product = await getCartedProduct(optionID: optionID) else { return }
         
         if isPlus {
             guard product.pieces < 1000 else { throw AmountError.increase }
         } else {
             guard product.pieces > 1 else { throw AmountError.decrease }
         }
-        try! localRealm.write {
+        try! realm.write {
             product.pieces += delta
         }
     }
     
     @MainActor
-    func deleteCartedProducts()  {
-        try! localRealm.write {
-            let products = localRealm.objects(CartedProduct.self)
-            localRealm.delete(products)
+    func deleteCartedProducts() async {
+        let realm = try! await Realm()
+        
+        try! realm.write {
+            let products = realm.objects(CartedProduct.self)
+            realm.delete(products)
         }
     }
     
     
  
     @MainActor
-    func setCartedProduct(_ newProduct: CartedProduct) {
+    func setCartedProduct(_ newProduct: CartedProduct) async {
+        let realm = try! await Realm()
         
-        if let existedProduct = getCartedProduct(optionID: newProduct.optionID) {
-            try! localRealm.write {
-                localRealm.create(CartedProduct.self,
+        if let existedProduct = await getCartedProduct(optionID: newProduct.optionID) {
+            try! realm.write {
+                realm.create(CartedProduct.self,
                                   value: ["optionID": newProduct.optionID,
                                           "pieces": existedProduct.pieces + newProduct.pieces],
                                   update: .modified)
             }
         } else {
-            try! localRealm.write {
-                localRealm.add(newProduct, update: .modified)
+            try! realm.write {
+                realm.add(newProduct, update: .modified)
             }
         }
         
     }
     
     @MainActor
-    func deleteCartedProduct(_ product: CartedProduct) {
-        try! localRealm.write {
-            localRealm.delete(product)
+    func deleteCartedProduct(_ product: CartedProduct) async {
+        let realm = try! await Realm()
+        try! realm.write {
+            realm.delete(product)
         }
     }
     

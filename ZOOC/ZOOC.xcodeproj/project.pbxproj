@@ -159,6 +159,7 @@
 		87DF04E62AC751C200E10B2D /* ShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04E52AC751C200E10B2D /* ShopView.swift */; };
 		87DF04E82AC821CE00E10B2D /* ShopProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04E72AC821CE00E10B2D /* ShopProductViewModel.swift */; };
 		87DF04EA2AC822ED00E10B2D /* ShopProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04E92AC822ED00E10B2D /* ShopProductView.swift */; };
+		87DF04EC2AC82D5D00E10B2D /* ShopToastCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04EB2AC82D5D00E10B2D /* ShopToastCase.swift */; };
 		87E462E62A10FA60006FC35D /* ExternalURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462E52A10FA60006FC35D /* ExternalURL.swift */; };
 		87E462EE2A110867006FC35D /* ZoocGradinetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */; };
 		87E462F12A110E18006FC35D /* CGColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462F02A110E18006FC35D /* CGColor+.swift */; };
@@ -490,6 +491,7 @@
 		87DF04E52AC751C200E10B2D /* ShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopView.swift; sourceTree = "<group>"; };
 		87DF04E72AC821CE00E10B2D /* ShopProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopProductViewModel.swift; sourceTree = "<group>"; };
 		87DF04E92AC822ED00E10B2D /* ShopProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopProductView.swift; sourceTree = "<group>"; };
+		87DF04EB2AC82D5D00E10B2D /* ShopToastCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopToastCase.swift; sourceTree = "<group>"; };
 		87E462E52A10FA60006FC35D /* ExternalURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalURL.swift; sourceTree = "<group>"; };
 		87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocGradinetButton.swift; sourceTree = "<group>"; };
 		87E462F02A110E18006FC35D /* CGColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGColor+.swift"; sourceTree = "<group>"; };
@@ -791,11 +793,11 @@
 		872BBD9329F959E2002E2C71 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				87DF04ED2AC82DFB00E10B2D /* Toast */,
 				87DDDD93298E607C00CBEC79 /* Device.swift */,
 				872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */,
 				872BBD9629F95BE2002E2C71 /* UserDefaultsManager.swift */,
 				874369562A8FFB250035AFD6 /* NetworkMonitor.swift */,
-				87BCAD3D2AA9BA2900A03DA3 /* Toast.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1014,10 +1016,10 @@
 		87A3D8762A975374002C36DB /* Shop */ = {
 			isa = PBXGroup;
 			children = (
-				87188C5E2AC7171800C31AC9 /* ViewModel */,
-				87BCAD302AA4EF5900A03DA3 /* ViewController */,
-				87BCAD2F2AA4EF4E00A03DA3 /* View */,
 				87BCAD2A2AA4C3D700A03DA3 /* Cell */,
+				87BCAD2F2AA4EF4E00A03DA3 /* View */,
+				87BCAD302AA4EF5900A03DA3 /* ViewController */,
+				87188C5E2AC7171800C31AC9 /* ViewModel */,
 			);
 			path = Shop;
 			sourceTree = "<group>";
@@ -1483,6 +1485,15 @@
 				87DC47F12A7B4CBF007823CB /* Release.xcconfig */,
 			);
 			path = Configuration;
+			sourceTree = "<group>";
+		};
+		87DF04ED2AC82DFB00E10B2D /* Toast */ = {
+			isa = PBXGroup;
+			children = (
+				87BCAD3D2AA9BA2900A03DA3 /* Toast.swift */,
+				87DF04EB2AC82D5D00E10B2D /* ShopToastCase.swift */,
+			);
+			path = Toast;
 			sourceTree = "<group>";
 		};
 		87E462EF2A1109FC006FC35D /* ViewModel */ = {
@@ -2315,6 +2326,7 @@
 				87648323295236B700F74882 /* UIColor+.swift in Sources */,
 				D2F99B472ABC25B000C7C91F /* DefaultGenAISelectImageUseCase.swift in Sources */,
 				D27D9560296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift in Sources */,
+				87DF04EC2AC82D5D00E10B2D /* ShopToastCase.swift in Sources */,
 				87E4A1CC2AAAFCA5005C012E /* CartedProduct.swift in Sources */,
 				D26C68EC296DE7B60088DC9A /* MyPetRegisterModel.swift in Sources */,
 				87E4A1C92AAAF8AC005C012E /* DefaultRealmService.swift in Sources */,

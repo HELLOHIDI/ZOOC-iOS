@@ -206,5 +206,16 @@ final class ShopProductView: UIView {
             $0.height.equalTo(54)
         }
     }
+    
+    //MARK: - Custom Method
+    
+    func updateUI(_ data: ProductDetailResult?) {
+        imageCollectionView.reloadData()
+        pageControl.numberOfPages = data?.images.count ?? 0
+        
+        priceLabel.text = data?.price.priceText
+        nameLabel.text = data?.name
+        descriptionLabel.text = data?.description
+    }
 }
 

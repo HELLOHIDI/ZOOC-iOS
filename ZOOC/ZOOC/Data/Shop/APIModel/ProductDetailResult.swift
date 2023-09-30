@@ -15,5 +15,21 @@ struct ProductDetailResult: Codable {
     let images: [String]
     let type: String
     let optionCategory: OptionCategoryResult
+    
+    init(id: Int = Int(),
+         name: String = String(),
+         description: String = String(),
+         price: Int = Int(),
+         images: [String] = [],
+         type: String = String(),
+         optionCategory: OptionCategoryResult = .init()) {
+        self.id = id
+        self.name = name
+        self.description = description
+        self.price = price
+        self.images = images
+        self.type = type
+        self.optionCategory = optionCategory
+    }
 }
 

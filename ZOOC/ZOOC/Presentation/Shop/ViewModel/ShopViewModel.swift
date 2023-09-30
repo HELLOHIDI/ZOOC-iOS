@@ -22,7 +22,7 @@ final class ShopViewModel {
     struct Output {
         let productData = PublishRelay<[ProductResult]>()
         let pushShopProductVC = PublishRelay<ShopProductModel>()
-        let showCommingSoonToast = PublishRelay<Void>()
+        let showToast = PublishRelay<ShopToastCase>()
     }
     
     //MARK: - Properties
@@ -47,7 +47,7 @@ final class ShopViewModel {
         input.productCellDidSelectEvent
             .subscribe(with: self, onNext: { owner, data in
                 guard data != ProductResult() else {
-                    output.showCommingSoonToast.accept(())
+                    output.showToast.accept(.commingSoon)
                     return
                 }
                 

@@ -12,10 +12,7 @@ import SnapKit
 protocol ToastCase {
     var message: String { get }
     var type: Toast.ToastType { get }
-    var bottomInset: CGFloat { get }
 }
-
-
 
 final class Toast: UIView {
     

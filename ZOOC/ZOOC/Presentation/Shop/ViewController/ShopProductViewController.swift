@@ -105,7 +105,7 @@ final class ShopProductViewController: BaseViewController {
         output.showToast
             .asDriver(onErrorJustReturn: .unknown)
             .drive(with: self, onNext: { owner, toast in
-                owner.showToast(toast.message, type: toast.type)
+                owner.showToast(toast)
             })
             .disposed(by: disposeBag)
         

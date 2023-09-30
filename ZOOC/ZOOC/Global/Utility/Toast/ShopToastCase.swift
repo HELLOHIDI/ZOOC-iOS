@@ -52,11 +52,4 @@ enum ShopToastCase: ToastCase {
         }
     }
     
-    var bottomInset: CGFloat {
-        switch self {
-        default:
-            return 86
-        }
-    }
-    
 }

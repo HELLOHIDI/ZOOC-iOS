@@ -88,12 +88,10 @@ final class ShopViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        output.showCommingSoonToast
-            .asDriver(onErrorJustReturn: ())
-            .drive(with: self, onNext: { owner, _ in
-                owner.showToast("오픈 예정 상품이에요",
-                                type: .normal,
-                                bottomInset: 40)
+        output.showToast
+            .asDriver(onErrorJustReturn: .unknown)
+            .drive(with: self, onNext: { owner, toast in
+                owner.showToast(toast, bottomInset: 40)
             })
             .disposed(by: disposeBag)
     }

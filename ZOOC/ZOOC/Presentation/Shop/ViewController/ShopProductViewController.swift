@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RxCocoa
+import RxSwift
 import FloatingPanel
 
 final class ShopProductViewController: BaseViewController {
@@ -21,6 +23,7 @@ final class ShopProductViewController: BaseViewController {
     }
     
     private var petID: Int
+    private let disposeBag = DisposeBag()
     
     
     //MARK: - UI Components
@@ -40,38 +43,49 @@ final class ShopProductViewController: BaseViewController {
         requestDetailProductAPI(id: model.productID)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setDelegate()
-        gesture()
+        bindUI()
+        bindViewModel()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     //MARK: - Custom Method
 
-    
     private func setDelegate() {
         rootView.productBottomSheet.delegate = self
         rootView.imageCollectionView.delegate = self
         rootView.imageCollectionView.dataSource = self
     }
     
-    private func gesture() {
-        rootView.backButton.addTarget(self,
-                             action: #selector(backButtonDidTap),
-                             for: .touchUpInside)
+    private func bindUI() {
+        rootView.backButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
         
-        rootView.cartButton.addTarget(self,
-                             action: #selector(naviCartButtonDidTap),
-                             for: .touchUpInside)
+        rootView.cartButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                let cartVC = ShopCartViewController()
+                owner.navigationController?.pushViewController(cartVC, animated: true)
+            })
+            .disposed(by: disposeBag)
         
-        rootView.buyButton.addTarget(self,
-                                     action: #selector(buyButtonDidTap),
-                                     for: .touchUpInside)
+        rootView.buyButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.present(owner.rootView.productBottomSheetVC, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+    }
+    
+    private func bindViewModel() {
         
     }
     
@@ -92,25 +106,6 @@ final class ShopProductViewController: BaseViewController {
             guard let result = self.validateResult(result) as? ProductDetailResult else { return }
             self.productData = result
         }
-    }
-    
-    
-    //MARK: - Action Method
-    
-    @objc
-    private func backButtonDidTap() {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    @objc
-    private func naviCartButtonDidTap() {
-        let cartVC = ShopCartViewController()
-        navigationController?.pushViewController(cartVC, animated: true)
-    }
-    
-    @objc
-    private func buyButtonDidTap() {
-        present(rootView.productBottomSheetVC, animated: true)
     }
 }
 

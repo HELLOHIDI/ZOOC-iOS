@@ -12,7 +12,6 @@ import RxCocoa
 import Kingfisher
 
 final class MyEditProfileViewModel: ViewModelType {
-    internal var disposeBag = DisposeBag()
     private let myEditProfileUseCase: MyEditProfileUseCase
     
     init(myEditProfileUseCase: MyEditProfileUseCase) {

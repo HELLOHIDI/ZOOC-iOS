@@ -26,6 +26,17 @@ final class MyRegisterPetViewController: BaseViewController {
     private let changeNameSubject = PublishSubject<(String, Int)>()
     
     private let disposeBag = DisposeBag()
+//    
+//    private var dataSource:  RxCollectionViewSectionedReloadDataSource<SectionData<PetResult>>?
+//    var sectionSubject = BehaviorRelay(value: [SectionData<PetResult>]())
+//    
+//    private var myPetMemberData: [PetResult] = [] {
+//        didSet {
+//            var updateSection: [SectionData<PetResult>] = []
+//            updateSection.append(SectionData<PetResult>(items: myPetMemberData))
+//            sectionSubject.accept(updateSection)
+//        }
+//    }
     
     //MARK: - UI Components
     
@@ -36,6 +47,7 @@ final class MyRegisterPetViewController: BaseViewController {
         galleryAlertController.delegate = self
         return galleryAlertController
     }
+    
     private lazy var imagePickerController: UIImagePickerController = {
         let imagePickerController = UIImagePickerController()
         imagePickerController.sourceType = .photoLibrary
@@ -153,7 +165,6 @@ extension MyRegisterPetViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(#function)
         switch indexPath.section {
         case 0:
             let petData = viewModel.getPetMember()[indexPath.row]

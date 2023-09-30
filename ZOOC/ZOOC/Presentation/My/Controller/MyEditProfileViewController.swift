@@ -76,7 +76,8 @@ final class MyEditProfileViewController: BaseViewController {
     
     private func bindViewModel() {
         let input = MyEditProfileViewModel.Input(
-            nameTextFieldDidChangeEvent: rootView.nameTextField.rx.controlEvent(.editingChanged).map { self.rootView.nameTextField.text ?? "" }
+            nameTextFieldDidChangeEvent: rootView.nameTextField.rx.controlEvent(.editingChanged).map { [weak self] in
+                self?.rootView.nameTextField.text ?? "" }
                 .asObservable(),
             editButtonTapEvent: self.rootView.completeButton.rx.tap.asObservable(),
             deleteButtonTapEvent: deleteProfileImageSubject.asObservable(),

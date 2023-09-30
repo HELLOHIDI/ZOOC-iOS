@@ -11,7 +11,6 @@ import RxSwift
 import RxCocoa
 
 final class MyViewModel: ViewModelType {
-    internal var disposeBag = DisposeBag()
     private let myUseCase: MyUseCase
     
     init(myUseCase: MyUseCase) {

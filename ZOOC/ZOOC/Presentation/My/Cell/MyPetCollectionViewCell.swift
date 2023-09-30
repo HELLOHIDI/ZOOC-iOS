@@ -73,7 +73,7 @@ final class MyPetCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    public func dataBind(data: PetResult) {
+    public func dataBind(_ data: PetResult) {
         petNameLabel.text = data.name
         if let photo = data.photo {
             petImageView.kfSetImage(url: photo)
@@ -83,7 +83,10 @@ final class MyPetCollectionViewCell: UICollectionViewCell {
     }
     
     func sizeFittingWith(cellHeight: CGFloat) -> CGSize {
-        let targetSize = CGSize(width: UIView.layoutFittingCompressedSize.width, height: cellHeight)
+        let targetSize = CGSize(
+            width: UIView.layoutFittingCompressedSize.width,
+            height: cellHeight
+        )
         return self.contentView.systemLayoutSizeFitting(targetSize,
                                                         withHorizontalFittingPriority: .fittingSizeLevel,
                                                         verticalFittingPriority: .required)

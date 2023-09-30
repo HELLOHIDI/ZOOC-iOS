@@ -31,7 +31,6 @@ final class DefaultMyEditProfileUseCase: MyEditProfileUseCase {
             switch result {
             case .success(_):
                 self?.isEdited.accept(true)
-                NotificationCenter.default.post(name: .myPageUpdate, object: nil)
             default:
                 self?.isEdited.accept(false)
             }

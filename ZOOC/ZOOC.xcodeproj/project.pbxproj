@@ -160,6 +160,8 @@
 		87DF04E82AC821CE00E10B2D /* ShopProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04E72AC821CE00E10B2D /* ShopProductViewModel.swift */; };
 		87DF04EA2AC822ED00E10B2D /* ShopProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04E92AC822ED00E10B2D /* ShopProductView.swift */; };
 		87DF04EC2AC82D5D00E10B2D /* ShopToastCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04EB2AC82D5D00E10B2D /* ShopToastCase.swift */; };
+		87DF04EF2AC94B5400E10B2D /* ShopCartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04EE2AC94B5400E10B2D /* ShopCartViewModel.swift */; };
+		87DF04F12AC94B5D00E10B2D /* ShopCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04F02AC94B5D00E10B2D /* ShopCartView.swift */; };
 		87E462E62A10FA60006FC35D /* ExternalURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462E52A10FA60006FC35D /* ExternalURL.swift */; };
 		87E462EE2A110867006FC35D /* ZoocGradinetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */; };
 		87E462F12A110E18006FC35D /* CGColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462F02A110E18006FC35D /* CGColor+.swift */; };
@@ -492,6 +494,8 @@
 		87DF04E72AC821CE00E10B2D /* ShopProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopProductViewModel.swift; sourceTree = "<group>"; };
 		87DF04E92AC822ED00E10B2D /* ShopProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopProductView.swift; sourceTree = "<group>"; };
 		87DF04EB2AC82D5D00E10B2D /* ShopToastCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopToastCase.swift; sourceTree = "<group>"; };
+		87DF04EE2AC94B5400E10B2D /* ShopCartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCartViewModel.swift; sourceTree = "<group>"; };
+		87DF04F02AC94B5D00E10B2D /* ShopCartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCartView.swift; sourceTree = "<group>"; };
 		87E462E52A10FA60006FC35D /* ExternalURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalURL.swift; sourceTree = "<group>"; };
 		87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocGradinetButton.swift; sourceTree = "<group>"; };
 		87E462F02A110E18006FC35D /* CGColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGColor+.swift"; sourceTree = "<group>"; };
@@ -737,6 +741,7 @@
 			children = (
 				87188C5F2AC7172200C31AC9 /* ShopViewModel.swift */,
 				87DF04E72AC821CE00E10B2D /* ShopProductViewModel.swift */,
+				87DF04EE2AC94B5400E10B2D /* ShopCartViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1450,6 +1455,7 @@
 				D2ED94892AB962A90040B687 /* ShopChoosePetView.swift */,
 				87DF04E52AC751C200E10B2D /* ShopView.swift */,
 				87DF04E92AC822ED00E10B2D /* ShopProductView.swift */,
+				87DF04F02AC94B5D00E10B2D /* ShopCartView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2077,6 +2083,7 @@
 				D2F1936729713FCD00AD87D3 /* OnboardingJWTTokenResult.swift in Sources */,
 				870A4C062AA2704800D7CFD8 /* ProductBottomSheet.swift in Sources */,
 				D26C8600296B27B100AEAF9B /* OnboardingCheckReceivedCodeView.swift in Sources */,
+				87DF04EF2AC94B5400E10B2D /* ShopCartViewModel.swift in Sources */,
 				87F287D92A9A667500A53218 /* BasePaddingLabel.swift in Sources */,
 				D24AFABA2A8E011800823E9C /* GenAIRegisterPetViewController.swift in Sources */,
 				87A3D8902A975D84002C36DB /* OrderPriceView.swift in Sources */,
@@ -2144,6 +2151,7 @@
 				D23503032964728700F01101 /* MyAppInformationTableViewCell.swift in Sources */,
 				D26C68F22970AD820088DC9A /* HomeNoticeViewController.swift in Sources */,
 				D2CF76B42AC4C62500BF1EFA /* MyRegisterPetUseCase.swift in Sources */,
+				87DF04F12AC94B5D00E10B2D /* ShopCartView.swift in Sources */,
 				8718A06429AD3445001C7460 /* EditProfileRequest.swift in Sources */,
 				D299442E2AAC8D9B00C4F280 /* ViewModelType.swift in Sources */,
 				87DF04E22AC72CBA00E10B2D /* ShopError.swift in Sources */,

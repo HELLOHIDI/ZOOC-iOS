@@ -37,6 +37,7 @@ final class MyEditProfileViewController: BaseViewController {
         galleryAlertController.delegate = self
         return galleryAlertController
     }
+    
     private lazy var imagePickerController: UIImagePickerController = {
         let imagePickerController = UIImagePickerController()
         imagePickerController.sourceType = .photoLibrary

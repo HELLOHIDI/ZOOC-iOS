@@ -121,7 +121,11 @@ class ZoocTabBarController: UITabBarController {
                 if result.isEmpty {
                     self.presentZoocAlertVC()
                 } else {
-                    let recordVC = RecordViewController()
+                    let recordVC = RecordViewController(
+                        viewModel: RecordViewModel(
+                            recordUseCase: DefaultRecordUseCase()
+                        )
+                    )
                     let recordNVC = UINavigationController(rootViewController: recordVC)
                     recordNVC.modalPresentationStyle = .fullScreen
                     recordNVC.setNavigationBarHidden(true, animated: true)

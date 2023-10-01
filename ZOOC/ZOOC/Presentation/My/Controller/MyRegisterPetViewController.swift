@@ -26,6 +26,17 @@ final class MyRegisterPetViewController: BaseViewController {
     private let changeNameSubject = PublishSubject<(String, Int)>()
     
     private let disposeBag = DisposeBag()
+//    
+//    private var dataSource:  RxCollectionViewSectionedReloadDataSource<SectionData<PetResult>>?
+//    var sectionSubject = BehaviorRelay(value: [SectionData<PetResult>]())
+//    
+//    private var myPetMemberData: [PetResult] = [] {
+//        didSet {
+//            var updateSection: [SectionData<PetResult>] = []
+//            updateSection.append(SectionData<PetResult>(items: myPetMemberData))
+//            sectionSubject.accept(updateSection)
+//        }
+//    }
     
     //MARK: - UI Components
     
@@ -36,6 +47,7 @@ final class MyRegisterPetViewController: BaseViewController {
         galleryAlertController.delegate = self
         return galleryAlertController
     }
+    
     private lazy var imagePickerController: UIImagePickerController = {
         let imagePickerController = UIImagePickerController()
         imagePickerController.sourceType = .photoLibrary
@@ -108,14 +120,14 @@ final class MyRegisterPetViewController: BaseViewController {
         output.ableToRegisterPets
             .asDriver(onErrorJustReturn: nil)
             .drive(with: self, onNext: { owner, canRegister in
-                guard let canRegister = canRegister else { return }
+                guard let canRegister else { return }
                 owner.rootView.registerPetButton.isEnabled = canRegister
             }).disposed(by: disposeBag)
         
         output.isRegistered
             .asDriver(onErrorJustReturn: nil)
             .drive(with: self, onNext: { owner, isRegisterd in
-                guard let isRegisterd = isRegisterd else { return }
+                guard let isRegisterd else { return }
                 if isRegisterd {
                     if let presentingViewController = self.presentingViewController {
                         presentingViewController.dismiss(animated: true)
@@ -153,7 +165,6 @@ extension MyRegisterPetViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(#function)
         switch indexPath.section {
         case 0:
             let petData = viewModel.getPetMember()[indexPath.row]

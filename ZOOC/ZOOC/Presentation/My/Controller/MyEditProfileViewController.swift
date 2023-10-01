@@ -64,7 +64,7 @@ final class MyEditProfileViewController: BaseViewController {
         rootView.backButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
                 let zoocAlertVC = ZoocAlertViewController(.leavePage)
-                zoocAlertVC.delegate = self
+                zoocAlertVC.delegate = owner
                 owner.present(zoocAlertVC, animated: false)
             }).disposed(by: disposeBag)
         
@@ -76,10 +76,8 @@ final class MyEditProfileViewController: BaseViewController {
     
     private func bindViewModel() {
         let input = MyEditProfileViewModel.Input(
-            nameTextFieldDidChangeEvent: rootView.nameTextField.rx.controlEvent(.editingChanged)
-                .map { [weak self] in
-                    self?.rootView.nameTextField.text ?? ""
-                }
+            nameTextFieldDidChangeEvent: rootView.nameTextField.rx.controlEvent(.editingChanged).map { [weak self] in
+                self?.rootView.nameTextField.text ?? "" }
                 .asObservable(),
             editButtonTapEvent: self.rootView.completeButton.rx.tap.asObservable(),
             deleteButtonTapEvent: deleteProfileImageSubject.asObservable(),
@@ -103,7 +101,7 @@ final class MyEditProfileViewController: BaseViewController {
         output.isEdited
             .asDriver()
             .drive(with: self, onNext: { owner, isEdited in
-                guard let isEdited = isEdited else { return }
+                guard let isEdited else { return }
                 if isEdited { if let presentingViewController = owner.presentingViewController {
                     presentingViewController.dismiss(animated: true)
                 } else if let navigationController = owner.navigationController {
@@ -163,9 +161,9 @@ extension MyEditProfileViewController {
         guard let textField = textField else { return }
         let fixedText = textField.text?.substring(from: 0, to:textField.textFieldType.limit-1)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.rootView.nameTextField.text = fixedText
-            guard let fixedText = fixedText else { return }
+            guard let fixedText else { return }
             self.rootView.numberOfNameCharactersLabel.text = "\(String(describing: fixedText.count))/10"
         }
     }

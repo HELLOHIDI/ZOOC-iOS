@@ -63,19 +63,20 @@ final class MyEditPetProfileViewController: BaseViewController {
         rootView.backButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
                 let zoocAlertVC = ZoocAlertViewController(.leavePage)
-                zoocAlertVC.delegate = self
+                zoocAlertVC.delegate = owner
                 owner.present(zoocAlertVC, animated: false)
             }).disposed(by: disposeBag)
         
         rootView.profileImageButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
-                owner.present(self.galleryAlertController,animated: true)
+                owner.present(owner.galleryAlertController,animated: true)
             }).disposed(by: disposeBag)
     }
     
     private func bindViewModel() {
         let input = MyEditPetProfileViewModel.Input(
-            nameTextFieldDidChangeEvent: rootView.nameTextField.rx.controlEvent(.editingChanged).map { self.rootView.nameTextField.text ?? "" }
+            nameTextFieldDidChangeEvent: rootView.nameTextField.rx.controlEvent(.editingChanged).map { [weak self] _ in
+                self?.rootView.nameTextField.text ?? "" }
                 .asObservable(),
             editButtonTapEvent: self.rootView.completeButton.rx.tap.asObservable().map { [weak self] _ in
                 self?.rootView.profileImageButton.currentImage ?? nil
@@ -101,7 +102,7 @@ final class MyEditPetProfileViewController: BaseViewController {
         output.isEdited
             .asDriver()
             .drive(with: self, onNext: { owner, isEdited in
-                guard let isEdited = isEdited else { return }
+                guard let isEdited else { return }
                 if isEdited { owner.dismiss(animated: true) }
                 else { owner.showToast("다시 시도해주세요", type: .bad)}
             }).disposed(by: disposeBag)
@@ -109,7 +110,7 @@ final class MyEditPetProfileViewController: BaseViewController {
         output.petProfileData
             .asDriver(onErrorJustReturn: nil)
             .drive(with: self, onNext: { owner, profileData in
-                guard let profileData = profileData else { return }
+                guard let profileData else { return }
                 owner.updateUI(profileData)
             }).disposed(by: disposeBag)
         
@@ -158,9 +159,9 @@ extension MyEditPetProfileViewController {
         guard let textField = textField else { return }
         let fixedText = textField.text?.substring(from: 0, to:textField.textFieldType.limit-1)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.rootView.nameTextField.text = fixedText
-            guard let fixedText = fixedText else { return }
+            guard let fixedText else { return }
             self.rootView.numberOfNameCharactersLabel.text = "\(String(describing: fixedText.count))/4"
         }
     }

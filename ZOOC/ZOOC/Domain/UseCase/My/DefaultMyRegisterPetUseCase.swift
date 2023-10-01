@@ -32,6 +32,7 @@ final class DefaultMyRegisterPetUseCase: MyRegisterPetUseCase {
             case .success(let data):
                 guard let result = data as? MyResult else { return }
                 self.petMemberData.accept(result.pet)
+                self.checkAddButtonState()
             default:
                 break
             }

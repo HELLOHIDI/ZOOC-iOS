@@ -22,7 +22,7 @@ final class ShopProductViewModel {
     
     struct Output {
         let productDetailData = PublishRelay<ProductDetailResult>()
-        let productImageData = PublishRelay<[String]>()
+        let productImagesData = PublishRelay<[String]>()
         let showToast = PublishRelay<ShopToastCase>()
         let pushToOrderVC = PublishRelay<[OrderProduct]>()
     }
@@ -99,12 +99,12 @@ extension ShopProductViewModel {
             case .success(let data):
                 guard let data = data as? ProductDetailResult else { return }
                 output.productDetailData.accept(data)
-                output.productImageData.accept(data.images)
+                output.productImagesData.accept(data.images)
                 self.productData = data
             case .requestErr(let error):
-                output.showToast.accept(.serverError(message: error))
+                output.showToast.accept(.custom(message: error))
             default:
-                output.showToast.accept(.serverError(message: "서버 오류가 발생했습니다."))
+                output.showToast.accept(.custom(message: "서버 오류가 발생했습니다."))
             }
             
         }

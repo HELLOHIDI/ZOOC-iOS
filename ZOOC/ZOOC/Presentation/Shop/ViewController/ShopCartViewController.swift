@@ -15,157 +15,91 @@ final class ShopCartViewController: BaseViewController {
     
     //MARK: - Properties
     
+    private let viewModel: ShopCartViewModel
+    private let rootView = ShopCartView()
     private let disposeBag = DisposeBag()
     
-    private var deliveryFee: Int = 4000 {
-        didSet {
-            updateUI()
-        }
-    }
+    private let adjustAmountButtonDidTapEvent = PublishRelay<(Int, Bool)>()
+    private let deleteButtonDidTapEvent = PublishRelay<Int>()
     
-    private var cartedProducts: [CartedProduct] = [] {
-        didSet {
-            rootView.collectionView.reloadData()
-            updateUI()
-        }
-    }
-    
-    //MARK: - UI Components
-    
-    private let rootView = ShopCartView()
     
     //MARK: - Life Cycle
     
-    override func loadView() {
-        self.view = rootView
+    init(viewModel: ShopCartViewModel) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        bindUI()
+        bindViewModel()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
+        self.view = rootView
         
-       
-        setDelegate()
-        updateUI()
-        
-        requestDeliveryFee()
-        requestCartedProducts()
         dismissKeyboardWhenTappedAround()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: - Custom Method
     
     private func bindUI() {
-        rootView.backButton.rx.tap
-            .subscribe(with: self, onNext: { owner, _ in
-                owner.navigationController?.popViewController(animated: true)
+        Observable.merge(rootView.backButton.rx.tap.asObservable(),
+                         rootView.emptyCartButton.rx.tap.asObservable())
+        .subscribe(with: self, onNext: { owner, _ in
+            owner.navigationController?.popViewController(animated: true)
+            
+        })
+        .disposed(by: disposeBag)
+    }
+    
+    private func bindViewModel() {
+        let input = ShopCartViewModel.Input(
+            viewWillAppearEvent: rx.viewWillAppear.asObservable(),
+            orderButtonDidTapEvent: rootView.orderButton.rx.tap.asObservable(),
+            cellAdjustAmountButtonDidTapEvent: adjustAmountButtonDidTapEvent.asObservable(),
+            cellDeleteButtonDidTapEvent: deleteButtonDidTapEvent.asObservable()
+        )
+        
+        let output = viewModel.transform(input: input, disposeBag: disposeBag)
+
+        Observable.combineLatest(output.deliveryFee, output.cartedProductsData)
+            .asDriver(onErrorJustReturn: (Int(), []))
+            .drive(onNext: { [weak self] fee, cartedProducts in
+                self?.rootView.updateUI(cartedProducts, deliveryFee: fee)
             })
             .disposed(by: disposeBag)
         
-        rootView.payButton.rx.tap
-            .subscribe(with: self, onNext: { owner, _ in
-                var orderProducts: [OrderProduct] = []
-                owner.cartedProducts.forEach {
-                    orderProducts.append(OrderProduct(cartedProduct: $0))
-                }
+        output.cartedProductsData
+            .asDriver(onErrorJustReturn: [])
+            .drive(rootView.collectionView.rx.items(cellIdentifier: ShopCartCollectionViewCell.reuseCellIdentifier,
+                                                    cellType: ShopCartCollectionViewCell.self)
+            ) { row, data, cell in
+                cell.dataBind(row: row, selectedOption: data)
+                cell.delegate = self
+            }
+            .disposed(by: disposeBag)
+        
+        output.pushOrderVC
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self, onNext: { owner, orderProducts in
                 let orderVC = OrderViewController(orderProducts)
                 owner.navigationController?.pushViewController(orderVC, animated: true)
             })
             .disposed(by: disposeBag)
-        
-        rootView.emptyCartButton.rx.tap
-            .subscribe(with: self, onNext: { owner, _ in
-                owner.navigationController?.popViewController(animated: true)
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    private func setDelegate(){
-        rootView.collectionView.delegate = self
-        rootView.collectionView.dataSource = self
-    }
-    
-    private func updateUI() {
-        
-        rootView.emptyCartView.isHidden = !cartedProducts.isEmpty
-        rootView.payButton.isEnabled = !cartedProducts.isEmpty
-        
-        let productsTotalPrice = cartedProducts.reduce(0) { $0 + $1.productsPrice }
-        let totalPrice = deliveryFee + productsTotalPrice
-        
-        rootView.productsPriceValueLabel.text = productsTotalPrice.priceText
-        
-        rootView.deliveryFeeValueLabel.text = deliveryFee.priceText
-        rootView.totalPriceValueLabel.text = totalPrice.priceText
-        rootView.payButton.setTitle("\(totalPrice.priceText) 결제하기", for: .normal)
-        
-        rootView.totalPriceValueLabel.setAttributeLabel(
-            targetString: ["원"],
-            color: .zoocGray3,
-            font: .zoocBody3,
-            spacing: 0
-        )
-    }
-    
-    private func requestCartedProducts() {
-        Task {
-            cartedProducts = await DefaultRealmService.shared.getCartedProducts()
-        }
-        
+            
     }
 }
 
-//MARK: - UICollectionViewDataSource
 
-extension ShopCartViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        cartedProducts.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopCartCollectionViewCell.reuseCellIdentifier,
-                                                      for: indexPath) as! ShopCartCollectionViewCell
-        cell.dataBind(indexPath: indexPath, selectedOption: cartedProducts[indexPath.row])
-        cell.delegate = self
-        return cell
-    }
-}
-
-//MARK: - UICollectionViewDelegateFlowLayout
-
-extension ShopCartViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.frame.width - 60
-        let height: CGFloat = 90
-        return CGSize(width: width, height: height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        24
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
-    }
-}
-
-//MARK: - 구역
+//MARK: - ShopCartCollectionViewCellDelegate
 
 extension ShopCartViewController: ShopCartCollectionViewCellDelegate {
     func adjustAmountButtonDidTap(row: Int, isPlus: Bool) {
-        let optionID = cartedProducts[row].optionID
-            Task {
-                do {
-                    try await DefaultRealmService.shared.updateCartedProductPieces(optionID: optionID, isPlus: isPlus)
-                } catch  {
-                    guard let error =  error as? AmountError else { return }
-                    showToast(ShopToastCase.serverError(message: error.message))
-                }
-            }
-        
-        Task {
-            cartedProducts = await DefaultRealmService.shared.getCartedProducts()
-        }
-        
+        adjustAmountButtonDidTapEvent.accept((row,isPlus))
     }
     
     func xButtonDidTap(row: Int) {
@@ -173,48 +107,17 @@ extension ShopCartViewController: ShopCartCollectionViewCellDelegate {
         zoocAlertVC.delegate = self
         zoocAlertVC.dataBind(row)
         present(zoocAlertVC, animated: false)
-        
     }
     
 }
+
+//MARK: - ZoocAlertViewControllerDelegate
 
 extension ShopCartViewController: ZoocAlertViewControllerDelegate {
     
     internal func keepButtonDidTap(_ data: Any?) {
         guard let row = data as? Int else { return }
-        let product = cartedProducts[row]
-        Task {
-            await DefaultRealmService.shared.deleteCartedProduct(product)
-            cartedProducts.remove(at: row)
-        }
-        
+        deleteButtonDidTapEvent.accept(row)
         
     }
-}
-
-
-//MARK: - FirebaseRemoteConfig
-
-extension ShopCartViewController {
-    private func requestDeliveryFee() {
-        
-        let remoteConfig = RemoteConfig.remoteConfig()
-        let settings =  RemoteConfigSettings()
-        settings.minimumFetchInterval = 0
-        remoteConfig.configSettings = settings
-        
-        remoteConfig.fetch() { [weak self] status, error in
-            
-            if status == .success {
-                remoteConfig.activate() { [weak self] changed, error in
-                    DispatchQueue.main.async {
-                        self?.deliveryFee = Int(truncating: remoteConfig["deliveryFee"].numberValue)
-                    }
-                }
-            } else {
-                return
-            }
-        }
-    }
-
 }

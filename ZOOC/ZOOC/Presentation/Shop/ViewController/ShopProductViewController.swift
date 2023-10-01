@@ -61,7 +61,7 @@ final class ShopProductViewController: BaseViewController {
         
         rootView.cartButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
-                let cartVC = ShopCartViewController()
+                let cartVC = ShopCartViewController(viewModel: ShopCartViewModel())
                 owner.navigationController?.pushViewController(cartVC, animated: true)
             })
             .disposed(by: disposeBag)
@@ -91,7 +91,7 @@ final class ShopProductViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        output.productImageData
+        output.productImagesData
             .asDriver(onErrorJustReturn: [])
             .drive(
                 rootView.imageCollectionView.rx.items(cellIdentifier:

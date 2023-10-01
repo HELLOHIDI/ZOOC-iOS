@@ -8,7 +8,6 @@
 import UIKit
 
 import SnapKit
-import Then
 
 final class ShopView: UIView {
     

@@ -54,7 +54,7 @@ final class ShopViewController: BaseViewController {
         
         rootView.cartButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
-                let cartVC = ShopCartViewController()
+                let cartVC = ShopCartViewController(viewModel: ShopCartViewModel())
                 owner.navigationController?.pushViewController(cartVC, animated: true)
             })
             .disposed(by: disposeBag)

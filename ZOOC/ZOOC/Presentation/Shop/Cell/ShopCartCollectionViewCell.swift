@@ -22,7 +22,7 @@ final class ShopCartCollectionViewCell: UICollectionViewCell {
     
     weak var delegate: ShopCartCollectionViewCellDelegate?
     
-    private var indexPath: IndexPath?
+    private var row: Int?
     
     //MARK: - UI Components
     
@@ -180,9 +180,9 @@ final class ShopCartCollectionViewCell: UICollectionViewCell {
         
     }
     
-    func dataBind(indexPath: IndexPath,
+    func dataBind(row: Int,
                   selectedOption: CartedProduct) {
-        self.indexPath = indexPath
+        self.row = row
         
         imageView.kfSetImage(url: selectedOption.image)
         nameLabel.text = selectedOption.name
@@ -195,20 +195,20 @@ final class ShopCartCollectionViewCell: UICollectionViewCell {
     
     @objc
     private func minusButtonDidTap() {
-        guard let indexPath else { return }
-        delegate?.adjustAmountButtonDidTap(row: indexPath.row, isPlus: false)
+        guard let row else { return }
+        delegate?.adjustAmountButtonDidTap(row: row, isPlus: false)
     }
     
     @objc
     private func plusButtonDidTap() {
-        guard let indexPath else { return }
-        delegate?.adjustAmountButtonDidTap(row: indexPath.row, isPlus: true)
+        guard let row else { return }
+        delegate?.adjustAmountButtonDidTap(row: row, isPlus: true)
     }
     
     @objc
     private func xButtonDidTap() {
-        guard let indexPath else { return }
-        delegate?.xButtonDidTap(row: indexPath.row)
+        guard let row else { return }
+        delegate?.xButtonDidTap(row: row)
     }
 }
 

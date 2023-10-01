@@ -13,7 +13,7 @@ enum ShopToastCase: ToastCase {
     case cartedCompleted
     case notChooseOption
     case alreadySelectedOption
-    case serverError(message: String)
+    case custom(message: String)
     case unknown
     
     var message: String {
@@ -27,7 +27,7 @@ enum ShopToastCase: ToastCase {
             return "상품 옵션을 선택해주세요"
         case .alreadySelectedOption:
             return "이미 추가된 옵션이에요"
-        case .serverError(let message):
+        case .custom(let message):
             return message
         case .unknown:
             return "알 수 없는 오류가 발생했어요"
@@ -45,7 +45,7 @@ enum ShopToastCase: ToastCase {
             return .bad
         case .alreadySelectedOption:
             return .bad
-        case .serverError:
+        case .custom:
             return .bad
         case .unknown:
             return .bad

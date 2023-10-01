@@ -7,7 +7,6 @@
 
 import UIKit
 
-import FirebaseRemoteConfig
 import RxCocoa
 import RxSwift
 

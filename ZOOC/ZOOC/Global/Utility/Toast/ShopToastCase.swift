@@ -10,6 +10,7 @@ import Foundation
 enum ShopToastCase: ToastCase {
     
     case commingSoon
+    case productNotFound
     case cartedCompleted
     case notChooseOption
     case alreadySelectedOption
@@ -21,6 +22,8 @@ enum ShopToastCase: ToastCase {
             
         case .commingSoon:
             return "오픈 예정 상품이에요"
+        case .productNotFound:
+            return "상품 정보를 불러올 수 없습니다."
         case .cartedCompleted:
             return "상품이 장바구니에 담겼어요"
         case .notChooseOption:
@@ -39,6 +42,8 @@ enum ShopToastCase: ToastCase {
             
         case .commingSoon:
             return .normal
+        case .productNotFound:
+            return .bad
         case .cartedCompleted:
             return .good
         case .notChooseOption:

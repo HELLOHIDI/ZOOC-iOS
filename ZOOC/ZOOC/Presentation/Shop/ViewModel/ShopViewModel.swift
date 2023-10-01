@@ -69,6 +69,7 @@ extension ShopViewModel {
             switch result {
             case .success(let data):
                 guard var data = data as? [ProductResult] else {
+                    output.showToast.accept(.productNotFound)
                     return
                 }
                 data.append(.init()) // 커밍쑨 담당 데이터 추가

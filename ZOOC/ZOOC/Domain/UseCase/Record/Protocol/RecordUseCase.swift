@@ -16,5 +16,6 @@ protocol RecordUseCase {
     var ableToRecord: BehaviorRelay<Bool?> { get }
     
     func checkRecordingValidation()
+    func selectRecordImage(_ image: UIImage)
 }
 

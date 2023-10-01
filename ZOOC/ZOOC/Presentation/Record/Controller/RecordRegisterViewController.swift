@@ -14,7 +14,7 @@ final class RecordRegisterViewController : BaseViewController{
     
     // MARK: - Properties
     
-    private var recordData: RecordModel
+    private var recordData = RecordModel()
     private var petList: [RecordRegisterModel] = []
     private var selectedPetIDList: [Int] = []
     
@@ -24,15 +24,15 @@ final class RecordRegisterViewController : BaseViewController{
     
     //MARK: - Life Cycle
     
-    init(recordData: RecordModel) {
-        self.recordData = recordData
-        
-        super.init(nibName: nil, bundle: nil)
-    }
+//    init(recordData: RecordModel) {
+//        self.recordData = recordData
+//
+//        super.init(nibName: nil, bundle: nil)
+//    }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     override func loadView() {
         self.view = rootView

@@ -24,6 +24,10 @@ final class DefaultRecordUseCase: RecordUseCase {
         
         ableToRecord.accept(imageValidation && contentValidation)
     }
+    
+    func selectRecordImage(_ image: UIImage) {
+        self.image.accept(image)
+    }
 }
 
 extension DefaultRecordUseCase {

@@ -28,9 +28,6 @@ final class RecordViewController : BaseViewController {
     
     private let selectProfileImageSubject = PublishSubject<UIImage>()
     
-    
-//    private var recordData = RecordModel()
-    
     private lazy var imagePickerController: UIImagePickerController = {
         let imagePickerController = UIImagePickerController()
         imagePickerController.sourceType = .photoLibrary
@@ -94,6 +91,27 @@ final class RecordViewController : BaseViewController {
         )
         
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
+        
+        output.image
+            .asDriver()
+            .drive(with: self, onNext: { owner, image in
+                guard let image else { return }
+                owner.rootView.galleryImageView.image = image
+            }).disposed(by: disposeBag)
+        
+        output.content
+            .asDriver()
+            .drive(with: self, onNext: { owner, content in
+                guard let content else { return }
+                owner.rootView.contentTextView.text = content
+            }).disposed(by: disposeBag)
+        
+        output.ableToRecord
+            .asDriver(onErrorJustReturn: false)
+            .drive(with: self, onNext: { owner, canRecord in
+                guard let canRecord else { return }
+                owner.rootView.nextButton.isEnabled = canRecord
+            }).disposed(by: disposeBag)
     }
     
     private func gesture(){
@@ -148,23 +166,9 @@ extension RecordViewController {
     }
     
     func pushToRecordRegisterViewController() {
-//        if let text = rootView.contentTextView.text{
-//            recordData.content = text
-//            let recordRegisterVC = RecordRegisterViewController(recordData: recordData)
-//            navigationController?.pushViewController(recordRegisterVC, animated: true)
-//        } else {
-//            showToast("내용을 입력해주세요.", type: .bad)
-//            return
-//        }
+        let recordRegisterVC = RecordRegisterViewController()
+        navigationController?.pushViewController(recordRegisterVC, animated: true)
     }
-//
-//    private func updateUI(){
-//        if contentTextViewIsRegistered == false || recordData.image == nil {
-//            rootView.nextButton.isEnabled = false
-//        } else {
-//            rootView.nextButton.isEnabled = true
-//        }
-//    }
 }
 
 //MARK: - ZoocAlertViewControllerDelegate

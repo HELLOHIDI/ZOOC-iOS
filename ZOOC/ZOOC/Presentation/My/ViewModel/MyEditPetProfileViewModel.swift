@@ -7,97 +7,74 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
 import Kingfisher
 
-protocol MyEditPetProfileModelInput {
-    func nameTextFieldDidChangeEvent(_ text: String)
-    func editCompleteButtonDidTap()
-    func deleteButtonDidTap()
-    func editPetProfileImageEvent(_ image: UIImage)
-    func isTextCountExceeded(for type: MyEditTextField.TextFieldType) -> Bool
-}
-
-protocol MyEditPetProfileModelOutput {
-    var ableToEditPetProfile: ObservablePattern<Bool> { get }
-    var textFieldState: ObservablePattern<BaseTextFieldState> { get }
-    var editCompletedOutput: ObservablePattern<Bool?> { get }
-    var editPetProfileDataOutput: ObservablePattern<EditPetProfileRequest> { get }
+final class MyEditPetProfileViewModel: ViewModelType {
+    private let myEditPetProfileUseCase: MyEditPetProfileUseCase
     
-}
-
-typealias MyEditPetProfileViewModel = MyEditPetProfileModelInput & MyEditPetProfileModelOutput
-
-final class DefaultMyEditPetProfileViewModel: MyEditPetProfileViewModel {
-    let id: Int
-    let repository: MyEditPetProfileRepository
-    
-    var ableToEditPetProfile: ObservablePattern<Bool> = ObservablePattern(false)
-    var textFieldState: ObservablePattern<BaseTextFieldState> = ObservablePattern(.isEmpty)
-    var editCompletedOutput: ObservablePattern<Bool?> = ObservablePattern(nil)
-    var editPetProfileDataOutput: ObservablePattern<EditPetProfileRequest> = ObservablePattern(EditPetProfileRequest())
-    
-    init(id: Int,
-        editPetProfileRequest: EditPetProfileRequest,
-        repository: MyEditPetProfileRepository) {
-        self.id = id
-        self.editPetProfileDataOutput.value = editPetProfileRequest
-        self.repository = repository
+    init(myEditPetProfileUseCase: MyEditPetProfileUseCase) {
+        self.myEditPetProfileUseCase = myEditPetProfileUseCase
     }
     
-    func nameTextFieldDidChangeEvent(_ text: String) {
-        self.editPetProfileDataOutput.value.nickName = text
-        var textFieldState: BaseTextFieldState
-        switch text.count {
-        case 1...3:
-            textFieldState = .isWritten
-            ableToEditPetProfile.value = true
-        case 4...:
-            textFieldState = .isFull
-            ableToEditPetProfile.value = true
-        default:
-            textFieldState = .isEmpty
-            ableToEditPetProfile.value = false
-        }
-        self.textFieldState.value = textFieldState
+    struct Input {
+        var nameTextFieldDidChangeEvent: Observable<String?>
+        var editButtonTapEvent: Observable<UIImage?>
+        var deleteButtonTapEvent: Observable<Void>
+        var selectImageEvent: Observable<UIImage>
     }
     
-    func isTextCountExceeded(for type: MyEditTextField.TextFieldType) -> Bool {
-        let limit = type.limit
-        return editPetProfileDataOutput.value.nickName.count >= limit
+    struct Output {
+        var petProfileData = BehaviorRelay<EditPetProfileRequest?>(value: nil)
+        var textFieldState = BehaviorRelay<BaseTextFieldState>(value: .isEmpty)
+        var ableToEditProfile = BehaviorRelay<Bool>(value: false)
+        var isTextCountExceeded = BehaviorRelay<Bool>(value: false)
+        var isEdited = BehaviorRelay<Bool?>(value: nil)
     }
     
-    func editCompleteButtonDidTap() {
-        patchPetProfile()
+    func transform(from input: Input, disposeBag: DisposeBag) -> Output {
+        let output = Output()
+        self.bindOutput(output: output, disposeBag: disposeBag)
+        
+        input.nameTextFieldDidChangeEvent.subscribe(with: self, onNext: { owner, text in
+            owner.myEditPetProfileUseCase.nameTextFieldDidChangeEvent(text)
+        }).disposed(by: disposeBag)
+        
+        input.editButtonTapEvent.subscribe(with: self, onNext: { owner, _ in
+            owner.myEditPetProfileUseCase.editProfile()
+        }).disposed(by: disposeBag)
+        
+        input.deleteButtonTapEvent.subscribe(with: self, onNext: { owner, _ in
+            owner.myEditPetProfileUseCase.deleteProfileImage()
+        }).disposed(by: disposeBag)
+        
+        input.selectImageEvent.subscribe(with: self, onNext: { owner, profileImage in
+            owner.myEditPetProfileUseCase.selectProfileImage(profileImage)
+        }).disposed(by: disposeBag)
+        
+        return output
     }
     
-    func deleteButtonDidTap() {
-        self.editPetProfileDataOutput.value.file = nil
-        self.editPetProfileDataOutput.value.photo = false
-        ableToProfile()
-    }
-    
-    func editPetProfileImageEvent(_ image: UIImage) {
-        self.editPetProfileDataOutput.value.file = image
-        self.editPetProfileDataOutput.value.photo = true
-        ableToProfile()
-    }
-}
-
-extension DefaultMyEditPetProfileViewModel {
-    func patchPetProfile() {
-        repository.patchPetProfile(request: editPetProfileDataOutput.value, id: id) { result in
-            switch result {
-            case .success(_):
-                self.editCompletedOutput.value = true
-                NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
-                NotificationCenter.default.post(name: .myPageUpdate, object: nil)
-            default:
-                self.editCompletedOutput.value = false
-            }
-        }
-    }
-    
-    func ableToProfile() {
-        ableToEditPetProfile.value = self.editPetProfileDataOutput.value.nickName.count != 0
+    private func bindOutput(output: Output, disposeBag: DisposeBag) {
+        myEditPetProfileUseCase.petProfileData.subscribe(onNext: { profileData in
+            output.petProfileData.accept(profileData)
+        }).disposed(by: disposeBag)
+        
+        myEditPetProfileUseCase.textFieldState.subscribe(onNext: { state in
+            output.textFieldState.accept(state)
+        }).disposed(by: disposeBag)
+        
+        myEditPetProfileUseCase.ableToEditProfile.subscribe(onNext: { canEdit in
+            output.ableToEditProfile.accept(canEdit)
+        }).disposed(by: disposeBag)
+        
+        myEditPetProfileUseCase.isTextCountExceeded.subscribe(onNext: { isTextCountExceeded in
+            output.isTextCountExceeded.accept(isTextCountExceeded)
+        }).disposed(by: disposeBag)
+        
+        myEditPetProfileUseCase.isEdited.subscribe(onNext: { isEdited in
+            output.isEdited.accept(isEdited)
+        }).disposed(by: disposeBag)
     }
 }

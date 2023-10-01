@@ -17,8 +17,10 @@ class ZoocTabBarController: UITabBarController {
     
     let homeViewController = HomeViewController()
     let myViewController = MyViewController(
-        viewModel: DefaultMyViewModel(
-            repository: MyRepositoryImpl()
+        viewModel: MyViewModel(
+            myUseCase: DefaultMyUseCase(
+                repository: MyRepositoryImpl()
+            )
         )
     )
     lazy var homeNavigationContrller = UINavigationController(rootViewController: homeViewController)
@@ -141,7 +143,11 @@ class ZoocTabBarController: UITabBarController {
 extension ZoocTabBarController: ZoocAlertViewControllerDelegate {
     func keepButtonDidTap() {
         let myRegisterPetVC = MyRegisterPetViewController(
-            myPetRegisterViewModel: MyPetRegisterViewModel()
+            viewModel: MyRegisterPetViewModel(
+                myRegisterPetUseCase: DefaultMyRegisterPetUseCase(
+                    repository: MyRepositoryImpl()
+                )
+            )
         )
         let myRegisterPetNVC = UINavigationController(rootViewController: myRegisterPetVC)
         myRegisterPetNVC.modalPresentationStyle = .fullScreen

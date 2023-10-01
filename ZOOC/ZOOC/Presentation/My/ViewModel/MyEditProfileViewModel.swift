@@ -7,93 +7,74 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
 import Kingfisher
 
-protocol MyEditProfileModelInput {
-    func nameTextFieldDidChangeEvent(_ text: String)
-    func editCompleteButtonDidTap()
-    func deleteButtonDidTap()
-    func editProfileImageEvent(_ image: UIImage)
-}
-
-protocol MyEditProfileModelOutput {
-    var ableToEditProfile: ObservablePattern<Bool> { get }
-    var textFieldState: ObservablePattern<BaseTextFieldState> { get }
-    var editCompletedOutput: ObservablePattern<Bool?> { get }
-    var editProfileDataOutput: ObservablePattern<EditProfileRequest> { get }
-}
-
-final class MyEditProfileViewModel: MyEditProfileModelInput, MyEditProfileModelOutput {
+final class MyEditProfileViewModel: ViewModelType {
+    private let myEditProfileUseCase: MyEditProfileUseCase
     
-    private let repository: MyEditProfileRepository
-    
-    var ableToEditProfile: ObservablePattern<Bool> = ObservablePattern(false)
-    var textFieldState: ObservablePattern<BaseTextFieldState> = ObservablePattern(.isEmpty)
-    var editCompletedOutput: ObservablePattern<Bool?> = ObservablePattern(nil)
-    var editProfileDataOutput: ObservablePattern<EditProfileRequest> = ObservablePattern(EditProfileRequest())
-    
-    
-    init(editProfileData: EditProfileRequest, repository: MyEditProfileRepository) {
-        self.repository = repository
-        self.editProfileDataOutput.value = editProfileData
+    init(myEditProfileUseCase: MyEditProfileUseCase) {
+        self.myEditProfileUseCase = myEditProfileUseCase
     }
     
-    func nameTextFieldDidChangeEvent(_ text: String) {
-        self.editProfileDataOutput.value.nickName = text
-        var textFieldState: BaseTextFieldState
-        switch text.count {
-        case 1...9:
-            textFieldState = .isWritten
-            ableToEditProfile.value = true
-        case 10...:
-            textFieldState = .isFull
-            ableToEditProfile.value = true
-            
-        default:
-            textFieldState = .isEmpty
-            ableToEditProfile.value = false
-        }
+    struct Input {
+        var nameTextFieldDidChangeEvent: Observable<String?>
+        var editButtonTapEvent: Observable<Void>
+        var deleteButtonTapEvent: Observable<Void>
+        var selectImageEvent: Observable<UIImage>
+    }
+    
+    struct Output {
+        var profileData = BehaviorRelay<EditProfileRequest?>(value: nil)
+        var textFieldState = BehaviorRelay<BaseTextFieldState>(value: .isEmpty)
+        var ableToEditProfile = BehaviorRelay<Bool>(value: false)
+        var isTextCountExceeded = BehaviorRelay<Bool>(value: false)
+        var isEdited = BehaviorRelay<Bool?>(value: nil)
+    }
+    
+    func transform(from input: Input, disposeBag: DisposeBag) -> Output {
+        let output = Output()
+        self.bindOutput(output: output, disposeBag: disposeBag)
         
-        self.textFieldState.value = textFieldState
+        input.nameTextFieldDidChangeEvent.subscribe(with: self, onNext: { owner, text in
+            owner.myEditProfileUseCase.nameTextFieldDidChangeEvent(text)
+        }).disposed(by: disposeBag)
+        
+        input.editButtonTapEvent.subscribe(with: self, onNext: { owner, _  in
+            owner.myEditProfileUseCase.editProfile()
+        }).disposed(by: disposeBag)
+        
+        input.deleteButtonTapEvent.subscribe(with: self, onNext: { owner, _ in
+            owner.myEditProfileUseCase.deleteProfileImage()
+        }).disposed(by: disposeBag)
+        
+        input.selectImageEvent.subscribe(with: self, onNext: { owner, profileImage in
+            owner.myEditProfileUseCase.selectProfileImage(profileImage)
+        }).disposed(by: disposeBag)
+        
+        return output
     }
     
-    func isTextCountExceeded(for type: MyEditTextField.TextFieldType) -> Bool {
-        let limit = type.limit
-        return editProfileDataOutput.value.nickName.count >= limit
-    }
-    
-    func editCompleteButtonDidTap() {
-        patchMyPetProfile()
-    }
-    
-    func deleteButtonDidTap() {
-        self.editProfileDataOutput.value.profileImage = nil
-        self.editProfileDataOutput.value.hasPhoto = false
-        ableToProfile()
-    }
-    
-    func editProfileImageEvent(_ image: UIImage) {
-        self.editProfileDataOutput.value.profileImage = image
-        self.editProfileDataOutput.value.hasPhoto = true
-        ableToProfile()
-    }
-}
-
-extension MyEditProfileViewModel {
-    func patchMyPetProfile() {
-        repository.patchMyProfile(request: editProfileDataOutput.value) { result in
-            switch result {
-            case .success(_):
-                self.editCompletedOutput.value = true
-                NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
-                NotificationCenter.default.post(name: .myPageUpdate, object: nil)
-            default:
-                self.editCompletedOutput.value = false
-            }
-        }
-    }
-    
-    func ableToProfile() {
-        ableToEditProfile.value = self.editProfileDataOutput.value.nickName.count != 0
+    private func bindOutput(output: Output, disposeBag: DisposeBag) {
+        myEditProfileUseCase.profileData.subscribe(onNext: { profileData in
+            output.profileData.accept(profileData)
+        }).disposed(by: disposeBag)
+        
+        myEditProfileUseCase.textFieldState.subscribe(onNext: { state in
+            output.textFieldState.accept(state)
+        }).disposed(by: disposeBag)
+        
+        myEditProfileUseCase.ableToEditProfile.subscribe(onNext: { canEdit in
+            output.ableToEditProfile.accept(canEdit)
+        }).disposed(by: disposeBag)
+        
+        myEditProfileUseCase.isTextCountExceeded.subscribe(onNext: { isTextCountExceeded in
+            output.isTextCountExceeded.accept(isTextCountExceeded)
+        }).disposed(by: disposeBag)
+        
+        myEditProfileUseCase.isEdited.subscribe(onNext: { isEdited in
+            output.isEdited.accept(isEdited)
+        }).disposed(by: disposeBag)
     }
 }

@@ -9,13 +9,25 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
+import RxDataSources
 
-final class MyFamilySectionCollectionViewCell: UICollectionViewCell {
+final class MyFamilyView: UIView {
     
     //MARK: - Properties
     
-    private var myProfileData: UserResult?
-    private var myFamilyData: [UserResult] = []
+    private let disposeBag = DisposeBag()
+    private var dataSource:  RxCollectionViewSectionedReloadDataSource<SectionData<UserResult>>?
+    var sectionSubject = BehaviorRelay(value: [SectionData<UserResult>]())
+    
+    private var myFamilyData: [UserResult] = [] {
+        didSet {
+            var updateSection: [SectionData<UserResult>] = []
+            updateSection.append(SectionData<UserResult>(items: myFamilyData))
+            sectionSubject.accept(updateSection)
+        }
+    }
     
     //MARK: - UI Components
     
@@ -35,6 +47,9 @@ final class MyFamilySectionCollectionViewCell: UICollectionViewCell {
         style()
         hierarchy()
         layout()
+        
+        configureCollectionViewDataSource()
+        configureCollectionView()
     }
     
     required init?(coder: NSCoder) {
@@ -43,10 +58,31 @@ final class MyFamilySectionCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Custom Method
     
+    func configureCollectionViewDataSource() {
+        dataSource = RxCollectionViewSectionedReloadDataSource<SectionData<UserResult>>(
+            configureCell: { dataSource, collectionView, indexPath, item in
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: MyFamilyCollectionViewCell.cellIdentifier,
+                    for: indexPath
+                ) as? MyFamilyCollectionViewCell else { return UICollectionViewCell() }
+                cell.dataBind(
+                    data: self.myFamilyData[indexPath.item],
+                    index: indexPath.item
+                )
+                return cell
+            })
+    }
+    
+    //MARK: - Custom Method
+    
+    private func configureCollectionView() {
+        guard let dataSource else { return }
+        sectionSubject
+            .bind(to: familyCollectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+    }
+    
     private func register() {
-        familyCollectionView.delegate = self
-        familyCollectionView.dataSource = self
-        
         familyCollectionView.register(
             MyFamilyCollectionViewCell.self,
             forCellWithReuseIdentifier: MyFamilyCollectionViewCell.cellIdentifier)
@@ -83,6 +119,8 @@ final class MyFamilySectionCollectionViewCell: UICollectionViewCell {
         familyCollectionView.do {
             let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .horizontal
+            layout.itemSize = CGSize(width: 48, height: 68)
+            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 30)
             
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.showsHorizontalScrollIndicator = false
@@ -95,7 +133,8 @@ final class MyFamilySectionCollectionViewCell: UICollectionViewCell {
                     familyCountLabel,
                     inviteButton,
                     familyCollectionView,
-                    inviteButtonUnderLine)
+                    inviteButtonUnderLine
+        )
     }
     
     private func layout() {
@@ -131,37 +170,8 @@ final class MyFamilySectionCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    public func dataBind(myFamilyData: [UserResult], myProfileData: UserResult?) {
-        self.myProfileData = myProfileData
-        self.myFamilyData = myFamilyData
-        familyCountLabel.text = "\(myFamilyData.count)/8"
-        self.familyCollectionView.reloadData()
-    }
-}
-
-//MARK: - UICollectionViewDelegateFlowLayout
-
-extension MyFamilySectionCollectionViewCell: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 48, height: 68)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 30)
-    }
-}
-
-//MARK: - UICollectionViewDataSource
-
-extension MyFamilySectionCollectionViewCell: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return myFamilyData.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyFamilyCollectionViewCell.cellIdentifier, for: indexPath)
-                as? MyFamilyCollectionViewCell else { return UICollectionViewCell() }
-        cell.dataBind(data: myFamilyData[indexPath.item], myProfileData: myProfileData)
-        return cell
+    internal func updateUI(_ data: [UserResult]) {
+        familyCountLabel.text = "\(data.count)/8"
+        self.myFamilyData = data
     }
 }

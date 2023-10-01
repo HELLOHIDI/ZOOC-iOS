@@ -73,26 +73,22 @@ final class MyPetCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    public func dataBind(data: PetResult) {
+    public func dataBind(_ data: PetResult) {
         petNameLabel.text = data.name
-        data.photo == nil ? setDefaultPetProfileImage() : setPetMemberProfileImage(photo: data.photo!)
+        if let photo = data.photo {
+            petImageView.kfSetImage(url: photo)
+        } else {
+            petImageView.image = Image.defaultProfile
+        }
     }
     
     func sizeFittingWith(cellHeight: CGFloat) -> CGSize {
-        let targetSize = CGSize(width: UIView.layoutFittingCompressedSize.width, height: cellHeight)
+        let targetSize = CGSize(
+            width: UIView.layoutFittingCompressedSize.width,
+            height: cellHeight
+        )
         return self.contentView.systemLayoutSizeFitting(targetSize,
                                                         withHorizontalFittingPriority: .fittingSizeLevel,
                                                         verticalFittingPriority: .required)
     }
 }
-
-extension MyPetCollectionViewCell {
-    func setDefaultPetProfileImage() {
-        petImageView.image = Image.defaultProfile
-    }
-    
-    func setPetMemberProfileImage(photo: String) {
-        petImageView.kfSetImage(url: photo)
-    }
-}
-

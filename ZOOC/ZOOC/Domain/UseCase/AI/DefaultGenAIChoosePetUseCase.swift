@@ -52,9 +52,6 @@ final class DefaultGenAIChoosePetUseCase: GenAIChoosePetUseCase {
     }
     
     func pushNextView() {
-        print(#function)
-        print("canRegisterPet.value \(canRegisterPet.value)")
-        print("canPushNextView.value \(canPushNextView.value)")
         canPushNextView.accept(canRegisterPet.value)
     }
 }

@@ -9,20 +9,15 @@ import UIKit
 
 //MARK: - MyDeleteButtonTappedDelegate
 
-protocol MyDeleteButtonTappedDelegate: AnyObject {
+protocol MyRegisterPetTableViewCellDelegate: AnyObject {
     func deleteButtonTapped(tag: Int)
-    
     func petProfileImageButtonDidTap(tag: Int)
-    
-    func collectionViewCell(valueChangedIn textField: UITextField, delegatedFrom cell: UITableViewCell, tag: Int, image: UIImage)
+    func nameDidChanged(text: String, tag: Int)
 }
 
 final class MyRegisterPetTableViewCell: UITableViewCell {
     
-    let myPetRegisterViewModel = MyPetRegisterViewModel()
-    
-    weak var delegate: MyDeleteButtonTappedDelegate?
-    var canRegister: Bool = false
+    weak var delegate: MyRegisterPetTableViewCellDelegate?
     
     //MARK: - UI Components
     
@@ -70,7 +65,7 @@ final class MyRegisterPetTableViewCell: UITableViewCell {
         }
         
         petProfileNameTextField.do {
-            $0.attributedPlaceholder = NSAttributedString(string: "ex) 사랑,토리 (4자 이내)", attributes: [NSAttributedString.Key.foregroundColor: UIColor.zoocGray1, NSAttributedString.Key.font: UIFont.zoocBody1])
+            $0.setPlaceholderColor(text: "ex) 사랑,토리 (4자 이내)", color: .zoocGray1)
             $0.addLeftPadding(inset: 10)
             $0.textColor = .zoocDarkGreen
             $0.font = .zoocBody1
@@ -109,11 +104,23 @@ final class MyRegisterPetTableViewCell: UITableViewCell {
         }
     }
     
+    func dataBind(_ data: MyPetRegisterModel, index: Int) {
+        [deletePetProfileButton,
+         petProfileNameTextField,
+         petProfileImageButton].forEach { $0.tag = index}
+        
+        petProfileNameTextField.text = data.name
+        if let image = data.image {
+            petProfileImageButton.setImage(image, for: .normal)
+        } else {
+            petProfileImageButton.setImage(Image.cameraCircle, for: .normal)
+        }
+    }
+    
     //MARK: - Action Method
     
     @objc private func deletePetProfileButtonDidTap(sender: UIButton) {
         delegate?.deleteButtonTapped(tag: sender.tag)
-        myPetRegisterViewModel.deleteCellClosure?()
     }
     
     @objc private func petProfileImageButtonDidTap(sender: UIButton) {
@@ -133,13 +140,11 @@ final class MyRegisterPetTableViewCell: UITableViewCell {
 
 extension MyRegisterPetTableViewCell: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
-        delegate?.collectionViewCell(valueChangedIn: petProfileNameTextField, delegatedFrom: self, tag: textField.tag, image: petProfileImageButton.currentImage!)
+        delegate?.nameDidChanged(text: textField.text ?? "", tag: textField.tag)
     }
-    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-
 }

@@ -6,15 +6,18 @@
 //
 
 import UIKit
-
-import SnapKit
-import Then
+import RxSwift
+import RxCocoa
 
 final class MyEditProfileViewController: BaseViewController {
     
     //MARK: - Properties
     
     private let viewModel: MyEditProfileViewModel
+    private let disposeBag = DisposeBag()
+    
+    private let deleteProfileImageSubject = PublishSubject<Void>()
+    private let selectProfileImageSubject = PublishSubject<UIImage>()
     
     init(viewModel: MyEditProfileViewModel) {
         self.viewModel = viewModel
@@ -28,8 +31,19 @@ final class MyEditProfileViewController: BaseViewController {
     //MARK: - UIComponents
     
     private lazy var rootView = MyEditProfileView()
-    private let galleryAlertController = GalleryAlertController()
-    private lazy var imagePickerController = UIImagePickerController()
+    
+    private var galleryAlertController: GalleryAlertController {
+        let galleryAlertController = GalleryAlertController()
+        galleryAlertController.delegate = self
+        return galleryAlertController
+    }
+    private lazy var imagePickerController: UIImagePickerController = {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.allowsEditing = true
+        imagePickerController.delegate = self
+        return imagePickerController
+    }()
     
     //MARK: - Life Cycle
     
@@ -40,73 +54,73 @@ final class MyEditProfileViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bind()
-        delegate()
-        target()
-        
-        style()
+        bindUI()
+        bindViewModel()
     }
     
     //MARK: - Custom Method
     
-    private func bind() {
-        viewModel.editProfileDataOutput.observe(on: self) { [weak self] editProfileData in
-            self?.updateUI(editProfileData)
-        }
+    private func bindUI() {
+        rootView.backButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                let zoocAlertVC = ZoocAlertViewController(.leavePage)
+                zoocAlertVC.delegate = owner
+                owner.present(zoocAlertVC, animated: false)
+            }).disposed(by: disposeBag)
         
-        viewModel.ableToEditProfile.observe(on: self) { [weak self] isEnabled in
-            self?.rootView.completeButton.isEnabled = isEnabled
-        }
+        rootView.profileImageButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.present(owner.galleryAlertController,animated: true)
+            }).disposed(by: disposeBag)
+    }
+    
+    private func bindViewModel() {
+        let input = MyEditProfileViewModel.Input(
+            nameTextFieldDidChangeEvent: rootView.nameTextField.rx.controlEvent(.editingChanged).map { [weak self] in
+                self?.rootView.nameTextField.text ?? "" }
+                .asObservable(),
+            editButtonTapEvent: self.rootView.completeButton.rx.tap.asObservable(),
+            deleteButtonTapEvent: deleteProfileImageSubject.asObservable(),
+            selectImageEvent: selectProfileImageSubject.asObservable()
+        )
         
-        viewModel.textFieldState.observe(on: self) { [weak self] state in
-            self?.updateTextFieldUI(state)
-        }
+        let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
         
-        viewModel.editCompletedOutput.observe(on: self) { [weak self] isSuccess in
-            guard let isSuccess else { return }
-            if isSuccess {
-                self?.navigationController?.popViewController(animated: true)
-            } else {
-                self?.showToast("다시 시도해주세요", type: .bad)
-            }
-        }
-    }
-    
-    private func delegate() {
-        rootView.nameTextField.editDelegate = self
-        galleryAlertController.delegate = self
-        imagePickerController.delegate = self
-    }
-    
-    private func target() {
-        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        rootView.completeButton.addTarget(self, action: #selector(editCompleteButtonDidTap), for: .touchUpInside)
+        output.ableToEditProfile
+            .asDriver()
+            .drive(with: self, onNext: { owner, canEdit in
+                owner.rootView.completeButton.isEnabled = canEdit
+            }).disposed(by: disposeBag)
         
-        rootView.profileImageButton.addTarget(self, action: #selector(profileImageButtonDidTap) , for: .touchUpInside)
-    }
-    
-    private func style() {
-        imagePickerController.do { $0.sourceType = .photoLibrary }
-    }
-    
-    private func requestPatchUserProfileAPI() {
-        viewModel.editCompleteButtonDidTap()
-    }
-    //MARK: - Action Method
-    
-    @objc
-    private func profileImageButtonDidTap() {
-        present(galleryAlertController,animated: true)
-    }
-    
-    @objc func backButtonDidTap() {
-        let zoocAlertVC = ZoocAlertViewController(.leavePage)
-        zoocAlertVC.delegate = self
-        present(zoocAlertVC, animated: false)
-    }
-    
-    @objc func editCompleteButtonDidTap(){
-        requestPatchUserProfileAPI()
+        output.textFieldState
+            .asDriver()
+            .drive(with: self, onNext: { owner, state in
+                owner.rootView.nameTextField.textColor = state.textColor
+            }).disposed(by: disposeBag)
+        
+        output.isEdited
+            .asDriver()
+            .drive(with: self, onNext: { owner, isEdited in
+                guard let isEdited else { return }
+                if isEdited { if let presentingViewController = owner.presentingViewController {
+                    presentingViewController.dismiss(animated: true)
+                } else if let navigationController = owner.navigationController {
+                    navigationController.popViewController(animated: true) }
+                }
+                else { owner.showToast("다시 시도해주세요", type: .bad)}
+            }).disposed(by: disposeBag)
+        
+        output.profileData
+            .asDriver(onErrorJustReturn: nil)
+            .drive(with: self, onNext: { owner, profileData in
+                guard let profileData else { return }
+                owner.updateUI(profileData)
+            }).disposed(by: disposeBag)
+        
+        output.isTextCountExceeded
+            .subscribe(with: self, onNext: { owner, isTextCountExceeded in
+                if isTextCountExceeded { owner.updateTextField(owner.rootView.nameTextField) }
+            }).disposed(by: disposeBag)
     }
 }
 
@@ -118,8 +132,7 @@ extension MyEditProfileViewController: GalleryAlertControllerDelegate {
     }
     
     func deleteButtonDidTap() {
-        viewModel.deleteButtonDidTap()
-        rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
+        deleteProfileImageSubject.onNext(())
     }
 }
 
@@ -130,8 +143,7 @@ extension MyEditProfileViewController: UIImagePickerControllerDelegate, UINaviga
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        rootView.profileImageButton.setImage(image, for: .normal)
-        viewModel.editProfileImageEvent(image)
+        selectProfileImageSubject.onNext(image)
         dismiss(animated: true)
     }
 }
@@ -144,34 +156,26 @@ extension MyEditProfileViewController: ZoocAlertViewControllerDelegate {
     }
 }
 
-extension MyEditProfileViewController: MyTextFieldDelegate {
-    func myTextFieldTextDidChange(_ textFieldType: MyEditTextField.TextFieldType, text: String) {
-        self.viewModel.nameTextFieldDidChangeEvent(text)
-
-        if viewModel.isTextCountExceeded(for: textFieldType) {
-            let fixedText = text.substring(from: 0, to:textFieldType.limit-1)
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                self.rootView.nameTextField.text = fixedText
-            }
-        }
-    }
-}
-
 extension MyEditProfileViewController {
-    private func updateTextFieldUI(_ textFieldState: BaseTextFieldState) {
-        rootView.underLineView.backgroundColor = textFieldState.underLineColor
-        rootView.nameTextField.textColor = textFieldState.textColor
-        rootView.numberOfNameCharactersLabel.textColor = textFieldState.indexColor
+    private func updateTextField(_ textField: MyEditTextField?) {
+        guard let textField = textField else { return }
+        let fixedText = textField.text?.substring(from: 0, to:textField.textFieldType.limit-1)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            self.rootView.nameTextField.text = fixedText
+            guard let fixedText else { return }
+            self.rootView.numberOfNameCharactersLabel.text = "\(String(describing: fixedText.count))/10"
+        }
     }
     
     private func updateUI(_ editProfileData: EditProfileRequest) {
+        print(editProfileData.nickName, editProfileData.nickName.count)
         rootView.nameTextField.text = editProfileData.nickName
+        rootView.numberOfNameCharactersLabel.text = "\(editProfileData.nickName.count)/10"
         if editProfileData.profileImage != nil {
             rootView.profileImageButton.setImage(editProfileData.profileImage, for: .normal)
         } else {
             rootView.profileImageButton.setImage(Image.defaultProfile, for: .normal)
         }
-        rootView.numberOfNameCharactersLabel.text = "\(editProfileData.nickName.count)/10"
     }
 }

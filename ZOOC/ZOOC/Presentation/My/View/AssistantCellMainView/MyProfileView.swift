@@ -10,17 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-//MARK: - EditButtonTappedDelegate
-
-protocol EditButtonTappedDelegate: AnyObject {
-    func editButtonTapped()
-}
-
-final class MyProfileSectionCollectionViewCell: UICollectionViewCell  {
-    
-    //MARK: - Properties
-    
-    weak var delegate: EditButtonTappedDelegate?
+final class MyProfileView: UIView {
     
     //MARK: - UI Components
     
@@ -75,36 +65,22 @@ final class MyProfileSectionCollectionViewCell: UICollectionViewCell  {
     
     private func layout() {
         profileImageView.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(38)
+            $0.top.equalToSuperview()
             $0.leading.equalToSuperview().offset(6)
             $0.size.equalTo(72)
         }
         
         profileNameLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(62)
+            $0.centerY.equalTo(profileImageView)
             $0.leading.equalTo(self.profileImageView.snp.trailing).offset(14)
         }
         
         editProfileButton.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(62)
+            $0.centerY.equalTo(profileNameLabel)
             $0.trailing.equalToSuperview().inset(6)
             $0.width.equalTo(45)
             $0.height.equalTo(24)
         }
     }
-    
-    func dataBind(data: UserResult?) {
-        profileNameLabel.text = data?.nickName
-        data?.photo == nil ? setDefaultProfileImage() : setProfileImage(photo: (data?.photo)!)
-    }
 }
 
-extension MyProfileSectionCollectionViewCell {
-    func setDefaultProfileImage() {
-        profileImageView.image = Image.defaultProfile
-    }
-    
-    func setProfileImage(photo: String) {
-        profileImageView.kfSetImage(url: photo)
-    }
-}

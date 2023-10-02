@@ -58,3 +58,15 @@ final class RecordViewModel: ViewModelType {
         }).disposed(by: disposeBag)
     }
 }
+
+extension RecordViewModel {
+    func getPhoto() -> UIImage {
+        guard let photo = self.recordUseCase.image.value else { return UIImage()}
+        return photo
+    }
+    
+    func getContent() -> String {
+        guard let content = self.recordUseCase.content.value else { return ""}
+        return content
+    }
+}

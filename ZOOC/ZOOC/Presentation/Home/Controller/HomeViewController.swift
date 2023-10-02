@@ -598,7 +598,7 @@ extension HomeViewController: ZoocAlertViewControllerDelegate {
         let registerPetVC = MyRegisterPetViewController(
             viewModel: MyRegisterPetViewModel(
                 myRegisterPetUseCase: DefaultMyRegisterPetUseCase(
-                    repository: MyRepositoryImpl()
+                    repository: DefaultMyRepository()
                 )
             )
         )

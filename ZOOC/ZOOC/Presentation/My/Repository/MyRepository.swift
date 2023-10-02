@@ -17,7 +17,7 @@ protocol MyRepository {
     func registerPets(request: MyRegisterPetsRequest, completion: @escaping (NetworkResult<Any>) -> Void)
 }
 
-class MyRepositoryImpl: MyRepository {
+class DefaultMyRepository: MyRepository {
     func requestMyPageAPI(completion: @escaping (NetworkResult<Any>) -> Void) {
         MyAPI.shared.getMyPageData(completion: completion)
     }

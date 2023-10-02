@@ -149,7 +149,15 @@ extension RecordViewController {
     }
     
     func pushToRecordRegisterViewController() {
-        let recordRegisterVC = RecordRegisterViewController()
+        let recordRegisterVC = RecordSelectPetViewController(
+            viewModel: RecordSelectPetViewModel(
+                recordSelectPetUseCase: DefaultRecordSelectPetUseCase(
+                    photo: viewModel.getPhoto(),
+                    content: viewModel.getContent(),
+                    repository: DefaultRecordRepository()
+                )
+            )
+        )
         navigationController?.pushViewController(recordRegisterVC, animated: true)
     }
     

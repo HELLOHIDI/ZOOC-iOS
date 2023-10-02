@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4C6B1860296B40C00059840D /* RecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B185F296B40C00059840D /* RecordModel.swift */; };
-		4C6B1862296B69070059840D /* RecordRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B1861296B69070059840D /* RecordRegisterViewController.swift */; };
+		4C6B1862296B69070059840D /* RecordSelectPetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B1861296B69070059840D /* RecordSelectPetViewController.swift */; };
 		4C6B1864296B6C600059840D /* RecordRegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B1863296B6C600059840D /* RecordRegisterModel.swift */; };
 		4C6B1868296B930B0059840D /* RecordRegisterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B1867296B930B0059840D /* RecordRegisterCollectionViewCell.swift */; };
 		4C6B186A296C82850059840D /* RecordRegisterFourCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6B1869296C82850059840D /* RecordRegisterFourCollectionViewCell.swift */; };
@@ -305,6 +305,10 @@
 		D2C028F22A81F8B2003F4727 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C028F12A81F8B2003F4727 /* String+.swift */; };
 		D2C028F42A8246C1003F4727 /* MyEditPetProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C028F32A8246C1003F4727 /* MyEditPetProfileViewModel.swift */; };
 		D2C028F62A82BEAD003F4727 /* OnboardingChooseRoleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C028F52A82BEAD003F4727 /* OnboardingChooseRoleViewModel.swift */; };
+		D2CA73172ACB228C00DC17A4 /* RecordSelectPetUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CA73162ACB228C00DC17A4 /* RecordSelectPetUseCase.swift */; };
+		D2CA73192ACB229700DC17A4 /* DefaultRecordSelectPetUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CA73182ACB229700DC17A4 /* DefaultRecordSelectPetUseCase.swift */; };
+		D2CA731C2ACB236700DC17A4 /* RecordRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CA731B2ACB236700DC17A4 /* RecordRepository.swift */; };
+		D2CA731E2ACB2B4300DC17A4 /* RecordSelectPetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CA731D2ACB2B4300DC17A4 /* RecordSelectPetViewModel.swift */; };
 		D2CADF602AC8060A00772100 /* SectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CADF5F2AC8060A00772100 /* SectionData.swift */; };
 		D2CADF642AC914D000772100 /* RecordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CADF632AC914D000772100 /* RecordUseCase.swift */; };
 		D2CADF662AC9153D00772100 /* DefaultRecordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CADF652AC9153D00772100 /* DefaultRecordUseCase.swift */; };
@@ -318,7 +322,7 @@
 		D2D4401D2AA5D08D00329F35 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = D2D4401C2AA5D08D00329F35 /* Realm */; };
 		D2D4401F2AA5D08D00329F35 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D2D4401E2AA5D08D00329F35 /* RealmSwift */; };
 		D2D440212AA5F2C300329F35 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D2D440202AA5F2C200329F35 /* Pretendard-Regular.otf */; };
-		D2DC80D52A0DFDF600F48209 /* RecordRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC80D42A0DFDF600F48209 /* RecordRegisterView.swift */; };
+		D2DC80D52A0DFDF600F48209 /* RecordSelectPetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC80D42A0DFDF600F48209 /* RecordSelectPetView.swift */; };
 		D2DC80D72A0E158000F48209 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC80D62A0E158000F48209 /* RecordView.swift */; };
 		D2DD45C7297D9612001722A1 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DD45C6297D9612001722A1 /* BaseButton.swift */; };
 		D2EA37EF29BEAB57007EF4B7 /* OnboardingBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA37EE29BEAB57007EF4B7 /* OnboardingBaseView.swift */; };
@@ -343,7 +347,7 @@
 
 /* Begin PBXFileReference section */
 		4C6B185F296B40C00059840D /* RecordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordModel.swift; sourceTree = "<group>"; };
-		4C6B1861296B69070059840D /* RecordRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRegisterViewController.swift; sourceTree = "<group>"; };
+		4C6B1861296B69070059840D /* RecordSelectPetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSelectPetViewController.swift; sourceTree = "<group>"; };
 		4C6B1863296B6C600059840D /* RecordRegisterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRegisterModel.swift; sourceTree = "<group>"; };
 		4C6B1867296B930B0059840D /* RecordRegisterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRegisterCollectionViewCell.swift; sourceTree = "<group>"; };
 		4C6B1869296C82850059840D /* RecordRegisterFourCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRegisterFourCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -629,6 +633,10 @@
 		D2C028F12A81F8B2003F4727 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		D2C028F32A8246C1003F4727 /* MyEditPetProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditPetProfileViewModel.swift; sourceTree = "<group>"; };
 		D2C028F52A82BEAD003F4727 /* OnboardingChooseRoleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingChooseRoleViewModel.swift; sourceTree = "<group>"; };
+		D2CA73162ACB228C00DC17A4 /* RecordSelectPetUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSelectPetUseCase.swift; sourceTree = "<group>"; };
+		D2CA73182ACB229700DC17A4 /* DefaultRecordSelectPetUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRecordSelectPetUseCase.swift; sourceTree = "<group>"; };
+		D2CA731B2ACB236700DC17A4 /* RecordRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRepository.swift; sourceTree = "<group>"; };
+		D2CA731D2ACB2B4300DC17A4 /* RecordSelectPetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSelectPetViewModel.swift; sourceTree = "<group>"; };
 		D2CADF5F2AC8060A00772100 /* SectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionData.swift; sourceTree = "<group>"; };
 		D2CADF632AC914D000772100 /* RecordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordUseCase.swift; sourceTree = "<group>"; };
 		D2CADF652AC9153D00772100 /* DefaultRecordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRecordUseCase.swift; sourceTree = "<group>"; };
@@ -641,7 +649,7 @@
 		D2D440192AA5D02800329F35 /* OrderBasicAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBasicAddress.swift; sourceTree = "<group>"; };
 		D2D440202AA5F2C200329F35 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		D2D686BA299B59F400C290A8 /* ZOOC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZOOC.entitlements; sourceTree = "<group>"; };
-		D2DC80D42A0DFDF600F48209 /* RecordRegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRegisterView.swift; sourceTree = "<group>"; };
+		D2DC80D42A0DFDF600F48209 /* RecordSelectPetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSelectPetView.swift; sourceTree = "<group>"; };
 		D2DC80D62A0E158000F48209 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		D2DD45C6297D9612001722A1 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		D2EA37EE29BEAB57007EF4B7 /* OnboardingBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBaseView.swift; sourceTree = "<group>"; };
@@ -907,6 +915,7 @@
 		877BAFBD295EA09C00C2AA1C /* Record */ = {
 			isa = PBXGroup;
 			children = (
+				D2CA731A2ACB234F00DC17A4 /* Repository */,
 				D2CADF672AC919C000772100 /* ViewModel */,
 				4C84C33F298E2E62003B899E /* Cell */,
 				87A76A93295F6DB10096F669 /* View */,
@@ -1133,7 +1142,7 @@
 		87A76A93295F6DB10096F669 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				D2DC80D42A0DFDF600F48209 /* RecordRegisterView.swift */,
+				D2DC80D42A0DFDF600F48209 /* RecordSelectPetView.swift */,
 				D2DC80D62A0E158000F48209 /* RecordView.swift */,
 			);
 			path = View;
@@ -1143,7 +1152,7 @@
 			isa = PBXGroup;
 			children = (
 				87A76A91295F6DA50096F669 /* RecordViewController.swift */,
-				4C6B1861296B69070059840D /* RecordRegisterViewController.swift */,
+				4C6B1861296B69070059840D /* RecordSelectPetViewController.swift */,
 				4C6B186B296CB8730059840D /* RecordCompleteViewController.swift */,
 			);
 			path = Controller;
@@ -1891,11 +1900,20 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
+		D2CA731A2ACB234F00DC17A4 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				D2CA731B2ACB236700DC17A4 /* RecordRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
 		D2CADF612AC914B500772100 /* Record */ = {
 			isa = PBXGroup;
 			children = (
 				D2CADF622AC914BE00772100 /* Protocol */,
 				D2CADF652AC9153D00772100 /* DefaultRecordUseCase.swift */,
+				D2CA73182ACB229700DC17A4 /* DefaultRecordSelectPetUseCase.swift */,
 			);
 			path = Record;
 			sourceTree = "<group>";
@@ -1904,6 +1922,7 @@
 			isa = PBXGroup;
 			children = (
 				D2CADF632AC914D000772100 /* RecordUseCase.swift */,
+				D2CA73162ACB228C00DC17A4 /* RecordSelectPetUseCase.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -1912,6 +1931,7 @@
 			isa = PBXGroup;
 			children = (
 				D2CADF682AC919CF00772100 /* RecordViewModel.swift */,
+				D2CA731D2ACB2B4300DC17A4 /* RecordSelectPetViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -2081,8 +2101,10 @@
 				D2CADF662AC9153D00772100 /* DefaultRecordUseCase.swift in Sources */,
 				D2CADF602AC8060A00772100 /* SectionData.swift in Sources */,
 				8764832B295238EB00F74882 /* UITextField+.swift in Sources */,
+				D2CA73172ACB228C00DC17A4 /* RecordSelectPetUseCase.swift in Sources */,
 				87BCAD2E2AA4E53E00A03DA3 /* ProductResult.swift in Sources */,
 				D26C68E3296DE4F80088DC9A /* MyRegisterPetView.swift in Sources */,
+				D2CA731E2ACB2B4300DC17A4 /* RecordSelectPetViewModel.swift in Sources */,
 				D26996A42989AB7500025774 /* OnboardingPetRegisterViewModel.swift in Sources */,
 				D26C68F0296F693E0088DC9A /* MyResult.swift in Sources */,
 				87DDDD92298E5BE500CBEC79 /* ArchiveCommentView.swift in Sources */,
@@ -2104,7 +2126,7 @@
 				870D062A297BEB7900ADAD04 /* HomeView.swift in Sources */,
 				8723671C2A19276A00DCBBFF /* ArchiveService.swift in Sources */,
 				87A76AC32960427C0096F669 /* APIConstants.swift in Sources */,
-				D2DC80D52A0DFDF600F48209 /* RecordRegisterView.swift in Sources */,
+				D2DC80D52A0DFDF600F48209 /* RecordSelectPetView.swift in Sources */,
 				87F288072A9FA86600A53218 /* BankAccount.swift in Sources */,
 				D26C860A296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift in Sources */,
 				D2ED948C2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift in Sources */,
@@ -2152,6 +2174,7 @@
 				871EA35B2970BE8400D0E8CC /* RecordPetResult.swift in Sources */,
 				D26C860C296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift in Sources */,
 				876554A72958494B006BBDA9 /* MyViewController.swift in Sources */,
+				D2CA73192ACB229700DC17A4 /* DefaultRecordSelectPetUseCase.swift in Sources */,
 				D2350309296490A700F01101 /* MyEditProfileView.swift in Sources */,
 				87B6624129521E7500B6FFA9 /* AppDelegate.swift in Sources */,
 				87BCAD3A2AA718D800A03DA3 /* ShopCartViewController.swift in Sources */,
@@ -2217,7 +2240,7 @@
 				877E57F22966D13E006D82FC /* ArchiveViewController.swift in Sources */,
 				D2CF76B22AC4980100BF1EFA /* DefaultMyEditPetProfileUseCase.swift in Sources */,
 				870A4BFF2AA26E9100D7CFD8 /* BottomSheetViewController.swift in Sources */,
-				4C6B1862296B69070059840D /* RecordRegisterViewController.swift in Sources */,
+				4C6B1862296B69070059840D /* RecordSelectPetViewController.swift in Sources */,
 				87B6624329521E7500B6FFA9 /* SceneDelegate.swift in Sources */,
 				87F287D52A9A4EC100A53218 /* KakaoPostCodeViewController.swift in Sources */,
 				87BCAD3E2AA9BA2900A03DA3 /* Toast.swift in Sources */,
@@ -2260,6 +2283,7 @@
 				D27D9EAA2A8EFA2F00E02842 /* GenAISelectImageView.swift in Sources */,
 				872BBD9729F95BE2002E2C71 /* UserDefaultsManager.swift in Sources */,
 				87F287FD2A9F7D3000A53218 /* OrderAssistantCollectionViewCell.swift in Sources */,
+				D2CA731C2ACB236700DC17A4 /* RecordRepository.swift in Sources */,
 				87C6C4C92A537902003DA38A /* TextLiteral.swift in Sources */,
 				D26C861A296C0FC800AEAF9B /* OnboardingPetRegisterModel.swift in Sources */,
 				87A3D8782A975385002C36DB /* ShopViewController.swift in Sources */,

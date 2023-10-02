@@ -115,13 +115,6 @@ final class RecordSelectPetViewController : BaseViewController{
                     owner.showToast("기록하기 중 문제가 발생했습니다.", type: .bad)
                 }
             }).disposed(by: disposeBag)
-       
-    }
-    
-    private func presentAlertViewController() {
-        let zoocAlertVC = ZoocAlertViewController(.leavePage)
-        zoocAlertVC.delegate = self
-        self.present(zoocAlertVC, animated: false, completion: nil)
     }
     
     private func configureCollectionViewLayout() {
@@ -131,13 +124,13 @@ final class RecordSelectPetViewController : BaseViewController{
         
         self.rootView.petCollectionView.collectionViewLayout = layout
     }
+}
 
-    private func activateButton(indexPathArray: [IndexPath]?) {
-        if (indexPathArray?.count == 0) {
-            rootView.registerButton.isEnabled = false
-        } else {
-            rootView.registerButton.isEnabled = true
-        }
+extension RecordSelectPetViewController {
+    private func presentAlertViewController() {
+        let zoocAlertVC = ZoocAlertViewController(.leavePage)
+        zoocAlertVC.delegate = self
+        self.present(zoocAlertVC, animated: false, completion: nil)
     }
     
     private func pushToRecordCompleteViewController() {

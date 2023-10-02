@@ -19,7 +19,7 @@ final class RecordViewModel: ViewModelType {
     
     struct Input {
         let selectRecordImageEvent: Observable<UIImage>
-//        let textViewDidTapEvent: Observable<Void>
+        let textViewDidTapEvent: Observable<String>
     }
     
     struct Output {
@@ -34,6 +34,10 @@ final class RecordViewModel: ViewModelType {
         
         input.selectRecordImageEvent.subscribe(with: self, onNext: { owner, image in
             owner.recordUseCase.selectRecordImage(image)
+        }).disposed(by: disposeBag)
+        
+        input.textViewDidTapEvent.subscribe(with: self, onNext: { owner, content in
+            owner.recordUseCase.updateContent(content)
         }).disposed(by: disposeBag)
         
         return output

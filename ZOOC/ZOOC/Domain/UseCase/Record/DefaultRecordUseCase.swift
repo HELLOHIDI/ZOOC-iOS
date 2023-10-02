@@ -28,6 +28,21 @@ final class DefaultRecordUseCase: RecordUseCase {
     func selectRecordImage(_ image: UIImage) {
         self.image.accept(image)
     }
+    
+    func updateContent(_ text: String) {
+        
+        content.accept(text)
+        switch text {
+        case TextLiteral.recordPlaceHolderText:
+            ableToRecord.accept(false)
+            content.accept("")
+        case "":
+            ableToRecord.accept(false)
+            content.accept(TextLiteral.recordPlaceHolderText)
+        default:
+            ableToRecord.accept(true)
+        }
+    }
 }
 
 extension DefaultRecordUseCase {
@@ -36,11 +51,7 @@ extension DefaultRecordUseCase {
     }
     
     func checkContentValidation() -> Bool {
-        let placeHoldText: String = """
-                                    ex) 2023년 2월 30일
-                                    가족에게 어떤 순간이었는지 남겨주세요
-                                    """
         guard let content = content.value else { return false }
-        return !(content == placeHoldText || content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+        return !(content == TextLiteral.recordPlaceHolderText || content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
     }
 }

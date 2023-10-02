@@ -72,5 +72,8 @@ struct TextLiteral {
                 """
     }
     
-    
+    static let recordPlaceHolderText = """
+                                        ex) 2023년 2월 30일
+                                        가족에게 어떤 순간이었는지 남겨주세요
+                                        """
 }

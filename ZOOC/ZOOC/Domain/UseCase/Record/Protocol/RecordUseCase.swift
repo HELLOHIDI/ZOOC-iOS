@@ -17,5 +17,6 @@ protocol RecordUseCase {
     
     func checkRecordingValidation()
     func selectRecordImage(_ image: UIImage)
+    func updateContent(_ text: String)
 }
 

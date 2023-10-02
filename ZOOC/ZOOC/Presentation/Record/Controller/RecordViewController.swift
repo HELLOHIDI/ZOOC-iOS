@@ -27,6 +27,7 @@ final class RecordViewController : BaseViewController {
     }
     
     private let selectProfileImageSubject = PublishSubject<UIImage>()
+    private let updateContentTextViewSubject = PublishSubject<String>()
     
     private lazy var imagePickerController: UIImagePickerController = {
         let imagePickerController = UIImagePickerController()
@@ -87,7 +88,7 @@ final class RecordViewController : BaseViewController {
     
     private func bindViewModel() {
         let input = RecordViewModel.Input(
-            selectRecordImageEvent: selectProfileImageSubject.asObservable()
+            selectRecordImageEvent: selectProfileImageSubject.asObservable(), textViewDidTapEvent: updateContentTextViewSubject.asObservable()
         )
         
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
@@ -103,7 +104,7 @@ final class RecordViewController : BaseViewController {
             .asDriver()
             .drive(with: self, onNext: { owner, content in
                 guard let content else { return }
-                owner.rootView.contentTextView.text = content
+                owner.updateTextViewUI(content)
             }).disposed(by: disposeBag)
         
         output.ableToRecord
@@ -114,7 +115,7 @@ final class RecordViewController : BaseViewController {
             }).disposed(by: disposeBag)
     }
     
-    private func gesture(){
+    private func gesture() {
         rootView.contentTextView.delegate = self
     }
 
@@ -132,19 +133,13 @@ final class RecordViewController : BaseViewController {
 }
 
 extension RecordViewController: UITextViewDelegate {
-//    func textViewDidBeginEditing(_ textView: UITextView) {
-//        if textView.text == placeHoldText {
-//            textView.text = nil
-//            textView.textColor = .black
-//        }
-//    }
-//
-//    func textViewDidEndEditing(_ textView: UITextView) {
-//        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-//            textView.text = placeHoldText
-//            textView.textColor = .zoocGray1
-//        }
-//    }
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        updateContentTextViewSubject.onNext(textView.text)
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        updateContentTextViewSubject.onNext(textView.text)
+    }
 }
 
 extension RecordViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
@@ -168,6 +163,15 @@ extension RecordViewController {
     func pushToRecordRegisterViewController() {
         let recordRegisterVC = RecordRegisterViewController()
         navigationController?.pushViewController(recordRegisterVC, animated: true)
+    }
+    
+    func updateTextViewUI(_ content: String) {
+        rootView.contentTextView.text = content
+        if content != TextLiteral.recordPlaceHolderText {
+            rootView.contentTextView.textColor = .zoocGray3
+        } else {
+            rootView.contentTextView.textColor = .zoocGray1
+        }
     }
 }
 

@@ -27,6 +27,7 @@ final class DefaultRecordUseCase: RecordUseCase {
     
     func selectRecordImage(_ image: UIImage) {
         self.image.accept(image)
+        checkRecordingValidation()
     }
     
     func updateContent(_ text: String) {
@@ -34,13 +35,13 @@ final class DefaultRecordUseCase: RecordUseCase {
         content.accept(text)
         switch text {
         case TextLiteral.recordPlaceHolderText:
-            ableToRecord.accept(false)
+            checkRecordingValidation()
             content.accept("")
         case "":
-            ableToRecord.accept(false)
+            checkRecordingValidation()
             content.accept(TextLiteral.recordPlaceHolderText)
         default:
-            ableToRecord.accept(true)
+            checkRecordingValidation()
         }
     }
 }

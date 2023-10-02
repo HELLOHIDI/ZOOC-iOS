@@ -29,6 +29,10 @@ final class RecordViewController : BaseViewController {
     private let selectProfileImageSubject = PublishSubject<UIImage>()
     private let updateContentTextViewSubject = PublishSubject<String>()
     
+    //MARK: - UI Components
+    
+    private let rootView = RecordView()
+    
     private lazy var imagePickerController: UIImagePickerController = {
         let imagePickerController = UIImagePickerController()
         imagePickerController.sourceType = .photoLibrary
@@ -36,11 +40,6 @@ final class RecordViewController : BaseViewController {
         imagePickerController.delegate = self
         return imagePickerController
     }()
-    
-    
-    //MARK: - UI Components
-    
-    private let rootView = RecordView()
     
     // MARK: - Life Cycle
     
@@ -51,7 +50,7 @@ final class RecordViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        gesture()
+        delegate()
         bindUI()
         bindViewModel()
     }
@@ -88,7 +87,8 @@ final class RecordViewController : BaseViewController {
     
     private func bindViewModel() {
         let input = RecordViewModel.Input(
-            selectRecordImageEvent: selectProfileImageSubject.asObservable(), textViewDidTapEvent: updateContentTextViewSubject.asObservable()
+            selectRecordImageEvent: selectProfileImageSubject.asObservable(),
+            textViewDidTapEvent: updateContentTextViewSubject.asObservable()
         )
         
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
@@ -115,20 +115,8 @@ final class RecordViewController : BaseViewController {
             }).disposed(by: disposeBag)
     }
     
-    private func gesture() {
+    private func delegate() {
         rootView.contentTextView.delegate = self
-    }
-
-    
-    @objc
-    private func textViewDidTap(_ sender: Any) {
-        view.endEditing(true)
-    }
-    
-    @objc
-    private func nextButtonDidTap(_ sender: Any) {
-        view.endEditing(true)
-        
     }
 }
 

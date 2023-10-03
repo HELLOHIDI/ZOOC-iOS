@@ -319,7 +319,10 @@ final class OrderViewController: BaseViewController {
                 return
             }
             
-            DefaultRealmService.shared.deleteCartedProducts()
+            Task {
+                await DefaultRealmService.shared.deleteCartedProducts()
+            }
+            
             
             switch self.paymentType {
             case .withoutBankBook:

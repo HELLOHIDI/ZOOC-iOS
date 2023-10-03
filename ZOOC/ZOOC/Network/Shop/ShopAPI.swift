@@ -9,6 +9,7 @@ import Foundation
 
 import Moya
 
+
 final class ShopAPI: BaseAPI {
     static let shared = ShopAPI()
     private var shopProvider = MoyaProvider<ShopService>(session: Session(interceptor: ZoocInterceptor()),

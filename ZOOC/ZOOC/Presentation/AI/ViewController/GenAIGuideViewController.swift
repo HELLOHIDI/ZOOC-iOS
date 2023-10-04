@@ -104,7 +104,7 @@ extension GenAIGuideViewController {
                 genAISelectImageUseCase: DefaultGenAISelectImageUseCase(
                     petId: viewModel.getPetId(),
                     selectedImageDatesets: viewModel.getSelectedImageDatasets(),
-                    repository: GenAIModelRepositoryImpl()
+                    repository: DefaultGenAIModelRepository()
                 )
             )
         )

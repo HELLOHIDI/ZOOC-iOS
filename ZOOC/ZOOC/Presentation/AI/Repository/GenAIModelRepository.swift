@@ -13,7 +13,7 @@ protocol GenAIModelRepository {
     func postRecordDatasetImages(familyId: String, content: String?, files: [UIImage], pet: Int, completion: @escaping ((NetworkResult<Any>) -> Void))
 }
 
-class GenAIModelRepositoryImpl: GenAIModelRepository {
+class DefaultGenAIModelRepository: GenAIModelRepository {
     func postMakeDataset(petId: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         GenAIAPI.shared.postMakeDataset(petId: petId, completion: completion)
     }

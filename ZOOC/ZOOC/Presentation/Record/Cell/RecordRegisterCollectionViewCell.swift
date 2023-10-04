@@ -101,18 +101,18 @@ final class RecordRegisterCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Action Method
     
-    func dataBind(data: RecordRegisterModel) {
-        if let imageURL = data.petImageURL {
+    func dataBind(_ data: RecordRegisterModel) {
+
+        if let imageURL = data.petImageURL{
             profilePetImageView.kfSetImage(url: imageURL)
         } else {
             profilePetImageView.image = Image.defaultProfile
         }
+
         petNameLabel.text = data.petName
         selectImageView.isHidden = data.isSelected ? false : true
-    }
-    
-    func updateUI(isSelected: Bool){
-        if isSelected {
+
+        if data.isSelected {
             contentView.backgroundColor = .zoocWhite2
             profilePetImageView.layer.borderColor = UIColor.zoocMainGreen.cgColor
             profilePetImageView.layer.borderWidth = 2

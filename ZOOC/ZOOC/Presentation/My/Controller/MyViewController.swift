@@ -187,7 +187,7 @@ extension MyViewController {
                         nickName: viewModel.getProfileData()?.nickName ?? "",
                         profileImage: photo
                     ),
-                    repository: MyRepositoryImpl()
+                    repository: DefaultMyRepository()
                 )
             )
         )
@@ -210,7 +210,7 @@ extension MyViewController {
         let registerPetVC = MyRegisterPetViewController(
             viewModel: MyRegisterPetViewModel(
                 myRegisterPetUseCase: DefaultMyRegisterPetUseCase(
-                    repository: MyRepositoryImpl()
+                    repository: DefaultMyRepository()
                 )
             )
         )
@@ -240,7 +240,7 @@ extension MyViewController {
                         file: photo
                     ),
                     id: pet.id,
-                    repository: MyRepositoryImpl())
+                    repository: DefaultMyRepository())
             )
         )
         editPetProfileView.modalPresentationStyle = .fullScreen

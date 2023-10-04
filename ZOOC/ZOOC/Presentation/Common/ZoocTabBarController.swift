@@ -19,7 +19,7 @@ class ZoocTabBarController: UITabBarController {
     let myViewController = MyViewController(
         viewModel: MyViewModel(
             myUseCase: DefaultMyUseCase(
-                repository: MyRepositoryImpl()
+                repository: DefaultMyRepository()
             )
         )
     )
@@ -121,7 +121,11 @@ class ZoocTabBarController: UITabBarController {
                 if result.isEmpty {
                     self.presentZoocAlertVC()
                 } else {
-                    let recordVC = RecordViewController()
+                    let recordVC = RecordViewController(
+                        viewModel: RecordViewModel(
+                            recordUseCase: DefaultRecordUseCase()
+                        )
+                    )
                     let recordNVC = UINavigationController(rootViewController: recordVC)
                     recordNVC.modalPresentationStyle = .fullScreen
                     recordNVC.setNavigationBarHidden(true, animated: true)
@@ -145,7 +149,7 @@ extension ZoocTabBarController: ZoocAlertViewControllerDelegate {
         let myRegisterPetVC = MyRegisterPetViewController(
             viewModel: MyRegisterPetViewModel(
                 myRegisterPetUseCase: DefaultMyRegisterPetUseCase(
-                    repository: MyRepositoryImpl()
+                    repository: DefaultMyRepository()
                 )
             )
         )

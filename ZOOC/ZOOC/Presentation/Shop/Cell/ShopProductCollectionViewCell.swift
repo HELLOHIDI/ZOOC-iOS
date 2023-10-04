@@ -95,6 +95,10 @@ final class ShopProductCollectionViewCell: UICollectionViewCell {
     }
     
     func dataBind(data: ProductResult) {
+        guard data != ProductResult() else {
+            setCommingSoon()
+            return
+        }
         imageView.kfSetImage(url: data.thumbnail)
         nameLabel.text = data.name
         priceLabel.text = data.price.priceText

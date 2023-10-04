@@ -207,8 +207,7 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
     @objc
     private func cartButtonDidTap() {
         guard !selectedOptionsData.isEmpty else {
-            showToast("상품 옵션을 선택해주세요",
-                      type: .bad)
+            showToast(ShopToastCase.notChooseOption)
             return
         }
         dismiss(animated: true)
@@ -218,8 +217,7 @@ final class ProductBottomSheet: UIViewController, ScrollableViewController {
     @objc
     private func orderButtonDidTap() {
         guard !selectedOptionsData.isEmpty else {
-            showToast("상품 옵션을 선택해주세요",
-                      type: .bad)
+            showToast(ShopToastCase.notChooseOption)
             return
         }
         dismiss(animated: false)
@@ -332,9 +330,7 @@ extension ProductBottomSheet: ProductOptionCollectionViewCellDelegate {
         if canAppend {
             selectedOptionsData.append(willSelectedOption)
         } else {
-            showToast("이미 추가된 옵션입니다.",
-                      type: .bad,
-                      bottomInset: 122)
+            showToast(ShopToastCase.alreadySelectedOption, bottomInset: 122)
         }
         
     }

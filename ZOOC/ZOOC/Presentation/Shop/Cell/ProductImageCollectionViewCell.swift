@@ -50,7 +50,7 @@ final class ProductImageCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func dataBind(image: String?) {
+    func dataBind(_ image: String?) {
         imageView.kfSetImage(url: image)
     }
 }

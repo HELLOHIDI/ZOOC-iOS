@@ -9,7 +9,10 @@ import UIKit
 
 import SnapKit
 
-
+protocol ToastCase {
+    var message: String { get }
+    var type: Toast.ToastType { get }
+}
 
 final class Toast: UIView {
     
@@ -125,3 +128,4 @@ final class Toast: UIView {
     
     
 }
+

@@ -21,6 +21,14 @@ extension UIViewController{
                      bottomInset: bottomInset)
     }
     
+    func showToast(_ toast: ToastCase, bottomInset: CGFloat = 86) {
+        guard let view = UIApplication.shared.firstWindow else { return }
+        Toast().show(message: toast.message,
+                     type: toast.type,
+                     view: view,
+                     bottomInset: bottomInset)
+    }
+    
     
     func addKeyboardNotifications(){
         // 키보드가 나타날 때 앱에게 알리는 메서드 추가

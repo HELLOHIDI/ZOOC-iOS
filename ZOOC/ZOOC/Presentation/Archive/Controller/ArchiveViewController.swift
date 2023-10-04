@@ -17,61 +17,41 @@ final class ArchiveViewController : BaseViewController {
     
     //MARK: - Properties
     
+    let rootView = ArchiveView()
+    let emojiBottomSheetViewController = EmojiBottomSheetViewController()
+    
     enum PageDirection: Int{
         case left
         case right
     }
     
-    private var scrollDown = false
-    
     private var archiveModel: ArchiveModel
     
     private var archiveData: ArchiveResult? {
         didSet{
-            updateArchiveUI()
+            rootView.updateArchiveUI(archiveData)
         }
     }
     
     private var commentsData: [CommentResult] = [] {
         didSet{
-            updateCommentsUI()
+            rootView.updateCommentsUI(commentsData)
         }
     }
     
     
-    //MARK: - UI Components
-    
-    private let emojiBottomSheetViewController = EmojiBottomSheetViewController()
-    
-    private let scrollView = UIScrollView()
-    private let contentView = UIView()
-    
-    private let backButton = UIButton()
-    private let etcButton = UIButton()
-    
-    private let petImageView = UIImageView()
-    
-    private let dateLabel = UILabel()
-    private let writerImageView = UIImageView()
-    private let writerNameLabel = UILabel()
-    private let contentLabel = UILabel()
-    private let lineView = UIView()
-
-    private let commentCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-    
-    private let commentView = ArchiveCommentView()
     
     //MARK: - Life Cycle
     
     init(_ archiveModel: ArchiveModel, scrollDown: Bool) {
         self.archiveModel = archiveModel
-        self.scrollDown = scrollDown
+        rootView.scrollDown = scrollDown
         
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func loadView() {
+        self.view = rootView
     }
     
     override func viewDidLoad() {
@@ -80,10 +60,8 @@ final class ArchiveViewController : BaseViewController {
         register()
         gesture()
         
-        style()
-        hierarchy()
-        layout()
         requestDetailArchiveAPI(request: archiveModel)
+        emojiBottomSheetViewController.modalPresentationStyle = .overFullScreen
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -117,34 +95,32 @@ final class ArchiveViewController : BaseViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        commentView.layoutIfNeeded()
+        rootView.commentView.layoutIfNeeded()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     //MARK: - Custom Method
-//
-//    func dataBind(data: ArchiveModelrecordID: Int, petID: Int) {
-//        let data = ArchiveModel(recordID: recordID, petID: petID)
-//        archiveModel = data
-//        guard let archiveModel else { return }
-//        requestDetailArchiveAPI(request: archiveModel)
-//    }
     
     private func register() {
-        commentCollectionView.delegate = self
-        commentCollectionView.dataSource = self
-        commentView.delegate = self
+        rootView.commentCollectionView.delegate = self
+        rootView.commentCollectionView.dataSource = self
+        rootView.commentView.delegate = self
         emojiBottomSheetViewController.delegate = self
         
-        commentCollectionView.register(ArchiveCommentCollectionViewCell.self,
+            
+        rootView.commentCollectionView.register(ArchiveCommentCollectionViewCell.self,
                                        forCellWithReuseIdentifier: ArchiveCommentCollectionViewCell.cellIdentifier)
     }
     
     private func gesture() {
-        backButton.addTarget(self,
+        rootView.backButton.addTarget(self,
                              action: #selector(backButtonDidTap),
                              for: .touchUpInside)
 
-        etcButton.addTarget(self,
+        rootView.etcButton.addTarget(self,
                             action: #selector(etcButtonDidTap),
                             for: .touchUpInside)
         
@@ -159,172 +135,10 @@ final class ArchiveViewController : BaseViewController {
                                                          action: #selector(handlePageSwipeGesture(_:)))
         swipeGestureRight.direction = .right
         
-        petImageView.addGestureRecognizer(tapGesture)
+        rootView.petImageView.addGestureRecognizer(tapGesture)
         view.addGestureRecognizer(swipeGestureLeft)
         view.addGestureRecognizer(swipeGestureRight)
         
-    }
-    
-    private func style() {
-        emojiBottomSheetViewController.do{
-            $0.modalPresentationStyle = .overFullScreen
-        }
-        
-        scrollView.do {
-            $0.bounces = false
-            $0.showsVerticalScrollIndicator = false
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.contentInsetAdjustmentBehavior = .never
-        }
-        
-        backButton.do {
-            $0.setImage(Image.xmarkWhite, for: .normal)
-            $0.tintColor = .white
-        }
-        
-        etcButton.do {
-            $0.setImage(UIImage(systemName: "ellipsis"), for: .normal)
-            $0.tintColor = .white
-        }
-        
-        petImageView.do {
-            $0.contentMode = .scaleAspectFill
-            $0.clipsToBounds = true
-            $0.isUserInteractionEnabled = true
-        }
-        
-        dateLabel.do {
-            $0.font = .zoocBody1
-            $0.textColor = .zoocGray2
-        }
-        
-        writerImageView.do {
-            $0.contentMode = .scaleAspectFill
-            $0.clipsToBounds = true
-            $0.layer.cornerRadius = 12
-        }
-        
-        writerNameLabel.do {
-            $0.font = .zoocBody1
-            $0.textColor = .zoocGray2
-        }
-        
-        contentLabel.do {
-            $0.font = .zoocBody3
-            $0.textColor = .zoocDarkGray2
-        }
-        
-        lineView.do {
-            $0.backgroundColor = .zoocLightGray
-        }
-        
-        commentCollectionView.do {
-            let layout = UICollectionViewFlowLayout()
-            layout.scrollDirection = .vertical
-            
-            $0.collectionViewLayout = layout
-            $0.isScrollEnabled = false
-            $0.backgroundColor = .clear
-        }
-        
-    }
-    
-    private func hierarchy() {
-        
-        view.addSubviews(scrollView,
-                         commentView)
-        
-        scrollView.addSubview(contentView)
-        
-        
-        contentView.addSubviews(petImageView,
-                                backButton,
-                                etcButton,
-                                dateLabel,
-                                writerImageView,
-                                writerNameLabel,
-                                contentLabel,
-                                lineView,
-                                commentCollectionView)
-    }
-    
-    private func layout() {
-  
-        //MARK: view Layout
-        
-        scrollView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-        }
-        
-        commentView.snp.makeConstraints {
-            $0.top.equalTo(scrollView.snp.bottom)
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(19)
-            $0.height.equalTo(77)
-        }
-        
-        //MARK: scrollView Layout
-        
-        contentView.snp.makeConstraints {
-            $0.edges.equalTo(scrollView.contentLayoutGuide)
-            $0.height.equalTo(scrollView.frameLayoutGuide).priority(.low)
-            $0.width.equalTo(scrollView.frameLayoutGuide)
-        }
-        
-        //MARK: contentView Layout
-        
-        backButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(53)
-            $0.leading.equalToSuperview().offset(16)
-            $0.height.width.equalTo(42)
-        }
-        
-        etcButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(53)
-            $0.trailing.equalToSuperview().offset(-16)
-            $0.height.width.equalTo(42)
-        }
-        
-        petImageView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.centerX.equalToSuperview()
-            $0.width.equalToSuperview()
-            $0.height.equalTo(petImageView.snp.width)
-        }
-        
-        dateLabel.snp.makeConstraints {
-            $0.top.equalTo(petImageView.snp.bottom).offset(22)
-            $0.leading.equalToSuperview().offset(30)
-        }
-        
-        writerImageView.snp.makeConstraints {
-            $0.centerY.equalTo(dateLabel)
-            $0.trailing.equalTo(writerNameLabel.snp.leading).offset(-10)
-            $0.height.width.equalTo(24)
-        }
-        
-        writerNameLabel.snp.makeConstraints {
-            $0.centerY.equalTo(writerImageView)
-            $0.trailing.equalToSuperview().offset(-30)
-        }
-        
-        contentLabel.snp.makeConstraints {
-            $0.top.equalTo(dateLabel.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview().inset(30)
-        }
-        
-        lineView.snp.makeConstraints {
-            $0.top.equalTo(contentLabel.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(1)
-        }
-        
-        commentCollectionView.snp.makeConstraints {
-            $0.top.equalTo(lineView.snp.bottom)
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
-            $0.height.greaterThanOrEqualTo(450)
-        }
     }
     
     private func updateNewPage(direction: PageDirection) {
@@ -345,48 +159,12 @@ final class ArchiveViewController : BaseViewController {
         }
         
         archiveModel.recordID = id
-        scrollDown = false
-        self.scrollView.setContentOffset(CGPoint(x: 0,
+        rootView.scrollDown = false
+        rootView.scrollView.setContentOffset(CGPoint(x: 0,
                                                  y: 0),
                                          animated: true)
         requestDetailArchiveAPI(request: archiveModel)
     }
-    
-    private func updateArchiveUI() {
-        if let imageURL = archiveData?.record.writerPhoto{
-            self.writerImageView.kfSetImage(url: imageURL)
-        } else {
-            self.writerImageView.image = Image.defaultProfile
-        }
-        
-        self.petImageView.kfSetImage(url: archiveData?.record.photo)
-        self.dateLabel.text = archiveData?.record.date
-        self.writerNameLabel.text = archiveData?.record.writerName
-        self.contentLabel.text = archiveData?.record.content
-    }
-    
-    private func updateCommentsUI() {
-        commentCollectionView.reloadData()
-        commentCollectionView.layoutIfNeeded()
-        commentCollectionView.snp.updateConstraints {
-            let contentHeight = self.commentCollectionView.contentSize.height
-            let height = (contentHeight > 450 ) ? contentHeight : 450
-            $0.height.greaterThanOrEqualTo(height)
-        }
-        
-        if scrollDown{
-            scrollView.layoutSubviews()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                self.scrollView.setContentOffset(CGPoint(x: 0,
-                                                         y: self.scrollView.contentSize.height - self.scrollView.bounds.height),
-                                                 animated: true)
-            }
-        } else {
-            scrollDown = true
-        }
-        
-    }
-    
     private func deleteArchive() {
         guard let recordID = self.archiveData?.record.id else { return }
         let id = String(recordID)
@@ -408,7 +186,6 @@ final class ArchiveViewController : BaseViewController {
             
             guard let result = self.validateResult(result) as? ArchiveResult else { return }
             
-            //self.scrollDown = false
             self.archiveData = result
             self.commentsData = result.comments
         }
@@ -436,11 +213,6 @@ final class ArchiveViewController : BaseViewController {
     private func requestDeleteArchiveAPI(recordID: String) {
         ArchiveAPI.shared.deleteArchive(recordID: recordID) { result in
             self.validateResult(result)
-            
-
-            print("가드문 통과")
-            
-            
             guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
             tabVC.homeViewController.recordID = nil
             self.dismiss(animated: true)
@@ -452,7 +224,6 @@ final class ArchiveViewController : BaseViewController {
     private func requestDeleteCommentAPI(commentID: String) {
         ArchiveAPI.shared.deleteComment(commentID: commentID) { result in
             self.validateResult(result)
-            
             self.requestDetailArchiveAPI(request: self.archiveModel)
         }
     }
@@ -500,7 +271,7 @@ final class ArchiveViewController : BaseViewController {
     @objc
     private func petImageViewDidTap() {
         let imageVC = ZoocImageViewController()
-        imageVC.dataBind(image: petImageView.image)
+        imageVC.dataBind(image: rootView.petImageView.image)
         imageVC.modalPresentationStyle = .overFullScreen
         present(imageVC, animated: true)
     }
@@ -528,7 +299,7 @@ final class ArchiveViewController : BaseViewController {
         let keyboardHeight = keyboardRectangle.height
         
         UIView.animate(withDuration: duration){
-            self.commentView.snp.updateConstraints {
+            self.rootView.commentView.snp.updateConstraints {
                 $0.bottom.equalToSuperview().inset(keyboardHeight)
             }
             self.view.layoutIfNeeded()
@@ -542,7 +313,7 @@ final class ArchiveViewController : BaseViewController {
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
         
         UIView.animate(withDuration: duration){
-            self.commentView.snp.updateConstraints {
+            self.rootView.commentView.snp.updateConstraints {
                 $0.bottom.equalToSuperview().inset(19)
             }
             self.view.layoutIfNeeded()
@@ -560,7 +331,8 @@ extension ArchiveViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ArchiveCommentCollectionViewCell.cellIdentifier, for: indexPath) as? ArchiveCommentCollectionViewCell else { return UICollectionViewCell() }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ArchiveCommentCollectionViewCell.cellIdentifier,
+                                                      for: indexPath) as! ArchiveCommentCollectionViewCell
         cell.delegate = self
         cell.dataBind(data: commentsData[indexPath.item])
         return cell

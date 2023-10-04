@@ -78,6 +78,8 @@
 		8764833529523BCA00F74882 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 8764833429523BCA00F74882 /* Then */; };
 		8764833829523BEE00F74882 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 8764833729523BEE00F74882 /* Moya */; };
 		8764833B29523C0100F74882 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 8764833A29523C0100F74882 /* Kingfisher */; };
+		8764A6232ACD05D1007D4B0A /* ArchiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764A6222ACD05D1007D4B0A /* ArchiveViewModel.swift */; };
+		8764A6252ACD0624007D4B0A /* ArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764A6242ACD0624007D4B0A /* ArchiveView.swift */; };
 		8765549F295846F3006BBDA9 /* ZoocTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8765549E295846F3006BBDA9 /* ZoocTabBarController.swift */; };
 		876554A3295848D6006BBDA9 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876554A2295848D5006BBDA9 /* BaseViewController.swift */; };
 		876554A72958494B006BBDA9 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876554A62958494B006BBDA9 /* MyViewController.swift */; };
@@ -418,6 +420,8 @@
 		876483262952370F00F74882 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		87648328295237B500F74882 /* Adjusted+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Adjusted+.swift"; sourceTree = "<group>"; };
 		8764832A295238EB00F74882 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
+		8764A6222ACD05D1007D4B0A /* ArchiveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveViewModel.swift; sourceTree = "<group>"; };
+		8764A6242ACD0624007D4B0A /* ArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveView.swift; sourceTree = "<group>"; };
 		8765549E295846F3006BBDA9 /* ZoocTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocTabBarController.swift; sourceTree = "<group>"; };
 		876554A2295848D5006BBDA9 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		876554A62958494B006BBDA9 /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
@@ -894,6 +898,14 @@
 				87C6C4C82A537902003DA38A /* TextLiteral.swift */,
 			);
 			path = Constant;
+			sourceTree = "<group>";
+		};
+		8764A6212ACD05BC007D4B0A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				8764A6222ACD05D1007D4B0A /* ArchiveViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		8765549D295846E7006BBDA9 /* Base */ = {
@@ -1534,6 +1546,7 @@
 				87E462F92A129BB7006FC35D /* Cell */,
 				87E462FA2A129BBD006FC35D /* View */,
 				87E462FB2A129BC3006FC35D /* Controller */,
+				8764A6212ACD05BC007D4B0A /* ViewModel */,
 			);
 			path = Archive;
 			sourceTree = "<group>";
@@ -1550,8 +1563,8 @@
 		87E462FA2A129BBD006FC35D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8764A6242ACD0624007D4B0A /* ArchiveView.swift */,
 				87DDDD91298E5BE500CBEC79 /* ArchiveCommentView.swift */,
-				8747389D299E84B400C4CC52 /* EmojiBottomSheetViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1561,6 +1574,7 @@
 			children = (
 				872367122A136C7300DCBBFF /* ArchiveGuideViewController.swift */,
 				877E57F12966D13E006D82FC /* ArchiveViewController.swift */,
+				8747389D299E84B400C4CC52 /* EmojiBottomSheetViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2220,6 +2234,7 @@
 				871EA35B2970BE8400D0E8CC /* RecordPetResult.swift in Sources */,
 				D26C860C296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift in Sources */,
 				876554A72958494B006BBDA9 /* MyViewController.swift in Sources */,
+				8764A6252ACD0624007D4B0A /* ArchiveView.swift in Sources */,
 				D2CA73192ACB229700DC17A4 /* DefaultRecordSelectPetUseCase.swift in Sources */,
 				D2350309296490A700F01101 /* MyEditProfileView.swift in Sources */,
 				87B6624129521E7500B6FFA9 /* AppDelegate.swift in Sources */,
@@ -2399,6 +2414,7 @@
 				D26C68EC296DE7B60088DC9A /* MyPetRegisterModel.swift in Sources */,
 				87E4A1C92AAAF8AC005C012E /* DefaultRealmService.swift in Sources */,
 				D2EA37EF29BEAB57007EF4B7 /* OnboardingBaseView.swift in Sources */,
+				8764A6232ACD05D1007D4B0A /* ArchiveViewModel.swift in Sources */,
 				D24AFABC2A8E03EF00823E9C /* GenAIRegisterPetViewModel.swift in Sources */,
 				D21CEC6229ABC1F900854A36 /* MyRegisterPetResult.swift in Sources */,
 				87C109252971A5B40086466F /* ArchiveCommentReqeust.swift in Sources */,

@@ -13,14 +13,11 @@ protocol CheckedButtonTappedDelegate : AnyObject {
     func cellButtonTapped(index: Int)
 }
 
-final class OnboardingAgreementTableViewCell: UITableViewCell {
+final class OnboardingAgreementCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Properties
     
-    let onboardingAgreementViewModel = OnboardingAgreementViewModel()
-    
     weak var delegate: CheckedButtonTappedDelegate?
-    var index: Int = 0
     
     //MARK: - UI Components
     
@@ -31,15 +28,14 @@ final class OnboardingAgreementTableViewCell: UITableViewCell {
     
     //MARK: - Life Cycles
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         target()
         
-        cellStyle()
+        style()
         hierarchy()
         layout()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -54,9 +50,8 @@ final class OnboardingAgreementTableViewCell: UITableViewCell {
         checkedButton.addTarget(self, action: #selector(checkButtonDidTap), for: .touchUpInside)
     }
     
-    private func cellStyle() {
+    private func style() {
         self.backgroundColor = .zoocBackgroundGreen
-        self.selectionStyle = .none
         
         menuLabel.do {
             $0.textColor = .zoocGray3
@@ -69,6 +64,11 @@ final class OnboardingAgreementTableViewCell: UITableViewCell {
             $0.textColor = .zoocGray2
             $0.font = .zoocBody1
             $0.asUnderLine($0.text)
+        }
+        
+        checkedButton.do {
+            $0.setImage(Image.checkBox, for: .normal)
+            $0.setImage(Image.checkBoxFill, for: .selected)
         }
     }
     
@@ -96,11 +96,11 @@ final class OnboardingAgreementTableViewCell: UITableViewCell {
         }
     }
     
-    func dataBind(tag: Int, text: String) {
+    func dataBind(tag: Int, data: OnboardingAgreementModel) {
         checkedButton.tag = tag
-        menuLabel.text = text
+        checkedButton.isSelected = data.isSelected
+        menuLabel.text = data.title
         menuLabel.asColor(targetString: "[필수]", color: .zoocMainGreen)
-        
         
         seeLabel.isHidden = (tag == 2)
        
@@ -108,15 +108,7 @@ final class OnboardingAgreementTableViewCell: UITableViewCell {
     
     //MARK: - Action Method
     
-    @objc func checkButtonDidTap() {
-        updatecheckButtonUI()
+    @objc func checkButtonDidTap(_ sender: UIButton) {
+        delegate?.cellButtonTapped(index: sender.tag)
     }
 }
-
-private extension OnboardingAgreementTableViewCell {
-    func updatecheckButtonUI() {
-        delegate?.cellButtonTapped(index: index)
-        onboardingAgreementViewModel.updateAgreementClosure?()
-    }
-}
-

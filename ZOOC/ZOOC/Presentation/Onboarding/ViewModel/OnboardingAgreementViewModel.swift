@@ -7,90 +7,61 @@
 
 import UIKit
 
-final class OnboardingAgreementViewModel {
+import RxSwift
+import RxCocoa
+
+final class OnboardingAgreementViewModel: ViewModelType {
+    private let onboardingAgreementUseCase: OnboardingAgreementUseCase
     
-    var updateAgreementClosure: (() -> Void)?
-    var updateAllAgreementClosure: (() -> Void)?
+    init(onboardingAgreementUseCase: OnboardingAgreementUseCase) {
+        self.onboardingAgreementUseCase = onboardingAgreementUseCase
+    }
     
-    // 1. 동의항목 bool타입 배열 프로퍼티
-    var agreementList: [OnboardingAgreementModel] = OnboardingAgreementModel.agreementData
+    struct Input {
+        let allAgreementCheckButtonDidTapEvent: Observable<Void>
+        let agreementCheckButtonDidTapEvent: Observable<Int>
+    }
     
-    // 2. 눌린 버튼이 무엇인지 식별할 수 있는 index int 타입 프로퍼티
-    var index: Int = 0
+    struct Output {
+        var ableToSignUp = BehaviorRelay<Bool>(value: false)
+        var allAgreed = BehaviorRelay<Bool>(value: false)
+        var agreementList = BehaviorRelay<[OnboardingAgreementModel]>(value: OnboardingAgreementModel.agreementData)
+    }
     
-    // 3. 전체 동의 버튼의 상태를 알려주는 bool 타입 프로퍼티
-    var allAgreement: Bool = false
-    
-    //  1. 각 동의 항목의 상태 변환 메소드
-    
-    func updateAgreementState(index: Int) {
-        agreementList[index].isSelected = agreementList[index].isSelected == true ? false : true
-        print(agreementList[index])
+    func transform(from input: Input, disposeBag: DisposeBag) -> Output {
+        let output = Output()
+        self.bindOutput(output: output, disposeBag: disposeBag)
         
-        for agreement in agreementList {
-            if !agreement.isSelected {
-                allAgreement = false
-                return
-            }
-        }
-        allAgreement = true
-    }
-    
-    // 2. 전체동의 버튼을 눌렀을 때 실행되는 메소드
-    func updateAllAgreementState() {
-        allAgreement = allAgreement == true ? false : true
+        input.allAgreementCheckButtonDidTapEvent.subscribe(with: self, onNext: { owner, _ in
+            owner.onboardingAgreementUseCase.updateAllAgreementState()
+        }).disposed(by: disposeBag)
         
-        for index in 0..<agreementList.count {
-            agreementList[index].isSelected = allAgreement
-        }
+        input.agreementCheckButtonDidTapEvent.subscribe(with: self, onNext: { owner, index in
+            owner.onboardingAgreementUseCase.updateAgreementState(index)
+        }).disposed(by: disposeBag)
+        
+        return output
     }
     
-    // 4. 다음 버튼 활성화 메소드
-    func updateNextButton(button: inout Bool) {
-        if (agreementList[0].isSelected &&
-            agreementList[1].isSelected &&
-            agreementList[2].isSelected == true) {
-            button = true
-        } else {
-            button = false
-        }
-    }
     
-    //    // 동의 항목 버튼 이미지 변화
-    //    func updateCheckBoxButton(index: Int, image: inout UIImage?) {
-    //        image = agreementList[index] ? Image.checkBoxFill : Image.checkBox
-    //    }
+    private func bindOutput(output: Output, disposeBag: DisposeBag) {
+        onboardingAgreementUseCase.ableToSignUp.subscribe(onNext: { canSignUp in
+            output.ableToSignUp.accept(canSignUp)
+            if output.ableToSignUp.value { print("가능함")}
+        }).disposed(by: disposeBag)
+        
+        onboardingAgreementUseCase.allAgreed.subscribe(onNext: { allAgreed in
+            output.ableToSignUp.accept(allAgreed)
+        }).disposed(by: disposeBag)
+        
+        onboardingAgreementUseCase.agreementList.subscribe(onNext: { agreementList in
+            output.agreementList.accept(agreementList)
+        }).disposed(by: disposeBag)
+    }
 }
 
-
-/* 여기서 관리하고 싶은거
- 1. 각 항목의 상태변화 (false -> true, true -> false)
- 2. 이를 통해서 전체항목 선택 버튼의 상태 변화
- 3. 전체동의 버튼을 눌럿을 때 전부 상태 true or false로 변환
- 3. 1,3,4번 이상 체크 했을때 다음 버튼 활성화
- 
- 그러면 해야될 플로우 정리
- - 동의버튼 체크했을 경우
- 1. 버튼을 누르면 몇번째가 눌렀는지 확인
- 2. 그 동의버튼 index의 상태를 리스트에 저장되어 있는것과 반대로 지정해준다.
- 
- - 전체 동의 버튼 눌렀을 때
- 1. 1,2,3,4가 전부 true 일때 -> 전체동의 버튼 활성화
- 2. 전체 동의 버튼을 눌렀을 때 -> 현재 상태와 반대로 바꿔주고 그에 따른 동의항목 리스트 전부 변환
- 
- - 다음 버튼 활성화
- 1. 1,3,4번 이상이 동의상태면 다음 버튼 활성화
- 
- 
- 
- 그러면 필요한 프로퍼티
- -> var agreementList: [OnboardingAgreementModel] = []
- 2. 눌린 버튼이 무엇인지 식별할 수 있는 index int 타입 프로퍼티 -> var index: Int
- 3. 전체 동의 버튼의 상태를 알려주는 bool 타입 프로퍼티 -> var allAgreement: Bool
- 
- 필요한 메소드
- -> func updateAgreementState(index: Int)
- 2. 전체동의 버튼을 눌렀을 때 실행되는 메소드 ->
- -> func updateAllAgreementState()
- -> func updateNextButton()
- */
+extension OnboardingAgreementViewModel {
+    func getAllAgreed() -> Bool {
+        return onboardingAgreementUseCase.allAgreed.value
+    }
+}

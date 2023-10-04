@@ -13,13 +13,10 @@ protocol AllChekedButtonTappedDelegate : AnyObject {
     func allCellButtonTapped()
 }
 
-final class OnboardingAgreementTableHeaderView: UITableViewHeaderFooterView {
+final class OnboardingAgreementCollectionHeaderView: UICollectionReusableView {
     
     //MARK: - Properties
     
-    let onboardingAgreementViewModel = OnboardingAgreementViewModel()
-    
-    private var isSelected: Bool = false
     weak var delegate: AllChekedButtonTappedDelegate?
     
     //MARK: - UI Components
@@ -30,8 +27,8 @@ final class OnboardingAgreementTableHeaderView: UITableViewHeaderFooterView {
     
     //MARK: - Life Cycle
     
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         target()
         
@@ -51,7 +48,7 @@ final class OnboardingAgreementTableHeaderView: UITableViewHeaderFooterView {
     }
     
     private func style() {
-        contentView.backgroundColor = .zoocBackgroundGreen
+        self.backgroundColor = .zoocBackgroundGreen
         
         allAgreementView.do {
             $0.makeCornerRound(radius: 12)
@@ -68,11 +65,12 @@ final class OnboardingAgreementTableHeaderView: UITableViewHeaderFooterView {
         
         allCheckedButton.do {
             $0.setImage(Image.checkBox, for: .normal)
+            $0.setImage(Image.checkBoxFill, for: .selected)
         }
     }
     
     private func hierarchy() {
-        contentView.addSubview(allAgreementView)
+        self.addSubview(allAgreementView)
         allAgreementView.addSubviews(allAgreementLabel, allCheckedButton)
     }
     
@@ -99,13 +97,7 @@ final class OnboardingAgreementTableHeaderView: UITableViewHeaderFooterView {
     //MARK: - Action Method
     
     @objc func checkedButtonDidTap() {
-        updateAllCheckedButtonUI()
+        delegate?.allCellButtonTapped()
     }
 }
 
-private extension OnboardingAgreementTableHeaderView {
-    func updateAllCheckedButtonUI() {
-        delegate?.allCellButtonTapped()
-        onboardingAgreementViewModel.updateAllAgreementClosure?()
-    }
-}

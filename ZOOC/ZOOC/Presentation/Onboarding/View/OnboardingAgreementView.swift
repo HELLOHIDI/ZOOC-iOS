@@ -15,7 +15,7 @@ final class OnboardingAgreementView: OnboardingBaseView {
     //MARK: - UI Components
     
     private let agreeTitleLabel = UILabel()
-    public lazy var agreementTableView = UITableView(frame: .zero, style: .grouped)
+    public lazy var agreementCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     public lazy var signUpButton = ZoocGradientButton()
     
     //MARK: - Life Cycles
@@ -24,6 +24,7 @@ final class OnboardingAgreementView: OnboardingBaseView {
         super.init(onboardingState: onboardingState)
         
         register()
+        
         style()
         hierarchy()
         layout()
@@ -36,12 +37,14 @@ final class OnboardingAgreementView: OnboardingBaseView {
     //MARK: - Custom Method
     
     private func register() {
-        agreementTableView.register(
-            OnboardingAgreementTableViewCell.self,
-            forCellReuseIdentifier: OnboardingAgreementTableViewCell.cellIdentifier)
-        agreementTableView.register(
-            OnboardingAgreementTableHeaderView.self,
-            forHeaderFooterViewReuseIdentifier: OnboardingAgreementTableHeaderView.cellIdentifier)
+        agreementCollectionView.register(
+            OnboardingAgreementCollectionViewCell.self,
+            forCellWithReuseIdentifier: OnboardingAgreementCollectionViewCell.cellIdentifier)
+        
+        agreementCollectionView.register(
+            OnboardingAgreementCollectionHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: OnboardingAgreementCollectionHeaderView.reuseCellIdentifier)
     }
     
     private func style() {
@@ -56,24 +59,28 @@ final class OnboardingAgreementView: OnboardingBaseView {
             $0.setLineSpacing(spacing: 6)
         }
         
-        agreementTableView.do {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.separatorStyle = .none
-            $0.backgroundColor = .clear
+        agreementCollectionView.do {
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .vertical
+            layout.itemSize = CGSize(width: 315, height: 22)
+            layout.minimumLineSpacing = 15
+            layout.headerReferenceSize = CGSize(width: 315, height: 80)
+            
+            $0.collectionViewLayout = layout
             $0.isScrollEnabled = false
-            $0.rowHeight = 37
-            $0.sectionHeaderHeight = 80
+            $0.backgroundColor = .clear
+            $0.showsHorizontalScrollIndicator = false
+            $0.showsVerticalScrollIndicator = false
         }
         
         signUpButton.do {
             $0.setTitle("회원가입", for: .normal)
-            $0.isEnabled = false
         }
     }
     private func hierarchy() {
         self.addSubviews(
             agreeTitleLabel,
-            agreementTableView,
+            agreementCollectionView,
             signUpButton
         )
     }
@@ -86,7 +93,7 @@ final class OnboardingAgreementView: OnboardingBaseView {
             $0.height.equalTo(68)
         }
         
-        agreementTableView.snp.makeConstraints {
+        agreementCollectionView.snp.makeConstraints {
             $0.top.equalTo(self.agreeTitleLabel.snp.bottom).offset(43)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(315)

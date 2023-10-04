@@ -104,7 +104,11 @@ final class OnboardingLoginViewController: BaseViewController {
 
 private extension OnboardingLoginViewController {
     func pushToAgreementView() {
-        let agreementVC = OnboardingAgreementViewController()
+        let agreementVC = OnboardingAgreementViewController(
+            viewModel: OnboardingAgreementViewModel(
+                onboardingAgreementUseCase: DefaultOnboardingAgreementUseCase()
+            )
+        )
         self.navigationController?.pushViewController(agreementVC, animated: true)
     }
 }

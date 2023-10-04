@@ -18,6 +18,7 @@ final class ArchiveViewController : BaseViewController {
     //MARK: - Properties
     
     let rootView = ArchiveView()
+    let guideVC = ArchiveGuideView()
     let emojiBottomSheetViewController = EmojiBottomSheetViewController()
     
     enum PageDirection: Int{
@@ -46,7 +47,6 @@ final class ArchiveViewController : BaseViewController {
     init(_ archiveModel: ArchiveModel, scrollDown: Bool) {
         self.archiveModel = archiveModel
         rootView.scrollDown = scrollDown
-        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -80,9 +80,7 @@ final class ArchiveViewController : BaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         if UserDefaultsManager.isFirstAttemptArchive {
-            let guideVC = ArchiveGuideViewController()
-            guideVC.modalPresentationStyle = .overFullScreen
-            present(guideVC, animated: false)
+            guideVC.isHidden = false
         }
     }
     
@@ -216,8 +214,6 @@ final class ArchiveViewController : BaseViewController {
             guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
             tabVC.homeViewController.recordID = nil
             self.dismiss(animated: true)
-            print("게시물 삭제 완료!")
-                    
         }
     }
     
@@ -257,14 +253,16 @@ final class ArchiveViewController : BaseViewController {
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
 
         //메시지 창 컨트롤러에 버튼 액션을 추가
-        alert.addAction(reportAction)
+        guard let archiveData else { return }
         
         
-        if archiveData?.record.isMyRecord ?? false {
+        if archiveData.record.isMyRecord {
             alert.addAction(destructiveAction)
+        } else {
+            alert.addAction(reportAction)
         }
+        
         alert.addAction(cancelAction)
-
         self.present(alert, animated: true)
     }
     
@@ -462,17 +460,24 @@ extension ArchiveViewController: MFMailComposeViewControllerDelegate {
                 self.present(composeViewController, animated: true, completion: nil)
             } else {
                 print("메일 보내기 실패")
-                let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "메일을 보내려면 'Mail' 앱이 필요합니다. App Store에서 해당 앱을 복원하거나 이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
-                let goAppStoreAction = UIAlertAction(title: "App Store로 이동하기", style: .default) { _ in
+                let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패",
+                                                           message: "메일을 보내려면 'Mail' 앱이 필요합니다. App Store에서 해당 앱을 복원하거나 이메일 설정을 확인하고 다시 시도해주세요.",
+                                                           preferredStyle: .alert)
+                let goAppStoreAction = UIAlertAction(title: "App Store로 이동하기",
+                                                     style: .default) { _ in
                     // 앱스토어로 이동하기(Mail)
                     let url = "https://apps.apple.com/kr/app/mail/id1108187098"
                     self.presentSafariViewController(url)
                 }
-                let cancleAction = UIAlertAction(title: "취소", style: .destructive, handler: nil)
+                let cancleAction = UIAlertAction(title: "취소",
+                                                 style: .destructive,
+                                                 handler: nil)
                 
                 sendMailErrorAlert.addAction(goAppStoreAction)
                 sendMailErrorAlert.addAction(cancleAction)
-                self.present(sendMailErrorAlert, animated: true, completion: nil)
+                self.present(sendMailErrorAlert,
+                             animated: true,
+                             completion: nil)
             }
     }
     

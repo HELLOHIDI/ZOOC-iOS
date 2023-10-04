@@ -46,7 +46,7 @@
 		871EA35B2970BE8400D0E8CC /* RecordPetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871EA35A2970BE8400D0E8CC /* RecordPetResult.swift */; };
 		871EA35D2970CFA700D0E8CC /* SimpleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871EA35C2970CFA700D0E8CC /* SimpleResponse.swift */; };
 		872367112A12AC4E00DCBBFF /* ArchiveModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872367102A12AC4E00DCBBFF /* ArchiveModel.swift */; };
-		872367132A136C7300DCBBFF /* ArchiveGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872367122A136C7300DCBBFF /* ArchiveGuideViewController.swift */; };
+		872367132A136C7300DCBBFF /* ArchiveGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872367122A136C7300DCBBFF /* ArchiveGuideView.swift */; };
 		872367162A19062700DCBBFF /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 872367152A19062700DCBBFF /* Sentry */; };
 		872367192A19080600DCBBFF /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872367182A19080600DCBBFF /* AuthError.swift */; };
 		8723671C2A19276A00DCBBFF /* ArchiveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8723671B2A19276A00DCBBFF /* ArchiveService.swift */; };
@@ -393,7 +393,7 @@
 		871EA35A2970BE8400D0E8CC /* RecordPetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordPetResult.swift; sourceTree = "<group>"; };
 		871EA35C2970CFA700D0E8CC /* SimpleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleResponse.swift; sourceTree = "<group>"; };
 		872367102A12AC4E00DCBBFF /* ArchiveModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveModel.swift; sourceTree = "<group>"; };
-		872367122A136C7300DCBBFF /* ArchiveGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveGuideViewController.swift; sourceTree = "<group>"; };
+		872367122A136C7300DCBBFF /* ArchiveGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveGuideView.swift; sourceTree = "<group>"; };
 		872367182A19080600DCBBFF /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 		8723671B2A19276A00DCBBFF /* ArchiveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveService.swift; sourceTree = "<group>"; };
 		8723671D2A19277300DCBBFF /* ArchiveAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveAPI.swift; sourceTree = "<group>"; };
@@ -1563,6 +1563,7 @@
 		87E462FA2A129BBD006FC35D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				872367122A136C7300DCBBFF /* ArchiveGuideView.swift */,
 				8764A6242ACD0624007D4B0A /* ArchiveView.swift */,
 				87DDDD91298E5BE500CBEC79 /* ArchiveCommentView.swift */,
 			);
@@ -1572,7 +1573,6 @@
 		87E462FB2A129BC3006FC35D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				872367122A136C7300DCBBFF /* ArchiveGuideViewController.swift */,
 				877E57F12966D13E006D82FC /* ArchiveViewController.swift */,
 				8747389D299E84B400C4CC52 /* EmojiBottomSheetViewController.swift */,
 			);
@@ -2424,7 +2424,7 @@
 				87D5AF622960CFE500CA7F12 /* HomeGuideCollectionViewCell.swift in Sources */,
 				4C6B186A296C82850059840D /* RecordRegisterFourCollectionViewCell.swift in Sources */,
 				D26C68F62970B0640088DC9A /* HomeNoticeTableViewCell.swift in Sources */,
-				872367132A136C7300DCBBFF /* ArchiveGuideViewController.swift in Sources */,
+				872367132A136C7300DCBBFF /* ArchiveGuideView.swift in Sources */,
 				D24DA0BE2AC5D6760037D0A2 /* DefaultMyRegisterPetUseCase.swift in Sources */,
 				872BBD9229F9576E002E2C71 /* UIApplication+.swift in Sources */,
 				870A4C0C2AA2823900D7CFD8 /* ProductSelectedOptionCollectionViewCell.swift in Sources */,

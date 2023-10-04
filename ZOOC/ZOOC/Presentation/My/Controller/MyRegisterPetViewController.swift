@@ -18,25 +18,13 @@ final class MyRegisterPetViewController: BaseViewController {
     private var index: Int?
     
     private let viewModel: MyRegisterPetViewModel
+    private let disposeBag = DisposeBag()
     
     private let deleteRegisterPetSubject = PublishSubject<Int>()
     private let addRegisterPetSubject = PublishSubject<Void>()
     private let deleteProfileImageSubject = PublishSubject<Int>()
     private let selectProfileImageSubject = PublishSubject<(UIImage, Int)>()
     private let changeNameSubject = PublishSubject<(String, Int)>()
-    
-    private let disposeBag = DisposeBag()
-//    
-//    private var dataSource:  RxCollectionViewSectionedReloadDataSource<SectionData<PetResult>>?
-//    var sectionSubject = BehaviorRelay(value: [SectionData<PetResult>]())
-//    
-//    private var myPetMemberData: [PetResult] = [] {
-//        didSet {
-//            var updateSection: [SectionData<PetResult>] = []
-//            updateSection.append(SectionData<PetResult>(items: myPetMemberData))
-//            sectionSubject.accept(updateSection)
-//        }
-//    }
     
     //MARK: - UI Components
     
@@ -125,9 +113,8 @@ final class MyRegisterPetViewController: BaseViewController {
             }).disposed(by: disposeBag)
         
         output.isRegistered
-            .asDriver(onErrorJustReturn: nil)
+            .asDriver(onErrorJustReturn: Bool())
             .drive(with: self, onNext: { owner, isRegisterd in
-                guard let isRegisterd else { return }
                 if isRegisterd {
                     if let presentingViewController = self.presentingViewController {
                         presentingViewController.dismiss(animated: true)
@@ -146,19 +133,12 @@ final class MyRegisterPetViewController: BaseViewController {
                 owner.rootView.registerPetTableView.reloadData()
             }).disposed(by: disposeBag)
     }
-    //MARK: - Action Method
-
-    
-
 }
 
 //MARK: - UITableViewDelegate
 
 extension MyRegisterPetViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
-    }
-    
+
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let height: CGFloat = (section == 1) ? 64 : 0
         return height
@@ -193,7 +173,6 @@ extension MyRegisterPetViewController: UITableViewDelegate {
     }
 }
 
-
 //MARK: - UITableViewDataSource
 
 extension MyRegisterPetViewController: UITableViewDataSource {
@@ -213,7 +192,6 @@ extension MyRegisterPetViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print(#function)
         switch indexPath.section {
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MyRegisteredPetTableViewCell.cellIdentifier, for: indexPath)
@@ -268,7 +246,6 @@ extension MyRegisterPetViewController: MyRegisterPetTableViewCellDelegate {
 
 extension MyRegisterPetViewController: MyRegisterPetTableFooterViewDelegate {
     func addPetProfileButtonDidTap() {
-        print(#function)
         addRegisterPetSubject.onNext(())
     }
 }

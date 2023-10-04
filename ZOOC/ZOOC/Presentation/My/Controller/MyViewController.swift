@@ -85,9 +85,8 @@ final class MyViewController: BaseViewController {
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
         
         output.isloggedOut
-            .asDriver(onErrorJustReturn: nil)
+            .asDriver(onErrorJustReturn: Bool())
             .drive(with: self, onNext: { owner, isLogout in
-                guard let isLogout else { return }
                 if isLogout {
                     let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
                     UIApplication.shared.changeRootViewController(onboardingNVC)
@@ -97,9 +96,8 @@ final class MyViewController: BaseViewController {
             }).disposed(by: disposeBag)
         
         output.isDeletedAccount
-            .asDriver(onErrorJustReturn: nil)
+            .asDriver(onErrorJustReturn: Bool())
             .drive(with: self, onNext: { owner, isDeleted in
-                guard let isDeleted else { return }
                 if isDeleted {
                     let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
                     onboardingNVC.setNavigationBarHidden(true, animated: true)
@@ -110,9 +108,8 @@ final class MyViewController: BaseViewController {
             }).disposed(by: disposeBag)
         
         output.inviteCode
-            .asDriver(onErrorJustReturn: nil)
+            .asDriver(onErrorJustReturn: "")
             .drive(with: self, onNext: { owner, inviteCode in
-                guard let inviteCode else { return }
                 owner.shareInviteCode(code: inviteCode)
             }).disposed(by: disposeBag)
         

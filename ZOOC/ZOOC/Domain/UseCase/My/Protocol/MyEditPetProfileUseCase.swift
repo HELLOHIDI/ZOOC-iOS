@@ -16,7 +16,7 @@ protocol MyEditPetProfileUseCase {
     var textFieldState: BehaviorRelay<BaseTextFieldState> { get }
     var ableToEditProfile: BehaviorRelay<Bool> { get }
     var isTextCountExceeded: BehaviorRelay<Bool> { get }
-    var isEdited: BehaviorRelay<Bool?> { get set}
+    var isEdited: PublishRelay<Bool> { get set}
     
     func editProfile()
     func isTextCountExceeded(for type: MyEditTextField.TextFieldType)

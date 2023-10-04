@@ -30,7 +30,7 @@ final class MyEditPetProfileViewModel: ViewModelType {
         var textFieldState = BehaviorRelay<BaseTextFieldState>(value: .isEmpty)
         var ableToEditProfile = BehaviorRelay<Bool>(value: false)
         var isTextCountExceeded = BehaviorRelay<Bool>(value: false)
-        var isEdited = BehaviorRelay<Bool?>(value: nil)
+        var isEdited = PublishRelay<Bool>()
     }
     
     func transform(from input: Input, disposeBag: DisposeBag) -> Output {

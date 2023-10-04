@@ -105,9 +105,8 @@ final class RecordSelectPetViewController : BaseViewController{
             }).disposed(by: disposeBag)
         
         output.isRegistered
-            .asDriver(onErrorJustReturn: nil)
+            .asDriver(onErrorJustReturn: Bool())
             .drive(with: self, onNext: { owner, isRegistered in
-                guard let isRegistered else { return }
                 if isRegistered {
                     owner.pushToRecordCompleteViewController()
                 } else {

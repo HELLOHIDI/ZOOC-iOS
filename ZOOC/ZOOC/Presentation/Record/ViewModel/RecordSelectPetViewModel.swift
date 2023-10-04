@@ -26,7 +26,7 @@ final class RecordSelectPetViewModel: ViewModelType {
     struct Output {
         var petList = BehaviorRelay<[RecordRegisterModel]>(value: [])
         var ableToRecord = BehaviorRelay<Bool>(value: false)
-        var isRegistered = BehaviorRelay<Bool?>(value: nil)
+        var isRegistered = PublishRelay<Bool>()
     }
     
     func transform(from input: Input, disposeBag: DisposeBag) -> Output {

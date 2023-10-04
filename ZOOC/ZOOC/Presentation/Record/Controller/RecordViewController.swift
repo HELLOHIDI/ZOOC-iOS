@@ -110,7 +110,6 @@ final class RecordViewController : BaseViewController {
         output.ableToRecord
             .asDriver(onErrorJustReturn: false)
             .drive(with: self, onNext: { owner, canRecord in
-                guard let canRecord else { return }
                 owner.rootView.nextButton.isEnabled = canRecord
             }).disposed(by: disposeBag)
     }

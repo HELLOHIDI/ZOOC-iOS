@@ -22,7 +22,7 @@ final class DefaultRecordSelectPetUseCase: RecordSelectPetUseCase {
     }
     
     var petList = BehaviorRelay<[RecordRegisterModel]>(value: [])
-    var ableToRecord = BehaviorRelay<Bool?>(value: nil)
+    var ableToRecord = BehaviorRelay<Bool>(value: false)
     var isRegistered = BehaviorRelay<Bool?>(value: nil)
     var photo = BehaviorRelay<UIImage?>(value: nil)
     var content = BehaviorRelay<String?>(value: nil)

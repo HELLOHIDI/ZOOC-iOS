@@ -25,7 +25,7 @@ final class RecordViewModel: ViewModelType {
     struct Output {
         var image = BehaviorRelay<UIImage?>(value: nil)
         var content = BehaviorRelay<String?>(value: nil)
-        var ableToRecord = BehaviorRelay<Bool?>(value: nil)
+        var ableToRecord = BehaviorRelay<Bool>(value: false)
     }
     
     func transform(from input: Input, disposeBag: DisposeBag) -> Output {

@@ -16,7 +16,7 @@ final class DefaultRecordUseCase: RecordUseCase {
     
     var image = BehaviorRelay<UIImage?>(value: nil)
     var content = BehaviorRelay<String?>(value: nil)
-    var ableToRecord = BehaviorRelay<Bool?>(value: nil)
+    var ableToRecord = BehaviorRelay<Bool>(value: false)
     
     func checkRecordingValidation() {
         let imageValidation = checkImageValidation()

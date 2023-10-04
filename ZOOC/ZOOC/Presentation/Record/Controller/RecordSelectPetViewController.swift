@@ -99,9 +99,8 @@ final class RecordSelectPetViewController : BaseViewController{
             .disposed(by: disposeBag)
         
         output.ableToRecord
-            .asDriver(onErrorJustReturn: nil)
+            .asDriver(onErrorJustReturn: false)
             .drive(with: self, onNext: { owner, canRecord in
-                guard let canRecord else { return }
                 owner.rootView.registerButton.isEnabled = canRecord
             }).disposed(by: disposeBag)
         

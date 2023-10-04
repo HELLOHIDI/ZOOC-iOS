@@ -12,8 +12,7 @@ import RxCocoa
 
 protocol RecordSelectPetUseCase {
     var petList: BehaviorRelay<[RecordRegisterModel]> { get }
-//    var petId: BehaviorRelay<Int?> { get }
-    var ableToRecord: BehaviorRelay<Bool?> { get }
+    var ableToRecord: BehaviorRelay<Bool> { get }
     var isRegistered: BehaviorRelay<Bool?> { get }
     var photo: BehaviorRelay<UIImage?> { get }
     var content: BehaviorRelay<String?> { get }

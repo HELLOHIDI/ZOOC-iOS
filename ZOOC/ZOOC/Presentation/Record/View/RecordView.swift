@@ -12,15 +12,6 @@ import Then
 
 final class RecordView: UIView {
     
-    //MARK: - Properties
-    
-    var petImage: UIImage?
-    private let placeHoldText: String = """
-                                        ex) 2023년 2월 30일
-                                        가족에게 어떤 순간이었는지 남겨주세요
-                                        """
-    var contentTextViewIsRegistered: Bool = false
-    
     //MARK: - UI Components
     
     private let topBarView = UIView()
@@ -78,7 +69,7 @@ final class RecordView: UIView {
         contentTextView.do {
             $0.textContainerInset = UIEdgeInsets(top: 16.0, left: 18.0, bottom: 16.0, right: 18.0)
             $0.font = .zoocBody2
-            $0.text = placeHoldText
+            $0.text = TextLiteral.recordPlaceHolderText
             $0.textColor = .zoocGray1
             $0.backgroundColor = .zoocWhite2
             $0.clipsToBounds = true

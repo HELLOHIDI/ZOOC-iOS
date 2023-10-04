@@ -10,6 +10,4 @@ import UIKit
 struct RecordModel {
     var image: UIImage?
     var content: String?
-    var missionID: Int?
-    var textColor: UIColor = .zoocGray1
 }

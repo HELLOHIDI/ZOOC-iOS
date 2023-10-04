@@ -7,24 +7,39 @@
 
 import UIKit
 
-import SnapKit
-import Then
+import RxSwift
+import RxCocoa
 
-final class RecordViewController : BaseViewController{
+final class RecordViewController : BaseViewController {
     
     //MARK: - Properties
     
-    private var recordData = RecordModel()
-    private let placeHoldText: String = """
-                                        ex) 2023년 2월 30일
-                                        가족에게 어떤 순간이었는지 남겨주세요
-                                        """
-    private var contentTextViewIsRegistered: Bool = false
-    private lazy var imagePickerController = UIImagePickerController()
+    private let disposeBag = DisposeBag()
+    private let viewModel: RecordViewModel
+    
+    init(viewModel: RecordViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private let selectProfileImageSubject = PublishSubject<UIImage>()
+    private let updateContentTextViewSubject = PublishSubject<String>()
     
     //MARK: - UI Components
     
     private let rootView = RecordView()
+    
+    private lazy var imagePickerController: UIImagePickerController = {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.allowsEditing = true
+        imagePickerController.delegate = self
+        return imagePickerController
+    }()
     
     // MARK: - Life Cycle
     
@@ -35,8 +50,9 @@ final class RecordViewController : BaseViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        gesture()
-        target()
+        delegate()
+        bindUI()
+        bindViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,90 +62,83 @@ final class RecordViewController : BaseViewController{
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
         removeKeyboardNotifications()
     }
     
     // MARK: - Custom Method
     
-    private func target() {
-        rootView.xmarkButton.addTarget(self,
-                                       action: #selector(xButtonDidTap),
-                                       for: .touchUpInside)
-        rootView.nextButton.addTarget(self,
-                                      action: #selector(nextButtonDidTap),
-                                      for: .touchUpInside)
+    private func bindUI() {
+        rootView.xmarkButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.presentAlertViewController()
+        }).disposed(by: disposeBag)
+        
+        rootView.nextButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.pushToRecordRegisterViewController()
+        }).disposed(by: disposeBag)
+        
+        rootView.galleryImageView.rx.tapGesture()
+            .when(.recognized)
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.present(owner.imagePickerController, animated: true)
+            }).disposed(by: disposeBag)
     }
     
-    private func gesture(){
-        self.imagePickerController.delegate = self
+    private func bindViewModel() {
+        let input = RecordViewModel.Input(
+            selectRecordImageEvent: selectProfileImageSubject.asObservable(),
+            textViewDidTapEvent: updateContentTextViewSubject.asObservable()
+        )
+        
+        let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
+        
+        output.image
+            .asDriver()
+            .drive(with: self, onNext: { owner, image in
+                guard let image else { return }
+                owner.rootView.galleryImageView.image = image
+            }).disposed(by: disposeBag)
+        
+        output.content
+            .asDriver()
+            .drive(with: self, onNext: { owner, content in
+                guard let content else { return }
+                owner.updateTextViewUI(content)
+            }).disposed(by: disposeBag)
+        
+        output.ableToRecord
+            .asDriver(onErrorJustReturn: false)
+            .drive(with: self, onNext: { owner, canRecord in
+                owner.rootView.nextButton.isEnabled = canRecord
+            }).disposed(by: disposeBag)
+    }
+    
+    private func delegate() {
         rootView.contentTextView.delegate = self
-        rootView.galleryImageView.addGestureRecognizer(
-            UITapGestureRecognizer(target: self,action: #selector(galleryImageViewDidTap)))
-    }
-    
-    //MARK: - Action Method
-    
-    @objc private func xButtonDidTap(){
-        presentAlertViewController()
-    }
-    
-    @objc private func galleryImageViewDidTap(){
-        DispatchQueue.main.async {
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = .photoLibrary
-            self.present(imagePicker, animated: true)
-        }
-    }
-    
-    @objc
-    private func textViewDidTap(_ sender: Any) {
-        view.endEditing(true)
-    }
-    
-    @objc
-    private func nextButtonDidTap(_ sender: Any) {
-        view.endEditing(true)
-        pushToRecordRegisterViewController()
     }
 }
 
 extension RecordViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == placeHoldText {
-            textView.text = nil
-            textView.textColor = .black
-        }
+        updateContentTextViewSubject.onNext(textView.text)
     }
-    
+
     func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = placeHoldText
-            textView.textColor = .zoocGray1
-        }
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
-        if textView.text == placeHoldText || textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty  {
-            contentTextViewIsRegistered = false
-        } else {
-            contentTextViewIsRegistered = true
-        }
-        updateUI()
+        updateContentTextViewSubject.onNext(textView.text)
     }
 }
 
-extension RecordViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+extension RecordViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            self.recordData.image = image
-            self.rootView.galleryImageView.image = image
-            updateUI()
-        }
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        selectProfileImageSubject.onNext(image)
         dismiss(animated: true)
     }
 }
+
 
 extension RecordViewController {
     func presentAlertViewController() {
@@ -139,37 +148,26 @@ extension RecordViewController {
     }
     
     func pushToRecordRegisterViewController() {
-        if let text = rootView.contentTextView.text{
-            recordData.content = text
-            let recordRegisterVC = RecordRegisterViewController(recordData: recordData)
-            navigationController?.pushViewController(recordRegisterVC, animated: true)
-        } else {
-            showToast("내용을 입력해주세요.", type: .bad)
-            return
-        }
+        let recordRegisterVC = RecordSelectPetViewController(
+            viewModel: RecordSelectPetViewModel(
+                recordSelectPetUseCase: DefaultRecordSelectPetUseCase(
+                    photo: viewModel.getPhoto(),
+                    content: viewModel.getContent(),
+                    repository: DefaultRecordRepository()
+                )
+            )
+        )
+        navigationController?.pushViewController(recordRegisterVC, animated: true)
     }
     
-    private func updateUI(){
-        if contentTextViewIsRegistered == false || recordData.image == nil {
-            rootView.nextButton.isEnabled = false
+    func updateTextViewUI(_ content: String) {
+        rootView.contentTextView.text = content
+        if content != TextLiteral.recordPlaceHolderText {
+            rootView.contentTextView.textColor = .zoocGray3
         } else {
-            rootView.nextButton.isEnabled = true
+            rootView.contentTextView.textColor = .zoocGray1
         }
     }
-    
-//    private func ImageViewDidTap(tag: Int) {
-//        checkAlbumPermission { hasPermission in
-//            if hasPermission {
-//                DispatchQueue.main.async {
-//                    let galleryAlertController = GalleryAlertController()
-//                    geallertAlertController.delegate = self
-//                    self.present(self.galleryAlertController,animated: true)
-//                }
-//            } else {
-//                self.showAccessDenied()
-//            }
-//        }
-//    }
 }
 
 //MARK: - ZoocAlertViewControllerDelegate

@@ -182,7 +182,7 @@ extension MyRegisterPetViewController: UITableViewDelegate {
                             file: photo
                         ),
                         id: petData.id,
-                        repository: MyRepositoryImpl()
+                        repository: DefaultMyRepository()
                     )
                 )
             )

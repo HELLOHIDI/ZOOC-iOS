@@ -11,10 +11,6 @@ import SnapKit
 
 final class RecordCompleteViewController : BaseViewController {
     
-    //MARK: - Properties
-    
-    private let selectedPetID: [Int]
-    
     //MARK: - UI Components
     
     private let cardView: UIView = {
@@ -61,18 +57,6 @@ final class RecordCompleteViewController : BaseViewController {
         button.addTarget(self, action: #selector(goArchiveButtonDidTap), for: .touchUpInside)
         return button
     }()
-    
-    //MARK: - Life Cycle
-    
-    init(selectedPetID: [Int]) {
-        self.selectedPetID = selectedPetID
-        
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -135,13 +119,13 @@ final class RecordCompleteViewController : BaseViewController {
             return
         }
 
-        guard let petID = selectedPetID.first else {
-            print("가드문에 막힘 petID가 없는듯")
-            return
-        }
+//        guard let petID = selectedPetID.first else {
+//            print("가드문에 막힘 petID가 없는듯")
+//            return
+//        }
         
         tabVC.homeViewController.recordID = nil
-        tabVC.homeViewController.selectPetCollectionView(petID: petID)
+//        tabVC.homeViewController.selectPetCollectionView(petID: petID)
         self.navigationController?.previousViewController?.navigationController?.previousViewController?.dismiss(animated: true)
     }
 }

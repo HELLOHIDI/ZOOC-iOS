@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class RecordRegisterView : UIView{
+final class RecordSelectPetView : UIView{
     
     // MARK: - Properties
     

@@ -14,7 +14,7 @@ final class OnboardingReInviteFamilyViewController: UIViewController{
     
     //MARK: - Properties
     
-    private let onboardingReInviteFamilyView = OnboardingReInviteFamilyView()
+    private let onboardingReInviteFamilyView = OnboardingReInviteFamilyView.init(onboardingState: .processCodeReceived)
     
     //MARK: - Life Cycle
     

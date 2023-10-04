@@ -15,7 +15,7 @@ final class OnboardingAgreementViewController: BaseViewController {
     
     //MARK: - Properties
     
-    private lazy var onboardingAgreementView = OnboardingAgreementView()
+    private lazy var rootView = OnboardingAgreementView.init(onboardingState: .makeFamily)
     private let onboardingAgreementViewModel: OnboardingAgreementViewModel
     
     init(onboardingAgreementViewModel: OnboardingAgreementViewModel) {
@@ -30,7 +30,7 @@ final class OnboardingAgreementViewController: BaseViewController {
     //MARK: - Life Cycle
     
     override func loadView() {
-        self.view = onboardingAgreementView
+        self.view = rootView
     }
     
     override func viewDidLoad() {
@@ -43,15 +43,15 @@ final class OnboardingAgreementViewController: BaseViewController {
     //MARK: - Custom Method
     
     private func register() {
-        onboardingAgreementView.agreementTableView.delegate = self
-        onboardingAgreementView.agreementTableView.dataSource = self
+        rootView.agreementTableView.delegate = self
+        rootView.agreementTableView.dataSource = self
     }
     
     private func target() {
-        onboardingAgreementView.backButton.addTarget(self,
+        rootView.backButton.addTarget(self,
                                                      action: #selector(backButtonDidTap),
                                                      for: .touchUpInside)
-        onboardingAgreementView.signUpButton.addTarget(self,
+        rootView.signUpButton.addTarget(self,
                                                        action: #selector(signUpButtonDidTap),
                                                        for: .touchUpInside)
     }
@@ -117,10 +117,10 @@ extension OnboardingAgreementViewController: UITableViewDataSource {
             self.onboardingAgreementViewModel.updateAgreementState(
                 index: indexPath.row
             )
-            self.onboardingAgreementView.agreementTableView.reloadData()
+            self.rootView.agreementTableView.reloadData()
         }
         self.onboardingAgreementViewModel.updateNextButton(
-            button:&onboardingAgreementView.signUpButton.isEnabled)
+            button:&rootView.signUpButton.isEnabled)
         return cell
     }
     
@@ -136,10 +136,10 @@ extension OnboardingAgreementViewController: UITableViewDataSource {
         
         cell.onboardingAgreementViewModel.updateAllAgreementClosure = {
             self.onboardingAgreementViewModel.updateAllAgreementState()
-            self.onboardingAgreementView.agreementTableView.reloadData()
+            self.rootView.agreementTableView.reloadData()
         }
         self.onboardingAgreementViewModel.updateNextButton(
-            button:&onboardingAgreementView.signUpButton.isEnabled)
+            button:&rootView.signUpButton.isEnabled)
         return cell
     }
 }
@@ -149,7 +149,7 @@ extension OnboardingAgreementViewController: UITableViewDataSource {
 extension OnboardingAgreementViewController: CheckedButtonTappedDelegate {
     func cellButtonTapped(index: Int) {
         onboardingAgreementViewModel.index = index
-        onboardingAgreementView.agreementTableView.reloadData()
+        rootView.agreementTableView.reloadData()
     }
 }
 
@@ -157,7 +157,7 @@ extension OnboardingAgreementViewController: CheckedButtonTappedDelegate {
 
 extension OnboardingAgreementViewController: AllChekedButtonTappedDelegate {
     func allCellButtonTapped() {
-        onboardingAgreementView.agreementTableView.reloadData()
+        rootView.agreementTableView.reloadData()
     }
 }
 

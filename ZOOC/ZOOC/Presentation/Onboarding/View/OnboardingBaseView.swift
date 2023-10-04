@@ -10,9 +10,66 @@ import UIKit
 import SnapKit
 import Then
 
+enum OnboardingState {
+    case makeFamily
+    case checkReceivedCode
+    case processCodeReceived
+    case onboardingSuccess
+    
+    var progressBarIsHidden: Bool {
+        switch self {
+        case .makeFamily:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    var firstProgressBarBackgroundColor: UIColor {
+        switch self {
+        case .makeFamily:
+            return .zoocLightGray
+        case .checkReceivedCode:
+            return .zoocMainGreen
+        case .processCodeReceived:
+            return .zoocMainGreen
+        case .onboardingSuccess:
+            return .zoocMainGreen
+        }
+    }
+    
+    var secondProgressBarBackgroundColor: UIColor {
+        switch self {
+        case .makeFamily:
+            return .zoocLightGray
+        case .checkReceivedCode:
+            return .zoocLightGray
+        case .processCodeReceived:
+            return .zoocMainGreen
+        case .onboardingSuccess:
+            return .zoocMainGreen
+        }
+    }
+    
+    var thirdProgressBarBackgroundColor: UIColor {
+        switch self {
+        case .makeFamily:
+            return .zoocLightGray
+        case .checkReceivedCode:
+            return .zoocLightGray
+        case .processCodeReceived:
+            return .zoocLightGray
+        case .onboardingSuccess:
+            return .zoocMainGreen
+        }
+    }
+}
+
 class OnboardingBaseView: UIView {
 
     //MARK: - UI Components
+    
+    public var onboardingState: OnboardingState
     
     public lazy var backButton = UIButton()
     public lazy var firstProgressBar = UIView()
@@ -21,9 +78,10 @@ class OnboardingBaseView: UIView {
 
     //MARK: - Life Cycles
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
+    init(onboardingState: OnboardingState) {
+        self.onboardingState = onboardingState
+        super.init(frame: .zero)
+        
         style()
         hierarchy()
         layout()
@@ -43,18 +101,21 @@ class OnboardingBaseView: UIView {
         }
         
         firstProgressBar.do {
-            $0.backgroundColor = .zoocLightGray
+            $0.backgroundColor = onboardingState.firstProgressBarBackgroundColor
             $0.makeCornerRound(radius: 2)
+            $0.isHidden = onboardingState.progressBarIsHidden
         }
         
         secondProgressBar.do {
-            $0.backgroundColor = .zoocLightGray
+            $0.backgroundColor = onboardingState.secondProgressBarBackgroundColor
             $0.makeCornerRound(radius: 2)
+            $0.isHidden = onboardingState.progressBarIsHidden
         }
         
         thirdProgressBar.do {
-            $0.backgroundColor = .zoocLightGray
+            $0.backgroundColor = onboardingState.thirdProgressBarBackgroundColor
             $0.makeCornerRound(radius: 2)
+            $0.isHidden = onboardingState.progressBarIsHidden
         }
     }
     private func hierarchy() {
@@ -96,27 +157,3 @@ class OnboardingBaseView: UIView {
         }
     }
 }
-
-extension OnboardingBaseView {
-    func allHidden() {
-        firstProgressBar.isHidden = true
-        secondProgressBar.isHidden = true
-        thirdProgressBar.isHidden = true
-    }
-    
-    func firstStep() {
-        firstProgressBar.backgroundColor = .zoocMainGreen
-    }
-    
-    func secondStep() {
-        firstProgressBar.backgroundColor = .zoocMainGreen
-        secondProgressBar.backgroundColor = .zoocMainGreen
-    }
-    
-    func thirdStep() {
-        firstProgressBar.backgroundColor = .zoocMainGreen
-        secondProgressBar.backgroundColor = .zoocMainGreen
-        thirdProgressBar.backgroundColor = .zoocMainGreen
-    }
-}
-

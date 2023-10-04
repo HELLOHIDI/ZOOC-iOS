@@ -14,12 +14,12 @@ final class OnboardingInviteFamilyCompletedViewController: UIViewController{
     
     //MARK: - Properties
     
-    private let onboardingInviteCompletedFamilyView = OnboardingInviteCompletedFamilyView()
+    private let rootView = OnboardingInviteCompletedFamilyView.init(onboardingState: .onboardingSuccess)
     
     //MARK: - Life Cycle
     
     override func loadView() {
-        self.view = onboardingInviteCompletedFamilyView
+        self.view = rootView
     }
     
     override func viewDidLoad() {
@@ -31,8 +31,8 @@ final class OnboardingInviteFamilyCompletedViewController: UIViewController{
     //MARK: - Custom Method
     
     func target() {
-        onboardingInviteCompletedFamilyView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        onboardingInviteCompletedFamilyView.startButton.addTarget(self, action: #selector(startButtonDidTap), for: .touchUpInside)
+        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        rootView.startButton.addTarget(self, action: #selector(startButtonDidTap), for: .touchUpInside)
     }
     
     

@@ -14,7 +14,7 @@ final class OnboardingCheckReceivedCodeViewController: BaseViewController{
     
     //MARK: - Properties
     
-    private let rootView = OnboardingCheckReceivedCodeView()
+    private let rootView = OnboardingCheckReceivedCodeView.init(onboardingState: .checkReceivedCode)
     
     //MARK: - Life Cycle
     

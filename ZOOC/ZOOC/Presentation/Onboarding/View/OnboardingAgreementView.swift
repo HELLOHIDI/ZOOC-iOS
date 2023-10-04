@@ -20,8 +20,8 @@ final class OnboardingAgreementView: OnboardingBaseView {
     
     //MARK: - Life Cycles
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(onboardingState: OnboardingState) {
+        super.init(onboardingState: onboardingState)
         
         register()
         style()
@@ -46,8 +46,6 @@ final class OnboardingAgreementView: OnboardingBaseView {
     
     private func style() {
         self.backgroundColor = .zoocBackgroundGreen
-        
-        allHidden()
         
         agreeTitleLabel.do {
             $0.text = "더 나은 서비스 제공을 위해 \n약관동의가 필요해요"

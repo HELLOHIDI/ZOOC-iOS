@@ -14,12 +14,12 @@ final class OnboardingJoinFamilyViewController: BaseViewController {
     
     //MARK: - Properties
     
-    private let onboardingJoinFamilyView = OnboardingJoinFamilyView()
+    private let rootView = OnboardingJoinFamilyView.init(onboardingState: .processCodeReceived)
     
     //MARK: - Life Cycle
     
     override func loadView() {
-        self.view = onboardingJoinFamilyView
+        self.view = rootView
     }
     
     override func viewDidLoad() {
@@ -32,12 +32,12 @@ final class OnboardingJoinFamilyViewController: BaseViewController {
     //MARK: - Custom Method
     
     func register() {
-        onboardingJoinFamilyView.familyCodeTextField.delegate = self
+        rootView.familyCodeTextField.delegate = self
     }
     
     func target() {
-        onboardingJoinFamilyView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        onboardingJoinFamilyView.nextButton.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
+        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        rootView.nextButton.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
     }
     
     //MARK: - Action Method
@@ -53,7 +53,7 @@ final class OnboardingJoinFamilyViewController: BaseViewController {
 
 extension OnboardingJoinFamilyViewController {
     private func requestJoinFamilyAPI() {
-        guard let code = onboardingJoinFamilyView.familyCodeTextField.text else { return }
+        guard let code = rootView.familyCodeTextField.text else { return }
         let param = OnboardingJoinFamilyRequest(code: code)
         OnboardingAPI.shared.postJoinFamily(requset: param) { result in
             
@@ -87,6 +87,6 @@ extension OnboardingJoinFamilyViewController {
 
 extension OnboardingJoinFamilyViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        self.onboardingJoinFamilyView.nextButton.isEnabled = textField.hasText
+        self.rootView.nextButton.isEnabled = textField.hasText
     }
 }

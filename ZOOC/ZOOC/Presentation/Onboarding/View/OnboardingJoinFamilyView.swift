@@ -21,8 +21,8 @@ final class OnboardingJoinFamilyView: OnboardingBaseView {
     
     //MARK: - Life Cycles
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(onboardingState: OnboardingState) {
+        super.init(onboardingState: onboardingState)
         
         style()
         hierarchy()
@@ -37,8 +37,6 @@ final class OnboardingJoinFamilyView: OnboardingBaseView {
     
     private func style() {
         self.backgroundColor = .zoocBackgroundGreen
-        
-        secondStep()
         
         participateTitleLabel.do {
             $0.text = "전달받은 가족코드를 \n입력해주세요"

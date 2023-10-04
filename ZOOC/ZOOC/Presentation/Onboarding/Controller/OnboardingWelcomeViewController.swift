@@ -14,7 +14,7 @@ final class OnboardingWelcomeViewController: UIViewController{
     
     //MARK: - Properties
     
-    private let rootView = OnboardingWelcomeView()
+    private let rootView = OnboardingWelcomeView.init(onboardingState: .makeFamily)
     
     //MARK: - Life Cycle
     

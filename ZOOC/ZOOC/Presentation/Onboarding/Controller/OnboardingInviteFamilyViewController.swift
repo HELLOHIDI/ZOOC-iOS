@@ -27,7 +27,7 @@ final class OnboardingInviteFamilyViewController: BaseViewController {
     \(ExternalURL.zoocAppStoreKR())
     """
     
-    private let onboardingInviteFamilyView = OnboardingInviteFamilyView()
+    private let onboardingInviteFamilyView = OnboardingInviteFamilyView.init(onboardingState: .processCodeReceived)
     
     //MARK: - Life Cycle
     

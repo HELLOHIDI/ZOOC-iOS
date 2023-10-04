@@ -7,8 +7,8 @@
 
 import UIKit
 
-import SnapKit
-import Then
+import RxSwift
+import RxCocoa
 
 import AuthenticationServices
 import KakaoSDKAuth
@@ -28,7 +28,8 @@ final class OnboardingLoginViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        target()
+        
+        bindUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -38,9 +39,13 @@ final class OnboardingLoginViewController: BaseViewController {
     
     //MARK: - Custom Method
     
-    private func target() {
+    private func bindUI() {
+        
+        
+        
+        
+        
         onboardingLoginView.kakaoLoginButton.addTarget(self, action: #selector(kakaoLoginButtonDidTap), for: .touchUpInside)
-        onboardingLoginView.goHomeButton.addTarget(self, action: #selector(goHomeButtonDidTap), for: .touchUpInside)
         onboardingLoginView.appleLoginButton.addTarget(self, action: #selector(appleLoginButtonDidTap), for: .touchUpInside)
     }
     
@@ -57,11 +62,6 @@ final class OnboardingLoginViewController: BaseViewController {
     
     @objc func appleLoginButtonDidTap() {
         requestAppleSocialLoginAPI()
-    }
-    
-    @objc func goHomeButtonDidTap(){
-        UserDefaultsManager.zoocAccessToken = "Test용 AccessToken 입력 공간"
-        self.requestFamilyAPI()
     }
 }
 

@@ -14,7 +14,7 @@ final class OnboardingJoinFamilyCompletedViewController: BaseViewController{
     
     //MARK: - Properties
     
-    private let onboardingJoinFamilyCompletedView = OnboardingJoinFamilyCompletedView()
+    private let onboardingJoinFamilyCompletedView = OnboardingJoinFamilyCompletedView.init(onboardingState: .processCodeReceived)
     
     //MARK: - Life Cycle
     

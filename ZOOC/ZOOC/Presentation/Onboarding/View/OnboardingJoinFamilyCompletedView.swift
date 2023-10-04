@@ -21,8 +21,8 @@ final class OnboardingJoinFamilyCompletedView: OnboardingBaseView {
     
     //MARK: - Life Cycles
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(onboardingState: OnboardingState) {
+        super.init(onboardingState: onboardingState)
         
         style()
         hierarchy()
@@ -37,8 +37,6 @@ final class OnboardingJoinFamilyCompletedView: OnboardingBaseView {
     
     private func style() {
         self.backgroundColor = .zoocBackgroundGreen
-        
-        thirdStep()
         
         completeProfileLabel.do {
             $0.text = "가족 합류 완료!"

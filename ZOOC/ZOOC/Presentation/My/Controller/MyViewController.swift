@@ -88,7 +88,14 @@ final class MyViewController: BaseViewController {
             .asDriver(onErrorJustReturn: Bool())
             .drive(with: self, onNext: { owner, isLogout in
                 if isLogout {
-                    let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
+                    let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController(
+                        viewModel: OnboardingLoginViewModel(
+                            onboardingLoginUseCase: DefaultOnboardingLoginUseCase(
+                                repository: DefaultOnboardingRepository()
+                            )
+                        )
+                    )
+                    )
                     UIApplication.shared.changeRootViewController(onboardingNVC)
                 } else {
                     owner.showToast("로그아웃에 실패했습니다.", type: .bad)
@@ -99,7 +106,14 @@ final class MyViewController: BaseViewController {
             .asDriver(onErrorJustReturn: Bool())
             .drive(with: self, onNext: { owner, isDeleted in
                 if isDeleted {
-                    let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
+                    let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController(
+                        viewModel: OnboardingLoginViewModel(
+                            onboardingLoginUseCase: DefaultOnboardingLoginUseCase(
+                                repository: DefaultOnboardingRepository()
+                            )
+                        )
+                    )
+                    )
                     onboardingNVC.setNavigationBarHidden(true, animated: true)
                     UIApplication.shared.changeRootViewController(onboardingNVC)
                 } else {

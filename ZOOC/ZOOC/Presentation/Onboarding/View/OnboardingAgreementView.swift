@@ -61,6 +61,8 @@ final class OnboardingAgreementView: OnboardingBaseView {
             $0.separatorStyle = .none
             $0.backgroundColor = .clear
             $0.isScrollEnabled = false
+            $0.rowHeight = 37
+            $0.sectionHeaderHeight = 80
         }
         
         signUpButton.do {

@@ -26,7 +26,7 @@ final class ZoocInterceptor: RequestInterceptor {
         let kakaoURL = URL(string: Config.baseURL + URLs.kakaoLogin)
         
         guard headersKey != APIConstants.noTokenHeader.keys,
-                url != kakaoURL
+              url != kakaoURL
         else {
             print("🦫 ZoocAccessToken을 사용하지 않는 API입니다. Adapt를 수행하지 않습니다.")
             completion(.success(urlRequest))
@@ -43,7 +43,7 @@ final class ZoocInterceptor: RequestInterceptor {
         print("👽 BaseTargetType의 ValidationType에 막혔습니다.")
         print("👽 API: \(request)")
         guard let response = request.task?.response as? HTTPURLResponse,
-                response.statusCode == 401
+              response.statusCode == 401
         else {
             print("retry를 하지 않습니다.")
             completion(.doNotRetryWithError(error))
@@ -89,7 +89,15 @@ extension ZoocInterceptor {
             print(data)
             print("👽 StatusCode: 406을 반환받았습니다. 이는 모든 토큰이 만료됐음을 뜻합니다.")
             
-            let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
+            let onboardingNVC = UINavigationController(
+                rootViewController: OnboardingLoginViewController(
+                    viewModel: OnboardingLoginViewModel(
+                        onboardingLoginUseCase: DefaultOnboardingLoginUseCase(
+                            repository: DefaultOnboardingRepository()
+                        )
+                    )
+                )
+            )
             onboardingNVC.setNavigationBarHidden(true, animated: true)
             UIApplication.shared.changeRootViewController(onboardingNVC)
             throw AuthError.tokenExpired
@@ -102,4 +110,4 @@ extension ZoocInterceptor {
     }
     
 }
-        
+

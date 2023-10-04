@@ -199,6 +199,10 @@
 		D20C00912A96F23200666963 /* GenAIAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C00902A96F23200666963 /* GenAIAPI.swift */; };
 		D20C00952A96FE3200666963 /* GenAIPetDatasetsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C00942A96FE3200666963 /* GenAIPetDatasetsResult.swift */; };
 		D20C00972A9711C200666963 /* GenAIDatasetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C00962A9711C200666963 /* GenAIDatasetResult.swift */; };
+		D21638032ACDC41F0096D474 /* OnboardingLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21638022ACDC41F0096D474 /* OnboardingLoginUseCase.swift */; };
+		D21638052ACDC54E0096D474 /* DefaultOnboardingLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21638042ACDC54E0096D474 /* DefaultOnboardingLoginUseCase.swift */; };
+		D21638082ACDC59E0096D474 /* OnboardingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21638072ACDC59E0096D474 /* OnboardingRepository.swift */; };
+		D216380A2ACDC6790096D474 /* OnboardingLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21638092ACDC6780096D474 /* OnboardingLoginViewModel.swift */; };
 		D21CEC5C29AB9B3D00854A36 /* BaseTextFieldState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC5B29AB9B3D00854A36 /* BaseTextFieldState.swift */; };
 		D21CEC6029ABC01200854A36 /* MyRegisterPetsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC5F29ABC01200854A36 /* MyRegisterPetsRequest.swift */; };
 		D21CEC6229ABC1F900854A36 /* MyRegisterPetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC6129ABC1F900854A36 /* MyRegisterPetResult.swift */; };
@@ -537,6 +541,10 @@
 		D20C00902A96F23200666963 /* GenAIAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIAPI.swift; sourceTree = "<group>"; };
 		D20C00942A96FE3200666963 /* GenAIPetDatasetsResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIPetDatasetsResult.swift; sourceTree = "<group>"; };
 		D20C00962A9711C200666963 /* GenAIDatasetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIDatasetResult.swift; sourceTree = "<group>"; };
+		D21638022ACDC41F0096D474 /* OnboardingLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginUseCase.swift; sourceTree = "<group>"; };
+		D21638042ACDC54E0096D474 /* DefaultOnboardingLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultOnboardingLoginUseCase.swift; sourceTree = "<group>"; };
+		D21638072ACDC59E0096D474 /* OnboardingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRepository.swift; sourceTree = "<group>"; };
+		D21638092ACDC6780096D474 /* OnboardingLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginViewModel.swift; sourceTree = "<group>"; };
 		D21CEC5B29AB9B3D00854A36 /* BaseTextFieldState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextFieldState.swift; sourceTree = "<group>"; };
 		D21CEC5F29ABC01200854A36 /* MyRegisterPetsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetsRequest.swift; sourceTree = "<group>"; };
 		D21CEC6129ABC1F900854A36 /* MyRegisterPetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetResult.swift; sourceTree = "<group>"; };
@@ -949,6 +957,7 @@
 		877BAFBE295EA0D300C2AA1C /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				D21638062ACDC58E0096D474 /* Repository */,
 				87E462EF2A1109FC006FC35D /* ViewModel */,
 				D26C85E62968CB3900AEAF9B /* Cell */,
 				87A76A8C295F6D7E0096F669 /* View */,
@@ -1517,6 +1526,7 @@
 			children = (
 				D26989A729A60EE7008A5ACC /* OnboardingAgreementViewModel.swift */,
 				D2C028F52A82BEAD003F4727 /* OnboardingChooseRoleViewModel.swift */,
+				D21638092ACDC6780096D474 /* OnboardingLoginViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1708,6 +1718,31 @@
 			path = APIModel;
 			sourceTree = "<group>";
 		};
+		D21638002ACDC3E80096D474 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				D21638012ACDC4080096D474 /* Protocol */,
+				D21638042ACDC54E0096D474 /* DefaultOnboardingLoginUseCase.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		D21638012ACDC4080096D474 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				D21638022ACDC41F0096D474 /* OnboardingLoginUseCase.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		D21638062ACDC58E0096D474 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				D21638072ACDC59E0096D474 /* OnboardingRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
 		D22EF8FE2A7C9B5E0050E325 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1833,6 +1868,7 @@
 		D29944202AAC7E7500C4F280 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				D21638002ACDC3E80096D474 /* Onboarding */,
 				D2CADF612AC914B500772100 /* Record */,
 				D239C0822AC1464400D1AA37 /* My */,
 				D29944212AAC7E7A00C4F280 /* AI */,
@@ -2133,6 +2169,7 @@
 				87A3D8902A975D84002C36DB /* OrderPriceView.swift in Sources */,
 				87BCAD362AA5C70700A03DA3 /* OptionCategoryResult.swift in Sources */,
 				D27D95D5296DDF4F0097CD03 /* MyFamilyCollectionViewCell.swift in Sources */,
+				D21638052ACDC54E0096D474 /* DefaultOnboardingLoginUseCase.swift in Sources */,
 				D2CADF662AC9153D00772100 /* DefaultRecordUseCase.swift in Sources */,
 				D2CADF602AC8060A00772100 /* SectionData.swift in Sources */,
 				8764832B295238EB00F74882 /* UITextField+.swift in Sources */,
@@ -2162,6 +2199,7 @@
 				87A76AC32960427C0096F669 /* APIConstants.swift in Sources */,
 				D2DC80D52A0DFDF600F48209 /* RecordSelectPetView.swift in Sources */,
 				87F288072A9FA86600A53218 /* BankAccount.swift in Sources */,
+				D21638082ACDC59E0096D474 /* OnboardingRepository.swift in Sources */,
 				87DF04E62AC751C200E10B2D /* ShopView.swift in Sources */,
 				D26C860A296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift in Sources */,
 				D2ED948C2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift in Sources */,
@@ -2334,6 +2372,7 @@
 				D29944342AAEE5C400C4F280 /* DefaultGenAIRegisterPetUseCase.swift in Sources */,
 				87F287DD2A9C6F1200A53218 /* OrderProduct.swift in Sources */,
 				D27D9568296CB5930097CD03 /* OnboardingInviteFamilyView.swift in Sources */,
+				D216380A2ACDC6790096D474 /* OnboardingLoginViewModel.swift in Sources */,
 				D27D9566296CA99B0097CD03 /* OnboardingInviteFamilyCompletedViewController.swift in Sources */,
 				87809C2A2A8CB6EE0060641F /* SplashViewController.swift in Sources */,
 				8718A06A29ADE6E8001C7460 /* BaseTextField.swift in Sources */,
@@ -2376,6 +2415,7 @@
 				87E4A1CE2AAB3075005C012E /* Results+.swift in Sources */,
 				876483192952366A00F74882 /* Image.swift in Sources */,
 				4C6B1868296B930B0059840D /* RecordRegisterCollectionViewCell.swift in Sources */,
+				D21638032ACDC41F0096D474 /* OnboardingLoginUseCase.swift in Sources */,
 				87FAF8BD2AB090D700DADCC4 /* AddressType.swift in Sources */,
 				87F288052A9FA69200A53218 /* OrderAssistantCompleteView.swift in Sources */,
 				87A3D88A2A975D4F002C36DB /* OrderAddressView.swift in Sources */,

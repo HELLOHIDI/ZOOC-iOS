@@ -17,6 +17,16 @@ struct ArchiveResult: Codable {
         case rightID = "rightId"
         case record, comments
     }
+    
+    init(leftID: Int? = nil,
+         rightID: Int? = nil,
+         record: RecordResult = .init() ,
+         comments: [CommentResult] = []) {
+        self.leftID = leftID
+        self.rightID = rightID
+        self.record = record
+        self.comments = comments
+    }
 }
 
 // MARK: - Comment

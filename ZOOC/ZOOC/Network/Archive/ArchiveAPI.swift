@@ -29,7 +29,7 @@ extension ArchiveAPI{
         }
     }
     
-    func postComment(recordID: String,
+    func postComment(recordID: Int,
                      comment: String,
                      completion: @escaping (NetworkResult<Any>) -> Void) {
         archiveProvider.request(.postComment(recordID: recordID, comment: comment)) { (result) in
@@ -37,7 +37,7 @@ extension ArchiveAPI{
         }
     }
     
-    func postEmojiComment(recordID: String,
+    func postEmojiComment(recordID: Int,
                           emojiID: Int,
                           completion: @escaping (NetworkResult<Any>) -> Void) {
         archiveProvider.request(.postEmojiComment(recordID: recordID, emojiID: emojiID)) { (result) in
@@ -45,7 +45,7 @@ extension ArchiveAPI{
         }
     }
     
-    func deleteArchive(recordID: String,
+    func deleteArchive(recordID: Int,
                        completion: @escaping (NetworkResult<Any>) -> Void) {
         archiveProvider.request(.deleteArchive(recordID: recordID)) { (result) in
             self.disposeNetwork(result,
@@ -54,7 +54,7 @@ extension ArchiveAPI{
         }
     }
     
-    func deleteComment(commentID: String,
+    func deleteComment(commentID: Int,
                        completion: @escaping (NetworkResult<Any>) -> Void) {
         archiveProvider.request(.deleteComment(commentID: commentID)) { (result) in
             self.disposeNetwork(result,

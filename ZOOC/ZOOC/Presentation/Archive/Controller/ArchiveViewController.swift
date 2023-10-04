@@ -6,46 +6,39 @@
 //
 
 import UIKit
-
 import SafariServices
 import MessageUI
 
-import SnapKit
-import Then
+import RxCocoa
+import RxSwift
+
+
+enum HorizontalSwipe {
+    //default value: left
+    case left
+    case right
+}
 
 final class ArchiveViewController : BaseViewController {
     
     //MARK: - Properties
     
-    let rootView = ArchiveView()
-    let guideVC = ArchiveGuideView()
-    let emojiBottomSheetViewController = EmojiBottomSheetViewController()
+    private let viewModel: ArchiveViewModel
+    private let rootView = ArchiveView()
+    private let guideVC = ArchiveGuideView()
+    private let emojiBottomSheetViewController = EmojiBottomSheetViewController()
+    private let disposeBag = DisposeBag()
     
-    enum PageDirection: Int{
-        case left
-        case right
-    }
-    
-    private var archiveModel: ArchiveModel
-    
-    private var archiveData: ArchiveResult? {
-        didSet{
-            rootView.updateArchiveUI(archiveData)
-        }
-    }
-    
-    private var commentsData: [CommentResult] = [] {
-        didSet{
-            rootView.updateCommentsUI(commentsData)
-        }
-    }
-    
-    
+    private let uploadCommentButtonDidTapEvent = PublishRelay<String>()
+    private let emojiDidSelectEvent = PublishRelay<Int>()
+    private let commentReportButtonDidTapEvent = PublishRelay<Int>()
+    private let commentDeleteButtonDidTapEvent = PublishRelay<Int>()
+    private let deleteArchiveEvent = PublishRelay<Void>()
     
     //MARK: - Life Cycle
     
-    init(_ archiveModel: ArchiveModel, scrollDown: Bool) {
-        self.archiveModel = archiveModel
+    init(viewModel: ArchiveViewModel, scrollDown: Bool) {
+        self.viewModel = viewModel
         rootView.scrollDown = scrollDown
         super.init(nibName: nil, bundle: nil)
     }
@@ -58,10 +51,9 @@ final class ArchiveViewController : BaseViewController {
         super.viewDidLoad()
         
         register()
-        gesture()
         
-        requestDetailArchiveAPI(request: archiveModel)
-        emojiBottomSheetViewController.modalPresentationStyle = .overFullScreen
+        bindUI()
+        bindViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,12 +68,6 @@ final class ArchiveViewController : BaseViewController {
                                                selector: #selector(keyboardWillHide),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        if UserDefaultsManager.isFirstAttemptArchive {
-            guideVC.isHidden = false
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -113,33 +99,75 @@ final class ArchiveViewController : BaseViewController {
                                        forCellWithReuseIdentifier: ArchiveCommentCollectionViewCell.cellIdentifier)
     }
     
-    private func gesture() {
-        rootView.backButton.addTarget(self,
-                             action: #selector(backButtonDidTap),
-                             for: .touchUpInside)
-
-        rootView.etcButton.addTarget(self,
-                            action: #selector(etcButtonDidTap),
-                            for: .touchUpInside)
+    func bindUI() {
         
-        let tapGesture = UITapGestureRecognizer(target: self,
-                                                action: #selector(petImageViewDidTap))
+        rootView.backButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
+                tabVC.homeViewController.recordID = nil
+                owner.dismiss(animated: true)
+            })
+            .disposed(by: disposeBag)
         
-        let swipeGestureLeft = UISwipeGestureRecognizer(target: self,
-                                                        action: #selector(handlePageSwipeGesture(_:)))
-        swipeGestureLeft.direction = .left
+        rootView.etcButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.etcButtonDidTap()
+            })
+            .disposed(by: disposeBag)
         
-        let swipeGestureRight = UISwipeGestureRecognizer(target: self,
-                                                         action: #selector(handlePageSwipeGesture(_:)))
-        swipeGestureRight.direction = .right
+        rootView.petImageView.rx.tapGesture().asObservable()
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.petImageViewDidTap()
+            })
+            .disposed(by: disposeBag)
         
-        rootView.petImageView.addGestureRecognizer(tapGesture)
-        view.addGestureRecognizer(swipeGestureLeft)
-        view.addGestureRecognizer(swipeGestureRight)
+        rootView.rx.swipeGesture(.left).asObservable()
+            .subscribe(with: self, onNext: { owner, swipe in
+                print("왼쪽~~")
+            })
+            .disposed(by: disposeBag)
         
     }
     
-    private func updateNewPage(direction: PageDirection) {
+    func bindViewModel() {
+        let input = ArchiveViewModel.Input(
+            viewDidLoadEvent: rx.viewDidLoad.asObservable(),
+            deleteArchiveButtonDidTap: rootView.etcButton.rx.tap.asObservable(),
+            swipeGestureEvent: rootView.rx.swipeGesture(.left, .right).asObservable().map { $0.direction.transform()},
+            commentUploadButtonDidTapEvent: uploadCommentButtonDidTapEvent.asObservable(),
+            emojiDidSelectEvent: emojiDidSelectEvent.asObservable(),
+            commentReportButtonDidTapEvent: commentReportButtonDidTapEvent.asObservable(),
+            commentDeleteButtonDidTapEvent: commentDeleteButtonDidTapEvent.asObservable()
+        )
+        
+        let output = viewModel.tranform(input: input, disposeBag: disposeBag)
+        
+        output.dismissToHomeVC
+            .asDriver(onErrorJustReturn: ())
+            .drive(with: self, onNext: { owner, _ in
+                guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
+                tabVC.homeViewController.recordID = nil
+                owner.dismiss(animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        output.archiveData
+            .asDriver(onErrorJustReturn: .init())
+            .drive(with: self, onNext: { owner, data in
+                owner.rootView.updateArchiveUI(data)
+            })
+            .disposed(by: disposeBag)
+        
+        output.commentData
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self, onNext: { owner, data in
+                owner.rootView.updateCommentsUI(data)
+            })
+            .disposed(by: disposeBag)
+        
+    }
+    
+    private func updateNewPage(_ direction: UISwipeGestureRecognizer.Direction) {
         var message: String
         var id: Int?
         switch direction {
@@ -149,6 +177,8 @@ final class ArchiveViewController : BaseViewController {
         case .right:
             message = "마지막 페이지 입니다."
             id = archiveData?.rightID
+        default:
+            return
         }
         
         guard let id else {
@@ -163,12 +193,6 @@ final class ArchiveViewController : BaseViewController {
                                          animated: true)
         requestDetailArchiveAPI(request: archiveModel)
     }
-    private func deleteArchive() {
-        guard let recordID = self.archiveData?.record.id else { return }
-        let id = String(recordID)
-        
-        self.requestDeleteArchiveAPI(recordID: id)
-    }
     
     private func presentZoocAlertVC() {
         let alertVC = ZoocAlertViewController(.deleteArchive)
@@ -176,89 +200,27 @@ final class ArchiveViewController : BaseViewController {
         present(alertVC, animated: false)
     }
     
-    //MARK: - API Method
     
-    func requestDetailArchiveAPI(request: ArchiveModel) {
-        HomeAPI.shared.getDetailPetArchive(recordID: request.recordID,
-                                           petID: request.petID) { result in
-            
-            guard let result = self.validateResult(result) as? ArchiveResult else { return }
-            
-            self.archiveData = result
-            self.commentsData = result.comments
-        }
-    }
     
-    private func requestCommentsAPI(recordID: String, text: String) {
-        HomeAPI.shared.postComment(recordID: recordID, comment: text) { result in
-            guard let result = self.validateResult(result) as? [CommentResult] else { return }
-            
-            self.commentsData = result
-            NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
-            
-        }
-    }
-    
-    private func requestEmojiCommentAPI(recordID: String, emojiID: Int) {
-        HomeAPI.shared.postEmojiComment(recordID: recordID, emojiID: emojiID) { result in
-            guard let result = self.validateResult(result) as? [CommentResult] else { return }
-            
-            self.commentsData = result
-            NotificationCenter.default.post(name: .homeVCUpdate, object: nil)
-        }
-    }
-    
-    private func requestDeleteArchiveAPI(recordID: String) {
-        ArchiveAPI.shared.deleteArchive(recordID: recordID) { result in
-            self.validateResult(result)
-            guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
-            tabVC.homeViewController.recordID = nil
-            self.dismiss(animated: true)
-        }
-    }
-    
-    private func requestDeleteCommentAPI(commentID: String) {
-        ArchiveAPI.shared.deleteComment(commentID: commentID) { result in
-            self.validateResult(result)
-            self.requestDetailArchiveAPI(request: self.archiveModel)
-        }
-    }
-    
-    //MARK: - Action Method
-    
-    @objc
-    func backButtonDidTap() {
-        guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
-        tabVC.homeViewController.recordID = nil
-        dismiss(animated: true)
-    }
-    
-    @objc
-    private func etcButtonDidTap() {
-        let alert = UIAlertController(title: nil,
-                                      message: nil,
-                                      preferredStyle: .actionSheet)
+   private func etcButtonDidTap() {
+       let alert = UIAlertController(title: nil,
+                                     message: nil,
+                                     preferredStyle: .actionSheet)
         
-        let reportAction =  UIAlertAction(title: "신고하기", style: .default) { action in
-           
-            self.sendMail(subject: "[ZOOC] 게시글 신고하기",
-                          body: TextLiteral.mailRecordReportBody(recordID: self.archiveModel.recordID))
-        }
-        
-        let destructiveAction = UIAlertAction(title: "삭제하기",
-                                              style: .destructive) { action in
-            self.presentZoocAlertVC()
-        }
-        
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-
-        //메시지 창 컨트롤러에 버튼 액션을 추가
-        guard let archiveData else { return }
-        
-        
-        if archiveData.record.isMyRecord {
+       let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+       
+       if archiveData.record.isMyRecord {
+           let destructiveAction = UIAlertAction(title: "삭제하기",
+                                                  style: .destructive) { _ in
+                self.presentZoocAlertVC()
+            }
             alert.addAction(destructiveAction)
         } else {
+            let reportAction =  UIAlertAction(title: "신고하기", style: .default) { _ in
+               
+                self.sendMail(subject: "[ZOOC] 게시글 신고하기",
+                              body: TextLiteral.mailRecordReportBody(recordID: self.archiveModel.recordID))
+            }
             alert.addAction(reportAction)
         }
         
@@ -266,26 +228,11 @@ final class ArchiveViewController : BaseViewController {
         self.present(alert, animated: true)
     }
     
-    @objc
     private func petImageViewDidTap() {
         let imageVC = ZoocImageViewController()
         imageVC.dataBind(image: rootView.petImageView.image)
         imageVC.modalPresentationStyle = .overFullScreen
         present(imageVC, animated: true)
-    }
-    
-    @objc
-    private func handlePageSwipeGesture(_ gesture: UIGestureRecognizer) {
-        guard let gesture = gesture as? UISwipeGestureRecognizer else { return }
-        switch gesture.direction {
-        case .left:
-            updateNewPage(direction: .right)
-        case .right:
-            updateNewPage(direction: .left)
-        default:
-            return
-        }
-        
     }
     
     @objc
@@ -382,14 +329,13 @@ extension ArchiveViewController: UICollectionViewDelegateFlowLayout {
 extension ArchiveViewController: ArchiveCommentViewDelegate {
    
     func uploadButtonDidTap(_ textField: UITextField, text: String) {
-        guard let recordID = archiveData?.record.id else { return }
-        textField.text = nil
+        guard let archiveData else { return }
         view.endEditing(true)
-        requestCommentsAPI(recordID: String(recordID), text: text)
+        uploadCommentButtonDidTapEvent.accept(text)\
     }
     
     func emojiButtonDidTap() {
-        dismissKeyboard()
+        view.endEditing(true)
         present(emojiBottomSheetViewController, animated: false)
     }
 }
@@ -408,8 +354,7 @@ extension ArchiveViewController: ArchiveCommentCellDelegate {
         
         let destructiveAction = UIAlertAction(title: "삭제하기",
                                               style: .destructive) { action in
-            let id = String(id)
-            self.requestDeleteCommentAPI(commentID: id)
+            self.commentDeleteButtonDidTapEvent.accept(id)
         }
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
@@ -432,16 +377,16 @@ extension ArchiveViewController: ArchiveCommentCellDelegate {
 extension ArchiveViewController: EmojiBottomSheetDelegate{
     func emojiDidSelected(emojiID: Int) {
         guard let recordID = archiveData?.record.id else { return }
-        requestEmojiCommentAPI(recordID: String(recordID), emojiID: emojiID)
+        emojiDidSelectEvent.accept(emojiID)
     }
     
 }
 
-//MARK: - 구역
+//MARK: - ZoocAlertViewControllerDelegate
 
 extension ArchiveViewController: ZoocAlertViewControllerDelegate {
     func exitButtonDidTap() {
-        deleteArchive()
+        deleteArchiveEvent.accept(Void())
     }
     
 }
@@ -453,7 +398,7 @@ extension ArchiveViewController: MFMailComposeViewControllerDelegate {
                 composeViewController.mailComposeDelegate = self
             
                 
-                composeViewController.setToRecipients(["thekimhyo@gmail.com"])
+                composeViewController.setToRecipients(["zooc0102@gmail.com"])
                 composeViewController.setSubject(subject)
                 composeViewController.setMessageBody(body, isHTML: false)
                 

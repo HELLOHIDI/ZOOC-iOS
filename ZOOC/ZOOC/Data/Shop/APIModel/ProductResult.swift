@@ -7,9 +7,20 @@
 
 import Foundation
 
-struct ProductResult: Codable {
+struct ProductResult: Codable, Equatable {
     let id: Int
     let thumbnail: String
     let name: String
     let price: Int
+    
+    init(id: Int = Int(),
+         thumbnail: String = String(),
+         name: String = String(),
+         price: Int = Int())
+    {
+        self.id = id
+        self.thumbnail = thumbnail
+        self.name = name
+        self.price = price
+    }
 }

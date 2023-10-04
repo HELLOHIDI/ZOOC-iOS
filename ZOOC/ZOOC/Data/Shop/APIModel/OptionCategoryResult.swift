@@ -10,5 +10,11 @@ import Foundation
 struct OptionCategoryResult: Codable {
     let name: String
     let options: [OptionResult]
+    
+    init(name: String = String(),
+         options: [OptionResult] = []) {
+        self.name = name
+        self.options = options
+    }
 }
 

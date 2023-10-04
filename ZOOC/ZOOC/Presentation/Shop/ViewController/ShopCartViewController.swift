@@ -7,407 +7,98 @@
 
 import UIKit
 
-import FirebaseRemoteConfig
-import SnapKit
-import Then
+import RxCocoa
+import RxSwift
 
 final class ShopCartViewController: BaseViewController {
     
     //MARK: - Properties
     
-    private var deliveryFee: Int = 4000 {
-        didSet {
-            updateUI()
-        }
-    }
+    private let viewModel: ShopCartViewModel
+    private let rootView = ShopCartView()
+    private let disposeBag = DisposeBag()
     
-    private var cartedProducts: [CartedProduct] = [] {
-        didSet {
-            collectionView.reloadData()
-            updateUI()
-        }
-    }
+    private let adjustAmountButtonDidTapEvent = PublishRelay<(Int, Bool)>()
+    private let deleteButtonDidTapEvent = PublishRelay<Int>()
     
-    //MARK: - UI Components
-    
-    private lazy var backButton: UIButton =  {
-        let button = UIButton()
-        button.setImage(Image.back, for: .normal)
-        button.addTarget(self,
-                         action: #selector(backButtonDidTap),
-                         for: .touchUpInside)
-        return button
-    }()
-    
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "장바구니"
-        label.font = .zoocHeadLine
-        label.textColor = .zoocDarkGray2
-        label.textAlignment = .left
-        return label
-    }()
-    
-    private let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(ShopCartCollectionViewCell.self,
-                                forCellWithReuseIdentifier: ShopCartCollectionViewCell.reuseCellIdentifier)
-        return collectionView
-    }()
-    
-    private let bottomView = UIView()
-    
-    private let lineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .zoocLightGray
-        return view
-    }()
-    
-    private let paymentInformationLabel: UILabel = {
-        let label = UILabel()
-        label.text = "결제 정보"
-        label.font = .zoocSubhead2
-        label.textColor = .zoocDarkGray2
-        return label
-    }()
-    
-    
-    private let productsPriceLabel: UILabel = {
-        let label = UILabel()
-        label.text = "상품 가격"
-        label.font = .zoocFont(font: .medium, size: 16)
-        label.textColor = .zoocGray2
-        return label
-    }()
-    
-    private let productsPriceValueLabel: UILabel = {
-        let label = UILabel()
-        label.font = .zoocFont(font: .medium, size: 16)
-        label.textColor = .zoocGray2
-        label.textAlignment = .right
-        return label
-    }()
-    
-    private let deliveryFeeLabel: UILabel = {
-        let label = UILabel()
-        label.text = "배송비"
-        label.font = .zoocFont(font: .medium, size: 16)
-        label.textColor = .zoocGray2
-        return label
-    }()
-    
-    private let deliveryFeeValueLabel: UILabel = {
-        let label = UILabel()
-        label.font = .zoocFont(font: .medium, size: 16)
-        label.textColor = .zoocGray2
-        label.textAlignment = .right
-        return label
-    }()
-    
-    private let totalPriceLabel: UILabel = {
-        let label = UILabel()
-        label.text = "총 결제 금액"
-        label.font = .zoocFont(font: .semiBold, size: 16)
-        label.textColor = .zoocGray3
-        return label
-    }()
-    
-    private let totalPriceValueLabel: UILabel = {
-        let label = UILabel()
-        label.font = .zoocFont(font: .semiBold, size: 16)
-        label.textColor = .zoocMainGreen
-        return label
-    }()
-    
-    private lazy var payButton: ZoocGradientButton = {
-        let button = ZoocGradientButton()
-        button.setTitle("\(0.priceText) 결제하기", for: .normal)
-        button.addTarget(self,
-                         action: #selector(orderButtonDidTap),
-                         for: .touchUpInside)
-        return button
-    }()
-    
-    private let emptyCartView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .zoocBackgroundGreen
-        view.isHidden = true
-        return view
-    }()
-    
-    private let emptyCartImageView: UIImageView = {
-        let imageView = UIImageView(image: Image.cartLight)
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-    
-    private let emptyCartLabel: UILabel = {
-        let label = UILabel()
-        label.text = "아직 담은 상품이 없어요"
-        label.font = .zoocHeadLine
-        label.textColor = .zoocGray2
-        label.textAlignment = .center
-        return label
-    }()
-    
-    private lazy var emptyCartButton: ZoocGradientButton = {
-        let button = ZoocGradientButton(.order)
-        button.setTitle("굿즈 담으러 가기", for: .normal)
-        button.addTarget(self,
-                         action: #selector(backButtonDidTap),
-                         for: .touchUpInside)
-        return button
-    }()
     
     //MARK: - Life Cycle
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    init(viewModel: ShopCartViewModel) {
+        self.viewModel = viewModel
         
-        style()
-        hierarchy()
-        layout()
-        setDelegate()
-        updateUI()
-        requestDeliveryFee()
-        requestCartedProducts()
+        super.init(nibName: nil, bundle: nil)
+        
+        bindUI()
+        bindViewModel()
+    }
+    
+    override func loadView() {
+        self.view = rootView
+        
         dismissKeyboardWhenTappedAround()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: - Custom Method
     
-    
-    private func style() {
-        view.backgroundColor = .zoocBackgroundGreen
-        
+    private func bindUI() {
+        Observable.merge(rootView.backButton.rx.tap.asObservable(),
+                         rootView.emptyCartButton.rx.tap.asObservable())
+        .subscribe(with: self, onNext: { owner, _ in
+            owner.navigationController?.popViewController(animated: true)
+            
+        })
+        .disposed(by: disposeBag)
     }
     
-    private func hierarchy() {
-        view.addSubviews(collectionView,
-                         bottomView,
-                         emptyCartView,
-                         backButton,
-                         titleLabel)
-        
-        bottomView.addSubviews(lineView,
-                               paymentInformationLabel,
-                               productsPriceLabel,
-                               productsPriceValueLabel,
-                               deliveryFeeLabel,
-                               deliveryFeeValueLabel,
-                               totalPriceLabel,
-                               totalPriceValueLabel,
-                               payButton)
-        
-        emptyCartView.addSubviews(emptyCartImageView,
-                                  emptyCartLabel,
-                                  emptyCartButton)
-    }
-    
-    private func layout() {
-        
-        //root View
-        backButton.snp.makeConstraints {
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(11)
-            $0.leading.equalToSuperview().inset(17)
-            $0.size.equalTo(42)
-        }
-        
-        titleLabel.snp.makeConstraints {
-            $0.centerY.equalTo(backButton)
-            $0.centerX.equalToSuperview()
-        }
-        
-        collectionView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(30)
-            $0.horizontalEdges.equalToSuperview()
-            $0.bottom.equalTo(bottomView.snp.top)
-        }
-        
-        
-        bottomView.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
-            $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(300)
-        }
-        
-        // bottom View
-        lineView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(1)
-        }
-        
-        paymentInformationLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(30)
-            $0.leading.equalToSuperview().inset(30)
-        }
-        
-        productsPriceLabel.snp.makeConstraints {
-            $0.top.equalTo(paymentInformationLabel.snp.bottom).offset(26)
-            $0.leading.equalToSuperview().inset(30)
-        }
-        
-        productsPriceValueLabel.snp.makeConstraints {
-            $0.centerY.equalTo(productsPriceLabel)
-            $0.trailing.equalToSuperview().inset(30)
-        }
-        
-        deliveryFeeLabel.snp.makeConstraints {
-            $0.top.equalTo(productsPriceLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().inset(30)
-        }
-        
-        deliveryFeeValueLabel.snp.makeConstraints {
-            $0.centerY.equalTo(deliveryFeeLabel)
-            $0.trailing.equalToSuperview().inset(30)
-        }
-        
-        totalPriceLabel.snp.makeConstraints {
-            $0.top.equalTo(deliveryFeeLabel.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().inset(30)
-        }
-        
-        totalPriceValueLabel.snp.makeConstraints {
-            $0.centerY.equalTo(totalPriceLabel)
-            $0.trailing.equalToSuperview().inset(30)
-        }
-        
-        payButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(37)
-            $0.horizontalEdges.equalToSuperview().inset(30)
-            $0.height.equalTo(54)
-        }
-        
-        
-        emptyCartView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        emptyCartImageView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview().offset(-40)
-            $0.size.equalTo(95)
-        }
-        
-        emptyCartLabel.snp.makeConstraints {
-            $0.top.equalTo(emptyCartImageView.snp.bottom).offset(30)
-            $0.centerX.equalToSuperview()
-        }
-        
-        emptyCartButton.snp.makeConstraints {
-            $0.top.equalTo(emptyCartLabel.snp.bottom).offset(24)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(emptyCartLabel)
-            $0.height.equalTo(52)
-        }
-    }
-    
-    
-    private func setDelegate(){
-        collectionView.delegate = self
-        collectionView.dataSource = self
-    }
-    
-    private func updateUI() {
-        
-        emptyCartView.isHidden = !cartedProducts.isEmpty
-        payButton.isEnabled = !cartedProducts.isEmpty
-        
-        let productsTotalPrice = cartedProducts.reduce(0) { $0 + $1.productsPrice }
-        let totalPrice = deliveryFee + productsTotalPrice
-        
-        productsPriceValueLabel.text = productsTotalPrice.priceText
-        
-        deliveryFeeValueLabel.text = deliveryFee.priceText
-        totalPriceValueLabel.text = totalPrice.priceText
-        payButton.setTitle("\(totalPrice.priceText) 결제하기", for: .normal)
-        
-        totalPriceValueLabel.setAttributeLabel(
-            targetString: ["원"],
-            color: .zoocGray3,
-            font: .zoocBody3,
-            spacing: 0
+    private func bindViewModel() {
+        let input = ShopCartViewModel.Input(
+            viewWillAppearEvent: rx.viewWillAppear.asObservable(),
+            orderButtonDidTapEvent: rootView.orderButton.rx.tap.asObservable(),
+            cellAdjustAmountButtonDidTapEvent: adjustAmountButtonDidTapEvent.asObservable(),
+            cellDeleteButtonDidTapEvent: deleteButtonDidTapEvent.asObservable()
         )
-    }
-    
-    private func requestCartedProducts() {
-        cartedProducts = DefaultRealmService.shared.getCartedProducts()
-    }
-    
-    //MARK: - Action Method
-    
-    @objc
-    private func backButtonDidTap() {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    @objc
-    private func orderButtonDidTap() {
-        var orderProducts: [OrderProduct] = []
-        cartedProducts.forEach {
-            orderProducts.append(OrderProduct(cartedProduct: $0))
-        }
-        let orderVC = OrderViewController(orderProducts)
-        navigationController?.pushViewController(orderVC, animated: true)
-    }
-    
-}
+        
+        let output = viewModel.transform(input: input, disposeBag: disposeBag)
 
-//MARK: - UICollectionViewDataSource
-
-extension ShopCartViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        cartedProducts.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopCartCollectionViewCell.reuseCellIdentifier,
-                                                      for: indexPath) as! ShopCartCollectionViewCell
-        cell.dataBind(indexPath: indexPath, selectedOption: cartedProducts[indexPath.row])
-        cell.delegate = self
-        return cell
+        Observable.combineLatest(output.deliveryFee, output.cartedProductsData)
+            .asDriver(onErrorJustReturn: (Int(), []))
+            .drive(onNext: { [weak self] fee, cartedProducts in
+                self?.rootView.updateUI(cartedProducts, deliveryFee: fee)
+            })
+            .disposed(by: disposeBag)
+        
+        output.cartedProductsData
+            .asDriver(onErrorJustReturn: [])
+            .drive(rootView.collectionView.rx.items(cellIdentifier: ShopCartCollectionViewCell.reuseCellIdentifier,
+                                                    cellType: ShopCartCollectionViewCell.self)
+            ) { row, data, cell in
+                cell.dataBind(row: row, selectedOption: data)
+                cell.delegate = self
+            }
+            .disposed(by: disposeBag)
+        
+        output.pushOrderVC
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self, onNext: { owner, orderProducts in
+                let orderVC = OrderViewController(orderProducts)
+                owner.navigationController?.pushViewController(orderVC, animated: true)
+            })
+            .disposed(by: disposeBag)
+            
     }
 }
 
-//MARK: - UICollectionViewDelegateFlowLayout
 
-extension ShopCartViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.frame.width - 60
-        let height: CGFloat = 90
-        return CGSize(width: width, height: height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        24
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
-    }
-}
-
-//MARK: - 구역
+//MARK: - ShopCartCollectionViewCellDelegate
 
 extension ShopCartViewController: ShopCartCollectionViewCellDelegate {
     func adjustAmountButtonDidTap(row: Int, isPlus: Bool) {
-        let optionID = cartedProducts[row].optionID
-        do {
-            try DefaultRealmService.shared.updateCartedProductPieces(optionID: optionID, isPlus: isPlus)
-        } catch  {
-            guard let error =  error as? AmountError else { return }
-            showToast(error.message,
-                      type: .bad)
-        }
-        
-        cartedProducts = DefaultRealmService.shared.getCartedProducts()
+        adjustAmountButtonDidTapEvent.accept((row,isPlus))
     }
     
     func xButtonDidTap(row: Int) {
@@ -415,44 +106,17 @@ extension ShopCartViewController: ShopCartCollectionViewCellDelegate {
         zoocAlertVC.delegate = self
         zoocAlertVC.dataBind(row)
         present(zoocAlertVC, animated: false)
-        
     }
     
 }
+
+//MARK: - ZoocAlertViewControllerDelegate
 
 extension ShopCartViewController: ZoocAlertViewControllerDelegate {
     
     internal func keepButtonDidTap(_ data: Any?) {
         guard let row = data as? Int else { return }
-        let product = cartedProducts[row]
-        DefaultRealmService.shared.deleteCartedProduct(product)
-        cartedProducts.remove(at: row)
-    }
-}
-
-
-//MARK: - FirebaseRemoteConfig
-
-extension ShopCartViewController {
-    private func requestDeliveryFee() {
+        deleteButtonDidTapEvent.accept(row)
         
-        let remoteConfig = RemoteConfig.remoteConfig()
-        let settings =  RemoteConfigSettings()
-        settings.minimumFetchInterval = 0
-        remoteConfig.configSettings = settings
-        
-        remoteConfig.fetch() { [weak self] status, error in
-            
-            if status == .success {
-                remoteConfig.activate() { [weak self] changed, error in
-                    DispatchQueue.main.async {
-                        self?.deliveryFee = Int(truncating: remoteConfig["deliveryFee"].numberValue)
-                    }
-                }
-            } else {
-                return
-            }
-        }
     }
-
 }

@@ -171,11 +171,7 @@ final class HomeViewController : BaseViewController {
         if petData.isEmpty {
             presentAlertViewController()
         } else {
-            let shopVC = ShopChoosePetViewController(
-//                viewModel: DefaultGenAIChoosePetModel(
-//                    repository: GenAIPetRepositoryImpl()
-//                )
-            )
+            let shopVC = ShopViewController(viewModel: ShopViewModel(petID: 1))
             shopVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(shopVC, animated: true)
         }

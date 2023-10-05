@@ -69,7 +69,7 @@ final class ShopViewController: BaseViewController {
         rootView.shopPetView.rx.tapGesture()
             .when(.recognized)
             .subscribe(with: self, onNext: { owner, _ in
-                owner.rootView.showPetCollectionView(true)
+                owner.rootView.showPetCollectionView = true
             })
             .disposed(by: disposeBag)
         

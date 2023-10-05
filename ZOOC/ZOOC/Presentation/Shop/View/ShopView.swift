@@ -11,6 +11,12 @@ import SnapKit
 
 final class ShopView: UIView {
     
+    var showPetCollectionView: Bool = false {
+        didSet {
+            updateHidden(showPetCollectionView)
+        }
+    }
+    
     //MARK: - UI Components
     
     let backButton: UIButton = {
@@ -62,7 +68,13 @@ final class ShopView: UIView {
         return button
     }()
     
-    let blurView = BlurView()
+    lazy var blurView: BlurView = {
+        let view = BlurView()
+        view.blurDidTap = {
+            self.showPetCollectionView = false
+        }
+        return view
+    }()
     
     let petCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -215,7 +227,7 @@ final class ShopView: UIView {
         
     }
     
-    func showPetCollectionView(_ show: Bool) {
+    private func updateHidden(_ show: Bool) {
         petCollectionView.isHidden = !show
         
         if show {
@@ -224,12 +236,19 @@ final class ShopView: UIView {
             blurView.endBlur()
         }
         
+        
+        petCollectionView.reloadData()
         petCollectionView.layoutIfNeeded()
+        
         petCollectionView.snp.remakeConstraints {
             $0.top.equalTo(shopPetView.snp.bottom).offset(5)
             $0.centerX.equalTo(shopPetView)
             $0.width.equalTo(shopPetView)
             $0.height.greaterThanOrEqualTo(petCollectionView.contentSize.height)
+        }
+        
+        UIView.animate(withDuration: 0.7) {
+            self.petCollectionView.layoutIfNeeded()
         }
     }
     

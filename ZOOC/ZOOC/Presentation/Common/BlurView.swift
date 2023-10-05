@@ -12,6 +12,8 @@ class BlurView: UIView {
     let blurEffect = UIBlurEffect(style: .light)
     lazy var blurView = UIVisualEffectView(effect: blurEffect)
     
+    var blurDidTap: (() -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -43,7 +45,8 @@ class BlurView: UIView {
     }
     
     func endBlur() {
-        UIView.animate(withDuration: 0.1, animations:  {
+        
+        UIView.animate(withDuration: 0.2, animations:  {
             self.alpha = 0
             self.blurView.alpha = 0
         })
@@ -52,5 +55,6 @@ class BlurView: UIView {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         endBlur()
+        blurDidTap?()
     }
 }

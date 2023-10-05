@@ -18,12 +18,18 @@ final class ShopViewController: BaseViewController {
     private let disposeBag = DisposeBag()
     
     private let rootView = ShopView()
+    private let refreshControl = UIRefreshControl()
+    
 
     //MARK: - Life Cycle
     
     init(viewModel: ShopViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        
+        bindUI()
+        bindViewModel()
+        rootView.shopCollectionView.refreshControl = refreshControl
     }
     
     
@@ -33,14 +39,6 @@ final class ShopViewController: BaseViewController {
     
     override func loadView() {
         self.view = rootView
-    }
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        bindUI()  // 뷰모델까지 거치기 번거로운 이벤트
-        bindViewModel()
     }
     
     //MARK: - Custom Method
@@ -55,24 +53,96 @@ final class ShopViewController: BaseViewController {
         rootView.cartButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
                 let cartVC = ShopCartViewController(viewModel: ShopCartViewModel())
+                cartVC.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(cartVC, animated: true)
             })
             .disposed(by: disposeBag)
+        
+        refreshControl.rx.controlEvent(.valueChanged)
+            .subscribe(with: self, onNext: { owner, _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    owner.refreshControl.endRefreshing()
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        rootView.shopPetView.rx.tapGesture()
+            .when(.recognized)
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.rootView.showPetCollectionView = true
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     func bindViewModel() {
         let input = ShopViewModel.Input(
-            viewWillAppearEvent:
-                self.rx.viewWillAppear.asObservable(),
-            productCellDidSelectEvent: self.rootView.collectionView.rx.modelSelected(ProductResult.self).asObservable()
+            viewDidLoadEvent: self.rx.viewDidLoad.asObservable(),
+            petCellShouldSelectIndexPathEvent: rootView.petCollectionView.rx.itemSelected.asObservable().map { $0.row },
+            petCellShouldSelectEvent: rootView.petCollectionView.rx.modelSelected(PetAiResult.self).asObservable(),
+            refreshValueChangedEvent: self.refreshControl.rx.controlEvent(.valueChanged).asObservable(),
+            productCellDidSelectEvent:  self.rootView.shopCollectionView.rx.modelSelected(ProductResult.self).asObservable()
         )
         
         let output = self.viewModel.transform(input: input, disposeBag: disposeBag)
         
+        output.petAiData
+            .asDriver(onErrorJustReturn: [])
+            .drive(
+                rootView.petCollectionView.rx.items(cellIdentifier: ShopPetCollectionViewCell.reuseCellIdentifier,
+                                                    cellType: ShopPetCollectionViewCell.self)
+            ) { row, data, cell in
+                print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
+                cell.dataBind(data)
+            }
+            .disposed(by: disposeBag)
+        
+        
+        output.petAiData
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self, onNext: { owner, petData in
+                guard !petData.isEmpty else { return }
+                owner.rootView.updateCollectionViewHeight(petData)
+            })
+            .disposed(by: disposeBag)
+        
+        output.petDidSelected
+            .asDriver(onErrorJustReturn: (Int(), .init()))
+            .drive(onNext: { [weak self] row, petAiData in
+                self?.rootView.updateSelectedPetViewUI(petAiData)
+                self?.rootView.petCollectionView.selectCell(row: row)
+                self?.rootView.showPetCollectionView = false
+            })
+            .disposed(by: disposeBag)
+        
+        output.petDeselect
+            .asDriver(onErrorJustReturn: Int())
+            .drive(with: self, onNext: { owner, row in
+                owner.rootView.updateNotSelectedPetUI()
+                owner.rootView.petCollectionView.deselectCell(row: row)
+                owner.rootView.showPetCollectionView = false
+            })
+            .disposed(by: disposeBag)
+        
+            
+        
+        output.pushGenAIGuideVC
+            .asDriver(onErrorJustReturn: Int())
+            .drive(with: self, onNext: { owner, petID in
+                let genAIGuideVC = GenAIGuideViewController(
+                    viewModel: GenAIGuideViewModel(
+                        genAIGuideUseCase: DefaultGenAIGuideUseCase(petId: petID)
+                    )
+                )
+                genAIGuideVC.hidesBottomBarWhenPushed = true
+                owner.navigationController?.pushViewController(genAIGuideVC, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
         output.productData
             .asDriver(onErrorJustReturn: [])
             .drive(
-                rootView.collectionView.rx.items(
+                rootView.shopCollectionView.rx.items(
                     cellIdentifier: ShopProductCollectionViewCell.reuseCellIdentifier,
                     cellType: ShopProductCollectionViewCell.self)
             ) { row, data, cell in
@@ -84,6 +154,7 @@ final class ShopViewController: BaseViewController {
             .asDriver(onErrorJustReturn: ShopProductModel())
             .drive(with: self, onNext: { owner, model in
                 let productVC = ShopProductViewController(viewModel: ShopProductViewModel(model: model))
+                productVC.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(productVC, animated: true)
             })
             .disposed(by: disposeBag)
@@ -91,7 +162,7 @@ final class ShopViewController: BaseViewController {
         output.showToast
             .asDriver(onErrorJustReturn: .unknown)
             .drive(with: self, onNext: { owner, toast in
-                owner.showToast(toast, bottomInset: 40)
+                owner.showToast(toast)
             })
             .disposed(by: disposeBag)
     }

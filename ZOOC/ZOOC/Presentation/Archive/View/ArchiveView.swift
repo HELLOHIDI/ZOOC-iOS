@@ -233,7 +233,7 @@ final class ArchiveView: UIView {
         commentCollectionView.layoutIfNeeded()
         commentCollectionView.snp.updateConstraints {
             let contentHeight = self.commentCollectionView.contentSize.height + 40
-            let height = (contentHeight > 450 ) ? contentHeight : 450
+            let height = max(contentHeight, 450 )
             $0.height.greaterThanOrEqualTo(height)
         }
 

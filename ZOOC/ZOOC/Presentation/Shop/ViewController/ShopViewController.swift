@@ -78,12 +78,13 @@ final class ShopViewController: BaseViewController {
     func bindViewModel() {
         let input = ShopViewModel.Input(
             viewDidLoadEvent: self.rx.viewDidLoad.asObservable(),
+            petCellShouldSelectIndexPathEvent: rootView.petCollectionView.rx.itemSelected.asObservable().map { $0.row },
+            petCellShouldSelectEvent: rootView.petCollectionView.rx.modelSelected(PetAiResult.self).asObservable(),
             refreshValueChangedEvent: self.refreshControl.rx.controlEvent(.valueChanged).asObservable(),
             productCellDidSelectEvent:  self.rootView.shopCollectionView.rx.modelSelected(ProductResult.self).asObservable()
         )
         
         let output = self.viewModel.transform(input: input, disposeBag: disposeBag)
-        
         
         output.petAiData
             .asDriver(onErrorJustReturn: [])
@@ -101,7 +102,40 @@ final class ShopViewController: BaseViewController {
             .asDriver(onErrorJustReturn: [])
             .drive(with: self, onNext: { owner, petData in
                 guard !petData.isEmpty else { return }
-                owner.rootView.updateUI(petData.first!)
+                owner.rootView.updateCollectionViewHeight(petData)
+            })
+            .disposed(by: disposeBag)
+        
+        output.petDidSelected
+            .asDriver(onErrorJustReturn: (Int(), .init()))
+            .drive(onNext: { [weak self] row, petAiData in
+                self?.rootView.updateSelectedPetViewUI(petAiData)
+                self?.rootView.petCollectionView.selectCell(row: row)
+                self?.rootView.showPetCollectionView = false
+            })
+            .disposed(by: disposeBag)
+        
+        output.petDeselect
+            .asDriver(onErrorJustReturn: Int())
+            .drive(with: self, onNext: { owner, row in
+                owner.rootView.updateNotSelectedPetUI()
+                owner.rootView.petCollectionView.deselectCell(row: row)
+                owner.rootView.showPetCollectionView = false
+            })
+            .disposed(by: disposeBag)
+        
+            
+        
+        output.pushGenAIGuideVC
+            .asDriver(onErrorJustReturn: Int())
+            .drive(with: self, onNext: { owner, petID in
+                let genAIGuideVC = GenAIGuideViewController(
+                    viewModel: GenAIGuideViewModel(
+                        genAIGuideUseCase: DefaultGenAIGuideUseCase(petId: petID)
+                    )
+                )
+                genAIGuideVC.hidesBottomBarWhenPushed = true
+                owner.navigationController?.pushViewController(genAIGuideVC, animated: true)
             })
             .disposed(by: disposeBag)
         

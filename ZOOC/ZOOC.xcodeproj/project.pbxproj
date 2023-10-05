@@ -84,6 +84,7 @@
 		8764A6322ACF0955007D4B0A /* PetAiResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764A6312ACF0955007D4B0A /* PetAiResult.swift */; };
 		8764A6342ACF0D8F007D4B0A /* ShopPetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764A6332ACF0D8F007D4B0A /* ShopPetCollectionViewCell.swift */; };
 		8764A6382ACF21FE007D4B0A /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764A6372ACF21FD007D4B0A /* BlurView.swift */; };
+		8764A63A2ACF386C007D4B0A /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764A6392ACF386C007D4B0A /* UICollectionView+.swift */; };
 		8765549F295846F3006BBDA9 /* ZoocTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8765549E295846F3006BBDA9 /* ZoocTabBarController.swift */; };
 		876554A3295848D6006BBDA9 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876554A2295848D5006BBDA9 /* BaseViewController.swift */; };
 		876554A72958494B006BBDA9 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876554A62958494B006BBDA9 /* MyViewController.swift */; };
@@ -430,6 +431,7 @@
 		8764A6312ACF0955007D4B0A /* PetAiResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetAiResult.swift; sourceTree = "<group>"; };
 		8764A6332ACF0D8F007D4B0A /* ShopPetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopPetCollectionViewCell.swift; sourceTree = "<group>"; };
 		8764A6372ACF21FD007D4B0A /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
+		8764A6392ACF386C007D4B0A /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		8765549E295846F3006BBDA9 /* ZoocTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocTabBarController.swift; sourceTree = "<group>"; };
 		876554A2295848D5006BBDA9 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		876554A62958494B006BBDA9 /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
@@ -882,6 +884,7 @@
 				87E4A1CD2AAB3075005C012E /* Results+.swift */,
 				D24DA0C42AC5F9A40037D0A2 /* BehaviorRelay+.swift */,
 				8764A6262ACD4E95007D4B0A /* Direction+.swift */,
+				8764A6392ACF386C007D4B0A /* UICollectionView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -2196,6 +2199,7 @@
 				870D062A297BEB7900ADAD04 /* HomeView.swift in Sources */,
 				8723671C2A19276A00DCBBFF /* ArchiveService.swift in Sources */,
 				87A76AC32960427C0096F669 /* APIConstants.swift in Sources */,
+				8764A63A2ACF386C007D4B0A /* UICollectionView+.swift in Sources */,
 				D2DC80D52A0DFDF600F48209 /* RecordSelectPetView.swift in Sources */,
 				87F288072A9FA86600A53218 /* BankAccount.swift in Sources */,
 				87DF04E62AC751C200E10B2D /* ShopView.swift in Sources */,

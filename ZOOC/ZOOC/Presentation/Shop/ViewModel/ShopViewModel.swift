@@ -16,6 +16,8 @@ final class ShopViewModel {
     
     struct Input {
         let viewDidLoadEvent: Observable<Void>
+        let petCellShouldSelectIndexPathEvent: Observable<Int>
+        let petCellShouldSelectEvent: Observable<PetAiResult>
         let refreshValueChangedEvent: Observable<Void>
         let productCellDidSelectEvent: Observable<ProductResult>
     }
@@ -23,20 +25,21 @@ final class ShopViewModel {
     struct Output {
         let petAiData = PublishRelay<[PetAiResult]>()
         let productData = PublishRelay<[ProductResult]>()
+        let petDidSelected = PublishRelay<(Int, PetAiResult)>()
+        let petDeselect = PublishRelay<Int>()
+        let pushGenAIGuideVC = PublishRelay<Int>()
         let pushShopProductVC = PublishRelay<ShopProductModel>()
         let showToast = PublishRelay<ShopToastCase>()
     }
     
     //MARK: - Properties
     
-    private var petData: [PetResult] = []
     private var petID: Int
     
     //MARK: - Life Cycle
     
-    init(petID: Int, petData: [PetResult] = []) {
+    init(petID: Int) {
         self.petID = petID
-        self.petData = petData
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -47,8 +50,24 @@ final class ShopViewModel {
             .subscribe(with: self) { owner, _ in
                 owner.requestProductsAPI(output: output)
                 owner.requestTotalPetAPI(output: output)
-                //output.petAiData.accept(owner.petData.map { $0.transform(state: .done)})
             }
+            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(input.petCellShouldSelectIndexPathEvent,
+                                 input.petCellShouldSelectEvent)
+        .throttle(.seconds(1), latest: false, scheduler: MainScheduler.instance)
+        .subscribe(onNext: { (row, petAiData) in
+                switch petAiData.state {
+                case .notStarted:
+                    output.pushGenAIGuideVC.accept(petAiData.id)
+                    output.petDeselect.accept(row)
+                case .inProgress:
+                    output.pushGenAIGuideVC.accept(petAiData.id)
+                    output.petDeselect.accept(row)
+                case .done:
+                    output.petDidSelected.accept((row, petAiData))
+                }
+            })
             .disposed(by: disposeBag)
         
         input.productCellDidSelectEvent
@@ -65,6 +84,7 @@ final class ShopViewModel {
             .disposed(by: disposeBag)
         
         
+        
         return output
     }
     
@@ -77,9 +97,24 @@ extension ShopViewModel {
             switch result {
             case .success(let data):
                 guard let data = data as? [PetResult] else { return }
-                //TODO: 빈 배열일 때 처리
-                let petAiData = data.map { $0.transform(state: .done)}
+                
+                guard !data.isEmpty else {
+                    //TODO: 빈 배열일 때 처리
+                    output.showToast.accept(.custom(message: "먼저 반려동물을 등록해주세요"))
+                    return
+                }
+                let petAiData = data.map { $0.transform(state: .notStarted)} // TODO: 서버 dataset값에 따라 바뀌게
+                
                 output.petAiData.accept(petAiData)
+                
+                let ableToSelectData = petAiData.filter { $0.state != .notStarted }
+                
+                if !ableToSelectData.isEmpty {
+                    output.petDidSelected.accept((0,ableToSelectData.first!))
+                } else {
+                    output.petDeselect.accept(0)
+                }
+                
             default:
                 break
             }
@@ -94,7 +129,7 @@ extension ShopViewModel {
                     output.showToast.accept(.productNotFound)
                     return
                 }
-                data.append(.init()) // 커밍쑨 담당 데이터 추가
+                data.append(.init()) // 커밍쑨 셀 추가를 위해 기본 데이터 추가
                 output.productData.accept(data)
             default:
                 return

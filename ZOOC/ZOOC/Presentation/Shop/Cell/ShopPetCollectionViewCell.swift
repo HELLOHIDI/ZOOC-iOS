@@ -16,8 +16,7 @@ final class ShopPetCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            checkImageView.isHidden = !isSelected
-            if isSelected { makeModelLabel.isHidden = true }
+            checkContainerView.isHidden = !isSelected
         }
     }
     
@@ -36,10 +35,22 @@ final class ShopPetCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    private let checkContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .zoocWhite1
+        view.isHidden = true
+        return view
+    }()
+    
     private let checkImageView: UIImageView = {
         let imageView = UIImageView(image: Image.checkTint)
         imageView.contentMode = .scaleAspectFit
-        imageView.isHidden = true
+        return imageView
+    }()
+    
+    private let nextImageView: UIImageView = {
+        let imageView = UIImageView(image: Image.next)
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 
@@ -67,9 +78,14 @@ final class ShopPetCollectionViewCell: UICollectionViewCell {
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        
         petImageView.makeCornerRound(ratio: 2)
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        checkContainerView.isHidden = true
+    }
+    
     
     //MARK: - Custom Method
     
@@ -82,7 +98,10 @@ final class ShopPetCollectionViewCell: UICollectionViewCell {
         contentView.addSubviews(petImageView,
                                 petNameLabel,
                                 makeModelLabel,
-                                checkImageView)
+                                nextImageView,
+                                checkContainerView)
+        
+        checkContainerView.addSubview(checkImageView)
     }
     
     private func layout() {
@@ -99,12 +118,25 @@ final class ShopPetCollectionViewCell: UICollectionViewCell {
         
         makeModelLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.trailing.equalTo(checkImageView.snp.leading)
+            $0.trailing.equalTo(nextImageView.snp.leading).offset(-5)
+        }
+        
+        nextImageView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(15)
+            $0.size.equalTo(14)
+        }
+        
+        checkContainerView.snp.makeConstraints {
+            $0.verticalEdges.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.leading.equalTo(petNameLabel.snp.trailing)
         }
         
         checkImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(10)
+            $0.size.equalTo(25)
         }
         
     }
@@ -113,6 +145,7 @@ final class ShopPetCollectionViewCell: UICollectionViewCell {
         self.petImageView.kfSetImage(url: data.photo, defaultImage: Image.defaultProfile)
         self.petNameLabel.text = data.name
         self.makeModelLabel.isHidden = data.state != .notStarted
+        self.nextImageView.isHidden = data.state != .notStarted
     }
     
     //MARK: - Action Method

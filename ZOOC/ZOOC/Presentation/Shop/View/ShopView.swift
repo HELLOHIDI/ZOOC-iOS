@@ -111,6 +111,7 @@ final class ShopView: UIView {
         return collectionView
     }()
     
+    
     //MARK: - Life Cycle
     
     override init(frame: CGRect) {
@@ -129,18 +130,18 @@ final class ShopView: UIView {
         super.draw(rect)
         
         shopPetView.makeCornerRound(ratio: 2)
+        petImageView.makeCornerRound(ratio: 2)
     }
     
     //MARK: - UI & Layout
     
     private func hierarchy() {
-        addSubviews(
+        addSubviews(backButton,
+                    cartButton,
                     logoImageView,
                     shopCollectionView,
                     blurView,
                     shopPetView,
-                    backButton,
-                    cartButton,
                     petCollectionView)
         
         shopPetView.addSubviews(petImageView,
@@ -221,10 +222,29 @@ final class ShopView: UIView {
         
     }
     
-    func updateUI(_ data: PetAiResult) {
+    func updateSelectedPetViewUI(_ data: PetAiResult) {
         self.petImageView.kfSetImage(url: data.photo, defaultImage: Image.defaultProfile)
         self.petNameLabel.text = data.name
+        self.marketLabel.text = "Market"
         
+    }
+    
+    func updateNotSelectedPetUI(){
+        self.petImageView.image = Image.defaultProfile
+        self.petNameLabel.text = nil
+        self.marketLabel.text = "ZOOC Market"
+    }
+    
+    func updateCollectionViewHeight(_ data: [PetAiResult]) {
+        
+        petCollectionView.layoutIfNeeded()
+        
+        petCollectionView.snp.remakeConstraints {
+            $0.top.equalTo(shopPetView.snp.bottom).offset(5)
+            $0.centerX.equalTo(shopPetView)
+            $0.width.equalTo(shopPetView)
+            $0.height.greaterThanOrEqualTo(51 * data.count)
+        }
     }
     
     private func updateHidden(_ show: Bool) {
@@ -234,17 +254,6 @@ final class ShopView: UIView {
             blurView.startBlur()
         } else {
             blurView.endBlur()
-        }
-        
-        
-        petCollectionView.reloadData()
-        petCollectionView.layoutIfNeeded()
-        
-        petCollectionView.snp.remakeConstraints {
-            $0.top.equalTo(shopPetView.snp.bottom).offset(5)
-            $0.centerX.equalTo(shopPetView)
-            $0.width.equalTo(shopPetView)
-            $0.height.greaterThanOrEqualTo(petCollectionView.contentSize.height)
         }
         
         UIView.animate(withDuration: 0.7) {

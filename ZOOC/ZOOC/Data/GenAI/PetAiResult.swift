@@ -18,4 +18,14 @@ struct PetAiResult {
     let name: String
     let photo: String?
     let state: PetAiState
+
+    init(id: Int = Int(),
+         name: String = String(),
+         photo: String? = nil,
+         state: PetAiState = .notStarted) {
+        self.id = id
+        self.name = name
+        self.photo = photo
+        self.state = state
+    }
 }

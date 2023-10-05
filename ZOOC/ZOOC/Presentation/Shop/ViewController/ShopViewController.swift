@@ -18,12 +18,17 @@ final class ShopViewController: BaseViewController {
     private let disposeBag = DisposeBag()
     
     private let rootView = ShopView()
+    private let refreshControl = UIRefreshControl()
 
     //MARK: - Life Cycle
     
     init(viewModel: ShopViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        
+        bindUI()
+        bindViewModel()
+        rootView.collectionView.refreshControl = refreshControl
     }
     
     
@@ -33,14 +38,6 @@ final class ShopViewController: BaseViewController {
     
     override func loadView() {
         self.view = rootView
-    }
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        bindUI()  // 뷰모델까지 거치기 번거로운 이벤트
-        bindViewModel()
     }
     
     //MARK: - Custom Method
@@ -55,16 +52,26 @@ final class ShopViewController: BaseViewController {
         rootView.cartButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
                 let cartVC = ShopCartViewController(viewModel: ShopCartViewModel())
+                cartVC.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(cartVC, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        refreshControl.rx.controlEvent(.valueChanged)
+            .subscribe(with: self, onNext: { owner, _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    owner.refreshControl.endRefreshing()
+                }
             })
             .disposed(by: disposeBag)
     }
     
     func bindViewModel() {
         let input = ShopViewModel.Input(
-            viewWillAppearEvent:
-                self.rx.viewWillAppear.asObservable(),
-            productCellDidSelectEvent: self.rootView.collectionView.rx.modelSelected(ProductResult.self).asObservable()
+            viewDidLoadEvent:
+                self.rx.viewDidLoad.asObservable(),
+            refreshValueChangedEvent: self.refreshControl.rx.controlEvent(.valueChanged).asObservable(),
+            productCellDidSelectEvent:  self.rootView.collectionView.rx.modelSelected(ProductResult.self).asObservable()
         )
         
         let output = self.viewModel.transform(input: input, disposeBag: disposeBag)

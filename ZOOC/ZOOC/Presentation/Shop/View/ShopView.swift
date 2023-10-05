@@ -44,7 +44,8 @@ final class ShopView: UIView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.contentInset = .init(top: 0, left: 30, bottom: 0, right: 30)
+        collectionView.alwaysBounceVertical = true
+        collectionView.contentInset = .init(top: 10, left: 30, bottom: 0, right: 30)
         collectionView.register(ShopProductCollectionViewCell.self,
                                 forCellWithReuseIdentifier: ShopProductCollectionViewCell.reuseCellIdentifier)
         return collectionView
@@ -93,7 +94,7 @@ final class ShopView: UIView {
         }
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(backButton.snp.bottom).offset(69)
+            $0.top.equalTo(backButton.snp.bottom).offset(5)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }

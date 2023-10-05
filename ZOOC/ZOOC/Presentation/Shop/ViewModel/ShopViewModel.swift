@@ -15,7 +15,8 @@ final class ShopViewModel {
     //MARK: - Input & Output
     
     struct Input {
-        let viewWillAppearEvent: Observable<Void>
+        let viewDidLoadEvent: Observable<Void>
+        let refreshValueChangedEvent: Observable<Void>
         let productCellDidSelectEvent: Observable<ProductResult>
     }
     
@@ -38,7 +39,8 @@ final class ShopViewModel {
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output()
         
-        input.viewWillAppearEvent
+        Observable<Void>.merge(input.viewDidLoadEvent,
+                               input.refreshValueChangedEvent)
             .subscribe(with: self) { owner, _ in
                 owner.requestProductsAPI(output: output)
             }

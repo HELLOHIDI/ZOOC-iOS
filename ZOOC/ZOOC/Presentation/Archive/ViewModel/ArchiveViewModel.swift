@@ -15,8 +15,8 @@ final class ArchiveViewModel {
     
     struct Input {
         let viewDidLoadEvent: Observable<Void>
-        let deleteArchiveButtonDidTap: Observable<Void>
         let swipeGestureEvent: Observable<HorizontalSwipe>
+        let deleteArchiveButtonDidTapEvent: Observable<Void>
         let commentUploadButtonDidTapEvent: Observable<String>
         let emojiDidSelectEvent: Observable<Int>
         let commentReportButtonDidTapEvent: Observable<Int>
@@ -51,29 +51,28 @@ final class ArchiveViewModel {
             })
             .disposed(by: disposeBag)
         
-        input.deleteArchiveButtonDidTap
-            .subscribe(with: self, onNext: { owner, _ in
-                owner.requestDeleteArchiveAPI(recordID: owner.archiveModel.recordID,
-                                              output: output)
-            })
-            .disposed(by: disposeBag)
-        
         input.swipeGestureEvent
             .subscribe(with: self, onNext: { owner, swipe in
                 guard let data = owner.archvieData else { return output.showToast.accept(.unknown)}
                 
                 switch swipe {
                 case .left:
-                    var leftID = data.leftID
-                    guard let leftID else { output.showToast.accept(.firstPage); return }
+                    guard let leftID = data.leftID else { output.showToast.accept(.firstPage); return }
                     owner.archiveModel.recordID = leftID
                 case .right:
-                    var rightID = data.rightID
-                    guard let rightID else { output.showToast.accept(.lastPage); return }
+                    guard let rightID = data.rightID else { output.showToast.accept(.lastPage); return }
                     owner.archiveModel.recordID = rightID
                 }
                 
                 owner.requestDetailArchiveAPI(request: owner.archiveModel, output: output)
+                
+            })
+            .disposed(by: disposeBag)
+        
+        input.deleteArchiveButtonDidTapEvent
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.requestDeleteArchiveAPI(recordID: owner.archiveModel.recordID,
+                                          output: output)
                 
             })
             .disposed(by: disposeBag)
@@ -180,7 +179,6 @@ extension ArchiveViewModel {
     
     private func requestDeleteArchiveAPI(recordID: Int, output: Output) {
         ArchiveAPI.shared.deleteArchive(recordID: recordID) { result in
-            
             switch result {
             case .success:
                 output.showToast.accept(.deleteArchiveSuccess)

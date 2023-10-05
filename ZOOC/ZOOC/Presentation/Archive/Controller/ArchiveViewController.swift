@@ -122,8 +122,8 @@ final class ArchiveViewController : BaseViewController {
     func bindViewModel() {
         let input = ArchiveViewModel.Input(
             viewDidLoadEvent: rx.viewWillAppear.asObservable(),
-            deleteArchiveButtonDidTap: rootView.etcButton.rx.tap.asObservable(),
             swipeGestureEvent: rootView.rx.swipeGesture(.left, .right).asObservable().map { $0.direction.transform()},
+            deleteArchiveButtonDidTapEvent: deleteArchiveEvent.asObservable(),
             commentUploadButtonDidTapEvent: uploadCommentButtonDidTapEvent.asObservable(),
             emojiDidSelectEvent: emojiDidSelectEvent.asObservable(),
             commentReportButtonDidTapEvent: commentReportButtonDidTapEvent.asObservable(),

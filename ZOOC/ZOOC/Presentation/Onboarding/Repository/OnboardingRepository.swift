@@ -13,6 +13,7 @@ protocol OnboardingRepository {
     func getFamily(completion: @escaping (NetworkResult<Any>) -> Void)
     func patchFCMToken(completion: @escaping (NetworkResult<Any>) -> Void)
     func postMakeFamily(completion: @escaping (NetworkResult<Any>) -> Void)
+    func postJoinFamily(requset: OnboardingJoinFamilyRequest, completion: @escaping (NetworkResult<Any>) -> Void)
 }
 
 class DefaultOnboardingRepository: OnboardingRepository {
@@ -34,6 +35,10 @@ class DefaultOnboardingRepository: OnboardingRepository {
     
     func postMakeFamily(completion: @escaping (NetworkResult<Any>) -> Void) {
         OnboardingAPI.shared.postMakeFamily(completion: completion)
+    }
+    
+    func postJoinFamily(requset: OnboardingJoinFamilyRequest, completion: @escaping (NetworkResult<Any>) -> Void) {
+        OnboardingAPI.shared.postJoinFamily(requset: requset, completion: completion)
     }
 }
 

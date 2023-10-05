@@ -208,6 +208,9 @@
 		D21638102ACF0E230096D474 /* OnboardingCheckReceivedCodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D216380F2ACF0E230096D474 /* OnboardingCheckReceivedCodeUseCase.swift */; };
 		D21638122ACF0E4C0096D474 /* DefaultOnboardingCheckReceivedCodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21638112ACF0E4C0096D474 /* DefaultOnboardingCheckReceivedCodeUseCase.swift */; };
 		D21638142ACF10480096D474 /* OnboardingCheckReceivedCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21638132ACF10470096D474 /* OnboardingCheckReceivedCodeViewModel.swift */; };
+		D21638162ACF15420096D474 /* OnboardingJoinFamilyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21638152ACF15420096D474 /* OnboardingJoinFamilyUseCase.swift */; };
+		D21638182ACF155C0096D474 /* DefaultOnboardingJoinFamilyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21638172ACF155C0096D474 /* DefaultOnboardingJoinFamilyUseCase.swift */; };
+		D216381A2ACF18E30096D474 /* OnboardingJoinFamilyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21638192ACF18E30096D474 /* OnboardingJoinFamilyViewModel.swift */; };
 		D21CEC5C29AB9B3D00854A36 /* BaseTextFieldState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC5B29AB9B3D00854A36 /* BaseTextFieldState.swift */; };
 		D21CEC6029ABC01200854A36 /* MyRegisterPetsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC5F29ABC01200854A36 /* MyRegisterPetsRequest.swift */; };
 		D21CEC6229ABC1F900854A36 /* MyRegisterPetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC6129ABC1F900854A36 /* MyRegisterPetResult.swift */; };
@@ -554,6 +557,9 @@
 		D216380F2ACF0E230096D474 /* OnboardingCheckReceivedCodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCheckReceivedCodeUseCase.swift; sourceTree = "<group>"; };
 		D21638112ACF0E4C0096D474 /* DefaultOnboardingCheckReceivedCodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultOnboardingCheckReceivedCodeUseCase.swift; sourceTree = "<group>"; };
 		D21638132ACF10470096D474 /* OnboardingCheckReceivedCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCheckReceivedCodeViewModel.swift; sourceTree = "<group>"; };
+		D21638152ACF15420096D474 /* OnboardingJoinFamilyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyUseCase.swift; sourceTree = "<group>"; };
+		D21638172ACF155C0096D474 /* DefaultOnboardingJoinFamilyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultOnboardingJoinFamilyUseCase.swift; sourceTree = "<group>"; };
+		D21638192ACF18E30096D474 /* OnboardingJoinFamilyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyViewModel.swift; sourceTree = "<group>"; };
 		D21CEC5B29AB9B3D00854A36 /* BaseTextFieldState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextFieldState.swift; sourceTree = "<group>"; };
 		D21CEC5F29ABC01200854A36 /* MyRegisterPetsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetsRequest.swift; sourceTree = "<group>"; };
 		D21CEC6129ABC1F900854A36 /* MyRegisterPetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetResult.swift; sourceTree = "<group>"; };
@@ -1535,6 +1541,7 @@
 				D26989A729A60EE7008A5ACC /* OnboardingAgreementViewModel.swift */,
 				D21638092ACDC6780096D474 /* OnboardingLoginViewModel.swift */,
 				D21638132ACF10470096D474 /* OnboardingCheckReceivedCodeViewModel.swift */,
+				D21638192ACF18E30096D474 /* OnboardingJoinFamilyViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1733,6 +1740,7 @@
 				D21638042ACDC54E0096D474 /* DefaultOnboardingLoginUseCase.swift */,
 				D216380D2ACDE22F0096D474 /* DefaultOnboardingAgreementUseCase.swift */,
 				D21638112ACF0E4C0096D474 /* DefaultOnboardingCheckReceivedCodeUseCase.swift */,
+				D21638172ACF155C0096D474 /* DefaultOnboardingJoinFamilyUseCase.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -1743,6 +1751,7 @@
 				D21638022ACDC41F0096D474 /* OnboardingLoginUseCase.swift */,
 				D216380B2ACDDBC10096D474 /* OnboardingAgreementUseCase.swift */,
 				D216380F2ACF0E230096D474 /* OnboardingCheckReceivedCodeUseCase.swift */,
+				D21638152ACF15420096D474 /* OnboardingJoinFamilyUseCase.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -2327,6 +2336,7 @@
 				D20C008D2A96E23500666963 /* GenAIGuideViewModel.swift in Sources */,
 				D27D9564296CA9720097CD03 /* OnboardingInviteCompletedFamilyView.swift in Sources */,
 				D2B735622A8BA1D700F93C45 /* GenAIGuideViewController.swift in Sources */,
+				D216381A2ACF18E30096D474 /* OnboardingJoinFamilyViewModel.swift in Sources */,
 				877E57F22966D13E006D82FC /* ArchiveViewController.swift in Sources */,
 				D2CF76B22AC4980100BF1EFA /* DefaultMyEditPetProfileUseCase.swift in Sources */,
 				870A4BFF2AA26E9100D7CFD8 /* BottomSheetViewController.swift in Sources */,
@@ -2339,6 +2349,7 @@
 				D2ED94882AB8476F0040B687 /* UIImagePicker+Rx.swift in Sources */,
 				D299957A2A95B8520004FB5D /* NSItemProvider+.swift in Sources */,
 				87DF04E82AC821CE00E10B2D /* ShopProductViewModel.swift in Sources */,
+				D21638162ACF15420096D474 /* OnboardingJoinFamilyUseCase.swift in Sources */,
 				87A76ABF2960423C0096F669 /* GenericResponse.swift in Sources */,
 				87DF04EA2AC822ED00E10B2D /* ShopProductView.swift in Sources */,
 				8782C7E42968B03500C9324B /* HomePetCollectionViewCell.swift in Sources */,
@@ -2356,6 +2367,7 @@
 				87E462EE2A110867006FC35D /* ZoocGradinetButton.swift in Sources */,
 				871EA3462970109E00D0E8CC /* HomeArchiveListWriterCollectionViewCell.swift in Sources */,
 				871EA340296F6E5000D0E8CC /* BaseAPI.swift in Sources */,
+				D21638182ACF155C0096D474 /* DefaultOnboardingJoinFamilyUseCase.swift in Sources */,
 				D26C85EC2968D2E100AEAF9B /* OnboardingAgreementCollectionHeaderView.swift in Sources */,
 				870A4C042AA26F8000D7CFD8 /* TouchPassIntrinsicPanelLayout.swift in Sources */,
 				D26C85D7296888D000AEAF9B /* MyDeleteAccountView.swift in Sources */,

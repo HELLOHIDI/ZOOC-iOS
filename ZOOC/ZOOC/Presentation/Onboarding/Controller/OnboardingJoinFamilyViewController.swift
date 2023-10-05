@@ -7,16 +7,30 @@
 
 import UIKit
 
-import SnapKit
-import Then
+import RxSwift
+import RxCocoa
 
 final class OnboardingJoinFamilyViewController: BaseViewController {
     
     //MARK: - Properties
     
+    private let disposeBag = DisposeBag()
+    private let viewModel: OnboardingJoinFamilyViewModel
+    
+    //MARK: - UI Components
+    
     private let rootView = OnboardingJoinFamilyView.init(onboardingState: .processCodeReceived)
     
     //MARK: - Life Cycle
+    
+    init(viewModel: OnboardingJoinFamilyViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         self.view = rootView
@@ -25,68 +39,51 @@ final class OnboardingJoinFamilyViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        register()
-        target()
+        bindUI()
+        bindViewModel()
     }
     
     //MARK: - Custom Method
     
-    func register() {
-        rootView.familyCodeTextField.delegate = self
+    func bindUI() {
+        rootView.backButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.navigationController?.popViewController(animated: true)
+        }).disposed(by: disposeBag)
     }
     
-    func target() {
-        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        rootView.nextButton.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
-    }
-    
-    //MARK: - Action Method
-    
-    @objc private func backButtonDidTap() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    @objc private func nextButtonDidTap() {
-        requestJoinFamilyAPI()
+    func bindViewModel() {
+        let input = OnboardingJoinFamilyViewModel.Input (
+            familyCodeTextFieldDidChangeEvent: rootView.familyCodeTextField.rx.text.asObservable(),
+            nextButtonDidTapEvent: rootView.nextButton.rx.tap.asObservable()
+        )
+        
+        let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
+        
+        output.enteredCode
+            .asDriver(onErrorJustReturn: "")
+            .drive(with: self, onNext: { owner, enteredCode in
+                owner.rootView.familyCodeTextField.text = enteredCode
+            }).disposed(by: disposeBag)
+        
+        output.ableToCheckCode
+            .asDriver(onErrorJustReturn: Bool())
+            .drive(with: self, onNext: { owner, ableToCheckCode in
+                owner.rootView.nextButton.isEnabled = ableToCheckCode
+            }).disposed(by: disposeBag)
+        
+        output.errMessage
+            .asDriver(onErrorJustReturn: nil)
+            .drive(with: self, onNext: { owner, errMessage in
+                guard let errMessage else { return }
+                owner.showToast(errMessage, type: .bad)
+            }).disposed(by: disposeBag)
+        
     }
 }
 
 extension OnboardingJoinFamilyViewController {
-    private func requestJoinFamilyAPI() {
-        guard let code = rootView.familyCodeTextField.text else { return }
-        let param = OnboardingJoinFamilyRequest(code: code)
-        OnboardingAPI.shared.postJoinFamily(requset: param) { result in
-            
-            switch result {
-            case .success(let data):
-                guard let result = data as? OnboardingJoinFamilyResult else { return }
-                UserDefaultsManager.familyID = String(result.familyID)
-                self.requestFCMTokenAPI()
-            case .requestErr(let msg):
-                self.showToast(msg, type: .bad)
-            default:
-                self.validateResult(result)
-            }
-        }
-    }
-    
-    private func requestFCMTokenAPI() {
-        OnboardingAPI.shared.patchFCMToken(fcmToken: UserDefaultsManager.fcmToken) { result in
-            self.pushToJoinCompletedViewController()
-            
-        }
-    }
-    
-    func pushToJoinCompletedViewController() {
+    private func pushToJoinCompletedViewController() {
         let joinCompletedVC = OnboardingJoinFamilyCompletedViewController()
         self.navigationController?.pushViewController(joinCompletedVC, animated: true)
-    }
-}
-
-//MARK: - UITextFieldDelegate
-
-extension OnboardingJoinFamilyViewController: UITextFieldDelegate {
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        self.rootView.nextButton.isEnabled = textField.hasText
     }
 }

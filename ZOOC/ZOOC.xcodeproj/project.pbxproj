@@ -46,7 +46,7 @@
 		871EA35B2970BE8400D0E8CC /* RecordPetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871EA35A2970BE8400D0E8CC /* RecordPetResult.swift */; };
 		871EA35D2970CFA700D0E8CC /* SimpleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871EA35C2970CFA700D0E8CC /* SimpleResponse.swift */; };
 		872367112A12AC4E00DCBBFF /* ArchiveModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872367102A12AC4E00DCBBFF /* ArchiveModel.swift */; };
-		872367132A136C7300DCBBFF /* ArchiveGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872367122A136C7300DCBBFF /* ArchiveGuideViewController.swift */; };
+		872367132A136C7300DCBBFF /* ArchiveGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872367122A136C7300DCBBFF /* ArchiveGuideView.swift */; };
 		872367162A19062700DCBBFF /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 872367152A19062700DCBBFF /* Sentry */; };
 		872367192A19080600DCBBFF /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872367182A19080600DCBBFF /* AuthError.swift */; };
 		8723671C2A19276A00DCBBFF /* ArchiveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8723671B2A19276A00DCBBFF /* ArchiveService.swift */; };
@@ -78,6 +78,10 @@
 		8764833529523BCA00F74882 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 8764833429523BCA00F74882 /* Then */; };
 		8764833829523BEE00F74882 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 8764833729523BEE00F74882 /* Moya */; };
 		8764833B29523C0100F74882 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 8764833A29523C0100F74882 /* Kingfisher */; };
+		8764A6232ACD05D1007D4B0A /* ArchiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764A6222ACD05D1007D4B0A /* ArchiveViewModel.swift */; };
+		8764A6252ACD0624007D4B0A /* ArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764A6242ACD0624007D4B0A /* ArchiveView.swift */; };
+		8764A6272ACD4E95007D4B0A /* Direction+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764A6262ACD4E95007D4B0A /* Direction+.swift */; };
+		8764A6292ACD5395007D4B0A /* ArchiveToastCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764A6282ACD5395007D4B0A /* ArchiveToastCase.swift */; };
 		8765549F295846F3006BBDA9 /* ZoocTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8765549E295846F3006BBDA9 /* ZoocTabBarController.swift */; };
 		876554A3295848D6006BBDA9 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876554A2295848D5006BBDA9 /* BaseViewController.swift */; };
 		876554A72958494B006BBDA9 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876554A62958494B006BBDA9 /* MyViewController.swift */; };
@@ -391,7 +395,7 @@
 		871EA35A2970BE8400D0E8CC /* RecordPetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordPetResult.swift; sourceTree = "<group>"; };
 		871EA35C2970CFA700D0E8CC /* SimpleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleResponse.swift; sourceTree = "<group>"; };
 		872367102A12AC4E00DCBBFF /* ArchiveModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveModel.swift; sourceTree = "<group>"; };
-		872367122A136C7300DCBBFF /* ArchiveGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveGuideViewController.swift; sourceTree = "<group>"; };
+		872367122A136C7300DCBBFF /* ArchiveGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveGuideView.swift; sourceTree = "<group>"; };
 		872367182A19080600DCBBFF /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 		8723671B2A19276A00DCBBFF /* ArchiveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveService.swift; sourceTree = "<group>"; };
 		8723671D2A19277300DCBBFF /* ArchiveAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveAPI.swift; sourceTree = "<group>"; };
@@ -418,6 +422,10 @@
 		876483262952370F00F74882 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		87648328295237B500F74882 /* Adjusted+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Adjusted+.swift"; sourceTree = "<group>"; };
 		8764832A295238EB00F74882 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
+		8764A6222ACD05D1007D4B0A /* ArchiveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveViewModel.swift; sourceTree = "<group>"; };
+		8764A6242ACD0624007D4B0A /* ArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveView.swift; sourceTree = "<group>"; };
+		8764A6262ACD4E95007D4B0A /* Direction+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Direction+.swift"; sourceTree = "<group>"; };
+		8764A6282ACD5395007D4B0A /* ArchiveToastCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveToastCase.swift; sourceTree = "<group>"; };
 		8765549E295846F3006BBDA9 /* ZoocTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocTabBarController.swift; sourceTree = "<group>"; };
 		876554A2295848D5006BBDA9 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		876554A62958494B006BBDA9 /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
@@ -812,7 +820,6 @@
 		872BBD9329F959E2002E2C71 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				87DF04ED2AC82DFB00E10B2D /* Toast */,
 				87DDDD93298E607C00CBEC79 /* Device.swift */,
 				872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */,
 				872BBD9629F95BE2002E2C71 /* UserDefaultsManager.swift */,
@@ -869,6 +876,7 @@
 				D2ED94872AB8476F0040B687 /* UIImagePicker+Rx.swift */,
 				87E4A1CD2AAB3075005C012E /* Results+.swift */,
 				D24DA0C42AC5F9A40037D0A2 /* BehaviorRelay+.swift */,
+				8764A6262ACD4E95007D4B0A /* Direction+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -878,6 +886,7 @@
 			children = (
 				872367172A1907FC00DCBBFF /* Error */,
 				D22EF9012A7C9BA80050E325 /* DesignPattern */,
+				87DF04ED2AC82DFB00E10B2D /* Toast */,
 				872BBD9329F959E2002E2C71 /* Utility */,
 				876483172952355A00F74882 /* Constant */,
 				87648315295234C100F74882 /* Extension */,
@@ -894,6 +903,14 @@
 				87C6C4C82A537902003DA38A /* TextLiteral.swift */,
 			);
 			path = Constant;
+			sourceTree = "<group>";
+		};
+		8764A6212ACD05BC007D4B0A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				8764A6222ACD05D1007D4B0A /* ArchiveViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		8765549D295846E7006BBDA9 /* Base */ = {
@@ -1514,6 +1531,7 @@
 			children = (
 				87BCAD3D2AA9BA2900A03DA3 /* Toast.swift */,
 				87DF04EB2AC82D5D00E10B2D /* ShopToastCase.swift */,
+				8764A6282ACD5395007D4B0A /* ArchiveToastCase.swift */,
 			);
 			path = Toast;
 			sourceTree = "<group>";
@@ -1534,6 +1552,7 @@
 				87E462F92A129BB7006FC35D /* Cell */,
 				87E462FA2A129BBD006FC35D /* View */,
 				87E462FB2A129BC3006FC35D /* Controller */,
+				8764A6212ACD05BC007D4B0A /* ViewModel */,
 			);
 			path = Archive;
 			sourceTree = "<group>";
@@ -1550,8 +1569,9 @@
 		87E462FA2A129BBD006FC35D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				872367122A136C7300DCBBFF /* ArchiveGuideView.swift */,
+				8764A6242ACD0624007D4B0A /* ArchiveView.swift */,
 				87DDDD91298E5BE500CBEC79 /* ArchiveCommentView.swift */,
-				8747389D299E84B400C4CC52 /* EmojiBottomSheetViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1559,8 +1579,8 @@
 		87E462FB2A129BC3006FC35D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				872367122A136C7300DCBBFF /* ArchiveGuideViewController.swift */,
 				877E57F12966D13E006D82FC /* ArchiveViewController.swift */,
+				8747389D299E84B400C4CC52 /* EmojiBottomSheetViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2220,6 +2240,7 @@
 				871EA35B2970BE8400D0E8CC /* RecordPetResult.swift in Sources */,
 				D26C860C296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift in Sources */,
 				876554A72958494B006BBDA9 /* MyViewController.swift in Sources */,
+				8764A6252ACD0624007D4B0A /* ArchiveView.swift in Sources */,
 				D2CA73192ACB229700DC17A4 /* DefaultRecordSelectPetUseCase.swift in Sources */,
 				D2350309296490A700F01101 /* MyEditProfileView.swift in Sources */,
 				87B6624129521E7500B6FFA9 /* AppDelegate.swift in Sources */,
@@ -2283,6 +2304,7 @@
 				8771843D2A0541B700AB7DE4 /* AuthService.swift in Sources */,
 				87BCA64429BB524D00D8DB58 /* OnboardingMakeFamilyResult.swift in Sources */,
 				D20C008D2A96E23500666963 /* GenAIGuideViewModel.swift in Sources */,
+				8764A6292ACD5395007D4B0A /* ArchiveToastCase.swift in Sources */,
 				D27D9564296CA9720097CD03 /* OnboardingInviteCompletedFamilyView.swift in Sources */,
 				D2B735622A8BA1D700F93C45 /* GenAIGuideViewController.swift in Sources */,
 				877E57F22966D13E006D82FC /* ArchiveViewController.swift in Sources */,
@@ -2366,6 +2388,7 @@
 				872BBD9529F959FC002E2C71 /* UserDefaultWrapper.swift in Sources */,
 				87A76AA5295F6EC40096F669 /* HomeAPI.swift in Sources */,
 				87FD185F2AB36A1800A1431E /* PaymentType.swift in Sources */,
+				8764A6272ACD4E95007D4B0A /* Direction+.swift in Sources */,
 				D2F3D6002A4411FF00C90A5A /* MyEditPetProfileView.swift in Sources */,
 				87A76AA7295F6ECD0096F669 /* MyService.swift in Sources */,
 				D26C8614296B7F3E00AEAF9B /* OnboardingRegisterPetTableViewCell.swift in Sources */,
@@ -2399,6 +2422,7 @@
 				D26C68EC296DE7B60088DC9A /* MyPetRegisterModel.swift in Sources */,
 				87E4A1C92AAAF8AC005C012E /* DefaultRealmService.swift in Sources */,
 				D2EA37EF29BEAB57007EF4B7 /* OnboardingBaseView.swift in Sources */,
+				8764A6232ACD05D1007D4B0A /* ArchiveViewModel.swift in Sources */,
 				D24AFABC2A8E03EF00823E9C /* GenAIRegisterPetViewModel.swift in Sources */,
 				D21CEC6229ABC1F900854A36 /* MyRegisterPetResult.swift in Sources */,
 				87C109252971A5B40086466F /* ArchiveCommentReqeust.swift in Sources */,
@@ -2408,7 +2432,7 @@
 				87D5AF622960CFE500CA7F12 /* HomeGuideCollectionViewCell.swift in Sources */,
 				4C6B186A296C82850059840D /* RecordRegisterFourCollectionViewCell.swift in Sources */,
 				D26C68F62970B0640088DC9A /* HomeNoticeTableViewCell.swift in Sources */,
-				872367132A136C7300DCBBFF /* ArchiveGuideViewController.swift in Sources */,
+				872367132A136C7300DCBBFF /* ArchiveGuideView.swift in Sources */,
 				D24DA0BE2AC5D6760037D0A2 /* DefaultMyRegisterPetUseCase.swift in Sources */,
 				872BBD9229F9576E002E2C71 /* UIApplication+.swift in Sources */,
 				870A4C0C2AA2823900D7CFD8 /* ProductSelectedOptionCollectionViewCell.swift in Sources */,

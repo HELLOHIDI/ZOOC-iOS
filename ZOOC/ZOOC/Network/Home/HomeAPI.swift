@@ -51,7 +51,7 @@ extension HomeAPI{
         }
     }
     
-    func postComment(recordID: String,
+    func postComment(recordID: Int,
                      comment: String,
                      completion: @escaping (NetworkResult<Any>) -> Void) {
         homeProvider.request(.postComment(recordID: recordID, comment: comment)) { (result) in
@@ -59,7 +59,7 @@ extension HomeAPI{
         }
     }
     
-    func postEmojiComment(recordID: String,
+    func postEmojiComment(recordID: Int,
                           emojiID: Int,
                           completion: @escaping (NetworkResult<Any>) -> Void) {
         homeProvider.request(.postEmojiComment(recordID: recordID, emojiID: emojiID)) { (result) in

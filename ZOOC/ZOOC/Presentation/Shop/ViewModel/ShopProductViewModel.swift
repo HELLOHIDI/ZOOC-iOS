@@ -75,13 +75,9 @@ final class ShopProductViewModel {
                 
                 guard let productData = owner.productData else { return }
                 
-                var orderProducts: [OrderProduct] = []
-                selectedProductOptions.forEach {
-                    orderProducts.append(OrderProduct(petID: owner.model.petID,
-                                                      product: productData,
-                                                      selectedProductOption: $0))
-                }
-                
+                let orderProducts = selectedProductOptions.map { OrderProduct(petID: owner.model.petID,
+                                                                              product: productData,
+                                                                              selectedProductOption: $0)}
                 output.pushToOrderVC.accept(orderProducts)
             })
             .disposed(by: disposeBag)

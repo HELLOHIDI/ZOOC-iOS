@@ -21,6 +21,7 @@ final class ShopViewModel {
     }
     
     struct Output {
+        let petAiData = PublishRelay<[PetAiResult]>()
         let productData = PublishRelay<[ProductResult]>()
         let pushShopProductVC = PublishRelay<ShopProductModel>()
         let showToast = PublishRelay<ShopToastCase>()
@@ -28,12 +29,14 @@ final class ShopViewModel {
     
     //MARK: - Properties
     
+    private var petData: [PetResult] = []
     private var petID: Int
     
     //MARK: - Life Cycle
     
-    init(petID: Int) {
+    init(petID: Int, petData: [PetResult] = []) {
         self.petID = petID
+        self.petData = petData
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -43,6 +46,8 @@ final class ShopViewModel {
                                input.refreshValueChangedEvent)
             .subscribe(with: self) { owner, _ in
                 owner.requestProductsAPI(output: output)
+                owner.requestTotalPetAPI(output: output)
+                //output.petAiData.accept(owner.petData.map { $0.transform(state: .done)})
             }
             .disposed(by: disposeBag)
         
@@ -59,12 +64,27 @@ final class ShopViewModel {
             })
             .disposed(by: disposeBag)
         
+        
         return output
     }
     
 }
 
 extension ShopViewModel {
+    
+    private func requestTotalPetAPI(output: Output) {
+        HomeAPI.shared.getTotalPet(familyID: UserDefaultsManager.familyID) { result in
+            switch result {
+            case .success(let data):
+                guard let data = data as? [PetResult] else { return }
+                //TODO: 빈 배열일 때 처리
+                let petAiData = data.map { $0.transform(state: .done)}
+                output.petAiData.accept(petAiData)
+            default:
+                break
+            }
+        }
+    }
     
     private func requestProductsAPI(output: Output) {
         ShopAPI.shared.getTotalProducts { result in

@@ -20,4 +20,11 @@ extension PetResult{
                             petName: self.name,
                             isSelected: false)
     }
+    
+    func transform(state: PetAiState) -> PetAiResult {
+        PetAiResult(id: id,
+                    name: name,
+                    photo: photo,
+                    state: state)
+    }
 }

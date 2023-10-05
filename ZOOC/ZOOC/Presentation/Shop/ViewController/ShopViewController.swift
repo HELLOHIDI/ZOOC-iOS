@@ -19,6 +19,7 @@ final class ShopViewController: BaseViewController {
     
     private let rootView = ShopView()
     private let refreshControl = UIRefreshControl()
+    
 
     //MARK: - Life Cycle
     
@@ -28,7 +29,7 @@ final class ShopViewController: BaseViewController {
         
         bindUI()
         bindViewModel()
-        rootView.collectionView.refreshControl = refreshControl
+        rootView.shopCollectionView.refreshControl = refreshControl
     }
     
     
@@ -64,22 +65,50 @@ final class ShopViewController: BaseViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
+        rootView.shopPetView.rx.tapGesture()
+            .when(.recognized)
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.rootView.showPetCollectionView(true)
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     func bindViewModel() {
         let input = ShopViewModel.Input(
-            viewDidLoadEvent:
-                self.rx.viewDidLoad.asObservable(),
+            viewDidLoadEvent: self.rx.viewDidLoad.asObservable(),
             refreshValueChangedEvent: self.refreshControl.rx.controlEvent(.valueChanged).asObservable(),
-            productCellDidSelectEvent:  self.rootView.collectionView.rx.modelSelected(ProductResult.self).asObservable()
+            productCellDidSelectEvent:  self.rootView.shopCollectionView.rx.modelSelected(ProductResult.self).asObservable()
         )
         
         let output = self.viewModel.transform(input: input, disposeBag: disposeBag)
         
+        
+        output.petAiData
+            .asDriver(onErrorJustReturn: [])
+            .drive(
+                rootView.petCollectionView.rx.items(cellIdentifier: ShopPetCollectionViewCell.reuseCellIdentifier,
+                                                    cellType: ShopPetCollectionViewCell.self)
+            ) { row, data, cell in
+                print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
+                cell.dataBind(data)
+            }
+            .disposed(by: disposeBag)
+        
+        
+        output.petAiData
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self, onNext: { owner, petData in
+                guard !petData.isEmpty else { return }
+                owner.rootView.updateUI(petData.first!)
+            })
+            .disposed(by: disposeBag)
+        
         output.productData
             .asDriver(onErrorJustReturn: [])
             .drive(
-                rootView.collectionView.rx.items(
+                rootView.shopCollectionView.rx.items(
                     cellIdentifier: ShopProductCollectionViewCell.reuseCellIdentifier,
                     cellType: ShopProductCollectionViewCell.self)
             ) { row, data, cell in

@@ -17,6 +17,7 @@ class ZoocTabBarController: UITabBarController {
     
     private var petData: [PetResult] = []
     
+    
     let homeViewController = HomeViewController()
 //    let myViewController = MyViewController(
 //        viewModel: MyViewModel(
@@ -25,7 +26,8 @@ class ZoocTabBarController: UITabBarController {
 //            )
 //        )
 //    )
-    let shopVC = ShopViewController(viewModel: ShopViewModel(petID: 1))
+    
+    var shopVC = ShopViewController(viewModel: ShopViewModel(petID: 1))
     
     lazy var homeNavigationContrller = UINavigationController(rootViewController: homeViewController)
     lazy var shopNavigationController = UINavigationController(rootViewController: shopVC)

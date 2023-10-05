@@ -14,6 +14,12 @@ final class MyView: UIView  {
     
     //MARK: - UI Components
     
+    let backButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Image.back, for: .normal)
+        return button
+    }()
+    
     internal var scrollView = UIScrollView()
     private let contentView = UIView()
     internal let profileView = MyProfileView()
@@ -45,7 +51,9 @@ final class MyView: UIView  {
     }
     
     private func hierarchy() {
-        self.addSubview(scrollView)
+        addSubviews(backButton,
+                        scrollView)
+        
         scrollView.addSubview(contentView)
         contentView.addSubviews(
             profileView,
@@ -57,8 +65,15 @@ final class MyView: UIView  {
     }
     
     private func layout() {
+        
+        backButton.snp.makeConstraints {
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(11)
+            $0.leading.equalToSuperview().inset(17)
+            $0.size.equalTo(42)
+        }
+        
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide)
+            $0.top.equalTo(backButton.snp.bottom)
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.bottom.equalToSuperview()
         }

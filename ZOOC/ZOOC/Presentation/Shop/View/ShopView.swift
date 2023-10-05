@@ -16,6 +16,7 @@ final class ShopView: UIView {
     let backButton: UIButton = {
         let button = UIButton()
         button.setImage(Image.back, for: .normal)
+        button.isHidden = true //MARK: Shopping몰 <-> 마이페이지 위치 바뀌며 삭제된 버튼 (23.10.05)
         return button
     }()
     
@@ -66,9 +67,9 @@ final class ShopView: UIView {
     
     private func hierarchy() {
         addSubviews(backButton,
-                     logoImageView,
-                     cartButton,
-                     collectionView)
+                    logoImageView,
+                    cartButton,
+                    collectionView)
     }
     
     private func layout() {

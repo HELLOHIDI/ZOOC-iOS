@@ -45,6 +45,7 @@ public enum Image{
     static let list = UIImage(named: "list")!
     static let minusCircle = UIImage(named: "minus.circle")!
     static let noise = UIImage(named: "noise")!
+    static let personFill = UIImage(named: "person.fill")!
     static let person = UIImage(named: "person")!
     static let plusCircle = UIImage(named: "plus.circle")!
     static let plus = UIImage(named: "plus")!

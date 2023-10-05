@@ -86,10 +86,8 @@ final class ArchiveCommentCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-    }
+
+    
     //MARK: - Custom Method
     
     private func setUI() {
@@ -103,13 +101,12 @@ final class ArchiveCommentCollectionViewCell: UICollectionViewCell {
                                 commentLabel,
                                 commentEmojiImageView,
                                 dateLabel,
-                                etcButton
-                                )
+                                etcButton)
         
         writerImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(12)
-            $0.height.width.equalTo(38)
+            $0.size.equalTo(38)
         }
         
         writerLabel.snp.makeConstraints {
@@ -133,7 +130,6 @@ final class ArchiveCommentCollectionViewCell: UICollectionViewCell {
             $0.leading.equalTo(writerLabel)
             $0.size.equalTo(84)
         }
-        
         
         etcButton.snp.makeConstraints {
             $0.centerY.equalTo(writerLabel)

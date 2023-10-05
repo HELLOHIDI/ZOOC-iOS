@@ -14,8 +14,6 @@ final class ArchiveView: UIView {
     
     //MARK: - Properties
     
-    var scrollDown = false
-    
     //MARK: - UI Components
     
     let scrollView = UIScrollView()
@@ -110,7 +108,11 @@ final class ArchiveView: UIView {
             
             $0.collectionViewLayout = layout
             $0.isScrollEnabled = false
+            $0.contentInset = UIEdgeInsets(top: 10, left: 18, bottom: 30, right: 18)
             $0.backgroundColor = .clear
+            
+            $0.register(ArchiveCommentCollectionViewCell.self,
+                        forCellWithReuseIdentifier: ArchiveCommentCollectionViewCell.reuseCellIdentifier)
         }
         
     }
@@ -227,24 +229,26 @@ final class ArchiveView: UIView {
     }
     
     
-    func updateCommentsUI(_ data: [CommentResult]) {
-        commentCollectionView.reloadData()
+    func updateCommentsUI(_ data: [CommentResult], scrollDown: Bool) {
         commentCollectionView.layoutIfNeeded()
         commentCollectionView.snp.updateConstraints {
-            let contentHeight = self.commentCollectionView.contentSize.height
+            let contentHeight = self.commentCollectionView.contentSize.height + 40
             let height = (contentHeight > 450 ) ? contentHeight : 450
             $0.height.greaterThanOrEqualTo(height)
         }
-        
-        if scrollDown{
+
+        if scrollDown {
             scrollView.layoutSubviews()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.scrollView.setContentOffset(CGPoint(x: 0,
                                                          y: self.scrollView.contentSize.height - self.scrollView.bounds.height),
                                                  animated: true)
             }
         } else {
-            scrollDown = true
+            scrollView.setContentOffset(CGPoint(x: 0,
+                                                y: 0),
+                                        animated: true)
+            
         }
         
     }

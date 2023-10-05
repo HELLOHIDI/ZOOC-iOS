@@ -14,7 +14,6 @@ import RxSwift
 
 
 enum HorizontalSwipe {
-    //default value: left
     case left
     case right
 }
@@ -22,6 +21,8 @@ enum HorizontalSwipe {
 final class ArchiveViewController : BaseViewController {
     
     //MARK: - Properties
+    
+    private var scrollDown: Bool = false
     
     private let viewModel: ArchiveViewModel
     private let rootView = ArchiveView()
@@ -37,9 +38,9 @@ final class ArchiveViewController : BaseViewController {
     
     //MARK: - Life Cycle
     
-    init(viewModel: ArchiveViewModel, scrollDown: Bool) {
+    init(viewModel: ArchiveViewModel, scrollDown: Bool = false) {
         self.viewModel = viewModel
-        rootView.scrollDown = scrollDown
+        self.scrollDown = scrollDown
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -90,13 +91,8 @@ final class ArchiveViewController : BaseViewController {
     
     private func register() {
         rootView.commentCollectionView.delegate = self
-        rootView.commentCollectionView.dataSource = self
         rootView.commentView.delegate = self
         emojiBottomSheetViewController.delegate = self
-        
-            
-        rootView.commentCollectionView.register(ArchiveCommentCollectionViewCell.self,
-                                       forCellWithReuseIdentifier: ArchiveCommentCollectionViewCell.cellIdentifier)
     }
     
     func bindUI() {
@@ -121,17 +117,11 @@ final class ArchiveViewController : BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        rootView.rx.swipeGesture(.left).asObservable()
-            .subscribe(with: self, onNext: { owner, swipe in
-                print("왼쪽~~")
-            })
-            .disposed(by: disposeBag)
-        
     }
     
     func bindViewModel() {
         let input = ArchiveViewModel.Input(
-            viewDidLoadEvent: rx.viewDidLoad.asObservable(),
+            viewDidLoadEvent: rx.viewWillAppear.asObservable(),
             deleteArchiveButtonDidTap: rootView.etcButton.rx.tap.asObservable(),
             swipeGestureEvent: rootView.rx.swipeGesture(.left, .right).asObservable().map { $0.direction.transform()},
             commentUploadButtonDidTapEvent: uploadCommentButtonDidTapEvent.asObservable(),
@@ -160,38 +150,31 @@ final class ArchiveViewController : BaseViewController {
         
         output.commentData
             .asDriver(onErrorJustReturn: [])
+            .drive(
+                rootView.commentCollectionView.rx.items(cellIdentifier: ArchiveCommentCollectionViewCell.reuseCellIdentifier,
+                                                        cellType: ArchiveCommentCollectionViewCell.self)
+            ) { row, data, cell in
+                cell.dataBind(data: data)
+                cell.delegate = self
+            }
+            .disposed(by: disposeBag)
+        
+        output.commentData
+            .asDriver(onErrorJustReturn: [])
             .drive(with: self, onNext: { owner, data in
-                owner.rootView.updateCommentsUI(data)
+                owner.rootView.updateCommentsUI(data, scrollDown: owner.scrollDown)
+                owner.scrollDown = false
             })
             .disposed(by: disposeBag)
         
-    }
-    
-    private func updateNewPage(_ direction: UISwipeGestureRecognizer.Direction) {
-        var message: String
-        var id: Int?
-        switch direction {
-        case .left:
-            message = "가장 최근 페이지입니다."
-            id = archiveData?.leftID
-        case .right:
-            message = "마지막 페이지 입니다."
-            id = archiveData?.rightID
-        default:
-            return
-        }
+        output.showToast
+            .asDriver(onErrorJustReturn: .unknown)
+            .drive(with: self, onNext: { owner, toast in
+                owner.showToast(toast)
+            })
+            .disposed(by: disposeBag)
+
         
-        guard let id else {
-            showToast(message, type: .normal)
-            return
-        }
-        
-        archiveModel.recordID = id
-        rootView.scrollDown = false
-        rootView.scrollView.setContentOffset(CGPoint(x: 0,
-                                                 y: 0),
-                                         animated: true)
-        requestDetailArchiveAPI(request: archiveModel)
     }
     
     private func presentZoocAlertVC() {
@@ -209,9 +192,8 @@ final class ArchiveViewController : BaseViewController {
         
        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
        
-       if archiveData.record.isMyRecord {
-           let destructiveAction = UIAlertAction(title: "삭제하기",
-                                                  style: .destructive) { _ in
+       if viewModel.getIsMyRecrod() {
+           let destructiveAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
                 self.presentZoocAlertVC()
             }
             alert.addAction(destructiveAction)
@@ -219,7 +201,7 @@ final class ArchiveViewController : BaseViewController {
             let reportAction =  UIAlertAction(title: "신고하기", style: .default) { _ in
                
                 self.sendMail(subject: "[ZOOC] 게시글 신고하기",
-                              body: TextLiteral.mailRecordReportBody(recordID: self.archiveModel.recordID))
+                              body: TextLiteral.mailRecordReportBody(recordID: self.viewModel.getArchiveID()))
             }
             alert.addAction(reportAction)
         }
@@ -266,23 +248,6 @@ final class ArchiveViewController : BaseViewController {
     }
 }
 
-//MARK: - UICollectionViewDataSource
-
-extension ArchiveViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView,
-                        numberOfItemsInSection section: Int) -> Int {
-        return commentsData.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ArchiveCommentCollectionViewCell.cellIdentifier,
-                                                      for: indexPath) as! ArchiveCommentCollectionViewCell
-        cell.delegate = self
-        cell.dataBind(data: commentsData[indexPath.item])
-        return cell
-    }
-}
 
 //MARK: - UICollectionViewDelegateFlowLayout
 
@@ -292,11 +257,11 @@ extension ArchiveViewController: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width - 36
         
-        if commentsData[indexPath.item].isEmoji{
+        if viewModel.getCommentIsEmoji(row: indexPath.item) {
             return CGSize(width: width, height: 126)
         } else {
             // 셀의 너비는 collectionView의 너비와 같습니다.
-            let comment = commentsData[indexPath.item].content
+            let comment = viewModel.getCommentContent(row: indexPath.item)
             let commentLabel = UILabel(frame: CGRect(x: 0,
                                                      y: 0,
                                                      width: width,
@@ -316,12 +281,6 @@ extension ArchiveViewController: UICollectionViewDelegateFlowLayout {
         
         
     }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 18, bottom: 30, right: 18)
-    }
 }
 
 //MARK: - CommentViewDelegate
@@ -329,12 +288,13 @@ extension ArchiveViewController: UICollectionViewDelegateFlowLayout {
 extension ArchiveViewController: ArchiveCommentViewDelegate {
    
     func uploadButtonDidTap(_ textField: UITextField, text: String) {
-        guard let archiveData else { return }
+        scrollDown = true
         view.endEditing(true)
-        uploadCommentButtonDidTapEvent.accept(text)\
+        uploadCommentButtonDidTapEvent.accept(text)
     }
     
     func emojiButtonDidTap() {
+        scrollDown = true
         view.endEditing(true)
         present(emojiBottomSheetViewController, animated: false)
     }
@@ -347,26 +307,23 @@ extension ArchiveViewController: ArchiveCommentCellDelegate {
         let alert = UIAlertController(title: nil,
                                       message: nil,
                                       preferredStyle: .actionSheet)
-        let reportAction =  UIAlertAction(title: "신고하기", style: .default) { action in
-           
-            self.sendMail(subject: "[ZOOC] 댓글 신고하기", body: TextLiteral.mailCommentReportBody(commentID: id))
-        }
-        
-        let destructiveAction = UIAlertAction(title: "삭제하기",
-                                              style: .destructive) { action in
-            self.commentDeleteButtonDidTapEvent.accept(id)
-        }
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-
-        //메시지 창 컨트롤러에 버튼 액션을 추가
-        alert.addAction(reportAction)
+        alert.addAction(cancelAction)
         
         if isMyComment {
+            let destructiveAction = UIAlertAction(title: "삭제하기",
+                                                  style: .destructive) { action in
+                self.commentDeleteButtonDidTapEvent.accept(id)
+            }
             alert.addAction(destructiveAction)
+        } else {
+            let reportAction =  UIAlertAction(title: "신고하기", style: .default) { action in
+               
+                self.sendMail(subject: "[ZOOC] 댓글 신고하기", body: TextLiteral.mailCommentReportBody(commentID: id))
+            }
+            alert.addAction(reportAction)
         }
-        alert.addAction(cancelAction)
-
         self.present(alert, animated: true)
     }
    
@@ -376,7 +333,6 @@ extension ArchiveViewController: ArchiveCommentCellDelegate {
 
 extension ArchiveViewController: EmojiBottomSheetDelegate{
     func emojiDidSelected(emojiID: Int) {
-        guard let recordID = archiveData?.record.id else { return }
         emojiDidSelectEvent.accept(emojiID)
     }
     

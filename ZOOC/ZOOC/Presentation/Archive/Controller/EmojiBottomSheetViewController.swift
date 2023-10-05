@@ -34,7 +34,11 @@ final class EmojiBottomSheetViewController: UIViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        emojiBottomSheetViewController.modalPresentationStyle = .overFullScreen
+        self.modalPresentationStyle = .overFullScreen
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {

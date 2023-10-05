@@ -32,7 +32,6 @@ final class ArchiveViewModel {
     }
         
     private var archiveModel: ArchiveModel
-    
     private var archvieData: ArchiveResult?
     private var commentData: [CommentResult] = []
 
@@ -210,4 +209,26 @@ extension ArchiveViewModel {
         }
     }
     
+}
+
+extension ArchiveViewModel {
+    func getArchiveID() ->  Int {
+        guard let archvieData else { return Int() }
+        return archvieData.record.id
+    }
+    
+    func getIsMyRecrod() -> Bool {
+        guard let archvieData else { return Bool() }
+        return archvieData.record.isMyRecord   
+    }
+    
+    func getCommentIsEmoji(row: Int) -> Bool {
+        guard commentData.count > row else { return Bool() }
+        return commentData[row].isEmoji
+    }
+    
+    func getCommentContent(row: Int) -> String? {
+        guard commentData.count > row else { return String() }
+        return commentData[row].content
+    }
 }

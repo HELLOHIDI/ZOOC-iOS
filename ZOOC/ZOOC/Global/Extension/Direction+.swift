@@ -10,8 +10,8 @@ import UIKit
 extension UISwipeGestureRecognizer.Direction {
     func transform() -> HorizontalSwipe {
         switch self {
-        case .left: return .left
-        case .right: return .right
+        case .left: return .right
+        case .right: return .left
         default: return .left
         }
     }

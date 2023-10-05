@@ -99,7 +99,7 @@ final class ShopViewController: BaseViewController {
         output.showToast
             .asDriver(onErrorJustReturn: .unknown)
             .drive(with: self, onNext: { owner, toast in
-                owner.showToast(toast, bottomInset: 40)
+                owner.showToast(toast)
             })
             .disposed(by: disposeBag)
     }

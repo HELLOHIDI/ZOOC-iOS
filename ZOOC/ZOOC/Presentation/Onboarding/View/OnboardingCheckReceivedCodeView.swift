@@ -14,9 +14,9 @@ final class OnboardingCheckReceivedCodeView: OnboardingBaseView {
     
     //MARK: - UI Components
     
-    public let titleLabel = UILabel()
-    public let subTitleLabel = UILabel()
-    public let completeImage = UIImageView()
+    private let titleLabel = UILabel()
+    private let subTitleLabel = UILabel()
+    private let completeImage = UIImageView()
     public lazy var getCodeButton = ZoocGradientButton.init(.network)
     public lazy var notGetCodeButton = ZoocGradientButton()
     
@@ -81,7 +81,6 @@ final class OnboardingCheckReceivedCodeView: OnboardingBaseView {
     }
     
     private func layout() {
-        
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(103)
             $0.leading.equalToSuperview().offset(30)

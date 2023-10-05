@@ -15,6 +15,9 @@ final class OnboardingWelcomeViewController: UIViewController{
     //MARK: - Properties
     
     private let disposeBag = DisposeBag()
+    
+    //MARK: - UI Components
+    
     private let rootView = OnboardingWelcomeView.init(onboardingState: .makeFamily)
     
     //MARK: - Life Cycle
@@ -57,7 +60,13 @@ extension OnboardingWelcomeViewController {
     }
     
     private func pushToChooseFamilyRoleView() {
-        let onboardingCompleteProfileVC = OnboardingCheckReceivedCodeViewController()
+        let onboardingCompleteProfileVC = OnboardingCheckReceivedCodeViewController(
+            viewModel: OnboardingCheckReceivedCodeViewModel(
+                onboardingCheckReceivedCodeUseCase: DefaultOnboardingCheckReceivedCodeUseCase(
+                    repository: DefaultOnboardingRepository()
+                )
+            )
+        )
         self.navigationController?.pushViewController(onboardingCompleteProfileVC, animated: true)
     }
 }

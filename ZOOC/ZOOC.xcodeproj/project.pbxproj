@@ -205,6 +205,9 @@
 		D216380A2ACDC6790096D474 /* OnboardingLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21638092ACDC6780096D474 /* OnboardingLoginViewModel.swift */; };
 		D216380C2ACDDBC10096D474 /* OnboardingAgreementUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D216380B2ACDDBC10096D474 /* OnboardingAgreementUseCase.swift */; };
 		D216380E2ACDE22F0096D474 /* DefaultOnboardingAgreementUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D216380D2ACDE22F0096D474 /* DefaultOnboardingAgreementUseCase.swift */; };
+		D21638102ACF0E230096D474 /* OnboardingCheckReceivedCodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D216380F2ACF0E230096D474 /* OnboardingCheckReceivedCodeUseCase.swift */; };
+		D21638122ACF0E4C0096D474 /* DefaultOnboardingCheckReceivedCodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21638112ACF0E4C0096D474 /* DefaultOnboardingCheckReceivedCodeUseCase.swift */; };
+		D21638142ACF10480096D474 /* OnboardingCheckReceivedCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21638132ACF10470096D474 /* OnboardingCheckReceivedCodeViewModel.swift */; };
 		D21CEC5C29AB9B3D00854A36 /* BaseTextFieldState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC5B29AB9B3D00854A36 /* BaseTextFieldState.swift */; };
 		D21CEC6029ABC01200854A36 /* MyRegisterPetsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC5F29ABC01200854A36 /* MyRegisterPetsRequest.swift */; };
 		D21CEC6229ABC1F900854A36 /* MyRegisterPetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC6129ABC1F900854A36 /* MyRegisterPetResult.swift */; };
@@ -548,6 +551,9 @@
 		D21638092ACDC6780096D474 /* OnboardingLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginViewModel.swift; sourceTree = "<group>"; };
 		D216380B2ACDDBC10096D474 /* OnboardingAgreementUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAgreementUseCase.swift; sourceTree = "<group>"; };
 		D216380D2ACDE22F0096D474 /* DefaultOnboardingAgreementUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultOnboardingAgreementUseCase.swift; sourceTree = "<group>"; };
+		D216380F2ACF0E230096D474 /* OnboardingCheckReceivedCodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCheckReceivedCodeUseCase.swift; sourceTree = "<group>"; };
+		D21638112ACF0E4C0096D474 /* DefaultOnboardingCheckReceivedCodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultOnboardingCheckReceivedCodeUseCase.swift; sourceTree = "<group>"; };
+		D21638132ACF10470096D474 /* OnboardingCheckReceivedCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCheckReceivedCodeViewModel.swift; sourceTree = "<group>"; };
 		D21CEC5B29AB9B3D00854A36 /* BaseTextFieldState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextFieldState.swift; sourceTree = "<group>"; };
 		D21CEC5F29ABC01200854A36 /* MyRegisterPetsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetsRequest.swift; sourceTree = "<group>"; };
 		D21CEC6129ABC1F900854A36 /* MyRegisterPetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetResult.swift; sourceTree = "<group>"; };
@@ -1528,6 +1534,7 @@
 			children = (
 				D26989A729A60EE7008A5ACC /* OnboardingAgreementViewModel.swift */,
 				D21638092ACDC6780096D474 /* OnboardingLoginViewModel.swift */,
+				D21638132ACF10470096D474 /* OnboardingCheckReceivedCodeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1725,6 +1732,7 @@
 				D21638012ACDC4080096D474 /* Protocol */,
 				D21638042ACDC54E0096D474 /* DefaultOnboardingLoginUseCase.swift */,
 				D216380D2ACDE22F0096D474 /* DefaultOnboardingAgreementUseCase.swift */,
+				D21638112ACF0E4C0096D474 /* DefaultOnboardingCheckReceivedCodeUseCase.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -1734,6 +1742,7 @@
 			children = (
 				D21638022ACDC41F0096D474 /* OnboardingLoginUseCase.swift */,
 				D216380B2ACDDBC10096D474 /* OnboardingAgreementUseCase.swift */,
+				D216380F2ACF0E230096D474 /* OnboardingCheckReceivedCodeUseCase.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -2151,6 +2160,7 @@
 				874369572A8FFB260035AFD6 /* NetworkMonitor.swift in Sources */,
 				87E462F12A110E18006FC35D /* CGColor+.swift in Sources */,
 				D235030729647B4200F01101 /* MyAppInformationViewController.swift in Sources */,
+				D21638102ACF0E230096D474 /* OnboardingCheckReceivedCodeUseCase.swift in Sources */,
 				8731C4B229A9400D00006743 /* EmojiCollectionViewCell.swift in Sources */,
 				87A76AA3295F6EB80096F669 /* HomeService.swift in Sources */,
 				8743695F2A90C4FB0035AFD6 /* HomeAiButton.swift in Sources */,
@@ -2230,6 +2240,7 @@
 				87809C2E2A8CC32F0060641F /* VersionState.swift in Sources */,
 				D23502F92961F34100F01101 /* MySettingView.swift in Sources */,
 				876483212952369500F74882 /* UICollectionViewCell+.swift in Sources */,
+				D21638122ACF0E4C0096D474 /* DefaultOnboardingCheckReceivedCodeUseCase.swift in Sources */,
 				D26C85E82968CD8E00AEAF9B /* OnboardingAgreementViewController.swift in Sources */,
 				87A76AAB295F6EDE0096F669 /* RecordService.swift in Sources */,
 				D2CADF692AC919CF00772100 /* RecordViewModel.swift in Sources */,
@@ -2420,6 +2431,7 @@
 				876483192952366A00F74882 /* Image.swift in Sources */,
 				4C6B1868296B930B0059840D /* RecordRegisterCollectionViewCell.swift in Sources */,
 				D21638032ACDC41F0096D474 /* OnboardingLoginUseCase.swift in Sources */,
+				D21638142ACF10480096D474 /* OnboardingCheckReceivedCodeViewModel.swift in Sources */,
 				87FAF8BD2AB090D700DADCC4 /* AddressType.swift in Sources */,
 				87F288052A9FA69200A53218 /* OrderAssistantCompleteView.swift in Sources */,
 				87A3D88A2A975D4F002C36DB /* OrderAddressView.swift in Sources */,

@@ -7,16 +7,30 @@
 
 import UIKit
 
-import SnapKit
-import Then
+import RxSwift
+import RxCocoa
 
 final class OnboardingCheckReceivedCodeViewController: BaseViewController{
     
     //MARK: - Properties
     
+    private let disposeBag = DisposeBag()
+    private let viewModel: OnboardingCheckReceivedCodeViewModel
+    
+    //MARK: - UI Components
+    
     private let rootView = OnboardingCheckReceivedCodeView.init(onboardingState: .checkReceivedCode)
     
     //MARK: - Life Cycle
+    
+    init(viewModel: OnboardingCheckReceivedCodeViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         self.view = rootView
@@ -25,51 +39,49 @@ final class OnboardingCheckReceivedCodeViewController: BaseViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        target()
+        bindUI()
+        bindViewModel()
     }
     
     //MARK: - Custom Method
     
-    func target() {
-        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        rootView.getCodeButton.addTarget(self, action: #selector(getCodeButtonDidTap), for: .touchUpInside)
-        rootView.notGetCodeButton.addTarget(self, action: #selector(notGetCodeButtonDidTap), for: .touchUpInside)
+    func bindUI() {
+        rootView.backButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.navigationController?.popViewController(animated: true)
+        }).disposed(by: disposeBag)
+        
+        rootView.getCodeButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.pushToParticipateCompletedView()
+        }).disposed(by: disposeBag)
     }
     
-    //MARK: - Action Method
-    
-    @objc private func backButtonDidTap() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    @objc private func notGetCodeButtonDidTap() {
-        requestMakeFamilyAPI()
-    }
-    
-    @objc private func getCodeButtonDidTap() {
-        pushToParticipateCompletedView()
+    func bindViewModel() {
+        let input = OnboardingCheckReceivedCodeViewModel.Input(
+            notGetCodeButtonDidTapEvent: self.rootView.notGetCodeButton.rx.tap.asObservable()
+        )
+        
+        let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
+        
+        output.makeFamilySucceeded
+            .asDriver(onErrorJustReturn: Bool())
+            .drive(with: self, onNext: { owner, makeFamilySucceeded in
+                if makeFamilySucceeded {
+                    owner.pushToInviteFamilyView()
+                } else {
+                    owner.showToast("가족을 생성하던 중 문제가 발생했습니다!", type: .bad)
+                }
+            }).disposed(by: disposeBag)
     }
 }
 
 private extension OnboardingCheckReceivedCodeViewController {
-    private func requestMakeFamilyAPI() {
-        OnboardingAPI.shared.postMakeFamily() { result in
-            guard let result = self.validateResult(result) as? OnboardingMakeFamilyResult else { return }
-            UserDefaultsManager.familyID = String(result.familyId)
-            
-            self.pushToInviteFamilyView()
-        }
-    }
-    
     func pushToParticipateCompletedView() {
-        let onboardingParticipateViewController = OnboardingJoinFamilyViewController()
-        self.navigationController?.pushViewController(onboardingParticipateViewController, animated: true)
-        
-        rootView.getCodeButton.isEnabled = true
+        let onboardingParticipateVC = OnboardingJoinFamilyViewController()
+        self.navigationController?.pushViewController(onboardingParticipateVC, animated: true)
     }
     
     func pushToInviteFamilyView() {
-        let onboardingInviteFamilyViewController = OnboardingInviteFamilyViewController()
-        self.navigationController?.pushViewController(onboardingInviteFamilyViewController, animated: true)
+        let onboardingInviteFamilyVC = OnboardingInviteFamilyViewController()
+        self.navigationController?.pushViewController(onboardingInviteFamilyVC, animated: true)
     }
 }

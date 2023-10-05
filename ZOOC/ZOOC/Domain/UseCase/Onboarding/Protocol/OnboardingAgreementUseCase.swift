@@ -9,8 +9,6 @@ import UIKit
 
 import RxSwift
 import RxCocoa
-import KakaoSDKAuth
-import KakaoSDKUser
 
 protocol OnboardingAgreementUseCase {
     var agreementList: BehaviorRelay<[OnboardingAgreementModel]> { get set }
@@ -20,4 +18,3 @@ protocol OnboardingAgreementUseCase {
     func updateAllAgreementState()
     func updateAgreementState(_ index: Int)
 }
-

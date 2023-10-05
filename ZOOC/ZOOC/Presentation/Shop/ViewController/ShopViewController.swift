@@ -91,6 +91,7 @@ final class ShopViewController: BaseViewController {
             .asDriver(onErrorJustReturn: ShopProductModel())
             .drive(with: self, onNext: { owner, model in
                 let productVC = ShopProductViewController(viewModel: ShopProductViewModel(model: model))
+                productVC.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(productVC, animated: true)
             })
             .disposed(by: disposeBag)

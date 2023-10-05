@@ -7,41 +7,46 @@
 
 import UIKit
 
-import SnapKit
-import Then
+import RxSwift
+import RxCocoa
 
 final class OnboardingJoinFamilyCompletedViewController: BaseViewController{
     
     //MARK: - Properties
     
-    private let onboardingJoinFamilyCompletedView = OnboardingJoinFamilyCompletedView.init(onboardingState: .processCodeReceived)
+    private let disposeBag = DisposeBag()
+    
+    //MARK: - UI Components
+    
+    private let rootView = OnboardingJoinFamilyCompletedView.init(onboardingState: .processCodeReceived)
     
     //MARK: - Life Cycle
     
     override func loadView() {
-        self.view = onboardingJoinFamilyCompletedView
+        self.view = rootView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        target()
+        bindUI()
     }
     
     //MARK: - Custom Method
     
-    func target() {
-        onboardingJoinFamilyCompletedView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        onboardingJoinFamilyCompletedView.startButton.addTarget(self, action: #selector(startButtonDidTap), for: .touchUpInside)
+    private func bindUI() {
+        rootView.backButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.navigationController?.popViewController(animated: true)
+        }).disposed(by: disposeBag)
+        
+        rootView.startButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.pushToInviteFamilyCompleteView()
+        }).disposed(by: disposeBag)
     }
-    
-    //MARK: - Action Method
-    
-    @objc private func backButtonDidTap() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    @objc private func startButtonDidTap(){
+}
+
+extension OnboardingJoinFamilyCompletedViewController {
+    private func pushToInviteFamilyCompleteView(){
         let inviteFamilyCompletedVC = OnboardingInviteFamilyCompletedViewController()
         self.navigationController?.pushViewController(inviteFamilyCompletedVC, animated: true)
     }

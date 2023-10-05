@@ -24,6 +24,8 @@ final class OnboardingAgreementViewController: BaseViewController {
     var sectionSubject = BehaviorRelay(value: [SectionData<OnboardingAgreementModel>]())
     private var dataSource:  RxCollectionViewSectionedReloadDataSource<SectionData<OnboardingAgreementModel>>?
     
+    //MARK: - UI Components
+    
     private lazy var rootView = OnboardingAgreementView.init(onboardingState: .makeFamily)
     
     //MARK: - Life Cycle

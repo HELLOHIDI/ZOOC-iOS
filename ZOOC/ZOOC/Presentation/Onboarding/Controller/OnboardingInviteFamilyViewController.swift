@@ -27,12 +27,12 @@ final class OnboardingInviteFamilyViewController: BaseViewController {
     \(ExternalURL.zoocAppStoreKR())
     """
     
-    private let onboardingInviteFamilyView = OnboardingInviteFamilyView.init(onboardingState: .processCodeReceived)
+    private let rootView = OnboardingInviteFamilyView.init(onboardingState: .processCodeReceived)
     
     //MARK: - Life Cycle
     
     override func loadView() {
-        self.view = onboardingInviteFamilyView
+        self.view = rootView
     }
     
     override func viewDidLoad() {
@@ -47,9 +47,9 @@ final class OnboardingInviteFamilyViewController: BaseViewController {
     //MARK: - Custom Method
     
     private func target() {
-        onboardingInviteFamilyView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        onboardingInviteFamilyView.inviteButton.addTarget(self, action: #selector(inviteButtonDidTap), for: .touchUpInside)
-        onboardingInviteFamilyView.inviteLatelyButton.addTarget(self, action: #selector(inviteLatelyButtonDidTap), for: .touchUpInside)
+        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        rootView.inviteButton.addTarget(self, action: #selector(inviteButtonDidTap), for: .touchUpInside)
+        rootView.inviteLatelyButton.addTarget(self, action: #selector(inviteLatelyButtonDidTap), for: .touchUpInside)
     }
     
     //MARK: - Action Method

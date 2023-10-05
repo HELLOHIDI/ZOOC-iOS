@@ -7,48 +7,47 @@
 
 import UIKit
 
-import SnapKit
-import Then
+import RxSwift
+import RxCocoa
 
 final class OnboardingReInviteFamilyViewController: UIViewController{
     
     //MARK: - Properties
     
-    private let onboardingReInviteFamilyView = OnboardingReInviteFamilyView.init(onboardingState: .processCodeReceived)
+    private let disposeBag = DisposeBag()
+    
+    //MARK: - UI Components
+    
+    private let rootView = OnboardingReInviteFamilyView.init(onboardingState: .processCodeReceived)
     
     //MARK: - Life Cycle
     
     override func loadView() {
-        self.view = onboardingReInviteFamilyView
+        self.view = rootView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        target()
+        bindUI()
     }
     
     //MARK: - Custom Method
     
-    private func target() {
-        onboardingReInviteFamilyView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        onboardingReInviteFamilyView.inviteButton.addTarget(self, action: #selector(inviteButtonDidTap), for: .touchUpInside)
-    }
-    
-    //MARK: - Action Method
-    
-    @objc private func backButtonDidTap() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    @objc private func inviteButtonDidTap() {
-        pushToInviteCompletedFamilyView()
+    private func bindUI() {
+        rootView.backButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.navigationController?.popViewController(animated: true)
+        }).disposed(by: disposeBag)
+        
+        rootView.inviteButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.pushToInviteCompletedFamilyView()
+        }).disposed(by: disposeBag)
     }
 }
 
 private extension OnboardingReInviteFamilyViewController {
     func pushToInviteCompletedFamilyView() {
-        let onboardingInviteCompletedFamilyViewController = OnboardingInviteFamilyCompletedViewController()
-        self.navigationController?.pushViewController(onboardingInviteCompletedFamilyViewController, animated: true)
+        let onboardingInviteCompletedFamilyVC = OnboardingInviteFamilyCompletedViewController()
+        self.navigationController?.pushViewController(onboardingInviteCompletedFamilyVC, animated: true)
     }
 }

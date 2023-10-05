@@ -7,13 +7,14 @@
 
 import UIKit
 
-import SnapKit
-import Then
+import RxSwift
+import RxCocoa
 
 final class OnboardingWelcomeViewController: UIViewController{
     
     //MARK: - Properties
     
+    private let disposeBag = DisposeBag()
     private let rootView = OnboardingWelcomeView.init(onboardingState: .makeFamily)
     
     //MARK: - Life Cycle
@@ -25,29 +26,23 @@ final class OnboardingWelcomeViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        target()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        updateWelcomeView()
+        bindUI()
     }
     
     //MARK: - Custom Method
     
-    private func target() {
-        rootView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        rootView.nextButton.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
-    }
-    
-    //MARK: - Action Method
-    
-    @objc private func backButtonDidTap() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    @objc private func nextButtonDidTap() {
-        pushToChooseFamilyRoleView()
+    private func bindUI() {
+        rootView.backButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.navigationController?.popViewController(animated: true)
+        }).disposed(by: disposeBag)
+        
+        rootView.nextButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.pushToChooseFamilyRoleView()
+        }).disposed(by: disposeBag)
+        
+        self.rx.viewWillAppear.subscribe(with: self, onNext: { owner, _ in
+            owner.updateWelcomeView()
+        }).disposed(by: disposeBag)
     }
 }
 
@@ -62,7 +57,7 @@ extension OnboardingWelcomeViewController {
     }
     
     private func pushToChooseFamilyRoleView() {
-        let onboardingCompleteProfileViewController = OnboardingCheckReceivedCodeViewController()
-        self.navigationController?.pushViewController(onboardingCompleteProfileViewController, animated: true)
+        let onboardingCompleteProfileVC = OnboardingCheckReceivedCodeViewController()
+        self.navigationController?.pushViewController(onboardingCompleteProfileVC, animated: true)
     }
 }

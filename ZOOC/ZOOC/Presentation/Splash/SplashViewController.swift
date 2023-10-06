@@ -171,7 +171,8 @@ final class SplashViewController: UIViewController {
         
         UserDefaultsManager.familyID = String(familyID)
         let archiveModel = ArchiveModel(recordID: recordID, petID: petID)
-        let archiveVC = ArchiveViewController(archiveModel, scrollDown: true)
+        let archiveVM = ArchiveViewModel(archiveModel: archiveModel)
+        let archiveVC = ArchiveViewController(viewModel: archiveVM, scrollDown: true)
         archiveVC.modalPresentationStyle = .fullScreen
         
         let tabVC = ZoocTabBarController()

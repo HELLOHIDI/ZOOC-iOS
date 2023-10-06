@@ -14,8 +14,8 @@ enum HomeService {
     case getTotalArchive(familyID: String, petID: String, limit: String, after: Int?)
     case getDetailPetArchive(familyID: String, recordID: Int, petID: Int)
     case getNotice(familyID: String)
-    case postComment(recordID: String, comment: String)
-    case postEmojiComment(recordID: String, emojiID: Int)
+    case postComment(recordID: Int, comment: String)
+    case postEmojiComment(recordID: Int, emojiID: Int)
 }
 
 extension HomeService: BaseTargetType {
@@ -45,11 +45,11 @@ extension HomeService: BaseTargetType {
             
         case .postComment(recordID: let recordID, comment: _):
             return URLs.postComment
-                .replacingOccurrences(of: "{recordId}", with: recordID)
+                .replacingOccurrences(of: "{recordId}", with: String(recordID))
             
         case .postEmojiComment(recordID: let recordID, emojiID: _):
             return URLs.postEmojiComment
-                .replacingOccurrences(of: "{recordId}", with: recordID)
+                .replacingOccurrences(of: "{recordId}", with: String(recordID))
         }
     }
     

@@ -120,7 +120,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         UserDefaultsManager.familyID = familyID
         let archiveModel = ArchiveModel(recordID: recordID, petID: petID)
-        let archiveVC = ArchiveViewController(archiveModel, scrollDown: true)
+        let archiveVM = ArchiveViewModel(archiveModel: archiveModel)
+        let archiveVC = ArchiveViewController(viewModel: archiveVM, scrollDown: true)
         archiveVC.modalPresentationStyle = .fullScreen
         
         let tabVC = ZoocTabBarController()

@@ -62,6 +62,13 @@ final class ShopView: UIView {
         return imageView
     }()
     
+    let orderHistoryButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "doc.fill"), for: .normal)
+        button.tintColor = .zoocGray2
+        return button
+    }()
+    
     let cartButton: UIButton = {
         let button = UIButton()
         button.setImage(Image.cart, for: .normal)
@@ -80,7 +87,7 @@ final class ShopView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 1
-        layout.itemSize = CGSize(width: 240, height: 50)
+        layout.itemSize = CGSize(width: 190, height: 50)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .zoocLightGray
@@ -136,7 +143,9 @@ final class ShopView: UIView {
     //MARK: - UI & Layout
     
     private func hierarchy() {
+        
         addSubviews(backButton,
+                    orderHistoryButton,
                     cartButton,
                     logoImageView,
                     shopCollectionView,
@@ -160,9 +169,9 @@ final class ShopView: UIView {
         
         shopPetView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.centerY.equalTo(backButton)
+            $0.centerY.equalTo(cartButton)
             $0.height.equalTo(40)
-            $0.width.equalTo(240)
+            $0.width.equalTo(190)
         }
         
         logoImageView.snp.makeConstraints {
@@ -171,11 +180,17 @@ final class ShopView: UIView {
             $0.height.equalTo(30)
         }
         
+        orderHistoryButton.snp.makeConstraints {
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(11)
+            $0.trailing.equalTo(cartButton.snp.leading)
+            $0.size.equalTo(36)
+        }
+        
         
         cartButton.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(11)
-            $0.trailing.equalToSuperview().inset(17)
-            $0.size.equalTo(42)
+            $0.trailing.equalToSuperview().inset(21)
+            $0.size.equalTo(36)
         }
         
         blurView.snp.makeConstraints {
@@ -185,7 +200,7 @@ final class ShopView: UIView {
         petCollectionView.snp.makeConstraints {
             $0.top.equalTo(shopPetView.snp.bottom).offset(5)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(800)
+            $0.width.equalTo(200)
             $0.height.equalTo(800)
         }
         
@@ -211,18 +226,18 @@ final class ShopView: UIView {
         
         marketLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.trailing.equalTo(downArrowImageView.snp.leading).offset(-10)
+            $0.trailing.equalTo(downArrowImageView.snp.leading)
         }
         
         downArrowImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview()
             $0.size.equalTo(30)
         }
         
     }
     
-    func updateSelectedPetViewUI(_ data: PetAiResult) {
+    func updateSelectedPetViewUI(_ data: PetAiModel) {
         self.petImageView.kfSetImage(url: data.photo, defaultImage: Image.defaultProfile)
         self.petNameLabel.text = data.name
         self.marketLabel.text = "Market"
@@ -235,7 +250,7 @@ final class ShopView: UIView {
         self.marketLabel.text = "ZOOC Market"
     }
     
-    func updateCollectionViewHeight(_ data: [PetAiResult]) {
+    func updateCollectionViewHeight(_ data: [PetAiModel]) {
         
         petCollectionView.layoutIfNeeded()
         
@@ -254,10 +269,6 @@ final class ShopView: UIView {
             blurView.startBlur()
         } else {
             blurView.endBlur()
-        }
-        
-        UIView.animate(withDuration: 0.7) {
-            self.petCollectionView.layoutIfNeeded()
         }
     }
     

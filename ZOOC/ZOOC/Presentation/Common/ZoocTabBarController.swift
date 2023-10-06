@@ -27,7 +27,7 @@ class ZoocTabBarController: UITabBarController {
 //        )
 //    )
     
-    var shopVC = ShopViewController(viewModel: ShopViewModel(petID: 1))
+    var shopVC = ShopViewController(viewModel: ShopViewModel())
     
     lazy var homeNavigationContrller = UINavigationController(rootViewController: homeViewController)
     lazy var shopNavigationController = UINavigationController(rootViewController: shopVC)

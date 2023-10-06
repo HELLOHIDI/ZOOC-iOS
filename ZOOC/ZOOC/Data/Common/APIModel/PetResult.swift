@@ -7,13 +7,19 @@
 
 import Foundation
 
-struct PetResult: Codable{
+struct PetResult: Codable {
     let id: Int
     let name: String
     let photo: String?
+    let datasetID: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id, name, photo
+        case datasetID = "dataset_id"
+    }
 }
 
-extension PetResult{
+extension PetResult {
     func transform()-> RecordRegisterModel{
         RecordRegisterModel(petID: self.id,
                             petImageURL: self.photo,
@@ -21,10 +27,10 @@ extension PetResult{
                             isSelected: false)
     }
     
-    func transform(state: PetAiState) -> PetAiResult {
-        PetAiResult(id: id,
+    func toPetAiModel() -> PetAiModel {
+        PetAiModel(id: id,
                     name: name,
                     photo: photo,
-                    state: state)
+                    state: (datasetID == nil) ? .notStarted : .done)
     }
 }

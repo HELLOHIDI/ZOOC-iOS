@@ -23,11 +23,11 @@ final class DefaultMyEditProfileUseCase: MyEditProfileUseCase {
     var textFieldState = BehaviorRelay<BaseTextFieldState>(value: .isEmpty)
     var ableToEditProfile = BehaviorRelay<Bool>(value: false)
     var isTextCountExceeded = BehaviorRelay<Bool>(value: false)
-    var isEdited = BehaviorRelay<Bool?>(value: nil)
+    var isEdited = PublishRelay<Bool>()
     
     func editProfile() {
-        guard let profile = profileData.value else { return }
-        repository.patchMyProfile(request: profile, completion: { [weak self] result in
+        guard let profileData = profileData.value else { return }
+        repository.patchMyProfile(request: profileData, completion: { [weak self] result in
             switch result {
             case .success(_):
                 self?.isEdited.accept(true)
@@ -37,7 +37,7 @@ final class DefaultMyEditProfileUseCase: MyEditProfileUseCase {
         })
     }
     
-    func isTextCountExceeded(for type: MyEditTextField.TextFieldType) {
+    func isTextCountExceeded(for type: ZoocEditTextField.TextFieldType) {
         guard let profileData = profileData.value else { return }
         let limit = type.limit
         self.isTextCountExceeded.accept(profileData.nickName.count >= limit)

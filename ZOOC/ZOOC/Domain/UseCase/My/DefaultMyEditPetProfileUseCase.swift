@@ -28,7 +28,7 @@ final class DefaultMyEditPetProfileUseCase: MyEditPetProfileUseCase {
     var textFieldState = BehaviorRelay<BaseTextFieldState>(value: .isEmpty)
     var ableToEditProfile = BehaviorRelay<Bool>(value: false)
     var isTextCountExceeded = BehaviorRelay<Bool>(value: false)
-    var isEdited = BehaviorRelay<Bool?>(value: nil)
+    var isEdited = PublishRelay<Bool>()
     
     func editProfile() {
         guard let profile = petProfileData.value else { return }
@@ -44,7 +44,7 @@ final class DefaultMyEditPetProfileUseCase: MyEditPetProfileUseCase {
         })
     }
     
-    func isTextCountExceeded(for type: MyEditTextField.TextFieldType) {
+    func isTextCountExceeded(for type: ZoocEditTextField.TextFieldType) {
         guard let petProfileData = petProfileData.value else { return }
         let limit = type.limit
         self.isTextCountExceeded.accept(petProfileData.nickName.count >= limit)

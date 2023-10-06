@@ -22,9 +22,9 @@ final class DefaultMyUseCase: MyUseCase {
     var profileData = BehaviorRelay<UserResult?>(value: nil)
     var familyMemberData = BehaviorRelay<[UserResult]>(value: [])
     var petMemberData = BehaviorRelay<[PetResult]>(value: [])
-    var inviteCode = BehaviorRelay<String?>(value: nil)
-    var isloggedOut = BehaviorRelay<Bool?>(value: nil)
-    var isDeletedAccount = BehaviorRelay<Bool?>(value: nil)
+    var inviteCode = PublishRelay<String>()
+    var isloggedOut = PublishRelay<Bool>()
+    var isDeletedAccount = PublishRelay<Bool>()
     
     func requestMyPage() {
         repository.requestMyPageAPI() {  result in

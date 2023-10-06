@@ -7,8 +7,8 @@
 
 import UIKit
 
-import SnapKit
-import Then
+import RxSwift
+import RxCocoa
 
 import AuthenticationServices
 import KakaoSDKAuth
@@ -18,147 +18,99 @@ final class OnboardingLoginViewController: BaseViewController {
     
     //MARK: - Properties
     
-    private let onboardingLoginView = OnboardingLoginView()
+    private let viewModel: OnboardingLoginViewModel
+    private let disposeBag = DisposeBag()
     
-    //MARK: - Life Cycle
+    private let appleIdentityTokenReceivedSubject = PublishSubject<String>()
     
-    override func loadView() {
-        self.view = onboardingLoginView
-    }
+    //MARK: - UI Components
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        target()
-    }
+    private let rootView = OnboardingLoginView()
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
-    
-    //MARK: - Custom Method
-    
-    private func target() {
-        onboardingLoginView.kakaoLoginButton.addTarget(self, action: #selector(kakaoLoginButtonDidTap), for: .touchUpInside)
-        onboardingLoginView.goHomeButton.addTarget(self, action: #selector(goHomeButtonDidTap), for: .touchUpInside)
-        onboardingLoginView.appleLoginButton.addTarget(self, action: #selector(appleLoginButtonDidTap), for: .touchUpInside)
-    }
-    
-    private func pushToAgreementView() {
-        let agreementViewController = OnboardingAgreementViewController(onboardingAgreementViewModel: OnboardingAgreementViewModel())
-        self.navigationController?.pushViewController(agreementViewController, animated: true)
-    }
-    
-    //MARK: - Action Method
-    
-    @objc func kakaoLoginButtonDidTap() {
-        requestKakaoSocialLoginAPI()
-    }
-    
-    @objc func appleLoginButtonDidTap() {
-        requestAppleSocialLoginAPI()
-    }
-    
-    @objc func goHomeButtonDidTap(){
-        UserDefaultsManager.zoocAccessToken = "Test용 AccessToken 입력 공간"
-        self.requestFamilyAPI()
-    }
-}
-
-//MARK: - API Method
-
-private extension OnboardingLoginViewController {
-    private func requestKakaoSocialLoginAPI() {
-        if UserApi.isKakaoTalkLoginAvailable() {
-            UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
-                guard let oauthToken = oauthToken else {
-                    guard let error = error else { return }
-                    print(error)
-                    return
-                }
-                self.requestZOOCKaKaoLoginAPI(oauthToken)
-            }
-        } else {
-            UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
-                guard let oauthToken = oauthToken else {
-                    guard let error = error else { return }
-                    print(error)
-                    return
-                }
-                
-                self.requestZOOCKaKaoLoginAPI(oauthToken)
-            }
-        }
-    }
-    
-    private func requestZOOCKaKaoLoginAPI(_ oauthToken: OAuthToken) {
-        OnboardingAPI.shared.postKakaoSocialLogin(accessToken: "Bearer \(oauthToken.accessToken)") { result in
-            guard let result = self.validateResult(result) as? OnboardingJWTTokenResult else { return }
-            UserDefaultsManager.zoocAccessToken = result.accessToken
-            UserDefaultsManager.zoocRefreshToken = result.refreshToken
-            
-            if result.isExistedUser{
-                self.requestFamilyAPI()
-            } else {
-                self.pushToAgreementView()
-            }
-        }
-    }
-    
-    private func requestAppleSocialLoginAPI() {
+    private var authorizationController: ASAuthorizationController {
         let request = ASAuthorizationAppleIDProvider().createRequest()
         request.requestedScopes = [.fullName, .email]
         
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
-        authorizationController.performRequests()
+        
+        return authorizationController
     }
     
-    private func requestZOOCAppleSocialLoginAPI(_ identityTokenString: String) {
-        OnboardingAPI.shared.postAppleSocialLogin(request: OnboardingAppleSocialLoginRequest(identityTokenString: identityTokenString)) { result in
-            guard let result = self.validateResult(result) as? OnboardingJWTTokenResult else { return }
-            UserDefaultsManager.zoocAccessToken = result.accessToken
-            UserDefaultsManager.zoocRefreshToken = result.refreshToken
-            print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
-            if result.isExistedUser{
-                self.requestFamilyAPI()
-            } else {
-                self.pushToAgreementView()
-            }
-            
-        }
+    //MARK: - Life Cycle
+    
+    init(viewModel: OnboardingLoginViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
-    private func requestFamilyAPI() {
-        OnboardingAPI.shared.getFamily { result in
-            guard let result = self.validateResult(result) as? [OnboardingFamilyResult] else { return }
-            
-            if result.count != 0 {
-                let familyID = String(result[0].id)
-                UserDefaultsManager.familyID = familyID
-                self.requestFCMTokenAPI()
-            } else {
-                self.pushToAgreementView()
-            }
-        }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
-    private func requestFCMTokenAPI() {
-        OnboardingAPI.shared.patchFCMToken(fcmToken: UserDefaultsManager.fcmToken) { result in
-            switch result {
-            case .success:
+    override func loadView() {
+        self.view = rootView
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        bindUI()
+        bindViewModel()
+    }
+    
+    //MARK: - Custom Method
+    
+    private func bindUI() {
+        rootView.appleLoginButton.rx.controlEvent(.touchUpInside).subscribe(with: self, onNext: { owner, _ in
+            owner.authorizationController.performRequests()
+        }).disposed(by: disposeBag)
+    }
+    
+    private func bindViewModel() {
+        let input = OnboardingLoginViewModel.Input(
+            kakaoLoginButtonDidTapEvent: rootView.kakaoLoginButton.rx.tap.asObservable(),
+            receiveAppleIdentityTokenEvent: appleIdentityTokenReceivedSubject.asObservable()
+        )
+        
+        let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
+        
+        output.isExistedUser
+            .filter { !$0 }
+            .asDriver(onErrorJustReturn: Bool())
+            .drive(with: self, onNext: { owner, _ in
+                owner.pushToAgreementView()
+            }).disposed(by: disposeBag)
+        
+        output.loginSucceeded
+            .filter { !$0 }
+            .asDriver(onErrorJustReturn: Bool())
+            .drive(with: self, onNext: { owner, _ in
+                owner.showToast("로그인 과정 중 문제가 발생했습니다", type: .bad)
+            }).disposed(by: disposeBag)
+        
+        output.autoLoginSucceeded
+            .asDriver(onErrorJustReturn: Bool())
+            .drive(with: self, onNext: { owner, autoLoginSucceded in
+                if !autoLoginSucceded { owner.showToast("FCM토큰을 재발급이 필요합니다.", type: .bad) }
                 UIApplication.shared.changeRootViewController(ZoocTabBarController())
-            default:
-                self.showToast("FCM토큰을 재발급이 필요합니다.", type: .bad)
-                
-                UIApplication.shared.changeRootViewController(ZoocTabBarController())
-            }
-            
-            
-        }
+            }).disposed(by: disposeBag)
     }
-    
+}
+
+
+//MARK: - API Method
+
+private extension OnboardingLoginViewController {
+    func pushToAgreementView() {
+        let agreementVC = OnboardingAgreementViewController(
+            viewModel: OnboardingAgreementViewModel(
+                onboardingAgreementUseCase: DefaultOnboardingAgreementUseCase()
+            )
+        )
+        self.navigationController?.pushViewController(agreementVC, animated: true)
+    }
 }
 
 
@@ -174,19 +126,12 @@ extension OnboardingLoginViewController: ASAuthorizationControllerPresentationCo
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
             if let identityToken = appleIDCredential.identityToken,
-                let identityTokenString = String(data: identityToken, encoding: .utf8) {
-                
-                
-                requestZOOCAppleSocialLoginAPI(identityTokenString)
-                print("identityTokenString: \(identityTokenString)")
+               let identityTokenString = String(data: identityToken, encoding: .utf8) {
+                appleIdentityTokenReceivedSubject.onNext(identityTokenString)
             }
         default:
             break
         }
-    }
-    
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        // Handle error.
     }
 }
 

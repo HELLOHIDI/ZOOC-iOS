@@ -52,38 +52,60 @@ final class OnboardingJoinFamilyViewController: BaseViewController {
     }
     
     func bindViewModel() {
-        let input = OnboardingJoinFamilyViewModel.Input (
-            familyCodeTextFieldDidChangeEvent: rootView.familyCodeTextField.rx.text.asObservable(),
+        let input = OnboardingJoinFamilyViewModel.Input(
+            familyCodeTextFieldDidChange: rootView.familyCodeTextField.rx.text.orEmpty.asObservable(),
             nextButtonDidTapEvent: rootView.nextButton.rx.tap.asObservable()
         )
         
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
         
-        output.enteredCode
-            .asDriver(onErrorJustReturn: "")
-            .drive(with: self, onNext: { owner, enteredCode in
-                owner.rootView.familyCodeTextField.text = enteredCode
-            }).disposed(by: disposeBag)
-        
-        output.ableToCheckCode
-            .asDriver(onErrorJustReturn: Bool())
-            .drive(with: self, onNext: { owner, ableToCheckCode in
-                owner.rootView.nextButton.isEnabled = ableToCheckCode
+        output.enteredFamilyCode
+            .asDriver(onErrorJustReturn: nil)
+            .drive(with: self, onNext: { owner, code in
+                owner.rootView.familyCodeTextField.text = code
             }).disposed(by: disposeBag)
         
         output.errMessage
             .asDriver(onErrorJustReturn: nil)
-            .drive(with: self, onNext: { owner, errMessage in
-                guard let errMessage else { return }
-                owner.showToast(errMessage, type: .bad)
+            .drive(with: self, onNext: { owner, err in
+                guard let err else { return }
+                owner.showToast(err, type: .bad)
             }).disposed(by: disposeBag)
         
+        output.ableToCheckFamilyCode
+            .asDriver(onErrorJustReturn: Bool())
+            .drive(with: self, onNext: { owner, canCheck in
+                owner.rootView.nextButton.isEnabled = canCheck
+            }).disposed(by: disposeBag)
+        
+        output.isJoinedFamily
+            .asDriver(onErrorJustReturn: Bool())
+            .drive(with: self, onNext: { owner, isJoined in
+                if isJoined { owner.pushToJoinCompletedViewController() }
+            }).disposed(by: disposeBag)
+        
+        output.isTextCountExceeded
+            .asDriver(onErrorJustReturn: Bool())
+            .drive(with: self, onNext: { owner, isTextCountExceeded in
+                if !isTextCountExceeded { owner.updateTextField(owner.rootView.familyCodeTextField)
+                }
+            }).disposed(by: disposeBag)
     }
 }
 
 extension OnboardingJoinFamilyViewController {
-    private func pushToJoinCompletedViewController() {
+    func pushToJoinCompletedViewController() {
         let joinCompletedVC = OnboardingJoinFamilyCompletedViewController()
         self.navigationController?.pushViewController(joinCompletedVC, animated: true)
     }
+    
+    private func updateTextField(_ textField: ZoocEditTextField?) {
+        guard let textField = textField else { return }
+        let fixedText = textField.text?.substring(from: 0, to:textField.textFieldType.limit-1)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            self.rootView.familyCodeTextField.text = fixedText
+        }
+    }
 }
+

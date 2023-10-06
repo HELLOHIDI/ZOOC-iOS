@@ -11,14 +11,14 @@ import RxSwift
 import RxCocoa
 
 protocol MyEditProfileUseCase {
-    var profileData:BehaviorRelay<EditProfileRequest?> { get }
+    var profileData: BehaviorRelay<EditProfileRequest?> { get }
     var textFieldState: BehaviorRelay<BaseTextFieldState> { get }
     var ableToEditProfile: BehaviorRelay<Bool> { get }
     var isTextCountExceeded: BehaviorRelay<Bool> { get }
-    var isEdited: BehaviorRelay<Bool?> { get set}
+    var isEdited: PublishRelay<Bool> { get }
     
     func editProfile()
-    func isTextCountExceeded(for type: MyEditTextField.TextFieldType)
+    func isTextCountExceeded(for type: ZoocEditTextField.TextFieldType)
     func nameTextFieldDidChangeEvent(_ text: String?)
     func deleteProfileImage()
     func selectProfileImage(_ image: UIImage)

@@ -57,8 +57,8 @@ extension OnboardingAPI {
         }
     }
     
-    public func postJoinFamily(requset: OnboardingJoinFamilyRequest, completion: @escaping (NetworkResult<Any>) -> Void) {
-        onboardingProvider.request(.postJoinFamily(requset)) { (result) in
+    public func postJoinFamily(request: OnboardingJoinFamilyRequest, completion: @escaping (NetworkResult<Any>) -> Void) {
+        onboardingProvider.request(.postJoinFamily(request)) { (result) in
             self.disposeNetwork(result,
                                 dataModel: OnboardingJoinFamilyResult.self,
                                 completion: completion)

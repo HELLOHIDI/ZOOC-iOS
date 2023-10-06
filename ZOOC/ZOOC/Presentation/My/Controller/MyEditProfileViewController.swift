@@ -100,9 +100,8 @@ final class MyEditProfileViewController: BaseViewController {
             }).disposed(by: disposeBag)
         
         output.isEdited
-            .asDriver()
+            .asDriver(onErrorJustReturn: Bool())
             .drive(with: self, onNext: { owner, isEdited in
-                guard let isEdited else { return }
                 if isEdited { if let presentingViewController = owner.presentingViewController {
                     presentingViewController.dismiss(animated: true)
                 } else if let navigationController = owner.navigationController {
@@ -158,7 +157,7 @@ extension MyEditProfileViewController: ZoocAlertViewControllerDelegate {
 }
 
 extension MyEditProfileViewController {
-    private func updateTextField(_ textField: MyEditTextField?) {
+    private func updateTextField(_ textField: ZoocEditTextField?) {
         guard let textField = textField else { return }
         let fixedText = textField.text?.substring(from: 0, to:textField.textFieldType.limit-1)
         

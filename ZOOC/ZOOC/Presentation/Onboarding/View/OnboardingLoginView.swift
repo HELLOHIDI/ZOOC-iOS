@@ -15,7 +15,6 @@ final class OnboardingLoginView: UIView {
     
     //MARK: - UI Components
     
-    lazy var goHomeButton = UIButton()
     private let loginTitleLabel = UILabel()
     private let loginDescribeLabel = UILabel()
     private let graphicsImageView = UIImageView()
@@ -42,10 +41,6 @@ final class OnboardingLoginView: UIView {
     
     private func style() {
         self.backgroundColor = .zoocBackgroundGreen
-        
-        goHomeButton.do {
-            $0.backgroundColor = .clear
-        }
         
         loginTitleLabel.do {
             $0.text = "초코와의 추억을 쭉 \n추억하는 우리만의 방법"
@@ -87,8 +82,7 @@ final class OnboardingLoginView: UIView {
     }
     
     private func hierarchy() {
-        self.addSubviews(goHomeButton,
-                         loginTitleLabel,
+        self.addSubviews(loginTitleLabel,
                          loginDescribeLabel,
                          graphicsImageView,
                          appleLoginButton,
@@ -96,12 +90,6 @@ final class OnboardingLoginView: UIView {
     }
     
     private func layout() {
-        goHomeButton.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(80)
-        }
-        
         loginTitleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(78)
             $0.leading.equalToSuperview().offset(30)

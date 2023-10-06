@@ -15,16 +15,22 @@ class ZoocTabBarController: UITabBarController {
     
     //MARK: - Properties
     
+    private var petData: [PetResult] = []
+    
+    
     let homeViewController = HomeViewController()
-    let myViewController = MyViewController(
-        viewModel: MyViewModel(
-            myUseCase: DefaultMyUseCase(
-                repository: DefaultMyRepository()
-            )
-        )
-    )
+//    let myViewController = MyViewController(
+//        viewModel: MyViewModel(
+//            myUseCase: DefaultMyUseCase(
+//                repository: DefaultMyRepository()
+//            )
+//        )
+//    )
+    
+    var shopVC = ShopViewController(viewModel: ShopViewModel(petID: 1))
+    
     lazy var homeNavigationContrller = UINavigationController(rootViewController: homeViewController)
-    lazy var myNavigationController = UINavigationController(rootViewController: myViewController)
+    lazy var shopNavigationController = UINavigationController(rootViewController: shopVC)
     
     
     
@@ -46,17 +52,10 @@ class ZoocTabBarController: UITabBarController {
         setNavigationController()
         setViewController()
         setCornerRadius()
+        requestTotalPetAPI()
         selectedIndex = 0
         
     }
-    
-    //    override func viewDidLayoutSubviews() {
-    //        super.viewDidLayoutSubviews()
-    //
-    //        tabBar.frame.size.height = 96
-    //        tabBar.frame.origin.y = view.frame.height - 96
-    //
-    //    }
     
     //MARK: - Custom Method
     
@@ -89,7 +88,7 @@ class ZoocTabBarController: UITabBarController {
     
     private func setNavigationController() {
         homeNavigationContrller.setNavigationBarHidden(true, animated: true)
-        myNavigationController.setNavigationBarHidden(true, animated: true)
+        shopNavigationController.setNavigationBarHidden(true, animated: true)
     }
     
     private func setViewController(){
@@ -98,18 +97,30 @@ class ZoocTabBarController: UITabBarController {
                                                           image: Image.home,
                                                           selectedImage: Image.home)
         
-        myNavigationController.tabBarItem = UITabBarItem(title: "",
-                                                         image: Image.person,
-                                                         selectedImage: Image.person)
+        shopNavigationController.tabBarItem = UITabBarItem(title: "",
+                                                         image: Image.shop,
+                                                         selectedImage: Image.shop)
         
-        viewControllers = [homeNavigationContrller,myNavigationController]
+        viewControllers = [homeNavigationContrller,shopNavigationController]
     }
     
     //MARK: - Action Method
     
     @objc func plusButtonDidTap(){
-        requestTotalPetAPI()
-        
+        if petData.isEmpty {
+            self.presentZoocAlertVC()
+        } else {
+            let recordVC = RecordViewController(
+                viewModel: RecordViewModel(
+                    recordUseCase: DefaultRecordUseCase()
+                )
+            )
+            
+            let recordNVC = UINavigationController(rootViewController: recordVC)
+            recordNVC.modalPresentationStyle = .fullScreen
+            recordNVC.setNavigationBarHidden(true, animated: true)
+            self.present(recordNVC, animated: true)
+        }
     }
     
     
@@ -117,20 +128,8 @@ class ZoocTabBarController: UITabBarController {
         HomeAPI.shared.getTotalPet(familyID: UserDefaultsManager.familyID) { result in
             switch result {
             case .success(let data):
-                guard let result = data as? [PetResult] else { return }
-                if result.isEmpty {
-                    self.presentZoocAlertVC()
-                } else {
-                    let recordVC = RecordViewController(
-                        viewModel: RecordViewModel(
-                            recordUseCase: DefaultRecordUseCase()
-                        )
-                    )
-                    let recordNVC = UINavigationController(rootViewController: recordVC)
-                    recordNVC.modalPresentationStyle = .fullScreen
-                    recordNVC.setNavigationBarHidden(true, animated: true)
-                    self.present(recordNVC, animated: true)
-                }
+                guard let data = data as? [PetResult] else { return }
+                self.petData = data
             default:
                 break
             }

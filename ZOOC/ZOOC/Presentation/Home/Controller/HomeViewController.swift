@@ -32,7 +32,6 @@ final class HomeViewController : BaseViewController {
         }
     }
     
-    
     //MARK: - UI Components
     
     private let guideVC = HomeGuideViewController()
@@ -109,7 +108,7 @@ final class HomeViewController : BaseViewController {
                                         action: #selector(noticeButtonDidTap),
                                         for: .touchUpInside)
         
-        rootView.shopButton.addTarget(self,
+        rootView.myPageButton.addTarget(self,
                                       action: #selector(shopButtonDidTap),
                                       for: .touchUpInside)
         
@@ -156,7 +155,8 @@ final class HomeViewController : BaseViewController {
         let petID = petData[index].id
         let archiveModel = ArchiveModel(recordID: recordID,
                                         petID: petID)
-        let archiveVC = ArchiveViewController(archiveModel, scrollDown: false)
+        let archiveVM = ArchiveViewModel(archiveModel: archiveModel)
+        let archiveVC = ArchiveViewController(viewModel: archiveVM)
         archiveVC.modalPresentationStyle = .fullScreen
         present(archiveVC, animated: true)
     }
@@ -167,15 +167,16 @@ final class HomeViewController : BaseViewController {
         navigationController?.pushViewController(noticeVC, animated: true)
     }
     
-    private func pushToShopViewController() {
-        if petData.isEmpty {
-            presentAlertViewController()
-        } else {
-            let shopVC = ShopViewController(viewModel: ShopViewModel(petID: 1))
-            shopVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(shopVC, animated: true)
-        }
-        
+    private func pushToMyViewController() {
+        let myVC = MyViewController(
+            viewModel: MyViewModel(
+                myUseCase: DefaultMyUseCase(
+                    repository: DefaultMyRepository()
+                )
+            )
+        )
+        myVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(myVC, animated: true)
     }
     
     private func deselectAllOfListArchiveCollectionViewCell(completion: (() -> Void)?) {
@@ -273,7 +274,7 @@ final class HomeViewController : BaseViewController {
     
     @objc
     private func shopButtonDidTap() {
-        pushToShopViewController()
+        pushToMyViewController()
     }
     
     @objc

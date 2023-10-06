@@ -15,4 +15,23 @@ struct RecordResult: Codable{
     let writerPhoto: String?
     let writerName: String
     let isMyRecord: Bool
+    
+    init(
+        id: Int = Int(),
+        photo: String = String(),
+        content: String? = nil,
+        date: String = String(),
+        writerPhoto: String? = nil,
+        writerName: String = String(),
+        isMyRecord: Bool = Bool()
+    ) { 
+        self.id = id
+        self.photo = photo
+        self.content = content
+        self.date = date
+        self.writerPhoto = writerPhoto
+        self.writerName = writerName
+        self.isMyRecord = isMyRecord
+    }
+
 }

@@ -14,6 +14,8 @@ final class HomeView : UIView{
     
     //MARK: - Properties
     
+    
+    
     //MARK: - UI Components
     
     public let homeScrollView = UIScrollView()
@@ -21,7 +23,7 @@ final class HomeView : UIView{
     
     public let aiView = HomeAiButton()
     public let noticeButton = UIButton()
-    public let shopButton = UIButton()
+    public let myPageButton = UIButton()
     
     public let petCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
     public let listButton = UIButton()
@@ -74,8 +76,8 @@ extension HomeView {
             $0.contentMode = .scaleAspectFit
         }
         
-        shopButton.do {
-            $0.setImage(Image.shop, for: .normal)
+        myPageButton.do {
+            $0.setImage(Image.personFill, for: .normal)
             $0.contentMode = .scaleAspectFit
         }
         
@@ -121,7 +123,7 @@ extension HomeView {
     }
     
     private func hierarchy() {
-        addSubviews(aiView, noticeButton, shopButton, homeScrollView)
+        addSubviews(aiView, noticeButton, myPageButton, homeScrollView)
         homeScrollView.addSubview(homeContentView)
         homeContentView.addSubviews(petCollectionView,
                                     listButton,
@@ -143,15 +145,15 @@ extension HomeView {
             $0.height.equalTo(42)
         }
         
-        shopButton.snp.makeConstraints {
+        myPageButton.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(21)
             $0.trailing.equalToSuperview().inset(21)
             $0.size.equalTo(36)
         }
         
         noticeButton.snp.makeConstraints {
-            $0.top.equalTo(shopButton)
-            $0.trailing.equalTo(shopButton.snp.leading)
+            $0.top.equalTo(myPageButton)
+            $0.trailing.equalTo(myPageButton.snp.leading)
             $0.size.equalTo(36)
         }
         

@@ -11,10 +11,10 @@ import Moya
 
 enum ArchiveService {
     case getArchive(familyID: String, recordID: Int, petID: Int)
-    case postComment(recordID: String, comment: String)
-    case postEmojiComment(recordID: String, emojiID: Int)
-    case deleteArchive(recordID: String)
-    case deleteComment(commentID: String)
+    case postComment(recordID: Int, comment: String)
+    case postEmojiComment(recordID: Int, emojiID: Int)
+    case deleteArchive(recordID: Int)
+    case deleteComment(commentID: Int)
 }
 
 extension ArchiveService: BaseTargetType {
@@ -32,19 +32,19 @@ extension ArchiveService: BaseTargetType {
             
         case .postComment(recordID: let recordID, comment: _):
             return URLs.postComment
-                .replacingOccurrences(of: "{recordId}", with: recordID)
+                .replacingOccurrences(of: "{recordId}", with: String(recordID))
             
         case .postEmojiComment(recordID: let recordID, emojiID: _):
             return URLs.postEmojiComment
-                .replacingOccurrences(of: "{recordId}", with: recordID)
+                .replacingOccurrences(of: "{recordId}", with: String(recordID))
             
         case .deleteArchive(recordID: let recordID):
             return URLs.deleteRecord
-                .replacingOccurrences(of: "{recordId}", with: recordID)
+                .replacingOccurrences(of: "{recordId}", with: String(recordID))
             
         case .deleteComment(commentID: let commentID):
             return URLs.deleteComment
-                .replacingOccurrences(of: "{commentId}", with: commentID)
+                .replacingOccurrences(of: "{commentId}", with: String(commentID))
         }
     }
         

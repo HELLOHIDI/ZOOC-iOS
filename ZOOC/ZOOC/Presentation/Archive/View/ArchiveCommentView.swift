@@ -151,6 +151,7 @@ final class ArchiveCommentView : UIView {
     @objc
     private func uploadButtonDidTap() {
         guard let text = commentTextField.text else { return }
+        commentTextField.text = nil
         delegate?.uploadButtonDidTap(commentTextField, text: text)
         
     }

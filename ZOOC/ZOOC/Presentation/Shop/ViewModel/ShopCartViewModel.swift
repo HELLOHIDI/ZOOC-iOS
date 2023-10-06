@@ -47,8 +47,7 @@ final class ShopCartViewModel {
         
         input.orderButtonDidTapEvent
             .subscribe(with: self, onNext: { owner, _ in
-                var orderProducts: [OrderProduct] = []
-                owner.cartedProducts.forEach { orderProducts.append(OrderProduct(cartedProduct: $0)) }
+                let orderProducts = owner.cartedProducts.map { OrderProduct(cartedProduct: $0) }
                 output.pushOrderVC.accept(orderProducts)
             })
             .disposed(by: disposeBag)

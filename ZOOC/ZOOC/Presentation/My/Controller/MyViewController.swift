@@ -56,6 +56,12 @@ final class MyViewController: BaseViewController {
     }
     
     private func bindUI() {
+        rootView.backButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
+        
         rootView.profileView.rx.tapGesture()
             .when(.recognized)
             .subscribe(with: self, onNext: { owner, _ in

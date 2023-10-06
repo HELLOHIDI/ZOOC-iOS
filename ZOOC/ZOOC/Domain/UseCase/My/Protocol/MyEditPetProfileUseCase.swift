@@ -19,7 +19,7 @@ protocol MyEditPetProfileUseCase {
     var isEdited: PublishRelay<Bool> { get set}
     
     func editProfile()
-    func isTextCountExceeded(for type: MyEditTextField.TextFieldType)
+    func isTextCountExceeded(for type: ZoocEditTextField.TextFieldType)
     func nameTextFieldDidChangeEvent(_ text: String?)
     func deleteProfileImage()
     func selectProfileImage(_ image: UIImage)

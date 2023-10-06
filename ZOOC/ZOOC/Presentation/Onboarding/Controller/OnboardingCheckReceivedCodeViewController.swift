@@ -76,7 +76,13 @@ final class OnboardingCheckReceivedCodeViewController: BaseViewController{
 
 private extension OnboardingCheckReceivedCodeViewController {
     func pushToParticipateCompletedView() {
-        let onboardingParticipateVC = OnboardingJoinFamilyViewController()
+        let onboardingParticipateVC = OnboardingJoinFamilyViewController(
+            viewModel: OnboardingJoinFamilyViewModel(
+                onboardingJoinFamilyUseCase: DefaultOnboardingJoinFamilyUseCase(
+                    repository: DefaultOnboardingRepository()
+                )
+                )
+            )
         self.navigationController?.pushViewController(onboardingParticipateVC, animated: true)
     }
     

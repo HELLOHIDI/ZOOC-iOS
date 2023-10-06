@@ -154,7 +154,7 @@ extension MyEditPetProfileViewController: ZoocAlertViewControllerDelegate {
 }
 
 extension MyEditPetProfileViewController {
-    private func updateTextField(_ textField: MyEditTextField?) {
+    private func updateTextField(_ textField: ZoocEditTextField?) {
         guard let textField = textField else { return }
         let fixedText = textField.text?.substring(from: 0, to:textField.textFieldType.limit-1)
         

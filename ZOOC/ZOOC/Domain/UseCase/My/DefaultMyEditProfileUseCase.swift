@@ -37,7 +37,7 @@ final class DefaultMyEditProfileUseCase: MyEditProfileUseCase {
         })
     }
     
-    func isTextCountExceeded(for type: MyEditTextField.TextFieldType) {
+    func isTextCountExceeded(for type: ZoocEditTextField.TextFieldType) {
         guard let profileData = profileData.value else { return }
         let limit = type.limit
         self.isTextCountExceeded.accept(profileData.nickName.count >= limit)

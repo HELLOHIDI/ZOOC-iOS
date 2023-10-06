@@ -15,7 +15,7 @@ final class OnboardingJoinFamilyView: OnboardingBaseView {
     //MARK: - UI Components
     
     private let participateTitleLabel = UILabel()
-    public lazy var familyCodeTextField = UITextField()
+    public lazy var familyCodeTextField = ZoocEditTextField.init(textFieldType: .familyCode)
     private let participateImage = UIImageView()
     public lazy var nextButton = ZoocGradientButton()
     
@@ -55,7 +55,7 @@ final class OnboardingJoinFamilyView: OnboardingBaseView {
             $0.backgroundColor = .zoocWhite2
             $0.font = .zoocBody2
             $0.textColor = .zoocDarkGreen
-            $0.placeholder = "  ex) SEF33210"
+            $0.placeholder = "  ex) SEF332"
             $0.makeCornerRound(radius: 8)
             $0.addLeftPadding(inset: 6)
         }

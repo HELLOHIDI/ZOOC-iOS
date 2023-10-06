@@ -1119,10 +1119,7 @@
 			isa = PBXGroup;
 			children = (
 				D26C85E02968C63F00AEAF9B /* OnboardingLoginViewController.swift */,
-				D26C85E72968CD8E00AEAF9B /* OnboardingAgreementViewController.swift */,
 				D26C85F129693CFA00AEAF9B /* OnboardingWelcomeViewController.swift */,
-				D26C8601296B285700AEAF9B /* OnboardingCheckReceivedCodeViewController.swift */,
-				D26C8609296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift */,
 				D26C860F296B761900AEAF9B /* OnboardingJoinFamilyCompletedViewController.swift */,
 				D27D9561296CA4640097CD03 /* OnboardingInviteFamilyViewController.swift */,
 				D27D9569296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift */,
@@ -1141,8 +1138,11 @@
 				D26C85FF296B27B100AEAF9B /* OnboardingCheckReceivedCodeView.swift */,
 				D26C8607296B585600AEAF9B /* OnboardingJoinFamilyView.swift */,
 				D26C860B296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift */,
+				D26C8601296B285700AEAF9B /* OnboardingCheckReceivedCodeViewController.swift */,
+				D26C8609296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift */,
 				D27D9567296CB5930097CD03 /* OnboardingInviteFamilyView.swift */,
 				D27D955F296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift */,
+				D26C85E72968CD8E00AEAF9B /* OnboardingAgreementViewController.swift */,
 				D27D9563296CA9720097CD03 /* OnboardingInviteCompletedFamilyView.swift */,
 			);
 			path = View;
@@ -1402,6 +1402,8 @@
 		87B6625529521EB400B6FFA9 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				D21638072ACDC59E0096D474 /* OnboardingRepository.swift */,
+				D24841FB2ACFDE2E002CD429 /* OnboardingJoinFamilyViewModel.swift */,
 				8743694E2A8E50E30035AFD6 /* Common */,
 				8765549D295846E7006BBDA9 /* Base */,
 				87809C312A8CFD790060641F /* Splash */,
@@ -1541,7 +1543,6 @@
 				D26989A729A60EE7008A5ACC /* OnboardingAgreementViewModel.swift */,
 				D21638092ACDC6780096D474 /* OnboardingLoginViewModel.swift */,
 				D21638132ACF10470096D474 /* OnboardingCheckReceivedCodeViewModel.swift */,
-				D24841FB2ACFDE2E002CD429 /* OnboardingJoinFamilyViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1740,7 +1741,6 @@
 				D21638042ACDC54E0096D474 /* DefaultOnboardingLoginUseCase.swift */,
 				D216380D2ACDE22F0096D474 /* DefaultOnboardingAgreementUseCase.swift */,
 				D21638112ACF0E4C0096D474 /* DefaultOnboardingCheckReceivedCodeUseCase.swift */,
-				D24841FF2ACFE043002CD429 /* DefaultOnboardingJoinFamilyUseCase.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -1751,7 +1751,6 @@
 				D21638022ACDC41F0096D474 /* OnboardingLoginUseCase.swift */,
 				D216380B2ACDDBC10096D474 /* OnboardingAgreementUseCase.swift */,
 				D216380F2ACF0E230096D474 /* OnboardingCheckReceivedCodeUseCase.swift */,
-				D24841FD2ACFDE6F002CD429 /* OnboardingJoinFamilyUseCase.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -1759,7 +1758,6 @@
 		D21638062ACDC58E0096D474 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				D21638072ACDC59E0096D474 /* OnboardingRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1881,6 +1879,8 @@
 		D299441F2AAC7E6A00C4F280 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				D24841FD2ACFDE6F002CD429 /* OnboardingJoinFamilyUseCase.swift */,
+				D24841FF2ACFE043002CD429 /* DefaultOnboardingJoinFamilyUseCase.swift */,
 				D29944202AAC7E7500C4F280 /* UseCase */,
 			);
 			path = Domain;

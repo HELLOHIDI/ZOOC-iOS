@@ -73,13 +73,22 @@ final class ShopViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
+        //TODO: 주문내역 버튼을 눌렀을 때 아래 함수가 발동돼
+        rootView.orderHistoryButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                let webVC = ZoocWebViewController(url: "https://zooc-web.vercel.app", callBackHandlerName: "callBackHandler")
+                webVC.hidesBottomBarWhenPushed = true
+                owner.navigationController?.pushViewController(webVC, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     func bindViewModel() {
         let input = ShopViewModel.Input(
             viewDidLoadEvent: self.rx.viewDidLoad.asObservable(),
             petCellShouldSelectIndexPathEvent: rootView.petCollectionView.rx.itemSelected.asObservable().map { $0.row },
-            petCellShouldSelectEvent: rootView.petCollectionView.rx.modelSelected(PetAiResult.self).asObservable(),
+            petCellShouldSelectEvent: rootView.petCollectionView.rx.modelSelected(PetAiModel.self).asObservable(),
             refreshValueChangedEvent: self.refreshControl.rx.controlEvent(.valueChanged).asObservable(),
             productCellDidSelectEvent:  self.rootView.shopCollectionView.rx.modelSelected(ProductResult.self).asObservable()
         )

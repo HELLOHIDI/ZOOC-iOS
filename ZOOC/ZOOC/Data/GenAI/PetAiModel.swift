@@ -13,7 +13,7 @@ enum PetAiState {
     case done
 }
 
-struct PetAiResult {
+struct PetAiModel {
     let id: Int
     let name: String
     let photo: String?

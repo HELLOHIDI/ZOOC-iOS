@@ -53,6 +53,10 @@ final class OnboardingCheckReceivedCodeViewController: BaseViewController{
         rootView.getCodeButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
             owner.pushToParticipateCompletedView()
         }).disposed(by: disposeBag)
+        
+        self.rx.viewWillAppear.subscribe(with: self, onNext: { owner, _ in
+            owner.rootView.getCodeButton.isEnabled = true
+        }).disposed(by: disposeBag)
     }
     
     func bindViewModel() {
@@ -81,8 +85,8 @@ private extension OnboardingCheckReceivedCodeViewController {
                 onboardingJoinFamilyUseCase: DefaultOnboardingJoinFamilyUseCase(
                     repository: DefaultOnboardingRepository()
                 )
-                )
             )
+        )
         self.navigationController?.pushViewController(onboardingParticipateVC, animated: true)
     }
     

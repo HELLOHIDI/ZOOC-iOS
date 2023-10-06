@@ -110,7 +110,6 @@ final class OnboardingAgreementViewController: BaseViewController {
         output.ableToSignUp
             .asDriver(onErrorJustReturn: false)
             .drive(with: self, onNext: { owner, canSignUp in
-                print("가능여부 \(canSignUp)")
                 owner.rootView.signUpButton.isEnabled = canSignUp
             }).disposed(by: disposeBag)
     }

@@ -15,6 +15,7 @@ protocol OnboardingJoinFamilyUseCase {
     var ableToCheckFamilyCode: PublishRelay<Bool> { get }
     var errMessage: BehaviorRelay<String?> { get }
     var isJoinedFamily: PublishRelay<Bool> { get }
+    var isTextCountExceeded: PublishRelay<Bool> { get }
 
     func updateEnteredFamilyCode(_ text: String)
     func joinFamily()

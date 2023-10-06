@@ -27,6 +27,7 @@ final class OnboardingJoinFamilyViewModel: ViewModelType {
         var errMessage = BehaviorRelay<String?>(value: nil)
         var ableToCheckFamilyCode = PublishRelay<Bool>()
         var isJoinedFamily = PublishRelay<Bool>()
+        var isTextCountExceeded = PublishRelay<Bool>()
     }
     
     func transform(from input: Input, disposeBag: DisposeBag) -> Output {
@@ -60,6 +61,10 @@ final class OnboardingJoinFamilyViewModel: ViewModelType {
         
         onboardingJoinFamilyUseCase.isJoinedFamily.subscribe(onNext: { isJoinedFamily in
             output.isJoinedFamily.accept(isJoinedFamily)
+        }).disposed(by: disposeBag)
+        
+        onboardingJoinFamilyUseCase.isTextCountExceeded.subscribe(onNext: { isTextCountExceeded in
+            output.isTextCountExceeded.accept(isTextCountExceeded)
         }).disposed(by: disposeBag)
     }
 }

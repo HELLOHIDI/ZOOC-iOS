@@ -23,11 +23,12 @@ final class DefaultOnboardingJoinFamilyUseCase: OnboardingJoinFamilyUseCase {
     var errMessage = BehaviorRelay<String?>(value: nil)
     var ableToCheckFamilyCode = PublishRelay<Bool>()
     var isJoinedFamily = PublishRelay<Bool>()
+    var isTextCountExceeded = PublishRelay<Bool>()
     
     func updateEnteredFamilyCode(_ text: String) {
         enteredFamilyCode.accept(text)
         guard let code = enteredFamilyCode.value else { return }
-        ableToCheckFamilyCode.accept(code.hasText)
+        checkEnteredCode(code)
     }
     
     func joinFamily() {
@@ -57,5 +58,12 @@ final class DefaultOnboardingJoinFamilyUseCase: OnboardingJoinFamilyUseCase {
                 self?.isJoinedFamily.accept(false)
             }
         }
+    }
+}
+
+extension DefaultOnboardingJoinFamilyUseCase {
+    func checkEnteredCode(_ code: String) {
+        ableToCheckFamilyCode.accept(code.hasText)
+        isTextCountExceeded.accept(code.count <= 6)
     }
 }

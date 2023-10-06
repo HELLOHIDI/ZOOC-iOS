@@ -83,6 +83,13 @@ final class OnboardingJoinFamilyViewController: BaseViewController {
             .drive(with: self, onNext: { owner, isJoined in
                 if isJoined { owner.pushToJoinCompletedViewController() }
             }).disposed(by: disposeBag)
+        
+        output.isTextCountExceeded
+            .asDriver(onErrorJustReturn: Bool())
+            .drive(with: self, onNext: { owner, isTextCountExceeded in
+                if !isTextCountExceeded { owner.updateTextField(owner.rootView.familyCodeTextField)
+                }
+            }).disposed(by: disposeBag)
     }
 }
 
@@ -90,6 +97,15 @@ extension OnboardingJoinFamilyViewController {
     func pushToJoinCompletedViewController() {
         let joinCompletedVC = OnboardingJoinFamilyCompletedViewController()
         self.navigationController?.pushViewController(joinCompletedVC, animated: true)
+    }
+    
+    private func updateTextField(_ textField: ZoocEditTextField?) {
+        guard let textField = textField else { return }
+        let fixedText = textField.text?.substring(from: 0, to:textField.textFieldType.limit-1)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            self.rootView.familyCodeTextField.text = fixedText
+        }
     }
 }
 

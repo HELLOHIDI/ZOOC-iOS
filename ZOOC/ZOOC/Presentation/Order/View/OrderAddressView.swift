@@ -23,6 +23,8 @@ final class OrderAddressView: UIView {
     weak var delegate: OrderAddressViewDelegate?
     private var basicAddressDatas: Results<OrderBasicAddress>?
     
+    private var registeredAddressData: [OrderBasicAddress] = []
+    
     var addressType: AddressType = .new {
         didSet {
             updateViewHidden()
@@ -206,6 +208,22 @@ final class OrderAddressView: UIView {
         }
     }
     
+    func dataBind(_ registeredAddressData: [OrderBasicAddress]) {
+        
+        //basicAddressView.dataBind(registeredAddressData)
+        self.registeredAddressData = registeredAddressData
+        addressType = registeredAddressData.isEmpty ? .new : .registed
+        
+        if addressType == .registed {
+            basicAddressView.layoutIfNeeded()
+            basicAddressButtonDidTap()
+        } else {
+            newAddressView.layoutIfNeeded()
+            newAddressButtonDidTap()
+        }
+    }
+    
+    
     func updateUI(newAddressData: OrderAddress) {
         newAddressView.updateUI(newAddressData)
     }
@@ -262,9 +280,9 @@ final class OrderAddressView: UIView {
     private func basicAddressButtonDidTap() {
         
         delegate?.basicAddressButtonDidTap(headerView.frame.height +
-                                           buttonView.frame.height + basicAddressView.basicAddressCollectionView.contentSize.height)
+                                           buttonView.frame.height + basicAddressView.collectionView.contentSize.height)
         
-        guard !(basicAddressDatas?.isEmpty ?? true) else {
+        guard !(registeredAddressData.isEmpty) else {
             return
         }
         addressType = .registed

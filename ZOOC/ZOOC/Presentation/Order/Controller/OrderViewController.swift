@@ -65,7 +65,7 @@ final class OrderViewController: BaseViewController {
         
         setDelegate()
         
-        setAddressData()
+        //setAddressData()
         
         dismissKeyboardWhenTappedAround()
     }
@@ -102,7 +102,9 @@ final class OrderViewController: BaseViewController {
     
     private func bindViewModel() {
         let input = OrderViewModel.Input(
-            viewDidLoadEvent: rx.viewDidLoad.asObservable()
+            viewDidLoadEvent: rx.viewDidLoad.asObservable(),
+            registedAddressCellShoulSelectRowEvent: rootView.addressView.basicAddressView.collectionView.rx.itemSelected.asObservable().map { $0.row },
+            registedAddressCellShoulSelectEvent: rootView.addressView.basicAddressView.collectionView.rx.modelSelected(OrderBasicAddress.self).asObservable()
         )
         
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
@@ -126,17 +128,47 @@ final class OrderViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
+        output.registeredAddressData
+            .asDriver(onErrorJustReturn: [])
+            .drive(
+                rootView.addressView.basicAddressView.collectionView.rx.items(cellIdentifier:
+                                                                                OrderBasicAddressCollectionViewCell.reuseCellIdentifier,
+                                                                              cellType: OrderBasicAddressCollectionViewCell.self)
+            ) { row, data, cell in
+                cell.dataBind(data)
+            }
+            .disposed(by: disposeBag)
+        
+        output.registeredAddressData
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self, onNext: { owner, registeredAddressData in
+                owner.rootView.addressView.dataBind(registeredAddressData)
+            })
+            .disposed(by: disposeBag)
+        
+        
+        output.registedAddressCellDidSelected
+            .asDriver(onErrorJustReturn: Int())
+            .drive(with: self, onNext: { owner, row  in
+                owner.rootView.addressView.basicAddressView.collectionView.selectCell(row: row)
+                owner.rootView.addressView.basicAddressView.collectionView.performBatchUpdates(nil)
+            })
+            .disposed(by: disposeBag)
+        
+        
+        
+        
         
     }
     
     private func setAddressData() {
         Task {
-            basicAddressResult = await realmService.getBasicAddress()
-            rootView.addressView.dataBind(basicAddressResult)
-            
-            if let selectedAddressData = await realmService.getSelectedAddress() {
-                currentAddressData = selectedAddressData.transform()
-            }
+//            basicAddressResult = await realmService.getBasicAddress()
+//            rootView.addressView.dataBind(basicAddressResult)
+//
+//            if let selectedAddressData = await realmService.getSelectedAddress() {
+//                currentAddressData = selectedAddressData.transform()
+//            }
         }
       
     }
@@ -277,7 +309,7 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
     }
     
     func basicAddressButtonDidTap(_ height: CGFloat) {
-        guard !basicAddressResult.isEmpty else {
+        guard viewModel.hasRegistedAddress else {
             showToast("먼저 신규입력으로 배송지를 등록해주세요", type: .bad)
             return
         }

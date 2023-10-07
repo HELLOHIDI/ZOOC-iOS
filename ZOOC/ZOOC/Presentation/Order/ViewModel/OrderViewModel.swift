@@ -20,17 +20,23 @@ final class OrderViewModel {
     //MARK: - Properties
     
     let productsData: [OrderProduct]
+    var hasRegistedAddress: Bool = false
+    var selectedRegistedAddress: OrderBasicAddress?
     
     //MARK: - Input & Output
     
     struct Input {
         let viewDidLoadEvent: Observable<Void>
+        let registedAddressCellShoulSelectRowEvent: Observable<Int>
+        let registedAddressCellShoulSelectEvent: Observable<OrderBasicAddress>
     }
     
     struct Output {
         let productsData = PublishRelay<[OrderProduct]>()
         let productsTotalPrice = PublishRelay<Int>()
         let deliveryFee = PublishRelay<Int>()
+        let registeredAddressData = PublishRelay<[OrderBasicAddress]>()
+        let registedAddressCellDidSelected = PublishRelay<Int>()
     }
     
     
@@ -55,6 +61,7 @@ final class OrderViewModel {
         input.viewDidLoadEvent
             .subscribe(with: self, onNext: { owner, _ in
                 owner.requestDeliveryFee(output: output)
+                owner.getRegisteredAddress(output: output)
                 
                 output.productsData.accept(owner.productsData)
                 
@@ -63,6 +70,16 @@ final class OrderViewModel {
                 
             })
             .disposed(by: disposeBag)
+        
+        Observable.combineLatest(input.registedAddressCellShoulSelectRowEvent,
+                                 input.registedAddressCellShoulSelectEvent)
+        .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+        .subscribe(onNext: { [weak self] (row, addressData) in
+            output.registedAddressCellDidSelected.accept(row)
+            self?.selectedRegistedAddress = addressData
+        })
+        .disposed(by: disposeBag)
+        
         
         
         
@@ -73,9 +90,27 @@ final class OrderViewModel {
     
 }
 
+//MARK: - Realm Service
+
 extension OrderViewModel {
     
+    private func getRegisteredAddress(output: Output) {
+        Task {
+            let registedAddress = await realmService.getRegisteredAddress()
+            output.registeredAddressData.accept(registedAddress)
+            
+            guard !registedAddress.isEmpty else {
+                hasRegistedAddress = false
+                return
+            }
+            hasRegistedAddress = true
+            output.registedAddressCellDidSelected.accept(0)
+        }
+    }
+    
 }
+
+//MARK: - Firebase Service
 
 extension OrderViewModel {
     private func requestDeliveryFee(output: Output) {
@@ -87,9 +122,7 @@ extension OrderViewModel {
         
         remoteConfig.fetch() { status, error in
             if status == .success {
-                remoteConfig.activate() { [weak self] changed, error in
-                    guard let self else { return }
-                    
+                remoteConfig.activate() { changed, error in
                     DispatchQueue.main.async {
                         let deliveryFee = Int(truncating: remoteConfig["deliveryFee"].numberValue)
                         output.deliveryFee.accept(deliveryFee)
@@ -100,5 +133,4 @@ extension OrderViewModel {
             }
         }
     }
-
 }

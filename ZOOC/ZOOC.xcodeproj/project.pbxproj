@@ -104,6 +104,7 @@
 		878133922ACFFEDD0004235E /* ZoocWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878133912ACFFEDD0004235E /* ZoocWebViewController.swift */; };
 		878133962AD1282E0004235E /* OrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878133952AD1282E0004235E /* OrderView.swift */; };
 		878133992AD131DF0004235E /* OrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878133982AD131DF0004235E /* OrderViewModel.swift */; };
+		8781339B2AD1703B0004235E /* OrderToastCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8781339A2AD1703B0004235E /* OrderToastCase.swift */; };
 		8781DE4829B20F61005ABF23 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 8781DE4729B20F61005ABF23 /* FirebaseMessaging */; };
 		8781DE4E29B273FB005ABF23 /* OnboardingFamilyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8781DE4D29B273FB005ABF23 /* OnboardingFamilyResult.swift */; };
 		8782C7DA296857A600C9324B /* KakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = 8782C7D9296857A600C9324B /* KakaoSDKShare */; };
@@ -461,6 +462,7 @@
 		878133912ACFFEDD0004235E /* ZoocWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocWebViewController.swift; sourceTree = "<group>"; };
 		878133952AD1282E0004235E /* OrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderView.swift; sourceTree = "<group>"; };
 		878133982AD131DF0004235E /* OrderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewModel.swift; sourceTree = "<group>"; };
+		8781339A2AD1703B0004235E /* OrderToastCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderToastCase.swift; sourceTree = "<group>"; };
 		8781DE4B29B25471005ABF23 /* Release-GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Release-GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8781DE4D29B273FB005ABF23 /* OnboardingFamilyResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFamilyResult.swift; sourceTree = "<group>"; };
 		8782C7E32968B03500C9324B /* HomePetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePetCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1571,6 +1573,7 @@
 				87BCAD3D2AA9BA2900A03DA3 /* Toast.swift */,
 				87DF04EB2AC82D5D00E10B2D /* ShopToastCase.swift */,
 				8764A6282ACD5395007D4B0A /* ArchiveToastCase.swift */,
+				8781339A2AD1703B0004235E /* OrderToastCase.swift */,
 			);
 			path = Toast;
 			sourceTree = "<group>";
@@ -2438,6 +2441,7 @@
 				D24AFAC62A8E3F7A00823E9C /* MyRegisterPetRequest.swift in Sources */,
 				D2B735642A8BA2B500F93C45 /* GenAIGuideView.swift in Sources */,
 				D29944342AAEE5C400C4F280 /* DefaultGenAIRegisterPetUseCase.swift in Sources */,
+				8781339B2AD1703B0004235E /* OrderToastCase.swift in Sources */,
 				87F287DD2A9C6F1200A53218 /* OrderProduct.swift in Sources */,
 				D27D9568296CB5930097CD03 /* OnboardingInviteFamilyView.swift in Sources */,
 				D216380A2ACDC6790096D474 /* OnboardingLoginViewModel.swift in Sources */,

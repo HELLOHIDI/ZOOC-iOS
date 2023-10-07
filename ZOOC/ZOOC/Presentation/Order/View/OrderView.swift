@@ -172,6 +172,10 @@ final class OrderView: UIView {
         }
     }
     
+    func updateUI(_ newAddressData: OrderAddress) {
+        addressView.updateUI(newAddressData)
+    }
+    
     
     
 }

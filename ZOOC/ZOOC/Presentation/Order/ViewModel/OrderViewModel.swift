@@ -23,6 +23,17 @@ final class OrderViewModel {
     var hasRegistedAddress: Bool = false
     var selectedRegistedAddress: OrderBasicAddress?
     
+    private var productsTotalPrice = Int()
+    private var deliveryFee = Int()
+    
+    private var totalPrice: Int { productsTotalPrice + deliveryFee }
+    
+    var ordererData = OrderOrderer()
+    var newAddressData = OrderAddress()
+    
+    var paymentType: PaymentType = .withoutBankBook
+    var agreementData = OrderAgreement()
+    
     //MARK: - Input & Output
     
     struct Input {
@@ -30,6 +41,8 @@ final class OrderViewModel {
         let registedAddressCellShoulSelectRowEvent: Observable<Int>
         let registedAddressCellShoulSelectEvent: Observable<OrderBasicAddress>
         let registeredAddressCellRequestTextFieldDidChange: Observable<(OrderBasicAddress, String)>
+        let validateOrderSuccess: Observable<AddressType>
+        let checkRegisterAddress: Observable<Bool>
     }
     
     struct Output {
@@ -38,6 +51,8 @@ final class OrderViewModel {
         let deliveryFee = PublishRelay<Int>()
         let registeredAddressData = PublishRelay<[OrderBasicAddress]>()
         let registedAddressCellDidSelected = PublishRelay<Int>()
+        let orderSuccess = PublishRelay<Int>()
+        let showToast = PublishRelay<OrderToastCase>()
     }
     
     
@@ -59,6 +74,7 @@ final class OrderViewModel {
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output()
         
+        
         input.viewDidLoadEvent
             .subscribe(with: self, onNext: { owner, _ in
                 owner.requestDeliveryFee(output: output)
@@ -68,6 +84,8 @@ final class OrderViewModel {
                 
                 let productsTotalPrice = owner.productsData.reduce(0) { $0 + $1.productsPrice }
                 output.productsTotalPrice.accept(productsTotalPrice)
+                owner.productsTotalPrice = productsTotalPrice
+                
                 
             })
             .disposed(by: disposeBag)
@@ -90,12 +108,63 @@ final class OrderViewModel {
             })
             .disposed(by: disposeBag)
         
+        input.validateOrderSuccess
+            .subscribe(with: self, onNext: { owner, addressType in
+                let currentAddress = (addressType == .new) ? owner.newAddressData : owner.selectedRegistedAddress!.transform()
+                
+                owner.requestOrderAPI(owner.ordererData,
+                                      currentAddress,
+                                      owner.productsData,
+                                      owner.deliveryFee,
+                                      output: output)
+            })
+            .disposed(by: disposeBag)
+        
+        input.checkRegisterAddress
+            .subscribe(with: self, onNext: { owner, isSelected in
+                if isSelected {
+                    owner.registerNewAddress(owner.newAddressData)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        
         
         
         return output
     }
     
     
+}
+
+//MARK: - Zooc Service
+
+extension OrderViewModel {
+    private func requestOrderAPI(_ orderer: OrderOrderer,
+                                 _ address: OrderAddress,
+                                 _ products: [OrderProduct],
+                                 _ deliveryFee: Int,
+                                 output: Output) {
+        
+        let request = OrderRequest(orderer: orderer,
+                                   address: address,
+                                   products: products,
+                                   deliveryFee: deliveryFee)
+        
+        ShopAPI.shared.postOrder(request: request) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success:
+                output.orderSuccess.accept(self.totalPrice)
+                self.deleteAllCartedProducts()
+            case .requestErr(let msg):
+                output.showToast.accept(.custom(message: msg))
+            default:
+                output.showToast.accept(.serverFail)
+            }
+        }
+        
+    }
 }
 
 //MARK: - Realm Service
@@ -129,6 +198,19 @@ extension OrderViewModel {
         }
     }
     
+    private func deleteAllCartedProducts() {
+        Task {
+            await realmService.deleteAllCartedProducts()
+        }
+    }
+    
+    
+    private func registerNewAddress(_ data: OrderAddress) {
+        Task {
+            await realmService.updateBasicAddress(data)
+        }
+    }
+    
 }
 
 //MARK: - Firebase Service
@@ -141,12 +223,13 @@ extension OrderViewModel {
         settings.minimumFetchInterval = 0
         remoteConfig.configSettings = settings
         
-        remoteConfig.fetch() { status, error in
+        remoteConfig.fetch() { [weak self] status, error in
             if status == .success {
                 remoteConfig.activate() { changed, error in
                     DispatchQueue.main.async {
                         let deliveryFee = Int(truncating: remoteConfig["deliveryFee"].numberValue)
                         output.deliveryFee.accept(deliveryFee)
+                        self?.deliveryFee = deliveryFee
                     }
                 }
             } else {
@@ -155,3 +238,5 @@ extension OrderViewModel {
         }
     }
 }
+
+

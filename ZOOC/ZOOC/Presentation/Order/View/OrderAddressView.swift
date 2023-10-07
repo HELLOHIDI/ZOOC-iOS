@@ -206,13 +206,13 @@ final class OrderAddressView: UIView {
     }
     
     
-    func updateUI(newAddressData: OrderAddress) {
+    func updateUI(_ newAddressData: OrderAddress) {
         newAddressView.updateUI(newAddressData)
     }
     
     
     func checkValidity() throws {
-        if !newAddressView.isHidden {
+        if addressType == .new {
             try newAddressView.checkValidity()
         }
     }

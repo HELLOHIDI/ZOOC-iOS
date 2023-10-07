@@ -16,36 +16,17 @@ import RealmSwift
 
 final class OrderViewController: BaseViewController {
     
-    private let realmService: RealmService
-    
     private let rootView = OrderView()
     private let viewModel: OrderViewModel
     private let disposeBag = DisposeBag()
     
     private let registeredAddressCellRequestTextFieldDidChange = PublishRelay<(OrderBasicAddress, String)>()
-    
-    //MARK: - Properties
-    
-    private let productsData: [OrderProduct]
-    
-    private var ordererData = OrderOrderer()
-    private var currentAddressData = OrderAddress() {
-        didSet {
-            print(currentAddressData)
-        }
-    }
-    
-    private var newAddressData = OrderAddress()
-    
-    private var paymentType : PaymentType = .withoutBankBook
-    private var agreementData = OrderAgreement()
-    
+    private let validateOrderSuccess = PublishRelay<AddressType>()
+    private let checkRegisterAddress = PublishRelay<Bool>()
     
     //MARK: - Life Cycle
     
-    init(_ products: [OrderProduct], realmService: RealmService, viewModel: OrderViewModel) {
-        self.productsData = products
-        self.realmService = realmService
+    init(viewModel: OrderViewModel) {
         self.viewModel = viewModel
         
         super.init(nibName: nil, bundle: nil)
@@ -102,7 +83,9 @@ final class OrderViewController: BaseViewController {
             registedAddressCellShoulSelectRowEvent: rootView.addressView.basicAddressView.collectionView.rx.itemSelected.asObservable().map { $0.row },
             registedAddressCellShoulSelectEvent: rootView.addressView.basicAddressView.collectionView.rx.modelSelected(OrderBasicAddress.self).asObservable(),
             registeredAddressCellRequestTextFieldDidChange:
-                registeredAddressCellRequestTextFieldDidChange.asObservable()
+                registeredAddressCellRequestTextFieldDidChange.asObservable(),
+            validateOrderSuccess: validateOrderSuccess.asObservable(),
+            checkRegisterAddress: checkRegisterAddress.asObservable()
         )
         
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
@@ -158,17 +141,24 @@ final class OrderViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
+        output.orderSuccess
+            .asDriver(onErrorJustReturn: Int())
+            .drive(with: self, onNext: { owner, totalPrice in
+                switch owner.viewModel.paymentType {
+                case .withoutBankBook:
+                    let payVC = OrderAssistantViewController(totalPrice: totalPrice)
+                    payVC.modalPresentationStyle = .fullScreen
+                    owner.present(payVC, animated: true) {
+                        owner.navigationController?.popToRootViewController(animated: false)
+                    }
+                default:
+                    owner.showToast("주문하기 완료", type: .good)
+                    owner.navigationController?.popToRootViewController(animated: false)
+                }
+            })
+            .disposed(by: disposeBag)
         
-    }
-    
-    private func registerNewAddress(_ data: OrderAddress) {
-        if rootView.addressView.newAddressView.registerBasicAddressCheckButton.isSelected == true && rootView.addressView.newAddressView.isHidden == false {
-            Task {
-                await realmService.updateBasicAddress(data)
-            }
-        } else {
-            print("로컬DB에 등록이 불가능합니다!")
-        }
+        
     }
     
     //MARK: - Action Method
@@ -180,17 +170,15 @@ final class OrderViewController: BaseViewController {
             try rootView.paymentMethodView.checkValidity()
             try rootView.agreementView.checkValidity()
             
-            try updateAddressData()
+            validateOrderSuccess.accept(rootView.addressView.addressType)
             
-            requestOrderAPI(ordererData,
-                            currentAddressData,
-                            productsData,
-                            3000)
+            if rootView.addressView.addressType == .new {
+                let isSelected = rootView.addressView.newAddressView.registerBasicAddressCheckButton.isSelected
+                checkRegisterAddress.accept(isSelected)
+            }
             
         } catch let error as OrderInvalidError {
-            showToast(error.message,
-                      type: .bad,
-                      bottomInset: 86)
+            showToast(error.message, type: .bad)
             
             var y: CGFloat = 0
             switch error {
@@ -211,71 +199,16 @@ final class OrderViewController: BaseViewController {
                       type: .bad)
         }
     }
-    
-    private func updateAddressData() throws {
-        switch rootView.addressView.addressType {
-        case .new:
-            registerNewAddress(newAddressData)
-            self.currentAddressData = newAddressData
-        case .registed:
-            Task {
-                let addressData = await realmService.getSelectedAddress()
-                guard let addressData else {
-                    throw OrderInvalidError.noAddressSelected
-                }
-                self.currentAddressData = addressData.transform()
-            }
-            
-            
-        }
-    }
-    
-    private func requestOrderAPI(_ orderer: OrderOrderer,
-                                 _ address: OrderAddress,
-                                 _ products: [OrderProduct],
-                                 _ deliveryFee: Int) {
-        
-        let request = OrderRequest(orderer: orderer,
-                                   address: address,
-                                   products: products,
-                                   deliveryFee: deliveryFee)
-        
-        ShopAPI.shared.postOrder(request: request) { result in
-            guard self.validateResult(result) != nil else {
-                self.showToast("주문하기에 실패하였습니다. 다시 시도해주세요", type: .bad)
-                return
-            }
-            
-            Task {
-                await self.realmService.deleteAllCartedProducts()
-            }
-            
-            
-            switch self.paymentType {
-            case .withoutBankBook:
-                let totalPrice = products.reduce(0) { $0 + $1.productsPrice} + deliveryFee
-                let payVC = OrderAssistantViewController(totalPrice: totalPrice)
-                payVC.modalPresentationStyle = .fullScreen
-                self.present(payVC, animated: true) {
-                    self.navigationController?.popToRootViewController(animated: false)
-                }
-            default:
-                self.showToast("주문하기 완료", type: .good)
-                self.navigationController?.popToRootViewController(animated: false)
-            }
-        }
-    }
-    
+
 }
 
 //MARK: - OrdererViewDelegate
 
 extension OrderViewController: OrderOrdererViewDelegate {
     func textFieldDidEndEditing(name: String?, phoneNumber: String?) {
-        ordererData.name = name ?? ""
-        ordererData.phoneNumber = phoneNumber ?? ""
+        viewModel.ordererData.name = name ?? ""
+        viewModel.ordererData.phoneNumber = phoneNumber ?? ""
     }
-    
 }
 
 //MARK: - OrderAddressViewDelegate
@@ -283,8 +216,6 @@ extension OrderViewController: OrderOrdererViewDelegate {
 extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDelegate {
   
     func newAddressButtonDidTap(_ height: CGFloat) {
-        currentAddressData = newAddressData
-        
         rootView.addressView.snp.remakeConstraints {
             $0.top.equalTo(rootView.ordererView.snp.bottom).offset(1)
             $0.horizontalEdges.equalToSuperview()
@@ -317,16 +248,16 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
     func copyButtonDidTap() {
         view.endEditing(true)
         
-        guard !ordererData.name.isEmpty ||
-                !ordererData.phoneNumber.isEmpty else {
+        guard !viewModel.ordererData.name.isEmpty ||
+                !viewModel.ordererData.phoneNumber.isEmpty else {
             showToast("먼저 구매자 정보를 입력해주세요", type: .bad)
             rootView.scrollView.setContentOffset(CGPoint(x: 0, y: rootView.ordererView.frame.minY), animated: true)
             return
         }
         
-        newAddressData.receiverName = ordererData.name
-        newAddressData.receiverPhoneNumber = ordererData.phoneNumber
-        rootView.addressView.updateUI(newAddressData: newAddressData)
+        viewModel.newAddressData.receiverName = viewModel.ordererData.name
+        viewModel.newAddressData.receiverPhoneNumber = viewModel.ordererData.phoneNumber
+        rootView.updateUI(viewModel.newAddressData)
     }
     
     func findAddressButtonDidTap() {
@@ -341,12 +272,11 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
                                 detailAddress: String?,
                                 request: String?) {
         
-        newAddressData.addressName = addressName
-        newAddressData.receiverName = receiverName
-        newAddressData.receiverPhoneNumber = receiverPhoneNumber
-        newAddressData.detailAddress = detailAddress
-        newAddressData.request = request
-        currentAddressData = newAddressData
+        viewModel.newAddressData.addressName = addressName
+        viewModel.newAddressData.receiverName = receiverName
+        viewModel.newAddressData.receiverPhoneNumber = receiverPhoneNumber
+        viewModel.newAddressData.detailAddress = detailAddress
+        viewModel.newAddressData.request = request
     }
 }
 
@@ -354,7 +284,7 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
 
 extension OrderViewController: OrderPaymentMethodViewDelegate {
     func paymentMethodDidChange(_ paymentType: PaymentType) {
-        self.paymentType = paymentType
+        viewModel.paymentType = paymentType
     }
 }
 
@@ -362,15 +292,15 @@ extension OrderViewController: OrderPaymentMethodViewDelegate {
 
 extension OrderViewController: OrderAgreementViewDelegate {
     func allPoliciesAgreemCheckButtonDidChange(allPoliciesAgree: Bool) {
-        agreementData.agreeWithOnwardTransfer = allPoliciesAgree
-        agreementData.agreeWithTermOfUse = allPoliciesAgree
-        rootView.agreementView.updateUI(agreementData)
+        viewModel.agreementData.agreeWithOnwardTransfer = allPoliciesAgree
+        viewModel.agreementData.agreeWithTermOfUse = allPoliciesAgree
+        rootView.agreementView.updateUI(viewModel.agreementData)
     }
     
     func checkButtonDidChange(onwardTransfer: Bool, termOfUse: Bool) {
-        agreementData.agreeWithOnwardTransfer = onwardTransfer
-        agreementData.agreeWithTermOfUse = termOfUse
-        rootView.agreementView.updateUI(agreementData)
+        viewModel.agreementData.agreeWithOnwardTransfer = onwardTransfer
+        viewModel.agreementData.agreeWithTermOfUse = termOfUse
+        rootView.agreementView.updateUI(viewModel.agreementData)
     }
     
     func watchButtonDidTap(_ type: OrderAgreementView.Policy) {
@@ -394,9 +324,9 @@ extension OrderViewController: OrderAgreementViewDelegate {
 extension OrderViewController: KakaoPostCodeViewControllerDelegate {
     
     func fetchPostCode(roadAddress: String, zoneCode: String) {
-        newAddressData.address = roadAddress
-        newAddressData.postCode = zoneCode
-        rootView.addressView.updateUI(newAddressData: newAddressData)
+        viewModel.newAddressData.address = roadAddress
+        viewModel.newAddressData.postCode = zoneCode
+        rootView.updateUI(viewModel.newAddressData)
     }
 }
 
@@ -405,6 +335,5 @@ extension OrderViewController: OrderBasicAddressCollectionViewCellDelegate {
     func requestTextFieldDidChange(_ object: OrderBasicAddress, request: String) {
         registeredAddressCellRequestTextFieldDidChange.accept((object,request))
     }
-    
     
 }

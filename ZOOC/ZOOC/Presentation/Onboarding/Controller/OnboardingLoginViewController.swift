@@ -96,6 +96,13 @@ final class OnboardingLoginViewController: BaseViewController {
                 if !autoLoginSucceded { owner.showToast("FCM토큰을 재발급이 필요합니다.", type: .bad) }
                 UIApplication.shared.changeRootViewController(ZoocTabBarController())
             }).disposed(by: disposeBag)
+        
+        output.kakaoLoginError
+            .asDriver(onErrorJustReturn: nil)
+            .drive(with: self, onNext: { owner, error in
+                guard error != nil else { return }
+                owner.showToast("카카오톡 로그인에 실패했습니다.", type: .bad)
+            }).disposed(by: disposeBag)
     }
 }
 

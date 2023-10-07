@@ -24,7 +24,9 @@ protocol RealmService {
     func getRegisteredAddress() async -> [OrderBasicAddress]
     func getSelectedAddress() async -> OrderBasicAddress?
     func setAddress(_ newAddress: OrderBasicAddress) async
+    func selectBasicAddress(_ object: OrderBasicAddress) async 
     func updateBasicAddress(_ data: OrderAddress) async
+    func updateBasicAddressRequest(_ object: OrderBasicAddress, request: String) async 
     func resetBasicAddressSelected() async
 }
 

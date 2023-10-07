@@ -158,7 +158,7 @@ final class OrderView: UIView {
                   _ totalPrice: Int) {
         
         priceView.updateUI(deliveryFee, productsTotalPrice, totalPrice)
-        orderButton.setTitle("\(totalPrice.priceText) 원", for: .normal)
+        orderButton.setTitle("\(totalPrice.priceTextWithSpacing) 결제하기", for: .normal)
     }
     
     func updateUI(_ productData: [OrderProduct]) {

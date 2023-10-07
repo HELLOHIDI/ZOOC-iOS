@@ -29,6 +29,7 @@ final class OrderViewModel {
         let viewDidLoadEvent: Observable<Void>
         let registedAddressCellShoulSelectRowEvent: Observable<Int>
         let registedAddressCellShoulSelectEvent: Observable<OrderBasicAddress>
+        let registeredAddressCellRequestTextFieldDidChange: Observable<(OrderBasicAddress, String)>
     }
     
     struct Output {
@@ -75,12 +76,19 @@ final class OrderViewModel {
                                  input.registedAddressCellShoulSelectEvent)
         .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
         .subscribe(onNext: { [weak self] (row, addressData) in
+            
+            self?.selectRegisteredAddress(addressData)
+                
             output.registedAddressCellDidSelected.accept(row)
             self?.selectedRegistedAddress = addressData
         })
         .disposed(by: disposeBag)
         
-        
+        input.registeredAddressCellRequestTextFieldDidChange
+            .subscribe(onNext: { [weak self] object, text in
+                self?.updateRegisteredAddressRequest(object, request: text)
+            })
+            .disposed(by: disposeBag)
         
         
         
@@ -105,6 +113,19 @@ extension OrderViewModel {
             }
             hasRegistedAddress = true
             output.registedAddressCellDidSelected.accept(0)
+        }
+    }
+    
+    private func selectRegisteredAddress(_ object: OrderBasicAddress) {
+        Task {
+            await realmService.selectBasicAddress(object)
+        }
+    }
+    
+    private func updateRegisteredAddressRequest(_ object: OrderBasicAddress, request: String) {
+        
+        Task {
+            await realmService.updateBasicAddressRequest(object, request: request)
         }
     }
     

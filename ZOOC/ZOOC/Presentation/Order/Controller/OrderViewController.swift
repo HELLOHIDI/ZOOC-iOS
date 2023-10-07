@@ -18,10 +18,11 @@ final class OrderViewController: BaseViewController {
     
     private let realmService: RealmService
     
-    
     private let rootView = OrderView()
     private let viewModel: OrderViewModel
     private let disposeBag = DisposeBag()
+    
+    private let registeredAddressCellRequestTextFieldDidChange = PublishRelay<(OrderBasicAddress, String)>()
     
     //MARK: - Properties
     
@@ -34,7 +35,6 @@ final class OrderViewController: BaseViewController {
         }
     }
     
-    var basicAddressResult: Results<OrderBasicAddress>!
     private var newAddressData = OrderAddress()
     
     private var paymentType : PaymentType = .withoutBankBook
@@ -62,11 +62,7 @@ final class OrderViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         setDelegate()
-        
-        //setAddressData()
-        
         dismissKeyboardWhenTappedAround()
     }
     
@@ -104,7 +100,9 @@ final class OrderViewController: BaseViewController {
         let input = OrderViewModel.Input(
             viewDidLoadEvent: rx.viewDidLoad.asObservable(),
             registedAddressCellShoulSelectRowEvent: rootView.addressView.basicAddressView.collectionView.rx.itemSelected.asObservable().map { $0.row },
-            registedAddressCellShoulSelectEvent: rootView.addressView.basicAddressView.collectionView.rx.modelSelected(OrderBasicAddress.self).asObservable()
+            registedAddressCellShoulSelectEvent: rootView.addressView.basicAddressView.collectionView.rx.modelSelected(OrderBasicAddress.self).asObservable(),
+            registeredAddressCellRequestTextFieldDidChange:
+                registeredAddressCellRequestTextFieldDidChange.asObservable()
         )
         
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
@@ -134,8 +132,10 @@ final class OrderViewController: BaseViewController {
                 rootView.addressView.basicAddressView.collectionView.rx.items(cellIdentifier:
                                                                                 OrderBasicAddressCollectionViewCell.reuseCellIdentifier,
                                                                               cellType: OrderBasicAddressCollectionViewCell.self)
-            ) { row, data, cell in
+            ) { [weak self] row, data, cell in
+                guard let self else { return }
                 cell.dataBind(data)
+                cell.delegate = self
             }
             .disposed(by: disposeBag)
         
@@ -151,26 +151,14 @@ final class OrderViewController: BaseViewController {
             .asDriver(onErrorJustReturn: Int())
             .drive(with: self, onNext: { owner, row  in
                 owner.rootView.addressView.basicAddressView.collectionView.selectCell(row: row)
-                owner.rootView.addressView.basicAddressView.collectionView.performBatchUpdates(nil)
+                owner.rootView.addressView.basicAddressView.collectionView.layoutIfNeeded()
+                owner.rootView.addressView.basicAddressView.collectionView.performBatchUpdates({
+                    owner.rootView.addressView.basicAddressButtonDidTap()
+                })
             })
             .disposed(by: disposeBag)
         
         
-        
-        
-        
-    }
-    
-    private func setAddressData() {
-        Task {
-//            basicAddressResult = await realmService.getBasicAddress()
-//            rootView.addressView.dataBind(basicAddressResult)
-//
-//            if let selectedAddressData = await realmService.getSelectedAddress() {
-//                currentAddressData = selectedAddressData.transform()
-//            }
-        }
-      
     }
     
     private func registerNewAddress(_ data: OrderAddress) {
@@ -412,3 +400,11 @@ extension OrderViewController: KakaoPostCodeViewControllerDelegate {
     }
 }
 
+
+extension OrderViewController: OrderBasicAddressCollectionViewCellDelegate {
+    func requestTextFieldDidChange(_ object: OrderBasicAddress, request: String) {
+        registeredAddressCellRequestTextFieldDidChange.accept((object,request))
+    }
+    
+    
+}

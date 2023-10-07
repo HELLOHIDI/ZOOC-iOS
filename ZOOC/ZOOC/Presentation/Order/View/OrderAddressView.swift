@@ -21,7 +21,6 @@ final class OrderAddressView: UIView {
     //MARK: - Properties
     
     weak var delegate: OrderAddressViewDelegate?
-    private var basicAddressDatas: Results<OrderBasicAddress>?
     
     private var registeredAddressData: [OrderBasicAddress] = []
     
@@ -29,7 +28,6 @@ final class OrderAddressView: UIView {
         didSet {
             updateViewHidden()
             updateTintBar()
-            
         }
     }
     
@@ -193,24 +191,8 @@ final class OrderAddressView: UIView {
     
     //MARK: - Public Methods
     
-    func dataBind(_ basicAddressData: Results<OrderBasicAddress>) {
-        self.basicAddressDatas = basicAddressData
-        basicAddressView.dataBind(basicAddressDatas)
-        
-        addressType = basicAddressData.isEmpty ? .new : .registed
-        
-        if addressType == .registed {
-            basicAddressView.layoutIfNeeded()
-            basicAddressButtonDidTap()
-        } else {
-            newAddressView.layoutIfNeeded()
-            newAddressButtonDidTap()
-        }
-    }
-    
     func dataBind(_ registeredAddressData: [OrderBasicAddress]) {
         
-        //basicAddressView.dataBind(registeredAddressData)
         self.registeredAddressData = registeredAddressData
         addressType = registeredAddressData.isEmpty ? .new : .registed
         
@@ -277,10 +259,14 @@ final class OrderAddressView: UIView {
     }
     
     @objc
-    private func basicAddressButtonDidTap() {
+    func basicAddressButtonDidTap() {
         
         delegate?.basicAddressButtonDidTap(headerView.frame.height +
-                                           buttonView.frame.height + basicAddressView.collectionView.contentSize.height)
+                                           buttonView.frame.height +
+                                           basicAddressView.collectionView.contentSize.height +
+                                           basicAddressView.collectionView.contentInset.top +
+                                           basicAddressView.collectionView.contentInset.bottom
+        )
         
         guard !(registeredAddressData.isEmpty) else {
             return

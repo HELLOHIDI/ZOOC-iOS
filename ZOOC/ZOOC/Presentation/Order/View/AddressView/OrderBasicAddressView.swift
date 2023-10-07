@@ -12,21 +12,6 @@ import RealmSwift
 
 final class OrderBasicAddressView: UIView {
     
-    //MARK: - Properties
-    
-    private var basicAddressDatas: Results<OrderBasicAddress>?  {
-        didSet {
-//            collectionView.reloadData()
-//            let selectedIndex = basicAddressDatas?.firstIndex(where: { data in
-//                data.isSelected == true
-//            })
-//            guard let selectedIndex else { return }
-//            collectionView.selectItem(at: IndexPath(item: selectedIndex,
-//                                                                section: 0),
-//                                                  animated: true, scrollPosition: .centeredVertically)
-        }
-    }
-    
     //MARK: - UI Components
     
     let collectionView: UICollectionView = {
@@ -38,6 +23,8 @@ final class OrderBasicAddressView: UIView {
         collectionView.bounces = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isScrollEnabled = false
+        collectionView.register(OrderBasicAddressCollectionViewCell.self,
+                                            forCellWithReuseIdentifier: OrderBasicAddressCollectionViewCell.cellIdentifier)
         return collectionView
     }()
     
@@ -73,14 +60,6 @@ final class OrderBasicAddressView: UIView {
     
     private func register() {
         collectionView.delegate = self
-        //collectionView.dataSource = self
-        
-        collectionView.register(OrderBasicAddressCollectionViewCell.self,
-                                            forCellWithReuseIdentifier: OrderBasicAddressCollectionViewCell.cellIdentifier)
-    }
-    
-    func dataBind(_ data: Results<OrderBasicAddress>?) {
-        basicAddressDatas = data
     }
 }
 
@@ -118,21 +97,3 @@ extension OrderBasicAddressView: UICollectionViewDelegateFlowLayout {
         UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
     }
 }
-
-extension OrderBasicAddressView: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let basicAddressDatas else { return 0 }
-        return basicAddressDatas.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OrderBasicAddressCollectionViewCell.cellIdentifier, for: indexPath) as! OrderBasicAddressCollectionViewCell
-        
-        guard let basicAddressDatas = basicAddressDatas else { return UICollectionViewCell()}
-        cell.dataBind(basicAddressDatas[indexPath.item])
-        collectionView.performBatchUpdates(nil)
-        return cell
-    }
-    
-}
-

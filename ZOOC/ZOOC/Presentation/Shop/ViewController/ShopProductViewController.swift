@@ -60,7 +60,7 @@ final class ShopProductViewController: BaseViewController {
         
         rootView.cartButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
-                let cartVC = ShopCartViewController(viewModel: ShopCartViewModel())
+                let cartVC = ShopCartViewController(viewModel: ShopCartViewModel(service: DefaultRealmService()))
                 owner.navigationController?.pushViewController(cartVC, animated: true)
             })
             .disposed(by: disposeBag)
@@ -111,7 +111,7 @@ final class ShopProductViewController: BaseViewController {
         output.pushToOrderVC
             .asDriver(onErrorJustReturn: [])
             .drive(with: self, onNext: { owner, orderProducts in
-                let orderVC = OrderViewController(orderProducts)
+                let orderVC = OrderViewController(orderProducts, realmService: DefaultRealmService())
                 owner.navigationController?.pushViewController(orderVC, animated: true)
             })
             .disposed(by: disposeBag)

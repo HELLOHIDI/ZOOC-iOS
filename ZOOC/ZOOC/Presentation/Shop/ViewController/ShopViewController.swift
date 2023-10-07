@@ -52,7 +52,7 @@ final class ShopViewController: BaseViewController {
         
         rootView.cartButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
-                let cartVC = ShopCartViewController(viewModel: ShopCartViewModel())
+                let cartVC = ShopCartViewController(viewModel: ShopCartViewModel(service: DefaultRealmService()))
                 cartVC.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(cartVC, animated: true)
             })
@@ -162,7 +162,8 @@ final class ShopViewController: BaseViewController {
         output.pushShopProductVC
             .asDriver(onErrorJustReturn: ShopProductModel())
             .drive(with: self, onNext: { owner, model in
-                let productVC = ShopProductViewController(viewModel: ShopProductViewModel(model: model))
+                let productVC = ShopProductViewController(viewModel: ShopProductViewModel(model: model,
+                                                                                          service: DefaultRealmService()))
                 productVC.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(productVC, animated: true)
             })

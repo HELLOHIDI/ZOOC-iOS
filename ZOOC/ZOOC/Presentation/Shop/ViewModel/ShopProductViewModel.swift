@@ -12,6 +12,8 @@ import RxSwift
 
 final class ShopProductViewModel {
     
+    private let service: RealmService
+    
     //MARK: - Input & Output
     
     struct Input {
@@ -34,8 +36,9 @@ final class ShopProductViewModel {
     
     //MARK: - Life Cycle
     
-    init(model: ShopProductModel) {
+    init(model: ShopProductModel, service: RealmService) {
         self.model = model
+        self.service = service
     }
 
     //MARK: - Public Method
@@ -62,7 +65,7 @@ final class ShopProductViewModel {
                                                       selectedProduct: $0)
                     
                     Task {
-                        await DefaultRealmService.shared.setCartedProduct(cartedProduct)
+                        await self.service.setCartedProduct(cartedProduct)
                     }
                         
                 }

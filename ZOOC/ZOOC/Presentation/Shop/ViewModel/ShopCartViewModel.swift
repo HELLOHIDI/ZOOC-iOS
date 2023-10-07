@@ -13,6 +13,8 @@ import RxSwift
 
 final class ShopCartViewModel {
     
+    private let service: RealmService
+    
     //MARK: - Input & Output
     
     struct Input {
@@ -32,6 +34,12 @@ final class ShopCartViewModel {
     //MARK: - Properties
     
     private var cartedProducts: [CartedProduct] = []
+    
+    //MARK: - Life Cycle
+
+    init(service: RealmService) {
+        self.service = service
+    }
     
     //MARK: - Method
     
@@ -76,7 +84,7 @@ extension ShopCartViewModel {
     
     private func requestCartedProducts(output: Output) {
         Task {
-            let data = await DefaultRealmService.shared.getCartedProducts()
+            let data = await service.getCartedProducts()
             output.cartedProductsData.accept(data)
             self.cartedProducts = data
         }
@@ -87,7 +95,7 @@ extension ShopCartViewModel {
         let optionID = cartedProducts[row].optionID
         Task {
             do {
-                try await DefaultRealmService.shared.updateCartedProductPieces(optionID: optionID, isPlus: isPlus)
+                try await service.updateCartedProductPieces(optionID: optionID, isPlus: isPlus)
                 requestCartedProducts(output: output)
             } catch  {
                 guard let error =  error as? AmountError else { return }
@@ -100,7 +108,7 @@ extension ShopCartViewModel {
     private func deleteCartedProduct(row: Int, output: Output) {
         let product = cartedProducts[row]
         Task {
-            await DefaultRealmService.shared.deleteCartedProduct(product)
+            await service.deleteCartedProduct(product)
             requestCartedProducts(output: output)
         }
     }

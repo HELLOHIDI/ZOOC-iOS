@@ -25,7 +25,10 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
             updateUI(isSelected)
             
             if isSelected {
-                DefaultRealmService.shared.selectBasicAddress(data)
+                Task {
+                    await DefaultRealmService().selectBasicAddress(data)
+                }
+                
             }
         }
     }
@@ -173,7 +176,11 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
     private func textFieldDidEndEditing(_ textField: UITextField) {
         guard let text = textField.text else { return }
         guard let data else { return }
-        DefaultRealmService.shared.updateBasicAddressRequest(data, request: text)
+        
+        Task {
+            await DefaultRealmService().updateBasicAddressRequest(data, request: text)
+        }
+        
     }
     
     

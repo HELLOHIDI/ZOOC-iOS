@@ -14,6 +14,8 @@ import Then
 
 final class OrderViewController: BaseViewController {
     
+    private let realmService: RealmService
+    
     //MARK: - Properties
     
     private let productsData: [OrderProduct]
@@ -25,7 +27,6 @@ final class OrderViewController: BaseViewController {
         }
     }
     
-    let basicAddressRealm = try! Realm()
     var basicAddressResult: Results<OrderBasicAddress>!
     private var newAddressData = OrderAddress()
     
@@ -67,8 +68,9 @@ final class OrderViewController: BaseViewController {
     
     //MARK: - Life Cycle
     
-    init(_ products: [OrderProduct]) {
+    init(_ products: [OrderProduct], realmService: RealmService) {
         self.productsData = products
+        self.realmService = realmService
         super.init(nibName: nil, bundle: nil)
         
     }
@@ -215,12 +217,15 @@ final class OrderViewController: BaseViewController {
     }
     
     private func setAddressData() {
-        basicAddressResult = DefaultRealmService.shared.getBasicAddress()
-        addressView.dataBind(basicAddressResult)
-        
-        if let selectedAddressData = DefaultRealmService.shared.getSelectedAddress() {
-            currentAddressData = selectedAddressData.transform()
+        Task {
+            basicAddressResult = await realmService.getBasicAddress()
+            addressView.dataBind(basicAddressResult)
+            
+            if let selectedAddressData = await realmService.getSelectedAddress() {
+                currentAddressData = selectedAddressData.transform()
+            }
         }
+      
     }
     
     private func updateUI() {
@@ -232,9 +237,9 @@ final class OrderViewController: BaseViewController {
     
     private func registerNewAddress(_ data: OrderAddress) {
         if addressView.newAddressView.registerBasicAddressCheckButton.isSelected == true && addressView.newAddressView.isHidden == false {
-            
-            DefaultRealmService.shared.updateBasicAddress(data)
-            
+            Task {
+                await realmService.updateBasicAddress(data)
+            }
         } else {
             print("로컬DB에 등록이 불가능합니다!")
         }
@@ -289,17 +294,21 @@ final class OrderViewController: BaseViewController {
         }
     }
     
-    private func updateAddressData() throws{
+    private func updateAddressData() throws {
         switch addressView.addressType {
         case .new:
             registerNewAddress(newAddressData)
             self.currentAddressData = newAddressData
         case .registed:
-            let addressData = DefaultRealmService.shared.getSelectedAddress()
-            guard let addressData else {
-                throw OrderInvalidError.noAddressSelected
+            Task {
+                let addressData = await realmService.getSelectedAddress()
+                guard let addressData else {
+                    throw OrderInvalidError.noAddressSelected
+                }
+                self.currentAddressData = addressData.transform()
             }
-            self.currentAddressData = addressData.transform()
+            
+            
         }
     }
     
@@ -320,7 +329,7 @@ final class OrderViewController: BaseViewController {
             }
             
             Task {
-                await DefaultRealmService.shared.deleteCartedProducts()
+                await self.realmService.deleteAllCartedProducts()
             }
             
             

@@ -99,6 +99,7 @@ extension OrderBasicAddressView: UICollectionViewDelegateFlowLayout {
             size.height = 138 // 선택되지 않은 주소의 높이
         }
         
+        
         return size
     }
     
@@ -124,13 +125,14 @@ extension OrderBasicAddressView: UICollectionViewDataSource {
         
         guard let basicAddressDatas = basicAddressDatas else { return UICollectionViewCell()}
         cell.dataBind(basicAddressDatas[indexPath.item])
+        collectionView.performBatchUpdates(nil)
         return cell
     }
     
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+        UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
     }
 }
 

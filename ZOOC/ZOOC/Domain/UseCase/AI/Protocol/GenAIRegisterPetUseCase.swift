@@ -21,7 +21,7 @@ protocol GenAIRegisterPetUseCase {
     
     func registerProfileImage(_ image: UIImage)
     func registerPet()
-    func isTextCountExceeded(for type: MyEditTextField.TextFieldType)
+    func isTextCountExceeded(for type: ZoocEditTextField.TextFieldType)
     func nameTextFieldDidChangeEvent(_ text: String?)
 }
 

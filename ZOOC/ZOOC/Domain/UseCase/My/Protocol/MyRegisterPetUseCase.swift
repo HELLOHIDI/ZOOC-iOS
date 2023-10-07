@@ -13,7 +13,7 @@ import RxCocoa
 protocol MyRegisterPetUseCase {
     var petMemberData: BehaviorRelay<[PetResult]> { get }
     var ableToRegisterPets: BehaviorRelay<Bool?> { get }
-    var isRegistered: BehaviorRelay<Bool?> { get }
+    var isRegistered: PublishRelay<Bool> { get }
     var registerPetData: BehaviorRelay<[MyPetRegisterModel]> { get }
     var addButtonIsHidden: BehaviorRelay<Bool> { get }
     var deleteButtonIsHidden: BehaviorRelay<Bool> { get }

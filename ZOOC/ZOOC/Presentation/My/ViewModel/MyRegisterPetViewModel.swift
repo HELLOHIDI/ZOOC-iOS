@@ -31,7 +31,7 @@ final class MyRegisterPetViewModel: ViewModelType {
     struct Output {
         var petMemberData = BehaviorRelay<[PetResult]>(value: [])
         var ableToRegisterPets = BehaviorRelay<Bool?>(value: nil)
-        var isRegistered = BehaviorRelay<Bool?>(value: nil)
+        var isRegistered = PublishRelay<Bool>()
         var registerPetData = BehaviorRelay<[MyPetRegisterModel]>(value: [])
     }
     

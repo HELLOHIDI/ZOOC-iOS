@@ -82,6 +82,7 @@ final class MyRegisterPetView: UIView {
         registerPetTableView.do {
             $0.separatorStyle = .none
             $0.isScrollEnabled = false
+            $0.rowHeight = 90
             $0.backgroundColor = .zoocBackgroundGreen
         }
         

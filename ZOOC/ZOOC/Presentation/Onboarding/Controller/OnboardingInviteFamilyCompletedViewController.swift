@@ -7,32 +7,41 @@
 
 import UIKit
 
-import SnapKit
-import Then
+import RxSwift
+import RxCocoa
 
 final class OnboardingInviteFamilyCompletedViewController: UIViewController{
     
     //MARK: - Properties
     
-    private let onboardingInviteCompletedFamilyView = OnboardingInviteCompletedFamilyView()
+    private let disposeBag = DisposeBag()
+    
+    //MARK: - UI Components
+    
+    private let rootView = OnboardingInviteCompletedFamilyView.init(onboardingState: .onboardingSuccess)
     
     //MARK: - Life Cycle
     
     override func loadView() {
-        self.view = onboardingInviteCompletedFamilyView
+        self.view = rootView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        target()
+        bindUI()
     }
     
     //MARK: - Custom Method
     
-    func target() {
-        onboardingInviteCompletedFamilyView.backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        onboardingInviteCompletedFamilyView.startButton.addTarget(self, action: #selector(startButtonDidTap), for: .touchUpInside)
+    func bindUI() {
+        rootView.backButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.navigationController?.popViewController(animated: true)
+        }).disposed(by: disposeBag)
+        
+        rootView.startButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.requestFCMTokenAPI()
+        }).disposed(by: disposeBag)
     }
     
     
@@ -47,16 +56,5 @@ final class OnboardingInviteFamilyCompletedViewController: UIViewController{
             }
             
         }
-    }
-    
-    
-    //MARK: - Action Method
-    
-    @objc private func backButtonDidTap() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    @objc private func startButtonDidTap(){
-        requestFCMTokenAPI()
     }
 }

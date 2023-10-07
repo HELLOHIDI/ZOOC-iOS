@@ -30,17 +30,17 @@ final class SplashViewController: UIViewController {
     
     init(userInfo: [AnyHashable: Any]? = nil) {
         self.userInfo = userInfo
-
+        
         super.init(nibName: nil, bundle: nil)
-
+        
     }
     
     
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -101,7 +101,7 @@ final class SplashViewController: UIViewController {
     
     private func disposeVersion() {
         switch version {
-
+            
         case .latestVersion:
             checkUser()
         default:
@@ -111,7 +111,7 @@ final class SplashViewController: UIViewController {
                 alertVC.modalPresentationStyle = .overFullScreen
                 self.present(alertVC, animated: false)
             }
-           
+            
         }
     }
     
@@ -144,7 +144,14 @@ final class SplashViewController: UIViewController {
     
     private func autoLoginFail () {
         DispatchQueue.main.async {
-            let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
+            let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController(
+                viewModel: OnboardingLoginViewModel(
+                    onboardingLoginUseCase: DefaultOnboardingLoginUseCase(
+                        repository: DefaultOnboardingRepository()
+                    )
+                )
+            )
+            )
             onboardingNVC.setNavigationBarHidden(true, animated: true)
             
             UIApplication.shared.changeRootViewController(onboardingNVC)

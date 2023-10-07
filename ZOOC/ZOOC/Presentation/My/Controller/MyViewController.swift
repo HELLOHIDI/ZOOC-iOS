@@ -91,11 +91,17 @@ final class MyViewController: BaseViewController {
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
         
         output.isloggedOut
-            .asDriver(onErrorJustReturn: nil)
+            .asDriver(onErrorJustReturn: Bool())
             .drive(with: self, onNext: { owner, isLogout in
-                guard let isLogout else { return }
                 if isLogout {
-                    let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
+                    let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController(
+                        viewModel: OnboardingLoginViewModel(
+                            onboardingLoginUseCase: DefaultOnboardingLoginUseCase(
+                                repository: DefaultOnboardingRepository()
+                            )
+                        )
+                    )
+                    )
                     UIApplication.shared.changeRootViewController(onboardingNVC)
                 } else {
                     owner.showToast("로그아웃에 실패했습니다.", type: .bad)
@@ -103,11 +109,17 @@ final class MyViewController: BaseViewController {
             }).disposed(by: disposeBag)
         
         output.isDeletedAccount
-            .asDriver(onErrorJustReturn: nil)
+            .asDriver(onErrorJustReturn: Bool())
             .drive(with: self, onNext: { owner, isDeleted in
-                guard let isDeleted else { return }
                 if isDeleted {
-                    let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController())
+                    let onboardingNVC = UINavigationController(rootViewController: OnboardingLoginViewController(
+                        viewModel: OnboardingLoginViewModel(
+                            onboardingLoginUseCase: DefaultOnboardingLoginUseCase(
+                                repository: DefaultOnboardingRepository()
+                            )
+                        )
+                    )
+                    )
                     onboardingNVC.setNavigationBarHidden(true, animated: true)
                     UIApplication.shared.changeRootViewController(onboardingNVC)
                 } else {
@@ -116,9 +128,8 @@ final class MyViewController: BaseViewController {
             }).disposed(by: disposeBag)
         
         output.inviteCode
-            .asDriver(onErrorJustReturn: nil)
+            .asDriver(onErrorJustReturn: "")
             .drive(with: self, onNext: { owner, inviteCode in
-                guard let inviteCode else { return }
                 owner.shareInviteCode(code: inviteCode)
             }).disposed(by: disposeBag)
         

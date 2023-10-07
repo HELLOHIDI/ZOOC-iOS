@@ -21,7 +21,7 @@ final class DefaultMyRegisterPetUseCase: MyRegisterPetUseCase {
     
     var petMemberData = BehaviorRelay<[PetResult]>(value: [])
     var ableToRegisterPets = BehaviorRelay<Bool?>(value: nil)
-    var isRegistered = BehaviorRelay<Bool?>(value: nil)
+    var isRegistered = PublishRelay<Bool>()
     var registerPetData = BehaviorRelay<[MyPetRegisterModel]>(value: [])
     var addButtonIsHidden = BehaviorRelay<Bool>(value: false)
     var deleteButtonIsHidden = BehaviorRelay<Bool>(value: false)

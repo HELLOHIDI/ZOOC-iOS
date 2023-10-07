@@ -21,8 +21,8 @@ final class OnboardingWelcomeView: OnboardingBaseView {
     
     //MARK: - Life Cycles
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(onboardingState: OnboardingState) {
+        super.init(onboardingState: onboardingState)
         
         style()
         hierarchy()
@@ -37,8 +37,6 @@ final class OnboardingWelcomeView: OnboardingBaseView {
     
     private func style() {
         self.backgroundColor = .zoocBackgroundGreen
-        
-        allHidden()
         
         welcomeLabel.do {
             $0.text = "안녕하세요! \nZOOC에 온 걸 환영해요"

@@ -8,13 +8,20 @@
 import UIKit
 
 import FirebaseRemoteConfig
+import RxCocoa
+import RxSwift
 import RealmSwift
-import SnapKit
-import Then
+
+
 
 final class OrderViewController: BaseViewController {
     
     private let realmService: RealmService
+    
+    
+    private let rootView = OrderView()
+    private let viewModel: OrderViewModel
+    private let disposeBag = DisposeBag()
     
     //MARK: - Properties
     
@@ -34,57 +41,31 @@ final class OrderViewController: BaseViewController {
     private var agreementData = OrderAgreement()
     
     
-    
-    private var deliveryFee = 4000 {
-        didSet {
-            let productsTotalPrice = productsData.reduce(0) { $0 + $1.productsPrice }
-            totalPrice = productsTotalPrice + deliveryFee
-        }
-    }
-    
-    private var totalPrice = 0 {
-        didSet {
-            priceView.updateUI(totalPrice, deliveryFee: deliveryFee)
-            orderButton.setTitle("\(totalPrice.priceText) 결제하기", for: .normal)
-        }
-    }
-
-    //MARK: - UI Components
-    
-    private let backButton = UIButton()
-    private let titleLabel = UILabel()
-    
-    private let scrollView = UIScrollView()
-    private let contentView = UIView()
-    
-    private let productView = OrderProductView()
-    private let ordererView = OrderOrdererView()
-    private let addressView = OrderAddressView()
-    private let paymentMethodView = OrderPaymentMethodView()
-    private let priceView = OrderPriceView()
-    private let agreementView = OrderAgreementView()
-    
-    private let orderButton = ZoocGradientButton()
-    
     //MARK: - Life Cycle
     
-    init(_ products: [OrderProduct], realmService: RealmService) {
+    init(_ products: [OrderProduct], realmService: RealmService, viewModel: OrderViewModel) {
         self.productsData = products
         self.realmService = realmService
+        self.viewModel = viewModel
+        
         super.init(nibName: nil, bundle: nil)
         
+        bindUI()
+        bindViewModel()
+        
+    }
+    
+    override func loadView() {
+        self.view = rootView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        style()
-        hierarchy()
-        layout()
+        
         setDelegate()
+        
         setAddressData()
-        requestDeliveryFee()
-        updateUI()
         
         dismissKeyboardWhenTappedAround()
     }
@@ -95,131 +76,63 @@ final class OrderViewController: BaseViewController {
     
     //MARK: - Custom Method
     
-    
-    private func style() {
-        view.backgroundColor = .zoocBackgroundGreen
-        
-        backButton.do {
-            $0.setImage(Image.back, for: .normal)
-            $0.addTarget(self,
-                         action: #selector(backButtonDidTap),
-                         for: .touchUpInside)
-        }
-        
-        titleLabel.do {
-            $0.text = "주문하기"
-            $0.font = .zoocHeadLine
-            $0.textColor = .zoocDarkGray2
-            $0.textAlignment = .left
-        }
-        
-        scrollView.do {
-            $0.backgroundColor = .zoocBackgroundGreen
-            $0.alwaysBounceVertical = true
-            $0.showsVerticalScrollIndicator = false
-        }
-        
-        contentView.do {
-            $0.backgroundColor = .zoocLightGray
-        }
-        
-        orderButton.do {
-            $0.setTitle("결제하기", for: .normal)
-            $0.addTarget(self,
-                         action: #selector(orderButtonDidTap),
-                         for: .touchUpInside)
-        }
-    }
-    
-    private func hierarchy() {
-        view.addSubviews(backButton, titleLabel, scrollView, orderButton)
-        scrollView.addSubview(contentView)
-        
-        contentView.addSubviews(addressView,
-                                productView,
-                                ordererView,
-                                paymentMethodView,
-                                priceView,
-                                agreementView)
-    }
-    
-    private func layout() {
-        backButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(53)
-            $0.leading.equalToSuperview().offset(16)
-            $0.height.width.equalTo(42)
-        }
-        
-        titleLabel.snp.makeConstraints {
-            $0.centerY.equalTo(backButton)
-            $0.centerX.equalToSuperview()
-        }
-        
-        scrollView.snp.makeConstraints {
-            $0.top.equalTo(backButton.snp.bottom).offset(5)
-            $0.horizontalEdges.equalToSuperview()
-            $0.bottom.equalTo(orderButton.snp.top).offset(-5)
-        }
-        
-        orderButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(50)
-            $0.horizontalEdges.equalToSuperview().inset(30)
-            $0.height.equalTo(54)
-        }
-        
-        contentView.snp.makeConstraints {
-            $0.edges.equalTo(scrollView.contentLayoutGuide)
-            $0.width.equalTo(scrollView.frameLayoutGuide)
-            $0.height.equalTo(scrollView.frameLayoutGuide).priority(.low)
-        }
-        
-        productView.snp.makeConstraints {
-            let totalHeight = 60 + productsData.count * 90 + (productsData.count - 1) * 24 + 30
-            $0.top.equalToSuperview()
-            $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(totalHeight)
-        }
-        
-        ordererView.snp.makeConstraints {
-            $0.top.equalTo(productView.snp.bottom).offset(1)
-            $0.horizontalEdges.equalToSuperview()
-        }
-        
-        addressView.snp.makeConstraints {
-            $0.top.equalTo(ordererView.snp.bottom).offset(1)
-            $0.horizontalEdges.equalToSuperview()
-        }
-        
-        paymentMethodView.snp.makeConstraints {
-            $0.top.equalTo(addressView.snp.bottom).offset(1)
-            $0.horizontalEdges.equalToSuperview()
-        }
-        
-        priceView.snp.makeConstraints {
-            $0.top.equalTo(paymentMethodView.snp.bottom).offset(1)
-            $0.horizontalEdges.equalToSuperview()
-        }
-        
-        agreementView.snp.makeConstraints {
-            $0.top.equalTo(priceView.snp.bottom).offset(1)
-            $0.horizontalEdges.equalToSuperview()
-            $0.bottom.equalToSuperview()
-        }
-    }
-    
-    
     private func setDelegate(){
-        ordererView.delegate = self
-        addressView.delegate = self
-        addressView.newAddressView.delegate = self
-        paymentMethodView.delegate = self
-        agreementView.delegate = self
+        rootView.ordererView.delegate = self
+        rootView.addressView.delegate = self
+        rootView.addressView.newAddressView.delegate = self
+        rootView.paymentMethodView.delegate = self
+        rootView.agreementView.delegate = self
+    }
+    
+    private func bindUI() {
+        
+        rootView.backButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        rootView.orderButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.view.endEditing(true)
+                owner.orderButtonDidTap()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindViewModel() {
+        let input = OrderViewModel.Input(
+            viewDidLoadEvent: rx.viewDidLoad.asObservable()
+        )
+        
+        let output = viewModel.transform(input: input, disposeBag: disposeBag)
+        
+        output.productsData
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self, onNext: { owner, productsData in
+                owner.rootView.updateUI(productsData)
+            })
+            .disposed(by: disposeBag)
+        
+        
+        Observable.combineLatest(output.productsTotalPrice,
+                                 output.deliveryFee)
+            .asDriver(onErrorJustReturn: (Int(),Int()))
+            .drive(onNext: { [weak self] productsTotalPrice, deliveryFee in
+                let totalPrice = productsTotalPrice + deliveryFee
+                self?.rootView.updateUI(deliveryFee,
+                                        productsTotalPrice,
+                                        totalPrice)
+            })
+            .disposed(by: disposeBag)
+        
+        
     }
     
     private func setAddressData() {
         Task {
             basicAddressResult = await realmService.getBasicAddress()
-            addressView.dataBind(basicAddressResult)
+            rootView.addressView.dataBind(basicAddressResult)
             
             if let selectedAddressData = await realmService.getSelectedAddress() {
                 currentAddressData = selectedAddressData.transform()
@@ -228,15 +141,8 @@ final class OrderViewController: BaseViewController {
       
     }
     
-    private func updateUI() {
-        
-        ordererView.updateUI(ordererData)
-        productView.updateUI(productsData)
-        priceView.updateUI(totalPrice, deliveryFee: deliveryFee)
-    }
-    
     private func registerNewAddress(_ data: OrderAddress) {
-        if addressView.newAddressView.registerBasicAddressCheckButton.isSelected == true && addressView.newAddressView.isHidden == false {
+        if rootView.addressView.newAddressView.registerBasicAddressCheckButton.isSelected == true && rootView.addressView.newAddressView.isHidden == false {
             Task {
                 await realmService.updateBasicAddress(data)
             }
@@ -247,27 +153,19 @@ final class OrderViewController: BaseViewController {
     
     //MARK: - Action Method
     
-    @objc
-    private func backButtonDidTap() {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    @objc
     private func orderButtonDidTap() {
-        view.endEditing(true)
-        
         do {
-            try ordererView.checkValidity()
-            try addressView.checkValidity()
-            try paymentMethodView.checkValidity()
-            try agreementView.checkValidity()
+            try rootView.ordererView.checkValidity()
+            try rootView.addressView.checkValidity()
+            try rootView.paymentMethodView.checkValidity()
+            try rootView.agreementView.checkValidity()
             
             try updateAddressData()
             
             requestOrderAPI(ordererData,
                             currentAddressData,
                             productsData,
-                            deliveryFee)
+                            3000)
             
         } catch let error as OrderInvalidError {
             showToast(error.message,
@@ -277,17 +175,17 @@ final class OrderViewController: BaseViewController {
             var y: CGFloat = 0
             switch error {
             case .ordererInvalid:
-                y = ordererView.frame.minY
+                y = rootView.ordererView.frame.minY
             case .addressInvlid:
-                y = addressView.frame.minY
+                y = rootView.addressView.frame.minY
             case .paymentMethodInvalid:
-                y = paymentMethodView.frame.minY
+                y = rootView.paymentMethodView.frame.minY
             case .agreementInvalid:
-                y = scrollView.contentSize.height - scrollView.bounds.height
+                y = rootView.scrollView.contentSize.height - rootView.scrollView.bounds.height
             case .noAddressSelected:
-                y = addressView.frame.minY
+                y = rootView.addressView.frame.minY
             }
-            scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: true)
+            rootView.scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: true)
         } catch {
             showToast("알 수 없는 오류가 발생했습니다.",
                       type: .bad)
@@ -295,7 +193,7 @@ final class OrderViewController: BaseViewController {
     }
     
     private func updateAddressData() throws {
-        switch addressView.addressType {
+        switch rootView.addressView.addressType {
         case .new:
             registerNewAddress(newAddressData)
             self.currentAddressData = newAddressData
@@ -364,12 +262,11 @@ extension OrderViewController: OrderOrdererViewDelegate {
 
 extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDelegate {
   
-    
     func newAddressButtonDidTap(_ height: CGFloat) {
         currentAddressData = newAddressData
         
-        addressView.snp.remakeConstraints {
-            $0.top.equalTo(ordererView.snp.bottom).offset(1)
+        rootView.addressView.snp.remakeConstraints {
+            $0.top.equalTo(rootView.ordererView.snp.bottom).offset(1)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(height)
         }
@@ -385,8 +282,8 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
             return
         }
         
-        addressView.snp.remakeConstraints {
-            $0.top.equalTo(ordererView.snp.bottom).offset(1)
+        rootView.addressView.snp.remakeConstraints {
+            $0.top.equalTo(rootView.ordererView.snp.bottom).offset(1)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(height)
         }
@@ -403,13 +300,13 @@ extension OrderViewController: OrderAddressViewDelegate & OrderNewAddressViewDel
         guard !ordererData.name.isEmpty ||
                 !ordererData.phoneNumber.isEmpty else {
             showToast("먼저 구매자 정보를 입력해주세요", type: .bad)
-            scrollView.setContentOffset(CGPoint(x: 0, y: ordererView.frame.minY), animated: true)
+            rootView.scrollView.setContentOffset(CGPoint(x: 0, y: rootView.ordererView.frame.minY), animated: true)
             return
         }
         
         newAddressData.receiverName = ordererData.name
         newAddressData.receiverPhoneNumber = ordererData.phoneNumber
-        addressView.updateUI(newAddressData: newAddressData)
+        rootView.addressView.updateUI(newAddressData: newAddressData)
     }
     
     func findAddressButtonDidTap() {
@@ -439,8 +336,6 @@ extension OrderViewController: OrderPaymentMethodViewDelegate {
     func paymentMethodDidChange(_ paymentType: PaymentType) {
         self.paymentType = paymentType
     }
-    
-    
 }
 
 //MARK: - OrderAgreementViewDelegate
@@ -449,13 +344,13 @@ extension OrderViewController: OrderAgreementViewDelegate {
     func allPoliciesAgreemCheckButtonDidChange(allPoliciesAgree: Bool) {
         agreementData.agreeWithOnwardTransfer = allPoliciesAgree
         agreementData.agreeWithTermOfUse = allPoliciesAgree
-        agreementView.updateUI(agreementData)
+        rootView.agreementView.updateUI(agreementData)
     }
     
     func checkButtonDidChange(onwardTransfer: Bool, termOfUse: Bool) {
         agreementData.agreeWithOnwardTransfer = onwardTransfer
         agreementData.agreeWithTermOfUse = termOfUse
-        agreementView.updateUI(agreementData)
+        rootView.agreementView.updateUI(agreementData)
     }
     
     func watchButtonDidTap(_ type: OrderAgreementView.Policy) {
@@ -481,30 +376,7 @@ extension OrderViewController: KakaoPostCodeViewControllerDelegate {
     func fetchPostCode(roadAddress: String, zoneCode: String) {
         newAddressData.address = roadAddress
         newAddressData.postCode = zoneCode
-        addressView.updateUI(newAddressData: newAddressData)
+        rootView.addressView.updateUI(newAddressData: newAddressData)
     }
 }
 
-extension OrderViewController {
-    private func requestDeliveryFee() {
-        
-        let remoteConfig = RemoteConfig.remoteConfig()
-        let settings =  RemoteConfigSettings()
-        settings.minimumFetchInterval = 0
-        remoteConfig.configSettings = settings
-        
-        remoteConfig.fetch() { [weak self] status, error in
-            
-            if status == .success {
-                remoteConfig.activate() { [weak self] changed, error in
-                    DispatchQueue.main.async {
-                        self?.deliveryFee = Int(truncating: remoteConfig["deliveryFee"].numberValue)
-                    }
-                }
-            } else {
-                return
-            }
-        }
-    }
-
-}

@@ -114,6 +114,7 @@ final class OrderProductView: UIView {
     
     func updateUI(_ data: [OrderProduct]) {
         productData = data
+        
     }
     
     //MARK: - Action Method

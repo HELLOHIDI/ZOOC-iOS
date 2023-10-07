@@ -130,7 +130,7 @@ final class ArchiveViewController : BaseViewController {
             commentDeleteButtonDidTapEvent: commentDeleteButtonDidTapEvent.asObservable()
         )
         
-        let output = viewModel.tranform(input: input, disposeBag: disposeBag)
+        let output = viewModel.transform(input: input, disposeBag: disposeBag)
         
         output.dismissToHomeVC
             .asDriver(onErrorJustReturn: ())

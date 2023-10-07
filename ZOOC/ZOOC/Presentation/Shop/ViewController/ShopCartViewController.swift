@@ -85,7 +85,7 @@ final class ShopCartViewController: BaseViewController {
         output.pushOrderVC
             .asDriver(onErrorJustReturn: [])
             .drive(with: self, onNext: { owner, orderProducts in
-                let orderVC = OrderViewController(orderProducts, realmService: DefaultRealmService())
+                let orderVC = OrderViewController(orderProducts, realmService: DefaultRealmService(), viewModel: OrderViewModel(realmService: DefaultRealmService(), zoocService: ShopAPI.shared, productsData: orderProducts))
                 owner.navigationController?.pushViewController(orderVC, animated: true)
             })
             .disposed(by: disposeBag)

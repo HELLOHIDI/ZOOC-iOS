@@ -7,6 +7,7 @@
 
 import UIKit
 
+import FirebaseAnalytics
 import FirebaseRemoteConfig
 
 final class SplashViewController: UIViewController {
@@ -126,6 +127,7 @@ final class SplashViewController: UIViewController {
                 if data.count != 0 {
                     let familyID = String(data[0].id)
                     UserDefaultsManager.familyID = familyID
+                    
                     self.autoLoginSuccess()
                 } else {
                     self.autoLoginFail()
@@ -139,6 +141,7 @@ final class SplashViewController: UIViewController {
     
     private func autoLoginSuccess() {
         print(#function)
+        Analytics.setUserID("\(UserDefaultsManager.familyID)")
         requestFCMTokenAPI()
     }
     

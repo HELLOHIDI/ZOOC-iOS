@@ -8,11 +8,11 @@
 import UIKit
 
 import AuthenticationServices
-import KakaoSDKCommon
-import KakaoSDKAuth
-
-import FirebaseMessaging
+import FirebaseAnalytics
 import FirebaseCore
+import FirebaseMessaging
+import KakaoSDKAuth
+import KakaoSDKCommon
 
 import Sentry
 
@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setUserNotification(application)
         setKaKaoSDK()
         setFirebaseMessaging()
+        setFirebaseAnalytics()
         setSentry()
         return true
     }
@@ -81,6 +82,10 @@ extension AppDelegate {
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         Messaging.messaging().isAutoInitEnabled = true
+    }
+    
+    private func setFirebaseAnalytics() {
+        Analytics.logEvent(AnalyticsEventAppOpen, parameters: nil)
     }
     
     private func setSentry() {

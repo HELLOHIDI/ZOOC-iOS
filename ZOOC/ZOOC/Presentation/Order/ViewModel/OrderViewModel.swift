@@ -9,7 +9,7 @@ import Foundation
 
 import RxCocoa
 import RxSwift
-
+import FirebaseAnalytics
 import FirebaseRemoteConfig
 
 final class OrderViewModel {
@@ -65,6 +65,8 @@ final class OrderViewModel {
         self.realmService = realmService
         self.zoocService = zoocService
         self.productsData = productsData
+        
+        Analytics.logEvent(AnalyticsEventBeginCheckout, parameters: ["productsCount": productsData.count])
     }
     
     

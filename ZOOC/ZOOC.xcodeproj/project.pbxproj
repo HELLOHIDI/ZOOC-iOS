@@ -105,6 +105,7 @@
 		878133962AD1282E0004235E /* OrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878133952AD1282E0004235E /* OrderView.swift */; };
 		878133992AD131DF0004235E /* OrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878133982AD131DF0004235E /* OrderViewModel.swift */; };
 		8781339B2AD1703B0004235E /* OrderToastCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8781339A2AD1703B0004235E /* OrderToastCase.swift */; };
+		8781339D2AD1B3260004235E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8781339C2AD1B3260004235E /* FirebaseAnalytics */; };
 		8781DE4829B20F61005ABF23 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 8781DE4729B20F61005ABF23 /* FirebaseMessaging */; };
 		8781DE4E29B273FB005ABF23 /* OnboardingFamilyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8781DE4D29B273FB005ABF23 /* OnboardingFamilyResult.swift */; };
 		8782C7DA296857A600C9324B /* KakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = 8782C7D9296857A600C9324B /* KakaoSDKShare */; };
@@ -749,6 +750,7 @@
 				8764833829523BEE00F74882 /* Moya in Frameworks */,
 				87A76AB8295F760C0096F669 /* KakaoSDKCommon in Frameworks */,
 				D24DA0C32AC5DF580037D0A2 /* RxDataSources in Frameworks */,
+				8781339D2AD1B3260004235E /* FirebaseAnalytics in Frameworks */,
 				87A76AB6295F760C0096F669 /* KakaoSDKAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2102,6 +2104,7 @@
 				D29944282AAC7F0D00C4F280 /* RxSwift */,
 				D239C0902AC4038F00D1AA37 /* RxGesture */,
 				D24DA0C22AC5DF580037D0A2 /* RxDataSources */,
+				8781339C2AD1B3260004235E /* FirebaseAnalytics */,
 			);
 			productName = ZOOC;
 			productReference = 87B6623D29521E7500B6FFA9 /* ZOOC-Dev.app */;
@@ -2703,7 +2706,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID)";
 				PRODUCT_NAME = "$(APP_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -2746,7 +2749,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID)";
 				PRODUCT_NAME = "$(APP_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -2928,6 +2931,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8781DE4629B20F61005ABF23 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseRemoteConfig;
+		};
+		8781339C2AD1B3260004235E /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8781DE4629B20F61005ABF23 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
 		};
 		8781DE4729B20F61005ABF23 /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -7,6 +7,7 @@
 
 import UIKit
 
+import FirebaseAnalytics
 import RxCocoa
 import RxSwift
 
@@ -45,6 +46,16 @@ final class ShopProductViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+        Analytics.logEvent(AnalyticsEventScreenView,
+                           parameters: [AnalyticsParameterScreenName: "ShopProduct",
+                                        AnalyticsParameterScreenClass: "ShopProductViewController"])
+        
+    }
     //MARK: - Custom Method
 
     private func setDelegate() {

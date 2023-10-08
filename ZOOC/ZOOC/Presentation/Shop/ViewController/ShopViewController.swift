@@ -9,6 +9,7 @@ import UIKit
 
 import RxCocoa
 import RxSwift
+import FirebaseAnalytics
 
 final class ShopViewController: BaseViewController {
     
@@ -39,6 +40,14 @@ final class ShopViewController: BaseViewController {
     
     override func loadView() {
         self.view = rootView
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        Analytics.logEvent(AnalyticsEventScreenView,
+                           parameters: [AnalyticsParameterScreenName: "Shop",
+                                        AnalyticsParameterScreenClass: "ShopViewController"])
     }
     
     //MARK: - Custom Method

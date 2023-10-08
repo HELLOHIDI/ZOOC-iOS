@@ -53,7 +53,7 @@ class ZoocTabBarController: UITabBarController {
         setViewController()
         setCornerRadius()
         requestTotalPetAPI()
-        selectedIndex = 0
+        selectedIndex = 1
         
     }
     

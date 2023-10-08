@@ -102,6 +102,9 @@
 		87809C302A8CE3930060641F /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 87809C2F2A8CE3930060641F /* FirebaseRemoteConfig */; };
 		87809C332A8CFDA20060641F /* VersionAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87809C322A8CFDA20060641F /* VersionAlertViewController.swift */; };
 		878133922ACFFEDD0004235E /* ZoocWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878133912ACFFEDD0004235E /* ZoocWebViewController.swift */; };
+		878133962AD1282E0004235E /* OrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878133952AD1282E0004235E /* OrderView.swift */; };
+		878133992AD131DF0004235E /* OrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878133982AD131DF0004235E /* OrderViewModel.swift */; };
+		8781339B2AD1703B0004235E /* OrderToastCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8781339A2AD1703B0004235E /* OrderToastCase.swift */; };
 		8781DE4829B20F61005ABF23 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 8781DE4729B20F61005ABF23 /* FirebaseMessaging */; };
 		8781DE4E29B273FB005ABF23 /* OnboardingFamilyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8781DE4D29B273FB005ABF23 /* OnboardingFamilyResult.swift */; };
 		8782C7DA296857A600C9324B /* KakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = 8782C7D9296857A600C9324B /* KakaoSDKShare */; };
@@ -457,6 +460,9 @@
 		87809C2D2A8CC32F0060641F /* VersionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionState.swift; sourceTree = "<group>"; };
 		87809C322A8CFDA20060641F /* VersionAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionAlertViewController.swift; sourceTree = "<group>"; };
 		878133912ACFFEDD0004235E /* ZoocWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocWebViewController.swift; sourceTree = "<group>"; };
+		878133952AD1282E0004235E /* OrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderView.swift; sourceTree = "<group>"; };
+		878133982AD131DF0004235E /* OrderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewModel.swift; sourceTree = "<group>"; };
+		8781339A2AD1703B0004235E /* OrderToastCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderToastCase.swift; sourceTree = "<group>"; };
 		8781DE4B29B25471005ABF23 /* Release-GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Release-GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8781DE4D29B273FB005ABF23 /* OnboardingFamilyResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFamilyResult.swift; sourceTree = "<group>"; };
 		8782C7E32968B03500C9324B /* HomePetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePetCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1042,6 +1048,14 @@
 			path = Splash;
 			sourceTree = "<group>";
 		};
+		878133972AD131CD0004235E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				878133982AD131DF0004235E /* OrderViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		8782C7D62967997100C9324B /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -1093,6 +1107,7 @@
 				87F287FB2A9F7D0700A53218 /* Cell */,
 				87A3D8842A975CEA002C36DB /* View */,
 				87A3D8862A975D35002C36DB /* Controller */,
+				878133972AD131CD0004235E /* ViewModel */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -1102,6 +1117,7 @@
 			children = (
 				87FD18602AB7A06100A1431E /* AddressView */,
 				87F2880C2AA0689600A53218 /* AssistantCellMainView */,
+				878133952AD1282E0004235E /* OrderView.swift */,
 				87A3D8872A975D48002C36DB /* OrderOrdererView.swift */,
 				87A3D8892A975D4F002C36DB /* OrderAddressView.swift */,
 				87A3D88B2A975D5F002C36DB /* OrderProductView.swift */,
@@ -1557,6 +1573,7 @@
 				87BCAD3D2AA9BA2900A03DA3 /* Toast.swift */,
 				87DF04EB2AC82D5D00E10B2D /* ShopToastCase.swift */,
 				8764A6282ACD5395007D4B0A /* ArchiveToastCase.swift */,
+				8781339A2AD1703B0004235E /* OrderToastCase.swift */,
 			);
 			path = Toast;
 			sourceTree = "<group>";
@@ -2269,6 +2286,7 @@
 				D20C00952A96FE3200666963 /* GenAIPetDatasetsResult.swift in Sources */,
 				4C6B1860296B40C00059840D /* RecordModel.swift in Sources */,
 				D29944242AAC7EA100C4F280 /* GenAIChoosePetUseCase.swift in Sources */,
+				878133962AD1282E0004235E /* OrderView.swift in Sources */,
 				87809C2E2A8CC32F0060641F /* VersionState.swift in Sources */,
 				D23502F92961F34100F01101 /* MySettingView.swift in Sources */,
 				876483212952369500F74882 /* UICollectionViewCell+.swift in Sources */,
@@ -2301,7 +2319,6 @@
 				87B6624129521E7500B6FFA9 /* AppDelegate.swift in Sources */,
 				87BCAD3A2AA718D800A03DA3 /* ShopCartViewController.swift in Sources */,
 				D239C08D2AC1626B00D1AA37 /* DefaultMyEditProfileUseCase.swift in Sources */,
-				871EA33C296F3E6200D0E8CC /* HomePetResult.swift in Sources */,
 				87A76A9F295F6EA30096F669 /* OnboardingService.swift in Sources */,
 				D21CEC5C29AB9B3D00854A36 /* BaseTextFieldState.swift in Sources */,
 				D2F98F9F29676E3300CC82DE /* UINavigationController+.swift in Sources */,
@@ -2424,6 +2441,7 @@
 				D24AFAC62A8E3F7A00823E9C /* MyRegisterPetRequest.swift in Sources */,
 				D2B735642A8BA2B500F93C45 /* GenAIGuideView.swift in Sources */,
 				D29944342AAEE5C400C4F280 /* DefaultGenAIRegisterPetUseCase.swift in Sources */,
+				8781339B2AD1703B0004235E /* OrderToastCase.swift in Sources */,
 				87F287DD2A9C6F1200A53218 /* OrderProduct.swift in Sources */,
 				D27D9568296CB5930097CD03 /* OnboardingInviteFamilyView.swift in Sources */,
 				D216380A2ACDC6790096D474 /* OnboardingLoginViewModel.swift in Sources */,
@@ -2508,6 +2526,7 @@
 				D24AFAB42A8DFBB300823E9C /* GenAIChoosePetView.swift in Sources */,
 				D23502EC296197C700F01101 /* MyPetView.swift in Sources */,
 				87F287F42A9F372400A53218 /* OrderRequest.swift in Sources */,
+				878133992AD131DF0004235E /* OrderViewModel.swift in Sources */,
 				8782C7EB296AC58B00C9324B /* HomeArchiveIndicatorView.swift in Sources */,
 				D25543A22996B22E0072BF0D /* OnboardingRegisterPetResult.swift in Sources */,
 				877E57EE2966AAE6006D82FC /* HomeArchiveListCollectionViewCell.swift in Sources */,

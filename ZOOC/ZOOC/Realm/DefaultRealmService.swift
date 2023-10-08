@@ -21,9 +21,12 @@ protocol RealmService {
     
     // 기존 배송지
     func getBasicAddress() async -> Results<OrderBasicAddress>
+    func getRegisteredAddress() async -> [OrderBasicAddress]
     func getSelectedAddress() async -> OrderBasicAddress?
     func setAddress(_ newAddress: OrderBasicAddress) async
+    func selectBasicAddress(_ object: OrderBasicAddress) async 
     func updateBasicAddress(_ data: OrderAddress) async
+    func updateBasicAddressRequest(_ object: OrderBasicAddress, request: String) async 
     func resetBasicAddressSelected() async
 }
 
@@ -117,6 +120,14 @@ final class DefaultRealmService: RealmService {
     func getBasicAddress() async -> Results<OrderBasicAddress>  {
         let realm = try! await Realm()
         return realm.objects(OrderBasicAddress.self).sorted(byKeyPath: "isSelected", ascending: false)
+    }
+    
+    @MainActor
+    func getRegisteredAddress() async -> [OrderBasicAddress]  {
+        let realm = try! await Realm()
+        return realm.objects(OrderBasicAddress.self)
+            .sorted(byKeyPath: "isSelected", ascending: false)
+            .toArray(ofType: OrderBasicAddress.self) as [OrderBasicAddress]
     }
     
     @MainActor

@@ -8,6 +8,11 @@
 import UIKit
 
 import SnapKit
+
+protocol OrderBasicAddressCollectionViewCellDelegate: AnyObject {
+    func requestTextFieldDidChange(_ object: OrderBasicAddress, request: String)
+}
+
 final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Properties
@@ -21,17 +26,11 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            guard let data else { return }
             updateUI(isSelected)
-            
-            if isSelected {
-                Task {
-                    await DefaultRealmService().selectBasicAddress(data)
-                }
-                
-            }
         }
     }
+    
+    weak var delegate: OrderBasicAddressCollectionViewCellDelegate?
     
     //MARK: - UI Components
     
@@ -177,9 +176,7 @@ final class OrderBasicAddressCollectionViewCell: UICollectionViewCell {
         guard let text = textField.text else { return }
         guard let data else { return }
         
-        Task {
-            await DefaultRealmService().updateBasicAddressRequest(data, request: text)
-        }
+        delegate?.requestTextFieldDidChange(data, request: text)
         
     }
     

@@ -16,26 +16,28 @@ protocol RealmService {
     func getCartedProduct(optionID: Int) async -> CartedProduct?
     func setCartedProduct(_ newProduct: CartedProduct) async
     func updateCartedProductPieces(optionID: Int, isPlus: Bool) async throws
-    func deleteCartedProduct(_ product: CartedProduct) async 
+    func deleteCartedProduct(_ product: CartedProduct) async
+    func deleteAllCartedProducts() async
     
     // 기존 배송지
-    func getBasicAddress() -> Results<OrderBasicAddress>
-    func getSelectedAddress() -> OrderBasicAddress?
-    func setAddress(_ newAddress: OrderBasicAddress)
-    func updateBasicAddress(_ data: OrderAddress) throws
-    func resetBasicAddressSelected()
+    func getBasicAddress() async -> Results<OrderBasicAddress>
+    func getRegisteredAddress() async -> [OrderBasicAddress]
+    func getSelectedAddress() async -> OrderBasicAddress?
+    func setAddress(_ newAddress: OrderBasicAddress) async
+    func selectBasicAddress(_ object: OrderBasicAddress) async 
+    func updateBasicAddress(_ data: OrderAddress) async
+    func updateBasicAddressRequest(_ object: OrderBasicAddress, request: String) async 
+    func resetBasicAddressSelected() async
 }
 
 final class DefaultRealmService: RealmService {
     
-    static let shared = DefaultRealmService()
+    //static let shared = DefaultRealmService()
     
-    private let localRealm: Realm
-    
-    private init() {
+    init() {
         do {
-            localRealm = try Realm()
-            print("Realm Location: ", localRealm.configuration.fileURL ?? "cannot find location.")
+            let realm = try Realm()
+            print("Realm Location: ", realm.configuration.fileURL ?? "cannot find location.")
         } catch {
             fatalError("Failed to initialize local Realm: \(error)")
         }
@@ -73,16 +75,6 @@ final class DefaultRealmService: RealmService {
         }
     }
     
-    @MainActor
-    func deleteCartedProducts() async {
-        let realm = try! await Realm()
-        
-        try! realm.write {
-            let products = realm.objects(CartedProduct.self)
-            realm.delete(products)
-        }
-    }
-    
     
  
     @MainActor
@@ -112,20 +104,41 @@ final class DefaultRealmService: RealmService {
         }
     }
     
+    @MainActor
+    func deleteAllCartedProducts() async {
+        let realm = try! await Realm()
+        
+        try! realm.write {
+            let products = realm.objects(CartedProduct.self)
+            realm.delete(products)
+        }
+    }
+    
     //MARK: - 기존 배송지
     
     @MainActor
-    func getBasicAddress() -> Results<OrderBasicAddress> {
-        return localRealm.objects(OrderBasicAddress.self).sorted(byKeyPath: "isSelected", ascending: false)
+    func getBasicAddress() async -> Results<OrderBasicAddress>  {
+        let realm = try! await Realm()
+        return realm.objects(OrderBasicAddress.self).sorted(byKeyPath: "isSelected", ascending: false)
     }
     
     @MainActor
-    func getSelectedAddress() -> OrderBasicAddress? {
-        return localRealm.objects(OrderBasicAddress.self).filter("isSelected == true").first
+    func getRegisteredAddress() async -> [OrderBasicAddress]  {
+        let realm = try! await Realm()
+        return realm.objects(OrderBasicAddress.self)
+            .sorted(byKeyPath: "isSelected", ascending: false)
+            .toArray(ofType: OrderBasicAddress.self) as [OrderBasicAddress]
     }
     
     @MainActor
-    func updateBasicAddress(_ data: OrderAddress) {
+    func getSelectedAddress() async -> OrderBasicAddress? {
+        let realm = try! await Realm()
+        return realm.objects(OrderBasicAddress.self).filter("isSelected == true").first
+    }
+    
+    @MainActor
+    func updateBasicAddress(_ data: OrderAddress) async {
+        
         let newAddress = OrderBasicAddress(postCode: data.postCode,
                                            name: data.receiverName,
                                            address: data.address,
@@ -134,25 +147,29 @@ final class DefaultRealmService: RealmService {
                                            request: data.request,
                                            isSelected: false)
         
-        let filter = getBasicAddress().filter("fullAddress=='\(newAddress.fullAddress)'")
+        let filter = await getBasicAddress().filter("fullAddress=='\(newAddress.fullAddress)'")
         
         if filter.isEmpty {
-            self.setAddress(newAddress)
+            await self.setAddress(newAddress)
         } 
     }
     
     @MainActor
-    func setAddress(_ newAddress: OrderBasicAddress) {
-        try! localRealm.write {
-            localRealm.add(newAddress)
+    func setAddress(_ newAddress: OrderBasicAddress) async {
+        let realm = try! await Realm()
+        
+        try! realm.write {
+            realm.add(newAddress)
         }
     }
     
     @MainActor
-    func resetBasicAddressSelected() {
-        let basicAddress = getBasicAddress()
+    func resetBasicAddressSelected() async {
+        let realm = try! await Realm()
         
-        try! localRealm.write {
+        let basicAddress = await getBasicAddress()
+        
+        try! realm.write {
             basicAddress.forEach {
                 $0.isSelected = false
             }
@@ -161,9 +178,11 @@ final class DefaultRealmService: RealmService {
     }
     
     @MainActor
-    func selectBasicAddress(_ object: OrderBasicAddress) {
-        let objects = getBasicAddress()
-        try! localRealm.write {
+    func selectBasicAddress(_ object: OrderBasicAddress) async {
+        let realm = try! await Realm()
+        
+        let objects = await getBasicAddress()
+        try! realm.write {
             objects.forEach { data in
                 data.isSelected = false
             }
@@ -172,8 +191,9 @@ final class DefaultRealmService: RealmService {
     }
     
     @MainActor
-    func updateBasicAddressRequest(_ object: OrderBasicAddress, request: String) {
-        try! localRealm.write {
+    func updateBasicAddressRequest(_ object: OrderBasicAddress, request: String) async {
+        let realm = try! await Realm()
+        try! realm.write {
             object.request = request
         }
     }

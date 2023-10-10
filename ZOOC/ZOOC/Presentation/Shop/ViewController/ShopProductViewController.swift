@@ -7,6 +7,7 @@
 
 import UIKit
 
+import FirebaseAnalytics
 import RxCocoa
 import RxSwift
 
@@ -45,6 +46,16 @@ final class ShopProductViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+        Analytics.logEvent(AnalyticsEventScreenView,
+                           parameters: [AnalyticsParameterScreenName: "ShopProduct",
+                                        AnalyticsParameterScreenClass: "ShopProductViewController"])
+        
+    }
     //MARK: - Custom Method
 
     private func setDelegate() {
@@ -60,7 +71,7 @@ final class ShopProductViewController: BaseViewController {
         
         rootView.cartButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
-                let cartVC = ShopCartViewController(viewModel: ShopCartViewModel())
+                let cartVC = ShopCartViewController(viewModel: ShopCartViewModel(service: DefaultRealmService()))
                 owner.navigationController?.pushViewController(cartVC, animated: true)
             })
             .disposed(by: disposeBag)
@@ -111,7 +122,9 @@ final class ShopProductViewController: BaseViewController {
         output.pushToOrderVC
             .asDriver(onErrorJustReturn: [])
             .drive(with: self, onNext: { owner, orderProducts in
-                let orderVC = OrderViewController(orderProducts)
+                let orderVC = OrderViewController(viewModel: OrderViewModel(realmService: DefaultRealmService(),
+                                                                            zoocService: ShopAPI.shared,
+                                                                            productsData: orderProducts))
                 owner.navigationController?.pushViewController(orderVC, animated: true)
             })
             .disposed(by: disposeBag)

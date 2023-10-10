@@ -40,7 +40,7 @@ final class ArchiveViewModel {
         self.archiveModel = archiveModel
     }
     
-    func tranform(input: Input, disposeBag: DisposeBag) -> Output {
+    func transform(input: Input, disposeBag: DisposeBag) -> Output {
         
         let output = Output()
         

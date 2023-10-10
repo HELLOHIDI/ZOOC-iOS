@@ -21,13 +21,13 @@ final class OrderAddressView: UIView {
     //MARK: - Properties
     
     weak var delegate: OrderAddressViewDelegate?
-    private var basicAddressDatas: Results<OrderBasicAddress>?
+    
+    private var registeredAddressData: [OrderBasicAddress] = []
     
     var addressType: AddressType = .new {
         didSet {
             updateViewHidden()
             updateTintBar()
-            
         }
     }
     
@@ -191,11 +191,10 @@ final class OrderAddressView: UIView {
     
     //MARK: - Public Methods
     
-    func dataBind(_ basicAddressData: Results<OrderBasicAddress>) {
-        self.basicAddressDatas = basicAddressData
-        basicAddressView.dataBind(basicAddressDatas)
+    func dataBind(_ registeredAddressData: [OrderBasicAddress]) {
         
-        addressType = basicAddressData.isEmpty ? .new : .registed
+        self.registeredAddressData = registeredAddressData
+        addressType = registeredAddressData.isEmpty ? .new : .registed
         
         if addressType == .registed {
             basicAddressView.layoutIfNeeded()
@@ -206,13 +205,14 @@ final class OrderAddressView: UIView {
         }
     }
     
-    func updateUI(newAddressData: OrderAddress) {
+    
+    func updateUI(_ newAddressData: OrderAddress) {
         newAddressView.updateUI(newAddressData)
     }
     
     
     func checkValidity() throws {
-        if !newAddressView.isHidden {
+        if addressType == .new {
             try newAddressView.checkValidity()
         }
     }
@@ -259,12 +259,16 @@ final class OrderAddressView: UIView {
     }
     
     @objc
-    private func basicAddressButtonDidTap() {
+    func basicAddressButtonDidTap() {
         
         delegate?.basicAddressButtonDidTap(headerView.frame.height +
-                                           buttonView.frame.height + basicAddressView.basicAddressCollectionView.contentSize.height)
+                                           buttonView.frame.height +
+                                           basicAddressView.collectionView.contentSize.height +
+                                           basicAddressView.collectionView.contentInset.top +
+                                           basicAddressView.collectionView.contentInset.bottom
+        )
         
-        guard !(basicAddressDatas?.isEmpty ?? true) else {
+        guard !(registeredAddressData.isEmpty) else {
             return
         }
         addressType = .registed

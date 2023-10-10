@@ -7,6 +7,7 @@
 
 import Foundation
 
+import FirebaseAnalytics
 import RxSwift
 import RxCocoa
 
@@ -17,15 +18,15 @@ final class ShopViewModel {
     struct Input {
         let viewDidLoadEvent: Observable<Void>
         let petCellShouldSelectIndexPathEvent: Observable<Int>
-        let petCellShouldSelectEvent: Observable<PetAiResult>
+        let petCellShouldSelectEvent: Observable<PetAiModel>
         let refreshValueChangedEvent: Observable<Void>
         let productCellDidSelectEvent: Observable<ProductResult>
     }
     
     struct Output {
-        let petAiData = PublishRelay<[PetAiResult]>()
+        let petAiData = PublishRelay<[PetAiModel]>()
         let productData = PublishRelay<[ProductResult]>()
-        let petDidSelected = PublishRelay<(Int, PetAiResult)>()
+        let petDidSelected = PublishRelay<(Int, PetAiModel)>()
         let petDeselect = PublishRelay<Int>()
         let pushGenAIGuideVC = PublishRelay<Int>()
         let pushShopProductVC = PublishRelay<ShopProductModel>()
@@ -34,13 +35,9 @@ final class ShopViewModel {
     
     //MARK: - Properties
     
-    private var petID: Int
+    private var selectedPetID: Int?
     
     //MARK: - Life Cycle
-    
-    init(petID: Int) {
-        self.petID = petID
-    }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output()
@@ -55,8 +52,8 @@ final class ShopViewModel {
         
         Observable.combineLatest(input.petCellShouldSelectIndexPathEvent,
                                  input.petCellShouldSelectEvent)
-        .throttle(.seconds(1), latest: false, scheduler: MainScheduler.instance)
-        .subscribe(onNext: { (row, petAiData) in
+        .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+        .subscribe(onNext: { [weak self] (row, petAiData) in
                 switch petAiData.state {
                 case .notStarted:
                     output.pushGenAIGuideVC.accept(petAiData.id)
@@ -65,6 +62,7 @@ final class ShopViewModel {
                     output.pushGenAIGuideVC.accept(petAiData.id)
                     output.petDeselect.accept(row)
                 case .done:
+                    self?.selectedPetID = petAiData.id
                     output.petDidSelected.accept((row, petAiData))
                 }
             })
@@ -73,11 +71,16 @@ final class ShopViewModel {
         input.productCellDidSelectEvent
             .subscribe(with: self, onNext: { owner, data in
                 guard data != ProductResult() else {
-                    output.showToast.accept(.commingSoon)
+                    output.showToast.accept(.commingSoon) // 커밍순 눌렀을 때
                     return
                 }
                 
-                let model = ShopProductModel(petID: owner.petID,
+                guard let selectedPetID = owner.selectedPetID else {
+                    output.showToast.accept(.custom(message: "반려동물을 선택해주세요"))
+                    return
+                }
+                
+                let model = ShopProductModel(petID: selectedPetID,
                                              productID: data.id)
                 output.pushShopProductVC.accept(model)
             })
@@ -93,7 +96,7 @@ final class ShopViewModel {
 extension ShopViewModel {
     
     private func requestTotalPetAPI(output: Output) {
-        HomeAPI.shared.getTotalPet(familyID: UserDefaultsManager.familyID) { result in
+        HomeAPI.shared.getTotalPet(familyID: UserDefaultsManager.familyID) { [weak self] result in
             switch result {
             case .success(let data):
                 guard let data = data as? [PetResult] else { return }
@@ -103,13 +106,14 @@ extension ShopViewModel {
                     output.showToast.accept(.custom(message: "먼저 반려동물을 등록해주세요"))
                     return
                 }
-                let petAiData = data.map { $0.transform(state: .notStarted)} // TODO: 서버 dataset값에 따라 바뀌게
+                let petAiData = data.map { $0.toPetAiModel() } 
                 
                 output.petAiData.accept(petAiData)
                 
                 let ableToSelectData = petAiData.filter { $0.state != .notStarted }
                 
                 if !ableToSelectData.isEmpty {
+                    self?.selectedPetID = ableToSelectData.first!.id
                     output.petDidSelected.accept((0,ableToSelectData.first!))
                 } else {
                     output.petDeselect.accept(0)

@@ -9,6 +9,7 @@ import UIKit
 
 import RxCocoa
 import RxSwift
+import FirebaseAnalytics
 
 final class ShopViewController: BaseViewController {
     
@@ -41,6 +42,14 @@ final class ShopViewController: BaseViewController {
         self.view = rootView
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        Analytics.logEvent(AnalyticsEventScreenView,
+                           parameters: [AnalyticsParameterScreenName: "Shop",
+                                        AnalyticsParameterScreenClass: "ShopViewController"])
+    }
+    
     //MARK: - Custom Method
     
     func bindUI() {
@@ -52,7 +61,7 @@ final class ShopViewController: BaseViewController {
         
         rootView.cartButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
-                let cartVC = ShopCartViewController(viewModel: ShopCartViewModel())
+                let cartVC = ShopCartViewController(viewModel: ShopCartViewModel(service: DefaultRealmService()))
                 cartVC.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(cartVC, animated: true)
             })
@@ -73,13 +82,22 @@ final class ShopViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
+        //TODO: 주문내역 버튼을 눌렀을 때 아래 함수가 발동돼
+        rootView.orderHistoryButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                let webVC = ZoocWebViewController(url: "http://localhost:5173/order", callBackHandlerName: "callBackHandler")
+                webVC.hidesBottomBarWhenPushed = true
+                owner.navigationController?.pushViewController(webVC, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     func bindViewModel() {
         let input = ShopViewModel.Input(
             viewDidLoadEvent: self.rx.viewDidLoad.asObservable(),
             petCellShouldSelectIndexPathEvent: rootView.petCollectionView.rx.itemSelected.asObservable().map { $0.row },
-            petCellShouldSelectEvent: rootView.petCollectionView.rx.modelSelected(PetAiResult.self).asObservable(),
+            petCellShouldSelectEvent: rootView.petCollectionView.rx.modelSelected(PetAiModel.self).asObservable(),
             refreshValueChangedEvent: self.refreshControl.rx.controlEvent(.valueChanged).asObservable(),
             productCellDidSelectEvent:  self.rootView.shopCollectionView.rx.modelSelected(ProductResult.self).asObservable()
         )
@@ -153,7 +171,8 @@ final class ShopViewController: BaseViewController {
         output.pushShopProductVC
             .asDriver(onErrorJustReturn: ShopProductModel())
             .drive(with: self, onNext: { owner, model in
-                let productVC = ShopProductViewController(viewModel: ShopProductViewModel(model: model))
+                let productVC = ShopProductViewController(viewModel: ShopProductViewModel(model: model,
+                                                                                          service: DefaultRealmService()))
                 productVC.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(productVC, animated: true)
             })

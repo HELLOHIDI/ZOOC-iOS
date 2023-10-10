@@ -7,10 +7,13 @@
 
 import Foundation
 
+import FirebaseAnalytics
 import RxCocoa
 import RxSwift
 
 final class ShopProductViewModel {
+    
+    private let service: RealmService
     
     //MARK: - Input & Output
     
@@ -34,8 +37,9 @@ final class ShopProductViewModel {
     
     //MARK: - Life Cycle
     
-    init(model: ShopProductModel) {
+    init(model: ShopProductModel, service: RealmService) {
         self.model = model
+        self.service = service
     }
 
     //MARK: - Public Method
@@ -60,11 +64,15 @@ final class ShopProductViewModel {
                     let cartedProduct = CartedProduct(petID: owner.model.petID,
                                                       product: productData,
                                                       selectedProduct: $0)
+                    owner.setCartedProduct(cartedProduct)
                     
-                    Task {
-                        await DefaultRealmService.shared.setCartedProduct(cartedProduct)
-                    }
-                        
+                    Analytics.logEvent(AnalyticsEventAddToCart,
+                                       parameters: [ AnalyticsParameterItemID: cartedProduct.productID,
+                                                   AnalyticsParameterItemName: cartedProduct.name,
+                                               AnalyticsParameterItemVariant: cartedProduct.option,
+                                                      AnalyticsParameterPrice: cartedProduct.price,
+                                                     "petID": cartedProduct.petID])
+                    
                 }
                 output.showToast.accept(.cartedCompleted)
             })
@@ -87,6 +95,19 @@ final class ShopProductViewModel {
     
 }
 
+//MARK: - RealmService
+
+extension ShopProductViewModel {
+    private func setCartedProduct(_ data: CartedProduct) {
+        Task {
+            await self.service.setCartedProduct(data)
+        }
+    }
+}
+
+
+//MARK: - Zooc Service
+
 extension ShopProductViewModel {
     
     private func requestDetailProductAPI(id: Int, output: Output) {
@@ -97,6 +118,14 @@ extension ShopProductViewModel {
                 output.productDetailData.accept(data)
                 output.productImagesData.accept(data.images)
                 self.productData = data
+                
+                
+                Analytics.logEvent(AnalyticsEventViewItem,
+                                   parameters: [ AnalyticsParameterItemID: data.id,
+                                               AnalyticsParameterItemName: data.name,
+                                           AnalyticsParameterItemCategory: data.type,
+                                                  AnalyticsParameterPrice: data.price])
+                
             case .requestErr(let error):
                 output.showToast.accept(.custom(message: error))
             default:

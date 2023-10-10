@@ -5,9 +5,6 @@
 //  Created by 류희재 on 2023/10/05.
 //
 
-
-import UIKit
-
 import RxSwift
 import RxCocoa
 import KakaoSDKAuth
@@ -29,6 +26,7 @@ final class OnboardingLoginViewModel: ViewModelType {
         var loginSucceeded = PublishRelay<Bool>()
         var isExistedUser = PublishRelay<Bool>()
         var autoLoginSucceeded = PublishRelay<Bool>()
+        var kakaoLoginError = PublishRelay<Error?>()
     }
     
     func transform(from input: Input, disposeBag: DisposeBag) -> Output {
@@ -41,7 +39,7 @@ final class OnboardingLoginViewModel: ViewModelType {
                 UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
                     guard let oauthToken = oauthToken else {
                         guard let error = error else { return }
-                        print(error)
+                        output.kakaoLoginError.accept(error)
                         return
                     }
                     owner.onboardingLoginUseCase.requestKakaoLogin(oauthToken)
@@ -50,7 +48,7 @@ final class OnboardingLoginViewModel: ViewModelType {
                 UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
                     guard let oauthToken = oauthToken else {
                         guard let error = error else { return }
-                        print(error)
+                        output.kakaoLoginError.accept(error)
                         return
                     }
                     owner.onboardingLoginUseCase.requestKakaoLogin(oauthToken)
@@ -61,7 +59,6 @@ final class OnboardingLoginViewModel: ViewModelType {
         input.receiveAppleIdentityTokenEvent.subscribe(with: self, onNext: { owner, identityToken in
             owner.onboardingLoginUseCase.requestAppleLogin(identityToken)
         }).disposed(by: disposeBag)
-        
         
         return output
     }

@@ -141,7 +141,7 @@ final class ShopPetCollectionViewCell: UICollectionViewCell {
         
     }
     
-    public func dataBind(_ data: PetAiResult) {
+    public func dataBind(_ data: PetAiModel) {
         self.petImageView.kfSetImage(url: data.photo, defaultImage: Image.defaultProfile)
         self.petNameLabel.text = data.name
         self.makeModelLabel.isHidden = data.state != .notStarted

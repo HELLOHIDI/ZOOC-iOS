@@ -44,7 +44,6 @@ final class ZoocWebViewController: UIViewController {
     // MARK: - UI
     
     private func configureUI() {
-        view.backgroundColor = .white
         setAttributes()
         setContraints()
     }
@@ -93,11 +92,7 @@ extension ZoocWebViewController: WKScriptMessageHandler {
     //TODO: 만약 너가 콜백핸들러에 데이터를 전달했다면 meesage.body에 값이 실려 올거야. 형태는 JSON으로 주고받을거야.
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if let data = message.body as? [String: Any] {
-            let data1 = data["우리가 정할"] as? String ?? ""
-            let data2 = data["키값들"] as? String ?? ""
-        }
-        
+    
         //TODO: 일단 callBackHandler가 실행됐을 때 body값에 상관 없이 뒤로가기(popViewController)를 실행하는 걸로 했어.
         self.navigationController?.popViewController(animated: true)
     }
@@ -110,6 +105,27 @@ extension ZoocWebViewController: WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         indicator.stopAnimating()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            let token = UserDefaultsManager.zoocAccessToken
+            let data = ["token" : token] as [String: String]
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: data, options: [])
+                if let jsonString = String(data: jsonData, encoding: .utf8)
+                {
+                    let javascriptCode = "javascript:responseToken('\(jsonString)');"
+                    webView.evaluateJavaScript(javascriptCode, completionHandler: { result, error in
+                        print("컴플리션이 실행되었어요")
+                        dump(result)
+                        dump(error)
+                    })
+                    
+                } else {
+                    print("String 변환 실패")
+                }
+            } catch {
+                
+            }
+        }
+        
     }
 }
-

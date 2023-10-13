@@ -85,7 +85,7 @@ final class ShopViewController: BaseViewController {
         //TODO: 주문내역 버튼을 눌렀을 때 아래 함수가 발동돼
         rootView.orderHistoryButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
-                let webVC = ZoocWebViewController(url: "http://localhost:5173/order", callBackHandlerName: "callBackHandler")
+                let webVC = ZoocWebViewController(url: "https://zooc-shopping.vercel.app/order", callBackHandlerName: "callBackHandler")
                 webVC.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(webVC, animated: true)
             })

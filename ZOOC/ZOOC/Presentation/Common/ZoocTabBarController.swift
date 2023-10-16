@@ -17,20 +17,18 @@ class ZoocTabBarController: UITabBarController {
     
     private var petData: [PetResult] = []
     
-    
     let homeViewController = HomeViewController()
-//    let myViewController = MyViewController(
-//        viewModel: MyViewModel(
-//            myUseCase: DefaultMyUseCase(
-//                repository: DefaultMyRepository()
-//            )
-//        )
-//    )
     
-    var shopVC = ShopViewController(viewModel: ShopViewModel())
+    let shopChoosePetViewController = ShopChoosePetViewController(
+        viewModel: ShopChoosePetViewModel(
+            shopChoosePetUseCase: DefaultShopChoosePetUseCase(
+                repository: DefaultGenAIPetRepository()
+            )
+        )
+    )
     
     lazy var homeNavigationContrller = UINavigationController(rootViewController: homeViewController)
-    lazy var shopNavigationController = UINavigationController(rootViewController: shopVC)
+    lazy var shopNavigationController = UINavigationController(rootViewController: shopChoosePetViewController)
     
     
     
@@ -98,8 +96,8 @@ class ZoocTabBarController: UITabBarController {
                                                           selectedImage: Image.home)
         
         shopNavigationController.tabBarItem = UITabBarItem(title: "",
-                                                         image: Image.shop,
-                                                         selectedImage: Image.shop)
+                                                           image: Image.shop,
+                                                           selectedImage: Image.shop)
         
         viewControllers = [homeNavigationContrller,shopNavigationController]
     }
@@ -162,6 +160,3 @@ extension ZoocTabBarController: ZoocAlertViewControllerDelegate {
         self.dismiss(animated: true)
     }
 }
-
-
-

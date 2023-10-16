@@ -10,7 +10,6 @@ import UIKit
 import SnapKit
 import Then
 
-
 final class ShopChoosePetView : UIView{
     
     // MARK: - Properties
@@ -59,6 +58,7 @@ final class ShopChoosePetView : UIView{
     private func style() {
         backButton.do {
             $0.setImage(Image.back, for: .normal)
+            $0.isHidden = true
         }
         
         cardView.do {
@@ -107,13 +107,13 @@ final class ShopChoosePetView : UIView{
     
     private func layout() {
         backButton.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(10)
-            $0.leading.equalToSuperview().offset(17)
-            $0.size.equalTo(42)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(19)
+            $0.leading.equalToSuperview().offset(30)
+            $0.size.equalTo(36)
         }
         
         registerButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(50)
+            $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(16)
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.height.equalTo(54)
         }

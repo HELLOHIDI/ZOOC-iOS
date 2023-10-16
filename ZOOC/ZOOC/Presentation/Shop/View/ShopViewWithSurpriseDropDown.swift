@@ -9,22 +9,28 @@ import UIKit
 
 import SnapKit
 
-final class ShopView: UIView {
+final class ShopViewWithSurpriseDropDown: UIView {
+    
+    var showPetCollectionView: Bool = false {
+        didSet {
+            updateHidden(showPetCollectionView)
+        }
+    }
     
     //MARK: - UI Components
     
     let backButton: UIButton = {
         let button = UIButton()
         button.setImage(Image.back, for: .normal)
-        //        button.isHidden = true //MARK: Shopping몰 <-> 마이페이지 위치 바뀌며 삭제된 버튼 (23.10.05)
+        button.isHidden = true //MARK: Shopping몰 <-> 마이페이지 위치 바뀌며 삭제된 버튼 (23.10.05)
         return button
     }()
     
-    //    let shopPetView: UIView = {
-    //        let view = UIView()
-    //        view.backgroundColor = .zoocWhite1
-    //        return view
-    //    }()
+    let shopPetView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .zoocWhite1
+        return view
+    }()
     
     let petImageView: UIImageView = {
         let imageView = UIImageView()
@@ -52,7 +58,7 @@ final class ShopView: UIView {
     let logoImageView: UIImageView = {
         let imageView = UIImageView(image: Image.logoCombination)
         imageView.contentMode = .scaleAspectFit
-//        imageView.isHidden = true // 펫 섹션 추가되면서 잠시 숨길게
+        imageView.isHidden = true // 펫 섹션 추가되면서 잠시 숨길게
         return imageView
     }()
     
@@ -67,6 +73,30 @@ final class ShopView: UIView {
         let button = UIButton()
         button.setImage(Image.cart, for: .normal)
         return button
+    }()
+    
+    lazy var blurView: BlurView = {
+        let view = BlurView()
+        view.blurDidTap = {
+            self.showPetCollectionView = false
+        }
+        return view
+    }()
+    
+    let petCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 1
+        layout.itemSize = CGSize(width: 190, height: 50)
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .zoocLightGray
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.register(ShopPetCollectionViewCell.self,
+                                forCellWithReuseIdentifier: ShopPetCollectionViewCell.reuseCellIdentifier)
+        collectionView.makeCornerRound(radius: 12)
+        collectionView.isHidden = true
+        return collectionView
     }()
     
     let shopCollectionView: UICollectionView = {
@@ -106,8 +136,8 @@ final class ShopView: UIView {
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         
-        //shopPetView.makeCornerRound(ratio: 2)
-        //petImageView.makeCornerRound(ratio: 2)
+        shopPetView.makeCornerRound(ratio: 2)
+        petImageView.makeCornerRound(ratio: 2)
     }
     
     //MARK: - UI & Layout
@@ -119,12 +149,14 @@ final class ShopView: UIView {
                     cartButton,
                     logoImageView,
                     shopCollectionView,
-                    logoImageView)
+                    blurView,
+                    shopPetView,
+                    petCollectionView)
         
-        //        shopPetView.addSubviews(petImageView,
-        //                                petNameLabel,
-        //                                marketLabel,
-        //                                downArrowImageView)
+        shopPetView.addSubviews(petImageView,
+                                petNameLabel,
+                                marketLabel,
+                                downArrowImageView)
     }
     
     private func layout() {
@@ -135,12 +167,12 @@ final class ShopView: UIView {
             $0.size.equalTo(42)
         }
         
-//        shopPetView.snp.makeConstraints {
-//            $0.centerX.equalToSuperview()
-//            $0.centerY.equalTo(cartButton)
-//            $0.height.equalTo(40)
-//            $0.width.equalTo(190)
-//        }
+        shopPetView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalTo(cartButton)
+            $0.height.equalTo(40)
+            $0.width.equalTo(190)
+        }
         
         logoImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -154,10 +186,22 @@ final class ShopView: UIView {
             $0.size.equalTo(36)
         }
         
+        
         cartButton.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(11)
             $0.trailing.equalToSuperview().inset(21)
             $0.size.equalTo(36)
+        }
+        
+        blurView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        petCollectionView.snp.makeConstraints {
+            $0.top.equalTo(shopPetView.snp.bottom).offset(5)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(200)
+            $0.height.equalTo(800)
         }
         
         shopCollectionView.snp.makeConstraints {
@@ -168,22 +212,28 @@ final class ShopView: UIView {
         
         // ShopPetView
         
-        //        petNameLabel.snp.makeConstraints {
-        //            $0.centerY.equalToSuperview()
-        //            $0.leading.equalTo(petImageView.snp.trailing).offset(8)
-        //            $0.trailing.equalToSuperview()
-        //        }
-        //
-        //        marketLabel.snp.makeConstraints {
-        //            $0.centerY.equalToSuperview()
-        //            $0.trailing.equalTo(downArrowImageView.snp.leading)
-        //        }
-        //
-        //        downArrowImageView.snp.makeConstraints {
-        //            $0.centerY.equalToSuperview()
-        //            $0.trailing.equalToSuperview()
-        //            $0.size.equalTo(30)
-        //        }
+        petImageView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().offset(3)
+            $0.size.equalTo(34)
+        }
+        
+        petNameLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(petImageView.snp.trailing).offset(8)
+            $0.trailing.equalToSuperview()
+        }
+        
+        marketLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalTo(downArrowImageView.snp.leading)
+        }
+        
+        downArrowImageView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.size.equalTo(30)
+        }
         
     }
     
@@ -198,6 +248,28 @@ final class ShopView: UIView {
         self.petImageView.image = Image.defaultProfile
         self.petNameLabel.text = nil
         self.marketLabel.text = "ZOOC Market"
+    }
+    
+    func updateCollectionViewHeight(_ data: [PetAiModel]) {
+        
+        petCollectionView.layoutIfNeeded()
+        
+        petCollectionView.snp.remakeConstraints {
+            $0.top.equalTo(shopPetView.snp.bottom).offset(5)
+            $0.centerX.equalTo(shopPetView)
+            $0.width.equalTo(shopPetView)
+            $0.height.greaterThanOrEqualTo(51 * data.count)
+        }
+    }
+    
+    private func updateHidden(_ show: Bool) {
+        petCollectionView.isHidden = !show
+        
+        if show {
+            blurView.startBlur()
+        } else {
+            blurView.endBlur()
+        }
     }
     
 }

@@ -83,6 +83,7 @@ final class ShopProductCollectionViewCell: UICollectionViewCell {
         nameLabel.snp.makeConstraints {
             $0.top.equalTo(imageView.snp.bottom).offset(12)
             $0.leading.equalToSuperview()
+            $0.width.equalTo(imageView)
         }
         
         priceLabel.snp.makeConstraints {

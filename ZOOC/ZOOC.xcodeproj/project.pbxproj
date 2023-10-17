@@ -360,10 +360,12 @@
 		D2DD45C7297D9612001722A1 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DD45C6297D9612001722A1 /* BaseButton.swift */; };
 		D2EA37EF29BEAB57007EF4B7 /* OnboardingBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA37EE29BEAB57007EF4B7 /* OnboardingBaseView.swift */; };
 		D2ED94882AB8476F0040B687 /* UIImagePicker+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED94872AB8476F0040B687 /* UIImagePicker+Rx.swift */; };
-		D2ED948A2AB962A90040B687 /* ShopChoosePetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED94892AB962A90040B687 /* ShopChoosePetView.swift */; };
+		D2ED948A2AB962A90040B687 /* ShopChoosePetCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED94892AB962A90040B687 /* ShopChoosePetCollectionView.swift */; };
 		D2ED948C2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED948B2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift */; };
 		D2ED948E2ABAB5B40040B687 /* GenAIGuideUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED948D2ABAB5B40040B687 /* GenAIGuideUseCase.swift */; };
 		D2ED94902ABAC1EE0040B687 /* DefaultGenAIGuideUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED948F2ABAC1EE0040B687 /* DefaultGenAIGuideUseCase.swift */; };
+		D2ED94D22ADDA7BB00951007 /* ShopEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED94D12ADDA7BB00951007 /* ShopEmptyView.swift */; };
+		D2ED94D42ADDAC9200951007 /* ShopChoosePetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED94D32ADDAC9200951007 /* ShopChoosePetView.swift */; };
 		D2F193612970B3FB00AD87D3 /* HomeNoticeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F193602970B3FB00AD87D3 /* HomeNoticeModel.swift */; };
 		D2F193632970B95E00AD87D3 /* HomeNoticeResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F193622970B95E00AD87D3 /* HomeNoticeResult.swift */; };
 		D2F193652970E72500AD87D3 /* OnboardingJoinFamilyRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F193642970E72500AD87D3 /* OnboardingJoinFamilyRequest.swift */; };
@@ -719,10 +721,12 @@
 		D2DD45C6297D9612001722A1 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		D2EA37EE29BEAB57007EF4B7 /* OnboardingBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBaseView.swift; sourceTree = "<group>"; };
 		D2ED94872AB8476F0040B687 /* UIImagePicker+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePicker+Rx.swift"; sourceTree = "<group>"; };
-		D2ED94892AB962A90040B687 /* ShopChoosePetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopChoosePetView.swift; sourceTree = "<group>"; };
+		D2ED94892AB962A90040B687 /* ShopChoosePetCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopChoosePetCollectionView.swift; sourceTree = "<group>"; };
 		D2ED948B2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocUploadingImageAlertView.swift; sourceTree = "<group>"; };
 		D2ED948D2ABAB5B40040B687 /* GenAIGuideUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideUseCase.swift; sourceTree = "<group>"; };
 		D2ED948F2ABAC1EE0040B687 /* DefaultGenAIGuideUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGenAIGuideUseCase.swift; sourceTree = "<group>"; };
+		D2ED94D12ADDA7BB00951007 /* ShopEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopEmptyView.swift; sourceTree = "<group>"; };
+		D2ED94D32ADDAC9200951007 /* ShopChoosePetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopChoosePetView.swift; sourceTree = "<group>"; };
 		D2F193602970B3FB00AD87D3 /* HomeNoticeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNoticeModel.swift; sourceTree = "<group>"; };
 		D2F193622970B95E00AD87D3 /* HomeNoticeResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNoticeResult.swift; sourceTree = "<group>"; };
 		D2F193642970E72500AD87D3 /* OnboardingJoinFamilyRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyRequest.swift; sourceTree = "<group>"; };
@@ -1539,11 +1543,13 @@
 			isa = PBXGroup;
 			children = (
 				870A4BFD2AA26E7500D7CFD8 /* BottomSheet */,
-				D2ED94892AB962A90040B687 /* ShopChoosePetView.swift */,
+				D2ED94892AB962A90040B687 /* ShopChoosePetCollectionView.swift */,
 				87DF04E52AC751C200E10B2D /* ShopViewWithSurpriseDropDown.swift */,
 				87DF04E92AC822ED00E10B2D /* ShopProductView.swift */,
 				87DF04F02AC94B5D00E10B2D /* ShopCartView.swift */,
 				D2B5FFCE2ADCF43E00E3E4A1 /* ShopView.swift */,
+				D2ED94D12ADDA7BB00951007 /* ShopEmptyView.swift */,
+				D2ED94D32ADDAC9200951007 /* ShopChoosePetView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2433,6 +2439,7 @@
 				D299957A2A95B8520004FB5D /* NSItemProvider+.swift in Sources */,
 				87DF04E82AC821CE00E10B2D /* ShopProductViewModel.swift in Sources */,
 				87A76ABF2960423C0096F669 /* GenericResponse.swift in Sources */,
+				D2ED94D42ADDAC9200951007 /* ShopChoosePetView.swift in Sources */,
 				87DF04EA2AC822ED00E10B2D /* ShopProductView.swift in Sources */,
 				8782C7E42968B03500C9324B /* HomePetCollectionViewCell.swift in Sources */,
 				872367192A19080600DCBBFF /* AuthError.swift in Sources */,
@@ -2455,6 +2462,7 @@
 				87DDDD94298E607C00CBEC79 /* Device.swift in Sources */,
 				D29944322AAEDC4100C4F280 /* GenAIRegisterPetUseCase.swift in Sources */,
 				87F287DB2A9C6E6F00A53218 /* OrderOrderer.swift in Sources */,
+				D2ED94D22ADDA7BB00951007 /* ShopEmptyView.swift in Sources */,
 				D24AFAB62A8DFC3000823E9C /* GenAIChoosePetViewModel.swift in Sources */,
 				877DF3292A534DF2001CD452 /* NotificationName+.swift in Sources */,
 				D2ED948E2ABAB5B40040B687 /* GenAIGuideUseCase.swift in Sources */,
@@ -2495,7 +2503,7 @@
 				8718A06829ADB423001C7460 /* GalleryAlertController.swift in Sources */,
 				D2C028F02A81F542003F4727 /* ZoocEditTextField.swift in Sources */,
 				87A3D8972A97C736002C36DB /* OrderPaymentMethodCollectionViewCell.swift in Sources */,
-				D2ED948A2AB962A90040B687 /* ShopChoosePetView.swift in Sources */,
+				D2ED948A2AB962A90040B687 /* ShopChoosePetCollectionView.swift in Sources */,
 				D27D9EAC2A8F41B000E02842 /* GenAISelectImageViewModel.swift in Sources */,
 				870A4BF92AA252CB00D7CFD8 /* ShopProductViewController.swift in Sources */,
 				87A3D8882A975D48002C36DB /* OrderOrdererView.swift in Sources */,

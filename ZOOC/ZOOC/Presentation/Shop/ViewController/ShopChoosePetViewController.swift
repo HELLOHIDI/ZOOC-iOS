@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class ShopChoosePetViewController: BaseViewController{
+final class ShopChoosePetViewController: BaseViewController {
     
     // MARK: - Properties
     
@@ -43,23 +43,28 @@ final class ShopChoosePetViewController: BaseViewController{
         configureCollectionViewLayout()
         bindUI()
         bindViewModel()
-        
     }
     
     //MARK: - Custom Method
     
+    private func bindUI() {
+        rootView.shopPetEmptyView.registerButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.pushToRegisterPetView()
+        }).disposed(by: disposeBag)
+    }
+    
     private func bindViewModel() {
         let input = ShopChoosePetViewModel.Input(
             viewWillAppearEvent: self.rx.viewWillAppear.asObservable(),
-            petCellTapEvent: self.rootView.petCollectionView.rx.itemSelected.asObservable(),
-            registerButtonDidTapEvent: self.rootView.registerButton.rx.tap.asObservable()
+            petCellTapEvent: self.rootView.shopChoosePetCollectionView.petCollectionView.rx.itemSelected.asObservable(),
+            registerButtonDidTapEvent: self.rootView.shopChoosePetCollectionView.registerButton.rx.tap.asObservable()
         )
         
         let output = self.viewModel.transform(from: input, disposeBag: disposeBag)
     
         output.petList
             .asDriver(onErrorJustReturn: [])
-            .drive(self.rootView.petCollectionView.rx.items) { collectionView, index, data in
+            .drive(self.rootView.shopChoosePetCollectionView.petCollectionView.rx.items) { collectionView, index, data in
                 switch output.petList.value.count {
                 case 4:
                     self.layout.itemSize = CGSize(
@@ -87,6 +92,12 @@ final class ShopChoosePetViewController: BaseViewController{
             }
             .disposed(by: disposeBag)
         
+        output.petList
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self, onNext: { owner, petList in
+                owner.updateUI(petList.count)
+            }).disposed(by: disposeBag)
+        
         output.canRegisterPet
             .asDriver(onErrorJustReturn: false)
             .drive(with: self, onNext: { owner, canRegister in
@@ -101,20 +112,12 @@ final class ShopChoosePetViewController: BaseViewController{
             }).disposed(by: disposeBag)
     }
     
-    private func bindUI() {
-        rootView.backButton.rx.tap
-            .subscribe(with: self, onNext: { owner, _ in
-//                guard let tabBarhandler = owner.tabBarhandler else { return }
-//                tabBarhandler?()
-            }).disposed(by: disposeBag)
-    }
-    
     private func configureCollectionViewLayout() {
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .vertical
         
-        self.rootView.petCollectionView.collectionViewLayout = layout
+        self.rootView.shopChoosePetCollectionView.petCollectionView.collectionViewLayout = layout
     }
 }
 
@@ -131,8 +134,30 @@ extension ShopChoosePetViewController {
         navigationController?.pushViewController(shopVC, animated: true)
     }
     
+    func pushToRegisterPetView() {
+        let myRegisterPetVC = MyRegisterPetViewController(
+            viewModel: MyRegisterPetViewModel(
+                myRegisterPetUseCase: DefaultMyRegisterPetUseCase(
+                    repository: DefaultMyRepository()
+                )
+            )
+        )
+        myRegisterPetVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(myRegisterPetVC, animated: true)
+    }
+    
     func updateRegisterButtonUI(_ isSelected: Bool) {
-        rootView.registerButton.isEnabled = isSelected
+        rootView.shopChoosePetCollectionView.registerButton.isEnabled = isSelected
+    }
+    
+    func updateUI(_ petCount: Int) {
+        if petCount == 0 {
+            rootView.shopPetEmptyView.isHidden = false
+            rootView.shopChoosePetCollectionView.isHidden = true
+        } else {
+            rootView.shopPetEmptyView.isHidden = true
+            rootView.shopChoosePetCollectionView.isHidden = false
+        }
     }
 }
 

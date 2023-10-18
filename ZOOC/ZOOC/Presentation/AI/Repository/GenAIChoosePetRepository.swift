@@ -13,7 +13,7 @@ protocol GenAIPetRepository {
     func getPetDataset(petId: String, completion: @escaping (NetworkResult<Any>) -> Void)
 }
 
-class GenAIPetRepositoryImpl: GenAIPetRepository {
+class DefaultGenAIPetRepository: GenAIPetRepository {
     func getTotalPet(completion: @escaping (NetworkResult<Any>) -> Void) {
         RecordAPI.shared.getTotalPet(completion: completion)
     }

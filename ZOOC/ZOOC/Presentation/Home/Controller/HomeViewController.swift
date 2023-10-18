@@ -564,7 +564,7 @@ extension HomeViewController {
             let genAIChoosePetVC = GenAIChoosePetViewController(
                 viewModel: GenAIChoosePetViewModel(
                     genAIChoosePetUseCase: DefaultGenAIChoosePetUseCase(
-                        repository: GenAIPetRepositoryImpl()
+                        repository: DefaultGenAIPetRepository()
                     )
                 )
             )
@@ -574,7 +574,7 @@ extension HomeViewController {
             let genAIRegisterPetVC = GenAIRegisterPetViewController(
                 viewModel: GenAIRegisterPetViewModel(
                     genAIRegisterPetUseCase: DefaultGenAIRegisterPetUseCase(
-                        repository: GenAIPetRepositoryImpl()
+                        repository: DefaultGenAIPetRepository()
                     )
                 )
             )

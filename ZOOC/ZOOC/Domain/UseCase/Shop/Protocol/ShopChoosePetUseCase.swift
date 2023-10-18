@@ -1,8 +1,8 @@
 //
-//  GenAIChoosePetUseCase.swift
+//  ShopChoosePetUseCase.swift
 //  ZOOC
 //
-//  Created by 류희재 on 2023/09/09.
+//  Created by 류희재 on 2023/10/16.
 //
 
 import Foundation
@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-protocol GenAIChoosePetUseCase {
+protocol ShopChoosePetUseCase {
     var petList: BehaviorRelay<[RecordRegisterModel]> { get }
     var petId: BehaviorRelay<Int?> { get }
     var canRegisterPet: BehaviorRelay<Bool> { get }
@@ -19,4 +19,3 @@ protocol GenAIChoosePetUseCase {
     func pushNextView()
     func getTotalPet()
 }
-

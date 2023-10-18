@@ -17,8 +17,8 @@ final class ShopViewModel {
     
     struct Input {
         let viewDidLoadEvent: Observable<Void>
-        let petCellShouldSelectIndexPathEvent: Observable<Int>
-        let petCellShouldSelectEvent: Observable<PetAiModel>
+//        let petCellShouldSelectIndexPathEvent: Observable<Int>
+//        let petCellShouldSelectEvent: Observable<PetAiModel>
         let refreshValueChangedEvent: Observable<Void>
         let productCellDidSelectEvent: Observable<ProductResult>
     }
@@ -50,23 +50,23 @@ final class ShopViewModel {
             }
             .disposed(by: disposeBag)
         
-        Observable.combineLatest(input.petCellShouldSelectIndexPathEvent,
-                                 input.petCellShouldSelectEvent)
-        .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
-        .subscribe(onNext: { [weak self] (row, petAiData) in
-                switch petAiData.state {
-                case .notStarted:
-                    output.pushGenAIGuideVC.accept(petAiData.id)
-                    output.petDeselect.accept(row)
-                case .inProgress:
-                    output.pushGenAIGuideVC.accept(petAiData.id)
-                    output.petDeselect.accept(row)
-                case .done:
-                    self?.selectedPetID = petAiData.id
-                    output.petDidSelected.accept((row, petAiData))
-                }
-            })
-            .disposed(by: disposeBag)
+//        Observable.combineLatest(input.petCellShouldSelectIndexPathEvent,
+//                                 input.petCellShouldSelectEvent)
+//        .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+//        .subscribe(onNext: { [weak self] (row, petAiData) in
+//                switch petAiData.state {
+//                case .notStarted:
+//                    output.pushGenAIGuideVC.accept(petAiData.id)
+//                    output.petDeselect.accept(row)
+//                case .inProgress:
+//                    output.pushGenAIGuideVC.accept(petAiData.id)
+//                    output.petDeselect.accept(row)
+//                case .done:
+//                    self?.selectedPetID = petAiData.id
+//                    output.petDidSelected.accept((row, petAiData))
+//                }
+//            })
+//            .disposed(by: disposeBag)
         
         input.productCellDidSelectEvent
             .subscribe(with: self, onNext: { owner, data in

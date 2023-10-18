@@ -21,7 +21,7 @@ final class ShopViewController: BaseViewController {
     private let rootView = ShopView()
     private let refreshControl = UIRefreshControl()
     
-
+    
     //MARK: - Life Cycle
     
     init(viewModel: ShopViewModel) {
@@ -47,7 +47,7 @@ final class ShopViewController: BaseViewController {
         
         Analytics.logEvent(AnalyticsEventScreenView,
                            parameters: [AnalyticsParameterScreenName: "Shop",
-                                        AnalyticsParameterScreenClass: "ShopViewController"])
+                                       AnalyticsParameterScreenClass: "ShopViewController"])
     }
     
     //MARK: - Custom Method
@@ -75,12 +75,12 @@ final class ShopViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        rootView.shopPetView.rx.tapGesture()
-            .when(.recognized)
-            .subscribe(with: self, onNext: { owner, _ in
-                owner.rootView.showPetCollectionView = true
-            })
-            .disposed(by: disposeBag)
+        //        rootView.shopPetView.rx.tapGesture()
+        //            .when(.recognized)
+        //            .subscribe(with: self, onNext: { owner, _ in
+        //                owner.rootView.showPetCollectionView = true
+        //            })
+        //            .disposed(by: disposeBag)
         
         //TODO: 주문내역 버튼을 눌렀을 때 아래 함수가 발동돼
         rootView.orderHistoryButton.rx.tap
@@ -96,31 +96,31 @@ final class ShopViewController: BaseViewController {
     func bindViewModel() {
         let input = ShopViewModel.Input(
             viewDidLoadEvent: self.rx.viewDidLoad.asObservable(),
-            petCellShouldSelectIndexPathEvent: rootView.petCollectionView.rx.itemSelected.asObservable().map { $0.row },
-            petCellShouldSelectEvent: rootView.petCollectionView.rx.modelSelected(PetAiModel.self).asObservable(),
+            //            petCellShouldSelectIndexPathEvent: rootView.petCollectionView.rx.itemSelected.asObservable().map { $0.row },
+            //            petCellShouldSelectEvent: rootView.petCollectionView.rx.modelSelected(PetAiModel.self).asObservable(),
             refreshValueChangedEvent: self.refreshControl.rx.controlEvent(.valueChanged).asObservable(),
             productCellDidSelectEvent:  self.rootView.shopCollectionView.rx.modelSelected(ProductResult.self).asObservable()
         )
         
         let output = self.viewModel.transform(input: input, disposeBag: disposeBag)
         
-        output.petAiData
-            .asDriver(onErrorJustReturn: [])
-            .drive(
-                rootView.petCollectionView.rx.items(cellIdentifier: ShopPetCollectionViewCell.reuseCellIdentifier,
-                                                    cellType: ShopPetCollectionViewCell.self)
-            ) { row, data, cell in
-                print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
-                cell.dataBind(data)
-            }
-            .disposed(by: disposeBag)
+        //        output.petAiData
+        //            .asDriver(onErrorJustReturn: [])
+        //            .drive(
+        //                rootView.petCollectionView.rx.items(cellIdentifier: ShopPetCollectionViewCell.reuseCellIdentifier,
+        //                                                    cellType: ShopPetCollectionViewCell.self)
+        //            ) { row, data, cell in
+        //                print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
+        //                cell.dataBind(data)
+        //            }
+        //            .disposed(by: disposeBag)
         
         
         output.petAiData
             .asDriver(onErrorJustReturn: [])
             .drive(with: self, onNext: { owner, petData in
                 guard !petData.isEmpty else { return }
-                owner.rootView.updateCollectionViewHeight(petData)
+                //owner.rootView.updateCollectionViewHeight(petData)
             })
             .disposed(by: disposeBag)
         
@@ -128,8 +128,8 @@ final class ShopViewController: BaseViewController {
             .asDriver(onErrorJustReturn: (Int(), .init()))
             .drive(onNext: { [weak self] row, petAiData in
                 self?.rootView.updateSelectedPetViewUI(petAiData)
-                self?.rootView.petCollectionView.selectCell(row: row)
-                self?.rootView.showPetCollectionView = false
+                //self?.rootView.petCollectionView.selectCell(row: row)
+                //self?.rootView.showPetCollectionView = false
             })
             .disposed(by: disposeBag)
         
@@ -137,12 +137,12 @@ final class ShopViewController: BaseViewController {
             .asDriver(onErrorJustReturn: Int())
             .drive(with: self, onNext: { owner, row in
                 owner.rootView.updateNotSelectedPetUI()
-                owner.rootView.petCollectionView.deselectCell(row: row)
-                owner.rootView.showPetCollectionView = false
+                //                owner.rootView.petCollectionView.deselectCell(row: row)
+                //owner.rootView.showPetCollectionView = false
             })
             .disposed(by: disposeBag)
         
-            
+        
         
         output.pushGenAIGuideVC
             .asDriver(onErrorJustReturn: Int())
@@ -167,7 +167,7 @@ final class ShopViewController: BaseViewController {
                 cell.dataBind(data: data)
             }
             .disposed(by: disposeBag)
-            
+        
         output.pushShopProductVC
             .asDriver(onErrorJustReturn: ShopProductModel())
             .drive(with: self, onNext: { owner, model in
@@ -185,5 +185,4 @@ final class ShopViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
     }
-    
 }

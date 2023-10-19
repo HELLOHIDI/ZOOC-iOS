@@ -30,7 +30,7 @@ final class ShopViewController: BaseViewController {
         
         bindUI()
         bindViewModel()
-        rootView.shopCollectionView.refreshControl = refreshControl
+        rootView.scrollView.refreshControl = refreshControl
     }
     
     
@@ -48,6 +48,11 @@ final class ShopViewController: BaseViewController {
         Analytics.logEvent(AnalyticsEventScreenView,
                            parameters: [AnalyticsParameterScreenName: "Shop",
                                        AnalyticsParameterScreenClass: "ShopViewController"])
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
     }
     
     //MARK: - Custom Method

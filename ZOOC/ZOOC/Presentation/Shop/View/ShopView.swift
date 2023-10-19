@@ -13,6 +13,16 @@ final class ShopView: UIView {
     
     //MARK: - UI Components
     
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.alwaysBounceVertical = true
+        return scrollView
+    }()
+    
+    let contentView = UIView()
+    
     let backButton: UIButton = {
         let button = UIButton()
         button.setImage(Image.back, for: .normal)
@@ -69,6 +79,15 @@ final class ShopView: UIView {
         return button
     }()
     
+    let eventBannerImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = Image.gallery
+        view.contentMode = .scaleAspectFill
+        view.isUserInteractionEnabled = true
+        view.clipsToBounds = true
+        return view
+    }()
+    
     let shopCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -82,9 +101,10 @@ final class ShopView: UIView {
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
         collectionView.alwaysBounceVertical = true
-        collectionView.contentInset = .init(top: 10, left: 30, bottom: 0, right: 30)
+        collectionView.contentInset = .init(top: 10, left: 30, bottom: 10, right: 30)
         collectionView.register(ShopProductCollectionViewCell.self,
                                 forCellWithReuseIdentifier: ShopProductCollectionViewCell.reuseCellIdentifier)
+        collectionView.isScrollEnabled = false
         return collectionView
     }()
     
@@ -110,6 +130,17 @@ final class ShopView: UIView {
         //petImageView.makeCornerRound(ratio: 2)
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        shopCollectionView.snp.remakeConstraints {
+            $0.top.equalTo(eventBannerImageView.snp.bottom).offset(20)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(shopCollectionView.contentSize.height)
+            $0.bottom.equalToSuperview().inset(60)
+        }
+    }
+    
     //MARK: - UI & Layout
     
     private func hierarchy() {
@@ -118,8 +149,12 @@ final class ShopView: UIView {
                     orderHistoryButton,
                     cartButton,
                     logoImageView,
-                    shopCollectionView,
-                    logoImageView)
+                    scrollView)
+        
+        scrollView.addSubview(contentView)
+        
+        contentView.addSubviews(eventBannerImageView,
+                                shopCollectionView)
         
         //        shopPetView.addSubviews(petImageView,
         //                                petNameLabel,
@@ -160,10 +195,28 @@ final class ShopView: UIView {
             $0.size.equalTo(36)
         }
         
-        shopCollectionView.snp.makeConstraints {
+        scrollView.snp.makeConstraints {
             $0.top.equalTo(backButton.snp.bottom).offset(5)
-            $0.horizontalEdges.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
+        }
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalTo(scrollView.contentLayoutGuide)
+            $0.width.equalTo(scrollView.frameLayoutGuide)
+            $0.height.greaterThanOrEqualTo(scrollView).priority(.low)
+        }
+        
+        eventBannerImageView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(20)
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.height.equalTo(80)
+        }
+        
+        shopCollectionView.snp.makeConstraints {
+            $0.top.equalTo(eventBannerImageView.snp.bottom).offset(20)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(60)
         }
         
         // ShopPetView

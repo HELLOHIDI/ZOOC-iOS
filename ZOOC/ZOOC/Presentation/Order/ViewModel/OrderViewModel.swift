@@ -14,14 +14,14 @@ import FirebaseRemoteConfig
 
 final class OrderViewModel {
     
-    let realmService: RealmService
-    let zoocService: ShopAPI
+    private let realmService: RealmService
+    private let zoocService: ShopAPI
     
     //MARK: - Properties
-    
-    let productsData: [OrderProduct]
     var hasRegistedAddress: Bool = false
-    var selectedRegistedAddress: OrderBasicAddress?
+    
+    private let productsData: [OrderProduct]
+    private var selectedRegistedAddress: OrderBasicAddress?
     
     private var productsTotalPrice = Int()
     private var deliveryFee = Int()
@@ -92,9 +92,8 @@ final class OrderViewModel {
             })
             .disposed(by: disposeBag)
         
-        Observable.combineLatest(input.registedAddressCellShoulSelectRowEvent,
+        Observable.zip(input.registedAddressCellShoulSelectRowEvent,
                                  input.registedAddressCellShoulSelectEvent)
-        .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
         .subscribe(onNext: { [weak self] (row, addressData) in
             
             self?.selectRegisteredAddress(addressData)
@@ -112,7 +111,20 @@ final class OrderViewModel {
         
         input.validateOrderSuccess
             .subscribe(with: self, onNext: { owner, addressType in
-                let currentAddress = (addressType == .new) ? owner.newAddressData : owner.selectedRegistedAddress!.transform()
+                
+                var currentAddress: OrderAddress
+                
+                switch addressType {
+                case .new:
+                    currentAddress = owner.newAddressData
+                case .registed:
+                    guard let selectedRegistedAddress = owner.selectedRegistedAddress else {
+                        output.showToast.accept(.unknown)
+                        return
+                    }
+                    currentAddress = selectedRegistedAddress.transform()
+                }
+                
                 
                 owner.requestOrderAPI(owner.ordererData,
                                       currentAddress,
@@ -182,7 +194,8 @@ extension OrderViewModel {
                 hasRegistedAddress = false
                 return
             }
-            hasRegistedAddress = true
+            self.hasRegistedAddress = true
+            self.selectedRegistedAddress = registedAddress.first
             output.registedAddressCellDidSelected.accept(0)
         }
     }

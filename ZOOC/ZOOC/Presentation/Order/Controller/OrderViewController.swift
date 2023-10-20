@@ -33,9 +33,6 @@ final class OrderViewController: BaseViewController {
         
         bindUI()
         bindViewModel()
-        
-        
-        
     }
     
     override func loadView() {

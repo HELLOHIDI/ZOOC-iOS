@@ -129,7 +129,7 @@ extension ShopChoosePetViewController: ZoocAlertViewControllerDelegate {
 
 extension ShopChoosePetViewController {
     func pushToShopVC(with petId: Int?) {
-        let shopVC = ShopViewController(viewModel: ShopViewModel())
+        let shopVC = ShopViewController(viewModel: ShopViewModel.init(petId))
         shopVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(shopVC, animated: true)
     }

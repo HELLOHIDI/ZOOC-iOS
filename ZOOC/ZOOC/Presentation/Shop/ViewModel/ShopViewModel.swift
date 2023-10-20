@@ -37,6 +37,10 @@ final class ShopViewModel {
     
     private var selectedPetID: Int?
     
+    init(_ petId: Int?) {
+        selectedPetID = petId
+    }
+    
     //MARK: - Life Cycle
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {

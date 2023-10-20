@@ -61,4 +61,7 @@ public enum URLs{
     static let getTotalProducts = "/shop/product"
     static let getProduct = "/shop/product/{productId}"
     static let postOrder = "/shop/order"
+    static let getEvent = "/shop/event/{eventId}"
+    static let getEventProgress = "/shop/event/{eventId}/progress"
+    static let postEvent = "/shop/event/{eventId}"
 }

@@ -13,6 +13,11 @@ enum ShopService {
     case getTotalProducts
     case getProduct(productID: Int)
     case postOrder(_ request: OrderRequest)
+    case getEvent
+    case getEventProgress
+    case postEvent(petID: Int)
+    
+    
 }
 
 extension ShopService: BaseTargetType {
@@ -22,10 +27,18 @@ extension ShopService: BaseTargetType {
             return URLs.getTotalProducts
         case .getProduct(let productID):
             return URLs.getProduct
-                .replacingOccurrences(of: "{productId}",
-                                      with: String(productID))
+                .replacingOccurrences(of: "{productId}", with: String(productID))
         case .postOrder:
             return URLs.postOrder
+        case .getEvent:
+            return URLs.getEvent
+                .replacingOccurrences(of: "{eventId}", with: "1")
+        case .getEventProgress:
+            return URLs.getEventProgress
+                .replacingOccurrences(of: "{eventId}", with: "1")
+        case .postEvent:
+            return URLs.postEvent
+                .replacingOccurrences(of: "{eventId}", with: "1")
         }
     }
     
@@ -36,6 +49,12 @@ extension ShopService: BaseTargetType {
         case .getProduct:
             return .get
         case .postOrder:
+            return .post
+        case .getEvent:
+            return .get
+        case .getEventProgress:
+            return .get
+        case .postEvent:
             return .post
         }
     }
@@ -48,6 +67,12 @@ extension ShopService: BaseTargetType {
             return .requestPlain
         case .postOrder(let request):
             return .requestJSONEncodable(request)
+        case .getEvent:
+            return .requestPlain
+        case .getEventProgress:
+            return .requestPlain
+        case .postEvent(let petID):
+            return .requestParameters(parameters: ["petId" : petID], encoding: JSONEncoding.default)
         }
     }
 }

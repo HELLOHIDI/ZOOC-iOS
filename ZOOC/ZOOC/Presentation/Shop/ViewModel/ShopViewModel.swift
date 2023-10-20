@@ -47,12 +47,12 @@ final class ShopViewModel {
             .subscribe(with: self) { owner, _ in
                 owner.requestProductsAPI(output: output)
                 owner.requestTotalPetAPI(output: output)
+                owner.requestEventAPI(output: output)
             }
             .disposed(by: disposeBag)
         
-//        Observable.combineLatest(input.petCellShouldSelectIndexPathEvent,
+//        Observable.zip(input.petCellShouldSelectIndexPathEvent,
 //                                 input.petCellShouldSelectEvent)
-//        .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
 //        .subscribe(onNext: { [weak self] (row, petAiData) in
 //                switch petAiData.state {
 //                case .notStarted:
@@ -140,5 +140,9 @@ extension ShopViewModel {
             }
         }
         
+    }
+    
+    private func requestEventAPI() {
+        ShopAPI.shared
     }
 }

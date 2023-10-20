@@ -104,7 +104,8 @@ final class ShopViewController: BaseViewController {
             //            petCellShouldSelectIndexPathEvent: rootView.petCollectionView.rx.itemSelected.asObservable().map { $0.row },
             //            petCellShouldSelectEvent: rootView.petCollectionView.rx.modelSelected(PetAiModel.self).asObservable(),
             refreshValueChangedEvent: self.refreshControl.rx.controlEvent(.valueChanged).asObservable(),
-            productCellDidSelectEvent:  self.rootView.shopCollectionView.rx.modelSelected(ProductResult.self).asObservable()
+            productCellDidSelectEvent:  self.rootView.shopCollectionView.rx.modelSelected(ProductResult.self).asObservable(),
+            eventButtonDidTap: rootView.eventBannerImageView.rx.tapGesture().when(.recognized).map { _ in }.asObservable()
         )
         
         let output = self.viewModel.transform(input: input, disposeBag: disposeBag)
@@ -180,6 +181,31 @@ final class ShopViewController: BaseViewController {
                                                                                           service: DefaultRealmService()))
                 productVC.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(productVC, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        output.eventImageShouldChanged
+            .asDriver(onErrorJustReturn: String())
+            .drive(with: self, onNext: { owner, imageUrl in
+                owner.rootView.eventBannerImageView.kfSetImage(url: imageUrl)
+            })
+            .disposed(by: disposeBag)
+        
+        output.pushEventVC
+            .asDriver(onErrorJustReturn: Void())
+            .drive(with: self, onNext: { owner, imageUrl in
+                let eventVC = ShopEventViewController()
+                owner.navigationController?.pushViewController(eventVC, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+            
+        
+        output.pushAIPetArchiveVC
+            .asDriver(onErrorJustReturn: Void())
+            .drive(with: self, onNext: { owner, imageUrl in
+                let aiArchive = AiPetArchiveViewController()
+                owner.navigationController?.pushViewController(aiArchive, animated: true)
             })
             .disposed(by: disposeBag)
         

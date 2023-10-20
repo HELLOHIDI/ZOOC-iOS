@@ -67,13 +67,13 @@ class BaseAPI{
             let statusCode = response.statusCode
             let data = response.data
             
-            if dataModel == String.self {
-                guard let data = String(data: data, encoding: .utf8) else {
-                    completion(.decodedErr)
-                    return
-                }
-                completion(.success(data))
-            }
+//            if dataModel == String.self {
+//                guard let data = String(data: data, encoding: .utf8) else {
+//                    completion(.decodedErr)
+//                    return
+//                }
+//                completion(.success(data))
+//            }
             
             if dataModel != VoidResult.self{
                 let networkResult = self.judgeStatus(by: statusCode, data, dataModel.self)

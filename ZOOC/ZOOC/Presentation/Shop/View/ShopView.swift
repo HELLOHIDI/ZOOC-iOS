@@ -81,7 +81,6 @@ final class ShopView: UIView {
     
     let eventBannerImageView: UIImageView = {
         let view = UIImageView()
-        view.image = Image.gallery
         view.contentMode = .scaleAspectFill
         view.isUserInteractionEnabled = true
         view.clipsToBounds = true

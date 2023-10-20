@@ -10,13 +10,13 @@ import Foundation
 struct ShopEventResult: Codable {
     
     let id: Int
-    let startDate: String
+    //let startDate: String
     let participants: Int
-    let able: Int
+    let able: Bool
     
     enum ShopEventResult: String, CodingKey {
         case id, participants, able
-        case startDate = "start_date"
+        //case startDate = "start_date"
     }
     
 }

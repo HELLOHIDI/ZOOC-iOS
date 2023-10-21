@@ -69,8 +69,6 @@ final class HomeViewController : BaseViewController {
             guideVC.modalPresentationStyle = .overCurrentContext
             present(guideVC, animated: false)
         }
-        
-        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -560,27 +558,31 @@ extension HomeViewController {
     }
     
     private func pushToGenAIViewController() {
-        if petData.count > 0 {
-            let genAIChoosePetVC = GenAIChoosePetViewController(
-                viewModel: GenAIChoosePetViewModel(
-                    genAIChoosePetUseCase: DefaultGenAIChoosePetUseCase(
-                        repository: DefaultGenAIPetRepository()
-                    )
-                )
-            )
-            genAIChoosePetVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(genAIChoosePetVC, animated: true)
-        } else {
-            let genAIRegisterPetVC = GenAIRegisterPetViewController(
-                viewModel: GenAIRegisterPetViewModel(
-                    genAIRegisterPetUseCase: DefaultGenAIRegisterPetUseCase(
-                        repository: DefaultGenAIPetRepository()
-                    )
-                )
-            )
-            genAIRegisterPetVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(genAIRegisterPetVC, animated: true)
-        }
+        let eventVC = ShopEventViewController()
+        eventVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(eventVC, animated: true)
+        
+//        if petData.count > 0 {
+//            let genAIChoosePetVC = GenAIChoosePetViewController(
+//                viewModel: GenAIChoosePetViewModel(
+//                    genAIChoosePetUseCase: DefaultGenAIChoosePetUseCase(
+//                        repository: DefaultGenAIPetRepository()
+//                    )
+//                )
+//            )
+//            genAIChoosePetVC.hidesBottomBarWhenPushed = true
+//            navigationController?.pushViewController(genAIChoosePetVC, animated: true)
+//        } else {
+//            let genAIRegisterPetVC = GenAIRegisterPetViewController(
+//                viewModel: GenAIRegisterPetViewModel(
+//                    genAIRegisterPetUseCase: DefaultGenAIRegisterPetUseCase(
+//                        repository: DefaultGenAIPetRepository()
+//                    )
+//                )
+//            )
+//            genAIRegisterPetVC.hidesBottomBarWhenPushed = true
+//            navigationController?.pushViewController(genAIRegisterPetVC, animated: true)
+//        }
     }
 }
 

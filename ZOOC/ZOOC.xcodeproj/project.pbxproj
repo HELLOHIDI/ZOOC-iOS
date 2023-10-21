@@ -369,7 +369,7 @@
 		D2EA37EF29BEAB57007EF4B7 /* OnboardingBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA37EE29BEAB57007EF4B7 /* OnboardingBaseView.swift */; };
 		D2ED94882AB8476F0040B687 /* UIImagePicker+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED94872AB8476F0040B687 /* UIImagePicker+Rx.swift */; };
 		D2ED948A2AB962A90040B687 /* ShopChoosePetCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED94892AB962A90040B687 /* ShopChoosePetCollectionView.swift */; };
-		D2ED948C2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED948B2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift */; };
+		D2ED948C2AB9B99B0040B687 /* ZoocCheckAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED948B2AB9B99B0040B687 /* ZoocCheckAlertView.swift */; };
 		D2ED948E2ABAB5B40040B687 /* GenAIGuideUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED948D2ABAB5B40040B687 /* GenAIGuideUseCase.swift */; };
 		D2ED94902ABAC1EE0040B687 /* DefaultGenAIGuideUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED948F2ABAC1EE0040B687 /* DefaultGenAIGuideUseCase.swift */; };
 		D2ED94D22ADDA7BB00951007 /* ShopEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED94D12ADDA7BB00951007 /* ShopEmptyView.swift */; };
@@ -738,7 +738,7 @@
 		D2EA37EE29BEAB57007EF4B7 /* OnboardingBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBaseView.swift; sourceTree = "<group>"; };
 		D2ED94872AB8476F0040B687 /* UIImagePicker+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePicker+Rx.swift"; sourceTree = "<group>"; };
 		D2ED94892AB962A90040B687 /* ShopChoosePetCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopChoosePetCollectionView.swift; sourceTree = "<group>"; };
-		D2ED948B2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocUploadingImageAlertView.swift; sourceTree = "<group>"; };
+		D2ED948B2AB9B99B0040B687 /* ZoocCheckAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocCheckAlertView.swift; sourceTree = "<group>"; };
 		D2ED948D2ABAB5B40040B687 /* GenAIGuideUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideUseCase.swift; sourceTree = "<group>"; };
 		D2ED948F2ABAC1EE0040B687 /* DefaultGenAIGuideUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGenAIGuideUseCase.swift; sourceTree = "<group>"; };
 		D2ED94D12ADDA7BB00951007 /* ShopEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopEmptyView.swift; sourceTree = "<group>"; };
@@ -902,7 +902,7 @@
 				874369582A8FFB7F0035AFD6 /* NetworkAlertView.swift */,
 				87A3D8912A97756E002C36DB /* ZoocTextField.swift */,
 				D299441B2AAB04E100C4F280 /* ZoocRequiredInputLabel.swift */,
-				D2ED948B2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift */,
+				D2ED948B2AB9B99B0040B687 /* ZoocCheckAlertView.swift */,
 				8764A6372ACF21FD007D4B0A /* BlurView.swift */,
 				878133912ACFFEDD0004235E /* ZoocWebViewController.swift */,
 			);
@@ -2333,7 +2333,7 @@
 				D206AB4D2AE42E3900127DE8 /* EventToastCase.swift in Sources */,
 				87DF04E62AC751C200E10B2D /* ShopViewWithSurpriseDropDown.swift in Sources */,
 				D26C860A296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift in Sources */,
-				D2ED948C2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift in Sources */,
+				D2ED948C2AB9B99B0040B687 /* ZoocCheckAlertView.swift in Sources */,
 				D24AFAC42A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift in Sources */,
 				D239C0872AC148A100D1AA37 /* DefaultMyUseCase.swift in Sources */,
 				D26C85CF2968681900AEAF9B /* MyPetCollectionFooterView.swift in Sources */,

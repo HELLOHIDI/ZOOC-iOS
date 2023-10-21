@@ -22,6 +22,7 @@ final class ShopViewModel {
         let refreshValueChangedEvent: Observable<Void>
         let productCellDidSelectEvent: Observable<ProductResult>
         let eventButtonDidTap: Observable<Void>
+        let applyEventDidTap: Observable<Void>
     }
     
     struct Output {
@@ -32,6 +33,7 @@ final class ShopViewModel {
         let eventImageShouldChanged = PublishRelay<UIImage>()
         let ableToClickBanner = PublishRelay<Bool>()
         let pushGenAIGuideVC = PublishRelay<Int>()
+        let presentEventView = PublishRelay<Void>()
         let pushShopProductVC = PublishRelay<ShopProductModel>()
         let pushEventVC = PublishRelay<Void>()
         let pushAIPetArchiveVC = PublishRelay<Void>()
@@ -118,7 +120,7 @@ final class ShopViewModel {
                 
                 switch owner.eventProgress.value {
                 case .notApplied:
-                    owner.requestPostEventAPI(output: output)
+                    output.presentEventView.accept(Void())
                 case .inProgress:
                     output.showEventToast.accept(.inProgress)
                 case .done:
@@ -126,6 +128,10 @@ final class ShopViewModel {
                 }
             })
             .disposed(by: disposeBag)
+        
+        input.applyEventDidTap.subscribe(with: self, onNext: { owner, _ in
+            owner.requestPostEventAPI(output: output)
+        }).disposed(by: disposeBag)
         
         return output
     }
@@ -215,10 +221,11 @@ extension ShopViewModel {
     
     private func requestPostEventAPI(output: Output) {
         guard let selectedPetID else { return }
-        ShopAPI.shared.postEvent(petID: selectedPetID) { result in
+        ShopAPI.shared.postEvent(petID: selectedPetID) { [weak self] result in
             switch result {
             case .success(_):
                 output.showEventToast.accept(.appliedEventSuccess)
+                self?.requestEventProgressAPI()
             default:
                 output.showEventToast.accept(.appliedEventFail)
             }

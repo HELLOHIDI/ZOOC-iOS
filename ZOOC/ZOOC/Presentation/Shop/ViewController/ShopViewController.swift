@@ -21,6 +21,8 @@ final class ShopViewController: BaseViewController {
     private let rootView = ShopView()
     private let refreshControl = UIRefreshControl()
     
+    private let applyEventSubject = PublishSubject<Void>()
+    
     
     //MARK: - Life Cycle
     
@@ -105,7 +107,9 @@ final class ShopViewController: BaseViewController {
             //            petCellShouldSelectEvent: rootView.petCollectionView.rx.modelSelected(PetAiModel.self).asObservable(),
             refreshValueChangedEvent: self.refreshControl.rx.controlEvent(.valueChanged).asObservable(),
             productCellDidSelectEvent:  self.rootView.shopCollectionView.rx.modelSelected(ProductResult.self).asObservable(),
-            eventButtonDidTap: rootView.eventBannerImageView.rx.tapGesture().when(.recognized).map { _ in }.asObservable()
+            eventButtonDidTap: rootView.eventBannerImageView.rx.tapGesture().when(.recognized).map { _ in }.asObservable(),
+            applyEventDidTap:
+                applyEventSubject.asObservable()
         )
         
         let output = self.viewModel.transform(input: input, disposeBag: disposeBag)
@@ -189,6 +193,14 @@ final class ShopViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
+        output.presentEventView
+            .asDriver(onErrorJustReturn: Void())
+            .drive(with: self, onNext: { owner, _ in
+                let alertVC = ZoocAlertViewController.init(.applyEvent)
+                alertVC.delegate = owner
+                owner.present(alertVC, animated: false)
+            }).disposed(by: disposeBag)
+        
         output.pushEventVC
             .asDriver(onErrorJustReturn: Void())
             .drive(with: self, onNext: { owner, imageUrl in
@@ -217,5 +229,16 @@ final class ShopViewController: BaseViewController {
             .drive(with: self, onNext: { owner, toast in
                 owner.showToast(toast)
             }).disposed(by: disposeBag)
+    }
+}
+
+extension ShopViewController: ZoocAlertViewControllerDelegate {
+    func exitButtonDidTap() {
+        self.dismiss(animated: false)
+    }
+    
+    func keepButtonDidTap() {
+        applyEventSubject.onNext(())
+        self.dismiss(animated: false)
     }
 }

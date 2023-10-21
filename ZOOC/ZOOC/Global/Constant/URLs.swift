@@ -64,4 +64,5 @@ public enum URLs{
     static let getEvent = "/shop/event/{eventId}"
     static let getEventProgress = "/shop/event/{eventId}/progress"
     static let postEvent = "/shop/event/{eventId}"
+    static let getEventResult = "/shop/event/{eventId}/result"
 }

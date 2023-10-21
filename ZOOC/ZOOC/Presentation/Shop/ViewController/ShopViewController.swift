@@ -60,7 +60,7 @@ final class ShopViewController: BaseViewController {
     func bindUI() {
         rootView.backButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
-                owner.navigationController?.popViewController(animated: true)
+                owner.navigationController?.popToRootViewController(animated: true)
             })
             .disposed(by: disposeBag)
         
@@ -198,8 +198,6 @@ final class ShopViewController: BaseViewController {
                 owner.navigationController?.pushViewController(eventVC, animated: true)
             })
             .disposed(by: disposeBag)
-        
-            
         
         output.pushAIPetArchiveVC
             .asDriver(onErrorJustReturn: Void())

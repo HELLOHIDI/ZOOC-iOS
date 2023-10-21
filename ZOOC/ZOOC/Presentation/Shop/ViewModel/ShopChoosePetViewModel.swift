@@ -22,6 +22,7 @@ final class ShopChoosePetViewModel: ViewModelType {
         let viewWillAppearEvent: Observable<Void>
         let petCellTapEvent: Observable<IndexPath>
         let registerButtonDidTapEvent: Observable<Void>
+        let dismissAlertEvent: Observable<Void>
     }
     
     struct Output {
@@ -29,6 +30,7 @@ final class ShopChoosePetViewModel: ViewModelType {
         var petList: BehaviorRelay<[RecordRegisterModel]> = BehaviorRelay<[RecordRegisterModel]>(value: [])
         var canRegisterPet: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
         var datasetStatus: BehaviorRelay<DatasetStatus?> = BehaviorRelay<DatasetStatus?>(value: nil)
+        var isLoading: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
     }
     
     func transform(from input: Input, disposeBag: DisposeBag) -> Output {
@@ -50,6 +52,10 @@ final class ShopChoosePetViewModel: ViewModelType {
             owner.shopChoosePetUseCase.checkDatasetValid()
         }).disposed(by: disposeBag)
         
+        input.dismissAlertEvent.subscribe(with: self, onNext: { owner, _ in
+            owner.shopChoosePetUseCase.initPetList()
+        }).disposed(by: disposeBag)
+        
         return output
     }
     
@@ -69,6 +75,10 @@ final class ShopChoosePetViewModel: ViewModelType {
         
         shopChoosePetUseCase.datasetStatus.subscribe(onNext: { datasetStatus in
             output.datasetStatus.accept(datasetStatus)
+        }).disposed(by: disposeBag)
+        
+        shopChoosePetUseCase.isLoading.subscribe(onNext: { isLoading in
+            output.isLoading.accept(isLoading)
         }).disposed(by: disposeBag)
     }
 }

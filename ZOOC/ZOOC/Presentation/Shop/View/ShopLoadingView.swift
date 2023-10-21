@@ -14,8 +14,8 @@ final class ShopLoadingView: UIView {
     
     // MARK: - Properties
     
-    private let titleLabel = UILabel()
-    private let subTitleLabel = UILabel()
+    public let titleLabel = UILabel()
+    public let subTitleLabel = UILabel()
     public let activityIndicatorView = UIActivityIndicatorView(style: .large)
     
     // MARK: - UI Components

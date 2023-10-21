@@ -68,7 +68,14 @@ extension ShopAPI {
         }
     }
     
-    
-    
+    public func getEventResult(completion: @escaping (NetworkResult<Any>) -> Void) {
+        shopProvider.request(.getEventResult) {(result) in
+            self.disposeNetwork(
+                result,
+                dataModel: ShopEventResultImage.self,
+                completion: completion)
+        }
+    }
+
 }
 

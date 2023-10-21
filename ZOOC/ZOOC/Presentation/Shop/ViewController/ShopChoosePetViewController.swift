@@ -16,6 +16,7 @@ final class ShopChoosePetViewController: BaseViewController {
     
     let viewModel: ShopChoosePetViewModel
     private let disposeBag = DisposeBag()
+    private let dismissAlertSubject = PublishSubject<Void>()
     
     //MARK: - UI Components
     
@@ -57,7 +58,10 @@ final class ShopChoosePetViewController: BaseViewController {
         let input = ShopChoosePetViewModel.Input(
             viewWillAppearEvent: self.rx.viewWillAppear.asObservable(),
             petCellTapEvent: self.rootView.shopChoosePetCollectionView.petCollectionView.rx.itemSelected.asObservable(),
-            registerButtonDidTapEvent: self.rootView.shopChoosePetCollectionView.registerButton.rx.tap.asObservable()
+            registerButtonDidTapEvent: self.rootView.shopChoosePetCollectionView.registerButton.rx.tap
+                .debounce(.seconds(1), scheduler: MainScheduler.instance)
+                .asObservable(),
+            dismissAlertEvent: dismissAlertSubject.asObservable()
         )
         
         let output = self.viewModel.transform(from: input, disposeBag: disposeBag)
@@ -122,6 +126,15 @@ final class ShopChoosePetViewController: BaseViewController {
                     break
                 }
             }).disposed(by: disposeBag)
+        
+        output.isLoading
+            .asDriver(onErrorJustReturn: false)
+            .drive(with: self, onNext: { owner, isLoading in
+                if isLoading { owner.rootView.activityIndicatorView.startAnimating()
+                } else {
+                    owner.rootView.activityIndicatorView.stopAnimating()
+                }
+            }).disposed(by: disposeBag)
     }
     
     private func configureCollectionViewLayout() {
@@ -181,6 +194,7 @@ extension ShopChoosePetViewController {
 
 extension ShopChoosePetViewController: ZoocAlertViewControllerDelegate {
     func exitButtonDidTap() {
+        dismissAlertSubject.onNext(())
         dismiss(animated: true)
     }
     

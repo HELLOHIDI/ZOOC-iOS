@@ -209,7 +209,7 @@ final class ShopView: UIView {
         eventBannerImageView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(20)
             $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.height.equalTo(80)
+            $0.height.equalTo(115)
         }
         
         shopCollectionView.snp.makeConstraints {

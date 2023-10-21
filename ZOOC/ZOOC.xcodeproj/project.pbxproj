@@ -211,6 +211,7 @@
 		D206AB472AE3C1D800127DE8 /* ShopLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D206AB462AE3C1D800127DE8 /* ShopLoadingViewController.swift */; };
 		D206AB492AE3C20400127DE8 /* ShopLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D206AB482AE3C20400127DE8 /* ShopLoadingView.swift */; };
 		D206AB4B2AE3DF2800127DE8 /* ShopEventResultImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D206AB4A2AE3DF2800127DE8 /* ShopEventResultImage.swift */; };
+		D206AB4D2AE42E3900127DE8 /* EventToastCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D206AB4C2AE42E3900127DE8 /* EventToastCase.swift */; };
 		D209F9302AB0594B0017D623 /* PetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D209F92F2AB0594B0017D623 /* PetResult.swift */; };
 		D20C008A2A96DDB000666963 /* GenAIModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C00892A96DDB000666963 /* GenAIModelRepository.swift */; };
 		D20C008D2A96E23500666963 /* GenAIGuideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */; };
@@ -584,6 +585,7 @@
 		D206AB462AE3C1D800127DE8 /* ShopLoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopLoadingViewController.swift; sourceTree = "<group>"; };
 		D206AB482AE3C20400127DE8 /* ShopLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopLoadingView.swift; sourceTree = "<group>"; };
 		D206AB4A2AE3DF2800127DE8 /* ShopEventResultImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopEventResultImage.swift; sourceTree = "<group>"; };
+		D206AB4C2AE42E3900127DE8 /* EventToastCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventToastCase.swift; sourceTree = "<group>"; };
 		D209F92F2AB0594B0017D623 /* PetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetResult.swift; sourceTree = "<group>"; };
 		D20C00892A96DDB000666963 /* GenAIModelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIModelRepository.swift; sourceTree = "<group>"; };
 		D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideViewModel.swift; sourceTree = "<group>"; };
@@ -1612,6 +1614,7 @@
 				87DF04EB2AC82D5D00E10B2D /* ShopToastCase.swift */,
 				8764A6282ACD5395007D4B0A /* ArchiveToastCase.swift */,
 				8781339A2AD1703B0004235E /* OrderToastCase.swift */,
+				D206AB4C2AE42E3900127DE8 /* EventToastCase.swift */,
 			);
 			path = Toast;
 			sourceTree = "<group>";
@@ -2327,6 +2330,7 @@
 				87F288072A9FA86600A53218 /* BankAccount.swift in Sources */,
 				D206AB4B2AE3DF2800127DE8 /* ShopEventResultImage.swift in Sources */,
 				D21638082ACDC59E0096D474 /* OnboardingRepository.swift in Sources */,
+				D206AB4D2AE42E3900127DE8 /* EventToastCase.swift in Sources */,
 				87DF04E62AC751C200E10B2D /* ShopViewWithSurpriseDropDown.swift in Sources */,
 				D26C860A296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift in Sources */,
 				D2ED948C2AB9B99B0040B687 /* ZoocUploadingImageAlertView.swift in Sources */,

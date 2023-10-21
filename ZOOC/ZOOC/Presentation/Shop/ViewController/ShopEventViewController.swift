@@ -90,13 +90,8 @@ final class ShopEventViewController: BaseViewController {
     
     private func getEventImage() {
         ShopAPI.shared.getEventResult() { [weak self] result in
-            guard let result = self?.validateResult(result) as? ShopEventResultImage else {
-                guard let err = self?.validateResult(result) as? String else { return }
-                self?.showToast(err, type: .bad)
-                return
-            }
-            self?.eventImageView.kfSetImage(url: result.data)
+            guard let imageURL = self?.validateResult(result) as? String else { return }
+            self?.eventImageView.kfSetImage(url: imageURL)
         }
     }
 }
-

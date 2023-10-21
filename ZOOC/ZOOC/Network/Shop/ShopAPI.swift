@@ -72,7 +72,7 @@ extension ShopAPI {
         shopProvider.request(.getEventResult) {(result) in
             self.disposeNetwork(
                 result,
-                dataModel: ShopEventResultImage.self,
+                dataModel: String.self,
                 completion: completion)
         }
     }

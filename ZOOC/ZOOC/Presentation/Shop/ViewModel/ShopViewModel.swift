@@ -5,7 +5,7 @@
 //  Created by 장석우 on 2023/09/29.
 //
 
-import Foundation
+import UIKit // 쓰면 안되는거 아는데 너무 급하니까 쓸게 떠구미안
 
 import FirebaseAnalytics
 import RxSwift
@@ -29,12 +29,14 @@ final class ShopViewModel {
         let productData = PublishRelay<[ProductResult]>()
         let petDidSelected = PublishRelay<(Int, PetAiModel)>()
         let petDeselect = PublishRelay<Int>()
-        let eventImageShouldChanged = PublishRelay<String>()
+        let eventImageShouldChanged = PublishRelay<UIImage>()
+        let ableToClickBanner = PublishRelay<Bool>()
         let pushGenAIGuideVC = PublishRelay<Int>()
         let pushShopProductVC = PublishRelay<ShopProductModel>()
         let pushEventVC = PublishRelay<Void>()
         let pushAIPetArchiveVC = PublishRelay<Void>()
-        let showToast = PublishRelay<ShopToastCase>()
+        let showShopToast = PublishRelay<ShopToastCase>()
+        let showEventToast = PublishRelay<EventToastCase>()
     }
     
     //MARK: - Properties
@@ -54,15 +56,11 @@ final class ShopViewModel {
         
         Observable.combineLatest(eventAble, eventProgress)
             .subscribe(onNext: { able, progress in
-                var image: String
-                switch progress {
-                case .notApplied:
-                    image = able ? progress.imageURL : "https://ibb.co/CncSPKr"
-                default:
-                    image = progress.imageURL
-                }
+                print("progress는 \(progress) image는 \(progress.imageURL)")
+                let endedImage = Image.ended
+                let image = able ? progress.imageURL : endedImage
                 output.eventImageShouldChanged.accept(image)
-                
+                output.ableToClickBanner.accept(progress.ableToClick)
             })
             .disposed(by: disposeBag)
         
@@ -96,12 +94,12 @@ final class ShopViewModel {
         input.productCellDidSelectEvent
             .subscribe(with: self, onNext: { owner, data in
                 guard data != ProductResult() else {
-                    output.showToast.accept(.commingSoon) // 커밍순 눌렀을 때
+                    output.showShopToast.accept(.commingSoon) // 커밍순 눌렀을 때
                     return
                 }
                 
                 guard let selectedPetID = owner.selectedPetID else {
-                    output.showToast.accept(.custom(message: "반려동물을 선택해주세요"))
+                    output.showShopToast.accept(.custom(message: "반려동물을 선택해주세요"))
                     return
                 }
                 
@@ -114,23 +112,20 @@ final class ShopViewModel {
         input.eventButtonDidTap
             .subscribe(with: self, onNext: { owner, _ in
                 guard owner.eventAble.value else {
-                    output.showToast.accept(.custom(message: "이벤트가 종료되었어요"))
+                    output.showEventToast.accept(.ended)
                     return
                 }
                 
                 switch owner.eventProgress.value {
                 case .notApplied:
-                    output.pushEventVC.accept(Void())
+                    owner.requestPostEventAPI(output: output)
                 case .inProgress:
-                    output.showToast.accept(.custom(message: "이미지를 생성하고 있어요\n 잠시만 기다려주세요"))
+                    output.showEventToast.accept(.inProgress)
                 case .done:
-                    output.pushAIPetArchiveVC.accept(Void())
+                    output.pushEventVC.accept(Void())
                 }
             })
             .disposed(by: disposeBag)
-        
-        
-    
         
         return output
     }
@@ -147,7 +142,7 @@ extension ShopViewModel {
                 
                 guard !data.isEmpty else {
                     //TODO: 빈 배열일 때 처리
-                    output.showToast.accept(.custom(message: "먼저 반려동물을 등록해주세요"))
+                    output.showShopToast.accept(.custom(message: "먼저 반려동물을 등록해주세요"))
                     return
                 }
                 let petAiData = data.map { $0.toPetAiModel() } 
@@ -174,7 +169,7 @@ extension ShopViewModel {
             switch result {
             case .success(let data):
                 guard var data = data as? [ProductResult] else {
-                    output.showToast.accept(.productNotFound)
+                    output.showShopToast.accept(.productNotFound)
                     return
                 }
                 data.append(.init()) // 커밍쑨 셀 추가를 위해 기본 데이터 추가
@@ -214,6 +209,18 @@ extension ShopViewModel {
                 
             default:
                 return
+            }
+        }
+    }
+    
+    private func requestPostEventAPI(output: Output) {
+        guard let selectedPetID else { return }
+        ShopAPI.shared.postEvent(petID: selectedPetID) { result in
+            switch result {
+            case .success(_):
+                output.showEventToast.accept(.appliedEventSuccess)
+            default:
+                output.showEventToast.accept(.appliedEventFail)
             }
         }
     }

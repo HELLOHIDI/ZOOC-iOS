@@ -148,8 +148,6 @@ final class ShopViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        
-        
         output.pushGenAIGuideVC
             .asDriver(onErrorJustReturn: Int())
             .drive(with: self, onNext: { owner, petID in
@@ -185,9 +183,9 @@ final class ShopViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.eventImageShouldChanged
-            .asDriver(onErrorJustReturn: String())
+            .asDriver(onErrorJustReturn: UIImage())
             .drive(with: self, onNext: { owner, imageUrl in
-                owner.rootView.eventBannerImageView.kfSetImage(url: imageUrl)
+                owner.rootView.eventBannerImageView.image = imageUrl
             })
             .disposed(by: disposeBag)
         
@@ -207,11 +205,17 @@ final class ShopViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        output.showToast
+        output.showShopToast
             .asDriver(onErrorJustReturn: .unknown)
             .drive(with: self, onNext: { owner, toast in
                 owner.showToast(toast)
             })
             .disposed(by: disposeBag)
+        
+        output.showEventToast
+            .asDriver(onErrorJustReturn: .unknown)
+            .drive(with: self, onNext: { owner, toast in
+                owner.showToast(toast)
+            }).disposed(by: disposeBag)
     }
 }

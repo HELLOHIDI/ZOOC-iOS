@@ -21,6 +21,7 @@ final class ShopViewModel {
 //        let petCellShouldSelectEvent: Observable<PetAiModel>
         let refreshValueChangedEvent: Observable<Void>
         let productCellDidSelectEvent: Observable<ProductResult>
+        let eventButtonDidTap: Observable<Void>
     }
     
     struct Output {
@@ -28,14 +29,19 @@ final class ShopViewModel {
         let productData = PublishRelay<[ProductResult]>()
         let petDidSelected = PublishRelay<(Int, PetAiModel)>()
         let petDeselect = PublishRelay<Int>()
+        let eventImageShouldChanged = PublishRelay<String>()
         let pushGenAIGuideVC = PublishRelay<Int>()
         let pushShopProductVC = PublishRelay<ShopProductModel>()
+        let pushEventVC = PublishRelay<Void>()
+        let pushAIPetArchiveVC = PublishRelay<Void>()
         let showToast = PublishRelay<ShopToastCase>()
     }
     
     //MARK: - Properties
     
     private var selectedPetID: Int?
+    private var eventAble = BehaviorRelay<Bool>(value: false)
+    private var eventProgress = BehaviorRelay<EventProgress>(value: .notApplied)
     
     init(_ petId: Int?) {
         selectedPetID = petId
@@ -46,17 +52,32 @@ final class ShopViewModel {
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output()
         
+        Observable.combineLatest(eventAble, eventProgress)
+            .subscribe(onNext: { able, progress in
+                var image: String
+                switch progress {
+                case .notApplied:
+                    image = able ? progress.imageURL : "https://ibb.co/CncSPKr"
+                default:
+                    image = progress.imageURL
+                }
+                output.eventImageShouldChanged.accept(image)
+                
+            })
+            .disposed(by: disposeBag)
+        
         Observable<Void>.merge(input.viewDidLoadEvent,
                                input.refreshValueChangedEvent)
             .subscribe(with: self) { owner, _ in
                 owner.requestProductsAPI(output: output)
                 owner.requestTotalPetAPI(output: output)
+                owner.requestEventAPI()
+                owner.requestEventProgressAPI()
             }
             .disposed(by: disposeBag)
         
-//        Observable.combineLatest(input.petCellShouldSelectIndexPathEvent,
+//        Observable.zip(input.petCellShouldSelectIndexPathEvent,
 //                                 input.petCellShouldSelectEvent)
-//        .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
 //        .subscribe(onNext: { [weak self] (row, petAiData) in
 //                switch petAiData.state {
 //                case .notStarted:
@@ -90,7 +111,26 @@ final class ShopViewModel {
             })
             .disposed(by: disposeBag)
         
+        input.eventButtonDidTap
+            .subscribe(with: self, onNext: { owner, _ in
+                guard owner.eventAble.value else {
+                    output.showToast.accept(.custom(message: "이벤트가 종료되었어요"))
+                    return
+                }
+                
+                switch owner.eventProgress.value {
+                case .notApplied:
+                    output.pushEventVC.accept(Void())
+                case .inProgress:
+                    output.showToast.accept(.custom(message: "이미지를 생성하고 있어요\n 잠시만 기다려주세요"))
+                case .done:
+                    output.pushAIPetArchiveVC.accept(Void())
+                }
+            })
+            .disposed(by: disposeBag)
         
+        
+    
         
         return output
     }
@@ -144,5 +184,37 @@ extension ShopViewModel {
             }
         }
         
+    }
+    
+    private func requestEventAPI() {
+        ShopAPI.shared.getEvent { result in
+            switch result {
+            case .success(let data):
+                guard let data = data as? ShopEventResult else {
+                    return
+                }
+                
+                self.eventAble.accept(data.able)
+            default:
+                return
+            }
+        }
+    }
+    
+    private func requestEventProgressAPI() {
+        ShopAPI.shared.getEventProgress { result in
+            switch result {
+            case .success(let data):
+                guard let data = data as? String else {
+                    return
+                }
+                
+                guard let progress = EventProgress(rawValue: data) else { return }
+                self.eventProgress.accept(progress)
+                
+            default:
+                return
+            }
+        }
     }
 }

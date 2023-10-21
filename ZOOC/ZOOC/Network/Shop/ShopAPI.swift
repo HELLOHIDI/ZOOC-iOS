@@ -43,5 +43,32 @@ extension ShopAPI {
                                 completion: completion)
         }
     }
+    
+    public func getEvent(completion: @escaping (NetworkResult<Any>) -> Void) {
+        shopProvider.request(.getEvent) {(result) in
+            self.disposeNetwork(result,
+                                dataModel: ShopEventResult.self,
+                                completion: completion)
+        }
+    }
+    
+    public func getEventProgress(completion: @escaping (NetworkResult<Any>) -> Void) {
+        shopProvider.request(.getEventProgress) {(result) in
+            self.disposeNetwork(result,
+                                dataModel: String.self,
+                                completion: completion)
+        }
+    }
+    
+    public func postEvent(petID: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+        shopProvider.request(.postEvent(petID: petID)) {(result) in
+            self.disposeNetwork(result,
+                                dataModel: VoidResult.self,
+                                completion: completion)
+        }
+    }
+    
+    
+    
 }
 

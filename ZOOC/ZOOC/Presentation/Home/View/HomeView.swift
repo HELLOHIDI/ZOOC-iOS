@@ -60,6 +60,7 @@ extension HomeView {
             $0.alwaysBounceVertical = true
             $0.showsVerticalScrollIndicator = false
         }
+        
         emptyView.do {
             $0.image = Image.graphics12
             $0.contentMode = .scaleAspectFit

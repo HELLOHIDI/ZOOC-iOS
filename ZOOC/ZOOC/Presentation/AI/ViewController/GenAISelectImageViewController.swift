@@ -106,9 +106,13 @@ final class GenAISelectImageViewController : BaseViewController {
         }).disposed(by: disposeBag)
         
         output.uploadCompleted.subscribe(with: self, onNext: { owner, convertCompleted in
-            guard let convertCompleted = convertCompleted else { return }
-            if convertCompleted { owner.showToast("AI 모델 생성이 완료되었습니다", type: .good) }
-            else { owner.showToast("AI 모델 생성 중 문제가 발생했습니다", type: .bad) }
+            guard let convertCompleted else { return }
+            
+            if convertCompleted {
+                owner.showToast("AI 모델 생성이 완료되었습니다", type: .good)
+            } else {
+                owner.showToast("AI 모델 생성 중 문제가 발생했습니다", type: .bad)
+            }
         }).disposed(by: disposeBag)
     }
 }

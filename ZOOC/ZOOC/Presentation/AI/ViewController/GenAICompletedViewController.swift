@@ -41,12 +41,6 @@ final class GenAICompletedViewController : UIViewController {
     }
     
     @objc func goShopButtonDidTap() {
-        //        let shopChoosePetVC = ShopChoosePetViewController(
-        //            viewModel: GenAIChoosePetModel(
-        //                repository: GenAIPetRepositoryImpl()
-        //            )
-        //        )
-        //        self.navigationController?.pushViewController(shopChoosePetVC, animated: true)
-        //    }
+        self.navigationController?.popToRootViewController(animated: true)
     }
 }

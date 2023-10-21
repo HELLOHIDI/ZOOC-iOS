@@ -61,7 +61,7 @@ final class ShopChoosePetViewController: BaseViewController {
         )
         
         let output = self.viewModel.transform(from: input, disposeBag: disposeBag)
-    
+        
         output.petList
             .asDriver(onErrorJustReturn: [])
             .drive(self.rootView.shopChoosePetCollectionView.petCollectionView.rx.items) { collectionView, index, data in
@@ -104,11 +104,23 @@ final class ShopChoosePetViewController: BaseViewController {
                 owner.updateRegisterButtonUI(canRegister)
             }).disposed(by: disposeBag)
         
-        output.canPushNextView
-            .asDriver(onErrorJustReturn: false)
-            .filter { $0 }
-            .drive(with: self, onNext: { owner, _ in
-                owner.pushToShopVC(with: owner.viewModel.getPetId())
+        output.datasetStatus
+            .asDriver(onErrorJustReturn: nil)
+            .drive(with: self, onNext: { owner, datasetStatus in
+                switch datasetStatus {
+                case .notStarted:
+                    owner.presentZoocAlertVC()
+                case .inProgress:
+                    owner.pushToShopLoadingVC(
+                        with: owner.viewModel.getPetId()
+                    )
+                case .done:
+                    owner.pushToShopVC(
+                        with: owner.viewModel.getPetId()
+                    )
+                default:
+                    break
+                }
             }).disposed(by: disposeBag)
     }
     
@@ -121,13 +133,13 @@ final class ShopChoosePetViewController: BaseViewController {
     }
 }
 
-extension ShopChoosePetViewController: ZoocAlertViewControllerDelegate {
-    func exitButtonDidTap() {
-        dismiss(animated: true)
-    }
-}
-
 extension ShopChoosePetViewController {
+    func pushToShopLoadingVC(with petId: Int?) {
+        let shopLoadingVC = ShopLoadingViewController.init(petId)
+        shopLoadingVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(shopLoadingVC, animated: true)
+    }
+    
     func pushToShopVC(with petId: Int?) {
         let shopVC = ShopViewController(viewModel: ShopViewModel.init(petId))
         shopVC.hidesBottomBarWhenPushed = true
@@ -146,11 +158,17 @@ extension ShopChoosePetViewController {
         self.navigationController?.pushViewController(myRegisterPetVC, animated: true)
     }
     
-    func updateRegisterButtonUI(_ isSelected: Bool) {
+    private func presentZoocAlertVC() {
+        let alertVC = ZoocAlertViewController(.noDataset)
+        alertVC.delegate = self
+        present(alertVC, animated: false)
+    }
+    
+    private func updateRegisterButtonUI(_ isSelected: Bool) {
         rootView.shopChoosePetCollectionView.registerButton.isEnabled = isSelected
     }
     
-    func updateUI(_ petCount: Int) {
+    private func updateUI(_ petCount: Int) {
         if petCount == 0 {
             rootView.shopPetEmptyView.isHidden = false
             rootView.shopChoosePetCollectionView.isHidden = true
@@ -161,3 +179,20 @@ extension ShopChoosePetViewController {
     }
 }
 
+extension ShopChoosePetViewController: ZoocAlertViewControllerDelegate {
+    func exitButtonDidTap() {
+        dismiss(animated: true)
+    }
+    
+    func keepButtonDidTap() {
+        let genAIGuideVC = GenAIGuideViewController(
+            viewModel: GenAIGuideViewModel(
+                genAIGuideUseCase: DefaultGenAIGuideUseCase(
+                    petId: viewModel.getPetId()
+                )
+            )
+        )
+        genAIGuideVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(genAIGuideVC, animated: true)
+    }
+}

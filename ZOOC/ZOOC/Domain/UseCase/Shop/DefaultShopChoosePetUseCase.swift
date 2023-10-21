@@ -10,8 +10,13 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+enum DatasetStatus {
+    case notStarted
+    case inProgress
+    case done
+}
+
 final class DefaultShopChoosePetUseCase: ShopChoosePetUseCase {
-    
     private let repository: GenAIPetRepository
     private let disposeBag = DisposeBag()
     
@@ -22,9 +27,8 @@ final class DefaultShopChoosePetUseCase: ShopChoosePetUseCase {
     var petList = BehaviorRelay<[RecordRegisterModel]>(value: [])
     var petId = BehaviorRelay<Int?>(value: nil)
     var canRegisterPet = BehaviorRelay<Bool>(value: false)
-    var canPushNextView = BehaviorRelay<Bool>(value: false)
-    
-    
+    var datasetStatus = BehaviorRelay<DatasetStatus?>(value: nil)
+        
     func selectPet(at index: Int) {
         print(#function)
         let updatedPetList = petList.value.map { pet in
@@ -51,8 +55,23 @@ final class DefaultShopChoosePetUseCase: ShopChoosePetUseCase {
         }
     }
     
-    func pushNextView() {
-        canPushNextView.accept(canRegisterPet.value)
+    func checkDatasetValid() {
+        guard let petId = petId.value else { return }
+        repository.getPetDataset(petId: String(petId)) { [weak self] result in
+            switch result {
+            case .success(let data):
+                guard let result = data as? GenAIPetDatasetsResult else { return }
+                if result.datasetImages.isEmpty {
+                    self?.datasetStatus.accept(.inProgress)
+                } else {
+                    self?.datasetStatus.accept(.done)
+                }
+            case .requestErr(_):
+                self?.datasetStatus.accept(.notStarted)
+            default:
+                break
+            }
+        }
     }
 }
 

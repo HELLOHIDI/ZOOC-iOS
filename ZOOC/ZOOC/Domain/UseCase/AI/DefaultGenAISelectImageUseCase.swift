@@ -97,6 +97,7 @@ final class DefaultGenAISelectImageUseCase: GenAISelectImageUseCase {
         repository.patchDatasetImages(datasetId: datasetId, files: files) { [weak self] result in
             switch result {
             case .success(_):
+                NotificationCenter.default.post(name: .dataSetUploadSuccess, object: nil)
                 self?.uploadCompleted.accept(true)
             default:
                 self?.uploadCompleted.accept(false)

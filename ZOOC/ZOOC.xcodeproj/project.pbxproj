@@ -208,6 +208,8 @@
 		87FAF8B72AAE1D8300DADCC4 /* OrderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FAF8B62AAE1D8300DADCC4 /* OrderError.swift */; };
 		87FAF8BD2AB090D700DADCC4 /* AddressType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FAF8BC2AB090D700DADCC4 /* AddressType.swift */; };
 		87FD185F2AB36A1800A1431E /* PaymentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FD185E2AB36A1800A1431E /* PaymentType.swift */; };
+		D206AB472AE3C1D800127DE8 /* ShopLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D206AB462AE3C1D800127DE8 /* ShopLoadingViewController.swift */; };
+		D206AB492AE3C20400127DE8 /* ShopLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D206AB482AE3C20400127DE8 /* ShopLoadingView.swift */; };
 		D209F9302AB0594B0017D623 /* PetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D209F92F2AB0594B0017D623 /* PetResult.swift */; };
 		D20C008A2A96DDB000666963 /* GenAIModelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C00892A96DDB000666963 /* GenAIModelRepository.swift */; };
 		D20C008D2A96E23500666963 /* GenAIGuideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */; };
@@ -578,6 +580,8 @@
 		87FAF8B62AAE1D8300DADCC4 /* OrderError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderError.swift; sourceTree = "<group>"; };
 		87FAF8BC2AB090D700DADCC4 /* AddressType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressType.swift; sourceTree = "<group>"; };
 		87FD185E2AB36A1800A1431E /* PaymentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentType.swift; sourceTree = "<group>"; };
+		D206AB462AE3C1D800127DE8 /* ShopLoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopLoadingViewController.swift; sourceTree = "<group>"; };
+		D206AB482AE3C20400127DE8 /* ShopLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopLoadingView.swift; sourceTree = "<group>"; };
 		D209F92F2AB0594B0017D623 /* PetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetResult.swift; sourceTree = "<group>"; };
 		D20C00892A96DDB000666963 /* GenAIModelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIModelRepository.swift; sourceTree = "<group>"; };
 		D20C008C2A96E23500666963 /* GenAIGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIGuideViewModel.swift; sourceTree = "<group>"; };
@@ -1558,6 +1562,7 @@
 				D2B5FFCE2ADCF43E00E3E4A1 /* ShopView.swift */,
 				D2ED94D12ADDA7BB00951007 /* ShopEmptyView.swift */,
 				D2ED94D32ADDAC9200951007 /* ShopChoosePetView.swift */,
+				D206AB482AE3C20400127DE8 /* ShopLoadingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1570,6 +1575,7 @@
 				870A4BF82AA252CB00D7CFD8 /* ShopProductViewController.swift */,
 				87BCAD392AA718D800A03DA3 /* ShopCartViewController.swift */,
 				D2B5FFD02ADCF63200E3E4A1 /* ShopViewController.swift */,
+				D206AB462AE3C1D800127DE8 /* ShopLoadingViewController.swift */,
 				874A13E62AE29489000ED2C1 /* ShopEventViewController.swift */,
 			);
 			path = ViewController;
@@ -2259,6 +2265,7 @@
 				874369572A8FFB260035AFD6 /* NetworkMonitor.swift in Sources */,
 				87E462F12A110E18006FC35D /* CGColor+.swift in Sources */,
 				D235030729647B4200F01101 /* MyAppInformationViewController.swift in Sources */,
+				D206AB492AE3C20400127DE8 /* ShopLoadingView.swift in Sources */,
 				D21638102ACF0E230096D474 /* OnboardingCheckReceivedCodeUseCase.swift in Sources */,
 				8731C4B229A9400D00006743 /* EmojiCollectionViewCell.swift in Sources */,
 				87A76AA3295F6EB80096F669 /* HomeService.swift in Sources */,
@@ -2322,6 +2329,7 @@
 				D24AFAC42A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift in Sources */,
 				D239C0872AC148A100D1AA37 /* DefaultMyUseCase.swift in Sources */,
 				D26C85CF2968681900AEAF9B /* MyPetCollectionFooterView.swift in Sources */,
+				D206AB472AE3C1D800127DE8 /* ShopLoadingViewController.swift in Sources */,
 				D29944362AAF1D7A00C4F280 /* ShopChoosePetViewController.swift in Sources */,
 				872F638929B89D9B002EC413 /* HomeGuideViewController.swift in Sources */,
 				8765549F295846F3006BBDA9 /* ZoocTabBarController.swift in Sources */,

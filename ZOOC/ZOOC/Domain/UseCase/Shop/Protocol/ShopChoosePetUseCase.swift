@@ -14,8 +14,8 @@ protocol ShopChoosePetUseCase {
     var petList: BehaviorRelay<[RecordRegisterModel]> { get }
     var petId: BehaviorRelay<Int?> { get }
     var canRegisterPet: BehaviorRelay<Bool> { get }
-    var canPushNextView: BehaviorRelay<Bool> { get }
+    var datasetStatus: BehaviorRelay<DatasetStatus?> { get }
     func selectPet(at index: Int)
-    func pushNextView()
+    func checkDatasetValid()
     func getTotalPet()
 }

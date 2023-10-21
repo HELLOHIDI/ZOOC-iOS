@@ -28,7 +28,7 @@ final class ShopChoosePetViewModel: ViewModelType {
         var petId: BehaviorRelay<Int?> = BehaviorRelay<Int?>(value: nil)
         var petList: BehaviorRelay<[RecordRegisterModel]> = BehaviorRelay<[RecordRegisterModel]>(value: [])
         var canRegisterPet: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
-        var canPushNextView: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
+        var datasetStatus: BehaviorRelay<DatasetStatus?> = BehaviorRelay<DatasetStatus?>(value: nil)
     }
     
     func transform(from input: Input, disposeBag: DisposeBag) -> Output {
@@ -47,7 +47,7 @@ final class ShopChoosePetViewModel: ViewModelType {
         
         input.registerButtonDidTapEvent
             .subscribe(with: self, onNext: { owner, _ in
-            owner.shopChoosePetUseCase.pushNextView()
+            owner.shopChoosePetUseCase.checkDatasetValid()
         }).disposed(by: disposeBag)
         
         return output
@@ -67,8 +67,8 @@ final class ShopChoosePetViewModel: ViewModelType {
             output.canRegisterPet.accept(canRegister)
         }).disposed(by: disposeBag)
         
-        shopChoosePetUseCase.canPushNextView.subscribe(onNext: { canPush in
-            output.canPushNextView.accept(canPush)
+        shopChoosePetUseCase.datasetStatus.subscribe(onNext: { datasetStatus in
+            output.datasetStatus.accept(datasetStatus)
         }).disposed(by: disposeBag)
     }
 }
@@ -82,8 +82,8 @@ extension ShopChoosePetViewModel {
         return shopChoosePetUseCase.petId.value
     }
     
-    func getCanRegisterPet() -> Bool {
-        return shopChoosePetUseCase.canRegisterPet.value
+    func getCanRegisterPet() -> DatasetStatus? {
+        return shopChoosePetUseCase.datasetStatus.value
     }
 }
 

@@ -66,7 +66,7 @@ final class ShopLoadingView: UIView {
         
         subTitleLabel.snp.makeConstraints {
             $0.top.equalTo(self.titleLabel.snp.bottom).offset(8)
-            $0.leading.trailing.equalToSuperview().inset(79)
+            $0.centerX.equalToSuperview()
         }
         
         activityIndicatorView.snp.makeConstraints {

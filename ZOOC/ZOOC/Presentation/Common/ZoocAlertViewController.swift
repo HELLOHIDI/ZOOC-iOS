@@ -79,7 +79,7 @@ enum AlertType {
         case .noPet:
             return "반려동물을 등록한 후에 작성이 가능해요"
         case .applyEvent:
-            return "선택하신 반려동물의 AI 프로필을 만들어 드려요/n이벤트 참여는 1회만 가능합니다."
+            return "선택하신 반려동물의 AI 프로필을 만들어 드려요\n 이벤트 참여는 1회만 가능합니다."
         case .noApplyEvent:
             return "이벤트에 참여하시겠습니까?"
         }

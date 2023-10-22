@@ -16,8 +16,7 @@ enum ShopService {
     case getEvent
     case getEventProgress
     case postEvent(petID: Int)
-    
-    
+    case getEventResult
 }
 
 extension ShopService: BaseTargetType {
@@ -39,6 +38,8 @@ extension ShopService: BaseTargetType {
         case .postEvent:
             return URLs.postEvent
                 .replacingOccurrences(of: "{eventId}", with: "1")
+        case .getEventResult:
+            return URLs.getEventResult.replacingOccurrences(of: "{eventId}", with: "1")
         }
     }
     
@@ -56,6 +57,8 @@ extension ShopService: BaseTargetType {
             return .get
         case .postEvent:
             return .post
+        case .getEventResult:
+            return .get
         }
     }
     
@@ -73,6 +76,8 @@ extension ShopService: BaseTargetType {
             return .requestPlain
         case .postEvent(let petID):
             return .requestParameters(parameters: ["petId" : petID], encoding: JSONEncoding.default)
+        case .getEventResult:
+            return .requestPlain
         }
     }
 }

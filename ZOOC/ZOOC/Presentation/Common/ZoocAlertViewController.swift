@@ -21,6 +21,8 @@ enum AlertType {
     case deleteProduct
     case noDataset
     case noPet
+    case applyEvent
+    case noApplyEvent
     
     
     var title: String {
@@ -46,6 +48,10 @@ enum AlertType {
             return "먼저 AI 모델을 생성해야해요"
         case .noPet:
             return "먼저 반려동물을 등록 해주세요"
+        case .applyEvent:
+            return "이벤트에 참여하시나요?"
+        case .noApplyEvent:
+            return "이벤트에 참여하지 않았습니다"
         }
     }
     
@@ -72,6 +78,10 @@ enum AlertType {
             return "생성한 후에 쇼핑몰에서 구매가 가능해요"
         case .noPet:
             return "반려동물을 등록한 후에 작성이 가능해요"
+        case .applyEvent:
+            return "반려동물 AI 프로필을 만들어 드려요"
+        case .noApplyEvent:
+            return "이벤트에 참여하시겠습니까?"
         }
     }
     
@@ -98,6 +108,10 @@ enum AlertType {
             return "생성하기"
         case .noPet:
             return "생성하기"
+        case .applyEvent:
+            return "참여하기"
+        case .noApplyEvent:
+            return "참여하기"
         }
     }
     
@@ -124,6 +138,10 @@ enum AlertType {
             return "취소"
         case .noPet:
             return "취소"
+        case .applyEvent:
+            return "나가기"
+        case .noApplyEvent:
+            return "나가기"
         }
     }
     

@@ -9,7 +9,41 @@ import UIKit
 
 import SnapKit
 
-final class ZoocUploadingImageAlertView: UIViewController {
+enum CheckAlertType {
+    case noApplied
+    case inProgress
+    
+    var titleLabel: String {
+        switch self {
+        case .noApplied:
+            return "아직 이벤트에 참여하지 않았어요"
+        case .inProgress:
+            return "AI 이미지 생성 중이에요"
+        }
+    }
+    
+    var description: String {
+        switch self {
+        case .noApplied:
+            return "쇼핑몰에서 이벤트 참여가 가능해요"
+        case .inProgress:
+            return "최대 3일이 소요될 수 있어요\n알림으로 빠르게 알려드릴게요"
+        }
+    }
+    
+    var keep: String {
+        switch self {
+        case .noApplied:
+            return "확인"
+        case .inProgress:
+            return "확인"
+        }
+    }
+}
+
+final class ZoocCheckAlertView: UIViewController {
+    
+    var checkAlertType: CheckAlertType?
     
     private let alertView = UIView()
     private let dimmedView = UIView()
@@ -19,7 +53,8 @@ final class ZoocUploadingImageAlertView: UIViewController {
     
     //MARK: - Life Cycle
     
-    init() {
+    init(_ checkAlertType: CheckAlertType) {
+        self.checkAlertType = checkAlertType
         super.init(nibName: nil, bundle: nil)
         modalPresentationStyle = .overFullScreen
     }
@@ -60,14 +95,14 @@ final class ZoocUploadingImageAlertView: UIViewController {
         }
         
         titleLabel.do {
-            $0.text = "AI 이미지를 생성하고 있어요"
+            $0.text = checkAlertType?.titleLabel
             $0.backgroundColor = .white
             $0.font = .zoocSubhead2
             $0.textColor = .zoocDarkGray1
         }
         
         descriptionLabel.do {
-            $0.text = "30초 정도만 더 기다려주세요"
+            $0.text = checkAlertType?.description
             $0.font = .zoocBody1
             $0.textColor = .zoocGray1
             $0.textAlignment = .center
@@ -75,7 +110,7 @@ final class ZoocUploadingImageAlertView: UIViewController {
         }
         
         updateButton.do {
-            $0.setTitle("확인", for: .normal)
+            $0.setTitle(checkAlertType?.keep, for: .normal)
             $0.setBackgroundColor(.zoocMainGreen, for: .normal)
             $0.setBackgroundColor(.zoocGradientGreen, for: .highlighted)
             $0.titleLabel?.textAlignment = .center

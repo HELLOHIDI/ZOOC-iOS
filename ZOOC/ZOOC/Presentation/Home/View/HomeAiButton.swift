@@ -81,10 +81,10 @@ final class HomeAiButton: UIButton {
         }
         
         aiLabel.do {
-            $0.text = "우리집 강아지 AI 굿즈 만들기"
+            $0.text = "반려동물 AI 프로필 보러가기"
             $0.font = .zoocBody1
             $0.textColor = .zoocGray3
-            $0.asColor(targetString: "AI", color: .zoocMainGreen)
+            $0.asColor(targetString: "AI 프로필", color: .zoocMainGreen)
         }
     }
     

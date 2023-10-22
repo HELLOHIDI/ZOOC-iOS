@@ -28,9 +28,9 @@ final class DefaultShopChoosePetUseCase: ShopChoosePetUseCase {
     var petId = BehaviorRelay<Int?>(value: nil)
     var canRegisterPet = BehaviorRelay<Bool>(value: false)
     var datasetStatus = BehaviorRelay<DatasetStatus?>(value: nil)
-        
+    var isLoading = BehaviorRelay<Bool>(value: false)
+    
     func selectPet(at index: Int) {
-        print(#function)
         let updatedPetList = petList.value.map { pet in
             var updatedPet = pet
             updatedPet.isSelected = pet.petID == petList.value[index].petID
@@ -56,22 +56,37 @@ final class DefaultShopChoosePetUseCase: ShopChoosePetUseCase {
     }
     
     func checkDatasetValid() {
+        isLoading.accept(true)
         guard let petId = petId.value else { return }
-        repository.getPetDataset(petId: String(petId)) { [weak self] result in
-            switch result {
-            case .success(let data):
-                guard let result = data as? GenAIPetDatasetsResult else { return }
-                if result.datasetImages.isEmpty {
-                    self?.datasetStatus.accept(.inProgress)
-                } else {
-                    self?.datasetStatus.accept(.done)
+        DispatchQueue.global().async {
+            self.repository.getPetDataset(petId: String(petId)) { [weak self] result in
+                switch result {
+                case .success(let data):
+                    guard let result = data as? GenAIPetDatasetsResult else { return }
+                    if result.datasetImages.isEmpty {
+                        self?.datasetStatus.accept(.inProgress)
+                    } else {
+                        self?.datasetStatus.accept(.done)
+                    }
+                case .requestErr(_):
+                    self?.datasetStatus.accept(.notStarted)
+                default:
+                    break
                 }
-            case .requestErr(_):
-                self?.datasetStatus.accept(.notStarted)
-            default:
-                break
+                self?.isLoading.accept(false)
             }
         }
+    }
+    
+    func initPetList() {
+        let updatedPetList = petList.value.map { pet in
+            var updatedPet = pet
+            updatedPet.isSelected = false
+            return updatedPet
+        }
+        petList.accept(updatedPetList)
+        canRegisterPet.accept(false)
+        petId.accept(nil)
     }
 }
 

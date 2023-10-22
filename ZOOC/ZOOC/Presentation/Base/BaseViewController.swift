@@ -110,6 +110,7 @@ class BaseViewController : UIViewController{
             print(data)
             return data
         case .requestErr(let message):
+            return message
             break
             //showToast(message, type: .bad)
         case .pathErr:

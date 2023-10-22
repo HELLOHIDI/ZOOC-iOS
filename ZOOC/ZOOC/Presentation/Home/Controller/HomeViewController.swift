@@ -69,8 +69,6 @@ final class HomeViewController : BaseViewController {
             guideVC.modalPresentationStyle = .overCurrentContext
             present(guideVC, animated: false)
         }
-        
-        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -303,7 +301,7 @@ final class HomeViewController : BaseViewController {
     }
     
     @objc func genAIViewDidTap() {
-        pushToGenAIViewController()
+        pushToEventVC()
     }
     
     @objc
@@ -559,29 +557,38 @@ extension HomeViewController {
         }
     }
     
-    private func pushToGenAIViewController() {
-        if petData.count > 0 {
-            let genAIChoosePetVC = GenAIChoosePetViewController(
-                viewModel: GenAIChoosePetViewModel(
-                    genAIChoosePetUseCase: DefaultGenAIChoosePetUseCase(
-                        repository: DefaultGenAIPetRepository()
-                    )
-                )
-            )
-            genAIChoosePetVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(genAIChoosePetVC, animated: true)
-        } else {
-            let genAIRegisterPetVC = GenAIRegisterPetViewController(
-                viewModel: GenAIRegisterPetViewModel(
-                    genAIRegisterPetUseCase: DefaultGenAIRegisterPetUseCase(
-                        repository: DefaultGenAIPetRepository()
-                    )
-                )
-            )
-            genAIRegisterPetVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(genAIRegisterPetVC, animated: true)
-        }
+    private func pushToEventVC() {
+        checkEventValid()
     }
+        
+        
+        
+        
+        
+        
+        
+//        if petData.count > 0 {
+//            let genAIChoosePetVC = GenAIChoosePetViewController(
+//                viewModel: GenAIChoosePetViewModel(
+//                    genAIChoosePetUseCase: DefaultGenAIChoosePetUseCase(
+//                        repository: DefaultGenAIPetRepository()
+//                    )
+//                )
+//            )
+//            genAIChoosePetVC.hidesBottomBarWhenPushed = true
+//            navigationController?.pushViewController(genAIChoosePetVC, animated: true)
+//        } else {
+//            let genAIRegisterPetVC = GenAIRegisterPetViewController(
+//                viewModel: GenAIRegisterPetViewModel(
+//                    genAIRegisterPetUseCase: DefaultGenAIRegisterPetUseCase(
+//                        repository: DefaultGenAIPetRepository()
+//                    )
+//                )
+//            )
+//            genAIRegisterPetVC.hidesBottomBarWhenPushed = true
+//            navigationController?.pushViewController(genAIRegisterPetVC, animated: true)
+//        }
+   
 }
 
 extension HomeViewController: HomeGuideViewControllerDelegate {
@@ -604,6 +611,47 @@ extension HomeViewController: ZoocAlertViewControllerDelegate {
     }
     func exitButtonDidTap() {
         self.dismiss()
+    }
+}
+
+extension HomeViewController {
+    func checkEventValid() {
+        ShopAPI.shared.getEvent { [weak self] result in
+            guard let result = self?.validateResult(result) as? ShopEventResult else { return }
+            if result.able {
+                self?.checkEventProgress()
+            } else {
+                self?.showToast("이벤트가 종료되었습니다", type: .bad)
+            }
+        }
+    }
+    
+    func checkEventProgress() {
+        ShopAPI.shared.getEventProgress { result in
+            switch result {
+            case .success(let data):
+                guard let data = data as? String else {
+                    return
+                }
+                
+                guard let progress = EventProgress(rawValue: data) else { return }
+                switch progress {
+                case .notApplied:
+                    let checkAlertView = ZoocCheckAlertView.init(.noApplied)
+                    self.present(checkAlertView, animated: false)
+                case .inProgress:
+                    let checkAlertView = ZoocCheckAlertView.init(.inProgress)
+                    self.present(checkAlertView, animated: false)
+                case .done:
+                    let eventVC = ShopEventViewController()
+                    eventVC.hidesBottomBarWhenPushed = true
+                    self.navigationController?.pushViewController(eventVC, animated: true)
+                }
+                
+            default:
+                return
+            }
+        }
     }
 }
 

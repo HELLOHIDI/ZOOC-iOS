@@ -131,6 +131,13 @@ public enum Image{
             return Image.bankBankSalad
         }
     }
+    
+    //MARK: - Event
+    
+    static let notApplied = UIImage(named: "event.notApplied")!
+    static let done = UIImage(named: "event.done")!
+    static let inProgress = UIImage(named: "event.inProgress")!
+    static let ended = UIImage(named: "event.ended")!
 }
 
 extension Image {

@@ -18,6 +18,7 @@ final class ShopChoosePetView: UIView {
     
     let shopPetEmptyView = ShopPetEmptyView()
     let shopChoosePetCollectionView = ShopChoosePetCollectionView()
+    public let activityIndicatorView = UIActivityIndicatorView(style: .large)
     
     // MARK: - UI Components
     
@@ -46,7 +47,8 @@ final class ShopChoosePetView: UIView {
     private func hieararchy() {
         self.addSubviews(
             shopPetEmptyView,
-            shopChoosePetCollectionView
+            shopChoosePetCollectionView,
+            activityIndicatorView
         )
     }
     
@@ -57,6 +59,11 @@ final class ShopChoosePetView: UIView {
         
         shopChoosePetCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        activityIndicatorView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.size.equalTo(70)
         }
     }
 }

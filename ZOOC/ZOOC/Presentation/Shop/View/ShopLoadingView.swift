@@ -38,18 +38,17 @@ final class ShopLoadingView: UIView {
     
     private func style() {
         titleLabel.do {
-            $0.text = "이미지를 업로드하고 있어요 "
-            $0.textColor = UIColor(r: 79, g: 79, b: 79)
+            $0.text = "AI 모델을 생성 중이에요"
+            $0.textColor = .zoocGray3
             $0.textAlignment = .center
             $0.font = .zoocDisplay1
-            $0.asColor(targetString: "이미지를 업로드", color: .zoocMainGreen)
         }
         
         subTitleLabel.do {
-            $0.text = "최대 1 - 2분 가량 소요될 수 있으니 \n현재 화면에 머물러주세요"
+            $0.text = "최대 1-2분 가량 소요될 수 있어요\n안정적인 모델 생성을 위해 화면에 머물러 주세요"
             $0.numberOfLines = 2
-            $0.font = .zoocBody2
-            $0.textColor = .zoocGray2
+            $0.font = .zoocBody3
+            $0.textColor = .zoocGray1
             $0.setLineSpacing(spacing: 8)
             $0.textAlignment = .center
         }

@@ -61,7 +61,7 @@ final class ShopEventViewController: BaseViewController {
         eventImageView.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.width.equalTo(315)
-            $0.height.equalTo(477)
+            $0.height.equalTo(472.5)
         }
     }
     

@@ -31,7 +31,6 @@ final class ShopViewModel {
         let petDidSelected = PublishRelay<(Int, PetAiModel)>()
         let petDeselect = PublishRelay<Int>()
         let eventImageShouldChanged = PublishRelay<UIImage>()
-        let ableToClickBanner = PublishRelay<Bool>()
         let pushGenAIGuideVC = PublishRelay<Int>()
         let presentEventView = PublishRelay<Void>()
         let pushShopProductVC = PublishRelay<ShopProductModel>()
@@ -62,7 +61,6 @@ final class ShopViewModel {
                 let endedImage = Image.ended
                 let image = able ? progress.imageURL : endedImage
                 output.eventImageShouldChanged.accept(image)
-                output.ableToClickBanner.accept(progress.ableToClick)
             })
             .disposed(by: disposeBag)
         

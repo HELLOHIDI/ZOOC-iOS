@@ -96,6 +96,7 @@ final class GenAISelectImageView: UIView {
         generateAIModelButton.do {
             $0.setTitle("AI 모델 생성하기", for: .normal)
             $0.setTitleColor(.zoocWhite1, for: .normal)
+            $0.isEnabled = false
             $0.titleLabel?.font = .zoocSubhead1
             $0.titleLabel?.textAlignment = .center
         }

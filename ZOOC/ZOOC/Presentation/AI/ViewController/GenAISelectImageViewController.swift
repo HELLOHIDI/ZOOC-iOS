@@ -93,6 +93,7 @@ final class GenAISelectImageViewController : BaseViewController {
             .drive(with: self, onNext: { owner, canShow in
                 if canShow {
                     owner.rootView.activityIndicatorView.stopAnimating()
+                    owner.rootView.generateAIModelButton.isEnabled = true
                     owner.rootView.petImageCollectionView.reloadData()
                 } else {
                     owner.rootView.activityIndicatorView.startAnimating()

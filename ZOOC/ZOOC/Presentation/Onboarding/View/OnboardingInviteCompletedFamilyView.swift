@@ -47,7 +47,7 @@ final class OnboardingInviteCompletedFamilyView: OnboardingBaseView {
         }
         
         completeProfileSubLabel.do {
-            $0.text = "가족과 기록한 순간들이 \nZOOC 소중한 추억으로 남을게예요"
+            $0.text = "가족과 기록한 순간들이 \nZOOC 소중한 추억으로 남을거예요"
             $0.textColor = .zoocGray1
             $0.textAlignment = .left
             $0.font = .zoocBody2

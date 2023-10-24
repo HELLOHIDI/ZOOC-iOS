@@ -158,7 +158,7 @@ final class ShopProductView: UIView {
         scrollView.snp.makeConstraints {
             $0.top.equalTo(backButton.snp.bottom).offset(11)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.height.equalTo(600)
         }
         
         buyView.snp.makeConstraints {

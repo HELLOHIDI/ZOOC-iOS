@@ -1562,13 +1562,13 @@
 			isa = PBXGroup;
 			children = (
 				870A4BFD2AA26E7500D7CFD8 /* BottomSheet */,
-				D2ED94892AB962A90040B687 /* ShopChoosePetCollectionView.swift */,
-				87DF04E52AC751C200E10B2D /* ShopViewWithSurpriseDropDown.swift */,
+				D2ED94D32ADDAC9200951007 /* ShopChoosePetView.swift */,
+				D2B5FFCE2ADCF43E00E3E4A1 /* ShopView.swift */,
 				87DF04E92AC822ED00E10B2D /* ShopProductView.swift */,
 				87DF04F02AC94B5D00E10B2D /* ShopCartView.swift */,
-				D2B5FFCE2ADCF43E00E3E4A1 /* ShopView.swift */,
+				D2ED94892AB962A90040B687 /* ShopChoosePetCollectionView.swift */,
+				87DF04E52AC751C200E10B2D /* ShopViewWithSurpriseDropDown.swift */,
 				D2ED94D12ADDA7BB00951007 /* ShopEmptyView.swift */,
-				D2ED94D32ADDAC9200951007 /* ShopChoosePetView.swift */,
 				D206AB482AE3C20400127DE8 /* ShopLoadingView.swift */,
 			);
 			path = View;

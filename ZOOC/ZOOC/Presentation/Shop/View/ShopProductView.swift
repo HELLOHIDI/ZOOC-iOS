@@ -101,6 +101,7 @@ final class ShopProductView: UIView {
         nameLabel.do {
             $0.font = .zoocFont(font: .medium, size: 20)
             $0.textColor = .zoocDarkGray2
+            $0.numberOfLines = 2
         }
         
         priceLabel.do {
@@ -193,6 +194,7 @@ final class ShopProductView: UIView {
         nameLabel.snp.makeConstraints {
             $0.top.equalTo(imageCollectionView.snp.bottom).offset(30)
             $0.leading.equalToSuperview().offset(30)
+            $0.trailing.equalTo(priceLabel.snp.leading).offset(-20)
         }
         
         priceLabel.snp.makeConstraints {
@@ -201,7 +203,7 @@ final class ShopProductView: UIView {
         }
         
         descriptionLabel.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(30)
+            $0.top.equalTo(nameLabel.snp.bottom).offset(40)
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.bottom.equalToSuperview().inset(40)
         }

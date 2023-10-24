@@ -34,6 +34,7 @@ final class ZoocWebViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        
     }
     
     
@@ -44,6 +45,7 @@ final class ZoocWebViewController: UIViewController {
     // MARK: - UI
     
     private func configureUI() {
+        view.backgroundColor = .zoocBackgroundGreen
         setAttributes()
         setContraints()
     }

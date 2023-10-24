@@ -177,6 +177,7 @@
 		87DF04EC2AC82D5D00E10B2D /* ShopToastCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04EB2AC82D5D00E10B2D /* ShopToastCase.swift */; };
 		87DF04EF2AC94B5400E10B2D /* ShopCartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04EE2AC94B5400E10B2D /* ShopCartViewModel.swift */; };
 		87DF04F12AC94B5D00E10B2D /* ShopCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DF04F02AC94B5D00E10B2D /* ShopCartView.swift */; };
+		87E268BF2AE7EC2600EB2206 /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E268BE2AE7EC2600EB2206 /* Haptic.swift */; };
 		87E462E62A10FA60006FC35D /* ExternalURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462E52A10FA60006FC35D /* ExternalURL.swift */; };
 		87E462EE2A110867006FC35D /* ZoocGradinetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */; };
 		87E462F12A110E18006FC35D /* CGColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E462F02A110E18006FC35D /* CGColor+.swift */; };
@@ -551,6 +552,7 @@
 		87DF04EB2AC82D5D00E10B2D /* ShopToastCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopToastCase.swift; sourceTree = "<group>"; };
 		87DF04EE2AC94B5400E10B2D /* ShopCartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCartViewModel.swift; sourceTree = "<group>"; };
 		87DF04F02AC94B5D00E10B2D /* ShopCartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCartView.swift; sourceTree = "<group>"; };
+		87E268BE2AE7EC2600EB2206 /* Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
 		87E462E52A10FA60006FC35D /* ExternalURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalURL.swift; sourceTree = "<group>"; };
 		87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocGradinetButton.swift; sourceTree = "<group>"; };
 		87E462F02A110E18006FC35D /* CGColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGColor+.swift"; sourceTree = "<group>"; };
@@ -885,6 +887,7 @@
 				872BBD9429F959FC002E2C71 /* UserDefaultWrapper.swift */,
 				872BBD9629F95BE2002E2C71 /* UserDefaultsManager.swift */,
 				874369562A8FFB250035AFD6 /* NetworkMonitor.swift */,
+				87E268BE2AE7EC2600EB2206 /* Haptic.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -2498,6 +2501,7 @@
 				D24AFAB62A8DFC3000823E9C /* GenAIChoosePetViewModel.swift in Sources */,
 				877DF3292A534DF2001CD452 /* NotificationName+.swift in Sources */,
 				D2ED948E2ABAB5B40040B687 /* GenAIGuideUseCase.swift in Sources */,
+				87E268BF2AE7EC2600EB2206 /* Haptic.swift in Sources */,
 				87D5AF5A29606AC900CA7F12 /* NetworkResult.swift in Sources */,
 				4C8A7C33297063F400783979 /* OnboardingInviteResult.swift in Sources */,
 				D2D440162AA5C88D00329F35 /* OrderBasicAddressView.swift in Sources */,
@@ -2761,7 +2765,7 @@
 				CODE_SIGN_ENTITLEMENTS = ZOOC/ZOOC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 27VUFHH5W2;
+				DEVELOPMENT_TEAM = T6DNHAHXG9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ZOOC/Application/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
@@ -2782,7 +2786,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.3;
+				MARKETING_VERSION = 1.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID)";
 				PRODUCT_NAME = "$(APP_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -2804,7 +2808,7 @@
 				CODE_SIGN_ENTITLEMENTS = ZOOC/ZOOC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = T6DNHAHXG9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ZOOC/Application/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
@@ -2825,7 +2829,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.3;
+				MARKETING_VERSION = 1.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID)";
 				PRODUCT_NAME = "$(APP_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

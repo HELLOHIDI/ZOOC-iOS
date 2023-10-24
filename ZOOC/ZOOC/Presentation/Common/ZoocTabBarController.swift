@@ -45,6 +45,8 @@ class ZoocTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        delegate = self
+        
         setTabBar()
         setLayout()
         setNavigationController()
@@ -158,5 +160,13 @@ extension ZoocTabBarController: ZoocAlertViewControllerDelegate {
     
     func exitButtonDidTap() {
         self.dismiss(animated: true)
+    }
+}
+
+extension ZoocTabBarController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+
+        let impactService = Haptic.impact(.light)
+        impactService.run()
     }
 }

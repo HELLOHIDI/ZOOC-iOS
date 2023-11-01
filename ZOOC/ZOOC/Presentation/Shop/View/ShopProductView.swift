@@ -197,6 +197,7 @@ final class ShopProductView: UIView {
             $0.trailing.equalTo(priceLabel.snp.leading).offset(-20)
         }
         
+        priceLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         priceLabel.snp.makeConstraints {
             $0.top.equalTo(imageCollectionView.snp.bottom).offset(30)
             $0.trailing.equalToSuperview().inset(30)

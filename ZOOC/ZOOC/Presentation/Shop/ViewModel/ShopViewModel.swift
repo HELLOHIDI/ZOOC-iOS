@@ -57,9 +57,13 @@ final class ShopViewModel {
         
         Observable.combineLatest(eventAble, eventProgress)
             .subscribe(onNext: { able, progress in
-                print("progress는 \(progress) image는 \(progress.imageURL)")
-                let endedImage = Image.ended
-                let image = able ? progress.imageURL : endedImage
+                var image: UIImage
+                switch progress {
+                case .notApplied:
+                    image = able ? progress.imageURL : Image.ended
+                default:
+                    image = progress.imageURL
+                }
                 output.eventImageShouldChanged.accept(image)
             })
             .disposed(by: disposeBag)

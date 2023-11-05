@@ -14,6 +14,43 @@ extension UIColor {
     }
 }
 
+
+extension UIColor {
+    
+    static var zw_background: UIColor {
+        return UIColor(r: 245, g: 245, b: 247)
+    }
+    
+    static var zw_white: UIColor {
+        return UIColor(r: 255, g: 255, b: 255)
+    }
+    
+    static var zw_brightgray: UIColor {
+        return UIColor(r: 230, g: 230, b: 230)
+    }
+    
+    static var zw_lightgray: UIColor {
+        return UIColor(r: 191, g: 191, b: 191)
+    }
+    
+    static var zw_gray: UIColor {
+        return UIColor(r: 130, g: 130, b: 130)
+    }
+    
+    static var zw_darkgray: UIColor {
+        return UIColor(r: 96, g: 96, b: 96)
+    }
+    
+    static var zw_black: UIColor {
+        return UIColor(r: 28, g: 28, b: 28)
+    }
+    
+    static var zw_point: UIColor {
+        return UIColor(r: 91, g: 127, b: 255)
+    }
+    
+}
+
 //MARK: - Custom Color
 
 extension UIColor{

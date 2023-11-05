@@ -8,7 +8,20 @@
 import UIKit
 
 //MARK: - 해당 Enum은 asset에 저장된 이미지와 이름이 동일해야 합니다!
+
 public enum ZwImageName: String {
+    
+    case btn_checkbox_fill
+    case btn_checkbox
+    case btn_minus
+    case btn_picture
+    case btn_plus
+    case btn_productdelete
+    case btn_x
+    
+    case featuredImage
+    case gallery
+    case graphics
     
     case ic_back
     case ic_cart
@@ -25,6 +38,17 @@ public enum ZwImageName: String {
     case ic_orderlist
     case ic_settings
     case ic_warning
+    
+    case mock_deprecated1
+    case mock_deprecated2
+    case mock_deprecated3
+    case mock_hidi
+    case mock_seokwoo
+    
+    case next
+    case noise
+    case x_toast
+    case xmark_white
 }
 
 //MARK: - 사용할땐
@@ -36,19 +60,4 @@ extension UIImage {
     }
 }
 
-extension UIImage{
-    
-    class func zoocEmoji(_ id: Int) -> UIImage{
-        switch id{
-        case 0: return Image.emojiDancing
-        case 1: return Image.emojiHeart
-        case 2: return Image.emojiSmile
-        case 3: return Image.emojiSad
-        case 4: return Image.emojiThumb
-        case 5: return Image.emojiSurprise
-        case 6: return Image.emojiHug
-        case 7: return Image.emojiDog
-        default: return UIImage()
-        }
-    }
-}
+

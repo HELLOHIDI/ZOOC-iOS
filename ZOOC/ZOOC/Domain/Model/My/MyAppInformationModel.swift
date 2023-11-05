@@ -1,8 +1,8 @@
 //
-//  AppTableViewModel.swift
+//  MyAppInformationModel.swift
 //  ZOOC
 //
-//  Created by 류희재 on 2023/01/03.
+//  Created by 장석우 on 11/6/23.
 //
 
 import Foundation
@@ -18,5 +18,3 @@ extension MyAppInformationModel {
         MyAppInformationModel(title: "마케팅 정보 수신 동의")
     ]
 }
-
-

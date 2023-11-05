@@ -54,9 +54,9 @@ public enum Image{
     static let shop = UIImage(named: "shop")!
     static let smile = UIImage(named: "smile")!
     static let upload = UIImage(named: "upload")!
-    static let xToast = UIImage(named: "x.toast")!
+    static let xToast = UIImage(named: "x_toast")!
     static let xmark = UIImage(named: "xmark")!
-    static let xmarkWhite = UIImage(named: "xmark.white")!
+    static let xmarkWhite = UIImage(named: "xmark_white")!
     static let aiLogo = UIImage(named: "ai")!
     static let next = UIImage(named: "next")!
     

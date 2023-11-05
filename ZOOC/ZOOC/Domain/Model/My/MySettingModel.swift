@@ -1,8 +1,8 @@
 //
-//  SettingMenuModel.swift
+//  MySettingModel.swift
 //  ZOOC
 //
-//  Created by 류희재 on 2023/01/02.
+//  Created by 장석우 on 11/6/23.
 //
 
 import Foundation
@@ -20,5 +20,4 @@ extension MySettingModel {
         MySettingModel(title: "앱 정보", isLogout: false),
         MySettingModel(title: "로그아웃", isLogout: true)
     ]
-} 
-
+}

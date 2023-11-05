@@ -74,6 +74,9 @@
 		874E63A72AF7F4240029733B /* FirebaseRemoteConfigService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874E63A62AF7F4240029733B /* FirebaseRemoteConfigService.swift */; };
 		874E63AC2AF7F8710029733B /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874E63AB2AF7F8710029733B /* UIFont+.swift */; };
 		874E63AE2AF7F88E0029733B /* ColorSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874E63AD2AF7F88E0029733B /* ColorSystem.swift */; };
+		874E63B02AF801440029733B /* MySettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874E63AF2AF801440029733B /* MySettingModel.swift */; };
+		874E63B22AF801510029733B /* MyAppInformationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874E63B12AF801510029733B /* MyAppInformationModel.swift */; };
+		874E63B42AF802950029733B /* SimpleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874E63B32AF802950029733B /* SimpleResponse.swift */; };
 		876483192952366A00F74882 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876483182952366A00F74882 /* Image.swift */; };
 		8764831B2952367400F74882 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764831A2952367400F74882 /* UIViewController+.swift */; };
 		8764831D2952368100F74882 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764831C2952368100F74882 /* UIView+.swift */; };
@@ -245,10 +248,8 @@
 		D23502F52961A69E00F01101 /* MyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502F42961A69E00F01101 /* MyView.swift */; };
 		D23502F92961F34100F01101 /* MySettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502F82961F34100F01101 /* MySettingView.swift */; };
 		D23502FB2961F44700F01101 /* MySettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502FA2961F44700F01101 /* MySettingTableViewCell.swift */; };
-		D23502FD2961F85100F01101 /* MySettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502FC2961F85100F01101 /* MySettingModel.swift */; };
 		D23503012964702400F01101 /* MyAppInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23503002964702400F01101 /* MyAppInformationView.swift */; };
 		D23503032964728700F01101 /* MyAppInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23503022964728700F01101 /* MyAppInformationTableViewCell.swift */; };
-		D23503052964743100F01101 /* MyAppInformationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23503042964743100F01101 /* MyAppInformationModel.swift */; };
 		D235030729647B4200F01101 /* MyAppInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D235030629647B4200F01101 /* MyAppInformationViewController.swift */; };
 		D2350309296490A700F01101 /* MyEditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2350308296490A700F01101 /* MyEditProfileView.swift */; };
 		D235030B2964991700F01101 /* MyEditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D235030A2964991700F01101 /* MyEditProfileViewController.swift */; };
@@ -458,6 +459,9 @@
 		874E63A62AF7F4240029733B /* FirebaseRemoteConfigService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRemoteConfigService.swift; sourceTree = "<group>"; };
 		874E63AB2AF7F8710029733B /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		874E63AD2AF7F88E0029733B /* ColorSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSystem.swift; sourceTree = "<group>"; };
+		874E63AF2AF801440029733B /* MySettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySettingModel.swift; sourceTree = "<group>"; };
+		874E63B12AF801510029733B /* MyAppInformationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppInformationModel.swift; sourceTree = "<group>"; };
+		874E63B32AF802950029733B /* SimpleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleResponse.swift; sourceTree = "<group>"; };
 		876483182952366A00F74882 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		8764831A2952367400F74882 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		8764831C2952368100F74882 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
@@ -625,10 +629,8 @@
 		D23502F42961A69E00F01101 /* MyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyView.swift; sourceTree = "<group>"; };
 		D23502F82961F34100F01101 /* MySettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySettingView.swift; sourceTree = "<group>"; };
 		D23502FA2961F44700F01101 /* MySettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySettingTableViewCell.swift; sourceTree = "<group>"; };
-		D23502FC2961F85100F01101 /* MySettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MySettingModel.swift; path = ZOOC/Data/My/MySettingModel.swift; sourceTree = SOURCE_ROOT; };
 		D23503002964702400F01101 /* MyAppInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppInformationView.swift; sourceTree = "<group>"; };
 		D23503022964728700F01101 /* MyAppInformationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppInformationTableViewCell.swift; sourceTree = "<group>"; };
-		D23503042964743100F01101 /* MyAppInformationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyAppInformationModel.swift; path = ZOOC/Data/My/MyAppInformationModel.swift; sourceTree = SOURCE_ROOT; };
 		D235030629647B4200F01101 /* MyAppInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppInformationViewController.swift; sourceTree = "<group>"; };
 		D2350308296490A700F01101 /* MyEditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditProfileView.swift; sourceTree = "<group>"; };
 		D235030A2964991700F01101 /* MyEditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEditProfileViewController.swift; sourceTree = "<group>"; };
@@ -856,6 +858,7 @@
 			children = (
 				87A76ABE2960423C0096F669 /* GenericResponse.swift */,
 				874AE9F729B49D5A007A637D /* VoidResult.swift */,
+				874E63B32AF802950029733B /* SimpleResponse.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1472,10 +1475,10 @@
 		87A76A98295F6E050096F669 /* My */ = {
 			isa = PBXGroup;
 			children = (
-				D23502FC2961F85100F01101 /* MySettingModel.swift */,
-				D23503042964743100F01101 /* MyAppInformationModel.swift */,
 				D26C68EB296DE7B60088DC9A /* MyPetRegisterModel.swift */,
 				D21DADC0298BFF2700CCC089 /* MyPetRegisterViewModel.swift */,
+				874E63AF2AF801440029733B /* MySettingModel.swift */,
+				874E63B12AF801510029733B /* MyAppInformationModel.swift */,
 			);
 			path = My;
 			sourceTree = "<group>";
@@ -2487,6 +2490,7 @@
 				D26C85DF2968C26500AEAF9B /* OnboardingLoginView.swift in Sources */,
 				874E639B2AF7ED020029733B /* Direction+.swift in Sources */,
 				D2DC80D72A0E158000F48209 /* RecordView.swift in Sources */,
+				874E63B42AF802950029733B /* SimpleResponse.swift in Sources */,
 				4C6B186C296CB8730059840D /* RecordCompleteViewController.swift in Sources */,
 				D22EF9002A7C9B720050E325 /* MyViewModel.swift in Sources */,
 				87F288032A9FA68A00A53218 /* OrderAssistantDepositView.swift in Sources */,
@@ -2509,7 +2513,6 @@
 				D27BDDC72A8C6FA2008E290D /* GenAICompletedViewController.swift in Sources */,
 				871EA351297042D800D0E8CC /* RecordResult.swift in Sources */,
 				D25323162A07330C00562D92 /* MyAppInformationHeaderView.swift in Sources */,
-				D23503052964743100F01101 /* MyAppInformationModel.swift in Sources */,
 				D24AFABF2A8E11DA00823E9C /* GenAIChoosePetRepository.swift in Sources */,
 				D2F3D6042A453E1000C90A5A /* EditPetProfileResult.swift in Sources */,
 				D26C85E12968C63F00AEAF9B /* OnboardingLoginViewController.swift in Sources */,
@@ -2635,7 +2638,6 @@
 				87A76AA7295F6ECD0096F669 /* MyService.swift in Sources */,
 				8764831F2952368800F74882 /* UITableViewCell+.swift in Sources */,
 				876483272952370F00F74882 /* UIStackView+.swift in Sources */,
-				D23502FD2961F85100F01101 /* MySettingModel.swift in Sources */,
 				87188C622AC719D300C31AC9 /* ShopViewModel.swift in Sources */,
 				877184382A052BF500AB7DE4 /* ZoocInterceptor.swift in Sources */,
 				D2F3D6022A441AC900C90A5A /* EditPetProfileRequest.swift in Sources */,
@@ -2643,6 +2645,7 @@
 				D299441A2AAADE7C00C4F280 /* OrderProductCollectionViewCell.swift in Sources */,
 				D24AFAC22A8E2BD100823E9C /* GenAIChoosePetCollectionViewCell.swift in Sources */,
 				D209F9302AB0594B0017D623 /* PetResult.swift in Sources */,
+				874E63B02AF801440029733B /* MySettingModel.swift in Sources */,
 				871EA35329704CD200D0E8CC /* ImageSystem.swift in Sources */,
 				D20C008A2A96DDB000666963 /* GenAIModelRepository.swift in Sources */,
 				D2C028F42A8246C1003F4727 /* MyEditPetProfileViewModel.swift in Sources */,
@@ -2691,6 +2694,7 @@
 				87F287F72A9F3F1500A53218 /* ProductDetailResult.swift in Sources */,
 				870A4C082AA2708700D7CFD8 /* SelfSizingCollectionView.swift in Sources */,
 				D24AFAB42A8DFBB300823E9C /* GenAIChoosePetView.swift in Sources */,
+				874E63B22AF801510029733B /* MyAppInformationModel.swift in Sources */,
 				D23502EC296197C700F01101 /* MyPetView.swift in Sources */,
 				87F287F42A9F372400A53218 /* OrderRequest.swift in Sources */,
 				878133992AD131DF0004235E /* OrderViewModel.swift in Sources */,

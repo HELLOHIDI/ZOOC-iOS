@@ -56,7 +56,7 @@ final class OrderView: UIView {
         
         titleLabel.do {
             $0.text = "주문하기"
-            $0.font = .zoocHeadLine
+            $0.font = .zw_head1
             $0.textColor = .zoocDarkGray2
             $0.textAlignment = .left
         }

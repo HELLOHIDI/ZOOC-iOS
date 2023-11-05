@@ -64,14 +64,14 @@ final class ShopCartView: UIView {
     let productsPriceLabel: UILabel = {
         let label = UILabel()
         label.text = "상품 가격"
-        label.font = .zoocFont(font: .medium, size: 16)
+        label.font = .pretendardFont(font: .medium, size: 16)
         label.textColor = .zoocGray2
         return label
     }()
     
     let productsPriceValueLabel: UILabel = {
         let label = UILabel()
-        label.font = .zoocFont(font: .medium, size: 16)
+        label.font = .pretendardFont(font: .medium, size: 16)
         label.textColor = .zoocGray2
         label.textAlignment = .right
         return label
@@ -80,14 +80,14 @@ final class ShopCartView: UIView {
     let deliveryFeeLabel: UILabel = {
         let label = UILabel()
         label.text = "배송비"
-        label.font = .zoocFont(font: .medium, size: 16)
+        label.font = .pretendardFont(font: .medium, size: 16)
         label.textColor = .zoocGray2
         return label
     }()
     
     let deliveryFeeValueLabel: UILabel = {
         let label = UILabel()
-        label.font = .zoocFont(font: .medium, size: 16)
+        label.font = .pretendardFont(font: .medium, size: 16)
         label.textColor = .zoocGray2
         label.textAlignment = .right
         return label
@@ -96,14 +96,14 @@ final class ShopCartView: UIView {
     let totalPriceLabel: UILabel = {
         let label = UILabel()
         label.text = "총 결제 금액"
-        label.font = .zoocFont(font: .semiBold, size: 16)
+        label.font = .pretendardFont(font: .semiBold, size: 16)
         label.textColor = .zoocGray3
         return label
     }()
     
     let totalPriceValueLabel: UILabel = {
         let label = UILabel()
-        label.font = .zoocFont(font: .semiBold, size: 16)
+        label.font = .pretendardFont(font: .semiBold, size: 16)
         label.textColor = .zoocMainGreen
         return label
     }()

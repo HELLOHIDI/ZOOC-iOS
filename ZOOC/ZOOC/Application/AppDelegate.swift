@@ -27,6 +27,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setFirebaseMessaging()
         setFirebaseAnalytics()
         setSentry()
+        
+        func getFontName() {
+            for family in UIFont.familyNames {
+                
+                let sName: String = family as String
+                print("family: \(sName)")
+                
+                for name in UIFont.fontNames(forFamilyName: sName) {
+                    print("name: \(name as String)")
+                }
+            }
+        }
+        
+        print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
+        getFontName()
+        
         return true
     }
     

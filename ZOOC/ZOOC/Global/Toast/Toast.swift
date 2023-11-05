@@ -75,7 +75,7 @@ final class Toast: UIView {
         
         toastLabel.textColor = .white
         toastLabel.textAlignment = .center
-        toastLabel.font = .zoocFont(font: .semiBold, size: 14)
+        toastLabel.font = .pretendardFont(font: .semiBold, size: 14)
         toastLabel.text = message
         toastLabel.clipsToBounds = true
         toastLabel.numberOfLines = 0

@@ -46,7 +46,7 @@ final class OrderAssistantDepositView: UIView {
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "선택하시면 해당 앱 서비스로 이동할 수 있어요"
-        label.font = .zoocFont(font: .regular, size: 14)
+        label.font = .pretendardFont(font: .regular, size: 14)
         label.textColor = .zoocGray2
         label.textAlignment = .center
         return label
@@ -57,7 +57,7 @@ final class OrderAssistantDepositView: UIView {
         button.setTitle("다른 앱에서 결제할래요", for: .normal)
         button.titleLabel?.asUnderLine(button.titleLabel?.text)
         button.setTitleColor(.zoocGray2, for: .normal)
-        button.titleLabel?.font = .zoocFont(font: .regular, size: 14)
+        button.titleLabel?.font = .pretendardFont(font: .regular, size: 14)
         button.addTarget(self,
                          action: #selector(chooseOtherBankButtonDidTap),
                          for: .touchUpInside)

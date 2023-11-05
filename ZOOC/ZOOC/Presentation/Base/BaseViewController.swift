@@ -133,12 +133,7 @@ class BaseViewController : UIViewController{
     
     //MARK: - Action Method
     
-    @objc func handleSwipeGesture(_ gestureRecognizer: UISwipeGestureRecognizer) {
-        print(#function)
-        if gestureRecognizer.state == .recognized {
-            navigationController?.popViewController(animated: true)
-        }
-    }
+ 
     
     @objc func handleDismiss(_ sender: UIPanGestureRecognizer) {
             

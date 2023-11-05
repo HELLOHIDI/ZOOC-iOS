@@ -99,13 +99,13 @@ final class ShopProductView: UIView {
         }
         
         nameLabel.do {
-            $0.font = .pretendardFont(font: .medium, size: 20)
+            $0.font = .pretendard(font: .medium, size: 20)
             $0.textColor = .zoocDarkGray2
             $0.numberOfLines = 2
         }
         
         priceLabel.do {
-            $0.font = .pretendardFont(font: .semiBold, size: 20)
+            $0.font = .pretendard(font: .semiBold, size: 20)
             $0.textColor = .zoocDarkGray2
         }
         

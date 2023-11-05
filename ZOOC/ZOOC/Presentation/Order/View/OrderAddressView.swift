@@ -66,7 +66,7 @@ final class OrderAddressView: UIView {
         button.setTitleColor(.zoocGray1, for: .normal)
         button.setTitleColor(.zoocMainGreen, for: .selected)
         button.setTitle("기존 배송지", for: .normal)
-        button.titleLabel?.font = .pretendardFont(font: .semiBold, size: 16)
+        button.titleLabel?.font = .pretendard(font: .semiBold, size: 16)
         button.addTarget(self,
                          action: #selector(basicAddressButtonDidTap),
                          for: .touchUpInside)
@@ -78,7 +78,7 @@ final class OrderAddressView: UIView {
         button.setTitle("신규 입력", for: .normal)
         button.setTitleColor(.zoocGray1, for: .normal)
         button.setTitleColor(.zoocMainGreen, for: .selected)
-        button.titleLabel?.font = .pretendardFont(font: .semiBold, size: 16)
+        button.titleLabel?.font = .pretendard(font: .semiBold, size: 16)
         button.addTarget(self,
                          action: #selector(newAddressButtonDidTap),
                          for: .touchUpInside)

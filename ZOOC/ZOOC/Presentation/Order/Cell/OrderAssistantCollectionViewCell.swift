@@ -40,7 +40,7 @@ final class OrderAssistantCollectionViewCell: UICollectionViewCell {
     
     private let stepLabel: UILabel = {
         let label = UILabel()
-        label.font = .pretendardFont(font: .medium, size: 16)
+        label.font = .pretendard(font: .medium, size: 16)
         label.textColor = .zoocGray3
         return label
     }()

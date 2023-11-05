@@ -68,15 +68,15 @@ extension UIFont {
     }
     
     static var price_big: UIFont {
-        return UIFont(name: Pretendard.semiBold.rawValue, size: 28)!
+        return UIFont(name: Gmarket.bold.rawValue, size: 22)!
     }
     
     static var price_middle: UIFont {
-        return UIFont(name: Pretendard.semiBold.rawValue, size: 28)!
+        return UIFont(name: Gmarket.medium.rawValue, size: 15)!
     }
     
     static var price_small: UIFont {
-        return UIFont(name: Pretendard.semiBold.rawValue, size: 28)!
+        return UIFont(name: Gmarket.medium.rawValue, size: 12)!
     }
 
     

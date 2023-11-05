@@ -1067,6 +1067,7 @@
 		874E63A12AF7F0C40029733B /* Realm */ = {
 			isa = PBXGroup;
 			children = (
+				D2D440192AA5D02800329F35 /* OrderBasicAddress.swift */,
 				87E4A1CB2AAAFCA5005C012E /* CartedProduct.swift */,
 			);
 			path = Realm;
@@ -1360,7 +1361,6 @@
 				87F287FE2A9F83DC00A53218 /* WithoutBankbookStep.swift */,
 				87F288062A9FA86600A53218 /* BankAccount.swift */,
 				87F288082A9FC41F00A53218 /* Bank.swift */,
-				D2D440192AA5D02800329F35 /* OrderBasicAddress.swift */,
 			);
 			path = Order;
 			sourceTree = "<group>";

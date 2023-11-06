@@ -124,7 +124,7 @@ final class RecordCompleteViewController : BaseViewController {
 //            return
 //        }
         
-        tabVC.homeViewController.recordID = nil
+        //tabVC.homeViewController.recordID = nil
 //        tabVC.homeViewController.selectPetCollectionView(petID: petID)
         self.navigationController?.previousViewController?.navigationController?.previousViewController?.dismiss(animated: true)
     }

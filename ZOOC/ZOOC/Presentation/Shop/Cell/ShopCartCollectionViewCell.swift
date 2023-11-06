@@ -36,7 +36,7 @@ final class ShopCartCollectionViewCell: UICollectionViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .zoocFont(font: .semiBold, size: 16)
+        label.font = .pretendard(font: .semiBold, size: 16)
         label.textColor = .zoocGray3
         return label
     }()
@@ -44,14 +44,14 @@ final class ShopCartCollectionViewCell: UICollectionViewCell {
     private let priceLabel: UILabel = {
         let label = UILabel()
         label.text = 0.priceText
-        label.font = .zoocFont(font: .semiBold, size: 20)
+        label.font = .pretendard(font: .semiBold, size: 20)
         label.textColor = .zoocDarkGray2
         return label
     }()
     
     private let optionLabel: UILabel = {
         let label = UILabel()
-        label.font = .zoocFont(font: .medium, size: 14)
+        label.font = .pretendard(font: .medium, size: 14)
         label.textColor = .zoocGray2
         return label
     }()
@@ -76,7 +76,7 @@ final class ShopCartCollectionViewCell: UICollectionViewCell {
     
     private let amountLabel: UILabel = {
         let label = UILabel()
-        label.font = .zoocFont(font: .medium, size: 20)
+        label.font = .pretendard(font: .medium, size: 20)
         label.textColor = .zoocDarkGray2
         label.textAlignment = .center
         return label

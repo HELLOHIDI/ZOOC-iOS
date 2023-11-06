@@ -25,7 +25,7 @@ final class ShopView: UIView {
     
     let backButton: UIButton = {
         let button = UIButton()
-        button.setImage(Image.back, for: .normal)
+        button.setImage(.zwImage(.ic_back), for: .normal)
         //        button.isHidden = true //MARK: Shopping몰 <-> 마이페이지 위치 바뀌며 삭제된 버튼 (23.10.05)
         return button
     }()

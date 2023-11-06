@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setFirebaseMessaging()
         setFirebaseAnalytics()
         setSentry()
+        
         return true
     }
     

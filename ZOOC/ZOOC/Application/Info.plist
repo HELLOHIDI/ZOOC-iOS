@@ -53,6 +53,9 @@
 		<string>Pretendard-Medium.otf</string>
 		<string>Pretendard-Regular.otf</string>
 		<string>Pretendard-Bold.otf</string>
+		<string>GmarketSansBold.otf</string>
+		<string>GmarketSansMedium.otf</string>
+		<string>GmarketSansLight.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

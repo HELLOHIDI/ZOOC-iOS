@@ -25,14 +25,14 @@ final class ShopProductCollectionViewCell: UICollectionViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .zoocFont(font: .semiBold, size: 14)
+        label.font = .pretendard(font: .semiBold, size: 14)
         label.textColor = .zoocGray3
         return label
     }()
     
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.font = .zoocFont(font: .medium, size: 14)
+        label.font = .pretendard(font: .medium, size: 14)
         label.textColor = .zoocGray3
         return label
     }()

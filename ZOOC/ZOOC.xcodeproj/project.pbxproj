@@ -77,6 +77,7 @@
 		874E63B02AF801440029733B /* MySettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874E63AF2AF801440029733B /* MySettingModel.swift */; };
 		874E63B22AF801510029733B /* MyAppInformationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874E63B12AF801510029733B /* MyAppInformationModel.swift */; };
 		874E63B42AF802950029733B /* SimpleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874E63B32AF802950029733B /* SimpleResponse.swift */; };
+		874E63BE2AF8C9BE0029733B /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874E63BD2AF8C9BE0029733B /* ExploreViewController.swift */; };
 		876483192952366A00F74882 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876483182952366A00F74882 /* Image.swift */; };
 		8764831B2952367400F74882 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764831A2952367400F74882 /* UIViewController+.swift */; };
 		8764831D2952368100F74882 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764831C2952368100F74882 /* UIView+.swift */; };
@@ -457,6 +458,7 @@
 		874E63AF2AF801440029733B /* MySettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySettingModel.swift; sourceTree = "<group>"; };
 		874E63B12AF801510029733B /* MyAppInformationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppInformationModel.swift; sourceTree = "<group>"; };
 		874E63B32AF802950029733B /* SimpleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleResponse.swift; sourceTree = "<group>"; };
+		874E63BD2AF8C9BE0029733B /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		876483182952366A00F74882 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		8764831A2952367400F74882 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		8764831C2952368100F74882 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
@@ -897,7 +899,6 @@
 			children = (
 				870A4C002AA26F5700D7CFD8 /* FloatingPanel */,
 				D2F98F9C2967154D00CC82DE /* ZoocAlertViewController.swift */,
-				8765549E295846F3006BBDA9 /* ZoocTabBarController.swift */,
 				871DC6C32A1DC691006BA780 /* ZoocImageController.swift */,
 				87E462ED2A110867006FC35D /* ZoocGradinetButton.swift */,
 				87809C322A8CFDA20060641F /* VersionAlertViewController.swift */,
@@ -1115,6 +1116,22 @@
 				874E63AB2AF7F8710029733B /* UIFont+.swift */,
 			);
 			path = Deprecating;
+			sourceTree = "<group>";
+		};
+		874E63BC2AF8C9390029733B /* Explore */ = {
+			isa = PBXGroup;
+			children = (
+				874E63BD2AF8C9BE0029733B /* ExploreViewController.swift */,
+			);
+			path = Explore;
+			sourceTree = "<group>";
+		};
+		874E63C12AF8D3080029733B /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				8765549E295846F3006BBDA9 /* ZoocTabBarController.swift */,
+			);
+			path = TabBar;
 			sourceTree = "<group>";
 		};
 		87648315295234C100F74882 /* Extension */ = {
@@ -1616,6 +1633,8 @@
 				8765549D295846E7006BBDA9 /* Base */,
 				87809C312A8CFD790060641F /* Splash */,
 				877BAFBE295EA0D300C2AA1C /* Onboarding */,
+				874E63C12AF8D3080029733B /* TabBar */,
+				874E63BC2AF8C9390029733B /* Explore */,
 				876554A02958489F006BBDA9 /* Home */,
 				87E462F82A129B94006FC35D /* Archive */,
 				876554A1295848A9006BBDA9 /* My */,
@@ -2372,6 +2391,7 @@
 				8764832B295238EB00F74882 /* UITextField+.swift in Sources */,
 				878133922ACFFEDD0004235E /* ZoocWebViewController.swift in Sources */,
 				D2CA73172ACB228C00DC17A4 /* RecordSelectPetUseCase.swift in Sources */,
+				874E63BE2AF8C9BE0029733B /* ExploreViewController.swift in Sources */,
 				87BCAD2E2AA4E53E00A03DA3 /* ProductResult.swift in Sources */,
 				D26C68E3296DE4F80088DC9A /* MyRegisterPetView.swift in Sources */,
 				D2CA731E2ACB2B4300DC17A4 /* RecordSelectPetViewModel.swift in Sources */,
@@ -2854,7 +2874,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.5;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID)";
 				PRODUCT_NAME = "$(APP_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -2897,7 +2917,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.5;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID)";
 				PRODUCT_NAME = "$(APP_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

@@ -22,6 +22,7 @@ public enum ZwImageName: String {
     case featuredImage
     case gallery
     case graphics
+    case graphics_notyet
     
     case ic_back
     case ic_cart

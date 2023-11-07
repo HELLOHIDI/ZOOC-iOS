@@ -100,7 +100,7 @@ final class ArchiveViewController : BaseViewController {
         rootView.backButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
                 guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
-                tabVC.homeViewController.recordID = nil
+                //tabVC.homeViewController.recordID = nil
                 owner.dismiss(animated: true)
             })
             .disposed(by: disposeBag)
@@ -136,7 +136,7 @@ final class ArchiveViewController : BaseViewController {
             .asDriver(onErrorJustReturn: ())
             .drive(with: self, onNext: { owner, _ in
                 guard let tabVC = UIApplication.shared.rootViewController as? ZoocTabBarController else { return }
-                tabVC.homeViewController.recordID = nil
+                //tabVC.homeViewController.recordID = nil
                 owner.dismiss(animated: true)
             })
             .disposed(by: disposeBag)

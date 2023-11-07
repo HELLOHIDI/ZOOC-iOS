@@ -26,7 +26,7 @@ final class OnboardingAgreementViewController: BaseViewController {
     
     //MARK: - UI Components
     
-    private lazy var rootView = OnboardingAgreementView.init(onboardingState: .makeFamily)
+    private lazy var rootView = OnboardingAgreementView()
     
     //MARK: - Life Cycle
     

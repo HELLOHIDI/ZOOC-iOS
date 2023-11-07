@@ -17,7 +17,7 @@ final class OnboardingLoginView: UIView {
     
     private let loginTitleLabel = UILabel()
     private let loginDescribeLabel = UILabel()
-    private let graphicsImageView = UIImageView()
+    private let lineView = UIView()
     public lazy var kakaoLoginButton = UIButton()
     public lazy var appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn,
                style: .black)
@@ -40,88 +40,69 @@ final class OnboardingLoginView: UIView {
     //MARK: - Custom Method
     
     private func style() {
-        self.backgroundColor = .zoocBackgroundGreen
-        
+        self.backgroundColor = .zw_background
         loginTitleLabel.do {
-            $0.text = "초코와의 추억을 쭉 \n추억하는 우리만의 방법"
-            $0.textColor = .zoocDarkGray2
+            $0.text = "반려동물과의 일상을\n쭉\n간직하는 특별한 방법"
+            $0.textColor = .zw_black
             $0.textAlignment = .left
-            $0.font = .zoocDisplay1
-            $0.numberOfLines = 2
+            $0.font = .gmarket(font: .light, size: 30)
+            $0.numberOfLines = 3
+            $0.setLineSpacing(spacing: 10)
             $0.setAttributeLabel(
-                targetString: ["쭉", "우리만의"],
-                color: .zoocMainGreen,
-                font: .zoocDisplay1,
-                spacing: 2
+                targetString: ["일상", "쭉", "간직"],
+                color: .zw_black,
+                font: .gmarket(font: .medium, size: 30),
+                spacing: 10
             )
         }
-        
+        lineView.backgroundColor = .zw_darkgray
         loginDescribeLabel.do {
-            $0.text = "ZOOC에서 가족들과 함께\n잊지 못할 추억을 쭉 쌓아보세요"
-            $0.textColor = .zoocGray2
+            $0.text = "1초만에 가입하고 우리집 반려동물 굿즈 만들기"
+            $0.textColor = .zw_gray
             $0.textAlignment = .left
             $0.font = .zoocBody2
-            $0.numberOfLines = 2
-            $0.setLineSpacing(spacing: 2)
+            $0.setLineSpacing(spacing: 8)
         }
-        
-        graphicsImageView.do {
-            $0.image = UIImage(named: "graphics_0")
-            $0.contentMode = .scaleAspectFill
-        }
-        
-        appleLoginButton.do {
-            $0.makeCornerRound(radius: 27)
-        }
-        
         kakaoLoginButton.do {
             $0.setImage(Image.kakaoLogin, for: .normal)
-            $0.makeCornerRound(radius: 27)
             $0.backgroundColor = UIColor(r: 255, g: 231, b: 0)
         }
     }
     
     private func hierarchy() {
-        self.addSubviews(loginTitleLabel,
-                         loginDescribeLabel,
-                         graphicsImageView,
-                         appleLoginButton,
-                         kakaoLoginButton)
+        self.addSubviews(
+            loginTitleLabel,
+            lineView,
+            loginDescribeLabel,
+            appleLoginButton,
+            kakaoLoginButton
+        )
     }
     
     private func layout() {
         loginTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(78)
-            $0.leading.equalToSuperview().offset(30)
-            $0.width.equalTo(281)
-            $0.height.equalTo(82)
+            $0.top.equalTo(safeAreaLayoutGuide).offset(97)
+            $0.leading.equalToSuperview().offset(28)
         }
-        
+        lineView.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide).offset(157)
+            $0.leading.equalToSuperview().offset(70)
+            $0.trailing.equalToSuperview().inset(77)
+            $0.height.equalTo(1)
+        }
         loginDescribeLabel.snp.makeConstraints {
-            $0.top.equalTo(self.loginTitleLabel.snp.bottom).offset(18)
-            $0.leading.equalTo(self.loginTitleLabel)
-            $0.width.equalTo(185)
-            $0.height.equalTo(48)
+            $0.top.equalTo(loginTitleLabel.snp.bottom).offset(24)
+            $0.leading.equalTo(loginTitleLabel)
         }
-        
-        graphicsImageView.snp.makeConstraints {
-            $0.top.equalTo(loginDescribeLabel.snp.bottom).offset(40)
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(kakaoLoginButton.snp.top).offset(-60)
-        }
-        
         appleLoginButton.snp.makeConstraints {
-            $0.top.equalTo(graphicsImageView.snp.bottom)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(315)
-            $0.height.equalTo(54)
+            $0.bottom.equalTo(kakaoLoginButton.snp.top)
+            $0.width.equalToSuperview()
+            $0.height.equalTo(77)
         }
-        
         kakaoLoginButton.snp.makeConstraints {
-            $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(30)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(315)
-            $0.height.equalTo(54)
+            $0.bottom.equalToSuperview()
+            $0.width.equalToSuperview()
+            $0.height.equalTo(77)
         }
     }
 }

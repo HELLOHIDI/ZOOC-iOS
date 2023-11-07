@@ -24,7 +24,6 @@ final class SplashViewController: UIViewController {
     
     //MARK: - UI Components
     
-    private let noiseImageView = UIImageView(image: Image.noise)
     private let imageView = UIImageView(image: Image.logoSymbol)
     
     //MARK: - Life Cycle
@@ -59,23 +58,15 @@ final class SplashViewController: UIViewController {
     //MARK: - UI & Layout
     
     func style() {
-        view.backgroundColor = .zoocMainGreen
-        
-        noiseImageView.alpha = 0.4
-        noiseImageView.contentMode = .scaleAspectFill
-        
+        view.backgroundColor = .zw_white
         imageView.contentMode = .scaleAspectFit
     }
     
     private func hierarchy() {
-        view.addSubviews(noiseImageView, imageView)
+        view.addSubview(imageView)
     }
     
     private func layout() {
-        noiseImageView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
         imageView.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.width.equalTo(100)

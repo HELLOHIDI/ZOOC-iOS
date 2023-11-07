@@ -10,18 +10,19 @@ import UIKit
 import SnapKit
 import Then
 
-final class OnboardingAgreementView: OnboardingBaseView {
+final class OnboardingAgreementView: UIView {
 
     //MARK: - UI Components
     
+    let backButton = UIButton()
     private let agreeTitleLabel = UILabel()
     public lazy var agreementCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     public lazy var signUpButton = ZoocGradientButton()
     
     //MARK: - Life Cycles
     
-    override init(onboardingState: OnboardingState) {
-        super.init(onboardingState: onboardingState)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         register()
         

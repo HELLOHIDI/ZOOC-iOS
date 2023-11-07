@@ -10,19 +10,19 @@ import UIKit
 import SnapKit
 import Then
 
-final class OnboardingWelcomeView: OnboardingBaseView {
+final class OnboardingWelcomeView: UIView {
 
     //MARK: - UI Components
     
     public let welcomeLabel = UILabel()
     public let welcomeSubLabel = UILabel()
     public let welcomeImage = UIImageView()
-    public lazy var nextButton = ZoocGradientButton()
+    public lazy var nextButton = UIButton()
     
     //MARK: - Life Cycles
     
-    override init(onboardingState: OnboardingState) {
-        super.init(onboardingState: onboardingState)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         style()
         hierarchy()
@@ -39,7 +39,7 @@ final class OnboardingWelcomeView: OnboardingBaseView {
         self.backgroundColor = .zoocBackgroundGreen
         
         welcomeLabel.do {
-            $0.text = "안녕하세요! \nZOOC에 온 걸 환영해요"
+            $0.text = "쭉에 오신 것을/n진심으로 환영해요!"
             $0.textColor = .zoocDarkGray2
             $0.textAlignment = .left
             $0.font = .zoocDisplay1
@@ -48,7 +48,7 @@ final class OnboardingWelcomeView: OnboardingBaseView {
         }
         
         welcomeSubLabel.do {
-            $0.text = "소중한 가족들과 함께 쭉\n잊지 못할 추억을 쌓아보세요"
+            $0.text = "사랑하는 반려동물과의 일상이/n특별하게 간직되도록 함께 할게요"
             $0.textColor = .zoocDarkGray2
             $0.textAlignment = .left
             $0.font = .zoocDisplay1

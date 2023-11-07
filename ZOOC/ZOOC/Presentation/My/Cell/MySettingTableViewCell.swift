@@ -43,6 +43,7 @@ final class MySettingTableViewCell: UITableViewCell {
             $0.textColor = .zw_black
             $0.font = .zw_Body1
         }
+        
         separatorLine.do {
             $0.backgroundColor = .zw_brightgray
         }

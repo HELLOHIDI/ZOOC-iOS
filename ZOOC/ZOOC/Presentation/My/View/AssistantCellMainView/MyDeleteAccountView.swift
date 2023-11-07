@@ -34,11 +34,7 @@ final class MyDeleteAccountView: UIView {
     //MARK: - Custom Method
     
     private func style() {
-        deleteAccountButton.do {
-            $0.setTitle("회원탈퇴", for: .normal)
-            $0.titleLabel?.font = .zoocCaption
-            $0.setTitleColor(.zoocDarkGreen, for: .normal)
-        }
+
         
         deleteAccountButtonUnderLineView.do {
             $0.backgroundColor = .zoocDarkGreen

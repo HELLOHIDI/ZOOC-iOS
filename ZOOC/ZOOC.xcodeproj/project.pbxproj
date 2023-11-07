@@ -237,7 +237,6 @@
 		D216380E2ACDE22F0096D474 /* DefaultOnboardingAgreementUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D216380D2ACDE22F0096D474 /* DefaultOnboardingAgreementUseCase.swift */; };
 		D21638102ACF0E230096D474 /* OnboardingCheckReceivedCodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D216380F2ACF0E230096D474 /* OnboardingCheckReceivedCodeUseCase.swift */; };
 		D21638122ACF0E4C0096D474 /* DefaultOnboardingCheckReceivedCodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21638112ACF0E4C0096D474 /* DefaultOnboardingCheckReceivedCodeUseCase.swift */; };
-		D21638142ACF10480096D474 /* OnboardingCheckReceivedCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21638132ACF10470096D474 /* OnboardingCheckReceivedCodeViewModel.swift */; };
 		D21CEC5C29AB9B3D00854A36 /* BaseTextFieldState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC5B29AB9B3D00854A36 /* BaseTextFieldState.swift */; };
 		D21CEC6029ABC01200854A36 /* MyRegisterPetsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC5F29ABC01200854A36 /* MyRegisterPetsRequest.swift */; };
 		D21CEC6229ABC1F900854A36 /* MyRegisterPetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CEC6129ABC1F900854A36 /* MyRegisterPetResult.swift */; };
@@ -261,7 +260,7 @@
 		D239C0912AC4038F00D1AA37 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = D239C0902AC4038F00D1AA37 /* RxGesture */; };
 		D246274D2AFA02DE00C69C56 /* MyRegisterPetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246274C2AFA02DE00C69C56 /* MyRegisterPetViewController.swift */; };
 		D246274F2AFA0DD800C69C56 /* MyNoProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246274E2AFA0DD800C69C56 /* MyNoProfileView.swift */; };
-		D24841FC2ACFDE2E002CD429 /* OnboardingJoinFamilyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24841FB2ACFDE2E002CD429 /* OnboardingJoinFamilyViewModel.swift */; };
+		D24627512AFA9DD400C69C56 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24627502AFA9DD400C69C56 /* Pretendard-Light.otf */; };
 		D24841FE2ACFDE6F002CD429 /* OnboardingJoinFamilyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24841FD2ACFDE6F002CD429 /* OnboardingJoinFamilyUseCase.swift */; };
 		D24842002ACFE043002CD429 /* DefaultOnboardingJoinFamilyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24841FF2ACFE043002CD429 /* DefaultOnboardingJoinFamilyUseCase.swift */; };
 		D24AFAB22A8DFB9F00823E9C /* GenAIChoosePetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB12A8DFB9F00823E9C /* GenAIChoosePetViewController.swift */; };
@@ -303,23 +302,11 @@
 		D26C85EE2968D51F00AEAF9B /* UITableViewHeaderFooterView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85ED2968D51F00AEAF9B /* UITableViewHeaderFooterView+.swift */; };
 		D26C85F029693C8500AEAF9B /* OnboardingWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85EF29693C8500AEAF9B /* OnboardingWelcomeView.swift */; };
 		D26C85F229693CFA00AEAF9B /* OnboardingWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85F129693CFA00AEAF9B /* OnboardingWelcomeViewController.swift */; };
-		D26C8600296B27B100AEAF9B /* OnboardingCheckReceivedCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85FF296B27B100AEAF9B /* OnboardingCheckReceivedCodeView.swift */; };
-		D26C8602296B285700AEAF9B /* OnboardingCheckReceivedCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8601296B285700AEAF9B /* OnboardingCheckReceivedCodeViewController.swift */; };
-		D26C8608296B585600AEAF9B /* OnboardingJoinFamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8607296B585600AEAF9B /* OnboardingJoinFamilyView.swift */; };
-		D26C860A296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8609296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift */; };
-		D26C860C296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C860B296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift */; };
 		D26C860E296B6E8600AEAF9B /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C860D296B6E8600AEAF9B /* UILabel+.swift */; };
-		D26C8610296B761900AEAF9B /* OnboardingJoinFamilyCompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C860F296B761900AEAF9B /* OnboardingJoinFamilyCompletedViewController.swift */; };
 		D26C861A296C0FC800AEAF9B /* OnboardingPetRegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C8619296C0FC800AEAF9B /* OnboardingPetRegisterModel.swift */; };
 		D2779742299F76FD008A237D /* OnboardingAppleSocialLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2779741299F76FD008A237D /* OnboardingAppleSocialLoginRequest.swift */; };
 		D27BDDC72A8C6FA2008E290D /* GenAICompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27BDDC62A8C6FA2008E290D /* GenAICompletedViewController.swift */; };
 		D27BDDC92A8C6FAC008E290D /* GenAICompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27BDDC82A8C6FAC008E290D /* GenAICompletedView.swift */; };
-		D27D9560296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D955F296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift */; };
-		D27D9562296CA4640097CD03 /* OnboardingInviteFamilyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9561296CA4640097CD03 /* OnboardingInviteFamilyViewController.swift */; };
-		D27D9564296CA9720097CD03 /* OnboardingInviteCompletedFamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9563296CA9720097CD03 /* OnboardingInviteCompletedFamilyView.swift */; };
-		D27D9566296CA99B0097CD03 /* OnboardingInviteFamilyCompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9565296CA99B0097CD03 /* OnboardingInviteFamilyCompletedViewController.swift */; };
-		D27D9568296CB5930097CD03 /* OnboardingInviteFamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9567296CB5930097CD03 /* OnboardingInviteFamilyView.swift */; };
-		D27D956A296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9569296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift */; };
 		D27D956C296CBA2D0097CD03 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D956B296CBA2D0097CD03 /* UIButton+.swift */; };
 		D27D9EA82A8EFA1B00E02842 /* GenAISelectImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9EA72A8EFA1B00E02842 /* GenAISelectImageViewController.swift */; };
 		D27D9EAA2A8EFA2F00E02842 /* GenAISelectImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9EA92A8EFA2F00E02842 /* GenAISelectImageView.swift */; };
@@ -371,7 +358,6 @@
 		D2DC80D52A0DFDF600F48209 /* RecordSelectPetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC80D42A0DFDF600F48209 /* RecordSelectPetView.swift */; };
 		D2DC80D72A0E158000F48209 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC80D62A0E158000F48209 /* RecordView.swift */; };
 		D2DD45C7297D9612001722A1 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DD45C6297D9612001722A1 /* BaseButton.swift */; };
-		D2EA37EF29BEAB57007EF4B7 /* OnboardingBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA37EE29BEAB57007EF4B7 /* OnboardingBaseView.swift */; };
 		D2ED94882AB8476F0040B687 /* UIImagePicker+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED94872AB8476F0040B687 /* UIImagePicker+Rx.swift */; };
 		D2ED948A2AB962A90040B687 /* ShopChoosePetCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED94892AB962A90040B687 /* ShopChoosePetCollectionView.swift */; };
 		D2ED948C2AB9B99B0040B687 /* ZoocCheckAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ED948B2AB9B99B0040B687 /* ZoocCheckAlertView.swift */; };
@@ -614,7 +600,6 @@
 		D216380D2ACDE22F0096D474 /* DefaultOnboardingAgreementUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultOnboardingAgreementUseCase.swift; sourceTree = "<group>"; };
 		D216380F2ACF0E230096D474 /* OnboardingCheckReceivedCodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCheckReceivedCodeUseCase.swift; sourceTree = "<group>"; };
 		D21638112ACF0E4C0096D474 /* DefaultOnboardingCheckReceivedCodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultOnboardingCheckReceivedCodeUseCase.swift; sourceTree = "<group>"; };
-		D21638132ACF10470096D474 /* OnboardingCheckReceivedCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCheckReceivedCodeViewModel.swift; sourceTree = "<group>"; };
 		D21CEC5B29AB9B3D00854A36 /* BaseTextFieldState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextFieldState.swift; sourceTree = "<group>"; };
 		D21CEC5F29ABC01200854A36 /* MyRegisterPetsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetsRequest.swift; sourceTree = "<group>"; };
 		D21CEC6129ABC1F900854A36 /* MyRegisterPetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetResult.swift; sourceTree = "<group>"; };
@@ -637,7 +622,7 @@
 		D239C08C2AC1626B00D1AA37 /* DefaultMyEditProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMyEditProfileUseCase.swift; sourceTree = "<group>"; };
 		D246274C2AFA02DE00C69C56 /* MyRegisterPetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetViewController.swift; sourceTree = "<group>"; };
 		D246274E2AFA0DD800C69C56 /* MyNoProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoProfileView.swift; sourceTree = "<group>"; };
-		D24841FB2ACFDE2E002CD429 /* OnboardingJoinFamilyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingJoinFamilyViewModel.swift; path = ../../OnboardingJoinFamilyViewModel.swift; sourceTree = "<group>"; };
+		D24627502AFA9DD400C69C56 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		D24841FD2ACFDE6F002CD429 /* OnboardingJoinFamilyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingJoinFamilyUseCase.swift; path = ../../../OnboardingJoinFamilyUseCase.swift; sourceTree = "<group>"; };
 		D24841FF2ACFE043002CD429 /* DefaultOnboardingJoinFamilyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DefaultOnboardingJoinFamilyUseCase.swift; path = ../../DefaultOnboardingJoinFamilyUseCase.swift; sourceTree = "<group>"; };
 		D24AFAB12A8DFB9F00823E9C /* GenAIChoosePetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetViewController.swift; sourceTree = "<group>"; };
@@ -678,23 +663,11 @@
 		D26C85ED2968D51F00AEAF9B /* UITableViewHeaderFooterView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewHeaderFooterView+.swift"; sourceTree = "<group>"; };
 		D26C85EF29693C8500AEAF9B /* OnboardingWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeView.swift; sourceTree = "<group>"; };
 		D26C85F129693CFA00AEAF9B /* OnboardingWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeViewController.swift; sourceTree = "<group>"; };
-		D26C85FF296B27B100AEAF9B /* OnboardingCheckReceivedCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCheckReceivedCodeView.swift; sourceTree = "<group>"; };
-		D26C8601296B285700AEAF9B /* OnboardingCheckReceivedCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCheckReceivedCodeViewController.swift; sourceTree = "<group>"; };
-		D26C8607296B585600AEAF9B /* OnboardingJoinFamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyView.swift; sourceTree = "<group>"; };
-		D26C8609296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingJoinFamilyViewController.swift; path = ../View/OnboardingJoinFamilyViewController.swift; sourceTree = "<group>"; };
-		D26C860B296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyCompletedView.swift; sourceTree = "<group>"; };
 		D26C860D296B6E8600AEAF9B /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
-		D26C860F296B761900AEAF9B /* OnboardingJoinFamilyCompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingJoinFamilyCompletedViewController.swift; sourceTree = "<group>"; };
 		D26C8619296C0FC800AEAF9B /* OnboardingPetRegisterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPetRegisterModel.swift; sourceTree = "<group>"; };
 		D2779741299F76FD008A237D /* OnboardingAppleSocialLoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAppleSocialLoginRequest.swift; sourceTree = "<group>"; };
 		D27BDDC62A8C6FA2008E290D /* GenAICompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAICompletedViewController.swift; sourceTree = "<group>"; };
 		D27BDDC82A8C6FAC008E290D /* GenAICompletedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAICompletedView.swift; sourceTree = "<group>"; };
-		D27D955F296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingReInviteFamilyView.swift; sourceTree = "<group>"; };
-		D27D9561296CA4640097CD03 /* OnboardingInviteFamilyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInviteFamilyViewController.swift; sourceTree = "<group>"; };
-		D27D9563296CA9720097CD03 /* OnboardingInviteCompletedFamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInviteCompletedFamilyView.swift; sourceTree = "<group>"; };
-		D27D9565296CA99B0097CD03 /* OnboardingInviteFamilyCompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInviteFamilyCompletedViewController.swift; sourceTree = "<group>"; };
-		D27D9567296CB5930097CD03 /* OnboardingInviteFamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInviteFamilyView.swift; sourceTree = "<group>"; };
-		D27D9569296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingReInviteFamilyViewController.swift; sourceTree = "<group>"; };
 		D27D956B296CBA2D0097CD03 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		D27D9EA72A8EFA1B00E02842 /* GenAISelectImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAISelectImageViewController.swift; sourceTree = "<group>"; };
 		D27D9EA92A8EFA2F00E02842 /* GenAISelectImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAISelectImageView.swift; sourceTree = "<group>"; };
@@ -743,7 +716,6 @@
 		D2DC80D42A0DFDF600F48209 /* RecordSelectPetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSelectPetView.swift; sourceTree = "<group>"; };
 		D2DC80D62A0E158000F48209 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		D2DD45C6297D9612001722A1 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
-		D2EA37EE29BEAB57007EF4B7 /* OnboardingBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBaseView.swift; sourceTree = "<group>"; };
 		D2ED94872AB8476F0040B687 /* UIImagePicker+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePicker+Rx.swift"; sourceTree = "<group>"; };
 		D2ED94892AB962A90040B687 /* ShopChoosePetCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopChoosePetCollectionView.swift; sourceTree = "<group>"; };
 		D2ED948B2AB9B99B0040B687 /* ZoocCheckAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoocCheckAlertView.swift; sourceTree = "<group>"; };
@@ -1376,14 +1348,8 @@
 			isa = PBXGroup;
 			children = (
 				D26C85E02968C63F00AEAF9B /* OnboardingLoginViewController.swift */,
-				D26C8601296B285700AEAF9B /* OnboardingCheckReceivedCodeViewController.swift */,
-				D26C85F129693CFA00AEAF9B /* OnboardingWelcomeViewController.swift */,
-				D26C860F296B761900AEAF9B /* OnboardingJoinFamilyCompletedViewController.swift */,
 				D26C85E72968CD8E00AEAF9B /* OnboardingAgreementViewController.swift */,
-				D26C8609296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift */,
-				D27D9561296CA4640097CD03 /* OnboardingInviteFamilyViewController.swift */,
-				D27D9569296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift */,
-				D27D9565296CA99B0097CD03 /* OnboardingInviteFamilyCompletedViewController.swift */,
+				D26C85F129693CFA00AEAF9B /* OnboardingWelcomeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1391,16 +1357,9 @@
 		87A76A8C295F6D7E0096F669 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				D2EA37EE29BEAB57007EF4B7 /* OnboardingBaseView.swift */,
 				D26C85DE2968C26500AEAF9B /* OnboardingLoginView.swift */,
 				D26C85E22968C88800AEAF9B /* OnboardingAgreementView.swift */,
 				D26C85EF29693C8500AEAF9B /* OnboardingWelcomeView.swift */,
-				D26C85FF296B27B100AEAF9B /* OnboardingCheckReceivedCodeView.swift */,
-				D26C8607296B585600AEAF9B /* OnboardingJoinFamilyView.swift */,
-				D26C860B296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift */,
-				D27D9567296CB5930097CD03 /* OnboardingInviteFamilyView.swift */,
-				D27D955F296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift */,
-				D27D9563296CA9720097CD03 /* OnboardingInviteCompletedFamilyView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1685,6 +1644,7 @@
 		87B6625929521EFF00B6FFA9 /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				D24627502AFA9DD400C69C56 /* Pretendard-Light.otf */,
 				D299441D2AAB065A00C4F280 /* Pretendard-Bold.otf */,
 				877BAFC1295EEA6900C2AA1C /* Pretendard-SemiBold.otf */,
 				877BAFC3295EEA7700C2AA1C /* Pretendard-Medium.otf */,
@@ -1774,9 +1734,7 @@
 			isa = PBXGroup;
 			children = (
 				D26989A729A60EE7008A5ACC /* OnboardingAgreementViewModel.swift */,
-				D24841FB2ACFDE2E002CD429 /* OnboardingJoinFamilyViewModel.swift */,
 				D21638092ACDC6780096D474 /* OnboardingLoginViewModel.swift */,
-				D21638132ACF10470096D474 /* OnboardingCheckReceivedCodeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -2321,6 +2279,7 @@
 				874E638B2AF7D3AF0029733B /* GmarketSansMedium.otf in Resources */,
 				877BAFC4295EEA7700C2AA1C /* Pretendard-Medium.otf in Resources */,
 				871EA359297078C900D0E8CC /* loading.json in Resources */,
+				D24627512AFA9DD400C69C56 /* Pretendard-Light.otf in Resources */,
 				874E63892AF7D3AB0029733B /* GmarketSansBold.otf in Resources */,
 				87DC47F52A7B7D55007823CB /* Debug-GoogleService-Info.plist in Resources */,
 				D2D440212AA5F2C300329F35 /* Pretendard-Regular.otf in Resources */,
@@ -2379,7 +2338,6 @@
 				87A3D88E2A975D78002C36DB /* OrderPaymentMethodView.swift in Sources */,
 				D2F1936729713FCD00AD87D3 /* OnboardingJWTTokenResult.swift in Sources */,
 				870A4C062AA2704800D7CFD8 /* ProductBottomSheet.swift in Sources */,
-				D26C8600296B27B100AEAF9B /* OnboardingCheckReceivedCodeView.swift in Sources */,
 				87DF04EF2AC94B5400E10B2D /* ShopCartViewModel.swift in Sources */,
 				87F287D92A9A667500A53218 /* BasePaddingLabel.swift in Sources */,
 				D24AFABA2A8E011800823E9C /* GenAIRegisterPetViewController.swift in Sources */,
@@ -2400,13 +2358,11 @@
 				87DDDD92298E5BE500CBEC79 /* ArchiveCommentView.swift in Sources */,
 				D27D956C296CBA2D0097CD03 /* UIButton+.swift in Sources */,
 				87A3D88C2A975D5F002C36DB /* OrderProductView.swift in Sources */,
-				D26C8608296B585600AEAF9B /* OnboardingJoinFamilyView.swift in Sources */,
 				874E63992AF7EBE50029733B /* UIButton+KF.swift in Sources */,
 				87A76A92295F6DA50096F669 /* RecordViewController.swift in Sources */,
 				874A13E52AE287BE000ED2C1 /* EventProgress.swift in Sources */,
 				87648325295236BE00F74882 /* FontSystem.swift in Sources */,
 				87BCAD342AA4F0BC00A03DA3 /* ProductImageCollectionViewCell.swift in Sources */,
-				D27D9562296CA4640097CD03 /* OnboardingInviteFamilyViewController.swift in Sources */,
 				87BCAD382AA5C71800A03DA3 /* OptionResult.swift in Sources */,
 				87D5AF602960CD5900CA7F12 /* HomeMissionCollectionViewCell.swift in Sources */,
 				D2F193632970B95E00AD87D3 /* HomeNoticeResult.swift in Sources */,
@@ -2422,7 +2378,6 @@
 				D21638082ACDC59E0096D474 /* OnboardingRepository.swift in Sources */,
 				D206AB4D2AE42E3900127DE8 /* EventToastCase.swift in Sources */,
 				87DF04E62AC751C200E10B2D /* ShopViewWithSurpriseDropDown.swift in Sources */,
-				D26C860A296B5C7400AEAF9B /* OnboardingJoinFamilyViewController.swift in Sources */,
 				D2ED948C2AB9B99B0040B687 /* ZoocCheckAlertView.swift in Sources */,
 				D24AFAC42A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift in Sources */,
 				D239C0872AC148A100D1AA37 /* DefaultMyUseCase.swift in Sources */,
@@ -2432,7 +2387,6 @@
 				872F638929B89D9B002EC413 /* HomeGuideViewController.swift in Sources */,
 				8765549F295846F3006BBDA9 /* ZoocTabBarController.swift in Sources */,
 				87F287EF2A9F36CE00A53218 /* ShopService.swift in Sources */,
-				D26C8602296B285700AEAF9B /* OnboardingCheckReceivedCodeViewController.swift in Sources */,
 				D26C68E6296DE61F0088DC9A /* MyRegisterPetTableViewCell.swift in Sources */,
 				872367112A12AC4E00DCBBFF /* ArchiveModel.swift in Sources */,
 				D2C028F22A81F8B2003F4727 /* String+.swift in Sources */,
@@ -2473,7 +2427,6 @@
 				8764A6342ACF0D8F007D4B0A /* ShopPetCollectionViewCell.swift in Sources */,
 				D23502FB2961F44700F01101 /* MySettingTableViewCell.swift in Sources */,
 				871EA35B2970BE8400D0E8CC /* RecordPetResult.swift in Sources */,
-				D26C860C296B650900AEAF9B /* OnboardingJoinFamilyCompletedView.swift in Sources */,
 				876554A72958494B006BBDA9 /* MyViewController.swift in Sources */,
 				8764A6252ACD0624007D4B0A /* ArchiveView.swift in Sources */,
 				D2CA73192ACB229700DC17A4 /* DefaultRecordSelectPetUseCase.swift in Sources */,
@@ -2545,8 +2498,6 @@
 				87BCA64429BB524D00D8DB58 /* OnboardingMakeFamilyResult.swift in Sources */,
 				D20C008D2A96E23500666963 /* GenAIGuideViewModel.swift in Sources */,
 				8764A6292ACD5395007D4B0A /* ArchiveToastCase.swift in Sources */,
-				D27D9564296CA9720097CD03 /* OnboardingInviteCompletedFamilyView.swift in Sources */,
-				D24841FC2ACFDE2E002CD429 /* OnboardingJoinFamilyViewModel.swift in Sources */,
 				D2B735622A8BA1D700F93C45 /* GenAIGuideViewController.swift in Sources */,
 				877E57F22966D13E006D82FC /* ArchiveViewController.swift in Sources */,
 				D2CF76B22AC4980100BF1EFA /* DefaultMyEditPetProfileUseCase.swift in Sources */,
@@ -2612,9 +2563,7 @@
 				D29944342AAEE5C400C4F280 /* DefaultGenAIRegisterPetUseCase.swift in Sources */,
 				8781339B2AD1703B0004235E /* OrderToastCase.swift in Sources */,
 				87F287DD2A9C6F1200A53218 /* OrderProduct.swift in Sources */,
-				D27D9568296CB5930097CD03 /* OnboardingInviteFamilyView.swift in Sources */,
 				D216380A2ACDC6790096D474 /* OnboardingLoginViewModel.swift in Sources */,
-				D27D9566296CA99B0097CD03 /* OnboardingInviteFamilyCompletedViewController.swift in Sources */,
 				87809C2A2A8CB6EE0060641F /* SplashViewController.swift in Sources */,
 				8718A06A29ADE6E8001C7460 /* BaseTextField.swift in Sources */,
 				D2B7355A2A866D8E00F93C45 /* MyRepository.swift in Sources */,
@@ -2657,19 +2606,16 @@
 				876483192952366A00F74882 /* Image.swift in Sources */,
 				4C6B1868296B930B0059840D /* RecordRegisterCollectionViewCell.swift in Sources */,
 				D21638032ACDC41F0096D474 /* OnboardingLoginUseCase.swift in Sources */,
-				D21638142ACF10480096D474 /* OnboardingCheckReceivedCodeViewModel.swift in Sources */,
 				87FAF8BD2AB090D700DADCC4 /* AddressType.swift in Sources */,
 				87F288052A9FA69200A53218 /* OrderAssistantCompleteView.swift in Sources */,
 				87A3D88A2A975D4F002C36DB /* OrderAddressView.swift in Sources */,
 				87648323295236B700F74882 /* UIColor+.swift in Sources */,
 				D2F99B472ABC25B000C7C91F /* DefaultGenAISelectImageUseCase.swift in Sources */,
 				D2B5FFCD2ADCE43A00E3E4A1 /* ShopChoosePetViewModel.swift in Sources */,
-				D27D9560296C9F5D0097CD03 /* OnboardingReInviteFamilyView.swift in Sources */,
 				87DF04EC2AC82D5D00E10B2D /* ShopToastCase.swift in Sources */,
 				87E4A1CC2AAAFCA5005C012E /* CartedProduct.swift in Sources */,
 				D26C68EC296DE7B60088DC9A /* MyPetRegisterModel.swift in Sources */,
 				87E4A1C92AAAF8AC005C012E /* DefaultRealmService.swift in Sources */,
-				D2EA37EF29BEAB57007EF4B7 /* OnboardingBaseView.swift in Sources */,
 				8764A6232ACD05D1007D4B0A /* ArchiveViewModel.swift in Sources */,
 				D24AFABC2A8E03EF00823E9C /* GenAIRegisterPetViewModel.swift in Sources */,
 				D21CEC6229ABC1F900854A36 /* MyRegisterPetResult.swift in Sources */,
@@ -2686,7 +2632,6 @@
 				D2B5FFD12ADCF63200E3E4A1 /* ShopViewController.swift in Sources */,
 				870A4C0C2AA2823900D7CFD8 /* ProductSelectedOptionCollectionViewCell.swift in Sources */,
 				D23502E22961898C00F01101 /* MyProfileView.swift in Sources */,
-				D27D956A296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift in Sources */,
 				D23502F129619D4700F01101 /* MyPetCollectionViewCell.swift in Sources */,
 				874E63AC2AF7F8710029733B /* UIFont+.swift in Sources */,
 				871EA34A2970403300D0E8CC /* ArchiveResult.swift in Sources */,
@@ -2701,7 +2646,6 @@
 				8782C7EB296AC58B00C9324B /* HomeArchiveIndicatorView.swift in Sources */,
 				D25543A22996B22E0072BF0D /* OnboardingRegisterPetResult.swift in Sources */,
 				877E57EE2966AAE6006D82FC /* HomeArchiveListCollectionViewCell.swift in Sources */,
-				D26C8610296B761900AEAF9B /* OnboardingJoinFamilyCompletedViewController.swift in Sources */,
 				87A76AAD295F6EE70096F669 /* RecordAPI.swift in Sources */,
 				D2ED94902ABAC1EE0040B687 /* DefaultGenAIGuideUseCase.swift in Sources */,
 				D26C68F42970AD930088DC9A /* HomeNoticeView.swift in Sources */,

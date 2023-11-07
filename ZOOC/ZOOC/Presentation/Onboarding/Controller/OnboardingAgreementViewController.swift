@@ -26,7 +26,7 @@ final class OnboardingAgreementViewController: BaseViewController {
     
     //MARK: - UI Components
     
-    private lazy var rootView = OnboardingAgreementView.init(onboardingState: .makeFamily)
+    private lazy var rootView = OnboardingAgreementView()
     
     //MARK: - Life Cycle
     
@@ -57,7 +57,7 @@ final class OnboardingAgreementViewController: BaseViewController {
     
     func configureCollectionViewDataSource() {
         dataSource = RxCollectionViewSectionedReloadDataSource<SectionData<OnboardingAgreementModel>>(
-            configureCell: { dataSource, collectionView, indexPath, item in
+            configureCell: { [weak self] dataSource, collectionView, indexPath, item in
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: OnboardingAgreementCollectionViewCell.cellIdentifier,
                     for: indexPath
@@ -65,10 +65,11 @@ final class OnboardingAgreementViewController: BaseViewController {
                 cell.dataBind(tag: indexPath.row, data: item)
                 cell.delegate = self
                 return cell
-            },configureSupplementaryView: { (dataSource, collectionView, kind, indexPath) -> UICollectionReusableView in
+            },configureSupplementaryView: { [weak self] (dataSource, collectionView, kind, indexPath) -> UICollectionReusableView in
+                guard let self else { return UICollectionReusableView() }
                 let kind = UICollectionView.elementKindSectionHeader
                       let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: OnboardingAgreementCollectionHeaderView.reuseCellIdentifier, for: indexPath) as! OnboardingAgreementCollectionHeaderView
-                header.allCheckedButton.isSelected = self.viewModel.getAllAgreed()
+                header.updateUI(self.viewModel.getAbleToSignUp())
                 header.delegate = self
                 return header
             })
@@ -81,16 +82,28 @@ final class OnboardingAgreementViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    
     private func bindUI() {
-        rootView.backButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+        rootView.backButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
             owner.navigationController?.popViewController(animated: true)
         }).disposed(by: disposeBag)
         
-        rootView.signUpButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+        rootView.signUpButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
             owner.pushToWelcomeVC()
         }).disposed(by: disposeBag)
-
+        
+        rootView.agreementCollectionView.rx.itemSelected
+            .subscribe(with: self, onNext: { owner, indexPath in
+                var url = ExternalURL.zoocDefaultURL
+                switch indexPath.row {
+                    case 0: url = ExternalURL.termsOfUse
+                    case 1: url = ExternalURL.privacyPolicy
+                    case 3: url = ExternalURL.consentMarketing
+                    default: break
+                }
+                owner.presentSafariViewController(url)
+            }).disposed(by: disposeBag)
     }
 
     private func bindViewModel() {
@@ -111,36 +124,21 @@ final class OnboardingAgreementViewController: BaseViewController {
             .asDriver(onErrorJustReturn: false)
             .drive(with: self, onNext: { owner, canSignUp in
                 owner.rootView.signUpButton.isEnabled = canSignUp
+                let updateColor: UIColor = canSignUp ? .zw_black : .zw_lightgray
+                owner.rootView.signUpButton.backgroundColor = updateColor
             }).disposed(by: disposeBag)
     }
 }
 
-//MARK: - UITableViewDelegate
 
-extension OnboardingAgreementViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        var url = ExternalURL.zoocDefaultURL
-        switch indexPath.row {
-        case 0: url = ExternalURL.termsOfUse
-        case 1: url = ExternalURL.privacyPolicy
-        case 3: url = ExternalURL.consentMarketing
-        default: break
-        }
-        
-        presentSafariViewController(url)
-        return
-    }
-}
 
-//MARK: - ChekedButtonTappedDelegate
+//MARK: - AllChekedButtonTappedDelegate
 
 extension OnboardingAgreementViewController: CheckedButtonTappedDelegate {
     func cellButtonTapped(index: Int) {
         agreementCheckButtonDidTapEventSubject.onNext(index)
     }
 }
-
-//MARK: - AllChekedButtonTappedDelegate
 
 extension OnboardingAgreementViewController: AllChekedButtonTappedDelegate {
     func allCellButtonTapped() {

@@ -21,7 +21,6 @@ final class OnboardingAgreementCollectionHeaderView: UICollectionReusableView {
     
     //MARK: - UI Components
     
-    public var allAgreementView = UIView()
     private var allAgreementLabel = UILabel()
     public lazy var allCheckedButton = BaseButton()
     
@@ -48,49 +47,38 @@ final class OnboardingAgreementCollectionHeaderView: UICollectionReusableView {
     }
     
     private func style() {
-        self.backgroundColor = .zoocBackgroundGreen
-        
-        allAgreementView.do {
-            $0.makeCornerRound(radius: 12)
-            $0.backgroundColor = .white
-            $0.setBorder(borderWidth: 1, borderColor: UIColor.zoocLightGray)
+        self.do {
+            $0.makeCornerRound(radius: 2)
+            $0.setBorder(borderWidth: 1.3, borderColor: .zw_lightgray)
         }
         
         allAgreementLabel.do {
             $0.text = "전체 동의"
-            $0.textColor = .zoocMainGreen
-            $0.font = .zoocSubhead1
+            $0.textColor = .zw_lightgray
+            $0.font = .zw_Subhead3
             $0.textAlignment = .left
         }
         
         allCheckedButton.do {
-            $0.setImage(Image.checkBox, for: .normal)
-            $0.setImage(Image.checkBoxFill, for: .selected)
+            $0.setImage(.zwImage(.btn_checkbox), for: .normal)
+            $0.setImage(.zwImage(.btn_checkbox_fill), for: .selected)
         }
     }
     
     private func hierarchy() {
-        self.addSubview(allAgreementView)
-        allAgreementView.addSubviews(allAgreementLabel, allCheckedButton)
+        self.addSubviews(allAgreementLabel, allCheckedButton)
     }
     
     private func layout() {
-        allAgreementView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(315)
-            $0.height.equalTo(50)
-        }
-        
         allAgreementLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().offset(18)
+            $0.leading.equalToSuperview().offset(20)
         }
         
         allCheckedButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(20)
-            $0.size.equalTo(20)
+            $0.size.equalTo(36)
         }
     }
     
@@ -98,6 +86,15 @@ final class OnboardingAgreementCollectionHeaderView: UICollectionReusableView {
     
     @objc func checkedButtonDidTap() {
         delegate?.allCellButtonTapped()
+    }
+}
+
+extension OnboardingAgreementCollectionHeaderView {
+    func updateUI(_ isSelected: Bool) {
+        allCheckedButton.isSelected = isSelected
+        let updateColor: UIColor = isSelected ? .zw_point : .zw_lightgray
+        allAgreementLabel.textColor = updateColor
+        self.layer.borderColor = updateColor.cgColor
     }
 }
 

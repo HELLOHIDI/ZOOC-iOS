@@ -22,7 +22,6 @@ final class OnboardingAgreementViewModel: ViewModelType {
     
     struct Output {
         var ableToSignUp = BehaviorRelay<Bool>(value: false)
-        var allAgreed = BehaviorRelay<Bool>(value: false)
         var agreementList = BehaviorRelay<[OnboardingAgreementModel]>(value: OnboardingAgreementModel.agreementData)
     }
     
@@ -45,11 +44,6 @@ final class OnboardingAgreementViewModel: ViewModelType {
     private func bindOutput(output: Output, disposeBag: DisposeBag) {
         onboardingAgreementUseCase.ableToSignUp.subscribe(onNext: { canSignUp in
             output.ableToSignUp.accept(canSignUp)
-            if output.ableToSignUp.value { print("가능함")}
-        }).disposed(by: disposeBag)
-        
-        onboardingAgreementUseCase.allAgreed.subscribe(onNext: { allAgreed in
-            output.ableToSignUp.accept(allAgreed)
         }).disposed(by: disposeBag)
         
         onboardingAgreementUseCase.agreementList.subscribe(onNext: { agreementList in
@@ -59,7 +53,7 @@ final class OnboardingAgreementViewModel: ViewModelType {
 }
 
 extension OnboardingAgreementViewModel {
-    func getAllAgreed() -> Bool {
-        return onboardingAgreementUseCase.allAgreed.value
+    func getAbleToSignUp() -> Bool {
+        return onboardingAgreementUseCase.ableToSignUp.value
     }
 }

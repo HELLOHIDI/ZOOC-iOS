@@ -10,19 +10,18 @@ import UIKit
 import SnapKit
 import Then
 
-final class OnboardingWelcomeView: OnboardingBaseView {
-
+final class OnboardingWelcomeView: UIView {
+    
     //MARK: - UI Components
     
     public let welcomeLabel = UILabel()
     public let welcomeSubLabel = UILabel()
-    public let welcomeImage = UIImageView()
-    public lazy var nextButton = ZoocGradientButton()
+    public lazy var goHomeButton = UIButton()
     
     //MARK: - Life Cycles
     
-    override init(onboardingState: OnboardingState) {
-        super.init(onboardingState: onboardingState)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         style()
         hierarchy()
@@ -36,73 +35,63 @@ final class OnboardingWelcomeView: OnboardingBaseView {
     //MARK: - Custom Method
     
     private func style() {
-        self.backgroundColor = .zoocBackgroundGreen
+        self.backgroundColor = .zw_background
         
         welcomeLabel.do {
-            $0.text = "안녕하세요! \nZOOC에 온 걸 환영해요"
-            $0.textColor = .zoocDarkGray2
+            $0.text = "쭉에 오신 것을\n진심으로 환영해요!"
+            $0.textColor = .zw_black
             $0.textAlignment = .left
-            $0.font = .zoocDisplay1
-            $0.numberOfLines = 2
-            $0.setLineSpacing(spacing: 6)
+            $0.font = .gmarket(font: .light, size: 30)
+            $0.numberOfLines = 3
+            $0.setLineSpacing(spacing: 10)
+            $0.setAttributeLabel(
+                targetString: ["쭉"],
+                color: .zw_black,
+                font: .gmarket(font: .medium, size: 30),
+                spacing: 10
+            )
         }
         
         welcomeSubLabel.do {
-            $0.text = "소중한 가족들과 함께 쭉\n잊지 못할 추억을 쌓아보세요"
-            $0.textColor = .zoocDarkGray2
+            $0.text = "사랑하는 반려동물과의 일상이\n특별하게 간직되도록 함께 할게요"
+            $0.textColor = .zw_gray
             $0.textAlignment = .left
-            $0.font = .zoocDisplay1
+            $0.font = .pretendard(font: .light, size: 16)
             $0.numberOfLines = 2
-            $0.alpha = 0
-            $0.setLineSpacing(spacing: 6)
+            $0.setLineSpacing(spacing: 4)
         }
         
-        welcomeImage.do {
-            $0.contentMode = .scaleAspectFill
-            $0.image = Image.graphics1
-            $0.alpha = 0
-        }
-        
-        nextButton.do {
-            $0.setTitle("다음", for: .normal)
-            $0.alpha = 0
+        goHomeButton.do {
+            $0.backgroundColor = .zw_black
+            $0.setTitle("홈으로 돌아가기", for: .normal)
+            $0.titleLabel?.font = .zw_Subhead1
+            $0.setTitleColor(.zw_white, for: .normal)
         }
     }
     
     private func hierarchy() {
-        self.addSubviews(welcomeLabel,
-                         welcomeSubLabel,
-                         welcomeImage,
-                         nextButton)
+        self.addSubviews(
+            welcomeLabel,
+            welcomeSubLabel,
+            goHomeButton
+        )
     }
     
     private func layout() {
         welcomeLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(77)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(315)
-            $0.height.equalTo(68)
+            $0.top.equalTo(safeAreaLayoutGuide).offset(97)
+            $0.leading.equalToSuperview().offset(28)
         }
         
         welcomeSubLabel.snp.makeConstraints {
-            $0.top.equalTo(self.welcomeLabel.snp.bottom).offset(20)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(315)
-            $0.height.equalTo(68)
+            $0.top.equalTo(welcomeLabel.snp.bottom).offset(24)
+            $0.leading.equalTo(welcomeLabel)
         }
         
-        welcomeImage.snp.makeConstraints {
-            $0.top.equalTo(self.welcomeSubLabel.snp.bottom).offset(51)
-            $0.centerX.equalToSuperview()
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(self.nextButton.snp.top).offset(-30)
-        }
-        
-        nextButton.snp.makeConstraints {
-            $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(30)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(315)
-            $0.height.equalTo(54)
+        goHomeButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.width.equalToSuperview()
+            $0.height.equalTo(77)
         }
     }
 }

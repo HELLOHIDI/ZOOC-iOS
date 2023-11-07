@@ -93,12 +93,6 @@ final class MyEditProfileViewController: BaseViewController {
                 owner.rootView.completeButton.isEnabled = canEdit
             }).disposed(by: disposeBag)
         
-        output.textFieldState
-            .asDriver()
-            .drive(with: self, onNext: { owner, state in
-                owner.rootView.nameTextField.textColor = state.textColor
-            }).disposed(by: disposeBag)
-        
         output.isEdited
             .asDriver(onErrorJustReturn: Bool())
             .drive(with: self, onNext: { owner, isEdited in
@@ -164,14 +158,13 @@ extension MyEditProfileViewController {
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.rootView.nameTextField.text = fixedText
             guard let fixedText else { return }
-            self.rootView.numberOfNameCharactersLabel.text = "\(String(describing: fixedText.count))/10"
+
         }
     }
     
     private func updateUI(_ editProfileData: EditProfileRequest) {
         print(editProfileData.nickName, editProfileData.nickName.count)
         rootView.nameTextField.text = editProfileData.nickName
-        rootView.numberOfNameCharactersLabel.text = "\(editProfileData.nickName.count)/10"
         if editProfileData.profileImage != nil {
             rootView.profileImageButton.setImage(editProfileData.profileImage, for: .normal)
         } else {

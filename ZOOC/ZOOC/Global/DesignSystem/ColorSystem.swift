@@ -17,6 +17,10 @@ extension UIColor {
 
 extension UIColor {
     
+    static var zw_tabbar_backgound: UIColor {
+        return UIColor(r: 247, g: 247, b: 249)
+    }
+    
     static var zw_background: UIColor {
         return UIColor(r: 245, g: 245, b: 247)
     }

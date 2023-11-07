@@ -81,16 +81,28 @@ final class OnboardingAgreementViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    
     private func bindUI() {
-        rootView.backButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+        rootView.backButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
             owner.navigationController?.popViewController(animated: true)
         }).disposed(by: disposeBag)
         
-        rootView.signUpButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+        rootView.signUpButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
             owner.pushToWelcomeVC()
         }).disposed(by: disposeBag)
-
+        
+        rootView.agreementCollectionView.rx.itemSelected
+            .subscribe(with: self, onNext: { owner, indexPath in
+                var url = ExternalURL.zoocDefaultURL
+                switch indexPath.row {
+                    case 0: url = ExternalURL.termsOfUse
+                    case 1: url = ExternalURL.privacyPolicy
+                    case 3: url = ExternalURL.consentMarketing
+                    default: break
+                }
+                owner.presentSafariViewController(url)
+            }).disposed(by: disposeBag)
     }
 
     private func bindViewModel() {
@@ -115,32 +127,15 @@ final class OnboardingAgreementViewController: BaseViewController {
     }
 }
 
-//MARK: - UITableViewDelegate
 
-extension OnboardingAgreementViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        var url = ExternalURL.zoocDefaultURL
-        switch indexPath.row {
-        case 0: url = ExternalURL.termsOfUse
-        case 1: url = ExternalURL.privacyPolicy
-        case 3: url = ExternalURL.consentMarketing
-        default: break
-        }
-        
-        presentSafariViewController(url)
-        return
-    }
-}
 
-//MARK: - ChekedButtonTappedDelegate
+//MARK: - AllChekedButtonTappedDelegate
 
 extension OnboardingAgreementViewController: CheckedButtonTappedDelegate {
     func cellButtonTapped(index: Int) {
         agreementCheckButtonDidTapEventSubject.onNext(index)
     }
 }
-
-//MARK: - AllChekedButtonTappedDelegate
 
 extension OnboardingAgreementViewController: AllChekedButtonTappedDelegate {
     func allCellButtonTapped() {

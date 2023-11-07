@@ -18,6 +18,8 @@ public enum ZwImageName: String {
     case btn_plus
     case btn_productdelete
     case btn_x
+    case btn_kakao
+    case btn_apple
     
     case featuredImage
     case gallery

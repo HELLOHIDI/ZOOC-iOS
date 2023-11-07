@@ -260,6 +260,7 @@
 		D239C0912AC4038F00D1AA37 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = D239C0902AC4038F00D1AA37 /* RxGesture */; };
 		D246274D2AFA02DE00C69C56 /* MyRegisterPetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246274C2AFA02DE00C69C56 /* MyRegisterPetViewController.swift */; };
 		D246274F2AFA0DD800C69C56 /* MyNoProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246274E2AFA0DD800C69C56 /* MyNoProfileView.swift */; };
+		D24627512AFA9DD400C69C56 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = D24627502AFA9DD400C69C56 /* Pretendard-Light.otf */; };
 		D24841FE2ACFDE6F002CD429 /* OnboardingJoinFamilyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24841FD2ACFDE6F002CD429 /* OnboardingJoinFamilyUseCase.swift */; };
 		D24842002ACFE043002CD429 /* DefaultOnboardingJoinFamilyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24841FF2ACFE043002CD429 /* DefaultOnboardingJoinFamilyUseCase.swift */; };
 		D24AFAB22A8DFB9F00823E9C /* GenAIChoosePetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24AFAB12A8DFB9F00823E9C /* GenAIChoosePetViewController.swift */; };
@@ -621,6 +622,7 @@
 		D239C08C2AC1626B00D1AA37 /* DefaultMyEditProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMyEditProfileUseCase.swift; sourceTree = "<group>"; };
 		D246274C2AFA02DE00C69C56 /* MyRegisterPetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetViewController.swift; sourceTree = "<group>"; };
 		D246274E2AFA0DD800C69C56 /* MyNoProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoProfileView.swift; sourceTree = "<group>"; };
+		D24627502AFA9DD400C69C56 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		D24841FD2ACFDE6F002CD429 /* OnboardingJoinFamilyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingJoinFamilyUseCase.swift; path = ../../../OnboardingJoinFamilyUseCase.swift; sourceTree = "<group>"; };
 		D24841FF2ACFE043002CD429 /* DefaultOnboardingJoinFamilyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DefaultOnboardingJoinFamilyUseCase.swift; path = ../../DefaultOnboardingJoinFamilyUseCase.swift; sourceTree = "<group>"; };
 		D24AFAB12A8DFB9F00823E9C /* GenAIChoosePetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAIChoosePetViewController.swift; sourceTree = "<group>"; };
@@ -1346,8 +1348,8 @@
 			isa = PBXGroup;
 			children = (
 				D26C85E02968C63F00AEAF9B /* OnboardingLoginViewController.swift */,
-				D26C85F129693CFA00AEAF9B /* OnboardingWelcomeViewController.swift */,
 				D26C85E72968CD8E00AEAF9B /* OnboardingAgreementViewController.swift */,
+				D26C85F129693CFA00AEAF9B /* OnboardingWelcomeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1642,6 +1644,7 @@
 		87B6625929521EFF00B6FFA9 /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				D24627502AFA9DD400C69C56 /* Pretendard-Light.otf */,
 				D299441D2AAB065A00C4F280 /* Pretendard-Bold.otf */,
 				877BAFC1295EEA6900C2AA1C /* Pretendard-SemiBold.otf */,
 				877BAFC3295EEA7700C2AA1C /* Pretendard-Medium.otf */,
@@ -2276,6 +2279,7 @@
 				874E638B2AF7D3AF0029733B /* GmarketSansMedium.otf in Resources */,
 				877BAFC4295EEA7700C2AA1C /* Pretendard-Medium.otf in Resources */,
 				871EA359297078C900D0E8CC /* loading.json in Resources */,
+				D24627512AFA9DD400C69C56 /* Pretendard-Light.otf in Resources */,
 				874E63892AF7D3AB0029733B /* GmarketSansBold.otf in Resources */,
 				87DC47F52A7B7D55007823CB /* Debug-GoogleService-Info.plist in Resources */,
 				D2D440212AA5F2C300329F35 /* Pretendard-Regular.otf in Resources */,

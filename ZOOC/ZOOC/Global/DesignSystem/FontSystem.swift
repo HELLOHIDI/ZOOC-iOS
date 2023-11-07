@@ -12,6 +12,7 @@ import UIKit
 extension UIFont {
     
     enum Pretendard: String {
+        case light = "Pretendard-Light"
         case regular = "Pretendard-Regular"
         case medium = "Pretendard-Medium"
         case semiBold = "Pretendard-SemiBold"

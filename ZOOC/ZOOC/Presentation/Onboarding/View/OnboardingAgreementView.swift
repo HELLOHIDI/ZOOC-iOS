@@ -17,7 +17,7 @@ final class OnboardingAgreementView: UIView {
     let backButton = UIButton()
     private let agreeTitleLabel = UILabel()
     public lazy var agreementCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    public lazy var signUpButton = ZoocGradientButton()
+    public lazy var signUpButton = UIButton()
     
     //MARK: - Life Cycles
     
@@ -49,24 +49,43 @@ final class OnboardingAgreementView: UIView {
     }
     
     private func style() {
-        self.backgroundColor = .zoocBackgroundGreen
+        self.backgroundColor = .zw_background
         
+        backButton.do {
+            $0.setImage(.zwImage(.ic_back), for: .normal)
+        }
         agreeTitleLabel.do {
             $0.text = "더 나은 서비스 제공을 위해 \n약관동의가 필요해요"
-            $0.textColor = .zoocDarkGray2
+            $0.textColor = .zw_black
             $0.textAlignment = .left
-            $0.font = .zoocDisplay1
+            $0.font = .pretendard(font: .regular, size: 24)
             $0.numberOfLines = 2
-            $0.setLineSpacing(spacing: 6)
+            $0.setLineSpacing(spacing: 8)
+            $0.setAttributeLabel(
+                targetString: ["약관동의"],
+                color: .zw_black,
+                font: .pretendard(font: .bold, size: 24)
+            )
         }
         
         agreementCollectionView.do {
             let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .vertical
-            layout.itemSize = CGSize(width: 315, height: 22)
-            layout.minimumLineSpacing = 15
-            layout.headerReferenceSize = CGSize(width: 315, height: 80)
-            
+            layout.itemSize = CGSize(
+                width: 319,
+                height: 36
+            )
+            layout.minimumLineSpacing = 4
+            layout.headerReferenceSize = CGSize(
+                width: 319,
+                height: 60
+            )
+            layout.sectionInset = UIEdgeInsets(
+                top: 24,
+                left: 0,
+                bottom: 0,
+                right: 0
+            )
             $0.collectionViewLayout = layout
             $0.isScrollEnabled = false
             $0.backgroundColor = .clear
@@ -75,37 +94,42 @@ final class OnboardingAgreementView: UIView {
         }
         
         signUpButton.do {
+            $0.backgroundColor = .zw_black
             $0.setTitle("회원가입", for: .normal)
+            $0.setTitleColor(.zw_white, for: .normal)
+            $0.titleLabel?.font = .zw_Subhead1
+            $0.titleLabel?.textAlignment = .center
         }
     }
     private func hierarchy() {
         self.addSubviews(
+            backButton,
             agreeTitleLabel,
             agreementCollectionView,
             signUpButton
         )
     }
-    
     private func layout() {
+        backButton.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide).offset(16)
+            $0.leading.equalToSuperview().offset(28)
+            $0.size.equalTo(36)
+        }
         agreeTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(77)
+            $0.top.equalTo(safeAreaLayoutGuide).offset(77)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(315)
             $0.height.equalTo(68)
         }
-        
         agreementCollectionView.snp.makeConstraints {
-            $0.top.equalTo(self.agreeTitleLabel.snp.bottom).offset(43)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(315)
+            $0.top.equalTo(agreeTitleLabel.snp.bottom).offset(43)
+            $0.leading.trailing.equalToSuperview().inset(28)
             $0.bottom.equalTo(signUpButton.snp.top)
         }
-        
         signUpButton.snp.makeConstraints {
-            $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(30)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(315)
-            $0.height.equalTo(54)
+            $0.bottom.equalToSuperview()
+            $0.width.equalToSuperview()
+            $0.height.equalTo(77)
         }
     }
 }

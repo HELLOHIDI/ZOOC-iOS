@@ -19,8 +19,7 @@ final class OnboardingLoginView: UIView {
     private let loginDescribeLabel = UILabel()
     private let lineView = UIView()
     public lazy var kakaoLoginButton = UIButton()
-    public lazy var appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn,
-               style: .black)
+    public lazy var appleLoginButton = UIButton()
     
     //MARK: - Life Cycles
     
@@ -64,8 +63,10 @@ final class OnboardingLoginView: UIView {
             $0.setLineSpacing(spacing: 8)
         }
         kakaoLoginButton.do {
-            $0.setImage(Image.kakaoLogin, for: .normal)
-            $0.backgroundColor = UIColor(r: 255, g: 231, b: 0)
+            $0.setImage(.zwImage(.btn_kakao), for: .normal)
+        }
+        appleLoginButton.do {
+            $0.setImage(.zwImage(.btn_apple), for: .normal)
         }
     }
     

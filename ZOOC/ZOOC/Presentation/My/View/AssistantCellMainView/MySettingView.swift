@@ -9,34 +9,23 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
-//MARK: - SettingMenuTableViewCellDelegate
-
-protocol SettingMenuTableViewCellDelegate {
-    func selectedSettingMenuTableViewCell(indexPath: IndexPath)
-}
-
-final class MySettingView: UIView {
+final class MySettingView: UITableView {
     
     //MARK: - Properties
     
-    var delegate: SettingMenuTableViewCellDelegate?
     private var mySettingData: [MySettingModel] = MySettingModel.settingData
-    
-    //MARK: - UI Components
-    
-    public lazy var settingMenuTableView = UITableView(frame: .zero, style: .plain)
     
     //MARK: - Life Cycles
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        style()
-        hierarchy()
-        layout()
-        
+    override init(frame: CGRect, style: UITableView.Style) {
+        super.init(frame: .zero, style: .plain)
+
         register()
+        
+        setStyle()
     }
     
     required init?(coder: NSCoder) {
@@ -46,45 +35,21 @@ final class MySettingView: UIView {
     //MARK: - Custom Method
     
     private func register() {
-        settingMenuTableView.delegate = self
-        settingMenuTableView.dataSource = self
+        self.dataSource = self
         
-        settingMenuTableView.register(
+        self.register(
             MySettingTableViewCell.self,
-            forCellReuseIdentifier: MySettingTableViewCell.cellIdentifier)
+            forCellReuseIdentifier: MySettingTableViewCell.cellIdentifier
+        )
     }
     
-    private func style() {
-        self.backgroundColor = .zoocBackgroundGreen
-        
-        settingMenuTableView.do {
-            $0.translatesAutoresizingMaskIntoConstraints = false
+    private func setStyle() {
+        self.do {
+            $0.backgroundColor = .clear
             $0.separatorStyle = .none
+            $0.rowHeight = 62
             $0.isScrollEnabled = false
         }
-    }
-    
-    private func hierarchy() {
-        addSubview(settingMenuTableView)
-    }
-    
-    private func layout() {
-        settingMenuTableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-    }
-}
-
-//MARK: - UITableViewDelegate
-
-extension MySettingView: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 62
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(#function)
-        delegate?.selectedSettingMenuTableViewCell(indexPath: indexPath)
     }
 }
 
@@ -96,9 +61,9 @@ extension MySettingView: UITableViewDataSource {
     }
         
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MySettingTableViewCell.cellIdentifier, for: indexPath)
-                as? MySettingTableViewCell else { return UITableViewCell() }
-        cell.dataBind(data: mySettingData[indexPath.row])
+        let cell = tableView.dequeueReusableCell(withIdentifier: MySettingTableViewCell.cellIdentifier, for: indexPath)
+                as! MySettingTableViewCell
+        cell.dataBind(mySettingData[indexPath.row])
         return cell
     }
 }

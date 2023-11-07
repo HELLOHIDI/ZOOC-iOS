@@ -43,49 +43,49 @@ final class MyViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        delegate()
         bindUI()
         bindViewModel()
     }
     
     //MARK: - Custom Method
     
-    private func delegate() {
-        rootView.petView.delegate = self
-        rootView.settingView.delegate = self
-    }
-    
     private func bindUI() {
-        rootView.backButton.rx.tap
-            .subscribe(with: self, onNext: { owner, _ in
-                owner.navigationController?.popViewController(animated: true)
-            })
-            .disposed(by: disposeBag)
-        
         rootView.profileView.rx.tapGesture()
             .when(.recognized)
             .subscribe(with: self, onNext: { owner, _ in
                 owner.pushToEditProfileView()
             }).disposed(by: disposeBag)
         
-        rootView.profileView.editProfileButton.rx.tap
-            .subscribe(with: self, onNext: { owner, _ in
-                owner.pushToEditProfileView()
-            }).disposed(by: disposeBag)
-        
-        rootView.deleteAccountView.deleteAccountButton.rx.tap
+        rootView.deleteAccountButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
                 owner.presentDeleteAccountZoocAlertView()
             }).disposed(by: disposeBag)
+        
+        rootView.settingView.rx.itemSelected.subscribe(with: self, onNext: { owner, index in
+            switch index.row {
+            case 0:
+                break
+            case 1: // 알림설정
+                owner.pushToNoticeSettingView()
+            case 2:
+                let url = ExternalURL.zoocDefaultURL
+                owner.presentSafariViewController(url)
+            case 3:
+                owner.sendMail(subject: "[ZOOC] 문의하기", body: TextLiteral.mailInquiryBody)
+            case 4:
+                owner.pushToAppInformationView()
+            default:
+                break
+            }
+        }).disposed(by: disposeBag)
         
     }
     private func bindViewModel() {
         let input = MyViewModel.Input(
             viewWillAppearEvent: self.rx.viewWillAppear.asObservable(),
-            logoutButtonDidTapEvent: self.rootView.settingView.settingMenuTableView.rx.itemSelected.asObservable()
-                .filter({ $0.item == 4 }),
-            deleteAccountButtonDidTapEvent: deleteAccountSubject.asObservable(),
-            inviteCodeButtonDidTapEvent: self.rootView.familyView.inviteButton.rx.tap.asObservable()
+            logoutButtonDidTapEvent: self.rootView.settingView.rx.itemSelected.asObservable()
+                .filter({ $0.item == 5 }),
+            deleteAccountButtonDidTapEvent: deleteAccountSubject.asObservable()
         )
         
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
@@ -126,66 +126,6 @@ final class MyViewController: BaseViewController {
                     owner.showToast("회원 탈퇴에 실패했습니다.", type: .bad)
                 }
             }).disposed(by: disposeBag)
-        
-        output.inviteCode
-            .asDriver(onErrorJustReturn: "")
-            .drive(with: self, onNext: { owner, inviteCode in
-                owner.shareInviteCode(code: inviteCode)
-            }).disposed(by: disposeBag)
-        
-        output.profileData
-            .asDriver(onErrorJustReturn: nil)
-            .drive(with: self, onNext: { owner, profileData in
-                owner.updateProfileView(profileData)
-            }).disposed(by: disposeBag)
-        
-        output.familyMemberData
-            .asDriver(onErrorJustReturn: [])
-            .drive(with: self, onNext: { owner, familyData in
-                owner.updateFamilyView(familyData)
-            }).disposed(by: disposeBag)
-        
-        output.petMemberData
-            .asDriver(onErrorJustReturn: [])
-            .drive(with: self, onNext:  { owner, petData in
-                owner.updatePetView(petData)
-            }).disposed(by: disposeBag)
-    }
-}
-
-//MARK: - MyRegisterPetButtonTappedDelegate
-
-extension MyViewController: MyRegisterPetButtonTappedDelegate {
-    func petCellTapped(pet: PetResult) {
-        presentToEditPetProfileView(pet: pet)
-    }
-    
-    func myRegisterPetButtonTapped(isSelected: Bool) {
-        pushToRegisterPetView()
-    }
-}
-
-//MARK: - SettingMenuTableViewCellDelegate
-
-extension MyViewController: SettingMenuTableViewCellDelegate {
-    func selectedSettingMenuTableViewCell(indexPath: IndexPath) {
-        switch indexPath.row {
-        case 0: // 알림설정
-            pushToNoticeSettingView()
-        case 1: // 공지사항
-            let url = ExternalURL.zoocDefaultURL
-            presentSafariViewController(url)
-            break
-        case 2: // 문의하기
-            sendMail(subject: "[ZOOC] 문의하기", body: TextLiteral.mailInquiryBody)
-            break
-        case 3: // 앱 정보
-            pushToAppInformationView()
-        case 4: // 로그아웃
-            return
-        default:
-            break
-        }
     }
 }
 
@@ -241,45 +181,6 @@ extension MyViewController {
         zoocAlertVC.delegate = self
         present(zoocAlertVC, animated: false)
     }
-    
-    private func presentToEditPetProfileView(pet: PetResult) {
-        let hasPhoto = pet.photo == nil ? false : true
-        let imageView = UIImageView()
-        imageView.kfSetImage(url: pet.photo)
-        let image = imageView.image
-        let photo = hasPhoto ? image : nil
-        let editPetProfileView = MyEditPetProfileViewController(
-            viewModel: MyEditPetProfileViewModel(
-                myEditPetProfileUseCase: DefaultMyEditPetProfileUseCase(
-                    petProfileData: EditPetProfileRequest(
-                        photo: hasPhoto,
-                        nickName: pet.name,
-                        file: photo
-                    ),
-                    id: pet.id,
-                    repository: DefaultMyRepository())
-            )
-        )
-        editPetProfileView.modalPresentationStyle = .fullScreen
-        self.present(editPetProfileView, animated: true)
-    }
-    
-    private func shareInviteCode(code: String) {
-        var objectToShare = [String]()
-        
-        objectToShare.append(code)
-        
-        let activityViewController = UIActivityViewController(activityItems : objectToShare, applicationActivities: nil)
-        
-        activityViewController.popoverPresentationController?.sourceView = self.view
-        self.present(activityViewController, animated: true, completion: nil)
-        
-        activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
-            let message = success ? "초대 코드 복사에 성공했습니다"  : "초대 코드 복사가 되지 않았어요"
-            let type: Toast.ToastType = success ? .good : .bad
-            self.showToast(message, type: type)
-        }
-    }
 }
 
 extension MyViewController: MFMailComposeViewControllerDelegate {
@@ -326,25 +227,6 @@ extension MyViewController: MFMailComposeViewControllerDelegate {
             break
         }
         controller.dismiss(animated: true, completion: nil)
-    }
-}
-
-extension MyViewController {
-    func updateProfileView(_ data: UserResult?) {
-        rootView.profileView.profileNameLabel.text = data?.nickName
-        if let photo = data?.photo {
-            rootView.profileView.profileImageView.kfSetImage(url: photo)
-        } else {
-            rootView.profileView.profileImageView.image = Image.defaultProfile
-        }
-    }
-    
-    func updateFamilyView(_ familyData: [UserResult] ) {
-        rootView.familyView.updateUI(familyData)
-    }
-    
-    func updatePetView(_ petData: [PetResult]) {
-        rootView.petView.updateUI(petData)
     }
 }
 

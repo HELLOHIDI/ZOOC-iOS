@@ -14,9 +14,10 @@ final class MyProfileView: UIView {
     
     //MARK: - UI Components
     
-    public var profileImageView = UIImageView()
-    public var profileNameLabel = UILabel()
-    public var editProfileButton = UIButton()
+    private let profileImageView = UIImageView()
+    private let nameLabel = UILabel()
+    private let breedLabel = UILabel()
+    private lazy var editProfileButton = UIButton()
     
     //MARK: - Life Cycles
     
@@ -32,54 +33,71 @@ final class MyProfileView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func draw(_ rect: CGRect) {
+        profileImageView.makeCornerRound(ratio: 2)
+    }
+    
     //MARK: - Custom Method
     private func style() {
-        profileImageView.do {
-            $0.makeCornerRound(radius: 36)
-            $0.setBorder(borderWidth: 2, borderColor: .zoocGray1)
-            $0.contentMode = .scaleAspectFill
+        self.do {
+            $0.setBorder(borderWidth: 1, borderColor: .zw_brightgray)
+            $0.makeCornerRound(radius: 4)
+            $0.backgroundColor = .zw_background
         }
         
-        profileNameLabel.do {
-            $0.textColor = .zoocDarkGray2
-            $0.font = .zoocHeadLine
+        profileImageView.do {
+            $0.image = .zwImage(.mock_hidi)
+        }
+        
+        nameLabel.do {
+            $0.text = "사랑이"
+            $0.font = .zw_Subhead1
+            $0.textColor = .zw_black
+            $0.textAlignment = .center
+        }
+        
+        breedLabel.do {
+            $0.text = "포메라니안"
+            $0.font = .zw_Body2
+            $0.textColor = .zw_gray
+            $0.textAlignment = .center
         }
         
         editProfileButton.do {
-            $0.setTitle("편집", for: .normal)
-            $0.titleLabel!.font = .zoocCaption
-            $0.setTitleColor(.zoocGray2, for: .normal)
-            $0.backgroundColor = .zoocWhite1
-            $0.makeCornerRound(radius: 12)
-            $0.setBorder(borderWidth: 1, borderColor: .zoocLightGreen)
+            $0.makeCornerRound(radius: 2)
+            $0.setTitle("프로필 수정", for: .normal)
+            $0.setTitleColor(.zw_gray, for: .normal)
+            $0.setBorder(borderWidth: 1, borderColor: .zw_brightgray)
+            $0.titleLabel?.font = .zw_Body2
+            $0.titleLabel?.textAlignment = .center
         }
     }
     
     private func hierarchy() {
         self.addSubviews(
             profileImageView,
-            profileNameLabel,
+            nameLabel,
+            breedLabel,
             editProfileButton
         )
     }
     
     private func layout() {
         profileImageView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().offset(6)
-            $0.size.equalTo(72)
+            $0.top.leading.equalToSuperview().offset(24)
+            $0.size.equalTo(70)
         }
-        
-        profileNameLabel.snp.makeConstraints {
-            $0.centerY.equalTo(profileImageView)
-            $0.leading.equalTo(self.profileImageView.snp.trailing).offset(14)
+        nameLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(36)
+            $0.leading.equalTo(profileImageView.snp.trailing).offset(16)
         }
-        
+        breedLabel.snp.makeConstraints {
+            $0.top.equalTo(nameLabel.snp.bottom).offset(4)
+            $0.leading.equalTo(nameLabel)
+        }
         editProfileButton.snp.makeConstraints {
-            $0.centerY.equalTo(profileNameLabel)
-            $0.trailing.equalToSuperview().inset(6)
-            $0.width.equalTo(45)
-            $0.height.equalTo(24)
+            $0.top.equalTo(profileImageView.snp.bottom).offset(20)
+            $0.leading.trailing.bottom.equalToSuperview().inset(24)
         }
     }
 }

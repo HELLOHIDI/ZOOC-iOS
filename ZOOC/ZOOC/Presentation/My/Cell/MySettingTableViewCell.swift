@@ -12,6 +12,7 @@ final class MySettingTableViewCell: UITableViewCell {
     //MARK: - UI Components
     
     public var menuLabel = UILabel()
+    private let iconImageView = UIImageView()
     private var separatorLine = UIView()
     
     //MARK: - Life Cycles
@@ -32,44 +33,50 @@ final class MySettingTableViewCell: UITableViewCell {
     
     private func cellStyle() {
         self.do {
-            $0.backgroundColor = .zoocBackgroundGreen
+            $0.backgroundColor = .zw_background
             $0.selectionStyle = .none
         }
         
-        menuLabel = UILabel().then {
-            $0.textColor = .zoocDarkGray2
-            $0.font = .zoocBody2
+        menuLabel.do {
+            $0.textColor = .zw_black
+            $0.font = .zw_Body1
         }
         
         separatorLine.do {
-            $0.backgroundColor = .zoocLightGray
+            $0.backgroundColor = .zw_brightgray
         }
     }
     
     private func hierarchy() {
-        contentView.addSubviews(menuLabel, separatorLine)
+        contentView.addSubviews(
+            menuLabel,
+            iconImageView,
+            separatorLine
+        )
     }
     
     private func layout() {
+        iconImageView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.size.equalTo(24)
+        }
+        
         menuLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(8)
-            $0.leading.equalToSuperview().offset(10)
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(iconImageView.snp.trailing).offset(10)
         }
         
         separatorLine.snp.makeConstraints {
-            $0.top.equalTo(self.menuLabel.snp.bottom).offset(18)
+            $0.top.equalTo(menuLabel.snp.bottom).offset(18)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(315)
             $0.height.equalTo(1)
         }
     }
     
-    public func dataBind(data: MySettingModel) {
+    public func dataBind(_ data: MySettingModel) {
         menuLabel.text = data.title
-        if data.isLogout {
-            menuLabel.textColor = UIColor(r: 235, g: 91, b: 78)
-            separatorLine.isHidden = true
-        }
+        iconImageView.image = data.icon
     }
 }
 

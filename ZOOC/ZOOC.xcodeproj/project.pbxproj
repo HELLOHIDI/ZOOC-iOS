@@ -243,7 +243,6 @@
 		D21DADC1298BFF2700CCC089 /* MyPetRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21DADC0298BFF2700CCC089 /* MyPetRegisterViewModel.swift */; };
 		D22EF9002A7C9B720050E325 /* MyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22EF8FF2A7C9B720050E325 /* MyViewModel.swift */; };
 		D23502E22961898C00F01101 /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502E12961898C00F01101 /* MyProfileView.swift */; };
-		D23502EC296197C700F01101 /* MyPetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502EB296197C700F01101 /* MyPetView.swift */; };
 		D23502F129619D4700F01101 /* MyPetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502F029619D4700F01101 /* MyPetCollectionViewCell.swift */; };
 		D23502F52961A69E00F01101 /* MyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502F42961A69E00F01101 /* MyView.swift */; };
 		D23502F92961F34100F01101 /* MySettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502F82961F34100F01101 /* MySettingView.swift */; };
@@ -321,8 +320,6 @@
 		D27D9568296CB5930097CD03 /* OnboardingInviteFamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9567296CB5930097CD03 /* OnboardingInviteFamilyView.swift */; };
 		D27D956A296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9569296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift */; };
 		D27D956C296CBA2D0097CD03 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D956B296CBA2D0097CD03 /* UIButton+.swift */; };
-		D27D95D5296DDF4F0097CD03 /* MyFamilyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D95D4296DDF4F0097CD03 /* MyFamilyCollectionViewCell.swift */; };
-		D27D95D7296DE0E30097CD03 /* MyFamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D95D6296DE0E30097CD03 /* MyFamilyView.swift */; };
 		D27D9EA82A8EFA1B00E02842 /* GenAISelectImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9EA72A8EFA1B00E02842 /* GenAISelectImageViewController.swift */; };
 		D27D9EAA2A8EFA2F00E02842 /* GenAISelectImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9EA92A8EFA2F00E02842 /* GenAISelectImageView.swift */; };
 		D27D9EAC2A8F41B000E02842 /* GenAISelectImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27D9EAB2A8F41B000E02842 /* GenAISelectImageViewModel.swift */; };
@@ -624,7 +621,6 @@
 		D21DADC0298BFF2700CCC089 /* MyPetRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPetRegisterViewModel.swift; sourceTree = "<group>"; };
 		D22EF8FF2A7C9B720050E325 /* MyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewModel.swift; sourceTree = "<group>"; };
 		D23502E12961898C00F01101 /* MyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyProfileView.swift; path = ZOOC/Presentation/My/View/AssistantCellMainView/MyProfileView.swift; sourceTree = SOURCE_ROOT; };
-		D23502EB296197C700F01101 /* MyPetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPetView.swift; sourceTree = "<group>"; };
 		D23502F029619D4700F01101 /* MyPetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPetCollectionViewCell.swift; sourceTree = "<group>"; };
 		D23502F42961A69E00F01101 /* MyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyView.swift; sourceTree = "<group>"; };
 		D23502F82961F34100F01101 /* MySettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySettingView.swift; sourceTree = "<group>"; };
@@ -700,8 +696,6 @@
 		D27D9567296CB5930097CD03 /* OnboardingInviteFamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInviteFamilyView.swift; sourceTree = "<group>"; };
 		D27D9569296CB6030097CD03 /* OnboardingReInviteFamilyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingReInviteFamilyViewController.swift; sourceTree = "<group>"; };
 		D27D956B296CBA2D0097CD03 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
-		D27D95D4296DDF4F0097CD03 /* MyFamilyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFamilyCollectionViewCell.swift; sourceTree = "<group>"; };
-		D27D95D6296DE0E30097CD03 /* MyFamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFamilyView.swift; sourceTree = "<group>"; };
 		D27D9EA72A8EFA1B00E02842 /* GenAISelectImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAISelectImageViewController.swift; sourceTree = "<group>"; };
 		D27D9EA92A8EFA2F00E02842 /* GenAISelectImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAISelectImageView.swift; sourceTree = "<group>"; };
 		D27D9EAB2A8F41B000E02842 /* GenAISelectImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenAISelectImageViewModel.swift; sourceTree = "<group>"; };
@@ -1977,7 +1971,6 @@
 			isa = PBXGroup;
 			children = (
 				D27D95D8296DE12D0097CD03 /* HeaderFooterVIew */,
-				D27D95D4296DDF4F0097CD03 /* MyFamilyCollectionViewCell.swift */,
 				D23502F029619D4700F01101 /* MyPetCollectionViewCell.swift */,
 				D23502FA2961F44700F01101 /* MySettingTableViewCell.swift */,
 				D23503022964728700F01101 /* MyAppInformationTableViewCell.swift */,
@@ -2014,8 +2007,6 @@
 			isa = PBXGroup;
 			children = (
 				D23502E12961898C00F01101 /* MyProfileView.swift */,
-				D27D95D6296DE0E30097CD03 /* MyFamilyView.swift */,
-				D23502EB296197C700F01101 /* MyPetView.swift */,
 				D23502F82961F34100F01101 /* MySettingView.swift */,
 				D26C85D6296888D000AEAF9B /* MyDeleteAccountView.swift */,
 			);
@@ -2382,7 +2373,6 @@
 				D24AFABA2A8E011800823E9C /* GenAIRegisterPetViewController.swift in Sources */,
 				87A3D8902A975D84002C36DB /* OrderPriceView.swift in Sources */,
 				87BCAD362AA5C70700A03DA3 /* OptionCategoryResult.swift in Sources */,
-				D27D95D5296DDF4F0097CD03 /* MyFamilyCollectionViewCell.swift in Sources */,
 				D21638052ACDC54E0096D474 /* DefaultOnboardingLoginUseCase.swift in Sources */,
 				D2CADF662AC9153D00772100 /* DefaultRecordUseCase.swift in Sources */,
 				D2CADF602AC8060A00772100 /* SectionData.swift in Sources */,
@@ -2520,7 +2510,6 @@
 				D20C00912A96F23200666963 /* GenAIAPI.swift in Sources */,
 				87648329295237B500F74882 /* Adjusted+.swift in Sources */,
 				87F288012A9FA67E00A53218 /* OrderAssistantCopyView.swift in Sources */,
-				D27D95D7296DE0E30097CD03 /* MyFamilyView.swift in Sources */,
 				87A3D8922A97756E002C36DB /* ZoocTextField.swift in Sources */,
 				87F287F12A9F36D400A53218 /* ShopAPI.swift in Sources */,
 				87A3D8992A987D55002C36DB /* OrderAgreementView.swift in Sources */,
@@ -2695,7 +2684,6 @@
 				870A4C082AA2708700D7CFD8 /* SelfSizingCollectionView.swift in Sources */,
 				D24AFAB42A8DFBB300823E9C /* GenAIChoosePetView.swift in Sources */,
 				874E63B22AF801510029733B /* MyAppInformationModel.swift in Sources */,
-				D23502EC296197C700F01101 /* MyPetView.swift in Sources */,
 				87F287F42A9F372400A53218 /* OrderRequest.swift in Sources */,
 				878133992AD131DF0004235E /* OrderViewModel.swift in Sources */,
 				8782C7EB296AC58B00C9324B /* HomeArchiveIndicatorView.swift in Sources */,

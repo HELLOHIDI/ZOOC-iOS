@@ -60,11 +60,12 @@ final class OnboardingAgreementView: UIView {
             $0.textAlignment = .left
             $0.font = .pretendard(font: .regular, size: 24)
             $0.numberOfLines = 2
-            $0.setLineSpacing(spacing: 8)
+            $0.setLineSpacing(spacing: 4)
             $0.setAttributeLabel(
                 targetString: ["약관동의"],
                 color: .zw_black,
-                font: .pretendard(font: .bold, size: 24)
+                font: .pretendard(font: .bold, size: 24),
+                spacing: 4
             )
         }
         
@@ -94,7 +95,7 @@ final class OnboardingAgreementView: UIView {
         }
         
         signUpButton.do {
-            $0.backgroundColor = .zw_black
+            $0.backgroundColor = .zw_lightgray
             $0.setTitle("회원가입", for: .normal)
             $0.setTitleColor(.zw_white, for: .normal)
             $0.titleLabel?.font = .zw_Subhead1

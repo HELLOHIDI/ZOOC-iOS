@@ -16,7 +16,7 @@ final class OnboardingWelcomeView: UIView {
     
     public let welcomeLabel = UILabel()
     public let welcomeSubLabel = UILabel()
-    public lazy var nextButton = UIButton()
+    public lazy var goHomeButton = UIButton()
     
     //MARK: - Life Cycles
     
@@ -61,7 +61,7 @@ final class OnboardingWelcomeView: UIView {
             $0.setLineSpacing(spacing: 4)
         }
         
-        nextButton.do {
+        goHomeButton.do {
             $0.backgroundColor = .zw_black
             $0.setTitle("홈으로 돌아가기", for: .normal)
             $0.titleLabel?.font = .zw_Subhead1
@@ -73,7 +73,7 @@ final class OnboardingWelcomeView: UIView {
         self.addSubviews(
             welcomeLabel,
             welcomeSubLabel,
-            nextButton
+            goHomeButton
         )
     }
     
@@ -88,7 +88,7 @@ final class OnboardingWelcomeView: UIView {
             $0.leading.equalTo(welcomeLabel)
         }
         
-        nextButton.snp.makeConstraints {
+        goHomeButton.snp.makeConstraints {
             $0.bottom.equalToSuperview()
             $0.width.equalToSuperview()
             $0.height.equalTo(77)

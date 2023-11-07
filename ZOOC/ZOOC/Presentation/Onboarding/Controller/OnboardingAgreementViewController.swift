@@ -57,7 +57,7 @@ final class OnboardingAgreementViewController: BaseViewController {
     
     func configureCollectionViewDataSource() {
         dataSource = RxCollectionViewSectionedReloadDataSource<SectionData<OnboardingAgreementModel>>(
-            configureCell: { dataSource, collectionView, indexPath, item in
+            configureCell: { [weak self] dataSource, collectionView, indexPath, item in
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: OnboardingAgreementCollectionViewCell.cellIdentifier,
                     for: indexPath
@@ -65,10 +65,11 @@ final class OnboardingAgreementViewController: BaseViewController {
                 cell.dataBind(tag: indexPath.row, data: item)
                 cell.delegate = self
                 return cell
-            },configureSupplementaryView: { (dataSource, collectionView, kind, indexPath) -> UICollectionReusableView in
+            },configureSupplementaryView: { [weak self] (dataSource, collectionView, kind, indexPath) -> UICollectionReusableView in
+                guard let self else { return UICollectionReusableView() }
                 let kind = UICollectionView.elementKindSectionHeader
                       let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: OnboardingAgreementCollectionHeaderView.reuseCellIdentifier, for: indexPath) as! OnboardingAgreementCollectionHeaderView
-                header.allCheckedButton.isSelected = self.viewModel.getAllAgreed()
+                header.updateUI(self.viewModel.getAbleToSignUp())
                 header.delegate = self
                 return header
             })
@@ -123,6 +124,8 @@ final class OnboardingAgreementViewController: BaseViewController {
             .asDriver(onErrorJustReturn: false)
             .drive(with: self, onNext: { owner, canSignUp in
                 owner.rootView.signUpButton.isEnabled = canSignUp
+                let updateColor: UIColor = canSignUp ? .zw_black : .zw_lightgray
+                owner.rootView.signUpButton.backgroundColor = updateColor
             }).disposed(by: disposeBag)
     }
 }

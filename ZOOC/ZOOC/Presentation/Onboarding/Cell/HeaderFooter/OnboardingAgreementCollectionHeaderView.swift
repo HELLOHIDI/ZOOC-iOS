@@ -89,3 +89,12 @@ final class OnboardingAgreementCollectionHeaderView: UICollectionReusableView {
     }
 }
 
+extension OnboardingAgreementCollectionHeaderView {
+    func updateUI(_ isSelected: Bool) {
+        allCheckedButton.isSelected = isSelected
+        let updateColor: UIColor = isSelected ? .zw_point : .zw_lightgray
+        allAgreementLabel.textColor = updateColor
+        self.layer.borderColor = updateColor.cgColor
+    }
+}
+

@@ -11,7 +11,6 @@ import RxCocoa
 protocol OnboardingAgreementUseCase {
     var agreementList: BehaviorRelay<[OnboardingAgreementModel]> { get set }
     var ableToSignUp: BehaviorRelay<Bool> { get }
-    var allAgreed: BehaviorRelay<Bool> { get }
     
     func updateAllAgreementState()
     func updateAgreementState(_ index: Int)

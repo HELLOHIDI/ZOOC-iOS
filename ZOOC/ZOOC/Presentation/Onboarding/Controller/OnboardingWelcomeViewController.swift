@@ -34,17 +34,22 @@ final class OnboardingWelcomeViewController: UIViewController{
     
     //MARK: - Custom Method
     
-    private func bindUI() {
-        rootView.nextButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
-            owner.pushToChooseFamilyRoleView()
+    func bindUI() {
+        rootView.goHomeButton.rx.tap.subscribe(with: self, onNext: { owner, _ in
+            owner.requestFCMTokenAPI()
         }).disposed(by: disposeBag)
     }
-}
-
-extension OnboardingWelcomeViewController {
     
     
-    private func pushToChooseFamilyRoleView() {
-        
+    private func requestFCMTokenAPI() {
+        OnboardingAPI.shared.patchFCMToken(fcmToken: UserDefaultsManager.fcmToken) { result in
+            switch result {
+            case .success(_):
+                UIApplication.shared.changeRootViewController(ZoocTabBarController())
+            default:
+                print("FCM 토큰 갱신 API 확인해보세요e")
+                UIApplication.shared.changeRootViewController(ZoocTabBarController())
+            }
+        }
     }
 }

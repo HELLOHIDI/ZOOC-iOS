@@ -62,6 +62,10 @@ final class MyEditProfileViewController: BaseViewController {
     //MARK: - Custom Method
     
     private func bindUI() {
+        self.rx.viewWillAppear
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.navigationController?.isNavigationBarHidden = true
+            }).disposed(by: disposeBag)
         rootView.backButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
                 let zoocAlertVC = ZoocAlertViewController(.leavePage)

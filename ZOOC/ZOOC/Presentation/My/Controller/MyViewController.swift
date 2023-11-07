@@ -49,6 +49,10 @@ final class MyViewController: BaseViewController {
     //MARK: - Custom Method
     
     private func bindUI() {
+        self.rx.viewWillAppear
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.navigationController?.isNavigationBarHidden = true
+            }).disposed(by: disposeBag)
         rootView.profileView.editProfileButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
                 owner.pushToEditProfileView()

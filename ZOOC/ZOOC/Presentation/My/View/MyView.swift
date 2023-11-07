@@ -99,7 +99,7 @@ final class MyView: UIView  {
         deleteAccountButton.snp.makeConstraints {
             $0.top.equalTo(settingView.snp.bottom).offset(40)
             $0.leading.equalToSuperview().offset(32)
-            $0.bottom.equalToSuperview().inset(134)
+            $0.bottom.equalToSuperview().inset(100)
         }
     }
 }

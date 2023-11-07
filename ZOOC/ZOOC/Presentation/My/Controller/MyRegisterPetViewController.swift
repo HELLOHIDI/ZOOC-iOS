@@ -2,7 +2,7 @@
 //  MyRegisterPetViewController.swift
 //  ZOOC
 //
-//  Created by 류희재 on 2023/01/11.
+//  Created by 류희재 on 2023/11/07.
 //
 
 import UIKit
@@ -153,20 +153,20 @@ extension MyRegisterPetViewController: UITableViewDelegate {
             imageView.kfSetImage(url: petData.photo)
             let image = imageView.image
             let photo = hasPhoto ? image : nil
-            let editPetProfileVC = MyEditPetProfileViewController(
-                viewModel: MyEditPetProfileViewModel(
-                    myEditPetProfileUseCase: DefaultMyEditPetProfileUseCase(
-                        petProfileData: EditPetProfileRequest(
-                            photo: hasPhoto,
-                            nickName: petData.name,
-                            file: photo
-                        ),
-                        id: petData.id,
-                        repository: DefaultMyRepository()
-                    )
-                )
-            )
-            navigationController?.pushViewController(editPetProfileVC, animated: true)
+//            let editPetProfileVC = MyEditPetProfileViewController(
+//                viewModel: MyEditPetProfileViewModel(
+//                    myEditPetProfileUseCase: DefaultMyEditPetProfileUseCase(
+//                        petProfileData: EditPetProfileRequest(
+//                            photo: hasPhoto,
+//                            nickName: petData.name,
+//                            file: photo
+//                        ),
+//                        id: petData.id,
+//                        repository: DefaultMyRepository()
+//                    )
+//                )
+//            )
+//            navigationController?.pushViewController(editPetProfileVC, animated: true)
         default:
             return
         }

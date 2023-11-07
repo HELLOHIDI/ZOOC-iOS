@@ -64,7 +64,7 @@ extension UIFont {
     }
     
     static var zw_caption: UIFont {
-        return UIFont(name: Pretendard.semiBold.rawValue, size: 28)!
+        return UIFont(name: Pretendard.semiBold.rawValue, size: 12)!
     }
     
     static var price_big: UIFont {

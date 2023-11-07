@@ -14,19 +14,12 @@ final class MyView: UIView  {
     
     //MARK: - UI Components
     
-    let backButton: UIButton = {
-        let button = UIButton()
-        button.setImage(Image.back, for: .normal)
-        return button
-    }()
-    
     internal var scrollView = UIScrollView()
     private let contentView = UIView()
     internal let profileView = MyProfileView()
-    internal let familyView = MyFamilyView()
-    internal let petView = MyPetView()
+    internal let noProfileView = MyNoProfileView()
     internal let settingView = MySettingView()
-    internal let deleteAccountView = MyDeleteAccountView()
+    internal let deleteAccountButton = UIButton()
     
     //MARK: - Life Cycles
     
@@ -45,36 +38,37 @@ final class MyView: UIView  {
     //MARK: - Custom Method
     
     private func style() {
+        self.backgroundColor = .zw_background
         scrollView.do {
+            $0.backgroundColor = .clear
             $0.showsVerticalScrollIndicator = false
         }
+        deleteAccountButton.do {
+            $0.setTitle("회원탈퇴", for: .normal)
+            $0.titleLabel?.font = .zw_caption
+            $0.titleLabel?.textAlignment = .left
+            $0.setTitleColor(.zw_lightgray, for: .normal)
+            $0.setUnderline()
+        }
+        noProfileView.isHidden = true
     }
     
     private func hierarchy() {
-        addSubviews(backButton,
-                        scrollView)
-        
+        self.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubviews(
             profileView,
-            familyView,
-            petView,
+            noProfileView,
             settingView,
-            deleteAccountView
+            deleteAccountButton
         )
     }
     
     private func layout() {
-        
-        backButton.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(11)
-            $0.leading.equalToSuperview().inset(17)
-            $0.size.equalTo(42)
-        }
-        
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(backButton.snp.bottom)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.top.equalTo(safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
         
@@ -85,34 +79,27 @@ final class MyView: UIView  {
         }
         
         profileView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(38)
-            $0.width.equalToSuperview()
-            $0.height.equalTo(72)
+            $0.top.equalToSuperview().offset(30)
+            $0.leading.trailing.equalToSuperview().inset(28)
+            $0.height.equalTo(182)
         }
         
-        familyView.snp.makeConstraints {
-            $0.top.equalTo(self.profileView.snp.bottom).offset(30)
-            $0.width.equalToSuperview()
-            $0.height.equalTo(155)
-        }
-        
-        petView.snp.makeConstraints {
-            $0.top.equalTo(self.familyView.snp.bottom).offset(12)
-            $0.width.equalToSuperview()
-            $0.height.equalTo(127)
+        noProfileView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(30)
+            $0.leading.trailing.equalToSuperview().inset(28)
+            $0.height.equalTo(189)
         }
         
         settingView.snp.makeConstraints {
-            $0.top.equalTo(self.petView.snp.bottom).offset(24)
-            $0.width.equalToSuperview()
-            $0.height.equalTo(284)
+            $0.top.equalTo(profileView.snp.bottom).offset(12)
+            $0.leading.trailing.equalTo(profileView)
+            $0.bottom.equalTo(deleteAccountButton.snp.top).inset(12)
         }
         
-        deleteAccountView.snp.makeConstraints {
-            $0.top.equalTo(self.settingView.snp.bottom).offset(40)
-            $0.width.equalToSuperview()
-            $0.height.equalTo(42)
-            $0.bottom.equalToSuperview().inset(133)
+        deleteAccountButton.snp.makeConstraints {
+            $0.top.equalTo(settingView.snp.bottom).offset(40)
+            $0.leading.equalToSuperview().offset(32)
+            $0.bottom.equalToSuperview().inset(134)
         }
     }
 }

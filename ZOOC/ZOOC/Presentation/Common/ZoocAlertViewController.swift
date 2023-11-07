@@ -65,7 +65,7 @@ enum AlertType {
         case .deleteArchive:
             return "삭제하면 글과 사진이 모두 삭제돼요"
         case .deleteAccount:
-            return "회원 탈퇴 시 자동으로 가족에서 탈퇴되고\n   작성한 글과 댓글이 모두 삭제됩니다"
+            return "회원 탈퇴 시 모든 정보와 내역이 삭제됩니다"
         case .needUpdate:
             return "업데이트 후 새로운 기능을 만나보세요"
         case .leaveAIPage:
@@ -234,42 +234,41 @@ final class ZoocAlertViewController: UIViewController {
         
         
         alertView.do {
-            $0.backgroundColor = .white
-            $0.layer.cornerRadius = 14
+            $0.backgroundColor = .zw_background
+            $0.layer.cornerRadius = 2
             $0.clipsToBounds = true
             $0.alpha = 1
         }
         
         contentView.do {
             $0.backgroundColor = .black
-            $0.alpha = 0.45
+            $0.alpha = 0.4
         }
         
         titleLabel.do {
-            $0.backgroundColor = .white
-            $0.font = .zoocSubhead2
-            $0.textColor = .zoocDarkGray1
+            $0.font = .zw_Subhead1
+            $0.textColor = .zw_black
         }
         
         descriptionLabel.do {
-            $0.font = .zoocBody1
-            $0.textColor = .zoocGray1
+            $0.font = .zw_Body2
+            $0.textColor = .zw_gray
             $0.textAlignment = .center
             $0.numberOfLines = 0
         }
         
         keepButton.do {
-            $0.backgroundColor = .zoocMainGreen
-            $0.setTitleColor(.zoocWhite1, for: .normal)
+            $0.backgroundColor = .zw_black
+            $0.setTitleColor(.zw_white, for: .normal)
             $0.titleLabel?.textAlignment = .center
-            $0.titleLabel?.font = .zoocSubhead1
+            $0.titleLabel?.font = .zw_Subhead3
         }
         
         exitButton.do {
-            $0.backgroundColor = .zoocWhite3
-            $0.setTitleColor(.zoocDarkGray2, for: .normal)
+            $0.backgroundColor = .zw_lightgray
+            $0.setTitleColor(.zw_white, for: .normal)
             $0.titleLabel?.textAlignment = .center
-            $0.titleLabel?.font = .zoocSubhead1
+            $0.titleLabel?.font = .zw_Subhead3
         }
     }
     

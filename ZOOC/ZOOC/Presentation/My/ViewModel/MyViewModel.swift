@@ -21,7 +21,6 @@ final class MyViewModel: ViewModelType {
         let viewWillAppearEvent: Observable<Void>
         let logoutButtonDidTapEvent: Observable<IndexPath>
         let deleteAccountButtonDidTapEvent: Observable<Void>
-        let inviteCodeButtonDidTapEvent: Observable<Void>
     }
     
     struct Output {
@@ -41,9 +40,6 @@ final class MyViewModel: ViewModelType {
             owner.myUseCase.requestMyPage()
         }).disposed(by: disposeBag)
         
-        input.inviteCodeButtonDidTapEvent.subscribe(with: self, onNext: { owner, _ in
-            owner.myUseCase.getInviteCode()
-        }).disposed(by: disposeBag)
         
         input.logoutButtonDidTapEvent.subscribe(with: self, onNext: { owner, index in
             owner.myUseCase.logout()

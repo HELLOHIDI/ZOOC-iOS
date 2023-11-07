@@ -9,6 +9,7 @@ import UIKit
 
 import RxSwift
 import RxCocoa
+import RxGesture
 
 final class RecordViewController : BaseViewController {
     

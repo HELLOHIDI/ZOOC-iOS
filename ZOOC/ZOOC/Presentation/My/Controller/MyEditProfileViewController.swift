@@ -62,6 +62,10 @@ final class MyEditProfileViewController: BaseViewController {
     //MARK: - Custom Method
     
     private func bindUI() {
+        self.rx.viewWillAppear
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.navigationController?.isNavigationBarHidden = true
+            }).disposed(by: disposeBag)
         rootView.backButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
                 let zoocAlertVC = ZoocAlertViewController(.leavePage)
@@ -91,12 +95,6 @@ final class MyEditProfileViewController: BaseViewController {
             .asDriver()
             .drive(with: self, onNext: { owner, canEdit in
                 owner.rootView.completeButton.isEnabled = canEdit
-            }).disposed(by: disposeBag)
-        
-        output.textFieldState
-            .asDriver()
-            .drive(with: self, onNext: { owner, state in
-                owner.rootView.nameTextField.textColor = state.textColor
             }).disposed(by: disposeBag)
         
         output.isEdited
@@ -164,14 +162,13 @@ extension MyEditProfileViewController {
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.rootView.nameTextField.text = fixedText
             guard let fixedText else { return }
-            self.rootView.numberOfNameCharactersLabel.text = "\(String(describing: fixedText.count))/10"
+
         }
     }
     
     private func updateUI(_ editProfileData: EditProfileRequest) {
         print(editProfileData.nickName, editProfileData.nickName.count)
         rootView.nameTextField.text = editProfileData.nickName
-        rootView.numberOfNameCharactersLabel.text = "\(editProfileData.nickName.count)/10"
         if editProfileData.profileImage != nil {
             rootView.profileImageButton.setImage(editProfileData.profileImage, for: .normal)
         } else {

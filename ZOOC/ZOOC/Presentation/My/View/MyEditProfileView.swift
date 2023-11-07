@@ -14,15 +14,18 @@ final class MyEditProfileView: UIView {
     
     //MARK: - UI Components
     
-    public var backButton = UIButton()
-    private var titleLabel = UILabel()
+    let backButton = UIButton()
+    private let titleLabel = UILabel()
     
-    public var profileImageButton = UIButton()
-    private var cameraIconImageView = UIImageView()
-    public var nameTextField = ZoocEditTextField(textFieldType: .profile)
-    public var underLineView = UIView()
-    public var numberOfNameCharactersLabel = UILabel()
-    public var completeButton = ZoocGradientButton.init(.network)
+    var profileImageButton = UIButton()
+    private let cameraIconImageView = UIImageView()
+    
+    private let nameLabel = UILabel()
+    private let requiredInputImageView = UIView()
+    var nameTextField = ZoocEditTextField(textFieldType: .pet)
+    private let breedLabel = UILabel()
+    var breedTextField = UITextField()
+    var completeButton = UIButton()
     
     //MARK: - Life Cycles
     
@@ -42,6 +45,7 @@ final class MyEditProfileView: UIView {
         super.draw(rect)
         profileImageButton.makeCornerRound(ratio: 2)
         cameraIconImageView.makeCornerRound(ratio: 2)
+        requiredInputImageView.makeCornerRound(radius: 2)
     }
     
     //MARK: - Custom Method
@@ -54,40 +58,51 @@ final class MyEditProfileView: UIView {
         }
 
         titleLabel.do {
-            $0.font = .zoocHeadLine
+            $0.font = .zw_Subhead2
             $0.text = "프로필 수정"
-            $0.textColor = .zoocDarkGray2
+            $0.textColor = .zw_black
         }
         
         profileImageButton.do {
-            $0.setImage(Image.logoSymbol, for: .normal)
+            $0.setImage(.zwImage(.mock_hidi), for: .normal)
             $0.imageView?.contentMode = .scaleAspectFill
         }
         
         cameraIconImageView.do {
-            $0.image = Image.cameraCircleGreen
+            $0.image = .zwImage(.btn_picture)
             $0.contentMode = .scaleAspectFill
         }
         
+        nameLabel.do {
+            $0.text = "이름"
+            $0.textColor = .zw_darkgray
+            $0.font = .zw_Subhead4
+        }
+        
+        requiredInputImageView.do {
+            $0.backgroundColor = .zw_point
+        }
         nameTextField.do {
-            $0.textAlignment = .center
-            $0.font = .zoocHeadLine
-            $0.tintColor = .zoocGradientGreen
+            $0.addLeftPadding(inset: 20)
+            $0.font = .zw_Body1
+            $0.textColor = .zw_black
+            $0.setBorder(borderWidth: 1, borderColor: .zw_brightgray)
         }
-        
-        underLineView.do {
-            $0.backgroundColor = .zoocGray1
+        breedLabel.do {
+            $0.text = "종"
+            $0.textColor = .zw_darkgray
+            $0.font = .zw_Subhead4
         }
-        
-        numberOfNameCharactersLabel.do {
-            $0.font = .zoocCaption
-            $0.text = "/10"
-            $0.textColor = .zoocGray3
+        breedTextField.do {
+            $0.addLeftPadding(inset: 20)
+            $0.font = .zw_Body1
+            $0.textColor = .zw_black
+            $0.setBorder(borderWidth: 1, borderColor: .zw_brightgray)
         }
-        
         completeButton.do {
+            $0.backgroundColor = .zw_black
             $0.setTitle("완료", for: .normal)
-            $0.isEnabled = false
+            $0.setTitleColor(.zw_white, for: .normal)
         }
     }
     
@@ -97,58 +112,62 @@ final class MyEditProfileView: UIView {
             titleLabel,
             profileImageButton,
             cameraIconImageView,
+            nameLabel,
+            requiredInputImageView,
             nameTextField,
-            underLineView,
-            numberOfNameCharactersLabel,
-            completeButton)
+            breedLabel,
+            breedTextField,
+            completeButton
+        )
     }
     
     private func layout() {
         backButton.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(10)
+            $0.top.equalTo(safeAreaLayoutGuide).offset(10)
             $0.leading.equalToSuperview().offset(17)
             $0.size.equalTo(42)
         }
-        
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(19)
+            $0.top.equalTo(safeAreaLayoutGuide).offset(19)
             $0.centerX.equalToSuperview()
         }
-        
         profileImageButton.snp.makeConstraints {
-            $0.top.equalTo(self.titleLabel.snp.bottom).offset(190)
-            $0.centerX.equalToSuperview()
-            $0.size.equalTo(109)
+            $0.top.equalTo(safeAreaLayoutGuide).offset(112)
+            $0.leading.equalToSuperview().offset(28)
+            $0.size.equalTo(90)
         }
-        
         cameraIconImageView.snp.makeConstraints {
-            $0.top.equalTo(self.profileImageButton).offset(78)
-            $0.leading.equalTo(self.profileImageButton).offset(78)
-            $0.size.equalTo(35)
+            $0.top.equalTo(profileImageButton).offset(60)
+            $0.leading.equalTo(profileImageButton).offset(68)
+            $0.size.equalTo(30)
         }
-        
+        nameLabel.snp.makeConstraints {
+            $0.top.equalTo(profileImageButton.snp.bottom).offset(36)
+            $0.leading.equalTo(profileImageButton)
+        }
+        requiredInputImageView.snp.makeConstraints {
+            $0.top.equalTo(profileImageButton.snp.bottom).offset(38)
+            $0.leading.equalTo(nameLabel.snp.trailing).offset(2)
+            $0.size.equalTo(6)
+        }
         nameTextField.snp.makeConstraints {
-            $0.top.equalTo(self.profileImageButton.snp.bottom).offset(29)
-            $0.centerX.equalToSuperview()
+            $0.top.equalTo(nameLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(28)
+            $0.height.equalTo(50)
         }
-        
-        underLineView.snp.makeConstraints {
-            $0.top.equalTo(self.nameTextField.snp.bottom).offset(9)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(205)
-            $0.height.equalTo(2)
+        breedLabel.snp.makeConstraints {
+            $0.top.equalTo(nameTextField.snp.bottom).offset(24)
+            $0.leading.equalTo(profileImageButton)
         }
-        
-        numberOfNameCharactersLabel.snp.makeConstraints {
-            $0.top.equalTo(self.underLineView).offset(9)
-            $0.trailing.equalTo(self.underLineView)
+        breedTextField.snp.makeConstraints {
+            $0.top.equalTo(breedLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(28)
+            $0.height.equalTo(50)
         }
-        
         completeButton.snp.makeConstraints {
-            $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(27)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(315)
-            $0.height.equalTo(54)
+            $0.bottom.equalToSuperview()
+            $0.width.equalToSuperview()
+            $0.height.equalTo(77)
         }
     }
 }

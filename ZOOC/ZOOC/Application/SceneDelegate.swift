@@ -31,7 +31,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         startMonitoringNetwork(on: scene)
         let userInfo = connectionOptions.notificationResponse?.notification.request.content.userInfo
         
-        let vc = SplashViewController(userInfo: userInfo)
+//        let vc = SplashViewController(userInfo: userInfo)
+        let vc = MyRegisterPetViewController(viewModel: MyRegisterPetViewModel(myRegisterPetUseCase: DefaultMyRegisterPetUseCase(repository: DefaultMyRepository())))
         self.window?.rootViewController = vc
         self.window?.makeKeyAndVisible()
         

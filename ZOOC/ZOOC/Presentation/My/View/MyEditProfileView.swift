@@ -22,7 +22,7 @@ final class MyEditProfileView: UIView {
     
     private let nameLabel = UILabel()
     private let requiredInputImageView = UIView()
-    var nameTextField = ZoocEditTextField(textFieldType: .pet)
+    var nameTextField = ZoocEditTextField(textFieldType: .profile)
     private let breedLabel = UILabel()
     var breedTextField = UITextField()
     var completeButton = UIButton()

@@ -5,28 +5,36 @@
 //  Created by 류희재 on 2023/01/11.
 //
 
+
+
 import UIKit
 
 import SnapKit
 import Then
 
 final class MyRegisterPetView: UIView {
-
-    //MARK: - UI Components
     
-    public var xmarkButton = UIButton()
-    public var completedProgressBarView = UIView()
-    private var registerPetTitleLabel = UILabel()
-    private var registerPetSubTitleLabel = UILabel()
-    public var registerPetTableView = UITableView(frame: .zero, style: .plain)
-    public var registerPetButton =  ZoocGradientButton.init(.network)
+    // MARK: - Properties
     
-    //MARK: - Life Cycles
+    lazy var backButton = UIButton()
+    private let titleLabel = UILabel()
+    private let descriptionLabel = UILabel()
+    private let subDescriptionLabel = UILabel()
+    
+    private let nameLabel = UILabel()
+    private let requiredInputImageView = UIView()
+    var nameTextField = ZoocEditTextField(textFieldType: .profile)
+    private let breedLabel = UILabel()
+    var breedTextField = ZoocEditTextField(textFieldType: .breed)
+    var completeButton = UIButton()
+    
+    
+    // MARK: - UI Components
+    
+    // MARK: - Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        register()
         
         style()
         hierarchy()
@@ -37,94 +45,123 @@ final class MyRegisterPetView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - Custom Method
-    
-    private func register() {
-        registerPetTableView.register(
-            MyRegisterPetTableViewCell.self,
-            forCellReuseIdentifier: MyRegisterPetTableViewCell.cellIdentifier)
-        
-        registerPetTableView.register(
-            MyRegisteredPetTableViewCell.self,
-            forCellReuseIdentifier: MyRegisteredPetTableViewCell.cellIdentifier)
-        
-        registerPetTableView.register(
-            MyRegisterPetTableFooterView.self,
-            forHeaderFooterViewReuseIdentifier: MyRegisterPetTableFooterView.cellIdentifier)
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        requiredInputImageView.makeCornerRound(radius: 2)
     }
+    
+    //MARK: - Custom Method
     
     private func style() {
         self.backgroundColor = .zoocBackgroundGreen
         
-        xmarkButton.do {
-            $0.setImage(Image.xmark, for: .normal)
+        backButton.do {
+            $0.setImage(Image.back, for: .normal)
         }
-        
-        completedProgressBarView.do {
-            $0.backgroundColor = .zoocMainGreen
-            $0.makeCornerRound(radius: 2)
-        }
-        
-        registerPetTitleLabel.do {
+
+        titleLabel.do {
+            $0.font = .zw_Subhead2
             $0.text = "반려동물 등록"
-            $0.textColor = .zoocDarkGray2
+            $0.textColor = .zw_black
+        }
+        descriptionLabel.do {
+            $0.font = .zw_Subhead1
+            $0.text = "반려동물의 정보를 입력해주세요"
             $0.textAlignment = .left
-            $0.font = .zoocHeadLine
+            $0.textColor = .zw_black
         }
-        
-        registerPetSubTitleLabel.do {
-            $0.text = "최대 4마리까지 등록 가능해요"
-            $0.textColor = .zoocGray1
+        subDescriptionLabel.do {
+            $0.font = .zw_Body1
+            $0.text = "해당 정보는 상품 제작 및 관리에 활용돼요"
+            $0.textColor = .zw_gray
             $0.textAlignment = .left
-            $0.font = .zoocBody3
+        }
+        nameLabel.do {
+            $0.text = "이름"
+            $0.textColor = .zw_darkgray
+            $0.font = .zw_Subhead4
         }
         
-        registerPetTableView.do {
-            $0.separatorStyle = .none
-            $0.isScrollEnabled = false
-            $0.rowHeight = 90
-            $0.backgroundColor = .zoocBackgroundGreen
+        requiredInputImageView.do {
+            $0.backgroundColor = .zw_point
         }
-        
-        registerPetButton.do {
-            $0.setTitle("등록하기", for: .normal)
-            $0.isEnabled = false
+        breedLabel.do {
+            $0.text = "종"
+            $0.textColor = .zw_darkgray
+            $0.font = .zw_Subhead4
+        }
+        completeButton.do {
+            $0.backgroundColor = .zw_black
+            $0.setTitle("완료", for: .normal)
+            $0.setTitleColor(.zw_white, for: .normal)
         }
     }
     
     private func hierarchy() {
-        addSubviews(xmarkButton, registerPetTitleLabel, registerPetSubTitleLabel,
-                    registerPetTableView, registerPetButton)
+        self.addSubviews(
+            backButton,
+            titleLabel,
+            nameLabel,
+            descriptionLabel,
+            subDescriptionLabel,
+            requiredInputImageView,
+            nameTextField,
+            breedLabel,
+            breedTextField,
+            completeButton
+        )
     }
     
     private func layout() {
-        xmarkButton.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(6)
+        backButton.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide).offset(10)
             $0.leading.equalToSuperview().offset(17)
             $0.size.equalTo(42)
         }
-        
-        registerPetTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(20)
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide).offset(19)
             $0.centerX.equalToSuperview()
         }
-        
-        registerPetSubTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.registerPetTitleLabel.snp.bottom).offset(50)
-            $0.leading.equalTo(self.safeAreaLayoutGuide).offset(30)
+        descriptionLabel.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide).offset(122)
+            $0.leading.equalToSuperview().offset(28)
         }
-        
-        registerPetTableView.snp.makeConstraints {
-            $0.top.equalTo(self.registerPetSubTitleLabel.snp.bottom).offset(24)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(424)
+        subDescriptionLabel.snp.makeConstraints {
+            $0.top.equalTo(descriptionLabel.snp.bottom).offset(8)
+            $0.leading.equalToSuperview().offset(28)
         }
-        
-        registerPetButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(50)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(315)
-            $0.height.equalTo(54)
+        nameLabel.snp.makeConstraints {
+            $0.top.equalTo(subDescriptionLabel.snp.bottom).offset(60)
+            $0.leading.equalTo(descriptionLabel)
+        }
+        requiredInputImageView.snp.makeConstraints {
+            $0.top.equalTo(subDescriptionLabel.snp.bottom).offset(62)
+            $0.leading.equalTo(nameLabel.snp.trailing).offset(2)
+            $0.size.equalTo(6)
+        }
+        nameTextField.snp.makeConstraints {
+            $0.top.equalTo(nameLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(28)
+            $0.height.equalTo(50)
+        }
+        breedLabel.snp.makeConstraints {
+            $0.top.equalTo(nameTextField.snp.bottom).offset(24)
+            $0.leading.equalTo(descriptionLabel)
+        }
+        breedTextField.snp.makeConstraints {
+            $0.top.equalTo(breedLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(28)
+            $0.height.equalTo(50)
+        }
+        completeButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.width.equalToSuperview()
+            $0.height.equalTo(77)
         }
     }
 }
+
+
+
+
+

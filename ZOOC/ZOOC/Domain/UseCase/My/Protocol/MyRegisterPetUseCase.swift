@@ -11,20 +11,12 @@ import RxSwift
 import RxCocoa
 
 protocol MyRegisterPetUseCase {
-    var petMemberData: BehaviorRelay<[PetResult]> { get }
-    var ableToRegisterPets: BehaviorRelay<Bool?> { get }
+    var ableToRegisterPet: BehaviorRelay<Bool?> { get }
     var isRegistered: PublishRelay<Bool> { get }
-    var registerPetData: BehaviorRelay<[MyPetRegisterModel]> { get }
-    var addButtonIsHidden: BehaviorRelay<Bool> { get }
-    var deleteButtonIsHidden: BehaviorRelay<Bool> { get }
+    var petName: BehaviorRelay<String> { get }
+    var petBreed: BehaviorRelay<String> { get }
     
-    func requestPetData()
     func registerPet()
-    func addPet()
-    func deletePet(_ index: Int)
-    func deleteProfileImage(_ index: Int)
-    func selectProfileImage(_ data: (UIImage, Int))
-    func updatePetName(_ data: (String, Int))
+    func updatePetName(_ name: String)
+    func updatePetBreed(_ breed: String)
 }
-
-

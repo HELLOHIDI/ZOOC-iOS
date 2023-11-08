@@ -21,8 +21,6 @@ final class MyEditProfileViewModel: ViewModelType {
     struct Input {
         var nameTextFieldDidChangeEvent: Observable<String?>
         var editButtonTapEvent: Observable<Void>
-        var deleteButtonTapEvent: Observable<Void>
-        var selectImageEvent: Observable<UIImage>
     }
     
     struct Output {
@@ -43,14 +41,6 @@ final class MyEditProfileViewModel: ViewModelType {
         
         input.editButtonTapEvent.subscribe(with: self, onNext: { owner, _  in
             owner.myEditProfileUseCase.editProfile()
-        }).disposed(by: disposeBag)
-        
-        input.deleteButtonTapEvent.subscribe(with: self, onNext: { owner, _ in
-            owner.myEditProfileUseCase.deleteProfileImage()
-        }).disposed(by: disposeBag)
-        
-        input.selectImageEvent.subscribe(with: self, onNext: { owner, profileImage in
-            owner.myEditProfileUseCase.selectProfileImage(profileImage)
         }).disposed(by: disposeBag)
         
         return output

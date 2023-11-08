@@ -243,7 +243,6 @@
 		D21DADC1298BFF2700CCC089 /* MyPetRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21DADC0298BFF2700CCC089 /* MyPetRegisterViewModel.swift */; };
 		D22EF9002A7C9B720050E325 /* MyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22EF8FF2A7C9B720050E325 /* MyViewModel.swift */; };
 		D23502E22961898C00F01101 /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502E12961898C00F01101 /* MyProfileView.swift */; };
-		D23502F129619D4700F01101 /* MyPetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502F029619D4700F01101 /* MyPetCollectionViewCell.swift */; };
 		D23502F52961A69E00F01101 /* MyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502F42961A69E00F01101 /* MyView.swift */; };
 		D23502F92961F34100F01101 /* MySettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502F82961F34100F01101 /* MySettingView.swift */; };
 		D23502FB2961F44700F01101 /* MySettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23502FA2961F44700F01101 /* MySettingTableViewCell.swift */; };
@@ -282,15 +281,11 @@
 		D25543A4299A239B0072BF0D /* OnboardingRegisterPetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25543A3299A239B0072BF0D /* OnboardingRegisterPetRequest.swift */; };
 		D26989A829A60EE7008A5ACC /* OnboardingAgreementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26989A729A60EE7008A5ACC /* OnboardingAgreementViewModel.swift */; };
 		D26C68E3296DE4F80088DC9A /* MyRegisterPetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C68E2296DE4F80088DC9A /* MyRegisterPetView.swift */; };
-		D26C68E6296DE61F0088DC9A /* MyRegisterPetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C68E5296DE61F0088DC9A /* MyRegisterPetTableViewCell.swift */; };
-		D26C68EA296DE6F70088DC9A /* MyRegisterPetTableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C68E9296DE6F70088DC9A /* MyRegisterPetTableFooterView.swift */; };
 		D26C68EC296DE7B60088DC9A /* MyPetRegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C68EB296DE7B60088DC9A /* MyPetRegisterModel.swift */; };
-		D26C68EE296EB2040088DC9A /* MyRegisteredPetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C68ED296EB2040088DC9A /* MyRegisteredPetTableViewCell.swift */; };
 		D26C68F0296F693E0088DC9A /* MyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C68EF296F693E0088DC9A /* MyResult.swift */; };
 		D26C68F22970AD820088DC9A /* HomeNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C68F12970AD810088DC9A /* HomeNoticeViewController.swift */; };
 		D26C68F42970AD930088DC9A /* HomeNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C68F32970AD930088DC9A /* HomeNoticeView.swift */; };
 		D26C68F62970B0640088DC9A /* HomeNoticeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C68F52970B0640088DC9A /* HomeNoticeTableViewCell.swift */; };
-		D26C85CF2968681900AEAF9B /* MyPetCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85CE2968681900AEAF9B /* MyPetCollectionFooterView.swift */; };
 		D26C85D1296869DD00AEAF9B /* UICollectionReusableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85D0296869DD00AEAF9B /* UICollectionReusableView+.swift */; };
 		D26C85DF2968C26500AEAF9B /* OnboardingLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85DE2968C26500AEAF9B /* OnboardingLoginView.swift */; };
 		D26C85E12968C63F00AEAF9B /* OnboardingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C85E02968C63F00AEAF9B /* OnboardingLoginViewController.swift */; };
@@ -606,7 +601,6 @@
 		D21DADC0298BFF2700CCC089 /* MyPetRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPetRegisterViewModel.swift; sourceTree = "<group>"; };
 		D22EF8FF2A7C9B720050E325 /* MyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewModel.swift; sourceTree = "<group>"; };
 		D23502E12961898C00F01101 /* MyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyProfileView.swift; path = ZOOC/Presentation/My/View/AssistantCellMainView/MyProfileView.swift; sourceTree = SOURCE_ROOT; };
-		D23502F029619D4700F01101 /* MyPetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPetCollectionViewCell.swift; sourceTree = "<group>"; };
 		D23502F42961A69E00F01101 /* MyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyView.swift; sourceTree = "<group>"; };
 		D23502F82961F34100F01101 /* MySettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySettingView.swift; sourceTree = "<group>"; };
 		D23502FA2961F44700F01101 /* MySettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySettingTableViewCell.swift; sourceTree = "<group>"; };
@@ -643,15 +637,11 @@
 		D25543A3299A239B0072BF0D /* OnboardingRegisterPetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRegisterPetRequest.swift; sourceTree = "<group>"; };
 		D26989A729A60EE7008A5ACC /* OnboardingAgreementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAgreementViewModel.swift; sourceTree = "<group>"; };
 		D26C68E2296DE4F80088DC9A /* MyRegisterPetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetView.swift; sourceTree = "<group>"; };
-		D26C68E5296DE61F0088DC9A /* MyRegisterPetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetTableViewCell.swift; sourceTree = "<group>"; };
-		D26C68E9296DE6F70088DC9A /* MyRegisterPetTableFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisterPetTableFooterView.swift; sourceTree = "<group>"; };
 		D26C68EB296DE7B60088DC9A /* MyPetRegisterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPetRegisterModel.swift; sourceTree = "<group>"; };
-		D26C68ED296EB2040088DC9A /* MyRegisteredPetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegisteredPetTableViewCell.swift; sourceTree = "<group>"; };
 		D26C68EF296F693E0088DC9A /* MyResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyResult.swift; sourceTree = "<group>"; };
 		D26C68F12970AD810088DC9A /* HomeNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNoticeViewController.swift; sourceTree = "<group>"; };
 		D26C68F32970AD930088DC9A /* HomeNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNoticeView.swift; sourceTree = "<group>"; };
 		D26C68F52970B0640088DC9A /* HomeNoticeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNoticeTableViewCell.swift; sourceTree = "<group>"; };
-		D26C85CE2968681900AEAF9B /* MyPetCollectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPetCollectionFooterView.swift; sourceTree = "<group>"; };
 		D26C85D0296869DD00AEAF9B /* UICollectionReusableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionReusableView+.swift"; sourceTree = "<group>"; };
 		D26C85DE2968C26500AEAF9B /* OnboardingLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginView.swift; sourceTree = "<group>"; };
 		D26C85E02968C63F00AEAF9B /* OnboardingLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginViewController.swift; sourceTree = "<group>"; };
@@ -1942,11 +1932,8 @@
 			isa = PBXGroup;
 			children = (
 				D27D95D8296DE12D0097CD03 /* HeaderFooterVIew */,
-				D23502F029619D4700F01101 /* MyPetCollectionViewCell.swift */,
 				D23502FA2961F44700F01101 /* MySettingTableViewCell.swift */,
 				D23503022964728700F01101 /* MyAppInformationTableViewCell.swift */,
-				D26C68E5296DE61F0088DC9A /* MyRegisterPetTableViewCell.swift */,
-				D26C68ED296EB2040088DC9A /* MyRegisteredPetTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -2014,8 +2001,6 @@
 		D27D95D8296DE12D0097CD03 /* HeaderFooterVIew */ = {
 			isa = PBXGroup;
 			children = (
-				D26C85CE2968681900AEAF9B /* MyPetCollectionFooterView.swift */,
-				D26C68E9296DE6F70088DC9A /* MyRegisterPetTableFooterView.swift */,
 				D25323152A07330C00562D92 /* MyAppInformationHeaderView.swift */,
 			);
 			path = HeaderFooterVIew;
@@ -2381,13 +2366,11 @@
 				D2ED948C2AB9B99B0040B687 /* ZoocCheckAlertView.swift in Sources */,
 				D24AFAC42A8E2C2500823E9C /* GenAIChooseFourPetCollectionViewCell.swift in Sources */,
 				D239C0872AC148A100D1AA37 /* DefaultMyUseCase.swift in Sources */,
-				D26C85CF2968681900AEAF9B /* MyPetCollectionFooterView.swift in Sources */,
 				D206AB472AE3C1D800127DE8 /* ShopLoadingViewController.swift in Sources */,
 				D29944362AAF1D7A00C4F280 /* ShopChoosePetViewController.swift in Sources */,
 				872F638929B89D9B002EC413 /* HomeGuideViewController.swift in Sources */,
 				8765549F295846F3006BBDA9 /* ZoocTabBarController.swift in Sources */,
 				87F287EF2A9F36CE00A53218 /* ShopService.swift in Sources */,
-				D26C68E6296DE61F0088DC9A /* MyRegisterPetTableViewCell.swift in Sources */,
 				872367112A12AC4E00DCBBFF /* ArchiveModel.swift in Sources */,
 				D2C028F22A81F8B2003F4727 /* String+.swift in Sources */,
 				87A3D8802A97546D002C36DB /* OrderViewController.swift in Sources */,
@@ -2411,7 +2394,6 @@
 				87A76AAB295F6EDE0096F669 /* RecordService.swift in Sources */,
 				D2CADF692AC919CF00772100 /* RecordViewModel.swift in Sources */,
 				87F288092A9FC41F00A53218 /* Bank.swift in Sources */,
-				D26C68EA296DE6F70088DC9A /* MyRegisterPetTableFooterView.swift in Sources */,
 				D27D9EAE2A8F46EA00E02842 /* GenAIPetImageCollectionViewCell.swift in Sources */,
 				D26C85E52968CB2F00AEAF9B /* OnboardingAgreementCollectionViewCell.swift in Sources */,
 				D23503032964728700F01101 /* MyAppInformationTableViewCell.swift in Sources */,
@@ -2517,7 +2499,6 @@
 				8782C7E42968B03500C9324B /* HomePetCollectionViewCell.swift in Sources */,
 				872367192A19080600DCBBFF /* AuthError.swift in Sources */,
 				D26989A829A60EE7008A5ACC /* OnboardingAgreementViewModel.swift in Sources */,
-				D26C68EE296EB2040088DC9A /* MyRegisteredPetTableViewCell.swift in Sources */,
 				D235030B2964991700F01101 /* MyEditProfileViewController.swift in Sources */,
 				D239C0852AC1467C00D1AA37 /* MyUseCase.swift in Sources */,
 				870A4C0A2AA2820D00D7CFD8 /* ProductOptionCollectionViewCell.swift in Sources */,
@@ -2632,7 +2613,6 @@
 				D2B5FFD12ADCF63200E3E4A1 /* ShopViewController.swift in Sources */,
 				870A4C0C2AA2823900D7CFD8 /* ProductSelectedOptionCollectionViewCell.swift in Sources */,
 				D23502E22961898C00F01101 /* MyProfileView.swift in Sources */,
-				D23502F129619D4700F01101 /* MyPetCollectionViewCell.swift in Sources */,
 				874E63AC2AF7F8710029733B /* UIFont+.swift in Sources */,
 				871EA34A2970403300D0E8CC /* ArchiveResult.swift in Sources */,
 				87F287E12A9D113E00A53218 /* OrderAgreement.swift in Sources */,

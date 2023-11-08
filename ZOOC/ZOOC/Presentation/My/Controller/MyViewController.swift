@@ -57,7 +57,10 @@ final class MyViewController: BaseViewController {
             .subscribe(with: self, onNext: { owner, _ in
                 owner.pushToEditProfileView()
             }).disposed(by: disposeBag)
-        
+        rootView.noProfileView.registerPetButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.pushToRegisterPetView()
+            }).disposed(by: disposeBag)
         rootView.deleteAccountButton.rx.tap
             .subscribe(with: self, onNext: { owner, _ in
                 owner.presentDeleteAccountZoocAlertView()

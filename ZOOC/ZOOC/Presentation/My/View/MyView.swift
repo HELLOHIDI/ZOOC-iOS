@@ -50,7 +50,7 @@ final class MyView: UIView  {
             $0.setTitleColor(.zw_lightgray, for: .normal)
             $0.setUnderline()
         }
-        noProfileView.isHidden = true
+        profileView.isHidden = true
     }
     
     private func hierarchy() {

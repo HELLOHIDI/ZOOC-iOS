@@ -44,11 +44,6 @@ final class DefaultGenAIRegisterPetUseCase: GenAIRegisterPetUseCase {
         }
     }
     
-    func isTextCountExceeded(for type: ZoocEditTextField.TextFieldType) {
-        let limit = type.limit
-        self.isTextCountExceeded.accept(name.value.count >= limit)
-    }
-    
     func nameTextFieldDidChangeEvent(_ text: String?) {
         guard let name = text else { return }
         self.name.accept(name)
